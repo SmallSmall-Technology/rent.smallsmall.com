@@ -1,0 +1,290 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+
+/* START CUSTOM FONT SIZES */
+.custom-font-size-14 {
+  font-size: 14px;
+}
+
+.custom-font-size-13 {
+  font-size: 13px;
+}
+
+.custom-font-size-22 {
+  font-size: 22px;
+}
+
+.custom-font-size-26 {
+  font-size: 26px;
+}
+
+/* END CUSTOM FONT SIZES */
+
+.primary-background {
+  background: #F3F6F8;
+  border-radius: 10px;
+  color: #222224;
+}
+
+.secondary-background {
+  background: #007DC1;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+.tertiary-background {
+  background: #64318A;
+  color: #ffffff;
+}
+
+.default-background {
+  background: #ffffff;
+  border-radius: 10px;
+  color: #222224;
+}
+
+.primary-text-color {
+  color: #222224;
+}
+
+.secondary-text-color {
+  color: #7D8993;
+}
+
+.divider {
+  width: 100%;
+  height: 0px;
+  border: 1px solid #CCCCD3;
+}
+
+.divider-vertical {
+  width: 0.1px;
+  height: -1px;
+  background-color: #CCCCD3;
+}
+
+
+
+.btn-custom-primary {
+  background: #007DC1;
+  border-radius: 4px;
+  color: #fafafa;
+  border: 1px solid #007DC1;
+  min-width: 211px
+}
+
+.btn-custom-primary:hover {
+  background: #007DC1;
+  color: #eeeef3;
+}
+
+
+.btn-custom-secondary {
+  background: #222224;
+  border-radius: 4px;
+  color: #CCCCD3;
+  border: 1px solid #222224;
+}
+
+.btn-custom-secondary:hover {
+  background: #39393b;
+  color: #CCCCD3;
+}
+
+p {
+  margin: 0;
+}
+
+.user-container {
+  position: relative;
+}
+
+.nav-bottom-color {
+  border-bottom: 1px solid #EEEEEF;
+  ;
+}
+
+
+.user-shorthand {
+  width: 29px;
+  height: 29px;
+  background-color: #007DC1;
+  color: #ffffff;
+  border-radius: 100%;
+  text-align: center;
+  font-size: 11px;
+  position: relative
+}
+
+.active-user {
+  position: absolute;
+  background-color: #138E3D;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid white;
+  left: 22px;
+  bottom: 1px;
+}
+
+.dashboard-active, .sub-menu--dashboard-active {
+  border-bottom: 3px solid #007DC1;
+  color: #222224
+}
+
+.card-custom {
+  min-height: 100%;
+  background: #F3F6F8;
+  border-radius: 10px;
+  color: #222224;
+  border: 0px;
+}
+
+.menu-navbar-bg {
+  background-color: #F6F7F8;
+}
+
+
+.nav-mobile {
+  /* justify-content: space-between; */
+}
+
+.mobile-menu-collapse {
+  z-index: 99999;
+  background-color: #F6F7F8;
+}
+
+.logout-dropdown {
+  left: unset;
+  right: 0;
+  border: 0;
+  background: #F6F7F8;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.sub-menu {
+  padding-left: 17em;
+}
+
+.address-title {
+  font-size: 40px;
+}
+
+.special-input {
+  border: none;
+  border-radius: unset;
+  border-bottom: 1px solid #c5c7c9;
+  padding-left: 0px;
+}
+
+.special-input::placeholder {
+  color: #CCCCD3;
+}
+
+.user-name {
+  font-size: 13px;
+  align-self: center;
+}
+
+.dropdown-menu.show {
+  left: -220% !important;
+}
+
+.custom-dropdown-menu {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.12);
+  border-radius: 7px;
+}
+
+.custom-dropdown-active {
+  color: #222224;
+}
+
+
+
+/*****MEDIA QUERY****/
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (max-width: 480px) {
+  .user-name {
+    font-size: 12px;
+    align-self: center
+  }
+
+  .dashboard-active {
+    border-left: 3px solid black;
+    border-bottom: 0;
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .sub-menu {
+    padding-left: 1em;
+    font-size: 11px;
+  }
+
+  .address-title {
+    font-size: 25px;
+  }
+
+  .btn-custom-primary {
+    min-width: 0
+  }
+
+  .sub-nav {
+    font-size: 13px;
+  }
+
+  /* .custom-dropdown-menu {
+    left: -168px !important;
+  } */
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (min-width: 576px) {}
+
+/* Medium devices (tablets, 768px and up)*/
+@media screen and (max-width: 768px) {
+  .dashboard-active {
+    border-left: 3px solid black;
+    border-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {}
+
+@media (max-width: 992px) {
+  .navbar-collapse {
+    position: fixed;
+    top: 49px;
+    left: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    width: 75%;
+    height: 100%;
+  }
+
+  .navbar-collapse.collapsing {
+    left: -75%;
+    transition: height 0s ease;
+  }
+
+  .navbar-collapse.show {
+    left: 0;
+    transition: left 300ms ease-in-out;
+  }
+
+  .navbar-toggler.collapsed~.navbar-collapse {
+    transition: left 500ms ease-in-out;
+  }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media screen and (992px <=width <=1024px) {}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media screen and (min-width: 1200px) {}

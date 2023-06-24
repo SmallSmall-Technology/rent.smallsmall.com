@@ -1,0 +1,164 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.primary-background {
+  background: #F6F7F8;
+  border-radius: 10px;
+  color: #222224;
+}
+
+.secondary-background {
+  background: #222224;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+.primary-text-color {
+  color: #222224;
+}
+
+.secondary-text-color {
+  color: #7D8993;
+}
+
+.btn-custom-primary:hover {
+  background: #39393b;
+  border-radius: 4px;
+  color: #CCCCD3;
+  border: 1px solid #222224;
+}
+
+p {
+  margin: 0;
+}
+
+.user-container {
+  position: relative;
+}
+
+.nav-bottom-color {
+  border-bottom: 1px solid #EEEEEF;
+  ;
+}
+
+
+.user-shorthand {
+  width: 29px;
+  height: 29px;
+  background-color: #222224;
+  color: #ffffff;
+  border-radius: 100%;
+  text-align: center;
+  font-size: 11px;
+  position: relative
+}
+
+.active-user {
+  position: absolute;
+  background-color: #138E3D;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid white;
+  left: 22px;
+  bottom: 1px;
+}
+
+.dashboard-active {
+  border-bottom: 3px solid black;
+}
+
+.card-custom {
+  min-height: 180px;
+  background: #222224;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+.menu-navbar-bg {
+  background-color: #F6F7F8;
+}
+
+
+.nav-mobile {
+  /* justify-content: space-between; */
+}
+
+.mobile-menu-collapse {
+  z-index: 99999;
+  background-color: #F6F7F8;
+}
+
+.logout-dropdown {
+  left: unset;
+  right: 0;
+  border: 0;
+  background: #F6F7F8;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/*****MEDIA QUERY****/
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (max-width: 480px) {
+  .user-name {
+    font-size: 12px;
+    align-self: center
+  }
+
+  .dashboard-active {
+    border-left: 3px solid black;
+    border-bottom: 0;
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (min-width: 576px) {}
+
+/* Medium devices (tablets, 768px and up)*/
+@media screen and (max-width: 768px) {
+  .dashboard-active {
+    border-left: 3px solid black;
+    border-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {}
+
+@media (max-width: 992px) {
+  .navbar-collapse {
+    position: fixed;
+    top: 49px;
+    left: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    width: 75%;
+    height: 100%;
+  }
+
+  .navbar-collapse.collapsing {
+    left: -75%;
+    transition: height 0s ease;
+  }
+
+  .navbar-collapse.show {
+    left: 0;
+    transition: left 300ms ease-in-out;
+  }
+
+  .navbar-toggler.collapsed~.navbar-collapse {
+    transition: left 500ms ease-in-out;
+  }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media screen and (992px <=width <=1024px) {}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media screen and (min-width: 1200px) {}

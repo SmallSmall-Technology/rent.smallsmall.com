@@ -1,0 +1,122 @@
+/* CSS Document */
+
+/* -------------------- Select Box Styles: stackoverflow.com Method */
+/* -------------------- Source: http://stackoverflow.com/a/5809186 */
+
+select#customSelect {
+	-webkit-appearance: button;
+	-webkit-border-radius: 2px;	
+	-webkit-padding-end: 10px;
+	-webkit-padding-start: 10px;
+	-moz-padding-end: 20px;
+	-moz-padding-start: 10px;
+	/*background-image: url(../img/combo-arrow.jpg);*/
+	background-position: 90% center;
+	background-repeat: no-repeat;
+	/*border: 1px solid #ced4da;*/
+	border: 0;
+	color: #333;
+	font-family:'Gotham';
+	font-size:14px;
+    font-weight: 400;
+	margin: 0;
+	overflow: hidden;
+	padding: 4px 10px 4px 15px; 
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	height:45px;
+	border-radius:4px;
+	width: 100%; 
+    background:#EAF9FF;
+	outline:none;
+}
+
+select.customSelect {
+	-webkit-appearance: button;
+	-webkit-border-radius: 2px;	
+	-webkit-padding-end: 10px;
+	-webkit-padding-start: 10px;
+	-moz-padding-end: 10px;
+	-moz-padding-start: 10px;
+	/*background-image: url(../img/combo-arrow.jpg);*/
+	background-position: 97% center;
+	background-repeat: no-repeat;
+	/*border: 1px solid #ced4da;*/
+	border: 0;
+	color: #333;
+	font-family:'Gotham';
+    font-weight: 400;
+	font-size:14px;
+	margin: 0;
+	overflow: hidden;
+	padding: 4px 0 4px 16px; 
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	height:45px;
+	border-radius:4px;
+	width: 100%; 
+    background:#EAF9FF;
+	outline:none;
+}
+select.customSelect::placeholder{
+	font-family:'Gotham';
+	font-weight:700;
+	font-size:16px;
+	color:#f3f3f3;
+}
+
+@media(max-width:1200px){
+select#customSelect {
+	-webkit-appearance: button;
+	-webkit-border-radius: 2px;	
+	-webkit-padding-end: 10px;
+	-webkit-padding-start: 10px;
+	-moz-padding-end: 10px;
+	-moz-padding-start: 10px;
+	/*background-image: url(../img/combo-arrow.jpg);*/
+	background-position: 97% center;
+	background-repeat: no-repeat;
+	/*border: 1px solid #ced4da;*/
+	border: 0;
+	color: #555;
+	font-size: inherit;
+	margin: 0;
+	overflow: hidden;
+	padding: 4px 0 4px 16px; 
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	height:45px;
+	border-radius:4px;
+	width: 100%; 
+    background:#EAF9FF;
+}
+
+select.customSelect {
+	-webkit-appearance: button;
+	-webkit-border-radius: 2px;	
+	-webkit-padding-end: 10px;
+	-webkit-padding-start: 10px;
+	-moz-padding-end: 10px;
+	-moz-padding-start: 10px;
+	/*background-image: url(../img/combo-arrow.jpg);*/
+	background-position: 90% center;
+	background-repeat: no-repeat;
+	/*border: 1px solid #ced4da;*/
+	border: 0;
+	color: #555;
+	font-size: inherit;
+	margin: 0;
+	overflow: hidden;
+	padding: 4px 0 4px 16px; 
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	height:45px;
+	border-radius:4px;
+	width: 100%; 
+    background:#EAF9FF;
+}
+}
+@media(max-width:900px){
+
+
+}

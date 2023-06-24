@@ -1,0 +1,160 @@
+/***Tool tip CSS ***/
+.tooltip-rss{
+	width:30px;
+	height:30px;
+	position: absolute;
+  	display: inline-block;
+  	right:30px;
+  	top:0;
+}
+.inspection-label-green .tooltip-rss{
+	width:30px;
+	height:30px;
+	position: absolute;
+  	display: inline-block;
+  	right:70px;
+  	top:0;
+}
+.tooltip-icn{
+	display:inline-block;
+	width:15px;
+	line-height:15px;
+	border-radius:50%;
+	color:#FFF;
+	font-size:10px;
+	text-align:center;
+	background:#00CDA6;
+	cursor:pointer;
+}
+
+.tooltip-rss .tooltiptext {
+	visibility: hidden;
+	width: 200px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 10px;
+	position: absolute;
+	z-index: 1;
+	left: -180px;
+	top: 35px;
+	font-family:avenir-regular;
+	font-size:12px;
+	line-height: 20px;
+}
+
+.tooltip-rss .tooltiptext::after {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	right: 8px;
+	margin-top: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent transparent black transparent;
+}
+.tooltip-rss:hover .tooltiptext {
+	visibility: visible;
+}
+
+.tooltip-rss .tooltiptext2 {
+	visibility: hidden;
+	width: 200px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 10px;
+	position: absolute;
+	z-index: 1;
+	left: -200px;
+	top: 25px;
+	font-family:avenir-regular;
+	font-size:12px;
+	line-height: 20px;
+}
+
+.tooltip-rss .tooltiptext2::after {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	right: 90px;
+	margin-top: 0;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent transparent black transparent;
+}
+.tooltip-rss:hover .tooltiptext2 {
+	visibility: visible;
+}
+
+.inspection-label-green .tooltip-rss .tooltiptext {
+	visibility: hidden;
+	width: 200px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 10px;
+	position: absolute;
+	z-index: 1;
+	left: -180px;
+	top: 35px;
+	font-family:avenir-regular;
+	font-size:12px;
+	line-height: 20px;
+}
+
+.inspection-label-green .tooltip-rss .tooltiptext::after {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	right: 30px;
+	margin-top: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent transparent black transparent;
+}
+.inspection-label-green.tooltip-rss:hover .tooltiptext {
+	visibility: visible;
+}
+
+.inspection-label-green .tooltip-rss .tooltiptext2 {
+	visibility: hidden; 
+	width: 200px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 10px;
+	position: absolute;
+	z-index: 1;
+	left: -130px;
+	top: 25px;
+	font-family:avenir-regular;
+	font-size:12px;
+	line-height: 20px;
+}
+
+.inspection-label-green .tooltip-rss .tooltiptext2::after {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	right: 60px;
+	margin-top: 0;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent transparent black transparent;
+}
+.inspection-label-green .tooltip-rss:hover .tooltiptext2 {
+	visibility: visible;
+}
+@media(max-width:1200px){
+ .tooltip-rss{
+  	right:0;
+}
+.inspection-label-green .tooltip-rss{
+  	right:70px;
+}  
+}

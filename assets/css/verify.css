@@ -1,0 +1,128 @@
+
+.offcanvas-btn{
+    display: none;
+  }
+
+.form .nextbtn{
+    border: 1px solid #007DC1;
+    border-radius: 10px;
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 10px 5px;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #ffffff;
+}
+.nextbtn:hover{
+    color: #ffffff;
+}
+.details h4{
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 22px;
+    margin-bottom: 50px;
+}
+
+.form{
+    width: 100%;
+    margin-top: 40px;
+}
+
+.form-topic{
+    width:100%;
+    
+    line-height:50px;
+    
+    font-weight:700;
+    
+    color:#414042;
+    
+    text-align:left;
+}
+/*.accordion-button{
+    box-shadow: none !important;
+    padding: 20px 15px 20px 0;
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 31px;
+    color: #414042;
+  }
+  .accordion-item{
+    margin: 20px 0;
+    border: 0;
+    border-bottom: 1px solid #D1CECE;
+  }
+  .accordion-button:not(.collapsed){
+    background: #007DC1;
+    border: 0 !important;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 30px;
+  }
+  .accordion-body{
+    background: #007DC1;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 165.92%;
+    padding: 0 50px 20px;
+  }
+*/
+@media screen and (max-width:991px) {
+    
+    .dropdown-menu li a{
+        text-align: center;
+    }
+    
+    .offcanvas-header .btn-close{
+        float: right !important;
+    }
+    .offcanvas-btn{
+        display: block;
+    }
+  
+    .hero-sub-text{
+        font-size: 21px;
+        line-height: 25px;
+        width: 100%;
+        padding: 20px 10px;
+    }
+    .hero-button{
+        width: 50%;
+        margin: 10px;
+    }
+    .subscriber, .subscriber-container{
+        margin: 0 ;
+    }
+    .subscriber-title{
+        font-size: 35px;
+    }
+    .work-grid{
+        margin: 0;
+    }
+    .manage{
+        margin: 50px 0;
+    }
+    .faq-container{
+        margin: 0;
+    }
+    .faq{
+        margin: 0;
+    }
+    .accordion-button{
+        font-size: 20px;
+        line-height: 21px;
+        padding: 20px;
+    }
+    
+}

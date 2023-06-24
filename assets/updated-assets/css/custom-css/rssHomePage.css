@@ -1,0 +1,894 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    /* box-sizing: border-box; */
+    margin: 0;
+}
+
+/* ============================================== NAVIGATION MENU =============================== */
+.main_menu {
+    display: flex;
+    justify-content: space-between;
+    /* width: 100%; */
+    padding: 2% 5%;
+    position: fixed;
+    background-color: #fff;
+    width: 100vw;
+    box-sizing: border-box;
+}   
+
+#main_logo{
+    width: 15rem;
+    /* width: 50px; */
+}
+.sub_menu{
+    flex-grow: 1;
+    padding: 0 2%;
+    display: flex;
+    justify-content: space-between;
+    /* width: 100%; */
+
+}
+
+.nav_menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav_menu h3 {
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    border: 2px solid #E6EBF1;
+    border-radius: 15px;
+    gap: 5px;
+    padding-left: 1%;
+    padding-right: 0.5%;
+}
+
+.search input {
+    border: none;
+}
+
+.s_logo {
+    background: #007DC1;
+    border-radius: 15px;
+    border: none;
+    height: 40px;
+    width: 50px;
+    margin: 0.5% 0;
+}
+
+.login_btn {
+    display: flex;
+    border: 2px solid #E6EBF1;
+    border-radius: 15px;
+    align-items: center;
+    padding: 0 1%;
+    gap: 5%;
+}
+
+.login_btn img {
+    width: 30px;
+}
+
+.user_icon {
+    display: flex;
+    align-items: center;
+    border-right: 1.5px solid #E6EBF1;
+    padding-right: 2%;
+}
+
+.menu_icon {
+    display: flex;
+    align-items: center;
+    gap: 5%;
+}
+
+
+.moble_navigation{
+    display: none;
+}
+.mobile_navigation_container{
+display: none;
+}
+
+/* ============================================== BANNER =============================== */
+.push_down{
+     
+}
+.banner {
+    padding: 18% 3% 8% 3%;
+    
+    background-image: linear-gradient(143.43deg, #03100D 11.62%, rgba(65, 64, 66, 0) 93.57%, rgba(65, 64, 66, 0) 93.58%, rgba(65, 64, 66, 0) 93.59%), url('../../imageTwo/homepage.svg');
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    border-radius: 30px;
+    margin: 0%  5% 1.5% 5%;
+}
+
+.banner h2 {
+    font-weight: 700;
+    font-size: 3.3rem;
+    margin: 0;
+}
+
+.banner p {
+    width: 80%;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+
+/* ============================================== MAIN PAGE =============================== */
+.main_page {
+    padding: 5% 8% 0 8%;
+}
+
+
+/* How we operate */
+.operation h3 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.operation small {
+    font-style: normal;
+    font-weight: 400;
+}
+
+.payment_plan {
+    background: #EAF9FF;
+    border-radius: 30px;
+    padding: 0% 3% 3% 3%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5%;
+    margin-top: 4%;
+}
+
+.payment_item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5%;
+    width: 28rem;
+    margin-top: 3%;
+}
+
+.payment_item img {
+    width: 25px;
+}
+
+.payment_item h5 {
+    margin: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.payment_item p {
+    margin: 0;
+    font-weight: 300;
+    font-size: 1rem;
+}
+
+.payment_plan button {
+    width: 265px;
+    height: 66px;
+    background: #007DC1;
+    border-radius: 8px;
+    border: none;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    color: #fff;
+    align-self: center;
+    margin: auto;
+}
+
+
+/* SUbscribe */
+.subscribe {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5%;
+    justify-content: center;
+    width: 100%;
+}
+
+.subscribe h5 {
+    margin: 0;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1rem;
+
+}
+
+.subscribe_how_it_works {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+    color: #fff;
+    flex-grow: 1;
+    background: linear-gradient(147.48deg, #007DC1 17.99%, #03100D 80.53%);
+    gap: 10%;
+    border-radius: 30px 0px 0px 30px;
+    max-width: 30rem;
+}
+
+.subscribe_steps {
+    background: #EAF9FF;
+    border-radius: 0px 30px 30px 0px;
+    padding: 5%;
+    max-width: 30rem;
+}
+
+
+.subscribe_how_it_works h5 {
+    font-size: 1.5rem;
+}
+
+.subscribe_how_it_works button {
+    width: 265px;
+    height: 66px;
+    background: #EAF9FF;
+    border-radius: 8px;
+    border: none;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #007DC1;
+}
+
+.subscribe_btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.subscribe_steps h5 {
+    margin: 0;
+}
+
+.subscribe_steps p {
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.subscribe_steps_item {
+    display: flex;
+    align-items: flex-start;
+    width: 80%;
+    color: #414042;
+    gap: 5%;
+    margin-bottom: 3%;
+
+}
+
+
+/* ============================================== EXPLORE OUR HOMES =============================== */
+
+.explore {
+    margin-top: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 5%;
+}
+
+.explore_image {
+    padding: 0 3% 3% 3%;
+}
+
+.explore_writeup h4 {
+    margin: 0;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #414042;
+}
+
+.explore_writeup p {
+    margin: 0;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 27px;
+    display: flex;
+    align-items: center;
+    color: #414042;
+}
+
+.small_writeup {
+    margin: 1% 0 2% 0;
+    font-style: normal;
+    color: #414042;
+    font-size: 12px;
+}
+
+
+
+.explore_writeup {
+     width: 35rem;
+}
+
+.explore_chip {
+    background: #007DC1;
+    border-radius: 12px;
+    font-style: normal;
+    font-weight: 500;
+    color: #FFFFFF;
+    padding: 1% 2%;
+    display: inline-block;
+    margin-bottom: 2%;
+}
+
+.explore_chip:hover {
+    background: #fff;
+    border: 1px solid #007DC1;
+    color: #000;
+    cursor: pointer;
+}
+
+.explore_chip small {
+    font-style: normal;
+    font-weight: 300;
+
+}
+
+/* ============================================== FIND A NEIGHBORHOOD =============================== */
+.neighborhood {
+    display: flex;
+    margin: 10% 0;
+    gap: 8%;
+    flex-direction: row;
+
+}
+
+.neighborhood h3 {
+    margin: 0;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 119%;
+
+    color: #414042;
+}
+
+.neighborhood_writeup {
+
+}
+
+.neighborhood p {
+    margin: 0;
+}
+
+.neighborhood_chip {
+    display: inline-block;
+}
+
+.neighborhood_chip_nav {
+    display: flex;
+    gap: 10%;
+}
+
+.neighborhood_chip_nav .tab {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 38px;
+    background: #007DC1;
+    border-radius: 15px;
+    color: #fff;
+    /* padding: 2% 5%; */
+    width: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.neighborhood_chip_nav .tab:hover {
+    background-color: transparent;
+    color: #000;
+}
+
+.chip_content {
+    margin-top: 3%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chip1,
+.chip3 {
+    background: #007DC1;
+    border-radius: 15px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 0.5rem;
+    height: 5px;
+    margin: 1%;
+    cursor: pointer;
+}
+
+.chip2 {
+    padding: 0.5rem;
+    height: 5px;
+    margin: 1%;
+    border: 1px solid #41404288;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border-radius: 15px;
+    font-style: normal;
+    color: #414042;
+    cursor: pointer;
+}
+
+.chip3 {
+    /* display: inline-flex; */
+    padding: 0.5rem 1rem;
+    margin-top: 2%;
+}
+
+.chip3 img {
+    width: 0.5rem;
+}
+
+.chip2:hover {
+    background: #007DC1;
+    color: #fff;
+    border: 1px solid #007DC1;
+}
+
+/* ============================================== OUR NUMBER =============================== */
+
+.our_number {
+    background: #EAF9FF;
+    border-radius: 18px;
+    padding: 3%;
+    text-align: center;
+}
+
+.our_number h3 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 2.5rem;
+    letter-spacing: 0.01em;
+    color: #414042;
+    margin: 0;
+}
+
+
+.our_number .rate {
+    display: flex;
+    color: #007DC1;
+    width: 70%;
+    justify-content: space-between;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.our_number h4 {
+    margin: 0;
+}
+
+.divider {
+    width: 1px;
+    height: 70px;
+    background: #007DC1;
+}
+
+
+
+/* <<<<TABLE TAG STYLING>>>> */
+.table_section{
+    margin-top: 10%;
+}
+.table_section h3 {
+    margin:0;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.5rem;
+    max-width: 40%;
+
+    color: #414042;
+}
+
+.main_table{
+    display: flex;
+    overflow-x: scroll;
+    /* width: 1021px; */
+}
+
+.main_table_left, .main_table_right{
+    flex-grow: 2;
+}
+.table_left{
+    border-bottom: 1px solid #D1CECE;
+    padding: 2.6% 5%;
+}
+.main_table_middle{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: #EAF9FF;
+border-radius: 20px;
+}
+
+.table_middle{
+    flex-grow: 1;
+    padding: 7% 0%;
+    text-align: center;
+    font-size: .8rem;
+}
+.table_bottom{
+    height: 5vh;
+}
+
+.table_right{
+    border-bottom: 1px solid #D1CECE;
+    padding: 3% 5%;
+    text-align: center;
+}
+
+/* ============================================== MOBILE APP =============================== */
+
+
+
+
+.bpm__tenancy{
+    /* width: 77%; */
+    /* width: auto; */
+    background: #007DC1;
+    border-radius:1.25em;
+    margin-top:30%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+    position: relative;
+    align-items: center;
+}
+
+.phone_img{
+    /* top: 10px; */
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-right:10% ;
+}
+
+.bpm_left{
+    padding:2rem 2rem 5rem 2rem;
+}
+#tenancy__heading{
+    padding-top: 5%;
+    padding-left:5%;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 2em;
+    /* line-height: 125%; */
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    color: #FFFFFF;
+}
+
+
+
+#tenancy__pa_rag{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1em;
+    line-height: 2em;
+    display: flex;
+    color: #FFFFFF;
+    padding-left:5%;
+}
+
+.tenancy_btn{
+  border-radius: 3%;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+  appearance: none;
+ 
+}
+
+/* ===========FAQ =======*/
+
+.faqgen__styling{
+    margin-top:10%;
+    /* gap:5em; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 3%;
+   }
+   
+
+ 
+ .faq__answers section{
+    display: flex;
+    justify-content: space-between;
+    background: #EAF9FF;
+border-radius: 18px;
+margin: 2% 0;
+padding:2% 5%;
+ }
+ .faq__answers section:hover{
+border: 1px solid #000000;
+cursor: pointer;
+
+ }
+ .faq__session{
+    width: 40%;
+ }
+  #faq__heading{
+     font-style: normal;
+     font-weight: 700;
+     font-size: 3rem;
+     color: #414042;
+     margin: 0;
+  }
+ 
+ 
+ 
+ #aboutus__faq {
+     font-style: normal;
+     font-weight: 400;
+     font-size: 2rem;
+     color: #414042; 
+     margin: 0;    
+  }
+
+  /* SUPPORT */
+  #claims__sup{
+    font-style: normal;
+    font-weight: 900;
+    font-size:2.5rem;
+    color: #282828;
+    margin:10% 0 0 0;
+    text-align: center;
+}
+
+.supporters{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 10%;
+    margin: 4rem 0;
+ }
+
+ .supporters img{
+    margin: 1rem;
+ }
+
+ /* FOOTER */
+
+ #footer__lg{
+    padding-top: 2em;
+ }
+
+
+ .contact{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom:2% ;
+ }
+
+ .rss_contact{
+    display: flex;
+    align-items: center;
+ }
+.socials{
+    display:inline-block ;
+
+}
+ .socials h3{
+    margin: 0;
+    font-weight: 300;
+
+ }
+
+.socials_link{
+    display: inline-flex;
+    gap: 1rem;
+}
+
+
+
+ #mail__info{
+    display: flex;
+    margin-left:3em;
+    font-weight: 500;
+    font-size: 1.3em;
+    color: #FFFFFF;
+    padding-top: 2em;
+    letter-spacing:0.1em;
+    /* z-index:1; */
+ }
+
+
+
+
+ .footer__btn{
+    border-radius: 3%;
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+    display: grid;
+    padding:4%;
+
+    
+ }
+
+ .fota__content{
+     display: flex;
+     flex-wrap: wrap;
+     gap:15%;
+     justify-content: center;
+
+ }
+ 
+
+ footer{
+    color: #FFFFFF;
+    background: #007DC1;
+    padding: 5%;
+    /* width:100%; */
+    margin: 0;
+ }
+
+
+ #copyright{
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.12em;
+    margin: auto;
+    padding-top:4em;
+    text-align: center;
+ }
+
+
+
+
+ /* MDEIA QUERY FOR MOBILE VIEW  FROM IPAD DOWNARDS*/
+ .mobile_search{
+    display: none;
+ }
+ @media only screen and (max-width: 768px) {
+    .main_menu{
+        gap:2%;
+    }
+    #main_logo{
+        width: 10rem;
+    }
+    .login_btn{
+        padding: 2%;
+    }
+  .sub_menu{
+    display: none;
+  }
+  .search{
+    display: none;
+  }
+
+  .mobile_search
+    {
+        display: flex;
+        align-items: center;
+        border: 2px solid #fff;
+        background-color: #fff;
+        border-radius: 15px;
+        color:#000;
+        gap: 5px;
+        padding-left: 1%;
+        padding-right: 0.5%;
+    }
+  .mobile_search input{
+    width: 100%;
+    outline: none;
+    border: none;
+  }
+
+  /* BANNER */
+  .banner{
+    padding: 10%;
+    border-radius:0 0 30px 30px;
+    margin: 0;
+  }
+
+  .banner h2{
+    font-size: 10vw;
+    line-height: 106%;
+  }
+
+  .banner p{
+    font-size: 4vw;
+    margin: 4% 0;
+  }
+
+  .payment_plan button {
+    margin: 10%;
+  }
+
+  /* SUBSCRIBE */
+  .subscribe_how_it_works {
+    border-radius: 30px 30px 0px 0px;
+  }
+
+  .subscribe_steps {
+    border-radius: 0px 0px 30px 30px;
+
+  }
+
+  /* FIND A NEIGHBORHOOD */
+  .neighborhood {
+    flex-direction: column;
+    gap:20%;
+  }
+
+  .our_number .divider{
+   display: none;
+  }
+
+  .our_number .rate div{
+    border-bottom: 2px solid #007DC1;
+    width: 100%;
+    text-align: left;
+    padding: 4% 0;
+  }
+
+  /* MOBILE APP */
+  .phone_img{
+    position: inherit;
+    width: 15rem;
+    margin: 0 auto;
+  }
+
+  .bpm_left{
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  .bpm_left button{
+    width: 100%;
+  }
+
+  /* TABLE */
+  .table_left, .table_right{
+    width: 85vw;
+  }
+  .table_middle{
+    width: 50vw;
+  }
+}
+
+

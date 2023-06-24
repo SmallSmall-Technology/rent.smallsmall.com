@@ -1,0 +1,73 @@
+.current-booking {
+  /* background: #F6F7F8;
+  border-radius: 10px;
+  padding: 4em; */
+}
+
+.address-title {
+  font-size: 40px;
+}
+
+.subscription-btn {
+  background: #222224;
+  border-radius: 4px;
+  min-width: 211px;
+  color: #ffffff
+    /* padding: 2em; */
+}
+
+
+.wallet-btn {
+  background: #EDEDEF;
+  border-radius: 4px;
+
+}
+
+.checkin-pictures-item {
+  width: 80px;
+}
+
+.checkin-videos-item {
+  width: 120px;
+}
+
+/*****MEDIA QUERY****/
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (max-width: 480px) {
+  .address-title {
+    font-size: 23px;
+  }
+
+  .subscription-date {
+    font-size: 22px;
+  }
+
+  .subscription-btn {
+    min-width: 90%;
+  }
+
+  .wallet-btn {
+    min-width: 90%;
+  }
+
+  .custom-btn {
+    text-align: center;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (min-width: 576px) {}
+
+/* Medium devices (tablets, 768px and up)*/
+@media screen and (max-width: 768px) {}
+
+@media screen and (min-width: 768px) {}
+
+@media (max-width: 992px) {}
+
+/* Large devices (desktops, 992px and up)*/
+@media screen and (992px <=width <=1024px) {}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media screen and (min-width: 1200px) {}

@@ -1,0 +1,95 @@
+body {
+  background-color: #f4f5f6;
+}
+
+.signup-section {
+  margin: auto;
+  /* max-width: 50%; */
+  text-align: center;
+}
+
+.signup-container {
+  width: 612px;
+  background-color: #ffffff;
+  padding: 2em 6em;
+  border: 1px solid #d1cece;
+  border-radius: 5px;
+}
+
+.progress-custom {
+  width: 500px;
+  margin: auto;
+  margin-bottom: 2em;
+}
+
+.create-account {
+  font-size: 36px;
+  font-weight: 700;
+  color: #414042;
+}
+
+.signup-container-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.progress-number {
+  width: 500px;
+}
+
+/*****MEDIA QUERY****/
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (max-width: 480px) {
+  .signup-container {
+    width: 100%;
+    background-color: #ffffff;
+  }
+
+  .signup-container {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 1em;
+    border: 1px solid #d1cece;
+    /* padding: em; */
+  }
+  .create-account {
+    font-size: 26px;
+    font-weight: 700;
+    color: #414042;
+  }
+
+  .signup-container-title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .progress-custom {
+    width: 100%;
+    margin: auto;
+    margin-bottom: 2em;
+  }
+
+  .progress-number {
+    width: 100%;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media screen and (min-width: 768px) {
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media screen and (992px <= width <=1024px) {
+  .footer-gutters {
+    padding: 0 4em;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media screen and (min-width: 1200px) {
+}

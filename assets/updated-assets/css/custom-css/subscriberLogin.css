@@ -1,0 +1,45 @@
+body {
+  background-color: #f4f5f6;
+}
+
+.login-section {
+  margin: auto;
+  /* max-width: 50%; */
+  text-align: center;
+}
+
+.login-container {
+  width: 555px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  border: 1px solid #d1cece;
+}
+
+/*****MEDIA QUERY****/
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (max-width: 480px) {
+  .login-container {
+    width: 100%;
+    background-color: #ffffff;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media screen and (min-width: 768px) {
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media screen and (992px <= width <=1024px) {
+  .footer-gutters {
+    padding: 0 4em;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media screen and (min-width: 1200px) {
+}

@@ -1,0 +1,196 @@
+@font-face {
+	font-family: 'Gotham';
+	src:url('../fonts/gotham/Gotham-Medium.otf');
+}
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-image: url('../images/Group-48.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+}
+.login-row{
+    margin: 25px 0 0 0;
+}
+.login-container{
+    padding: 10px 10px 0 0;
+}
+.form-section{
+    padding: 100px 0 0 10px;
+}
+.login-header, .login-title, .form-section .form-control, .form-section .reset-btn{
+    font-family: 'Gotham';
+    font-style: normal;
+    align-items: center;
+    color: #414042;
+}
+.login-header{
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+}
+.login-title{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+}
+.form{
+    margin: 75px 0 50px;
+}
+.form fieldset:not(:first-of-type) {
+    display: none;
+}
+.form-password{
+    border-right: 0 !important;
+}
+.input-group-append{
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+.form-section .form-control{
+    background: #EAF9FF;
+    border: transparent;
+    border-radius: 10px;
+    margin: 23px 0;
+    padding: 20px 15px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 15px;
+}
+.form-section .input-group-text{
+    background: #EAF9FF;
+    border: transparent;
+    margin: 23px 0;
+    padding: 20px 15px;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+.form-section .form-control:hover, .form-section .form-control:focus{
+    border: 1px solid #FF0000;
+    box-shadow: none!important;
+}
+.form-section .form-control:hover ~ .input-group-append .input-group-text,.form-section .form-control:focus ~ .input-group-append .input-group-text {
+    border: 1px solid #FF0000;
+}
+.form-section .reset-btn{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 13px;
+    text-align: center;
+}
+.form-section .reset-btn a{
+    font-weight: 700;
+    line-height: 17px;
+    color: #007DC1;
+    text-decoration: none;
+    padding-left: 5px;
+}
+.submit-btn{
+    width: 75%;
+}
+.submit-btn, .next-btn{
+    background: #007DC1;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 20px;
+    padding: 20px;
+    border: transparent;
+}
+.form-btn{
+    text-align: center;
+    margin: 50px 0;
+}
+button.previous-btn{
+    background: #94E0FF;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 20px;
+    padding: 20px;
+    border: transparent;
+}
+button.next-btn{
+    float: right;
+}
+.submit-btn, .create-p, .text-p, .next-btn, .previous-btn{
+    font-family: 'Gotham';
+    font-style: normal;
+    text-align: center;
+    color: #FFFFFF;
+}
+.agree{
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    color: #414042
+}
+.agree a{
+    text-decoration: none;
+}
+.create-p{
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 16px;
+}
+.create-p a{
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 20px;
+    text-decoration: none;
+    color: #FFFFFF;
+}
+.text-p{
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+}
+.login-background .button{
+    text-align: center;
+    display: flex;
+}
+.login-background button{
+    background: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 30px;
+    padding: 10px;
+    width: 50%;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 4px 2px;
+    text-align: center;
+}
+.login-background button, .progress-p{
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 700;
+    color: #414042;
+}
+/* register */
+.progress-p{
+    font-size: 16px;
+    line-height: 19px;
+}
+.progress{
+    background: #EAF9FF;
+    border-radius: 15px;
+    height: 9px;
+}
+.progress-bar{
+    border-radius: 10px;
+}
+.next-btn{
+    width: 35%;
+    border: transparent;
+}
+@media screen and (max-width:767px) {
+    .login-header, .login-title, .progress-p{
+        color: #FFFFFF;
+    }
+}

@@ -1,0 +1,62 @@
+/* @media screen and (min-width: 576px) {
+  
+} */
+
+@media only screen and (max-width: 600px) {
+    .web-view {
+      display: block;
+    }
+  }
+  @media only screen and (min-width: 600px) {
+    body {
+      display: none;
+    }
+  }
+
+
+.fgf
+p{
+    text-decoration: none;
+}
+
+#mobile_navigation_container{
+
+    z-index: 1;
+    position: absolute;
+    display: none;
+}
+#moble_navigation{
+    background: #007DC1;
+    color: white;
+    padding: 1.1%;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    padding: 5%;
+}
+
+#moble_navigation p{
+
+font-family: 'Poppins', sans-serif;
+font-style: normal;
+font-weight: 600;
+font-size: 1.9em;
+color: #FFFFFF;
+}
+
+#moble_navigation small{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.9em;
+    color: #FFFFFF;
+}
+
+#msg__lg{
+    font-weight: 300;
+    font-size: 1.4em;
+    position: relative;
+
+}
+
+

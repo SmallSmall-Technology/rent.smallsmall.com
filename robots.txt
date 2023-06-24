@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /uploads/verification/
+Disallow: /admin/profile.php
+Crawl-Delay: 20

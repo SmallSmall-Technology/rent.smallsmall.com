@@ -1,0 +1,14 @@
+		<table width="100%" style="margin-top:30px">
+			<tr>
+				<td width="100%">
+					<div class="message-container" style="width:100%;border-radius:10px;text-align:center;background:#F2FCFB;padding:40px;">
+						<div style="width:100%;	min-height:10px;overflow:auto;text-align:center;font-family:calibri;font-size:30px;margin-bottom:20px;" class="name">Hello <?php echo @$name; ?>,</div>
+						<div style="width:100%;min-height:10px;overflow:auto;text-align:center;font-family:calibri;font-size:20px;margin-bottom:20px;" class="intro">Payment Approval</div>
+						<div style="width:100%;min-height:30px;	overflow:auto;text-align:center;font-family:calibri;font-size:14px;margin-bottom:20px;" class="email-body">Good news!!! Your payment has been confirmed and approved for the following property <a href="https://www.rentsmallsmall.com/property/<?php echo @$prop_id; ?>"><?php echo @$propertyName; ?></a><br />Attached to this email is a copy of your invoice.</div> 
+						<!--<div style="width:100%;	min-height:10px;overflow:auto;text-align:center;font-family:calibri;font-size:16px;margin-bottom:20px;" class="small-big">Login to view</div>-->
+						
+						<div style="width:100px;line-height:30px;border-radius:4px;text-align:center;margin:auto;border-radius:4px;" class="verify-but"><a style="text-decoration:none;display:inline-block;width:100%;height:100%;background:#00CDA6;color:#000;font-family:calibri;border-radius:4px;font-size:14px;" href="<?php echo base_url().'login'; ?>">Login</a></div>
+					</div>
+				</td>
+			</tr>
+		</table> 

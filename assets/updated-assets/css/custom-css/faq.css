@@ -1,0 +1,623 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* <<<<<<<<<<faq page 1 >>>>>>>>>>> */
+.gen__sectn{
+padding-left:9% ;
+margin-top: 7%;
+}
+
+
+
+
+
+.faqgen__header{
+    font-family: 'Poppins',sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size:3.5vw; 
+    color: #282828;
+}
+
+
+.faqgen__parag{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 2vw;
+    color: #282828;
+}
+
+
+/* <<<<<<<<<faq page 2>>>>>>>>> */
+
+.faqbody__sectn{
+    background: #E6EBF1;
+    padding:3rem 8rem;
+    max-width: auto;
+   
+} 
+
+
+.sub__bas_ss{
+display: none;
+}
+
+
+.faq__sub{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2vw;
+    color: #282828;
+    display: flex;
+    
+}
+
+
+.faqwn__btn{
+    display: flex;
+    gap: 15%;
+    padding-bottom:6%;
+    padding-top:3%;
+    justify-content: space-between;
+    max-width: auto;
+}
+
+
+.faqwn__btn
+button{
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding:1.4rem;
+    box-shadow:border-box 0px;
+    border: none;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size:1.1vw;
+    width:100%;
+    color: #282828;
+    overflow: auto;
+}
+
+
+/* <<<<<< button icon styling >>>>>>> */
+.sub__image{
+    vertical-align: middle;
+    padding-right:22px ;
+    
+}
+
+.aa{
+    /* margin-right: 12%; */
+}
+
+
+
+
+.apartmtpoli_-image{
+    vertical-align: middle;
+    padding-right:22px ; 
+    width: 3vw; 
+}
+
+
+.mv_in_outimage{
+    vertical-align: text-bottom;
+    padding-right:22px ;
+    width: 2.7vw; 
+}
+
+
+.safety__image{
+    vertical-align: middle;
+    /* padding-right:22px ; */
+    width: 3vw;
+    margin-left:3%; 
+}
+
+/* .tenant__image{
+    /* padding-left: 9rem; */
+/* } */ 
+
+
+.payout__image{
+   width: 1.7vw;
+   vertical-align: text-bottom;
+}
+
+
+.propmanag__image{
+    width: 2vw;
+    vertical-align: text-bottom;
+}
+
+.secuity__btn{
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding:1.4rem;
+    box-shadow:border-box 0px;
+    border: none;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size:1.1vw;
+    width:23%;
+    color: #282828;
+    overflow: auto; 
+}
+
+
+.faqwn__btn
+img{
+    padding-right:4%;
+}
+
+
+.land__basbtn
+img{
+    padding-right:4%;
+    width: 2.5vw;
+}
+
+
+
+.secuity__btn
+img{
+    padding-right:6%;
+    /* padding-top:4%; */
+}
+
+
+/* <<<<<<<<< faq page 3 >>>>>>>>>> */
+.landld__basics{
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2vw;
+    padding-top: 3vw;
+
+    color: #282828;
+    margin-top: 10%;
+}
+
+
+
+.land__basbtn{
+    display: flex;
+    gap: 16%;
+    padding-bottom:9%;
+    padding-top:3%;
+    max-width: auto;
+   
+}
+
+
+
+.land__basbtn
+button{
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding:1.4rem;
+    box-shadow:border-box 0px;
+    border: none;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size:1.1vw;
+    width:90%;
+
+    color: #282828;  
+}
+
+
+/* <<<<<<<<< faq page 4 >>>>>>>>>>>*/
+.enquiry__cnr{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+    margin-bottom: 15%;
+}
+
+
+.curious__qtn{
+    font-family: 'Poppins',sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.2vw;
+    color: #414042;
+    padding-right:1.2%;
+    /* letter-spacing:1% ; */
+    mix-blend-mode: multiply;
+}
+
+
+.ask__us{
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.2vw;
+    color: #007DC1;
+    
+    mix-blend-mode: multiply;
+}
+
+
+
+
+
+
+/* <<<<<<<<<<<< MOBILE STYLING... MOBILE STYLING >>>>>>>>>>>>>>> */
+
+@media screen and (max-width: 480px) {
+   
+    /*>>>>>>> MOBILE STYLING  for the headers<<<<<< */
+    a, a:hover, a:focus, a:active {
+        text-decoration: none;
+        color: inherit;
+        font-size:4.3vw;
+
+
+    }
+
+
+
+
+    .sub__image{
+        padding-right:1rem ; 
+        vertical-align: middle; 
+        width: 16%;
+    }
+
+
+
+    .apartmtpoli_-image{
+        vertical-align: middle;
+        padding-right:7% ;
+        width: 21%;
+    }
+
+
+
+
+    .mv_in_outimage{
+        vertical-align: text-bottom;
+        padding-right:22px ;
+        width: 7vw; 
+    }
+
+
+
+
+    .safety__image{
+        vertical-align: text-bottom;
+        padding-right:22px ;
+        width: 7vw; 
+    }
+
+
+
+    .tenant__image{
+        vertical-align: middle;
+        /* padding-right:22px ; */
+        width: 6vw;  
+    }
+
+
+
+
+    .payout__image{
+        vertical-align: text-bottom;
+        padding-right:22px ;
+        width: 6vw; 
+    }
+
+
+
+    .propmanag__image{
+        vertical-align: text-bottom;
+        gap:14%;
+        width: 6vw; 
+    }
+
+
+/*<<<<<< styling the button icons and letters >>>> */
+ 
+    .aa
+   img{
+    /* padding-right:5.5% ; */
+   }
+
+
+   .aa
+    a{
+    margin-left:-30%;
+    }
+
+
+
+
+   .ab
+    img{
+            /* padding-right:5.5% ; */
+    }
+
+
+    .ab
+    a{
+    margin-left:-20%;
+    }
+
+
+
+
+    .ac
+    img{
+        /* padding-right:5.5% ; */
+        width: 17%;
+    }
+
+
+   .ac
+    a{
+    margin-left:-13%;
+    }
+
+
+
+    .secuity__btn
+    img{
+        padding-right:5%;
+
+    }
+
+
+    .secuity__btn
+    a{
+        margin-left:-23%;
+    }
+
+
+
+    .ba
+    img{
+        padding-right:7% ;
+    }
+
+    .ba
+    a{
+    margin-left:-45%;
+    }
+
+
+
+
+    .bb
+    img{
+        padding-right:5% ;
+    }
+
+
+    .bb
+    a{
+    margin-left:-46.8%;
+    }
+
+
+
+    .bc{
+        padding-left:16% ;
+    }
+
+    .bc
+    a{
+    margin-left:-3.2%;
+    }
+
+
+    
+
+
+
+    .faqgen__header{
+        font-family: 'Poppins',sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 10vw;
+        line-height: 52px;
+        
+        /* color: #282828; */
+    }
+    
+
+    .faqgen__parag{
+        font-family: 'Poppins',sans-serif;
+        font-style: normal;
+        font-weight: 300;
+        /* font-size: 18px; */
+        font-size: 4vw;
+        line-height: 5vh;
+        color: #282828;
+        
+        mix-blend-mode: multiply;
+    }
+    
+    
+    
+    .sub__bas_ss{
+       font-family: 'Poppins',sans-serif;
+       font-style: normal;
+       font-weight: 900;
+       font-size: 6vw;
+       display: flex;
+       margin-left:5%;
+
+    }
+    
+
+    
+
+    .faq__sub{
+       display: none;
+    }
+   
+    
+
+    .faqbody__sectn{
+        padding:3rem 1rem;
+        margin: auto;
+    }
+
+ /* <<<<< MOBILE STYLING the first three buttons >>>>*/
+    .faqwn__btn{    
+            font-size:3vw; 
+            display: flex; 
+            flex-direction: column; 
+            width: 100%; 
+            margin: auto;
+            padding:1.2rem;
+                
+   }
+   
+
+   .faqbody__sectn{
+        padding:3rem 1rem;
+        margin: auto;
+ }
+   
+   /* <<<<<MOBILE STYLING  the first three buttons inner styling >>>>> */
+
+   .faqwn__btn
+       button{
+           font-size:3.9vw;
+           padding: 7%;
+           margin-top:5%;
+       
+   }
+
+   
+
+   /* <<< MOBILE STYLING fourth button styling >>> */
+    .secuity__btn{
+          /* display:grid; */
+          display: block;
+          padding:1rem; 
+          font-size:3.9vw;
+          margin: auto;
+          width:90%;
+          padding: 6%;
+          
+   }
+   
+   
+   .secuity__btn
+   img{
+    width: 18%;
+   }
+
+
+/*    
+    .secuity__btn
+    button{
+        font-size:3vw;
+      
+   }  */
+
+   
+
+   /* >>>>>> MOBILE STYLING last three buttons styling <<<<<<*/
+    
+   .land__basbtn{
+           display: flex;
+           flex-direction: column;
+           /* font-size:3.9vw; */
+           width: 90%;
+           margin: auto;
+            
+       }
+   
+   
+      
+    /* >>>>>>MOBILE STYLING  last three buttons inner styling <<<<<<*/
+   
+      .land__basbtn
+           button{
+            width: 100%;
+            padding:1.4rem;
+            margin-top:7%;
+            font-size:3.9vw;
+           
+   }
+   
+
+   .land__basbtn
+   img{
+    width: 17.5%;
+
+   }
+
+   
+      .landld__basics{
+       font-size:5.5vw;
+       padding-left: 5%;
+       color: black;
+   }
+   
+   
+   
+   img{
+       padding-right:10%;
+       padding-left:4%;
+       width:1.5rem;
+   }
+   
+   
+   
+   /*<<<<<<<<<<MOBILE STYLING  mobile styling faq page 4>>>>>>>>>> */
+   
+   .enquiry__cnr{
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       padding-bottom: 30%;
+       margin-top: 13%;
+   
+   }
+   
+   
+   .enquiry__cnr
+   p{
+       font-size:3.2vw;
+       /* padding-top: 16%; */
+       vertical-align: baseline;
+   }
+
+
+
+   
+   
+   }
+   
+   
+   
+   /* Small devices (landscape phones, 576px and up) */
+   @media screen and (min-width: 576px) {}
+   
+   /* Medium devices (tablets, 768px and up)*/
+   @media screen and (min-width: 768px) {}
+   
+   /* Large devices (desktops, 992px and up)*/
+   @media screen and  ( 992px <= width <=1024px) {
+     
+   }
+   
+   /* Extra large devices (large desktops, 1200px and up)*/
+   @media screen and (min-width: 1200px) {}
+   

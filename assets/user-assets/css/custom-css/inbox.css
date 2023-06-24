@@ -1,0 +1,94 @@
+.inbox-left {
+  height: 650px;
+  background: #222224;
+  border-radius: 10px;
+  overflow: scroll;
+
+}
+
+.inbox-left--msg:hover {
+  cursor: pointer;
+  background: #525253;
+  border-radius: 10px;
+  padding-bottom: 2em;
+  margin-bottom: 1em;
+}
+
+/* 
+::-webkit-scrollbar {
+  width: 10px;
+} */
+
+.inbox-left--msg {
+  border-top: 1px solid white;
+
+}
+
+.msg-icon {
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  background: #D9D9D9;
+}
+
+.inbox-msg-intro h5 {
+  font-size: 14px;
+}
+
+.inbox-msg-intro p {
+  font-size: 13px;
+}
+
+.inbox-msg-intro, .inbox-date {
+  color: #D9D9D9;
+}
+
+.active-inbox {
+  background: #F6F7F8;
+  border-radius: 10px;
+  padding-bottom: 2em;
+  margin-bottom: 1em;
+}
+
+.active-inbox>.inbox-msg-intro {
+  color: black !important;
+
+}
+
+.active-inbox>.inbox-date {
+  color: black !important;
+
+}
+
+.inbox-right {
+  height: 650px;
+  background: #F6F7F8;
+  border-radius: 10px;
+  overflow: scroll;
+}
+
+.inbox-expand {
+
+  border-top: 0.5px solid #CCCCD3;
+}
+
+.inbox-body {
+  font-size: 13px;
+}
+
+.textarea-custom::placeholder {
+  font-size: 12px;
+}
+
+.btn-send {
+  background: #222224;
+  border-radius: 4px;
+  color: #F6F7F8;
+}
+
+.btn-send:hover {
+  background: #39393b;
+  border-radius: 4px;
+  color: #CCCCD3;
+  border: 1px solid #222224;
+}

@@ -1,0 +1,77 @@
+.payment-description {
+  border: 2px solid #EBEBEB;
+  border-radius: 20px;
+}
+
+.payment-amounts {
+  background: #F9F9F9;
+  border-radius: 20px;
+}
+
+.special-bold-1 {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.special-bold-2 {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.wallet-balance {
+  background: #007DC1;
+  border-radius: 10px;
+  color: #EBEBEB;
+}
+
+.wallet-payment {
+  background: #CBEEFC;
+  border-radius: 10px;
+}
+
+/* .wallet-mobile.show {
+  display: none !important;
+} */
+
+/* .modal-backdrop {
+  display: none !important;
+} */
+
+.wallet-balance-web {
+  background: #007DC1;
+  color: #FFFFFF;
+  border-radius: 20px 0px 0px 20px;
+}
+
+.wallet-payment-web {
+  background: #CBEEFC;
+  border-radius: 0px 20px 20px 0px;
+}
+
+
+
+
+/*****MEDIA QUERY****/
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (max-width: 480px) {
+  /* .wallet-mobile.show {
+    display: block !important;
+  }
+
+  .modal-backdrop {
+    display: block !important;
+  } */
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (min-width: 576px) {}
+
+/* Medium devices (tablets, 768px and up)*/
+@media screen and (min-width: 768px) {}
+
+/* Large devices (desktops, 992px and up)*/
+@media screen and (992px <=width <=1024px) {}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media screen and (min-width: 1200px) {}

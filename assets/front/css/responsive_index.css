@@ -1,0 +1,221 @@
+.top-menu .offcanvas-btn{
+    display: none;
+}
+.footer-sub-title{
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 19px;
+}
+
+/* remove this from the main css */
+.footer .no-img{
+    margin-top: 50px; 
+}
+
+@media (min-width: 992px) and (max-width:1200px ){
+    .hero-heading, .hero-text{
+        width: 100%;
+    }
+    .search-box{
+        width: 50%;
+     }
+}
+@media screen and (max-width:991px) {
+    .find-home-content a{
+        width:40%;
+        display:inline-block;
+        color:#333;
+        text-decoration:none;
+        line-height:30px;
+        font-size:16px;
+    }
+    .find-home-content a .image{
+        width: 20px;
+        margin-left: 5px;
+    }
+    li a{
+        color: #414042;
+    }
+    li a:hover{
+        color: #414042;
+    }
+    .dropdown-menu li a{
+        text-align: center;
+    }
+    .top-menu{
+        padding: 30px 0;
+        margin: 0 ;
+    }
+    .logo{
+        width: 50% !important;
+        padding: 0;
+        margin: 0;
+    }
+    .top-list-img{
+        text-align: center;
+    }
+    .offcanvas-header .btn-close{
+        float: right !important;
+    }
+    .top-menu .offcanvas-btn{
+        display: block;
+        color: #ffffff !important;
+        border-color: #ffffff !important;
+    }
+    span.navbar-toggler{
+        border-color: #f66666 !important;
+    }
+    .top-list  {
+        float: none !important;
+    }
+    .hero-header{
+        padding: 20px 0 0;
+        margin-top: 50px;
+    }
+    .hero-heading, .hero-text{
+        width: 100%;
+    }
+    .search-box{
+        width: 50%;
+    }
+    .hero-heading{
+        font-size: 40px;
+        line-height: 40px;
+        width: 100%;
+        padding: 0 60px ;
+    }
+    .hero-text{
+        font-size: 21px;
+        line-height: 25px;
+        width: 100%;
+        padding: 0 60px;
+    }
+    .heading2{
+        font-size: 30px;
+        line-height: 28px;
+    }
+    .text2{  
+        font-size: 15px;
+        line-height: 14px;
+    }
+    .features-container{
+        margin-top: 50px;
+    }
+    .features-container .row{
+        padding: 0 25px ;
+    }
+    .features-btn{
+        width: 200px;
+        height: 66px;
+        background: #007DC1;
+        margin: 20px;
+    }
+    .work{
+        padding: 50px 20px;
+        margin: 65px 0;
+    }
+    .work .column1{
+        margin: 0 25px;
+    }
+    .work-footer{
+        font-size: 15px;
+        line-height: 22px;
+        padding-top: 50px;
+    }
+    .work-title{
+        font-size: 18px;
+        line-height: 20px;
+    }
+    .work .column1 h3{
+        font-size: 18px;
+    }
+    .work-body{
+        font-size: 15px;
+        line-height: 15px;
+        padding-top: 5px;
+    }
+    .work-btn{
+        font-size: 15px;
+        line-height: 12px;
+        padding: 10px 25px;
+        margin-bottom: 25px;
+    }
+    .explore, .find-home{
+        margin-bottom: 50px;
+    }
+    .explore .row{
+        margin: 10px 35px;
+    }
+    .explore-title{
+        font-size: 18px;
+        line-height: 20px;
+    }
+    .explore-body{
+        font-size: 9px;
+        line-height: 9px;
+    }
+    .find-home-title{
+        font-size: 18px;
+        line-height: 20px;
+    }
+    .find-home-body{
+        font-size: 9px;
+        line-height: 8px;
+    }
+    .nav-item{
+        font-size: 15px;
+        line-height: 14px;  
+    }
+    
+    .find-home-btn{
+        /* font-size: 10px;
+        line-height: 12px;
+        padding: 10px 15px;
+        margin: 50px; */
+    }
+    .scores{
+        margin: 10px;
+    }
+    .scores .row{
+        padding: 15px 25px;  
+    }
+    .scores-title{
+        font-size: 36px;
+        line-height: 43px;
+    }
+    .scores-body{
+        font-size: 18px;
+        line-height: 21px;
+    }
+    .stack{
+        margin: 0;
+        padding: 0;
+    }
+    .stack .table{
+        width: 20%;
+        margin: 20px 0;
+    }
+    .table-heading1, .table-heading2, .table-heading3{
+        font-size: 16px;
+    }
+    .table-data-1{
+        font-size: 17px;
+    }
+    .faq-container, .faq{
+        margin: 10px;
+    }
+
+    .footer{
+        padding: 50px 0px 50px 20px;
+        margin: 0;
+    }
+    .footer .row-top .column1{
+        text-align: center;
+    }
+    .footer .row-top .column2, .footer .row-top .column3{
+        margin: 0;
+        padding: 5px 0;
+        width: 50%;
+    }
+    
+} 

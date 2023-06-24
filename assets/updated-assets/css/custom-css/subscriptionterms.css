@@ -1,0 +1,619 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    /* background-color: aqua; */
+
+}
+
+a,  a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+a:hover{
+    color:#007DC1;
+}
+
+.back__top{
+    color:red !important;  
+}
+
+.back__top{
+ color:blue !important;
+ font-size:0.9vw !important;
+ padding-top: 2%; 
+}
+
+
+
+/* <!--<<<<<<<< page 1 the heading section>>>>> --> */
+.main__headdingg{
+margin-top: 12%;
+}
+
+
+
+.subscription__letterhead{
+ display: flex;  
+ flex-direction: column; 
+ padding-top: 4%;
+ padding-bottom: 4.8%;
+ padding-left:3%;
+
+ background: #E6EBF1;
+ max-width:100%;
+}
+
+
+.subscription__letterhead
+h2{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.3vw;
+    line-height: 27px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    
+    color: #007DC1;
+}
+
+
+.subscription__letterhead
+p{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    /* font-size: 21px; */
+    font-size: 1.4vw;
+    /* line-height: 32px; */
+    display: flex;
+    align-items: center;
+
+    color: #414042;
+}
+
+
+
+
+/* <!--<<<<<<<< page 2 the heading section>>>>> --> */
+.subscriptionterms__list{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    color: #414042;
+}
+
+
+
+.rentsmall_subterm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 11%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    color: #414042;
+    /* line-height:180%; */
+}
+
+
+.rentsmall_subterm
+h1{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 6vw;
+    /* line-height: 10vh; */
+    display: flex;
+    align-items: center;
+    
+    color: #414042;
+}
+
+
+.gen__div{
+    display: flex;
+    flex-direction: row;
+    gap:4%;
+}
+
+
+
+.subscriptionterms__list{
+    padding-left:4%;
+}
+/* <!--<<<<< page 3 content part>>>>>> --> */
+
+
+.subterm__conditions{
+    /* font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.09vw;
+    /* line-height: 141.5%; */
+    /* display: flex;
+    align-items: center;
+    
+    color: #414042;  */ 
+}
+
+
+
+.subterm__conditions
+p{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.09vw;
+    line-height: 141.5%; 
+    display: flex;
+    align-items: center;
+    
+    color: #414042;  
+}
+
+
+
+.important__note{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+
+    display: flex;
+    align-items: center;
+
+    color: #414042;
+}
+
+
+
+
+.important__tonote{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.4vw;
+    line-height: 141.5%; 
+    display: flex;
+    align-items: center;
+    color: #414042;
+}
+
+
+
+ul{
+    font-family:'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.1vw;
+    color: #414042;
+}
+
+
+h4{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.9vw;
+    line-height: 141.5%;
+    /* or 18px */
+
+    display: flex;
+    align-items: center;
+
+    color: #414042;
+}
+
+
+/* <<< styling of all the article headers>>>>>>>> */
+#subterm__subfee,
+#subterm__noticeperiod,
+#subterm__secutydeposit,
+#subterm__subsstartdate,
+#subterm__paymentterms,
+#subterm__latecharges,
+#subterm__subfeecoverage,
+#subterm__creditreport,
+#subterm__general,
+#subterm__paymentoption,
+#subterm__earlycancellation,
+#subterm__verification,
+#subterm__refundmode,
+#subterm__movingpolicy,
+#subterm__resheduling,
+#subterm__cancellation,
+#subterm__policy,
+#subterm__interhosemove,
+#subterm__guesthost,
+#subterm__petpolicy,
+#subterm__theftandamage,
+#subterm__jobstatus{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2vw;
+    line-height: 36px;
+
+    display: flex;
+    align-items: center;
+
+    color: #414042;
+    /* margin-top: 4%; */
+    padding-top: 12%;
+    margin-bottom:1%;
+}
+
+
+#subterm__agreement{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2.3vw;
+    line-height: 36px;
+
+    display: flex;
+    align-items: center;
+
+    color: #414042;
+    margin-top: 4%;
+    
+    margin-bottom:3%; 
+}
+
+
+.subterm__jobstatusdiv{
+    /* margin-bottom: 35%; */
+}
+
+
+
+
+
+/*>>>>>> MOBILE STYLING <<<<<<< */
+
+@media screen and (max-width: 480px){
+
+    a,  a:focus, a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    
+    a:hover{
+        color:#007DC1;
+    }
+    
+
+    .back__top {
+        color: blue !important;
+        font-size: 1.9vw !important;
+        padding-top: 6%;
+    }
+
+
+  .subscription__letterhead
+  h2{
+   font-size:3vw;
+  } 
+  
+  
+ 
+  h2{
+    font-size: 14px;
+  }
+
+ 
+  
+.important__note{
+    font-size: 12px;
+} 
+
+
+
+  .subscription__letterhead
+  p{
+    /* font-size:2.9vw; */
+    font-size:3vw;
+  }  
+   
+
+  br{
+    display: none;
+  }
+   
+    .gen__div{
+        display: flex;
+        flex-direction: column;
+        margin-left:2%;
+      
+        
+    }  
+
+
+    .subscriptionterms__list{
+        justify-content: flex-start;
+        font-size:2.9vw;
+
+    }
+
+    .subterm__conditions{
+        font-size: 3vw;
+        padding-top: 0%;
+    }
+
+
+/* <<< styling of all the article headers>>>>>>>> */ */
+#subterm__agreement,
+#subterm__subfee,
+#subterm__noticeperiod,
+#subterm__secutydeposit,
+#subterm__subsstartdate,
+#subterm__paymentterms,
+#subterm__latecharges,
+#subterm__subfeecoverage,
+#subterm__creditreport,
+#subterm__general,
+#subterm__paymentoption,
+#subterm__earlycancellation,
+#subterm__verification,
+#subterm__refundmode,
+#subterm__movingpolicy,
+#subterm__resheduling,
+#subterm__cancellation,
+#subterm__policy,
+#subterm__interhosemove,
+#subterm__guesthost,
+#subterm__petpolicy,
+#subterm__theftandamage,
+#subterm__jobstatus{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 4.2vw;
+    /* line-height: 36px; */
+
+    display: flex;
+    align-items: center;
+
+    color: #414042; 
+    /* padding-bottom: 52%;  */
+    padding-bottom: 16rem;
+    margin-bottom: 0%;
+}
+
+ 
+
+
+ul {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 2.9vw;
+    color: #414042;
+}
+
+
+
+h4{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.9vw;
+    line-height: 141.5%;
+
+    display: flex;
+    align-items: center;
+
+    color: #414042;
+}
+
+
+
+li{
+    margin-right:4%;
+}
+
+
+}
+
+
+
+/* >>>>>>>> TABLET STYLING <<<<<<<*/
+@media screen and (max-width: 780px){
+    /* .subscriptionterms__list{
+        display: none;
+      
+    } 
+     */
+    
+
+    .subterm__conditions{
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 2.3vw;
+        display: flex;
+        align-items: center; 
+        color: #414042; 
+    }
+
+
+
+
+    a,  a:focus, a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    
+    a:hover{
+        color:#007DC1;
+    }
+    
+
+    .back__top {
+        color: blue !important;
+        font-size: 1.9vw !important;
+    }
+
+
+  .subscription__letterhead
+  h2{
+   font-size:2vw;
+  } 
+   
+   
+  .subscription__letterhead
+  p{
+    /* font-size:2.9vw; */
+    font-size:3vw;
+  }  
+   
+
+  br{
+    display: none;
+  }
+   
+    .gen__div{
+        display: flex;
+        flex-direction: column;
+        margin-left:2%;
+      
+        
+    }  
+
+
+    .subscriptionterms__list{
+        justify-content: flex-start;
+        font-size:2vw;
+
+    }
+
+
+/* <<< styling of all the article headers>>>>>>>> */
+#subterm__agreement,
+#subterm__subfee,
+#subterm__noticeperiod,
+#subterm__secutydeposit,
+#subterm__subsstartdate,
+#subterm__paymentterms,
+#subterm__latecharges,
+#subterm__subfeecoverage,
+#subterm__creditreport,
+#subterm__general,
+#subterm__paymentoption,
+#subterm__earlycancellation,
+#subterm__verification,
+#subterm__refundmode,
+#subterm__movingpolicy,
+#subterm__resheduling,
+#subterm__cancellation,
+#subterm__policy,
+#subterm__interhosemove,
+#subterm__guesthost,
+#subterm__petpolicy,
+#subterm__theftandamage,
+#subterm__jobstatus{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 3.5vw;
+    line-height: 36px;
+
+    display: flex;
+    align-items: center;
+
+    color: #414042;
+    /* margin-top: 4%; */
+    /* margin-bottom:3%; */
+}
+
+
+
+ul{
+    font-family:'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 2.3vw;
+    color: #414042;
+   
+}
+
+
+.important__tonote {
+    font-size: 3vw;
+}
+
+h4{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.9vw;
+    line-height: 141.5%;
+
+    display: flex;
+    align-items: center;
+
+    color: #414042;
+}
+
+
+li{
+    margin-right:4%;
+}
+
+} 
+
+
+
+
+@media screen and (max-width: 480px) {
+ 
+    #subterm__agreement,
+#subterm__subfee,
+#subterm__noticeperiod,
+#subterm__secutydeposit,
+#subterm__subsstartdate,
+#subterm__paymentterms,
+#subterm__latecharges,
+#subterm__subfeecoverage,
+#subterm__creditreport,
+#subterm__general,
+#subterm__paymentoption,
+#subterm__earlycancellation,
+#subterm__verification,
+#subterm__refundmode,
+#subterm__movingpolicy,
+#subterm__resheduling,
+#subterm__cancellation,
+#subterm__policy,
+#subterm__interhosemove,
+#subterm__guesthost,
+#subterm__petpolicy,
+#subterm__theftandamage,
+#subterm__jobstatus{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2vw;
+    /* line-height: 36px; */
+
+    display: flex;
+    align-items: center;
+
+    color: #414042; 
+    /* padding-bottom: 52%;  */
+    padding-bottom:9rem ; 
+    margin-bottom: 0%;
+}
+
+
+
+}

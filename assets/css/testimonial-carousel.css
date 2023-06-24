@@ -1,0 +1,325 @@
+/* CSS Document */
+
+.carousel_wrapper{
+
+	width:65%;
+
+	overflow:hidden;
+
+    float:left;
+    
+    background:#FFFAF6;
+    
+    border-radius:20px;
+
+}
+
+.carousel_wrapper * {
+  	box-sizing: border-box;
+}
+
+.carousel {
+  	transform-style: preserve-3d;
+}
+
+.carousel__item {
+
+	opacity: 0;
+
+	position: absolute;
+
+	top:0;
+
+	width: 100%;
+
+	height:400px;
+	
+	margin: auto;
+
+	padding: 1rem 4rem;
+
+	z-index: 100;
+
+	transition: transform .5s, opacity .5s, z-index .5s;
+
+}
+
+.carousel__item.initial,
+
+.carousel__item.active {
+
+  opacity: 1;
+
+  position: relative;
+
+  z-index: 900;
+
+}
+
+.carousel__item.prev,
+
+.carousel__item.next {
+
+  z-index: 800;
+
+}.carousel__item.prev {
+
+  transform: translateX(-100%); /* Move 'prev' item to the left */
+
+}.carousel__item.next {
+
+  transform: translateX(100%); /* Move 'next' item to the right */
+
+}
+
+.carousel_item_image{
+
+	width:200px;
+
+	float:left;
+
+	height:250px;
+
+	overflow:hidden;
+
+	display:flex;
+
+	align-items: center;
+	
+	align-content: center;
+
+}
+
+.carousel_item_image img{
+
+	width:100%;
+
+	height:auto;
+
+	border-radius:20px;
+
+	margin:0 auto;
+	
+	object-fit:auto;
+
+}
+
+.carousel_item_text{
+
+	width:100%;
+
+	min-height:70px;
+
+	overflow:auto;
+	
+	text-align:left;
+
+}
+.quote{
+    width:100%;
+    line-height:40px;
+    font-size:30px;
+    color:#00CDA4;
+}
+.carousel_teamName{
+
+	width:100%;
+
+	margin-top:10px;
+
+	color:#00CDA6;
+
+	font-family:avenir-demi;
+
+	font-size:18px;
+	text-align:left;
+	
+	font-style:normal;
+
+}
+.carousel_position{
+
+	width:100%;
+
+	margin-top:5px;
+
+	color:#03100D;
+
+	font-family:avenir-demi;
+
+	font-size:14px;
+	
+	text-align:left;
+	
+	font-style:normal;
+
+}
+
+.carousel_teamExcerpt{
+
+	width:60%;
+
+	line-height:30px;
+
+	color:#03100D;
+
+	font-family:avenir-regular;
+
+	font-size:27px;
+	
+	text-align:left;
+	
+	float:right;
+	
+	margin-top:20px;
+	
+	font-style:italic;
+
+}
+
+.carousel__button--prev,
+
+.carousel__button--next {
+
+	position: absolute;
+
+	top:95%;
+
+	width: 15px;
+
+	height: 15px;
+
+	background-color: #FFF;
+
+	transform: translateY(-50%);
+
+	border-radius: 50%;
+
+	cursor: pointer; 
+
+	z-index: 1001; /* Sit on top of everything */		
+
+/*	-webkit-box-shadow: 0px 0px 9px 3px rgba(0,0,0,0.10);
+
+	-moz-box-shadow: 0px 0px 9px 3px rgba(0,0,0,0.10);
+
+	box-shadow: 0px 0px 9px 3px rgba(0,0,0,0.10);*/
+}
+.carousel__button--prev {
+
+  left:42%;
+
+}.carousel__button--next {
+
+  right:42%;
+
+}.carousel__button--prev::after,
+
+.carousel__button--next::after {
+
+  content: " ";
+
+  position: absolute;
+
+  width: 10px;
+
+  height: 10px;
+
+  top: 50%;
+
+  left: 54%;
+
+  border-right: 2px solid #00CDA6;
+
+  border-bottom: 2px solid #00CDA6;
+
+  transform: translate(-50%, -50%) rotate(135deg);
+
+}.carousel__button--next::after {
+
+  left: 47%;
+
+  transform: translate(-50%, -50%) rotate(-45deg);
+
+}
+
+@media(max-width:1200px){
+
+.carousel_wrapper{
+
+	width:63%;
+
+	overflow:hidden;
+
+	margin:auto;
+
+	margin-top:0;
+
+	margin-bottom:0;
+
+}
+
+}
+
+@media(max-width:900px){
+
+.carousel_wrapper{
+
+	width:100%;
+
+	overflow:hidden;
+
+	margin:auto;
+
+	margin-top:30px;
+
+	margin-bottom:30px;
+
+}
+
+.carousel_item_image{
+	width:100%;
+	height:120px;
+
+}
+
+.carousel_item_image img{
+
+	width:100px;
+
+	height:100px;
+
+}
+.carousel_teamName{
+
+	width:100%;
+
+	margin-top:10px;
+
+	color:#00CDA6;
+
+	font-family:avenir-demi;
+
+	font-size:16px;
+	
+	text-align:center;
+
+}
+.carousel_position{
+	
+	text-align:center;
+
+}
+
+.carousel_teamExcerpt{
+	width:100%;
+	
+	font-size:14px;
+
+	margin-top:10px;
+	
+	text-align:center;
+
+}
+
+}
