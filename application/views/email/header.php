@@ -13,7 +13,7 @@
 		<div style="width:100%;height:70px;border-bottom:1px solid #F2F2F2;">
 			<table width="100%">
 				<tr>
-					<td width="33.3%"><img width="200px" src="https://rent.smallsmall.com/assets/images/logo.png" /></td>
+					<td width="33.3%"><img width="200px" src="https://dev-rent.smallsmall.com/assets/images/logo.png" /></td>
 					<td class="logo-container" width="33.3%">&nbsp;</td>
 					<td width="33.3%">&nbsp;</td>
 				</tr>

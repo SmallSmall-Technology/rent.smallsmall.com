@@ -3,7 +3,7 @@ $(window).on('load', function(){
 
 	"use strict";
 
-	var baseUrl = "https://rent.smallsmall.com/";
+	var baseUrl = "https://dev-rent.smallsmall.com/";
 
 	var distance = "";
 

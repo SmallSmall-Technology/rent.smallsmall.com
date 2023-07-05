@@ -1,5 +1,5 @@
 // JavaScript Document
-var baseUrl = "https://rent.smallsmall.com/";
+var baseUrl = "https://dev-rent.smallsmall.com/";
 var cartCount = document.getElementById('cart-counter');
 
 if(localStorage.getItem('rentalBasket') !== null){
