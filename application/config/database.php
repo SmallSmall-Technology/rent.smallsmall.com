@@ -75,12 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	/*'username' => 'rentsmallsmall_admin_user',
-	'password' => 'TaClZhh0KxsV',
-	'database' => 'rentsmallsmall_rss_staging',*/
+	'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
 	'username' => 'rentsmallsmall_buytolet',
-	'password' => 'Buytolet@2021',
+	'password' => 'Buytolet!2021',
 	'database' => 'rentsmallsmall_furnisure_buytolet_database',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
