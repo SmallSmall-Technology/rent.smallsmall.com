@@ -4094,6 +4094,8 @@ class Rss extends CI_Controller {
 				
 				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
 
+				echo $message;
+
 				$this->email->message($message);
 
 				$emailRes = $this->email->send();
