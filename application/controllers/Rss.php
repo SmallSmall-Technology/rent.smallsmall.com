@@ -4095,7 +4095,7 @@ class Rss extends CI_Controller {
 
 				$msgtest = $this->email->message("Hello Yusuf");
 
-				echo $msgtest;
+				// echo $msgtest;
 
 				$emailRes = $this->email->send();
 				
@@ -4103,7 +4103,7 @@ class Rss extends CI_Controller {
 				
 				if($emailRes){
 
-					echo 1;
+					echo $msgtest;
 					
 				}else{
 					
