@@ -4086,15 +4086,17 @@ class Rss extends CI_Controller {
 				
 				$this->email->set_mailtype("html");
 
-				// $message = $this->load->view('email/header.php', $data, TRUE);
+				$message = $this->load->view('email/header.php', $data, TRUE);
 
-				// $message .= $this->load->view('email/emailreset.php', $data, TRUE);
+				$message .= $this->load->view('email/emailreset.php', $data, TRUE);
 
-				// $message .= $this->load->view('email/footer.php', $data, TRUE);
+				$message .= $this->load->view('email/footer.php', $data, TRUE);
 				
-				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+				// $message = $this->load->view('email/unione-email-template.php', $data, TRUE);
 
-				echo $message;
+				$this->load->view('email/unione-email-template.php', $data, TRUE);
+
+				// echo $message;
 
 				$this->email->message($message);
 
