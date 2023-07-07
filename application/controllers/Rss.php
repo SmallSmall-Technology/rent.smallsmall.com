@@ -4094,8 +4094,6 @@ class Rss extends CI_Controller {
 				
 				// $message = $this->load->view('email/unione-email-template.php', $data, TRUE);
 
-				$this->load->view('email/unione-email-template.php', $data, TRUE);
-
 				// echo $message;
 
 				$this->email->message($message);
@@ -4105,8 +4103,8 @@ class Rss extends CI_Controller {
 				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
 				
 				if($emailRes){
-					$this->load->view('email/unione-email-template.php', $data, TRUE);
-					echo 1;
+					$unioneEmail = $this->load->view('email/unione-email-template.php', $data, TRUE);
+					echo $unioneEmail;
 					
 				}else{
 					
