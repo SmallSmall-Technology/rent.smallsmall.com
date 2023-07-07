@@ -7205,6 +7205,56 @@ public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $k
 
 	}
 
+	// Unione API Testing
+
+public function unione_template_get()
+{
+    require 'vendor/autoload.php';
+
+    $headers = array(
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+    );
+
+    $client = new \GuzzleHttp\Client([
+        'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+    ]);
+
+    $requestBody = [
+        "id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48"
+    ];
+
+    try {
+        $response = $client->request('POST', 'template/get.json', array(
+            'headers' => $headers,
+            'json' => $requestBody,
+        ));
+
+        $jsonResponse = $response->getBody()->getContents();
+        $responseData = json_decode($jsonResponse, true);
+
+        $htmlBody = $responseData['template']['body']['html'];
+        
+        
+        // Get the unique username
+        // $user = $this->admin_model->get_user($id);
+        $username = "Yusuf";
+        $resetLink = 'https://dev-buy.rentsmallsmall.com/';
+        
+        // Replace the placeholder in the HTML body with the username
+        $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+        $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+
+
+        $data['response'] = $htmlBody;
+    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+        $data['response'] = $e->getMessage();
+    }
+
+    $this->load->view('rss-partials/unione-testing', $data);
+}
+
     
 	
 }
