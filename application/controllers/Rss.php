@@ -4091,19 +4091,22 @@ class Rss extends CI_Controller {
 
 				// $message .= $this->load->view('email/footer.php', $data, TRUE);
 				
-				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+				// $message = $this->load->view('email/unione-email-template.php', $data, TRUE);
 
-				$msgtest = $this->email->message("Hello Yusuf");
+				$this->email->message($this->load->view('email/unione-email-template.php', $data, TRUE));
 
 				// echo $msgtest;
 
 				$emailRes = $this->email->send();
+
+				// Print the debug output
+				echo $this->email->print_debugger();
 				
 				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
 				
 				if($emailRes){
 
-					echo $msgtest;
+					echo 'email sent successfully';
 					
 				}else{
 					
