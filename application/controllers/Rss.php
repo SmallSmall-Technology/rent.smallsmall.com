@@ -4000,7 +4000,9 @@ class Rss extends CI_Controller {
 		);
 
 		$client = new \GuzzleHttp\Client([
+
 			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+
 		]);
 
 		$requestBody = [
@@ -4012,8 +4014,6 @@ class Rss extends CI_Controller {
 		//Check if email exists the create onetime code for password reset
 		
 		$res = $this->rss_model->check_reset_email($email);
-		
-		
 		
 		if($res){
 			
@@ -4040,7 +4040,6 @@ class Rss extends CI_Controller {
 
 				$data['name'] = $names[0];	
 				
-				
 				//Unione Template
 
 				try {
@@ -4055,7 +4054,6 @@ class Rss extends CI_Controller {
 
 					$htmlBody = $responseData['template']['body']['html'];
 
-
 					// Get the unique username
 					// $user = $this->admin_model->get_user($id);
 					
@@ -4068,11 +4066,12 @@ class Rss extends CI_Controller {
 					
 					$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
-
 					$data['response'] = $htmlBody;
 					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
 					$data['response'] = $e->getMessage();
+
 				}
 
 				// End Of Unione
@@ -4086,15 +4085,13 @@ class Rss extends CI_Controller {
 				
 				$this->email->set_mailtype("html");
 
-				$message = $this->load->view('email/header.php', $data, TRUE);
+				// $message = $this->load->view('email/header.php', $data, TRUE);
 
-				$message .= $this->load->view('email/emailreset.php', $data, TRUE);
+				// $message .= $this->load->view('email/emailreset.php', $data, TRUE);
 
-				$message .= $this->load->view('email/footer.php', $data, TRUE);
+				// $message .= $this->load->view('email/footer.php', $data, TRUE);
 				
-				// $message = $this->load->view('email/unione-email-template.php', $data, TRUE);
-
-				// echo $message;
+				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
 
 				$this->email->message($message);
 
@@ -4103,8 +4100,8 @@ class Rss extends CI_Controller {
 				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
 				
 				if($emailRes){
-					$unioneEmail = $this->load->view('email/unione-email-template.php', $data, TRUE);
-					echo $unioneEmail;
+
+					echo 1;
 					
 				}else{
 					
