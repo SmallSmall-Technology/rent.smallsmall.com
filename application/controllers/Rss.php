@@ -4091,19 +4091,22 @@ class Rss extends CI_Controller {
 
 				// $message .= $this->load->view('email/footer.php', $data, TRUE);
 				
-				// $message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
 
-				$message = 'This is a test message 1.';
+				// $message = 'This is a test message 1.';
 
-				var_dump($message);
+				// var_dump($message);
 
-				$msg = $this->email->message('This is a test message 2.');
+				// $msg = $this->email->message('This is a test message 2.');
 
-				var_dump($msg);
+				// var_dump($msg);
 
-				$emailRes = $this->email->send();
+				// $emailRes = $this->email->send();
 
-				var_dump($emailRes);
+				var_dump($this->email->send());
+
+
+				// var_dump($emailRes);
 
 				// Print the debug output
 				echo $this->email->print_debugger();
