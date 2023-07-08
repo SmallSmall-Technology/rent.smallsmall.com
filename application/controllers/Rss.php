@@ -4103,18 +4103,16 @@ class Rss extends CI_Controller {
 
 				$emailRes = $this->email->send();
 
-				echo $emailRes;
-
 				// var_dump($emailRes);
 
 				// Print the debug output
-				echo $this->email->print_debugger();
+				// echo $this->email->print_debugger();
 				
 				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
 				
 				if($emailRes){
 
-					echo 'email sent successfully';
+					echo 1;
 					
 				}else{
 					
