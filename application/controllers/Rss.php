@@ -4103,6 +4103,8 @@ class Rss extends CI_Controller {
 
 				$emailRes = $this->email->send();
 
+				var_dump($emailRes);
+
 				// Print the debug output
 				echo $this->email->print_debugger();
 				
