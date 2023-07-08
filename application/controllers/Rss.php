@@ -4093,13 +4093,13 @@ class Rss extends CI_Controller {
 				
 				// $message = $this->load->view('email/unione-email-template.php', $data, TRUE);
 
-				$message = 'This is a test message.';
+				$message = 'This is a test message 1.';
 
 				var_dump($message);
 
-				$this->email->message('This is a test message.');
+				$msg = $this->email->message('This is a test message 2.');
 
-				// echo $msgtest;
+				var_dump($msg);
 
 				$emailRes = $this->email->send();
 
