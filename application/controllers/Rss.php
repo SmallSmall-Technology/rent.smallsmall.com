@@ -4101,10 +4101,9 @@ class Rss extends CI_Controller {
 
 				// var_dump($msg);
 
-				// $emailRes = $this->email->send();
+				$emailRes = $this->email->send();
 
-				var_dump($this->email->send());
-
+				echo $emailRes;
 
 				// var_dump($emailRes);
 
