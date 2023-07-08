@@ -23,15 +23,15 @@
   display: none !important;
 }
 
-.banner-section {
-   /*background: linear-gradient(180.1deg, #03100D 0.08%, rgba(65, 64, 66, 0) 80.25%, rgba(65, 64, 66, 0) 80.25%); */
-}
+/*.banner-section {*/
+  /* background: linear-gradient(180.1deg, #03100D 0.08%, rgba(65, 64, 66, 0) 80.25%, rgba(65, 64, 66, 0) 80.25%); */
+/*}*/
 
 /*.banner-image {*/
-/*   background: url("<?php echo base_url(); ?>assets/updated-assets/images/banner.png") no-repeat center,*/
+  /* background: url("../../images/banner.png") no-repeat center,
+    linear-gradient(143.43deg, #03100D -94.27%, rgba(65, 64, 66, 0) 79.12%, rgba(65, 64, 66, 0) 79.22%, rgba(65, 64, 66, 0) 79.35%); */
+/*  background: url("https://raw.githubusercontent.com/SmallSmall-Technology/RSS-UIUX-Updated-Website-2023/dev/assets/images/banner.png") no-repeat center,*/
 /*    linear-gradient(12.43deg, #03100D 12.73%, rgba(65, 64, 66, 0) 79.12%, rgba(65, 64, 66, 0) 79.22%, rgba(65, 64, 66, 0) 74.35%);*/
-  /*background: url("https://raw.githubusercontent.com/SmallSmall-Technology/RSS-UIUX-Updated-Website-2023/dev/assets/images/banner.png") no-repeat center,*/
-    /*linear-gradient(12.43deg, #03100D 12.73%, rgba(65, 64, 66, 0) 79.12%, rgba(65, 64, 66, 0) 79.22%, rgba(65, 64, 66, 0) 74.35%);*/
 
 /*  background-blend-mode: overlay;*/
 /*  background-size: cover;*/
@@ -41,16 +41,14 @@
 /*}*/
 
 
-/*.banner-image {*/
-/*  background: linear-gradient(12.43deg, #03100D 12.73%, rgba(65, 64, 66, 0) 79.12%, rgba(65, 64, 66, 0) 79.22%, rgba(65, 64, 66, 0) 74.35%),*/
-/*    url("<?php echo base_url('assets/updated-assets/images/banner.png'); ?>") no-repeat center;*/
-/*  background-blend-mode: overlay;*/
-/*  background-size: cover;*/
-/*  height: 568px;*/
-/*  position: relative;*/
-/*  border-radius: 20px;*/
-/*}*/
 
+/*.banner-text {*/
+/*  text-align: left;*/
+  /* position: absolute; */
+  /* transform: translate(-50%, -50%); */
+/*  color: white;*/
+  /* width: 60% */
+/*}*/
 
 
 .banner-text {
@@ -105,39 +103,50 @@
 }
 
 
-.proud-satistics-container {
-  background-color: #eaf9ff;
-  border-radius: 10px;
-}
-
-.proud-satistics-text {
-  font-family: "Poppins", sans-serif;
-  color: #414042;
-}
-
-.proud-satistics-text h1 {
-  font-weight: 600;
-  font-size: 5em;
-  line-height: 0.9em;
-}
-
-.proud-satistics-text p {
-  font-weight: 300;
-  font-size: 2em;
-}
-
-.proud-satistics-figure {
-  color: #007dc1;
-}
-
-.proud-satistics-figure h3 {
-  font-weight: 600;
-  color: #007dc1;
-}
-
 .ready-partner {
   margin: 8em 0;
 }
+
+
+
+.proud-satistics-container {
+  background: linear-gradient(96.72deg, #007DC1 34.25%, rgba(34, 110, 152, 0) 208.82%);
+  border-radius: 18px;
+  color: #ffffff;
+  padding: 5em 1.5em;
+  margin: 2em;
+}
+
+.proud-satistics-container p {
+  margin: 0
+}
+
+.proud-satistics-text p:first-child {
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 55.75px;
+  /* color: #414042; */
+}
+
+.proud-satistics-text p:last-child {
+  font-weight: 400;
+  font-size: 25px;
+  /* color: #414042; */
+}
+
+.proud-satistics-figure p:first-child {
+  font-weight: 700;
+  font-size: 96px;
+  line-height: 90px;
+
+}
+
+.proud-satistics-figure p:last-child {
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 30px;
+}
+
 
 .proud-satistics-figure__border {
   border-right: 1px solid #007dc1;
@@ -198,27 +207,8 @@
     font-weight: 100;
   }
 
-  .proud-satistics-container {
-    background-color: #eaf9ff;
-    border-radius: 10px;
-    padding: 0.6em !important;
-    width: 100% !important;
-  }
 
-  .proud-satistics-text h1 {
-    font-weight: 600;
-    font-size: 2em;
-    line-height: 0.9em;
-  }
 
-  .proud-satistics-text p {
-    font-weight: 300;
-    font-size: 1em;
-  }
-
-  .proud-satistics-figure__border {
-    border-right: 0;
-  }
 
   .ready-partner {
     margin: 0;
@@ -261,19 +251,49 @@
     text-align: center;
   }
 
-  .proud-satistics-text {
-    text-align: left;
+
+
+  .proud-satistics-container {
+    margin: 0;
+    padding: 2em 1em;
   }
 
-  .proud-satistics-text h1 {
-    font-weight: 800;
-    line-height: normal;
+  .proud-satistics-text {
+    margin: 1em 0
+  }
+
+  .proud-satistics-text p:first-child {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 40px;
+    /* color: #414042; */
+  }
+
+  .proud-satistics-text p:last-child {
+    font-weight: 400;
+    font-size: 20px;
+
+    /* color: #414042; */
   }
 
   .proud-satistics-figure {
-    text-align: left;
-    /* border-bottom: 1px solid #007DC1; */
+    margin-right: 10px;
+
   }
+
+  .proud-satistics-figure p:first-child {
+    font-weight: 700;
+    font-size: 45px;
+    line-height: unset;
+
+  }
+
+  .proud-satistics-figure p:last-child {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: unset;
+  }
+
 
   .footer-contact {
     font-size: 14px;
@@ -284,7 +304,33 @@
 @media screen and (min-width: 576px) {}
 
 /* Medium devices (tablets, 768px and up)*/
-@media screen and (min-width: 768px) {}
+@media screen and (768px <=width <=992px) {
+  .proud-satistics-text p:first-child {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 40px;
+    /* color: #414042; */
+  }
+
+  .proud-satistics-text p:last-child {
+    font-weight: 400;
+    font-size: 16px;
+    /* color: #414042; */
+  }
+
+  .proud-satistics-figure p:first-child {
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 60px;
+
+  }
+
+  .proud-satistics-figure p:last-child {
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+  }
+}
 
 /* Large devices (desktops, 992px and up)*/
 @media screen and (992px <=width <=1024px) {

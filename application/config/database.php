@@ -96,9 +96,9 @@ $db['default'] = array(
 );
 $db['second'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'rentsmallsmall_apis_user',
-	'password' => 'wonderTree@2020',
+	'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
+	'username' => 'rentsmallsmall_buytolet',
+	'password' => 'Buytolet!2021',
 	'database' => 'rentsmallsmall_live_apis',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

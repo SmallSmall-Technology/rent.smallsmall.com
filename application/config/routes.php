@@ -626,6 +626,11 @@ $route['furnisure/appliances/(:any)'] = 'furnisure/appliances/$1';
 
 /*$route['rss/encdec'] = 'rss/encdec'; */ 
 
+
+/* Unione API testing    */
+$route['unione-testing'] = 'rss/unione_template_get';
+/* Unione testing    */
+
 $route['payment-summary'] = 'rss/payment_summary';
 
 $route['testemails'] = 'rss/testemails';

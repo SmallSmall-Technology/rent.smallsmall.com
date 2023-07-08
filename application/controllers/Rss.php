@@ -4000,7 +4000,9 @@ class Rss extends CI_Controller {
 		);
 
 		$client = new \GuzzleHttp\Client([
+
 			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+
 		]);
 
 		$requestBody = [
@@ -4012,8 +4014,6 @@ class Rss extends CI_Controller {
 		//Check if email exists the create onetime code for password reset
 		
 		$res = $this->rss_model->check_reset_email($email);
-		
-		
 		
 		if($res){
 			
@@ -4040,7 +4040,6 @@ class Rss extends CI_Controller {
 
 				$data['name'] = $names[0];	
 				
-				
 				//Unione Template
 
 				try {
@@ -4055,7 +4054,6 @@ class Rss extends CI_Controller {
 
 					$htmlBody = $responseData['template']['body']['html'];
 
-
 					// Get the unique username
 					// $user = $this->admin_model->get_user($id);
 					
@@ -4068,11 +4066,12 @@ class Rss extends CI_Controller {
 					
 					$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
-
 					$data['response'] = $htmlBody;
 					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
 					$data['response'] = $e->getMessage();
+
 				}
 
 				// End Of Unione
@@ -4094,14 +4093,25 @@ class Rss extends CI_Controller {
 				
 				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
 
-				$this->email->message($message);
+				// $message = 'This is a test message 1.';
+
+				// var_dump($message);
+
+				// $msg = $this->email->message('This is a test message 2.');
+
+				// var_dump($msg);
 
 				$emailRes = $this->email->send();
+
+				// var_dump($emailRes);
+
+				// Print the debug output
+				// echo $this->email->print_debugger();
 				
 				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
 				
 				if($emailRes){
-					
+
 					echo 1;
 					
 				}else{
@@ -7204,6 +7214,56 @@ public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $k
 	    }
 
 	}
+
+	// Unione API Testing
+
+public function unione_template_get()
+{
+    require 'vendor/autoload.php';
+
+    $headers = array(
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+    );
+
+    $client = new \GuzzleHttp\Client([
+        'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+    ]);
+
+    $requestBody = [
+        "id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48"
+    ];
+
+    try {
+        $response = $client->request('POST', 'template/get.json', array(
+            'headers' => $headers,
+            'json' => $requestBody,
+        ));
+
+        $jsonResponse = $response->getBody()->getContents();
+        $responseData = json_decode($jsonResponse, true);
+
+        $htmlBody = $responseData['template']['body']['html'];
+        
+        
+        // Get the unique username
+        // $user = $this->admin_model->get_user($id);
+        $username = "Yusuf";
+        $resetLink = 'https://dev-buy.rentsmallsmall.com/';
+        
+        // Replace the placeholder in the HTML body with the username
+        $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+        $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+
+
+        $data['response'] = $htmlBody;
+    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+        $data['response'] = $e->getMessage();
+    }
+
+    $this->load->view('rss-partials/unione-testing', $data);
+}
 
     
 	
