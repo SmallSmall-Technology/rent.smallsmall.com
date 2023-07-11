@@ -536,7 +536,7 @@ $route['landlord-landing'] = 'pages/landlord_landing';
 
 $route['refer-and-earn'] = 'pages/refer_and_earn';
 
-$route['contact-us'] = 'pages/contact_us';
+// $route['contact-us'] = 'pages/contact_us';
 
 $route['privacy-policy'] = 'pages/privacy_policy';
 

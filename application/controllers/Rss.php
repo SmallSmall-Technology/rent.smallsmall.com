@@ -7250,7 +7250,7 @@ public function unione_template_get()
         // Get the unique username
         // $user = $this->admin_model->get_user($id);
         $username = "Yusuf";
-        $resetLink = 'https://dev-buy.rentsmallsmall.com/';
+        $resetLink = 'https://buy.rentsmallsmall.com/';
         
         // Replace the placeholder in the HTML body with the username
         $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
