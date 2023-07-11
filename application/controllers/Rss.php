@@ -7217,7 +7217,7 @@ public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $k
 
 	// Unione API Testing
 
-public function unione_template_get()
+public function unione_template_getOLD()
 {
     require 'vendor/autoload.php';
 
@@ -7264,6 +7264,67 @@ public function unione_template_get()
 
     $this->load->view('rss-partials/unione-testing', $data);
 }
+
+
+
+public function unione_template_get()
+{
+
+require 'vendor/autoload.php';
+
+$headers = array(
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+    );
+
+$client = new \GuzzleHttp\Client([
+    // 'base_uri' => 'https://us1.unione.io/en/transactional/api/v1/'
+        'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+
+]);
+
+$requestBody = [
+  "message" => [
+    "recipients" => [
+      [
+        "email" => "bwitlawalyusuf@gmail.com",
+        
+        
+      ]
+    ],
+    "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
+   
+    "body" => [
+      "html" => "<b>Hello, {{to_name}}</b>",
+      "plaintext" => "Hello, {{to_name}}",
+      
+    ],
+    "subject" => "Testing",
+    "from_email" => "donotreply@smallsmall.com",
+    "from_name" => "SS",
+    "reply_to" => "user@example.com",
+    
+ 
+  ]
+];
+
+try {
+    $response = $client->request('POST','email/send.json', array(
+        'headers' => $headers,
+        'json' => $requestBody,
+       )
+    );
+    print_r($response->getBody()->getContents());
+ }
+ catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    // handle exception or api errors.
+    print_r($e->getMessage());
+ }
+ 
+ 
+}
+
 
     
 	
