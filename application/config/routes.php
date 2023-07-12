@@ -329,6 +329,7 @@ $route['tenant/payment-details/(:any)'] = 'buytolet/payment_details_tenant/$1';
 
 
 /**Admin Routes Starts Here ***/
+$route['admin/stp-subscribers'] = 'admin/buytolet_stp_subscribers'; 
 
 $route['admin/create-btl-promo'] = 'admin/promo_form'; 
 

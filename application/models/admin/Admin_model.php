@@ -3565,5 +3565,33 @@ class Admin_model extends CI_Model {
         return $this->db->insert('buytolet_promos', $this);
         
     }
+
+    public function countSubscribers() {
+
+	$this->db->select('a.*, b.*');
+
+	$this->db->from('target_options as a'); 
+	
+	$this->db->join('user_tbl as b', 'b.userID = a.userID');
+	
+	return $this->db->count_all_results();
+
+   }
+
+public function fetchSubscribers() {
+
+	$this->db->select('a.*, a.id as stp_id, a.userID as user_id, b.*');
+
+	$this->db->from('target_options as a'); 
+	
+	$this->db->join('user_tbl as b', 'b.userID = a.userID');
+    
+    	$this->db->limit($this->_pageNumber, $this->_offset);
+
+	$query = $this->db->get();
+	
+	return $query->result_array();
+
+}
 	
 }

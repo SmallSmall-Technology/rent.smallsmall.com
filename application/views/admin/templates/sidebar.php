@@ -474,6 +474,12 @@
 									Property requests
 								</a>
 							</li>
+							<li>
+								<a href="<?php echo base_url(); ?>admin/stp-subscribers">
+									<i class="metismenu-icon"></i>
+									STP Subscribers
+								</a>
+							</li>
 						</ul>
 					</li>
 					<?php if($userAccess != 6){ ?>
