@@ -4000,9 +4000,7 @@ class Rss extends CI_Controller {
 		);
 
 		$client = new \GuzzleHttp\Client([
-
 			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-
 		]);
 
 		$requestBody = [
@@ -4014,6 +4012,8 @@ class Rss extends CI_Controller {
 		//Check if email exists the create onetime code for password reset
 		
 		$res = $this->rss_model->check_reset_email($email);
+		
+		
 		
 		if($res){
 			
@@ -4040,6 +4040,7 @@ class Rss extends CI_Controller {
 
 				$data['name'] = $names[0];	
 				
+				
 				//Unione Template
 
 				try {
@@ -4054,6 +4055,7 @@ class Rss extends CI_Controller {
 
 					$htmlBody = $responseData['template']['body']['html'];
 
+
 					// Get the unique username
 					// $user = $this->admin_model->get_user($id);
 					
@@ -4066,18 +4068,17 @@ class Rss extends CI_Controller {
 					
 					$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
+
 					$data['response'] = $htmlBody;
 					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-
 					$data['response'] = $e->getMessage();
-
 				}
 
 				// End Of Unione
 				
 
-				$this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
+				$this->email->from('donotreply@rent.smallsmall.com', 'Small Small Password Reset');
 
 				$this->email->to($email);
 
@@ -4093,25 +4094,14 @@ class Rss extends CI_Controller {
 				
 				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
 
-				// $message = 'This is a test message 1.';
-
-				// var_dump($message);
-
-				// $msg = $this->email->message('This is a test message 2.');
-
-				// var_dump($msg);
+				$this->email->message($message);
 
 				$emailRes = $this->email->send();
-
-				// var_dump($emailRes);
-
-				// Print the debug output
-				// echo $this->email->print_debugger();
 				
 				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
 				
 				if($emailRes){
-
+					
 					echo 1;
 					
 				}else{
