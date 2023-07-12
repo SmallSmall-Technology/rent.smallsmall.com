@@ -4078,7 +4078,7 @@ class Rss extends CI_Controller {
 				// End Of Unione
 				
 
-				$this->email->from('donotreply@rentsmallsmall.com', 'Small Small Password Reset');
+				$this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
 
 				$this->email->to($email);
 
