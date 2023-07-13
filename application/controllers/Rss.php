@@ -7207,7 +7207,7 @@ public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $k
 
 	// Unione API Testing
 
-public function unione_template_getOLD()
+public function unione_template_get()
 {
     require 'vendor/autoload.php';
 
@@ -7240,7 +7240,8 @@ public function unione_template_getOLD()
         // Get the unique username
         // $user = $this->admin_model->get_user($id);
         $username = "Yusuf";
-        $resetLink = 'https://dev-buy.rentsmallsmall.com/';
+        $resetLink = 'https://buy.rentsmallsmall.com/';
+        $email = 'yusuf.i@smallsmall.com';
         
         // Replace the placeholder in the HTML body with the username
         $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
@@ -7251,13 +7252,41 @@ public function unione_template_getOLD()
     } catch (\GuzzleHttp\Exception\BadResponseException $e) {
         $data['response'] = $e->getMessage();
     }
+    
+    // End Of Unione
+				
+		$this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
 
-    $this->load->view('rss-partials/unione-testing', $data);
+		$this->email->to($email);
+
+		$this->email->subject("Password Reset RentSmallsmall");	
+				
+		$this->email->set_mailtype("html");
+				
+		$message = $this->load->view('rss-partials/unione-testing', $data, TRUE);
+
+		$this->email->message($message);
+
+		$emailRes = $this->email->send();
+
+        // $this->load->view('rss-partials/unione-testing', $data);
+        
+        if($emailRes){
+					
+					echo 'Email Sent successfully to' . ''. $email;
+					
+				}else{
+					
+					echo 'Error sending Email';
+					
+			}
+        
+        
+        
 }
 
 
-
-public function unione_template_get()
+public function unione_template_getOLD()
 {
 
 require 'vendor/autoload.php';
@@ -7286,14 +7315,14 @@ $requestBody = [
     "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
    
     "body" => [
-      "html" => "<b>Hello, {{to_name}}</b>",
-      "plaintext" => "Hello, {{to_name}}",
+      "html" => "<b>Hello, Yusuf</b>",
+    //   "plaintext" => "Hello, {{to_name}}",
       
     ],
     "subject" => "Testing",
-    "from_email" => "donotreply@rent.smallsmall.com",
+    "from_email" => "donotreply@smallsmall.com",
     "from_name" => "SS",
-    "reply_to" => "user@example.com",
+    "reply_to" => "user@smallsmall.com",
     
  
   ]
@@ -7313,9 +7342,8 @@ try {
  }
  
  
+ 
 }
-
-
     
 	
 }
