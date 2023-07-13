@@ -7255,6 +7255,145 @@ public function unione_template_get()
     $this->load->view('rss-partials/unione-testing', $data);
 }
 
+	// Unione API Testing
+
+public function unione_template_get()
+{
+    require 'vendor/autoload.php';
+
+    $headers = array(
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+    );
+
+    $client = new \GuzzleHttp\Client([
+        'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+    ]);
+
+    $requestBody = [
+        "id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48"
+    ];
+
+    try {
+        $response = $client->request('POST', 'template/get.json', array(
+            'headers' => $headers,
+            'json' => $requestBody,
+        ));
+
+        $jsonResponse = $response->getBody()->getContents();
+        $responseData = json_decode($jsonResponse, true);
+
+        $htmlBody = $responseData['template']['body']['html'];
+        
+        
+        // Get the unique username
+        // $user = $this->admin_model->get_user($id);
+        $username = "Yusuf";
+        $resetLink = 'https://buy.rentsmallsmall.com/';
+        $email = 'yusuf.i@smallsmall.com';
+        
+        // Replace the placeholder in the HTML body with the username
+        $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+        $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+
+
+        $data['response'] = $htmlBody;
+    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+        $data['response'] = $e->getMessage();
+    }
+    
+    // End Of Unione
+				
+		$this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
+
+		$this->email->to($email);
+
+		$this->email->subject("Password Reset RentSmallsmall");	
+				
+		$this->email->set_mailtype("html");
+				
+		$message = $this->load->view('rss-partials/unione-testing', $data, TRUE);
+
+		$this->email->message($message);
+
+		$emailRes = $this->email->send();
+
+        // $this->load->view('rss-partials/unione-testing', $data);
+        
+        if($emailRes){
+					
+		echo 'Email Sent successfully to' . ''. $email;
+					
+	}else{
+					
+		echo 'Error sending Email';
+					
+		}
+        
+        
+        
+}
+
+
+public function unione_template_getOLD()
+{
+
+require 'vendor/autoload.php';
+
+$headers = array(
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+    );
+
+$client = new \GuzzleHttp\Client([
+    // 'base_uri' => 'https://us1.unione.io/en/transactional/api/v1/'
+        'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+
+]);
+
+$requestBody = [
+  "message" => [
+    "recipients" => [
+      [
+        "email" => "bwitlawalyusuf@gmail.com",
+        
+        
+      ]
+    ],
+    "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
+   
+    "body" => [
+      "html" => "<b>Hello, Yusuf</b>",
+    //   "plaintext" => "Hello, {{to_name}}",
+      
+    ],
+    "subject" => "Testing",
+    "from_email" => "donotreply@smallsmall.com",
+    "from_name" => "SS",
+    "reply_to" => "user@smallsmall.com",
+    
+ 
+  ]
+];
+
+try {
+    $response = $client->request('POST','email/send.json', array(
+        'headers' => $headers,
+        'json' => $requestBody,
+       )
+    );
+    print_r($response->getBody()->getContents());
+ }
+ catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    // handle exception or api errors.
+    print_r($e->getMessage());
+ }
+ 
+ 
+ 
+}
     
 	
 }
