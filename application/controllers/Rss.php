@@ -7310,13 +7310,14 @@ $requestBody = [
          
       ]
     ],
-    // "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
+	
+    "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
    
-    "body" => [
+ //    "body" => [
 
-	"template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48"
-    	//   "html" => "<b>Hello, Yusuf</b>",
-    ],
+	// "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48"
+ //    	//   "html" => "<b>Hello, Yusuf</b>",
+ //    ],
     "subject" => "Password Reset RentSmallsmall",
     "from_email" => "donotreply@smallsmall.com",
     "from_name" => "Small Small Password Reset",
@@ -7332,7 +7333,7 @@ try {
        )
     );
 
-		$jsonResponse = $response->getBody()->getContents();
+	$jsonResponse = $response->getBody()->getContents();
         $responseData = json_decode($jsonResponse, true);
 
         $htmlBody = $responseData['template']['body']['html'];
