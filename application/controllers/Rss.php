@@ -7298,7 +7298,6 @@ $headers = array(
     );
 
 $client = new \GuzzleHttp\Client([
-    // 'base_uri' => 'https://us1.unione.io/en/transactional/api/v1/'
         'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
 
 ]);
@@ -7307,24 +7306,22 @@ $requestBody = [
   "message" => [
     "recipients" => [
       [
-        "email" => "bwitlawalyusuf@gmail.com",
-        
-        
+        "email" => 'bwitlawalyusuf@gmail.com',
+         
       ]
     ],
-    "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
+    // "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
    
     "body" => [
-      "html" => "<b>Hello, Yusuf</b>",
-    //   "plaintext" => "Hello, {{to_name}}",
-      
+
+	"template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48"
+    	//   "html" => "<b>Hello, Yusuf</b>",
     ],
-    "subject" => "Testing",
+    "subject" => "Password Reset RentSmallsmall",
     "from_email" => "donotreply@smallsmall.com",
-    "from_name" => "SS",
-    "reply_to" => "user@smallsmall.com",
+    "from_name" => "Small Small Password Reset",
+    // "reply_to" => "user@smallsmall.com",
     
- 
   ]
 ];
 
@@ -7334,16 +7331,38 @@ try {
         'json' => $requestBody,
        )
     );
-    print_r($response->getBody()->getContents());
- }
- catch (\GuzzleHttp\Exception\BadResponseException $e) {
-    // handle exception or api errors.
-    print_r($e->getMessage());
- }
+
+		$jsonResponse = $response->getBody()->getContents();
+        $responseData = json_decode($jsonResponse, true);
+
+        $htmlBody = $responseData['template']['body']['html'];
+        
+        // Get the unique username
+        // $user = $this->admin_model->get_user($id);
+        $username = "Yusuf";
+        $resetLink = 'https://rent.smallsmall.com/';
+        $email = 'yusuf.i@smallsmall.com';
+        
+        // Replace the placeholder in the HTML body with the username
+        $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+        $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+
+        $data['response'] = $htmlBody;
+
+    	// print_r($response->getBody()->getContents());
+
+ 		}
+ 		catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    	// handle exception or api errors.
+
+		$data['response'] = $htmlBody;
+		
+    	// print_r($e->getMessage());
+
+ 		}
  
  
- 
-}
+	}
     
 	
 }
