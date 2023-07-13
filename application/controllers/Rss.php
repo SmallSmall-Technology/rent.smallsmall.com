@@ -7257,7 +7257,7 @@ public function unione_template_get()
 
 	// Unione API Testing
 
-public function unione_template_get()
+public function unione_template_getOLD()
 {
     require 'vendor/autoload.php';
 
@@ -7336,7 +7336,7 @@ public function unione_template_get()
 }
 
 
-public function unione_template_getOLD()
+public function unione_template_get()
 {
 
 require 'vendor/autoload.php';
