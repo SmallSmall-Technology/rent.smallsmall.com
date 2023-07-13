@@ -7313,11 +7313,11 @@ $requestBody = [
 	
     "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
    
- //    "body" => [
-
+    "body" => [
+	
 	// "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48"
- //    	//   "html" => "<b>Hello, Yusuf</b>",
- //    ],
+    	  "html" => "<b>Hello, Yusuf</b>",
+    ],
     "subject" => "Password Reset RentSmallsmall",
     "from_email" => "donotreply@smallsmall.com",
     "from_name" => "Small Small Password Reset",
@@ -7333,32 +7333,32 @@ try {
        )
     );
 
-	$jsonResponse = $response->getBody()->getContents();
-        $responseData = json_decode($jsonResponse, true);
+	// $jsonResponse = $response->getBody()->getContents();
+ //        $responseData = json_decode($jsonResponse, true);
 
-        $htmlBody = $responseData['template']['body']['html'];
+ //        $htmlBody = $responseData['template']['body']['html'];
         
-        // Get the unique username
-        // $user = $this->admin_model->get_user($id);
-        $username = "Yusuf";
-        $resetLink = 'https://rent.smallsmall.com/';
-        $email = 'yusuf.i@smallsmall.com';
+ //        // Get the unique username
+ //        // $user = $this->admin_model->get_user($id);
+ //        $username = "Yusuf";
+ //        $resetLink = 'https://rent.smallsmall.com/';
+ //        $email = 'yusuf.i@smallsmall.com';
         
-        // Replace the placeholder in the HTML body with the username
-        $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-        $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+ //        // Replace the placeholder in the HTML body with the username
+ //        $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+ //        $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
-        $data['response'] = $htmlBody;
+ //        $data['response'] = $htmlBody;
 
-    	// print_r($response->getBody()->getContents());
+    	print_r($response->getBody()->getContents());
 
  		}
  		catch (\GuzzleHttp\Exception\BadResponseException $e) {
     	// handle exception or api errors.
 
-		$data['response'] = $htmlBody;
+		// $data['response'] = $htmlBody;
 		
-    	// print_r($e->getMessage());
+    	print_r($e->getMessage());
 
  		}
  
