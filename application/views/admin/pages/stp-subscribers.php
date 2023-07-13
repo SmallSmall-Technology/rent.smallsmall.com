@@ -73,8 +73,8 @@
 
 												<div class="widget-content-left">
 													<div class="widget-heading"><?php echo ucfirst($value['firstName']).' '.ucfirst($value['lastName']); ?></div>
-													<div class="widget-subheading"><b>Reference ID:</b><?php echo $value['refID']; ?> </div>
-													<div class="widget-subheading"><span style="display:block;font-size:12px;color:#e3e3e3"><?php echo "<a href='https://buy.smallsmall/property/".$value['propertyID']."' />".$value['property_name']."</a>" ?></span></div>
+													<div class="widget-subheading"><b>Email:</b><?php echo $value['email']; ?> </div>
+													<div class="widget-subheading"><b>Phone:</b><?php echo $value['phone']; ?> </div>
 												</div>
 
 											</div>											
