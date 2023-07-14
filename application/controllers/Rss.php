@@ -2385,7 +2385,6 @@ class Rss extends CI_Controller {
 	            
 	    $rc = strtoupper(substr($lname, 0, 3).$code);
 	    
-	    
 		// Unione Template
 
 		$headers = array(
@@ -2427,8 +2426,7 @@ class Rss extends CI_Controller {
 				$data['name'] = $fname;	
 				
 				$data['email'] = $email;
-				
-				
+					
 				//Unione Template
 
 				try {
@@ -2450,43 +2448,37 @@ class Rss extends CI_Controller {
 					$htmlBody = str_replace('{{confirmationLink}}', $confirmationLink, $htmlBody);
 
 					$data['response'] = $htmlBody;
+
+					// Prepare the email data
+					$emailData = [
+						"message" => [
+							"recipients" => [
+								["email" => $email],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Email Confirmation RentSmallsmall",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "Smallsmall",
+						],
+					];
+
+					// Send the email using the Unione API
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailData,
+					]);
+			
+					// Output the result
+					if($responseEmail){
+						echo 1;
+					}else{
+						echo 0;
+					}
 					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
 
-				// End Of Unione
-				
-				
-				$this->email->from('donotreply@smallsmall.com', 'SmallSmall');
-
-				$this->email->to($email);
-
-				$this->email->subject("Email Confirmation RentSmallsmall");	
-				
-				$this->email->set_mailtype("html");
-
-				// $message = $this->load->view('email/header.php', $data, TRUE);
-
-				// $message .= $this->load->view('email/confirmationemail.php', $data, TRUE);
-
-				// $message .= $this->load->view('email/footer.php', $data, TRUE);
-				
-				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
-
-				$this->email->message($message);
-
-				$emailRes = $this->email->send();
-				
-				if($emailRes){
-					
-					echo 1; 
-						
-				}else{
-					
-					echo 0;
-					
-				}
 
 			}
 
@@ -2494,7 +2486,6 @@ class Rss extends CI_Controller {
 
 	}
 
-	
 	public function resend_verification(){
 		
 		$email = $this->input->post('email');
@@ -2560,7 +2551,6 @@ class Rss extends CI_Controller {
 
 		// end Unione Template
 
-
 		if($this->session->has_userdata('loggedIn')){
 
 			//Proceeds to scheduling inspection
@@ -2586,7 +2576,6 @@ class Rss extends CI_Controller {
 				$data['propName'] = $property['propertyTitle'];
 				
 				$data['propAddress'] = $property['address'].', '.$property['city'];
-				
 				
 				//Unione Template
 
@@ -2620,37 +2609,33 @@ class Rss extends CI_Controller {
 					$htmlBody = str_replace('{{Time}}', $inspectionTime, $htmlBody);
 
 					$data['response'] = $htmlBody;
-					
+
+					// Prepare the email data
+					$emailData = [
+						"message" => [
+							"recipients" => [
+								["email" => $user['email']],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Property Visit Scheduled RentSmallsmall",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "Small Small Inspection",
+						],
+					];
+
+					// Send the email using the Unione API
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailData,
+					]);
+			
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
-
-				// End Of Unione
-				
-				
-				$this->email->from('donotreply@smallsmall.com', 'Small Small Inspection');
-
-				$this->email->to($user['email']);
-
-				$this->email->subject("Property Visit Scheduled RentSmallsmall");	
-				
-				$this->email->set_mailtype("html");
-
-				// $message = $this->load->view('email/header.php', $data, TRUE);
-
-				// $message .= $this->load->view('email/inspectionemail.php', $data, TRUE);
-
-				// $message .= $this->load->view('email/footer.php', $data, TRUE);
-				
-				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
-
-				$this->email->message($message);
-
-				$emailRes = $this->email->send();
 				
 				$notify = $this->functions_model->insert_user_notifications('Inspection Scheduled!', 'You have successfully scheduled an inspection', $user['userID'], 'Rent');
 				
-				if($emailRes){
+				if($responseEmail){
 				    
 				    $data['custname'] = $user['firstName'].' '.$user['lastName'];
 				    
@@ -2733,7 +2718,6 @@ class Rss extends CI_Controller {
 		}
 
 	}
-
 
 	public function reply_message(){
 
@@ -2972,7 +2956,10 @@ class Rss extends CI_Controller {
 
 	}
 
+	
 	public function insertDetails(){
+	    
+	    require 'vendor/autoload.php'; // For Unione template authoload
 
 		$details = $this->input->post('details');
 
@@ -2993,6 +2980,28 @@ class Rss extends CI_Controller {
 		$email = $details['profile'][0]['email'];
 		
 		$ref = 'rss_'.md5(rand(1000000, 9999999999));
+		
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "05d45b98-11ae-11ee-9bc2-0a93cf78caa3"
+		];
+		
+		$requestBodyForTeam = [
+			"id" => "f368198a-11c2-11ee-8731-76c23e12fa03"
+		];
+
+		// end Unione Template
 
 		//Insert details into verification table
 
@@ -3003,26 +3012,107 @@ class Rss extends CI_Controller {
 	    $data['ver_title'] = "Verification Notification";
 	    
 	    $data['ver_note'] = "There is a new verification request profile. ";
+	    
+	    //Unione Template
 
-	    $this->email->from('donotreply@smallsmall.com', 'SmallSmall Alert');
+				try {
+					$response = $client->request('POST', 'template/get.json', array(
+						'headers' => $headers,
+						'json' => $requestBody,
+					));
 
-		$this->email->to('verification@smallsmall.com');
+					$jsonResponse = $response->getBody()->getContents();
+					
+					$responseData = json_decode($jsonResponse, true);
+
+					$htmlBody = $responseData['template']['body']['html'];
+										
+					$userName = $fname;
+
+					// Replace the placeholder in the HTML body with the username
+					
+					$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+
+					$data['response'] = $htmlBody;
+
+					// Prepare the email data
+					$emailData = [
+						"message" => [
+							"recipients" => [
+								["email" => $email],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Verification Submitted notification",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "SmallSmall Alert",
+						],
+					];
+					
+					// Send the email using the Unione API
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailData,
+					]);
+
+				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+					$data['response'] = $e->getMessage();
+				}
 		
-		$this->email->bcc('pidah.t@smallsmall.com');
+		    if($responseEmail){
+		    
+				try {
+					$response = $client->request('POST', 'template/get.json', array(
+						'headers' => $headers,
+						'json' => $requestBodyForTeam,
+					));
 
-		$this->email->subject("Verification Alert!");	
+					$jsonResponse = $response->getBody()->getContents();
+					
+					$responseData = json_decode($jsonResponse, true);
 
-		$this->email->set_mailtype("html");
+					$htmlBody = $responseData['template']['body']['html'];
+										
+					$userName = $fname;
+					
+					$userEmail = $email;
+					
+					$propertyID = $order['property'][0]['productID'];
 
-		$message = $this->load->view('email/header.php', $data, TRUE);
+					// Replace the placeholder in the HTML body with the username
+					
+					$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+					
+					$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+					
+					$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
 
-		$message .= $this->load->view('email/verification-alert-email.php', $data, TRUE);
+					$data['response'] = $htmlBody;
+				
+        		// Prepare the email data
+       			 	$emailDataTeam = [
+            			"message" => [
+                			"recipients" => [
+                    			["email" => 'verification@smallsmall.com'],
+					["email" => 'pidah.t@smallsmall.com'],
+                			],
+                		"body" => ["html" => $htmlBody],
+                		"subject" => "New Verification alert",
+                		"from_email" => "donotreply@smallsmall.com",
+                		"from_name" => "SmallSmall Alert",
+            			],
+        			];
 
-		$message .= $this->load->view('email/footer.php', $data, TRUE);
+					// Send the email using the Unione API
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailDataTeam,
+					]);
+					
+				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+					$data['response'] = $e->getMessage();
+				}
 
-		$this->email->message($message);
-
-		$emailRes = $this->email->send();
+		    }
 
 		if($ver_result){
 
@@ -3042,7 +3132,6 @@ class Rss extends CI_Controller {
 
 				$booked = $this->rss_model->insertBooking($booking_id, $ver_result, $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 				
-
 				if($booked){
 				    
 				    //Get property details
@@ -3104,14 +3193,12 @@ class Rss extends CI_Controller {
 					$this->rss_model->insertFurnisureOrders($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['duration'], $order['paymentOption'], $i, count($order['furnisure']), $price, $ref);
 					
 					/*($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['productUrl'], $order['furnisure'][$i]['securityDeposit'], $order['furnisure'][$i]['duration'], $order['furnisure'][$i]['duration'],$order['paymentOption'], $i, count($order['furnisure']), $price);*/				
-					
-
+	
 				}
 
 				$result = "success";
 
 			}
-
 			
 		}
 		//This is where you send an email to customer for verification process starting
@@ -3138,7 +3225,7 @@ class Rss extends CI_Controller {
 		echo json_encode(array('result' => $result, 'msg' => $price));
 
 	}
-	
+
 	public function insertPropertyDetails(){
  
 		$propType = $this->input->post('propType');
@@ -4013,8 +4100,6 @@ class Rss extends CI_Controller {
 		
 		$res = $this->rss_model->check_reset_email($email);
 		
-		
-		
 		if($res){
 			
 			if($res['referral'] == 'wordpress'){ 
@@ -4037,10 +4122,8 @@ class Rss extends CI_Controller {
 				
 				$names = explode(" ", $res['firstName']);
 
-
 				$data['name'] = $names[0];	
-				
-				
+					
 				//Unione Template
 
 				try {
@@ -4055,7 +4138,6 @@ class Rss extends CI_Controller {
 
 					$htmlBody = $responseData['template']['body']['html'];
 
-
 					// Get the unique username
 					// $user = $this->admin_model->get_user($id);
 					
@@ -4068,47 +4150,41 @@ class Rss extends CI_Controller {
 					
 					$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
-
 					$data['response'] = $htmlBody;
-					
+
+					// Prepare the email data
+					$emailData = [
+						"message" => [
+							"recipients" => [
+								["email" => $email],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Password Reset RentSmallsmall",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "Small Small Password Reset",
+						],
+					];
+
+					// Send the email using the Unione API
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailData,
+					]);
+
+					// Output the result
+					if($responseEmail){
+						echo 1;
+					}else{
+						
+						echo 0;	
+					}
+
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
 
-				// End Of Unione
-				
-
-				$this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
-
-				$this->email->to($email);
-
-				$this->email->subject("Password Reset RentSmallsmall");	
-				
-				$this->email->set_mailtype("html");
-
-				// $message = $this->load->view('email/header.php', $data, TRUE);
-
-				// $message .= $this->load->view('email/emailreset.php', $data, TRUE);
-
-				// $message .= $this->load->view('email/footer.php', $data, TRUE);
-				
-				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
-
-				$this->email->message($message);
-
-				$emailRes = $this->email->send();
-				
 				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
 				
-				if($emailRes){
-					
-					echo 1;
-					
-				}else{
-					
-					echo 0;
-					
-				}
 			}else{
 				
 				echo "Error inserting reset data";
@@ -4504,6 +4580,8 @@ class Rss extends CI_Controller {
 	}
 	
 	public function payment_success($ref){
+	    
+	    require 'vendor/autoload.php'; // For Unione template authoload
 		
 		//$this->session->unset_userdata('payment');
 		
@@ -4514,9 +4592,112 @@ class Rss extends CI_Controller {
 			$data['fname'] = $this->session->userdata('fname');
 
 			$data['lname'] = $this->session->userdata('lname');
+			
+			$data['email'] = $this->session->userdata('email');
+			
+		// $user = $this->rss_model->getUser($this->session->userdata('userID'));
+
 		}
 		
+		// Unione Template Header
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "5d97bd2a-0f33-11ee-99b6-c60fd5919487"
+		];
+
+		// end Unione Template
+		
 		$dets = $this->rss_model->getDetails($ref);
+
+		if($dets){
+
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestBody,
+				));
+	
+				$jsonResponse = $response->getBody()->getContents();
+				
+				$responseData = json_decode($jsonResponse, true);
+	
+				$htmlBody = $responseData['template']['body']['html'];
+
+				// $email = $user['email'];
+				
+				$email = $data['email'];
+									
+				$userName = $data['fname'];
+
+				$propertyTitle = $dets['propertyTitle'];
+
+				$amountPaid = $dets['amount'];
+
+				$paymentPlan = $dets['type'];
+
+				$paymentType = $dets['payment_type'];
+
+				$referenceID = $ref;
+
+				$paymentPlan = $dets['payment_paln'];
+
+				$duration = $dets['duration'];
+					
+				// Replace the placeholder in the HTML body with the username
+				
+				$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+				
+				$htmlBody = str_replace('{{PropertyTitle}}', $propertyTitle, $htmlBody);
+				
+				$htmlBody = str_replace('{{Duration}}', $duration, $htmlBody);
+
+				$htmlBody = str_replace('{{PaymentPlan}}', $paymentPlan, $htmlBody);
+
+				$htmlBody = str_replace('{{AmountPaid}}', $amountPaid, $htmlBody);
+
+				$htmlBody = str_replace('{{ModeOfPayment}}', $paymentType, $htmlBody);
+
+				$htmlBody = str_replace('{{TransactionID}}', $referenceID, $htmlBody);
+	
+				$data['response'] = $htmlBody;
+				
+				// Prepare the email data
+				$emailData = [
+					"message" => [
+						"recipients" => [
+							["email" => $email],
+							["email" => 'pidah.t@smallsmall.com'], // Just for testing
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "RentSmallsmall Payment successful notification",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "SmallSmall Payment Alert",
+					],
+				];
+
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailData,
+				]);
+
+				echo 1;
+				
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
+			}
+	
+		}
 		
 		$prop_update = $this->rss_model->updatePropStat($dets['propertyID'], $dets['rent_expiration']);
 		
@@ -4536,7 +4717,7 @@ class Rss extends CI_Controller {
 
 		$this->load->view('templates/footer');
 	}
-	
+
 	public function payment_fail(){
 		
 		if($this->session->has_userdata('userID')){
