@@ -6001,7 +6001,6 @@ class Admin extends CI_Controller {
 		
 		$user = $this->admin_model->get_user($id);
 		
-		
 		// Unione Template
 
 		$headers = array(
@@ -6023,7 +6022,6 @@ class Admin extends CI_Controller {
 		    ];
 
 		// end Unione Template
-		
 		
 		if($result){
 			
@@ -6055,56 +6053,48 @@ class Admin extends CI_Controller {
 
 					$htmlBody = $responseData['template']['body']['html'];
 
-
 					// Get the unique username
 					// $user = $this->admin_model->get_user($id);
 					
 					$username = $data['name'];
 					
-
 					// Replace the placeholder in the HTML body with the username
 					$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
 
 					$data['response'] = $htmlBody;
+
+					// Prepare the email data
+					$emailData = [
+						"message" => [
+							"recipients" => [
+								["email" => $user['email']],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Verification Successful!",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "Smallsmall",
+						],
+					];
+
+					// Send the email using the Unione API
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailData,
+					]);
 					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
-
-				// End Of Unione
-
-			$this->email->from('donotreply@smallsmall.com', 'Small Small');
-
-			$this->email->to($user['email']);
-
-// 			$this->email->bcc('customerexperience@smallsmall.com');
-
-			$this->email->subject("Verification Successful!");	
-
-			$this->email->set_mailtype("html");
-
-// 			$message = $this->load->view('email/header.php', $data, TRUE);
-
-// 			$message .= $this->load->view('email/verification-result-email.php', $data, TRUE);
-
-// 			$message .= $this->load->view('email/footer.php', $data, TRUE);
-
-			$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
-
-			$this->email->message($message);
-
-			$emailRes = $this->email->send();
 			
 			$notify = $this->functions_model->insert_user_notifications('Verification Successful!', 'We are glad to inform you that your verification process has been successful, you can now start subscribing with us.', $user['userID'], 'Rent');
 			
-			if($emailRes){
+			if($responseEmail){
 			    
 			    	//Unione Template for CX
 
 				try {
 					$response = $client->request('POST', 'template/get.json', array(
 						'headers' => $headers,
-						
 						'json' => $requestBodyAdmin,
 					));
 
@@ -6113,7 +6103,6 @@ class Admin extends CI_Controller {
 					$responseData = json_decode($jsonResponse, true);
 
 					$htmlBody = $responseData['template']['body']['html'];
-
 
 					// Get the unique username
 
@@ -6127,26 +6116,23 @@ class Admin extends CI_Controller {
 					$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
 
 					$data['response'] = $htmlBody;
+
+					// Prepare the email data
+					$emailDataCx = [
+						"message" => [
+							"recipients" => [
+								["email" => 'customerexperience@smallsmall.com'],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Verification Successful!",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "Smallsmall",
+						],
+					];
 					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
-
-				// End Of Unione
-
-			$this->email->from('donotreply@smallsmall.com', 'Small Small');
-
-			$this->email->to('customerexperience@smallsmall.com');
-
-			$this->email->subject("Verification Successful!");	
-
-			$this->email->set_mailtype("html");
-
-			$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
-
-			$this->email->message($message);
-
-			$this->email->send();
 			
 			}
 			
@@ -6159,7 +6145,6 @@ class Admin extends CI_Controller {
 		}
 	}
 
-	
 	public function unverifyUser(){
 		
 		$id = $this->input->post("id");
