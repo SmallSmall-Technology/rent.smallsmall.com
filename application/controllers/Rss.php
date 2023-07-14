@@ -7286,7 +7286,7 @@ public function unione_template_getOLD()
 }
 
 
-public function unione_template_get()
+public function unione_template_getOLD1()
 {
 
 require 'vendor/autoload.php';
@@ -7344,6 +7344,77 @@ try {
  
  
 }
+
+function unione_template_get()
+{
+    require 'vendor/autoload.php';
+
+    $headers = array(
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+    );
+    
+    $client = new \GuzzleHttp\Client([
+        'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+    ]);
+
+    // Request body for retrieving the template
+    $requestBody = [
+        "id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
+    ];
+
+    try {
+        // Retrieve the template from the Unione API
+        $response = $client->request('POST', 'template/get.json', [
+            'headers' => $headers,
+            'json' => $requestBody,
+        ]);
+
+        $responseData = json_decode($response->getBody()->getContents(), true);
+
+        // Get the HTML body from the template response
+        $htmlBody = $responseData['template']['body']['html'];
+
+        // Replace placeholders in the HTML body with actual values
+        $username = "Yusuf";
+        $resetLink = 'https://buy.rentsmallsmall.com/';
+        $email = 'yusuf.i@smallsmall.com';
+        $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+        $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+
+        // Prepare the email data
+        $emailData = [
+            "message" => [
+                "recipients" => [
+                    ["email" => $email],
+                ],
+                "body" => ["html" => $htmlBody],
+                "subject" => "Testing",
+                "from_email" => "donotreply@smallsmall.com",
+                "from_name" => "Smallsmall",
+            ],
+        ];
+
+        // Send the email using the Unione API
+        $response = $client->request('POST', 'email/send.json', [
+            'headers' => $headers,
+            'json' => $emailData,
+        ]);
+
+        // Output the result
+        echo 'Email Sent successfully to ' . $email;
+        
+    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+        
+        // Handle API errors
+       print_r($e->getMessage());
+    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+        // Handle other exceptions
+        print_r($e->getMessage());
+    }
+}
+
     
 	
 }
