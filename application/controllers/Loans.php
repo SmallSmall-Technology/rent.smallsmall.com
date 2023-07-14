@@ -504,143 +504,142 @@ class Loans extends CI_Controller {
 	    
 	}
 
-	public function walletFunding(){
-	    
-	    	require 'vendor/autoload.php'; // For Unione template authoload
+	public function walletFunding()
+	{
 
-	    //if($this->session->has_userdata('userID')){	
-	        
-	        $reference = 'WF_'.$this->random_strings(8);
-	        
-	        $user_id = $this->input->post('userID');
-	        
-	        $amount = $this->input->post("amount");
-	        
-	        $paystack_ref = $this->input->post('paystack_reference');
-	        
-	        $referenceID = $this->input->post('referenceID');
-	        
-	        $details = $this->loan_model->get_account_details($user_id);
-	        
-	        $account_balance = $details['account_balance'] + $amount;
-	        
-	        //Added data
-	        
-	        $email = $details['email'];
+		require 'vendor/autoload.php'; // For Unione template authoload
 
-			$names = explode(" ", $details['firstName']);
+		//if($this->session->has_userdata('userID')){	
 
-			$data['name'] = $names[0];
-			
-				
+		$reference = 'WF_' . $this->random_strings(8);
+
+		$user_id = $this->input->post('userID');
+
+		$amount = $this->input->post("amount");
+
+		$paystack_ref = $this->input->post('paystack_reference');
+
+		$referenceID = $this->input->post('referenceID');
+
+		$details = $this->loan_model->get_account_details($user_id);
+
+		$account_balance = $details['account_balance'] + $amount;
+
+		//Added data
+
+		$email = $details['email'];
+
+		$names = explode(" ", $details['firstName']);
+
+		$data['name'] = $names[0];
+
 		// Unione Template
 
-		    $headers = array(
-			    'Content-Type' => 'application/json',
-			    'Accept' => 'application/json',
-			    'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
-		    );
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
 
-		    $client = new \GuzzleHttp\Client([
-			    'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-		    ]);
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
 
-		    $requestBody = [
-			    "id" => "56ab446a-0f3c-11ee-93cb-821d93a29a48"
-		    ];
+		$requestBody = [
+			"id" => "56ab446a-0f3c-11ee-93cb-821d93a29a48"
+		];
 
-		    // end Unione Template
-		    
-		    
-    	    //Update account balance and insert wallet transaction
-    	    
-    	    $response = $this->loan_model->update_balance($user_id, $account_balance);
-    	    
-    	    if($response){
-    	        
-    	       // if($this->loan_model->insert_wallet_funding($user_id, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystack_ref)){
-    	            
-    	       //     echo 1;
-    	            
-    	       // }else{
-    	            
-    	       //     echo 0;
-    	            
-    	       // }
-    	       
-    	       
-    	       $this->loan_model->insert_wallet_funding($user_id, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystack_ref);
-    	            
-					//Send Notification to users for successful funding
-					$data['transactioDate'] = $this->transaction_date = date('Y-m-d H:i:s');
-					//Unione Template
+		// end Unione Template
 
-				try {
-					$response = $client->request('POST', 'template/get.json', array(
-						'headers' => $headers,
-						'json' => $requestBody,
-					));
+		//Update account balance and insert wallet transaction
 
-					$jsonResponse = $response->getBody()->getContents();
-					
-					$responseData = json_decode($jsonResponse, true);
+		$response = $this->loan_model->update_balance($user_id, $account_balance);
 
-					$htmlBody = $responseData['template']['body']['html'];
-					
-					$username = $data['name'];
+		if ($response) {
 
-					$TransactioDate = $data['transactioDate'];
+			// if($this->loan_model->insert_wallet_funding($user_id, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystack_ref)){
 
-					$topUpAmount = $amount;
+			//     echo 1;
 
-					$transactionID = $reference;
+			// }else{
 
-					// Replace the placeholder in the HTML body with the username
-					
-					$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-					$htmlBody = str_replace('{{TransactioDate}}', $TransactioDate, $htmlBody);
-					$htmlBody = str_replace('{{TopupAmount}}', $topUpAmount, $htmlBody);
-					$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
-				
-					$data['response'] = $htmlBody;
-					
-				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-					$data['response'] = $e->getMessage();
-				}
+			//     echo 0;
 
-				// End Of Unione
+			// }
 
-					$this->email->from('donotreply@smallsmall.com', 'SmallSmall');
+			$this->loan_model->insert_wallet_funding($user_id, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystack_ref);
 
-					$this->email->to($email);
+			//Send Notification to users for successful funding
+			$data['transactioDate'] = $this->transaction_date = date('Y-m-d H:i:s');
 
-					$this->email->subject("RentSmallsmall Wallet Top up successful notification");
+			//Unione Template
 
-					$this->email->set_mailtype("html");
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestBody,
+				));
 
-				    $message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+				$jsonResponse = $response->getBody()->getContents();
 
-					$this->email->message($message);
+				$responseData = json_decode($jsonResponse, true);
 
-					$emailRes = $this->email->send();
+				$htmlBody = $responseData['template']['body']['html'];
 
-					if ($emailRes) {
+				$username = $data['name'];
 
-						echo 1;
-					} else {
-	
-						echo 0;
-					}     
-    	        
-    	    }
-    	        
-    	        
-	    //}else{
-	        
-	        //redirect( base_url()."login" ,'refresh');
-	        
-	    //}
-	    
+				$TransactioDate = $data['transactioDate'];
+
+				$topUpAmount = $amount;
+
+				$transactionID = $reference;
+
+				// Replace the placeholder in the HTML body with the username
+
+				$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+				$htmlBody = str_replace('{{TransactioDate}}', $TransactioDate, $htmlBody);
+				$htmlBody = str_replace('{{TopupAmount}}', $topUpAmount, $htmlBody);
+				$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
+
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailData = [
+					"message" => [
+						"recipients" => [
+							["email" => $email],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "RentSmallsmall Wallet Top up successful notification",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "Smallsmall",
+					],
+				];
+
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailData,
+				]);
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
+			}
+
+			if ($responseEmail) {
+
+				echo 1;
+			} else {
+
+				echo 0;
+			}
+		}
+
+		//}else{
+
+		//redirect( base_url()."login" ,'refresh');
+
+		//}
+
 	}
 
 	
