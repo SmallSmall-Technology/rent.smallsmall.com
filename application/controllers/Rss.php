@@ -7207,7 +7207,7 @@ public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $k
 
 	// Unione API Testing
 
-function unione_template_get()
+public function unione_template_get()
 {
     require 'vendor/autoload.php';
 
