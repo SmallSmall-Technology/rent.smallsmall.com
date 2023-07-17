@@ -7088,7 +7088,11 @@ class Admin extends CI_Controller {
 	    }
 	    
 	}
+
+
 	public function deductWallet(){
+
+		require 'vendor/autoload.php'; // For Unione template authoload
 	    
 	    $result = 0;
 	    
@@ -7103,6 +7107,28 @@ class Admin extends CI_Controller {
 	    $userID = $this->input->post('userID');
 	    
 	    $new_amount = $this->deduct_wallet($userID, $amount);
+
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "8dae4af2-140f-11ee-9d68-0a93cf78caa3"
+		];
+
+		$requestCxBody = [
+			"id" => "3a1e3ed8-1414-11ee-99b5-76c23e12fa03"
+		];
+
+		// end Unione Template
 	    
 	    if($new_amount["result"]){
 	    
@@ -7119,29 +7145,150 @@ class Admin extends CI_Controller {
     	            $message = "success";
     	            
     	            $user = $this->rss_model->get_user($userID);
-    	            
-    	            //Send email to user
-    	            $data['name'] = $user['lastName'];
-    	            
-    	            $data['amount'] = $amount;
 
-            	    $this->email->from('donotreply@smallsmall.com', 'SmallSmall Alert');
+					$data['name'] = $user['firstName'].' '.$user['lastName'];
+
+					//Unione Template
+
+					try {
+						$response = $client->request('POST', 'template/get.json', array(
+							'headers' => $headers,
+							'json' => $requestBody,
+					));
+
+						$jsonResponse = $response->getBody()->getContents();
+
+						$responseData = json_decode($jsonResponse, true);
+
+						$htmlBody = $responseData['template']['body']['html'];
+
+						$username = $data['name'];
+
+						$deductionType = $purpose;
+
+						$transactionDate = date('Y-m-d H:i:s');
+
+						$transactionID = $reference;
+
+						$walletBallance = $new_amount;
+
+						// Replace the placeholder in the HTML body with the username
+
+						$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+						$htmlBody = str_replace('{{amount}}', $deductionAmount, $htmlBody);
+						$htmlBody = str_replace('{{DeductionType}}', $deductionType, $htmlBody);
+
+						$htmlBody = str_replace('{{Amount}}', $deductionAmount, $htmlBody);
+						$htmlBody = str_replace('{{TransactioDate}}', $transactionDate, $htmlBody);
+						$htmlBody = str_replace('{{DeductionType}}', $deductionType, $htmlBody);
+						$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
+						$htmlBody = str_replace('{{WalletBalance}}', $walletBallance, $htmlBody);
+
+						$data['response'] = $htmlBody;
+
+					// Prepare the email data
+						$emailData = [
+							"message" => [
+								"recipients" => [
+									["email" => $user['email']],
+								],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Wallet Deduction Successful notification!",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "SmallSmall Alert",
+							],
+						];
+
+					// Send the email using the Unione API
+						$responseEmail = $client->request('POST', 'email/send.json', [
+							'headers' => $headers,
+							'json' => $emailData,
+						]);
+					} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+						$data['response'] = $e->getMessage();
+					}
+
+					if ($responseEmail) {
+
+						//Unione Template
+
+					try {
+						$response = $client->request('POST', 'template/get.json', array(
+							'headers' => $headers,
+							'json' => $requestCxBody,
+					));
+
+						$jsonResponse = $response->getBody()->getContents();
+
+						$responseData = json_decode($jsonResponse, true);
+
+						$htmlBody = $responseData['template']['body']['html'];
+
+						$username = $data['name'];
+
+						$deductionType = $purpose;
+
+						$transactionDate = date('Y-m-d H:i:s');
+
+						$transactionID = $reference;
+
+						$walletBallance = $new_amount;
+
+						// Replace the placeholder in the HTML body with the username
+
+						$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+						$htmlBody = str_replace('{{DeductionAmount}}', $deductionAmount, $htmlBody);
+						$htmlBody = str_replace('{{TransactionDate}}', $transactionDate, $htmlBody);
+						$htmlBody = str_replace('{{DeductionType}}', $deductionType, $htmlBody);
+						$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
+
+						$data['response'] = $htmlBody;
+
+					// Prepare the email data
+						$emailData = [
+							"message" => [
+								"recipients" => [
+									["email" => 'customerexperience@smallsmall.com'],
+								],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Wallet Deduction Successful notification!",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "SmallSmall Alert",
+							],
+						];
+
+					// Send the email using the Unione API
+						$responseCxEmail = $client->request('POST', 'email/send.json', [
+							'headers' => $headers,
+							'json' => $emailData,
+						]);
+					} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+						$data['response'] = $e->getMessage();
+					}
+				} 
+				
+    	            //Send email to user
+    	            // $data['name'] = $user['lastName'];
+    	            
+    	            // $data['amount'] = $amount;
+
+            	    // $this->email->from('donotreply@smallsmall.com', 'SmallSmall Alert');
             
-            		$this->email->to($user['email']);
+            		// $this->email->to($user['email']);
             
-            		$this->email->subject("Debit Alert!");	
+            		// $this->email->subject("Debit Alert!");	
             
-            		$this->email->set_mailtype("html");
+            		// $this->email->set_mailtype("html");
             
-            		$message = $this->load->view('email/header.php', $data, TRUE);
+            		// $message = $this->load->view('email/header.php', $data, TRUE);
             
-            		$message .= $this->load->view('email/debitalert.php', $data, TRUE);
+            		// $message .= $this->load->view('email/debitalert.php', $data, TRUE);
             
-            		$message .= $this->load->view('email/footer.php', $data, TRUE);
+            		// $message .= $this->load->view('email/footer.php', $data, TRUE);
             
-            		$this->email->message($message);
+            		// $this->email->message($message);
             
-            		$emailRes = $this->email->send();
+            		// $emailRes = $this->email->send();
     	        }
     	    }else{
     	        
@@ -7156,6 +7303,7 @@ class Admin extends CI_Controller {
 	    echo json_encode(array("response" => $result, "message" => $message));
 	    
 	}
+
 	
 	public function deduct_wallet($userID, $amount = 0){
 	    
