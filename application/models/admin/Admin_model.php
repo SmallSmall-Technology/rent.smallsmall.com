@@ -223,6 +223,7 @@ class Admin_model extends CI_Model {
 		return $this->db->count_all_results();
 
 	}
+
 	public function countRssUsers() {
 
 		$this->db->from('user_tbl');
@@ -230,6 +231,17 @@ class Admin_model extends CI_Model {
 		return $this->db->count_all_results();
 
 	}
+
+	public function countRssUser() {
+
+		$this->db->from('user_tbl');
+        
+        $this->db->where('verified', 'yes');
+        
+		return $this->db->count_all_results();
+
+	}
+
 	public function countBtlUsers() {
 
 		$this->db->from('user_tbl');
@@ -462,6 +474,40 @@ class Admin_model extends CI_Model {
 		return $query->result_array();
 
 	}
+
+	public function get_username($propID)
+	{
+		$this->db->select('*');
+		
+		$this->db->from('user_tbl');
+		
+		$this->db->where('userID', $propID);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	}
+
+	public function fetchRssUser() {       
+
+		$this->db->select('a.firstName, a.lastName, a.id, a.userID, a.email, a.phone, a.income, a.verified, a.referral, a.regDate, b.userID, b.lastLogin');
+
+		$this->db->from('user_tbl as a'); 
+		
+		$this->db->where('a.verified', 'yes');
+		
+		$this->db->join('login_tbl as b', 'b.userID = a.userID');
+		
+		$this->db->order_by('a.id', 'DESC');
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+
+	}
+
 	public function fetchAppUsers() {       
 
 		$this->db2->select('*');
@@ -1701,6 +1747,19 @@ class Admin_model extends CI_Model {
 		$query = $this->db->get();
 		
 		return $query->result_array();
+	}
+
+	public function getRows($propID)
+	{
+		$this->db->select('*');
+		
+		$this->db->from('sub_agreement');
+		
+		$this->db->where('id', $propID);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
 	}
 	
 	public function getReqMsg($id, $msgID){
@@ -3013,6 +3072,36 @@ class Admin_model extends CI_Model {
 	    $this->db->join('property_tbl as c', 'c.propertyID = a.propertyID', 'LEFT OUTER');
 	    
 	    $this->db->group_by('c.propertyID');
+	    
+	    $query = $this->db->get();
+	    
+	    return $query->result_array();
+	}
+
+	public function get_user_hstry($user_id){
+	    
+	    $this->db->select('a.*, b.firstName, b.lastName, c.propertyTitle, c.propertyID as pID');
+	    
+	    $this->db->from('sub_agreement as a');
+	    
+	    $this->db->where('a.userId', $user_id);
+	    
+	    $this->db->join('user_tbl as b', 'b.userID = a.userId', 'LEFT OUTER');
+	    
+	    $this->db->join('property_tbl as c', 'c.propertyID = a.property', 'LEFT OUTER');
+	    
+	    $this->db->order_by('a.id', 'DESC');
+	    
+	    $query = $this->db->get();
+	    
+	    return $query->result_array();
+	}
+	
+	public function get_user_propty($user_id){
+	    
+	    $this->db->select('a.*');
+	    
+	    $this->db->from('property_tbl as a');
 	    
 	    $query = $this->db->get();
 	    

@@ -461,6 +461,10 @@ $route['admin/user-profile/(:any)'] = 'admin/user_profile/$1';
 
 $route['admin/rss-users'] = 'admin/rss_users';
 
+$route['admin/rss-verfd'] = 'admin/rss_verfd';
+
+$route['admin/rss-verfd/(:any)'] = 'admin/rss_verfd/$1';
+
 $route['admin/app-users/(:any)'] = 'admin/app_users/$1';
 
 $route['admin/app-users'] = 'admin/app_users';

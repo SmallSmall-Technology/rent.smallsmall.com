@@ -23,6 +23,8 @@ else{
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../assets/css/bootstrap-css/bootstrap.min.css" crossorigin="anonymous" />
 
@@ -385,63 +387,26 @@ else{
                         <div class="col-12 mb-5">
                             <p>Repository of your subscription agreement with RentSmallsmall</p>
                         </div>
-                        <div class="col-md-4 col-12  mb-4">
-                            <div class="card default-background border-0">
-                                <div class="card-body pb-5">
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <img class="img-fluid" src="../assets/images/agreement2.svg" alt="">
-                                        <p class="custom-font-size-14 font-weight-light">2022 - 2023</p>
-                                    </div>
-                                    <div class="mt-3">
-                                        <p class="card-text">Premium furnished 2 br Maisonette B2 Olivia Court Lekki</p>
-
-                                        <div class="mt-3">
-                                            <a href="#" class="btn secondary-background px-3">Download</a>
+                        <?php foreach($sub_dats as $sub_data => $value){?> 
+                            <div class="col-md-4 col-12  mb-4">
+                                <div class="card default-background border-0">
+                                    <div class="card-body pb-5">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <img class="img-fluid" src="../assets/images/agreement2.svg" alt="">
+                                            <p class="custom-font-size-14 font-weight-light"><?php echo $value['start_year']; ?>-<?php echo $value['end_year']; ?></p>
                                         </div>
+                                        <div class="mt-3">
+                                            <p class="card-text"><?php echo $value['propertyTitle']; ?></p>
+    
+                                            <div class="mt-3">
+                                                <a href="<?php echo base_url().'admin/download/'.$value['id']; ?>" class="btn secondary-background px-3">Download</a>
+                                            </div>
+                                        </div>
+    
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-md-4 col-12  mb-4">
-                            <div class="card default-background border-0">
-                                <div class="card-body pb-5">
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <img class="img-fluid" src="../assets/images/agreement2.svg" alt="">
-                                        <p class="custom-font-size-14 font-weight-light">2021 - 2022</p>
-                                    </div>
-                                    <div class="mt-3">
-                                        <p class="card-text">Premium furnished 2 br Maisonette B2 Olivia Court Lekki</p>
-
-                                        <div class="mt-3">
-                                            <a href="#" class="btn secondary-background px-3">Download</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-12  mb-4">
-                            <div class="card default-background border-0">
-                                <div class="card-body pb-5">
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <img class="img-fluid" src="../assets/images/agreement2.svg" alt="">
-                                        <p class="custom-font-size-14 font-weight-light">2020 - 2021</p>
-                                    </div>
-                                    <div class="mt-3">
-                                        <p class="card-text">Premium furnished 2 br Maisonette B2 Olivia Court Lekki</p>
-
-                                        <div class="mt-3">
-                                            <a href="#" class="btn secondary-background px-3">Download</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
+                        <?php } ?>
                     </div>
 
                 </div>
@@ -451,7 +416,7 @@ else{
         </div>
 
     </main>
-
+    
     <footer>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light justify-content-end">

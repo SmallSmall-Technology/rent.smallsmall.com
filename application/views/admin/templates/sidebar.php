@@ -655,6 +655,19 @@
 								</a>
 
 							</li>
+
+							<li>
+
+								<a href="<?php echo base_url(); ?>admin/rss-verfd">
+
+									<i class="metismenu-icon"></i>
+
+									Verified Users
+
+								</a>
+
+							</li>
+							
                             <li>
 
 								<a href="<?php echo base_url(); ?>admin/rss-landlords">
@@ -666,6 +679,7 @@
 								</a>
 
 							</li>
+							
 							<li>
 
 								<a href="<?php echo base_url(); ?>admin/btl-users">
