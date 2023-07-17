@@ -398,110 +398,180 @@ class Loans extends CI_Controller {
 		}
 	}
 	
-	public function create_virtual_account(){
-	    
-	    $resp = FALSE;
-	    
-	    $result_data = array();
-	    
-	    if($this->session->has_userdata('userID')){
-		
-    		$userID = $this->session->userdata('userID');
-    		
-    		$bvn = $this->input->post("bvn");
-    	        
-    	    $account_name = $this->input->post("account_name");
-    		
-    		//check if account exists already
-		    $account_check = $this->loan_model->check_for_account($userID);
-		    
-		    if(empty($account_check)){
-    	        
-    	        $update_response = $this->rss_model->update_bvn($userID, $bvn);
-    	        
-    	        if($update_response){
-    	            
-    	            $data = '{
-                        "accountName" : "'.$account_name.'", 
-                        "bvn" : "'.$bvn.'",
-                        "isStatic" : '.true.'
+	public function create_virtual_account()
+	{
+
+		require 'vendor/autoload.php'; // For Unione template authoload
+
+		$resp = FALSE;
+
+		$result_data = array();
+
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "a40755b4-223d-11ee-b680-02e1ff456000"
+		];
+
+		if ($this->session->has_userdata('userID')) {
+
+			$userID = $this->session->userdata('userID');
+
+			$bvn = $this->input->post("bvn");
+
+			$account_name = $this->input->post("account_name");
+
+			//check if account exists already
+			$account_check = $this->loan_model->check_for_account($userID);
+
+			if (empty($account_check)) {
+
+				$update_response = $this->rss_model->update_bvn($userID, $bvn);
+
+				if ($update_response) {
+
+					$data = '{
+                        "accountName" : "' . $account_name . '", 
+                        "bvn" : "' . $bvn . '",
+                        "isStatic" : ' . true . '
                         }';
-                        
-                    $curl = curl_init();
-    	            
-    	            curl_setopt_array($curl, array(
-    			
-            		  	CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
-            
-            		  	CURLOPT_RETURNTRANSFER => true,
-            		  	
-            		  	CURLOPT_POSTFIELDS => $data,
-            
-            		  	CURLOPT_HTTPHEADER => [
-            				"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
-            
-            				"content-type: application/json"
-            		  	]
-            		));
-            
-            		$response = curl_exec($curl);
-            		
-            		$response = json_decode($response, true);
-    		
-            		if($response['status']){
-            		    
-            		    $accountID = $response['data']['id'];
-            		    
-            		    $accountReference = $response['data']['accountReference'];
-            		    
-            		    $accountName = $response['data']['bankAccount']['accountName'];
-            		    
-            		    $accountNumber = $response['data']['bankAccount']['accountNumber'];
-            		    
-            		    $bankName = $response['data']['bankAccount']['bank']['name'];
-            		    
-            		    $bankCode = $response['data']['bankAccount']['bank']['code'];
-            		    
-            		    $result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'Web');
-            		    
-            		    $resp = TRUE;
-            		    
-            		    if($result){
-            		        
-            		        $details = "success";
-            		        
-            		        redirect('/dashboard/wallet', 'refresh');
-            		        
-            		    }else{
-            		        
-            		        $details = "Unable to insert details in DB";
-            		        
-            		    }
-            		}else{
-            		    
-            		    $details = "Error : ".$response['message'];
-            		    
-            		}
-    	            
-    	        }else{
-    	            
-    	            $details = "Could not update BVN details";
-    	            
-    	        }
-		    }else{
-		        
-		        $details = "Account exists already";
-		        
-		    }
-	    
-	    }else{
-		    
-		    $details = "Session timed out please login again";
-		    
+
+					$curl = curl_init();
+
+					curl_setopt_array($curl, array(
+
+						CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
+
+						CURLOPT_RETURNTRANSFER => true,
+
+						CURLOPT_POSTFIELDS => $data,
+
+						CURLOPT_HTTPHEADER => [
+							"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
+
+							"content-type: application/json"
+						]
+					));
+
+					$response = curl_exec($curl);
+
+					$response = json_decode($response, true);
+
+					if ($response['status']) {
+
+						$accountID = $response['data']['id'];
+
+						$accountReference = $response['data']['accountReference'];
+
+						$accountName = $response['data']['bankAccount']['accountName'];
+
+						$accountNumber = $response['data']['bankAccount']['accountNumber'];
+
+						$bankName = $response['data']['bankAccount']['bank']['name'];
+
+						$bankCode = $response['data']['bankAccount']['bank']['code'];
+
+						$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'Web');
+
+						$resp = TRUE;
+
+						if ($result) {
+
+							$user = $this->rss_model->get_user($userID);
+
+							$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+							//Unione Template
+
+							try {
+								$response = $client->request('POST', 'template/get.json', array(
+									'headers' => $headers,
+									'json' => $requestBody,
+								));
+
+								$jsonResponse = $response->getBody()->getContents();
+
+								$responseData = json_decode($jsonResponse, true);
+
+								$htmlBody = $responseData['template']['body']['html'];
+
+								$username = $data['name'];
+
+								$accountNameDetail = $accountName;
+
+								$accoutNumberDetails = $accountNumber;
+
+								$BankNameDetail = $bankName;
+
+								$accountCreatedDate = date('Y-m-d H:i:s');
+
+								// Replace the placeholder in the HTML body with the username
+
+								$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+								$htmlBody = str_replace('{{AccountName}}', $accountNameDetail, $htmlBody);
+								$htmlBody = str_replace('{{AccountNumber}}', $accoutNumberDetails, $htmlBody);
+								$htmlBody = str_replace('{{BankName}}', $BankNameDetail, $htmlBody);
+								$htmlBody = str_replace('{{CreatedDate}}', $accountCreatedDate, $htmlBody);
+
+								$data['response'] = $htmlBody;
+
+								// Prepare the email data
+								$emailData = [
+									"message" => [
+										"recipients" => [
+											["email" => $user['email']],
+										],
+										"body" => ["html" => $htmlBody],
+										"subject" => "RentSmallsmall Wallet Created Successfully!",
+										"from_email" => "donotreply@smallsmall.com",
+										"from_name" => "Rentsmallsmall",
+									],
+								];
+
+								// Send the email using the Unione API
+								$responseEmail = $client->request('POST', 'email/send.json', [
+									'headers' => $headers,
+									'json' => $emailData,
+								]);
+							} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+								$data['response'] = $e->getMessage();
+							}
+
+							$details = "success";
+
+							redirect('/dashboard/wallet', 'refresh');
+						} else {
+
+							$details = "Unable to insert details in DB";
+						}
+					} else {
+
+						$details = "Error : " . $response['message'];
+					}
+				} else {
+
+					$details = "Could not update BVN details";
+				}
+			} else {
+
+				$details = "Account exists already";
+			}
+		} else {
+
+			$details = "Session timed out please login again";
 		}
-		
+
 		echo json_encode(array("result" => $resp, "details" => $details, "data" => $result_data));
-	    
 	}
 
 	public function walletFunding()
