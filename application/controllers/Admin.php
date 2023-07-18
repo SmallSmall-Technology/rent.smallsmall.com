@@ -7318,6 +7318,8 @@ class Admin extends CI_Controller {
 						$username = $data['name'];
 
 						$deductionType = $purpose;
+					
+						$deductionAmount = $amount;
 
 						$transactionDate = date('Y-m-d H:i:s');
 
@@ -7381,6 +7383,8 @@ class Admin extends CI_Controller {
 
 						$deductionType = $purpose;
 
+						$deductionAmount = $amount;
+
 						$transactionDate = date('Y-m-d H:i:s');
 
 						$transactionID = $reference;
@@ -7419,7 +7423,74 @@ class Admin extends CI_Controller {
 						$data['response'] = $e->getMessage();
 					}
 				} 
+
+				if ($responseCxEmail) {
+
+					//Unione Template
+
+				try {
+					$response = $client->request('POST', 'template/get.json', array(
+						'headers' => $headers,
+						'json' => $requestCxBody,
+				));
+
+					$jsonResponse = $response->getBody()->getContents();
+
+					$responseData = json_decode($jsonResponse, true);
+
+					$htmlBody = $responseData['template']['body']['html'];
+
+					$username = $data['name'];
+
+					$deductionType = $purpose;
+
+					$deductionAmount = $amount;
+
+					$transactionDate = date('Y-m-d H:i:s');
+
+					$transactionID = $reference;
+
+					$walletBallance = $new_amount;
+
+					// Replace the placeholder in the HTML body with the username
+
+					$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+					$htmlBody = str_replace('{{DeductionAmount}}', $deductionAmount, $htmlBody);
+					$htmlBody = str_replace('{{TransactionDate}}', $transactionDate, $htmlBody);
+					$htmlBody = str_replace('{{DeductionType}}', $deductionType, $htmlBody);
+					$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
+
+					$data['response'] = $htmlBody;
+
+				// Prepare the email data
+					$emailData = [
+						"message" => [
+							"recipients" => [
+								["email" => 'accounts@smallsmall.com'],
+							],
+						"body" => ["html" => $htmlBody],
+						"subject" => "Wallet Deduction Successful notification!",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "SmallSmall Alert",
+						],
+					];
+
+				// Send the email using the Unione API
+					$responseCxEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailData,
+					]);
+				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+					$data['response'] = $e->getMessage();
+				}
+			} 
 				
+				// else {
+
+				// // echo 0;
+				// // }
+
+    	            
     	            //Send email to user
     	            // $data['name'] = $user['lastName'];
     	            
