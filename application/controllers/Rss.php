@@ -2549,6 +2549,10 @@ class Rss extends CI_Controller {
 			"id" => "e5cc9712-0f36-11ee-8170-969a978c88f7"
 		];
 
+		$requestCxBody = [
+			"id" => "c457d6ec-254c-11ee-8e35-ee6e33baccfb"
+		];
+
 		// end Unione Template
 
 		if($this->session->has_userdata('loggedIn')){
@@ -2656,24 +2660,81 @@ class Rss extends CI_Controller {
 				    $data['inspectionDate'] = date('d F Y H:i', strtotime($inspectionDate));
 				    
 				    $data['propID'] = $propID;
-				    
-				    $this->email->from('donotreply@smallsmall.com', 'Small Small Inspection');
-				    
-				    $this->email->to('customerexperience@smallsmall.com');
 
-        			$this->email->subject("New Inspection Request!");
+					try {
+						$response = $client->request('POST', 'template/get.json', array(
+							'headers' => $headers,
+							'json' => $requestCxBody,
+						));
+	
+						$jsonResponse = $response->getBody()->getContents();
+						
+						$responseData = json_decode($jsonResponse, true);
+	
+						$htmlBody = $responseData['template']['body']['html'];
+						
+						$subscriberName = $data['custname'];
+						$subscriberEmail = $data['custemail'];
+						$subscriberPhoneNumber = $data['custphone'];
+						$propertyName = $data['propertyName'];
+						$propertyAddress = $data['propAddress'];
+						$dateOfVisit = $data['inspectionDate'];
+						$typeOfVisit = $data['inspectionType'];
+						$inspectionDateandTime = $data['signup_date'];
+
+						// Replace the placeholder in the HTML body with the username
+						
+						$htmlBody = str_replace('{{SubscriberName}}', $subscriberName, $htmlBody);
+						$htmlBody = str_replace('{{SubscriberEmail}}', $subscriberEmail, $htmlBody);
+						$htmlBody = str_replace('{{SubscriberPhoneNumber}}', $subscriberPhoneNumber, $htmlBody);
+						$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+						$htmlBody = str_replace('{{PropertyAddress}}', $propertyAddress, $htmlBody);
+						$htmlBody = str_replace('{{DateofVisit}}', $inspectionTime, $htmlBody);
+						$htmlBody = str_replace('{{InspectionDateandTime}}', $inspectionDateandTime, $htmlBody);
+						$htmlBody = str_replace('{{TypeofVisit}}', $typeOfVisit, $htmlBody);
+	
+						$data['response'] = $htmlBody;
+	
+						// Prepare the email data
+						$emailCxData = [
+							"message" => [
+								"recipients" => [
+									["email" => 'customerexperience@smallsmall.com'],
+								],
+								"body" => ["html" => $htmlBody],
+								"subject" => "New Inspection Request!",
+								"from_email" => "donotreply@smallsmall.com",
+								"from_name" => "Small Small Inspection",
+							],
+						];
+	
+						// Send the email using the Unione API
+						$responseEmail = $client->request('POST', 'email/send.json', [
+							'headers' => $headers,
+							'json' => $emailCxData,
+						]);
+				
+					} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+						$data['response'] = $e->getMessage();
+					}
+				    
+				    // $this->email->from('donotreply@smallsmall.com', 'Small Small Inspection');
+				    
+				    // $this->email->to('customerexperience@smallsmall.com');
+
+        			// $this->email->subject("New Inspection Request!");
         
-        			$this->email->set_mailtype("html");
+        			// $this->email->set_mailtype("html");
         
-        			$message = $this->load->view('email/header.php', $data, TRUE);
+        			// $message = $this->load->view('email/header.php', $data, TRUE);
         
-        			$message .= $this->load->view('email/newinspection.php', $data, TRUE);
+        			// $message .= $this->load->view('email/newinspection.php', $data, TRUE);
         
-        			$message .= $this->load->view('email/footer.php', $data, TRUE);
+        			// $message .= $this->load->view('email/footer.php', $data, TRUE);
         
-        			$this->email->message($message);
+        			// $this->email->message($message);
         
-        			$this->email->send();    
+        			// $this->email->send();    
 				
 				}
 				//Check if it is the weekend then send auto response email
