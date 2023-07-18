@@ -160,6 +160,12 @@
 								        <option value="">Purpose</option>
 								        <option value="Light">Light</option>
 								        <option value="Water">Water</option>
+								        <option value="Rent">Rent</option>
+								        <option value="Service Charge">Service Charge</option>
+								        <option value="Security Deposit">Security Deposit</option>
+								        <option value="Diesel">Diesel</option>
+								        <option value="PHCN">PHCN</option>
+								        <option value="Late Fee">Late Fee</option>
 								    </select>
 								</td>
 

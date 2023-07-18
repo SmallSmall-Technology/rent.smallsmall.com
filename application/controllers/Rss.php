@@ -1419,7 +1419,7 @@ class Rss extends CI_Controller {
                                 <td class="td-content"><div target="_blank" class="td-txt">'.$row->propertyTitle.'</div></td>
                                 <td class="td-content"><div class="td-txt">'.$row->city.', '.$row->state_name.'</div></td>
                                 <td class="td-content"><span style="font-family:helvetica">&#x20A6;</span>'.number_format($row->price).'</td>
-                                <td class="td-content">'.date('d M, Y', strtotime($row->dte)).'</td>
+                                <td class="td-content">'.date('d M, Y', strtotime($row->dateOfEntry)).'</td>
 								<td>
 								<a href="'.base_url().'property/'.$row->propertyID.'"><input type="button" class="btn secondary-background" value = "View"></a>
                                 </td>
@@ -1607,74 +1607,79 @@ class Rss extends CI_Controller {
             
             foreach($data->result() as $row){
                 
-                if($row->status == 1){
+                if($row->status == 0){
                 
                 $date1 = $row->entry_date;
                 
                 if($date1 != $date)
                 {
-                    $output .= '<div class="col-12 mb-3">
+                    $output .= '<br></br><div class="row mb-4">
+                    
+                    <div class="col-12 mb-3">
     				<p class="secondary-text-color">'.$row->entry_date.'</p>
     			  </div>';
     			  
     			  $date = $row->entry_date;
                 }
                 
-			  $output .= '<div class="col-12 mb-3" data-toggle="modal" data-target="#example'.$row->id.'">
-				<div class="message-container--latest px-3 py-4 justify-content-between d-flex">
-				  <div class="d-flex align-items-center">
-					<div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-block">
-					  Rentsmallsmall
-					</div>
-					<div class="bss-btn p-2  mr-2 d-md-none d-block">
-					  RSS
-					</div>
-					<div class="msg-intro">
-					  <p>'.$row->subject.'</p>
-					  <p style="font-size: 13px;">'.substr($row->details, 0, 14).'...</p>
-					</div>
-				  </div>
-				  <div class="align-self-center mr-md-4 mr-1">
-					<i class="fa-solid fa-greater-than"></i>
-				  </div>
-				</div>
-			  </div>
-		
-			  <!-- Modal -->
-			  <div class="modal fade" id="example'.$row->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-				aria-hidden="true">
-				<div class="modal-dialog " role="document">
-				  <div class="modal-content primary-background">
-					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					  </button>
-					</div>
-					<div class="modal-body">
-					  <div class="py-4">
-						<p class="mb-4">'.$row->entry_date.'</p>
-						<h5 class="mb-4">'.$row->subject.'</h5>
-						<div class=" d-flex align-items-center ">
-						  <div class="inbox-msg-icon py-3  mr-2">
-							<div class="msg-icon d-flex justify-content-center align-items-center">RSS</div>
-						  </div>
-						  <div class="flex-grow-1  py-3 pl-2 text-dark">
-							<p style="font-size: 14px; font-weight: 400;">Rentsmallsmall</p>
-						  </div>
-						</div>
-						<div class="inbox-body">
-						  <p class="mb-4">'.$row->details.'</p>
-						  <p class="mb-4">Please feel free to reach out to us.</p>
-						  <p class="mb-4">Regards,<br>
-							RSS Customer Experience</p>
-						</div>
-		
-					  </div>
-					</div>
-		
-				  </div>
-				</div>
-			  </div>';
+			  $output .= '
+                  <div class="col-12" onClick= insVal('.$row->id.') data-toggle="modal" data-target="#example'.$row->id.'">
+                    <div class="message-container-border">
+                      <div class="message-container--latest px-3 py-4 justify-content-between d-flex">
+                        <div class="d-flex align-items-center">
+                          <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-flex">
+                            RSS
+                          </div>
+                          <div class="bss-btn p-2  mr-2 d-md-none d-flex">
+                            RSS
+                          </div>
+                          <div class="msg-intro">
+                            <p>'.$row->subject.'</p>
+                            <p style="font-size: 13px;">'.substr($row->details, 0, 14).'...</p>
+                          </div>
+                        </div>
+                        <!-- <div class="align-self-center mr-md-4 mr-1">
+                                  <i class="fa-solid fa-greater-than"></i>
+                                </div> -->
+                      </div>
+                    </div>
+                  </div>
+            
+                  <!-- Modal -->
+                  <div class="modal fade" id="example'.$row->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog " role="document">
+                      <div class="modal-content primary-background">
+                        <div class="modal-header" style="border: none;">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body p-md-5 p-3">
+                          <div class="py-4">
+                            <p class="mb-4">'.$row->entry_date.'</p>
+                            <h5 class="mb-4">'.$row->subject.'</h5>
+                            <div class=" d-flex align-items-center ">
+                              <div class="inbox-msg-icon py-3  mr-2">
+                                <div class="msg-icon d-flex justify-content-center align-items-center">CX</div>
+                              </div>
+                              <div class="flex-grow-1  py-3 pl-2 text-dark">
+                                <p style="font-size: 14px; font-weight: 400;">Customer Experience</p>
+                              </div>
+                            </div>
+                            <div class="inbox-body">
+                              <p class="mb-4">'.$row->details.'</p>
+                              <p class="mb-4">Please feel free to reach out to us.</p>
+                              <p class="mb-4">Regards,<br>
+                                RSS Customer Experience</p>
+                            </div>
+            
+                          </div>
+                        </div>
+            
+                      </div>
+                    </div>
+                  </div>';
 			  
                 }
                 
@@ -1684,33 +1689,36 @@ class Rss extends CI_Controller {
                 
                     if($date1 != $date)
                     {
-                        $output .= '<div class="col-12 mb-3">
+                        $output .= '<br></br><div class="col-12 mb-3">
         				<p class="secondary-text-color">'.$row->entry_date.'</p>
         			  </div>';
         			  
         			  $date = $row->entry_date;
                     }
                     
-                             $output .= '<div class="col-12 mb-3" data-toggle="modal" data-target="#example'.$row->id.'">
-                                <div class="message-container px-3 py-4 justify-content-between d-flex">
-                                  <div class="d-flex align-items-center">
-                                    <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-block">
-                                      Rentsmallsmall
-                                    </div>
-                                    <div class="bss-btn p-2  mr-2 d-md-none d-block">
-                                      RSS
-                                    </div>
-                                    <div class="msg-intro">
-                                      <p>'.$row->subject.'</p>
-                                      <p style="font-size: 13px;">'.substr($row->details, 0, 14).'...</p>
-                                    </div>
+                             $output .= '
+                          <div class="col-12">
+                            <div class="message-container-border">
+                              <div class="message-container px-3 py-4 justify-content-between d-flex">
+                                <div class="d-flex align-items-center">
+                                  <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-flex">
+                                    RSS
                                   </div>
-                                  <div class="align-self-center mr-md-4 mr-1">
-                                    <i class="fa-solid fa-greater-than"></i>
+                                  <div class="bss-btn p-2  mr-2 d-md-none d-flex">
+                                    RSS
+                                  </div>
+                                  <div class="msg-intro" data-toggle="modal" data-target="#example'.$row->id.'">
+                                    <p>'.$row->subject.'</p>
+                                    <p style="font-size: 13px;">'.substr($row->details, 0, 14).'...</p>
                                   </div>
                                 </div>
+                                <!-- <div class="align-self-center mr-md-4 mr-1">
+                                <i class="fa-solid fa-greater-than"></i>
+                              </div> -->
                               </div>
-                              
+                            </div>
+                            </div>
+                                                  
                               <!-- Modal -->
             			  <div class="modal fade" id="example'.$row->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             				aria-hidden="true">
@@ -2385,6 +2393,7 @@ class Rss extends CI_Controller {
 	            
 	    $rc = strtoupper(substr($lname, 0, 3).$code);
 	    
+	    
 		// Unione Template
 
 		$headers = array(
@@ -2426,7 +2435,8 @@ class Rss extends CI_Controller {
 				$data['name'] = $fname;	
 				
 				$data['email'] = $email;
-					
+				
+				
 				//Unione Template
 
 				try {
@@ -2448,37 +2458,43 @@ class Rss extends CI_Controller {
 					$htmlBody = str_replace('{{confirmationLink}}', $confirmationLink, $htmlBody);
 
 					$data['response'] = $htmlBody;
-
-					// Prepare the email data
-					$emailData = [
-						"message" => [
-							"recipients" => [
-								["email" => $email],
-							],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Email Confirmation RentSmallsmall",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "Smallsmall",
-						],
-					];
-
-					// Send the email using the Unione API
-					$responseEmail = $client->request('POST', 'email/send.json', [
-						'headers' => $headers,
-						'json' => $emailData,
-					]);
-			
-					// Output the result
-					if($responseEmail){
-						echo 1;
-					}else{
-						echo 0;
-					}
 					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
 
+				// End Of Unione
+				
+				
+				$this->email->from('donotreply@smallsmall.com', 'SmallSmall');
+
+				$this->email->to($email);
+
+				$this->email->subject("Email Confirmation RentSmallsmall");	
+				
+				$this->email->set_mailtype("html");
+
+				// $message = $this->load->view('email/header.php', $data, TRUE);
+
+				// $message .= $this->load->view('email/confirmationemail.php', $data, TRUE);
+
+				// $message .= $this->load->view('email/footer.php', $data, TRUE);
+				
+				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+
+				$this->email->message($message);
+
+				$emailRes = $this->email->send();
+				
+				if($emailRes){
+					
+					echo 1; 
+						
+				}else{
+					
+					echo 0;
+					
+				}
 
 			}
 
@@ -2486,6 +2502,7 @@ class Rss extends CI_Controller {
 
 	}
 
+	
 	public function resend_verification(){
 		
 		$email = $this->input->post('email');
@@ -2551,6 +2568,7 @@ class Rss extends CI_Controller {
 
 		// end Unione Template
 
+
 		if($this->session->has_userdata('loggedIn')){
 
 			//Proceeds to scheduling inspection
@@ -2576,6 +2594,7 @@ class Rss extends CI_Controller {
 				$data['propName'] = $property['propertyTitle'];
 				
 				$data['propAddress'] = $property['address'].', '.$property['city'];
+				
 				
 				//Unione Template
 
@@ -2609,33 +2628,37 @@ class Rss extends CI_Controller {
 					$htmlBody = str_replace('{{Time}}', $inspectionTime, $htmlBody);
 
 					$data['response'] = $htmlBody;
-
-					// Prepare the email data
-					$emailData = [
-						"message" => [
-							"recipients" => [
-								["email" => $user['email']],
-							],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Property Visit Scheduled RentSmallsmall",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "Small Small Inspection",
-						],
-					];
-
-					// Send the email using the Unione API
-					$responseEmail = $client->request('POST', 'email/send.json', [
-						'headers' => $headers,
-						'json' => $emailData,
-					]);
-			
+					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
+
+				// End Of Unione
+				
+				
+				$this->email->from('donotreply@smallsmall.com', 'Small Small Inspection');
+
+				$this->email->to($user['email']);
+
+				$this->email->subject("Property Visit Scheduled RentSmallsmall");	
+				
+				$this->email->set_mailtype("html");
+
+				// $message = $this->load->view('email/header.php', $data, TRUE);
+
+				// $message .= $this->load->view('email/inspectionemail.php', $data, TRUE);
+
+				// $message .= $this->load->view('email/footer.php', $data, TRUE);
+				
+				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+
+				$this->email->message($message);
+
+				$emailRes = $this->email->send();
 				
 				$notify = $this->functions_model->insert_user_notifications('Inspection Scheduled!', 'You have successfully scheduled an inspection', $user['userID'], 'Rent');
 				
-				if($responseEmail){
+				if($emailRes){
 				    
 				    $data['custname'] = $user['firstName'].' '.$user['lastName'];
 				    
@@ -2718,6 +2741,7 @@ class Rss extends CI_Controller {
 		}
 
 	}
+
 
 	public function reply_message(){
 
@@ -2956,10 +2980,7 @@ class Rss extends CI_Controller {
 
 	}
 
-	
 	public function insertDetails(){
-	    
-	    require 'vendor/autoload.php'; // For Unione template authoload
 
 		$details = $this->input->post('details');
 
@@ -2980,28 +3001,6 @@ class Rss extends CI_Controller {
 		$email = $details['profile'][0]['email'];
 		
 		$ref = 'rss_'.md5(rand(1000000, 9999999999));
-		
-		// Unione Template
-
-		$headers = array(
-			'Content-Type' => 'application/json',
-			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
-		);
-
-		$client = new \GuzzleHttp\Client([
-			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-		]);
-
-		$requestBody = [
-			"id" => "05d45b98-11ae-11ee-9bc2-0a93cf78caa3"
-		];
-		
-		$requestBodyForTeam = [
-			"id" => "f368198a-11c2-11ee-8731-76c23e12fa03"
-		];
-
-		// end Unione Template
 
 		//Insert details into verification table
 
@@ -3012,107 +3011,26 @@ class Rss extends CI_Controller {
 	    $data['ver_title'] = "Verification Notification";
 	    
 	    $data['ver_note'] = "There is a new verification request profile. ";
-	    
-	    //Unione Template
 
-				try {
-					$response = $client->request('POST', 'template/get.json', array(
-						'headers' => $headers,
-						'json' => $requestBody,
-					));
+	    $this->email->from('donotreply@smallsmall.com', 'SmallSmall Alert');
 
-					$jsonResponse = $response->getBody()->getContents();
-					
-					$responseData = json_decode($jsonResponse, true);
-
-					$htmlBody = $responseData['template']['body']['html'];
-										
-					$userName = $fname;
-
-					// Replace the placeholder in the HTML body with the username
-					
-					$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
-
-					$data['response'] = $htmlBody;
-
-					// Prepare the email data
-					$emailData = [
-						"message" => [
-							"recipients" => [
-								["email" => $email],
-							],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Verification Submitted notification",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "SmallSmall Alert",
-						],
-					];
-					
-					// Send the email using the Unione API
-					$responseEmail = $client->request('POST', 'email/send.json', [
-						'headers' => $headers,
-						'json' => $emailData,
-					]);
-
-				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-					$data['response'] = $e->getMessage();
-				}
+		$this->email->to('verification@smallsmall.com');
 		
-		    if($responseEmail){
-		    
-				try {
-					$response = $client->request('POST', 'template/get.json', array(
-						'headers' => $headers,
-						'json' => $requestBodyForTeam,
-					));
+		$this->email->bcc('pidah.t@smallsmall.com');
 
-					$jsonResponse = $response->getBody()->getContents();
-					
-					$responseData = json_decode($jsonResponse, true);
+		$this->email->subject("Verification Alert!");	
 
-					$htmlBody = $responseData['template']['body']['html'];
-										
-					$userName = $fname;
-					
-					$userEmail = $email;
-					
-					$propertyID = $order['property'][0]['productID'];
+		$this->email->set_mailtype("html");
 
-					// Replace the placeholder in the HTML body with the username
-					
-					$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
-					
-					$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
-					
-					$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
+		$message = $this->load->view('email/header.php', $data, TRUE);
 
-					$data['response'] = $htmlBody;
-				
-        		// Prepare the email data
-       			 	$emailDataTeam = [
-            			"message" => [
-                			"recipients" => [
-                    			["email" => 'verification@smallsmall.com'],
-					["email" => 'pidah.t@smallsmall.com'],
-                			],
-                		"body" => ["html" => $htmlBody],
-                		"subject" => "New Verification alert",
-                		"from_email" => "donotreply@smallsmall.com",
-                		"from_name" => "SmallSmall Alert",
-            			],
-        			];
+		$message .= $this->load->view('email/verification-alert-email.php', $data, TRUE);
 
-					// Send the email using the Unione API
-					$responseEmail = $client->request('POST', 'email/send.json', [
-						'headers' => $headers,
-						'json' => $emailDataTeam,
-					]);
-					
-				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-					$data['response'] = $e->getMessage();
-				}
+		$message .= $this->load->view('email/footer.php', $data, TRUE);
 
-		    }
+		$this->email->message($message);
+
+		$emailRes = $this->email->send();
 
 		if($ver_result){
 
@@ -3132,6 +3050,7 @@ class Rss extends CI_Controller {
 
 				$booked = $this->rss_model->insertBooking($booking_id, $ver_result, $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 				
+
 				if($booked){
 				    
 				    //Get property details
@@ -3193,12 +3112,14 @@ class Rss extends CI_Controller {
 					$this->rss_model->insertFurnisureOrders($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['duration'], $order['paymentOption'], $i, count($order['furnisure']), $price, $ref);
 					
 					/*($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['productUrl'], $order['furnisure'][$i]['securityDeposit'], $order['furnisure'][$i]['duration'], $order['furnisure'][$i]['duration'],$order['paymentOption'], $i, count($order['furnisure']), $price);*/				
-	
+					
+
 				}
 
 				$result = "success";
 
 			}
+
 			
 		}
 		//This is where you send an email to customer for verification process starting
@@ -3225,7 +3146,7 @@ class Rss extends CI_Controller {
 		echo json_encode(array('result' => $result, 'msg' => $price));
 
 	}
-
+	
 	public function insertPropertyDetails(){
  
 		$propType = $this->input->post('propType');
@@ -4100,6 +4021,8 @@ class Rss extends CI_Controller {
 		
 		$res = $this->rss_model->check_reset_email($email);
 		
+		
+		
 		if($res){
 			
 			if($res['referral'] == 'wordpress'){ 
@@ -4122,8 +4045,10 @@ class Rss extends CI_Controller {
 				
 				$names = explode(" ", $res['firstName']);
 
+
 				$data['name'] = $names[0];	
-					
+				
+				
 				//Unione Template
 
 				try {
@@ -4138,6 +4063,7 @@ class Rss extends CI_Controller {
 
 					$htmlBody = $responseData['template']['body']['html'];
 
+
 					// Get the unique username
 					// $user = $this->admin_model->get_user($id);
 					
@@ -4150,41 +4076,47 @@ class Rss extends CI_Controller {
 					
 					$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
+
 					$data['response'] = $htmlBody;
-
-					// Prepare the email data
-					$emailData = [
-						"message" => [
-							"recipients" => [
-								["email" => $email],
-							],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Password Reset RentSmallsmall",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "Small Small Password Reset",
-						],
-					];
-
-					// Send the email using the Unione API
-					$responseEmail = $client->request('POST', 'email/send.json', [
-						'headers' => $headers,
-						'json' => $emailData,
-					]);
-
-					// Output the result
-					if($responseEmail){
-						echo 1;
-					}else{
-						
-						echo 0;	
-					}
-
+					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
 
+				// End Of Unione
+				
+
+				$this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
+
+				$this->email->to($email);
+
+				$this->email->subject("Password Reset RentSmallsmall");	
+				
+				$this->email->set_mailtype("html");
+
+				// $message = $this->load->view('email/header.php', $data, TRUE);
+
+				// $message .= $this->load->view('email/emailreset.php', $data, TRUE);
+
+				// $message .= $this->load->view('email/footer.php', $data, TRUE);
+				
+				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+
+				$this->email->message($message);
+
+				$emailRes = $this->email->send();
+				
 				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
 				
+				if($emailRes){
+					
+					echo 1;
+					
+				}else{
+					
+					echo 0;
+					
+				}
 			}else{
 				
 				echo "Error inserting reset data";
@@ -4580,8 +4512,6 @@ class Rss extends CI_Controller {
 	}
 	
 	public function payment_success($ref){
-	    
-	    require 'vendor/autoload.php'; // For Unione template authoload
 		
 		//$this->session->unset_userdata('payment');
 		
@@ -4592,112 +4522,9 @@ class Rss extends CI_Controller {
 			$data['fname'] = $this->session->userdata('fname');
 
 			$data['lname'] = $this->session->userdata('lname');
-			
-			$data['email'] = $this->session->userdata('email');
-			
-		// $user = $this->rss_model->getUser($this->session->userdata('userID'));
-
 		}
-		
-		// Unione Template Header
-
-		$headers = array(
-			'Content-Type' => 'application/json',
-			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
-		);
-
-		$client = new \GuzzleHttp\Client([
-			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-		]);
-
-		$requestBody = [
-			"id" => "5d97bd2a-0f33-11ee-99b6-c60fd5919487"
-		];
-
-		// end Unione Template
 		
 		$dets = $this->rss_model->getDetails($ref);
-
-		if($dets){
-
-			try {
-				$response = $client->request('POST', 'template/get.json', array(
-					'headers' => $headers,
-					'json' => $requestBody,
-				));
-	
-				$jsonResponse = $response->getBody()->getContents();
-				
-				$responseData = json_decode($jsonResponse, true);
-	
-				$htmlBody = $responseData['template']['body']['html'];
-
-				// $email = $user['email'];
-				
-				$email = $data['email'];
-									
-				$userName = $data['fname'];
-
-				$propertyTitle = $dets['propertyTitle'];
-
-				$amountPaid = $dets['amount'];
-
-				$paymentPlan = $dets['type'];
-
-				$paymentType = $dets['payment_type'];
-
-				$referenceID = $ref;
-
-				$paymentPlan = $dets['payment_paln'];
-
-				$duration = $dets['duration'];
-					
-				// Replace the placeholder in the HTML body with the username
-				
-				$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
-				
-				$htmlBody = str_replace('{{PropertyTitle}}', $propertyTitle, $htmlBody);
-				
-				$htmlBody = str_replace('{{Duration}}', $duration, $htmlBody);
-
-				$htmlBody = str_replace('{{PaymentPlan}}', $paymentPlan, $htmlBody);
-
-				$htmlBody = str_replace('{{AmountPaid}}', $amountPaid, $htmlBody);
-
-				$htmlBody = str_replace('{{ModeOfPayment}}', $paymentType, $htmlBody);
-
-				$htmlBody = str_replace('{{TransactionID}}', $referenceID, $htmlBody);
-	
-				$data['response'] = $htmlBody;
-				
-				// Prepare the email data
-				$emailData = [
-					"message" => [
-						"recipients" => [
-							["email" => $email],
-							["email" => 'pidah.t@smallsmall.com'], // Just for testing
-						],
-						"body" => ["html" => $htmlBody],
-						"subject" => "RentSmallsmall Payment successful notification",
-						"from_email" => "donotreply@smallsmall.com",
-						"from_name" => "SmallSmall Payment Alert",
-					],
-				];
-
-				// Send the email using the Unione API
-				$responseEmail = $client->request('POST', 'email/send.json', [
-					'headers' => $headers,
-					'json' => $emailData,
-				]);
-
-				echo 1;
-				
-			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-				$data['response'] = $e->getMessage();
-			}
-	
-		}
 		
 		$prop_update = $this->rss_model->updatePropStat($dets['propertyID'], $dets['rent_expiration']);
 		
@@ -4717,7 +4544,7 @@ class Rss extends CI_Controller {
 
 		$this->load->view('templates/footer');
 	}
-
+	
 	public function payment_fail(){
 		
 		if($this->session->has_userdata('userID')){
@@ -7386,157 +7213,6 @@ public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $k
 
 	}
 
-	// Unione API Testing
-
-public function unione_template_get()
-{
-    require 'vendor/autoload.php';
-
-    $headers = array(
-        'Content-Type' => 'application/json',
-        'Accept' => 'application/json',
-        'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
-    );
-    
-    $client = new \GuzzleHttp\Client([
-        'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-    ]);
-
-    // Request body for retrieving the template
-    $requestBody = [
-        "id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
-    ];
-
-    try {
-        // Retrieve the template from the Unione API
-        $response = $client->request('POST', 'template/get.json', [
-            'headers' => $headers,
-            'json' => $requestBody,
-        ]);
-
-        $responseData = json_decode($response->getBody()->getContents(), true);
-
-        // Get the HTML body from the template response
-        $htmlBody = $responseData['template']['body']['html'];
-
-        // Replace placeholders in the HTML body with actual values
-        $username = "Yusuf";
-        $resetLink = 'https://buy.rentsmallsmall.com/';
-        $email = 'yusuf.i@smallsmall.com';
-        $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-        $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
-
-        // Prepare the email data
-        $emailData = [
-            "message" => [
-                "recipients" => [
-                    ["email" => $email],
-                ],
-                "body" => ["html" => $htmlBody],
-                "subject" => "Testing",
-                "from_email" => "donotreply@smallsmall.com",
-                "from_name" => "Smallsmall",
-            ],
-        ];
-
-        // Send the email using the Unione API
-        $response = $client->request('POST', 'email/send.json', [
-            'headers' => $headers,
-            'json' => $emailData,
-        ]);
-
-        // Output the result
-        echo 'Email Sent successfully to ' . $email;
-        
-    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
-        
-        // Handle API errors
-       print_r($e->getMessage());
-    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
-        // Handle other exceptions
-        print_r($e->getMessage());
-    }
-}
-
-
-public function unione_template_getOLD()
-{
-
-require 'vendor/autoload.php';
-
-$headers = array(
-        'Content-Type' => 'application/json',
-        'Accept' => 'application/json',
-        'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
-    );
-
-$client = new \GuzzleHttp\Client([
-        'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-
-]);
-
-$requestBody = [
-  "message" => [
-    "recipients" => [
-      [
-        "email" => 'bwitlawalyusuf@gmail.com',
-         
-      ]
-    ],
-	
-    // "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
-   
-    "body" => [
-	
-	"template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48"
-    	  // "html" => "<b>Hello, Yusuf</b>",
-    ],
-    "subject" => "Password Reset RentSmallsmall",
-    "from_email" => "donotreply@smallsmall.com",
-    "from_name" => "Small Small Password Reset",
-    // "reply_to" => "user@smallsmall.com",
-    
-  ]
-];
-
-try {
-    $response = $client->request('POST','email/send.json', array(
-        'headers' => $headers,
-        'json' => $requestBody,
-       )
-    );
-
-	$jsonResponse = $response->getBody()->getContents();
-        $responseData = json_decode($jsonResponse, true);
-
-        $htmlBody = $responseData['template']['body']['html'];
-        
-        // Get the unique username
-        // $user = $this->admin_model->get_user($id);
-        $username = "Yusuf";
-        $resetLink = 'https://rent.smallsmall.com/';
-        $email = 'yusuf.i@smallsmall.com';
-        
-        // Replace the placeholder in the HTML body with the username
-        $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-        $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
-
-        $data['response'] = $htmlBody;
-
-    	// print_r($response->getBody()->getContents());
-
- 		}
- 		catch (\GuzzleHttp\Exception\BadResponseException $e) {
-    	// handle exception or api errors.
-
-	$data['response'] = $htmlBody;
-		
-    	// print_r($e->getMessage());
-
- 		}
- 
- 
-	}
     
 	
 }

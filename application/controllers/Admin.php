@@ -351,6 +351,70 @@ class Admin extends CI_Controller {
 		}
 
 	}
+	
+	public function get_user_propty($user_id){
+	    
+	    $this->db->select('a.*');
+	    
+	    $this->db->from('property_tbl as a');
+	    
+	    $query = $this->db->get();
+	    
+	    return $query->result_array();
+	}
+	
+	
+	public function agr_upload(){
+	    
+	    $config['upload_path']          = './uploads/agreement/';
+        $config['allowed_types']        = 'doc|docx|pdf';
+        $config['max_size']             = 0;
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+        
+        $usrs = $this->session->userdata('userID');
+        
+        $usrs = $this->admin_model->get_username($usrs);
+
+        if (!$this->upload->do_upload('filename'))
+        {
+            $error = array('error' => $this->upload->display_errors());
+
+            $this->load->view('agr_error', $error);
+        }
+        
+        else
+        {
+                $data = $this->upload->data();
+                
+                $id = $this->input->post('sub_id');
+                
+                
+                $str_yr = $this->input->post('start-yr');
+                
+                $data = array(
+                    'filename' => $data['file_name'],
+                    'userId'   => $id,
+                    'start_year' => $str_yr,
+                    'end_year' => $this->input->post('end-yr'),
+                    'property' => $this->input->post('sub-propty'),
+                    'admin' => $usrs['email'],
+                    'date' => date('Y-m-d H:i:s')
+                    );
+                    
+                $this->db->insert('sub_agreement', $data);
+                
+                //print_r($data);
+                
+                echo "<script>
+                            alert('Upload Successful');
+                            window.location.href='user-profile/".$id."';
+                      </script>";
+        }
+	}
+	
 	public function add_admin(){
 
 		if ( ! file_exists(APPPATH.'views/admin/pages/add-admin.php'))
@@ -666,11 +730,10 @@ class Admin extends CI_Controller {
 		}
 
 	}
-
-
+	
 	public function rss_verfd(){
 
-		$config['total_rows'] = $this->admin_model->countRssUser();
+		$config['total_rows'] = $this->admin_model->countRssUsers();
 
 		$data['total_count'] = $config['total_rows'];
 
@@ -680,7 +743,7 @@ class Admin extends CI_Controller {
 
 			$page_number = $this->uri->segment(3);
 
-			$config['base_url'] = base_url() . 'admin/rss-verfd';
+			$config['base_url'] = base_url() . 'admin/rss-users';
 
 			if (empty($page_number))
 
@@ -738,56 +801,6 @@ class Admin extends CI_Controller {
 
 	}
 	
-	public function agr_upload(){
-	    
-	    $config['upload_path']          = './uploads/agreement/';
-        $config['allowed_types']        = 'doc|docx|pdf';
-        $config['max_size']             = 0;
-        // $config['max_width']            = 1024;
-        // $config['max_height']           = 768;
-
-        $this->load->library('upload', $config);
-        
-        $usrs = $this->session->userdata('userID');
-        
-        $usrs = $this->admin_model->get_username($usrs);
-
-        if (!$this->upload->do_upload('filename'))
-        {
-            $error = array('error' => $this->upload->display_errors());
-
-            $this->load->view('agr_error', $error);
-        }
-        
-        else
-        {
-                $data = $this->upload->data();
-                
-                $id = $this->input->post('sub_id');
-                
-                $str_yr = $this->input->post('start-yr');
-                
-                $data = array(
-                    'filename' => $data['file_name'],
-                    'userId'   => $id,
-                    'start_year' => $str_yr,
-                    'end_year' => $this->input->post('end-yr'),
-                    'property' => $this->input->post('sub-propty'),
-                    'admin' => $usrs['email'],
-                    'date' => date('Y-m-d H:i:s')
-                    );
-                    
-                $this->db->insert('sub_agreement', $data);
-                
-                //print_r($data);
-                
-                echo "<script>
-                            alert('Upload Successful');
-                            window.location.href='user-profile/".$id."';
-                      </script>";
-        }
-	}
-
 	public function app_users(){
 
 		$config['total_rows'] = $this->admin_model->countAppUsers();
@@ -1073,33 +1086,6 @@ class Admin extends CI_Controller {
 		}
 
 	} 
-
-	
-	public function download($id){
-	    
-	    $config['upload_path']          = './uploads/agreement/';
-	    
-	    if(!empty($id))
-	    {
-	         //load download helper
-	         $this->load->helper('download');
-	         
-	         //get file from db
-	         
-	         $fileInfo = $this->admin_model->getRows($id);
-	         
-	         //file path
-	         $file = './uploads/agreement/'.$fileInfo['filename'];
-	         
-	         //download file 
-	         force_download($file, NULL);
-	         
-	         redirect(dashboard/subscription-agreement);
-	         
-	         //echo $id;
-	    }
-        
-	}
 	
 	public function user_profile($id){
 	    
@@ -1108,7 +1094,7 @@ class Admin extends CI_Controller {
 		$data['details'] = $this->admin_model->get_user_details($id);
 
 		$data['bookings'] = $this->admin_model->get_user_bookings($id);
-
+		
 		$data['user_hstry'] = $this->admin_model->get_user_hstry($id);
 		
 		$data['proptys'] = $this->admin_model->get_user_propty($id);
@@ -6141,6 +6127,32 @@ class Admin extends CI_Controller {
 	        echo 0;
 	    }
 	}
+	
+	public function download($id){
+	    
+	    $config['upload_path']          = './uploads/agreement/';
+	    
+	    if(!empty($id))
+	    {
+	         //load download helper
+	         $this->load->helper('download');
+	         
+	         //get file from db
+	         
+	         $fileInfo = $this->admin_model->getRows($id);
+	         
+	         //file path
+	         $file = './uploads/agreement/'.$fileInfo['filename'];
+	         
+	         //download file 
+	         force_download($file, NULL);
+	         
+	         redirect(dashboard/subscription-agreement);
+	         
+	         //echo $id;
+	    }
+        
+	}
 
 	public function verifyUser(){
 	    
@@ -6153,6 +6165,7 @@ class Admin extends CI_Controller {
 		$result = $this->admin_model->verifyUser($id, $prop_id);
 		
 		$user = $this->admin_model->get_user($id);
+		
 		
 		// Unione Template
 
@@ -6175,6 +6188,7 @@ class Admin extends CI_Controller {
 		    ];
 
 		// end Unione Template
+		
 		
 		if($result){
 			
@@ -6206,48 +6220,56 @@ class Admin extends CI_Controller {
 
 					$htmlBody = $responseData['template']['body']['html'];
 
+
 					// Get the unique username
 					// $user = $this->admin_model->get_user($id);
 					
 					$username = $data['name'];
 					
+
 					// Replace the placeholder in the HTML body with the username
 					$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
 
 					$data['response'] = $htmlBody;
-
-					// Prepare the email data
-					$emailData = [
-						"message" => [
-							"recipients" => [
-								["email" => $user['email']],
-							],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Verification Successful!",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "Smallsmall",
-						],
-					];
-
-					// Send the email using the Unione API
-					$responseEmail = $client->request('POST', 'email/send.json', [
-						'headers' => $headers,
-						'json' => $emailData,
-					]);
 					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
+
+				// End Of Unione
+
+			$this->email->from('donotreply@smallsmall.com', 'Small Small');
+
+			$this->email->to($user['email']);
+
+// 			$this->email->bcc('customerexperience@smallsmall.com');
+
+			$this->email->subject("Verification Successful!");	
+
+			$this->email->set_mailtype("html");
+
+// 			$message = $this->load->view('email/header.php', $data, TRUE);
+
+// 			$message .= $this->load->view('email/verification-result-email.php', $data, TRUE);
+
+// 			$message .= $this->load->view('email/footer.php', $data, TRUE);
+
+			$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+
+			$this->email->message($message);
+
+			$emailRes = $this->email->send();
 			
 			$notify = $this->functions_model->insert_user_notifications('Verification Successful!', 'We are glad to inform you that your verification process has been successful, you can now start subscribing with us.', $user['userID'], 'Rent');
 			
-			if($responseEmail){
+			if($emailRes){
 			    
 			    	//Unione Template for CX
 
 				try {
 					$response = $client->request('POST', 'template/get.json', array(
 						'headers' => $headers,
+						
 						'json' => $requestBodyAdmin,
 					));
 
@@ -6256,6 +6278,7 @@ class Admin extends CI_Controller {
 					$responseData = json_decode($jsonResponse, true);
 
 					$htmlBody = $responseData['template']['body']['html'];
+
 
 					// Get the unique username
 
@@ -6269,23 +6292,26 @@ class Admin extends CI_Controller {
 					$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
 
 					$data['response'] = $htmlBody;
-
-					// Prepare the email data
-					$emailDataCx = [
-						"message" => [
-							"recipients" => [
-								["email" => 'customerexperience@smallsmall.com'],
-							],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Verification Successful!",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "Smallsmall",
-						],
-					];
 					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
+
+				// End Of Unione
+
+			$this->email->from('donotreply@smallsmall.com', 'Small Small');
+
+			$this->email->to('customerexperience@smallsmall.com');
+
+			$this->email->subject("Verification Successful!");	
+
+			$this->email->set_mailtype("html");
+
+			$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+
+			$this->email->message($message);
+
+			$this->email->send();
 			
 			}
 			
@@ -6298,6 +6324,7 @@ class Admin extends CI_Controller {
 		}
 	}
 
+	
 	public function unverifyUser(){
 		
 		$id = $this->input->post("id");
@@ -7241,11 +7268,7 @@ class Admin extends CI_Controller {
 	    }
 	    
 	}
-
-
 	public function deductWallet(){
-
-		require 'vendor/autoload.php'; // For Unione template authoload
 	    
 	    $result = 0;
 	    
@@ -7260,28 +7283,6 @@ class Admin extends CI_Controller {
 	    $userID = $this->input->post('userID');
 	    
 	    $new_amount = $this->deduct_wallet($userID, $amount);
-
-		// Unione Template
-
-		$headers = array(
-			'Content-Type' => 'application/json',
-			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
-		);
-
-		$client = new \GuzzleHttp\Client([
-			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-		]);
-
-		$requestBody = [
-			"id" => "8dae4af2-140f-11ee-9d68-0a93cf78caa3"
-		];
-
-		$requestCxBody = [
-			"id" => "3a1e3ed8-1414-11ee-99b5-76c23e12fa03"
-		];
-
-		// end Unione Template
 	    
 	    if($new_amount["result"]){
 	    
@@ -7298,150 +7299,29 @@ class Admin extends CI_Controller {
     	            $message = "success";
     	            
     	            $user = $this->rss_model->get_user($userID);
-
-					$data['name'] = $user['firstName'].' '.$user['lastName'];
-
-					//Unione Template
-
-					try {
-						$response = $client->request('POST', 'template/get.json', array(
-							'headers' => $headers,
-							'json' => $requestBody,
-					));
-
-						$jsonResponse = $response->getBody()->getContents();
-
-						$responseData = json_decode($jsonResponse, true);
-
-						$htmlBody = $responseData['template']['body']['html'];
-
-						$username = $data['name'];
-
-						$deductionType = $purpose;
-
-						$transactionDate = date('Y-m-d H:i:s');
-
-						$transactionID = $reference;
-
-						$walletBallance = $new_amount;
-
-						// Replace the placeholder in the HTML body with the username
-
-						$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-						$htmlBody = str_replace('{{amount}}', $deductionAmount, $htmlBody);
-						$htmlBody = str_replace('{{DeductionType}}', $deductionType, $htmlBody);
-
-						$htmlBody = str_replace('{{Amount}}', $deductionAmount, $htmlBody);
-						$htmlBody = str_replace('{{TransactioDate}}', $transactionDate, $htmlBody);
-						$htmlBody = str_replace('{{DeductionType}}', $deductionType, $htmlBody);
-						$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
-						$htmlBody = str_replace('{{WalletBalance}}', $walletBallance, $htmlBody);
-
-						$data['response'] = $htmlBody;
-
-					// Prepare the email data
-						$emailData = [
-							"message" => [
-								"recipients" => [
-									["email" => $user['email']],
-								],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Wallet Deduction Successful notification!",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "SmallSmall Alert",
-							],
-						];
-
-					// Send the email using the Unione API
-						$responseEmail = $client->request('POST', 'email/send.json', [
-							'headers' => $headers,
-							'json' => $emailData,
-						]);
-					} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-						$data['response'] = $e->getMessage();
-					}
-
-					if ($responseEmail) {
-
-						//Unione Template
-
-					try {
-						$response = $client->request('POST', 'template/get.json', array(
-							'headers' => $headers,
-							'json' => $requestCxBody,
-					));
-
-						$jsonResponse = $response->getBody()->getContents();
-
-						$responseData = json_decode($jsonResponse, true);
-
-						$htmlBody = $responseData['template']['body']['html'];
-
-						$username = $data['name'];
-
-						$deductionType = $purpose;
-
-						$transactionDate = date('Y-m-d H:i:s');
-
-						$transactionID = $reference;
-
-						$walletBallance = $new_amount;
-
-						// Replace the placeholder in the HTML body with the username
-
-						$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-						$htmlBody = str_replace('{{DeductionAmount}}', $deductionAmount, $htmlBody);
-						$htmlBody = str_replace('{{TransactionDate}}', $transactionDate, $htmlBody);
-						$htmlBody = str_replace('{{DeductionType}}', $deductionType, $htmlBody);
-						$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
-
-						$data['response'] = $htmlBody;
-
-					// Prepare the email data
-						$emailData = [
-							"message" => [
-								"recipients" => [
-									["email" => 'customerexperience@smallsmall.com'],
-								],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Wallet Deduction Successful notification!",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "SmallSmall Alert",
-							],
-						];
-
-					// Send the email using the Unione API
-						$responseCxEmail = $client->request('POST', 'email/send.json', [
-							'headers' => $headers,
-							'json' => $emailData,
-						]);
-					} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-						$data['response'] = $e->getMessage();
-					}
-				} 
-				
-    	            //Send email to user
-    	            // $data['name'] = $user['lastName'];
     	            
-    	            // $data['amount'] = $amount;
+    	            //Send email to user
+    	            $data['name'] = $user['lastName'];
+    	            
+    	            $data['amount'] = $amount;
 
-            	    // $this->email->from('donotreply@smallsmall.com', 'SmallSmall Alert');
+            	    $this->email->from('donotreply@smallsmall.com', 'SmallSmall Alert');
             
-            		// $this->email->to($user['email']);
+            		$this->email->to($user['email']);
             
-            		// $this->email->subject("Debit Alert!");	
+            		$this->email->subject("Debit Alert!");	
             
-            		// $this->email->set_mailtype("html");
+            		$this->email->set_mailtype("html");
             
-            		// $message = $this->load->view('email/header.php', $data, TRUE);
+            		$message = $this->load->view('email/header.php', $data, TRUE);
             
-            		// $message .= $this->load->view('email/debitalert.php', $data, TRUE);
+            		$message .= $this->load->view('email/debitalert.php', $data, TRUE);
             
-            		// $message .= $this->load->view('email/footer.php', $data, TRUE);
+            		$message .= $this->load->view('email/footer.php', $data, TRUE);
             
-            		// $this->email->message($message);
+            		$this->email->message($message);
             
-            		// $emailRes = $this->email->send();
+            		$emailRes = $this->email->send();
     	        }
     	    }else{
     	        
@@ -7456,7 +7336,6 @@ class Admin extends CI_Controller {
 	    echo json_encode(array("response" => $result, "message" => $message));
 	    
 	}
-
 	
 	public function deduct_wallet($userID, $amount = 0){
 	    
@@ -8035,21 +7914,15 @@ class Admin extends CI_Controller {
     		    
     			if($this->admin_model->update_buytolet_units($new_pool_units, $property_id)){
     			    
-    			    $hash = ($offer_type == 'champions')? '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d' : '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d';
+    			    if($offer_type == 'champions'){ '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d';
     			    
-    			    $email_response = $this->send_mmio_email($firstname, $lastname, $email, $hash);
-    			        
+    			    }else{
+    			        $this->send_free_shares_email($lastname, $unit_amount, $prop['property_name']);
+    			    }
+    			    
     			    $response = "success";
     			        
-    			    if($email_response){
-    			    
-    			        $message = "Successfully sent";
-    			        
-    			    }else{
-    			        
-    			        $message = "Email send error";
-    			        
-    			    }
+    			    $message = "Successfully sent";
     			    
     			}else{
     			    
@@ -8164,77 +8037,76 @@ class Admin extends CI_Controller {
 
 	}
 	
-	public function buytolet_stp_subscribers(){
-
-		$config['total_rows'] = $this->admin_model->countSubscribers();
-
-		$data['total_count'] = $config['total_rows'];
-
-		$config['suffix'] = '';
-
-		if ($config['total_rows'] > 0) {
-
-			$page_number = $this->uri->segment(3);
-
-			$config['base_url'] = base_url() . 'admin/stp-subscribers';
-
-			if (empty($page_number))
-
-				$page_number = 1;
-
-			$offset = ($page_number - 1) * $this->pagination->per_page;
-
-			$this->admin_model->setPageNumber($this->pagination->per_page);
-
-			$this->admin_model->setOffset($offset);
-			
-			$this->pagination->cur_page = $page_number;
-
-			$this->pagination->initialize($config);
-
-			$data['page_links'] = $this->pagination->create_links();
-
-			$data['subscribers'] = $this->admin_model->fetchSubscribers();			
-
-		}
-
-		if ( ! file_exists(APPPATH.'views/admin/pages/stp-subscribers.php'))
-        {
-
-                // Whoops, we don't have a page for that!
-                show_404();
-
-        }
-		//check if Admin is logged in
-
-		if($this->session->has_userdata('adminLoggedIn')){
-
-			$data['adminPriv'] = $this->functions_model->getUserAccess();
-
-			$data['adminID'] = $this->session->userdata('adminID');
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');
-
-			$data['title'] = "STP :: Stay SmallSmall";
-
-			$this->load->view('admin/templates/header.php' , $data);
-
-			$this->load->view('admin/templates/sidebar.php' , $data);
-
-			$this->load->view('admin/pages/stp-subscribers.php' , $data);
-
-			$this->load->view('admin/templates/footer.php' , $data);
 	
-		}else{
-	
-			redirect( base_url().'admin/login','refresh');		
-
-		}
-	}
 	function random_strings($length_of_string) 
     { 
         $str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz'; 
         return substr(str_shuffle($str_result), 0, $length_of_string); 
     } 
+    
+    public function send_free_shares_email($name, $sharesAmount, $propertyName){
+        
+        require 'vendor/autoload.php';
+        
+        $headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "55265b5a-f3c8-11ed-adf7-66beeeca2892"
+			//"id" => '"'.$template_id.'"'
+		];
+
+		// end Unione Template
+		
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
+
+			$jsonResponse = $response->getBody()->getContents();
+			
+			$responseData = json_decode($jsonResponse, true);
+
+			$htmlBody = $responseData['template']['body']['html'];
+
+			// Replace the placeholder in the HTML body with the username
+			$htmlBody = str_replace('{{Name}}', $name, $htmlBody);
+			
+			$htmlBody = str_replace('{{propertyName}}', $propertyName, $htmlBody);
+			
+			$htmlBody = str_replace('{{sharesAmount}}', $sharesAmount, $htmlBody);
+			
+			
+
+			$data['response'] = $htmlBody;
+			
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+		    
+			$data['response'] = $e->getMessage();
+			
+		}
+		
+		$this->email->from('donotreply@smallsmall.com', 'Small Small');
+
+		$this->email->to($email);
+
+		$this->email->subject("You have been sent Property Shares From Buysmallsmall");	
+		
+		$this->email->set_mailtype("html");
+		
+		$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+		
+		$this->email->message($message);
+
+		$emailRes = $this->email->send();
+    }
 	
 }

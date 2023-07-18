@@ -21,8 +21,6 @@ else{
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../assets/css/bootstrap-css/bootstrap.min.css" crossorigin="anonymous" />
 
@@ -360,10 +358,10 @@ else{
                         <a class="nav-link primary-text-color  sub-menu--dashboard-active  px-0" id="currentBookingBtn" href="#" role="button">Current
                             Booking</a>
                     </li>
-                    <li class="nav-item mr-3">
-                        <a class="nav-link secondary-text-color px-0 " id="checklistBtn" href="#" role="button">Move-in
-                            Checklist</a>
-                    </li>
+                    <!--<li class="nav-item mr-3">-->
+                    <!--    <a class="nav-link secondary-text-color px-0 " id="checklistBtn" href="#" role="button">Move-in-->
+                    <!--        Checklist</a>-->
+                    <!--</li>-->
                     <li class="nav-item mr-3">
                         <a class="nav-link secondary-text-color px-0" id="historyBtn" href="#" role="button">History</a>
                     </li>

@@ -412,13 +412,13 @@ class Dashboard extends CI_Controller
 
 			$data['fname'] = $this->session->userdata('fname');			
 
-			$data['lname'] = $this->session->userdata('lname');			
-
-			$data['email'] = $this->session->userdata('email');	
+			$data['lname'] = $this->session->userdata('lname');
 			
 			$data['proptys'] = $this->admin_model->get_user_propty($data['userID']);
 			
 			$data['sub_dats'] = $this->rss_model->checkSub($data['userID']);
+
+			$data['email'] = $this->session->userdata('email');		
 
 			$data['refCode'] = $this->session->userdata('referral_code');		
 

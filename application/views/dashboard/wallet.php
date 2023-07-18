@@ -33,8 +33,6 @@ else{
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../assets/css/bootstrap-css/bootstrap.min.css"
          crossorigin="anonymous" />
@@ -640,7 +638,7 @@ else{
          
          if (!localStorage.getItem('modalShown')){
              
-             $('#createWallet').on('hidden.bs.modal'), function () {
+             $('#createWallet').on('hidden.bs.modal', function () {
         
          window.history.back(); // Redirect the user to the previous page
          }
@@ -651,7 +649,7 @@ else{
         
         //  window.history.back(); // Redirect the user to the previous page
     
-    // });
+    });
     
     });
     
