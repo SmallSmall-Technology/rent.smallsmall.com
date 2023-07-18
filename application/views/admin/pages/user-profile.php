@@ -330,7 +330,7 @@
             					
             					
             			    <div class="table-responsive">
-                                    <?php echo form_open_multipart('admin/agr_upload');?>  
+                                    <?php echo form_open_multipart('admin/agr-upload');?>  
                                     
                                         <br></br>
                                         <div class="form-row" style = "margin-left: 10px;">
@@ -371,7 +371,6 @@
                                         
                                         <div class="col-md-4">
                                             <input type="submit" value="upload"/><br></br>
-                                            
                                         </div>
                                             
             		                    </form>
@@ -447,7 +446,7 @@
             			</div>
             		</div>
                     <!--subscription agreement history -->
-                                        
+
                     <!--- Transaction start pane --->
                     <div class="row">
             			<div class="col-md-12">
