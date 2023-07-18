@@ -267,6 +267,17 @@ class Admin_model extends CI_Model {
 		return $this->db->count_all_results();
 
 	}
+
+	public function countRssUser() {
+
+		$this->db->from('user_tbl');
+        
+        $this->db->where('verified', 'yes');
+        
+		return $this->db->count_all_results();
+
+	}
+	
 	public function countBtlUsers() {
 
 		$this->db->from('user_tbl');

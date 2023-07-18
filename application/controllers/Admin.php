@@ -733,7 +733,7 @@ class Admin extends CI_Controller {
 	
 	public function rss_verfd(){
 
-		$config['total_rows'] = $this->admin_model->countRssUsers();
+		$config['total_rows'] = $this->admin_model->countRssUser();
 
 		$data['total_count'] = $config['total_rows'];
 
@@ -743,7 +743,7 @@ class Admin extends CI_Controller {
 
 			$page_number = $this->uri->segment(3);
 
-			$config['base_url'] = base_url() . 'admin/rss-users';
+			$config['base_url'] = base_url() . 'admin/rss-verfd';
 
 			if (empty($page_number))
 
