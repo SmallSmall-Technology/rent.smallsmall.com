@@ -23,8 +23,6 @@ else{
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../assets/css/bootstrap-css/bootstrap.min.css" crossorigin="anonymous" />
 
@@ -407,6 +405,7 @@ else{
                                 </div>
                             </div>
                         <?php } ?>
+                        
                     </div>
 
                 </div>
@@ -416,7 +415,7 @@ else{
         </div>
 
     </main>
-    
+
     <footer>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light justify-content-end">

@@ -24,8 +24,6 @@ else{
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="../assets/css/bootstrap-css/bootstrap.min.css" crossorigin="anonymous" />
 
@@ -327,10 +325,10 @@ else{
     </div>
         
     
-    <br></br>
+    
     <div class="row mb-4">
 
-        <div style="text-align:center;width:100%;font-size:14px;color:#138E3D" id="inbox-data-loading"> </div>
+        <div style="text-align:center;width:100%;font-size:14px;color:#138E3D" id="inbox-data-loading"> </div><br></br>
         <div class="text-right load-more-bar" id="load-inbox-messages">
             <a href="#" class="btn secondary-background">Load more</a>
         </div>

@@ -398,318 +398,249 @@ class Loans extends CI_Controller {
 		}
 	}
 	
-	public function create_virtual_account()
-	{
-
-		require 'vendor/autoload.php'; // For Unione template authoload
-
-		$resp = FALSE;
-
-		$result_data = array();
-
-		// Unione Template
-
-		$headers = array(
-			'Content-Type' => 'application/json',
-			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
-		);
-
-		$client = new \GuzzleHttp\Client([
-			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-		]);
-
-		$requestBody = [
-			"id" => "a40755b4-223d-11ee-b680-02e1ff456000"
-		];
-
-		if ($this->session->has_userdata('userID')) {
-
-			$userID = $this->session->userdata('userID');
-
-			$bvn = $this->input->post("bvn");
-
-			$account_name = $this->input->post("account_name");
-
-			//check if account exists already
-			$account_check = $this->loan_model->check_for_account($userID);
-
-			if (empty($account_check)) {
-
-				$update_response = $this->rss_model->update_bvn($userID, $bvn);
-
-				if ($update_response) {
-
-					$data = '{
-                        "accountName" : "' . $account_name . '", 
-                        "bvn" : "' . $bvn . '",
-                        "isStatic" : ' . true . '
+	public function create_virtual_account(){
+	    
+	    $resp = FALSE;
+	    
+	    $result_data = array();
+	    
+	    if($this->session->has_userdata('userID')){
+		
+    		$userID = $this->session->userdata('userID');
+    		
+    		$bvn = $this->input->post("bvn");
+    	        
+    	    $account_name = $this->input->post("account_name");
+    		
+    		//check if account exists already
+		    $account_check = $this->loan_model->check_for_account($userID);
+		    
+		    if(empty($account_check)){
+    	        
+    	        $update_response = $this->rss_model->update_bvn($userID, $bvn);
+    	        
+    	        if($update_response){
+    	            
+    	            $data = '{
+                        "accountName" : "'.$account_name.'", 
+                        "bvn" : "'.$bvn.'",
+                        "isStatic" : '.true.'
                         }';
-
-					$curl = curl_init();
-
-					curl_setopt_array($curl, array(
-
-						CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
-
-						CURLOPT_RETURNTRANSFER => true,
-
-						CURLOPT_POSTFIELDS => $data,
-
-						CURLOPT_HTTPHEADER => [
-							"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
-
-							"content-type: application/json"
-						]
-					));
-
-					$response = curl_exec($curl);
-
-					$response = json_decode($response, true);
-
-					if ($response['status']) {
-
-						$accountID = $response['data']['id'];
-
-						$accountReference = $response['data']['accountReference'];
-
-						$accountName = $response['data']['bankAccount']['accountName'];
-
-						$accountNumber = $response['data']['bankAccount']['accountNumber'];
-
-						$bankName = $response['data']['bankAccount']['bank']['name'];
-
-						$bankCode = $response['data']['bankAccount']['bank']['code'];
-
-						$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'Web');
-
-						$resp = TRUE;
-
-						if ($result) {
-
-							$user = $this->rss_model->get_user($userID);
-
-							$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
-
-							//Unione Template
-
-							try {
-								$response = $client->request('POST', 'template/get.json', array(
-									'headers' => $headers,
-									'json' => $requestBody,
-								));
-
-								$jsonResponse = $response->getBody()->getContents();
-
-								$responseData = json_decode($jsonResponse, true);
-
-								$htmlBody = $responseData['template']['body']['html'];
-
-								$username = $data['name'];
-
-								$accountNameDetail = $accountName;
-
-								$accoutNumberDetails = $accountNumber;
-
-								$BankNameDetail = $bankName;
-
-								$accountCreatedDate = date('Y-m-d H:i:s');
-
-								// Replace the placeholder in the HTML body with the username
-
-								$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-								$htmlBody = str_replace('{{AccountName}}', $accountNameDetail, $htmlBody);
-								$htmlBody = str_replace('{{AccountNumber}}', $accoutNumberDetails, $htmlBody);
-								$htmlBody = str_replace('{{BankName}}', $BankNameDetail, $htmlBody);
-								$htmlBody = str_replace('{{CreatedDate}}', $accountCreatedDate, $htmlBody);
-
-								$data['response'] = $htmlBody;
-
-								// Prepare the email data
-								$emailData = [
-									"message" => [
-										"recipients" => [
-											["email" => $user['email']],
-										],
-										"body" => ["html" => $htmlBody],
-										"subject" => "RentSmallsmall Wallet Created Successfully!",
-										"from_email" => "donotreply@smallsmall.com",
-										"from_name" => "Rentsmallsmall",
-									],
-								];
-
-								// Send the email using the Unione API
-								$responseEmail = $client->request('POST', 'email/send.json', [
-									'headers' => $headers,
-									'json' => $emailData,
-								]);
-							} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-								$data['response'] = $e->getMessage();
-							}
-
-							$details = "success";
-
-							redirect('/dashboard/wallet', 'refresh');
-						} else {
-
-							$details = "Unable to insert details in DB";
-						}
-					} else {
-
-						$details = "Error : " . $response['message'];
-					}
-				} else {
-
-					$details = "Could not update BVN details";
-				}
-			} else {
-
-				$details = "Account exists already";
-			}
-		} else {
-
-			$details = "Session timed out please login again";
+                        
+                    $curl = curl_init();
+    	            
+    	            curl_setopt_array($curl, array(
+    			
+            		  	CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
+            
+            		  	CURLOPT_RETURNTRANSFER => true,
+            		  	
+            		  	CURLOPT_POSTFIELDS => $data,
+            
+            		  	CURLOPT_HTTPHEADER => [
+            				"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
+            
+            				"content-type: application/json"
+            		  	]
+            		));
+            
+            		$response = curl_exec($curl);
+            		
+            		$response = json_decode($response, true);
+    		
+            		if($response['status']){
+            		    
+            		    $accountID = $response['data']['id'];
+            		    
+            		    $accountReference = $response['data']['accountReference'];
+            		    
+            		    $accountName = $response['data']['bankAccount']['accountName'];
+            		    
+            		    $accountNumber = $response['data']['bankAccount']['accountNumber'];
+            		    
+            		    $bankName = $response['data']['bankAccount']['bank']['name'];
+            		    
+            		    $bankCode = $response['data']['bankAccount']['bank']['code'];
+            		    
+            		    $result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'Web');
+            		    
+            		    $resp = TRUE;
+            		    
+            		    if($result){
+            		        
+            		        $details = "success";
+            		        
+            		        redirect('/dashboard/wallet', 'refresh');
+            		        
+            		    }else{
+            		        
+            		        $details = "Unable to insert details in DB";
+            		        
+            		    }
+            		}else{
+            		    
+            		    $details = "Error : ".$response['message'];
+            		    
+            		}
+    	            
+    	        }else{
+    	            
+    	            $details = "Could not update BVN details";
+    	            
+    	        }
+		    }else{
+		        
+		        $details = "Account exists already";
+		        
+		    }
+	    
+	    }else{
+		    
+		    $details = "Session timed out please login again";
+		    
 		}
-
+		
 		echo json_encode(array("result" => $resp, "details" => $details, "data" => $result_data));
+	    
 	}
 
-	public function walletFunding()
-	{
+	public function walletFunding(){
+	    
+	    	require 'vendor/autoload.php'; // For Unione template authoload
 
-		require 'vendor/autoload.php'; // For Unione template authoload
+	    //if($this->session->has_userdata('userID')){	
+	        
+	        $reference = 'WF_'.$this->random_strings(8);
+	        
+	        $user_id = $this->input->post('userID');
+	        
+	        $amount = $this->input->post("amount");
+	        
+	        $paystack_ref = $this->input->post('paystack_reference');
+	        
+	        $referenceID = $this->input->post('referenceID');
+	        
+	        $details = $this->loan_model->get_account_details($user_id);
+	        
+	        $account_balance = $details['account_balance'] + $amount;
+	        
+	        //Added data
+	        
+	        $email = $details['email'];
 
-		//if($this->session->has_userdata('userID')){	
+			$names = explode(" ", $details['firstName']);
 
-		$reference = 'WF_' . $this->random_strings(8);
-
-		$user_id = $this->input->post('userID');
-
-		$amount = $this->input->post("amount");
-
-		$paystack_ref = $this->input->post('paystack_reference');
-
-		$referenceID = $this->input->post('referenceID');
-
-		$details = $this->loan_model->get_account_details($user_id);
-
-		$account_balance = $details['account_balance'] + $amount;
-
-		//Added data
-
-		$email = $details['email'];
-
-		$names = explode(" ", $details['firstName']);
-
-		$data['name'] = $names[0];
-
+			$data['name'] = $names[0];
+			
+				
 		// Unione Template
 
-		$headers = array(
-			'Content-Type' => 'application/json',
-			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
-		);
+		    $headers = array(
+			    'Content-Type' => 'application/json',
+			    'Accept' => 'application/json',
+			    'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		    );
 
-		$client = new \GuzzleHttp\Client([
-			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-		]);
+		    $client = new \GuzzleHttp\Client([
+			    'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		    ]);
 
-		$requestBody = [
-			"id" => "56ab446a-0f3c-11ee-93cb-821d93a29a48"
-		];
+		    $requestBody = [
+			    "id" => "56ab446a-0f3c-11ee-93cb-821d93a29a48"
+		    ];
 
-		// end Unione Template
+		    // end Unione Template
+		    
+		    
+    	    //Update account balance and insert wallet transaction
+    	    
+    	    $response = $this->loan_model->update_balance($user_id, $account_balance);
+    	    
+    	    if($response){
+    	        
+    	       // if($this->loan_model->insert_wallet_funding($user_id, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystack_ref)){
+    	            
+    	       //     echo 1;
+    	            
+    	       // }else{
+    	            
+    	       //     echo 0;
+    	            
+    	       // }
+    	       
+    	       
+    	       $this->loan_model->insert_wallet_funding($user_id, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystack_ref);
+    	            
+					//Send Notification to users for successful funding
+					$data['transactioDate'] = $this->transaction_date = date('Y-m-d H:i:s');
+					//Unione Template
 
-		//Update account balance and insert wallet transaction
+				try {
+					$response = $client->request('POST', 'template/get.json', array(
+						'headers' => $headers,
+						'json' => $requestBody,
+					));
 
-		$response = $this->loan_model->update_balance($user_id, $account_balance);
+					$jsonResponse = $response->getBody()->getContents();
+					
+					$responseData = json_decode($jsonResponse, true);
 
-		if ($response) {
+					$htmlBody = $responseData['template']['body']['html'];
+					
+					$username = $data['name'];
 
-			// if($this->loan_model->insert_wallet_funding($user_id, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystack_ref)){
+					$TransactioDate = $data['transactioDate'];
 
-			//     echo 1;
+					$topUpAmount = $amount;
 
-			// }else{
+					$transactionID = $reference;
 
-			//     echo 0;
+					// Replace the placeholder in the HTML body with the username
+					
+					$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+					$htmlBody = str_replace('{{TransactioDate}}', $TransactioDate, $htmlBody);
+					$htmlBody = str_replace('{{TopupAmount}}', $topUpAmount, $htmlBody);
+					$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
+				
+					$data['response'] = $htmlBody;
+					
+				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+					$data['response'] = $e->getMessage();
+				}
 
-			// }
+				// End Of Unione
 
-			$this->loan_model->insert_wallet_funding($user_id, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystack_ref);
+					$this->email->from('donotreply@smallsmall.com', 'SmallSmall');
 
-			//Send Notification to users for successful funding
-			$data['transactioDate'] = $this->transaction_date = date('Y-m-d H:i:s');
+					$this->email->to($email);
 
-			//Unione Template
+					$this->email->subject("RentSmallsmall Wallet Top up successful notification");
 
-			try {
-				$response = $client->request('POST', 'template/get.json', array(
-					'headers' => $headers,
-					'json' => $requestBody,
-				));
+					$this->email->set_mailtype("html");
 
-				$jsonResponse = $response->getBody()->getContents();
+				    $message = $this->load->view('email/unione-email-template.php', $data, TRUE);
 
-				$responseData = json_decode($jsonResponse, true);
+					$this->email->message($message);
 
-				$htmlBody = $responseData['template']['body']['html'];
+					$emailRes = $this->email->send();
 
-				$username = $data['name'];
+					if ($emailRes) {
 
-				$TransactioDate = $data['transactioDate'];
-
-				$topUpAmount = $amount;
-
-				$transactionID = $reference;
-
-				// Replace the placeholder in the HTML body with the username
-
-				$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-				$htmlBody = str_replace('{{TransactioDate}}', $TransactioDate, $htmlBody);
-				$htmlBody = str_replace('{{TopupAmount}}', $topUpAmount, $htmlBody);
-				$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
-
-				$data['response'] = $htmlBody;
-
-				// Prepare the email data
-				$emailData = [
-					"message" => [
-						"recipients" => [
-							["email" => $email],
-						],
-						"body" => ["html" => $htmlBody],
-						"subject" => "RentSmallsmall Wallet Top up successful notification",
-						"from_email" => "donotreply@smallsmall.com",
-						"from_name" => "Smallsmall",
-					],
-				];
-
-				// Send the email using the Unione API
-				$responseEmail = $client->request('POST', 'email/send.json', [
-					'headers' => $headers,
-					'json' => $emailData,
-				]);
-			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-				$data['response'] = $e->getMessage();
-			}
-
-			if ($responseEmail) {
-
-				echo 1;
-			} else {
-
-				echo 0;
-			}
-		}
-
-		//}else{
-
-		//redirect( base_url()."login" ,'refresh');
-
-		//}
-
+						echo 1;
+					} else {
+	
+						echo 0;
+					}     
+    	        
+    	    }
+    	        
+    	        
+	    //}else{
+	        
+	        //redirect( base_url()."login" ,'refresh');
+	        
+	    //}
+	    
 	}
 
 	

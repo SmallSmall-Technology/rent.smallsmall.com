@@ -1,5 +1,5 @@
 
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -150,6 +150,7 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
               <span class="font-weight-bold">Stayone</span>
             </a>
           </li>
+
           <li class="nav-item">
             <a class="nav-link d-sm-inline-block primary-text-color" href="https://buy.smallsmall.com">
               <small>Own</small>

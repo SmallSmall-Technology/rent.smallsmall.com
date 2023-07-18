@@ -329,9 +329,6 @@ $route['tenant/payment-details/(:any)'] = 'buytolet/payment_details_tenant/$1';
 
 
 /**Admin Routes Starts Here ***/
-$route['admin/stp-subscribers'] = 'admin/buytolet_stp_subscribers'; 
-
-$route['admin/stp-subscribers/(:any)'] = 'admin/buytolet_stp_subscribers/$1';
 
 $route['admin/create-btl-promo'] = 'admin/promo_form'; 
 
@@ -463,11 +460,7 @@ $route['admin/rss-users'] = 'admin/rss_users';
 
 $route['admin/rss-verfd'] = 'admin/rss_verfd';
 
-$route['admin/agr-upload'] = 'admin/agr_upload';
-
 $route['admin/rss-verfd/(:any)'] = 'admin/rss_verfd/$1';
-
-$route['admin/download/(:any)'] = 'admin/download/$1';
 
 $route['admin/app-users/(:any)'] = 'admin/app_users/$1';
 
@@ -636,11 +629,6 @@ $route['furnisure/appliances/(:any)'] = 'furnisure/appliances/$1';
 /**Verification Frontend Routes Starts Here ***/
 
 /*$route['rss/encdec'] = 'rss/encdec'; */ 
-
-
-/* Unione API testing    */
-$route['unione-testing'] = 'rss/unione_template_get';
-/* Unione testing    */
 
 $route['payment-summary'] = 'rss/payment_summary';
 

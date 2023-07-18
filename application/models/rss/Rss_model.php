@@ -1626,6 +1626,7 @@ class Rss_model extends CI_Model {
         'next_rental' => $move_in_date,
         'rent_status' => 'Vacant',
         'booked_on' => date("Y-m-d"),
+        'updated_at' => date("Y-m-d H:i:s"),
         'eviction_deposit' => $evictionDeposit,
         'subscription_fees' => $subscriptionFees,
         'service_charge_deposit' => $serviceChargeDeposit,
@@ -4020,7 +4021,8 @@ class Rss_model extends CI_Model {
 		return $query;
 
 	}
-
+	
+	
 	public function checkSub($id)
 	{
 	    //$ids = $this->session->userdata('userID');

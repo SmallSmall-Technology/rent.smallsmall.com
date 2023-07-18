@@ -69,6 +69,28 @@ class Admin_model extends CI_Model {
 		return $this->db->count_all_results();
 
 	}
+	
+	
+	public function fetchRssUser() {       
+
+		$this->db->select('a.firstName, a.lastName, a.id, a.userID, a.email, a.phone, a.income, a.verified, a.referral, a.regDate, b.userID, b.lastLogin');
+
+		$this->db->from('user_tbl as a'); 
+		
+		$this->db->where('a.verified', 'yes');
+		
+		$this->db->join('login_tbl as b', 'b.userID = a.userID');
+		
+		$this->db->order_by('a.id', 'DESC');
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+
+	}
+	
 	public function getUserSearchCount($s_data) {
 
 		$this->db->select('a.*, b.*');
@@ -216,6 +238,21 @@ class Admin_model extends CI_Model {
 		return $this->db->count_all_results();
 
 	}
+	
+	
+	public function get_username($propID)
+	{
+		$this->db->select('*');
+		
+		$this->db->from('user_tbl');
+		
+		$this->db->where('userID', $propID);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	}
+	
 	public function countBuytoletProperties() {
 
 		$this->db->from('buytolet_property');
@@ -223,7 +260,6 @@ class Admin_model extends CI_Model {
 		return $this->db->count_all_results();
 
 	}
-
 	public function countRssUsers() {
 
 		$this->db->from('user_tbl');
@@ -241,7 +277,7 @@ class Admin_model extends CI_Model {
 		return $this->db->count_all_results();
 
 	}
-
+	
 	public function countBtlUsers() {
 
 		$this->db->from('user_tbl');
@@ -474,40 +510,6 @@ class Admin_model extends CI_Model {
 		return $query->result_array();
 
 	}
-
-	public function get_username($propID)
-	{
-		$this->db->select('*');
-		
-		$this->db->from('user_tbl');
-		
-		$this->db->where('userID', $propID);
-		
-		$query = $this->db->get();
-		
-		return $query->row_array();
-	}
-
-	public function fetchRssUser() {       
-
-		$this->db->select('a.firstName, a.lastName, a.id, a.userID, a.email, a.phone, a.income, a.verified, a.referral, a.regDate, b.userID, b.lastLogin');
-
-		$this->db->from('user_tbl as a'); 
-		
-		$this->db->where('a.verified', 'yes');
-		
-		$this->db->join('login_tbl as b', 'b.userID = a.userID');
-		
-		$this->db->order_by('a.id', 'DESC');
-
-		$this->db->limit($this->_pageNumber, $this->_offset);
-
-		$query = $this->db->get();
-
-		return $query->result_array();
-
-	}
-
 	public function fetchAppUsers() {       
 
 		$this->db2->select('*');
@@ -540,6 +542,7 @@ class Admin_model extends CI_Model {
 		return $query->result_array();
 
 	}
+	
 	public function get_btl_user($id) {       
 
 		$this->db->select('*');
@@ -555,6 +558,39 @@ class Admin_model extends CI_Model {
 		return $query->row_array();
 
 	}
+	
+	
+	
+	public function get_user_propty($user_id){
+	    
+	    $this->db->select('a.*');
+	    
+	    $this->db->from('property_tbl as a');
+	    
+	    $query = $this->db->get();
+	    
+	    return $query->result_array();
+	}
+	
+	public function get_user_hstry($user_id){
+	    
+	    $this->db->select('a.*, b.firstName, b.lastName, c.propertyTitle, c.propertyID as pID');
+	    
+	    $this->db->from('sub_agreement as a');
+	    
+	    $this->db->where('a.userId', $user_id);
+	    
+	    $this->db->join('user_tbl as b', 'b.userID = a.userId', 'LEFT OUTER');
+	    
+	    $this->db->join('property_tbl as c', 'c.propertyID = a.property', 'LEFT OUTER');
+	    
+	    $this->db->order_by('a.id', 'DESC');
+	    
+	    $query = $this->db->get();
+	    
+	    return $query->result_array();
+	}
+	
 	public function fetchFurnisureTypes() {       
 
 		$this->db->select('*');
@@ -1698,7 +1734,6 @@ class Admin_model extends CI_Model {
 		return $query->row_array();
 
 	}
-	
 	public function delArticle($articleID){
 	    
 	    $this->db-> where('articleID', $articleID);
@@ -1748,19 +1783,6 @@ class Admin_model extends CI_Model {
 		$query = $this->db->get();
 		
 		return $query->result_array();
-	}
-
-	public function getRows($propID)
-	{
-		$this->db->select('*');
-		
-		$this->db->from('sub_agreement');
-		
-		$this->db->where('id', $propID);
-		
-		$query = $this->db->get();
-		
-		return $query->row_array();
 	}
 	
 	public function getReqMsg($id, $msgID){
@@ -2041,6 +2063,22 @@ class Admin_model extends CI_Model {
 		}
 
 	}
+	
+	
+	public function getRows($propID)
+	{
+		$this->db->select('*');
+		
+		$this->db->from('sub_agreement');
+		
+		$this->db->where('id', $propID);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	}
+	
+	
 	public function get_rss_about_us(){
 		
 		$this->db->select("*");
@@ -3078,36 +3116,6 @@ class Admin_model extends CI_Model {
 	    
 	    return $query->result_array();
 	}
-
-	public function get_user_hstry($user_id){
-	    
-	    $this->db->select('a.*, b.firstName, b.lastName, c.propertyTitle, c.propertyID as pID');
-	    
-	    $this->db->from('sub_agreement as a');
-	    
-	    $this->db->where('a.userId', $user_id);
-	    
-	    $this->db->join('user_tbl as b', 'b.userID = a.userId', 'LEFT OUTER');
-	    
-	    $this->db->join('property_tbl as c', 'c.propertyID = a.property', 'LEFT OUTER');
-	    
-	    $this->db->order_by('a.id', 'DESC');
-	    
-	    $query = $this->db->get();
-	    
-	    return $query->result_array();
-	}
-	
-	public function get_user_propty($user_id){
-	    
-	    $this->db->select('a.*');
-	    
-	    $this->db->from('property_tbl as a');
-	    
-	    $query = $this->db->get();
-	    
-	    return $query->result_array();
-	}
 	
 	public function get_property_price($propID){
 	    
@@ -3655,33 +3663,5 @@ class Admin_model extends CI_Model {
         return $this->db->insert('buytolet_promos', $this);
         
     }
-
-    public function countSubscribers() {
-
-	$this->db->select('a.*, b.*');
-
-	$this->db->from('target_options as a'); 
-	
-	$this->db->join('user_tbl as b', 'b.userID = a.userID');
-	
-	return $this->db->count_all_results();
-
-   }
-
-public function fetchSubscribers() {
-
-	$this->db->select('a.*, a.id as stp_id, a.userID as user_id, b.*');
-
-	$this->db->from('target_options as a'); 
-	
-	$this->db->join('user_tbl as b', 'b.userID = a.userID');
-    
-    	$this->db->limit($this->_pageNumber, $this->_offset);
-
-	$query = $this->db->get();
-	
-	return $query->result_array();
-
-}
 	
 }
