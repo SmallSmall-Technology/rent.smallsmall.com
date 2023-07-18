@@ -463,7 +463,11 @@ $route['admin/rss-users'] = 'admin/rss_users';
 
 $route['admin/rss-verfd'] = 'admin/rss_verfd';
 
+$route['admin/agr-upload'] = 'admin/agr_upload';
+
 $route['admin/rss-verfd/(:any)'] = 'admin/rss_verfd/$1';
+
+$route['admin/download/(:any)'] = 'admin/download/$1';
 
 $route['admin/app-users/(:any)'] = 'admin/app_users/$1';
 
