@@ -8025,6 +8025,14 @@ class Admin extends CI_Controller {
 		$propName = $prop['property_name'];
 
 		$propLocation = $prop['location_info'];
+
+		$buyBackRate = $prop['outrightDiscount'];
+		
+		$holdPeriod = $prop['hold_period'];
+
+		$migrationDate = $prop['closing_date'];
+
+		$paymentPlanPeriod = $prop['payment_plan_period'];
 		
 		$email = $this->input->post('email');
 		
@@ -8113,7 +8121,7 @@ class Admin extends CI_Controller {
     			    $hash = ($offer_type == 'champions')? '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d' : '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d';
     			    
     			    // $email_response = $this->send_mmio_email($firstname, $lastname, $email, $hash);
-					$email_response = $this->send_unione_email($lastname, $unit_amount, $propName, $propLocation, $cost, $payment_period, $email, $hash);
+					$email_response = $this->send_unione_email($lastname, $unit_amount, $propName, $propLocation, $cost, $paymentPlanPeriod, $buyBackRate, $holdPeriod, $migrationDate, $email, $hash);
 
     			    $response = "success";
     			        
@@ -8193,43 +8201,7 @@ class Admin extends CI_Controller {
 		return $randomNumber;
 	}
 	
-	// public function send_mmio_email($fname, $lname, $email, $hash){
-	    
-	//     $curl = curl_init();
-        
-    //     curl_setopt_array($curl, array(
-				
-	// 	  	CURLOPT_URL => "https://app.marketingmaster.io/apis_email/webhook_callback_main/?hash=".$hash."",
-
-	// 	  	CURLOPT_CUSTOMREQUEST => "POST",
-		  	
-	// 	  	CURLOPT_RETURNTRANSFER => true,
-
-	// 	  	CURLOPT_POSTFIELDS => json_encode(array(
-
-	// 			'first_name'=>$fname,
-
-	// 			'last_name'=>$lname,
-				
-	// 			"email" => $email
-
-	// 	 	)),
-
-	// 	  	CURLOPT_HTTPHEADER => [
-
-	// 			"content-type: application/json"
-
-	// 	  	],
-
-	// 	));
-
-	// 	$response = json_decode(curl_exec($curl), true);
-
-	// 	return $response['status'];
-	    
-	// }
-
-	public function send_unione_email($lastname, $unit_amount, $propName, $propLocation, $cost, $payment_period, $email, $hash){
+	public function send_unione_email($lastname, $unit_amount, $propName, $propLocation, $cost, $paymentPlanPeriod, $buyBackRate, $holdPeriod, $migrationDate, $email, $hash){
 	    
 		require 'vendor/autoload.php'; // For Unione template authoload
 
@@ -8268,12 +8240,10 @@ class Admin extends CI_Controller {
 			$propertyInfo = $propName;
 			$propertyLocation = $propLocation;
 			$amountPaid = $payable;
-			$completionDate = $payment_period;
-
-			//Tocheck 
-			//backBackRate
-			//holdPeriod
-			//migrationDate
+			$completionDate = $paymentPlanPeriod;
+			$propBuyBackRate = $buyBackRate;
+			$propHoldPeriod = $holdPeriod;
+			$propMigrationDate = $migrationDate;
 
 			// Replace the placeholder in the HTML body with the username
 			
@@ -8283,6 +8253,10 @@ class Admin extends CI_Controller {
 			$htmlBody = str_replace('{{propertyLocation}}', $propertyLocation, $htmlBody);
 			$htmlBody = str_replace('{{amount}}', $amountPaid, $htmlBody);
 			$htmlBody = str_replace('{{completionDate}}', $completionDate, $htmlBody);
+			$htmlBody = str_replace('{{rate}}', $propBuyBackRate, $htmlBody);
+			$htmlBody = str_replace('{{holdPeriod}}', $propHoldPeriod, $htmlBody);
+			$htmlBody = str_replace('{{migrationDate}}', $propMigrationDate, $htmlBody);
+
 
 			$data['response'] = $htmlBody;
 
@@ -8314,7 +8288,6 @@ class Admin extends CI_Controller {
 		}
 	    
 	}
-
 	
 	//parameter array
 	public function create_user_account($details){
