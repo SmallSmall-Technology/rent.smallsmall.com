@@ -77,11 +77,11 @@
                             </tr>
                             <tr>
                                 <th scope="row">Phone</th>
-                                <td><?php echo $details['buyer_phone']; ?></td>
+                                <td><?php echo $details['phone']; ?></td>
                             </tr>
                             <tr>
                                 <th scope="row">Email</th>
-                                <td><?php echo $details['buyer_email']; ?></td>
+                                <td><?php echo $details['email']; ?></td>
                             </tr>
                             <tr>
                                 <th scope="row">Address</th>

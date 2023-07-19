@@ -330,7 +330,7 @@
             					
             					
             			    <div class="table-responsive">
-                                    <?php echo form_open_multipart('admin/agr-upload');?>  
+                                    <?php echo form_open_multipart('admin/agr_upload');?>  
                                     
                                         <br></br>
                                         <div class="form-row" style = "margin-left: 10px;">
