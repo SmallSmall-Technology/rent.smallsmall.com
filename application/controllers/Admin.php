@@ -8022,11 +8022,13 @@ class Admin extends CI_Controller {
 		
 		$prop = $this->admin_model->getBytoletPropertyByID($property_id);
 
+		$buyBackReturnsRate = $prop['co_appr_1'] + $prop['co_appr_2'] + $prop['co_appr_3'] + $prop['co_appr_4'] + $prop['co_appr_5'] + $prop['co_appr_6'] +  $prop['co_rent_1'] + $prop['co_rent_2'] + $prop['co_rent_3'] + $prop['co_rent_4'] + $prop['co_rent_5'] + $prop['co_rent_6'];
+
 		$propName = $prop['property_name'];
 
 		$propLocation = $prop['location_info'];
 
-		$buyBackRate = $prop['outrightDiscount'];
+		$buyBackRate = $buyBackReturnsRate;
 		
 		$holdPeriod = $prop['hold_period'];
 
