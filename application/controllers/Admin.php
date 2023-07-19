@@ -8021,6 +8021,18 @@ class Admin extends CI_Controller {
 		$property_id = $this->input->post("properties");
 		
 		$prop = $this->admin_model->getBytoletPropertyByID($property_id);
+
+		$propName = $prop['property_name'];
+
+		$propLocation = $prop['location_info'];
+
+		$buyBackRate = $prop['outrightDiscount'];
+		
+		$holdPeriod = $prop['hold_period'];
+
+		$migrationDate = $prop['closing_date'];
+
+		$paymentPlanPeriod = $prop['payment_plan_period'];
 		
 		$email = $this->input->post('email');
 		
@@ -8098,7 +8110,7 @@ class Admin extends CI_Controller {
         
         if($res){
         
-    		$result = $this->admin_model->insertCoOwnRequest($ref, $buyer_type, $payment_plan, $property_id, $cost, $user_id, $payable, 0, $mop, $payment_period, $unit_amount, $promo_code, $id_path, $beneficiary_id_path, $firstname, $lastname, $email, $phone, $company_name, $position, $occupation, $income_range, $company_address, $adminID, $offer_type);
+    		$result = $this->admin_model->insertCoOwnRequest($ref, $buyer_type, $payment_plan, $property_id, $cost, $payable, $user_id, $payable, 0, $mop, $payment_period, $unit_amount, $promo_code, $id_path, $beneficiary_id_path, $firstname, $lastname, $email, $phone, $company_name, $position, $occupation, $income_range, $company_address, $adminID, $offer_type);
     		
     		if($result){
     		    //Update the remaining pool units
@@ -8108,8 +8120,9 @@ class Admin extends CI_Controller {
     			    
     			    $hash = ($offer_type == 'champions')? '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d' : '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d';
     			    
-    			    $email_response = $this->send_mmio_email($firstname, $lastname, $email, $hash);
-    			        
+    			    // $email_response = $this->send_mmio_email($firstname, $lastname, $email, $hash);
+					$email_response = $this->send_unione_email($lastname, $unit_amount, $propName, $propLocation, $cost, $paymentPlanPeriod, $buyBackRate, $holdPeriod, $migrationDate, $email, $hash);
+
     			    $response = "success";
     			        
     			    if($email_response){
@@ -8188,39 +8201,91 @@ class Admin extends CI_Controller {
 		return $randomNumber;
 	}
 	
-	public function send_mmio_email($fname, $lname, $email, $hash){
+	public function send_unione_email($lastname, $unit_amount, $propName, $propLocation, $cost, $paymentPlanPeriod, $buyBackRate, $holdPeriod, $migrationDate, $email, $hash){
 	    
-	    $curl = curl_init();
-        
-        curl_setopt_array($curl, array(
-				
-		  	CURLOPT_URL => "https://app.marketingmaster.io/apis_email/webhook_callback_main/?hash=".$hash."",
+		require 'vendor/autoload.php'; // For Unione template authoload
 
-		  	CURLOPT_CUSTOMREQUEST => "POST",
-		  	
-		  	CURLOPT_RETURNTRANSFER => true,
+		// Unione Template
 
-		  	CURLOPT_POSTFIELDS => json_encode(array(
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
 
-				'first_name'=>$fname,
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
 
-				'last_name'=>$lname,
-				
-				"email" => $email
+		$requestBody = [
+			"id" => "c67f2132-f3dd-11ed-ad01-dabfde6df242"
+		];
 
-		 	)),
+		// end Unione Template
 
-		  	CURLOPT_HTTPHEADER => [
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
 
-				"content-type: application/json"
+			$jsonResponse = $response->getBody()->getContents();
+			
+			$responseData = json_decode($jsonResponse, true);
 
-		  	],
+			$htmlBody = $responseData['template']['body']['html'];
+			
+			$username = $lastname;
+			$noOFSharesBought = $unit_amount;
+			$propertyInfo = $propName;
+			$propertyLocation = $propLocation;
+			$amountPaid = $payable;
+			$completionDate = $paymentPlanPeriod;
+			$propBuyBackRate = $buyBackRate;
+			$propHoldPeriod = $holdPeriod;
+			$propMigrationDate = $migrationDate;
 
-		));
+			// Replace the placeholder in the HTML body with the username
+			
+			$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+			$htmlBody = str_replace('{{sharesAmount}}', $noOFSharesBought, $htmlBody);
+			$htmlBody = str_replace('{{propertyName}}', $propertyInfo, $htmlBody);
+			$htmlBody = str_replace('{{propertyLocation}}', $propertyLocation, $htmlBody);
+			$htmlBody = str_replace('{{amount}}', $amountPaid, $htmlBody);
+			$htmlBody = str_replace('{{completionDate}}', $completionDate, $htmlBody);
+			$htmlBody = str_replace('{{rate}}', $propBuyBackRate, $htmlBody);
+			$htmlBody = str_replace('{{holdPeriod}}', $propHoldPeriod, $htmlBody);
+			$htmlBody = str_replace('{{migrationDate}}', $propMigrationDate, $htmlBody);
 
-		$response = json_decode(curl_exec($curl), true);
 
-		return $response['status'];
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailData = [
+				"message" => [
+					"recipients" => [
+						["email" => $email],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "Thank you for your order from Buysmallsmall",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "Buysmallsmall",
+				],
+			];
+
+			// Send the email using the Unione API
+			$responseEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailData,
+			]);
+
+			$response = json_decode($responseEmail->getBody()->getContents(), true);
+
+        	return $response['status'];
+	
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+			$data['response'] = $e->getMessage();
+		}
 	    
 	}
 	
