@@ -678,6 +678,8 @@ $route['pay-test'] = 'rss/pay_test';
 
 $route['pay'] = 'rss/pay'; 
 
+$route['aws-s3-bucket'] = 'rss/aws_s3_bucket_test'; 
+
 $route['test-home'] = 'pages/test_home';
 
 $route['test-date'] = 'rss/test_date';
