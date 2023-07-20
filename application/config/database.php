@@ -75,7 +75,6 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	// 'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
 	'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
 	'username' => 'rentsmallsmall_buytolet',
 	'password' => 'Buytolet!2021',
@@ -97,7 +96,6 @@ $db['default'] = array(
 );
 $db['second'] = array(
 	'dsn'	=> '',
-	// 'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
 	'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
 	'username' => 'rentsmallsmall_buytolet',
 	'password' => 'Buytolet!2021',
