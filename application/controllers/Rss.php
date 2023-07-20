@@ -7774,7 +7774,6 @@ try {
 	public function aws_s3_bucket_test(){
 
 		require 'vendor/autoload.php'; // For aws sdk authoload
-		// require 'config.php';
 
 		$objAwsS3Client = new Aws\S3\S3Client([
 			'version' => 'latest',
@@ -7800,8 +7799,6 @@ try {
             echo "Error: " . $e->getMessage() . "\n";
         }
 
-
 	}
     
-	
 }
