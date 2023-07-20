@@ -4333,6 +4333,8 @@ class Rss extends CI_Controller {
 		
 		$res = $this->rss_model->check_reset_email($email);
 		
+		
+		
 		if($res){
 			
 			if($res['referral'] == 'wordpress'){ 
@@ -4356,7 +4358,7 @@ class Rss extends CI_Controller {
 				$names = explode(" ", $res['firstName']);
 
 				$data['name'] = $names[0];	
-					
+				
 				//Unione Template
 
 				try {
@@ -4371,6 +4373,7 @@ class Rss extends CI_Controller {
 
 					$htmlBody = $responseData['template']['body']['html'];
 
+
 					// Get the unique username
 					// $user = $this->admin_model->get_user($id);
 					
@@ -4383,37 +4386,59 @@ class Rss extends CI_Controller {
 					
 					$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
+
 					$data['response'] = $htmlBody;
-
-					// Prepare the email data
-					$emailData = [
-						"message" => [
-							"recipients" => [
-								["email" => $email],
-							],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Password Reset RentSmallsmall",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "Small Small Password Reset",
-						],
-					];
-
-					// Send the email using the Unione API
-					$responseEmail = $client->request('POST', 'email/send.json', [
-						'headers' => $headers,
-						'json' => $emailData,
-					]);
-
-					// Output the result
-					if($responseEmail){
-						echo 1;
-					}else{
-						
-						echo 0;	
-					}
-
+					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
 					$data['response'] = $e->getMessage();
+
+				}
+
+				// End Of Unione
+				
+
+				$this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
+
+				$this->email->to($email);
+
+				$this->email->subject("Password Reset RentSmallsmall");	
+				
+				$this->email->set_mailtype("html");
+
+				// $message = $this->load->view('email/header.php', $data, TRUE);
+
+				// $message .= $this->load->view('email/emailreset.php', $data, TRUE);
+
+				// $message .= $this->load->view('email/footer.php', $data, TRUE);
+				
+				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+
+				// $message = 'This is a test message 1.';
+
+				// var_dump($message);
+
+				// $msg = $this->email->message('This is a test message 2.');
+
+				// var_dump($msg);
+
+				$emailRes = $this->email->send();
+
+				// var_dump($emailRes);
+
+				// Print the debug output
+				// echo $this->email->print_debugger();
+				
+				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
+				
+				if($emailRes){
+
+					echo 1;
+					
+				}else{
+					
+					echo 0;
+					
 				}
 
 				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
@@ -7621,7 +7646,7 @@ public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $k
 
 	// Unione API Testing
 
-public function unione_template_get()
+public function unione_template_getOLD()
 {
     require 'vendor/autoload.php';
 
@@ -7747,7 +7772,7 @@ try {
         // Get the unique username
         // $user = $this->admin_model->get_user($id);
         $username = "Yusuf";
-        $resetLink = 'https://rent.smallsmall.com/';
+        $resetLink = 'https://buy.rentsmallsmall.com/';
         $email = 'yusuf.i@smallsmall.com';
         
         // Replace the placeholder in the HTML body with the username
@@ -7762,43 +7787,173 @@ try {
  		catch (\GuzzleHttp\Exception\BadResponseException $e) {
     	// handle exception or api errors.
 
-	$data['response'] = $htmlBody;
-		
-    	// print_r($e->getMessage());
-
- 		}
- 
- 
-	}
-
-	// public function aws_s3_bucket_test(){
-
-	// 	require 'vendor/autoload.php'; // For aws sdk authoload
-
-	// 	$objAwsS3Client = new S3Client([
-	// 		'version' => 'latest',
-	// 		'region' => AWS_ACCESS_REGION,
-	// 		'credentials' => [
-	// 			'key'    => AWS_ACCESS_KEY_ID,
-	// 			'secret' => AWS_ACCESS_KEY_SECRET
-	// 		]
-	// 	]);
-
-    //     try {
-    //         // List all S3 Buckets
-    //         $buckets = $objAwsS3Client->listBuckets();
-
-    //         if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
-    //             foreach ($buckets['Buckets'] as $bucket) {
-    //                 echo $bucket['Name'] . "\n";
-    //             }
-    //         } else {
-    //             echo "No buckets found.\n";
-    //         }
-    //     } catch (Aws\S3\Exception\S3Exception $e) {
-    //         echo "Error: " . $e->getMessage() . "\n";
-    //     }
-
-	// }
+        $data['response'] = $htmlBody;
+    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+        $data['response'] = $e->getMessage();
+    }
     
+    // End Of Unione
+				
+		$this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
+
+		$this->email->to($email);
+
+		$this->email->subject("Password Reset RentSmallsmall");	
+				
+		$this->email->set_mailtype("html");
+				
+		$message = $this->load->view('rss-partials/unione-testing', $data, TRUE);
+
+		$this->email->message($message);
+
+		$emailRes = $this->email->send();
+
+        // $this->load->view('rss-partials/unione-testing', $data);
+        
+        if($emailRes){
+					
+					echo 'Email Sent successfully to' . ''. $email;
+					
+				}else{
+					
+					echo 'Error sending Email';
+					
+			}
+        
+        
+        
+}
+
+
+public function unione_template_getOLD1()
+{
+
+require 'vendor/autoload.php';
+
+$headers = array(
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+    );
+
+$client = new \GuzzleHttp\Client([
+    // 'base_uri' => 'https://us1.unione.io/en/transactional/api/v1/'
+        'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+
+]);
+
+$requestBody = [
+  "message" => [
+    "recipients" => [
+      [
+        "email" => "bwitlawalyusuf@gmail.com",
+        
+        
+      ]
+    ],
+    "template_id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
+   
+    "body" => [
+      "html" => "<b>Hello, Yusuf</b>",
+    //   "plaintext" => "Hello, {{to_name}}",
+      
+    ],
+    "subject" => "Testing",
+    "from_email" => "donotreply@smallsmall.com",
+    "from_name" => "SS",
+    "reply_to" => "user@smallsmall.com",
+    
+ 
+  ]
+];
+
+try {
+    $response = $client->request('POST','email/send.json', array(
+        'headers' => $headers,
+        'json' => $requestBody,
+       )
+    );
+    print_r($response->getBody()->getContents());
+ }
+ catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    // handle exception or api errors.
+    print_r($e->getMessage());
+ }
+ 
+ 
+ 
+}
+
+function unione_template_get()
+{
+    require 'vendor/autoload.php';
+
+    $headers = array(
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+        'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+    );
+    
+    $client = new \GuzzleHttp\Client([
+        'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+    ]);
+
+    // Request body for retrieving the template
+    $requestBody = [
+        "id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
+    ];
+
+    try {
+        // Retrieve the template from the Unione API
+        $response = $client->request('POST', 'template/get.json', [
+            'headers' => $headers,
+            'json' => $requestBody,
+        ]);
+
+        $responseData = json_decode($response->getBody()->getContents(), true);
+
+        // Get the HTML body from the template response
+        $htmlBody = $responseData['template']['body']['html'];
+
+        // Replace placeholders in the HTML body with actual values
+        $username = "Yusuf";
+        $resetLink = 'https://buy.rentsmallsmall.com/';
+        $email = 'yusuf.i@smallsmall.com';
+        $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+        $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+
+        // Prepare the email data
+        $emailData = [
+            "message" => [
+                "recipients" => [
+                    ["email" => $email],
+                ],
+                "body" => ["html" => $htmlBody],
+                "subject" => "Testing",
+                "from_email" => "donotreply@smallsmall.com",
+                "from_name" => "Smallsmall",
+            ],
+        ];
+
+        // Send the email using the Unione API
+        $response = $client->request('POST', 'email/send.json', [
+            'headers' => $headers,
+            'json' => $emailData,
+        ]);
+
+        // Output the result
+        echo 'Email Sent successfully to ' . $email;
+        
+    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+        
+        // Handle API errors
+       print_r($e->getMessage());
+    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+        // Handle other exceptions
+        print_r($e->getMessage());
+    }
+}
+
+    
+	
 }
