@@ -7954,6 +7954,39 @@ function unione_template_get()
     }
 }
 
+public function aws_s3_integration_test(){
+
+	require 'vendor/autoload.php';
+
+	require 'aws.php';
+
+	$objAwsS3Client = new Aws\S3\S3Client([
+    	'version' => 'latest',
+    	'region' => AWS_ACCESS_REGION,
+    	'credentials' => [
+        	'key'    => AWS_ACCESS_KEY_ID,
+        	'secret' => AWS_ACCESS_KEY_SECRET
+    	]
+	]);
+
+
+	try {
+        // List all S3 Buckets
+        $buckets = $objAwsS3Client->listBuckets();
+
+        if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
+            foreach ($buckets['Buckets'] as $bucket) {
+                echo $bucket['Name'] . "\n";
+            }
+        } else {
+            echo "No buckets found.\n";
+        }
+    } catch (Aws\S3\Exception\S3Exception $e) {
+        echo "Error: " . $e->getMessage() . "\n";
+    }
+
+}
+
     
 	
 }
