@@ -1054,18 +1054,3 @@ $config['rewrite_short_tags'] = FALSE;
 
 $config['proxy_ips'] = '';
 
-
-//AWS Config Settings
-
-// $config['aws_access_key'] = 'AKIA3X5U4BTTM6R3FGMO';
-// $config['aws_secret_key'] = '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';
-// $config['aws_access_region'] = 'eu-west-1';
-// $config['s3_bucket'] = 'rss-prod-uploads';
-
-// define("AWS_ACCESS_KEY_ID", "AKIA3X5U4BTTM6R3FGMO");
-// define("AWS_ACCESS_KEY_SECRET", "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");
-// define("AWS_ACCESS_REGION", "eu-west-1");
-// define("AWS_BUCKET_NAME", "rss-prod-uploads");
-
-
-
