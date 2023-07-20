@@ -7774,12 +7774,9 @@ try {
 	public function aws_s3_bucket_test(){
 
 		require 'vendor/autoload.php'; // For aws sdk authoload
-		require 'config.php';
+		// require 'config.php';
 
-		// use Aws\S3\S3Client;
-		// use Aws\Exception\AwsException;
-
-		$objAwsS3Client = new S3Client([
+		$objAwsS3Client = new Aws\S3\S3Client([
 			'version' => 'latest',
 			'region' => AWS_ACCESS_REGION,
 			'credentials' => [
@@ -7799,7 +7796,7 @@ try {
             } else {
                 echo "No buckets found.\n";
             }
-        } catch (AwsException $e) {
+        } catch (Aws\S3\Exception\S3Exception $e) {
             echo "Error: " . $e->getMessage() . "\n";
         }
 
