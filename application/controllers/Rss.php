@@ -7770,7 +7770,41 @@ try {
  
  
 	}
+
+	public function aws_s3_bucket_test(){
+
+		require 'vendor/autoload.php'; // For aws sdk authoload
+		require 'config.php';
+
+		// use Aws\S3\S3Client;
+		// use Aws\Exception\AwsException;
+
+		$objAwsS3Client = new S3Client([
+			'version' => 'latest',
+			'region' => AWS_ACCESS_REGION,
+			'credentials' => [
+				'key'    => AWS_ACCESS_KEY_ID,
+				'secret' => AWS_ACCESS_KEY_SECRET
+			]
+		]);
+
+        try {
+            // List all S3 Buckets
+            $buckets = $objAwsS3Client->listBuckets();
+
+            if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
+                foreach ($buckets['Buckets'] as $bucket) {
+                    echo $bucket['Name'] . "\n";
+                }
+            } else {
+                echo "No buckets found.\n";
+            }
+        } catch (AwsException $e) {
+            echo "Error: " . $e->getMessage() . "\n";
+        }
+
+
+	}
     
 	
 }
-?>
