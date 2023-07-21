@@ -1593,7 +1593,170 @@ class Rss extends CI_Controller {
         
     }
     
-    function fetchMessage(){
+    // function fetchMessage(){
+	    
+    //     $output = '';
+        
+    //     $userID = $this->session->userdata('userID');
+      
+    //     $data = $this->rss_model->fetch_message($userID, $this->input->post('limit'), $this->input->post('start'));
+      
+    //     if($data->num_rows() > 0){
+            
+    //         $date = ''; 
+            
+    //         foreach($data->result() as $row){
+                
+    //             if($row->status == 1){
+                
+    //             $date1 = $row->entry_date;
+                
+    //             if($date1 != $date)
+    //             {
+    //                 $output .= '<div class="col-12 mb-3">
+    // 				<p class="secondary-text-color">'.$row->entry_date.'</p>
+    // 			  </div>';
+    			  
+    // 			  $date = $row->entry_date;
+    //             }
+                
+	// 		  $output .= '<div class="col-12 mb-3" data-toggle="modal" data-target="#example'.$row->id.'">
+	// 			<div class="message-container--latest px-3 py-4 justify-content-between d-flex">
+	// 			  <div class="d-flex align-items-center">
+	// 				<div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-block">
+	// 				  Rentsmallsmall
+	// 				</div>
+	// 				<div class="bss-btn p-2  mr-2 d-md-none d-block">
+	// 				  RSS
+	// 				</div>
+	// 				<div class="msg-intro">
+	// 				  <p>'.$row->subject.'</p>
+	// 				  <p style="font-size: 13px;">'.substr($row->details, 0, 14).'...</p>
+	// 				</div>
+	// 			  </div>
+	// 			  <div class="align-self-center mr-md-4 mr-1">
+	// 				<i class="fa-solid fa-greater-than"></i>
+	// 			  </div>
+	// 			</div>
+	// 		  </div>
+		
+	// 		  <!-- Modal -->
+	// 		  <div class="modal fade" id="example'.$row->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	// 			aria-hidden="true">
+	// 			<div class="modal-dialog " role="document">
+	// 			  <div class="modal-content primary-background">
+	// 				<div class="modal-header">
+	// 				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	// 					<span aria-hidden="true">&times;</span>
+	// 				  </button>
+	// 				</div>
+	// 				<div class="modal-body">
+	// 				  <div class="py-4">
+	// 					<p class="mb-4">'.$row->entry_date.'</p>
+	// 					<h5 class="mb-4">'.$row->subject.'</h5>
+	// 					<div class=" d-flex align-items-center ">
+	// 					  <div class="inbox-msg-icon py-3  mr-2">
+	// 						<div class="msg-icon d-flex justify-content-center align-items-center">RSS</div>
+	// 					  </div>
+	// 					  <div class="flex-grow-1  py-3 pl-2 text-dark">
+	// 						<p style="font-size: 14px; font-weight: 400;">Rentsmallsmall</p>
+	// 					  </div>
+	// 					</div>
+	// 					<div class="inbox-body">
+	// 					  <p class="mb-4">'.$row->details.'</p>
+	// 					  <p class="mb-4">Please feel free to reach out to us.</p>
+	// 					  <p class="mb-4">Regards,<br>
+	// 						RSS Customer Experience</p>
+	// 					</div>
+		
+	// 				  </div>
+	// 				</div>
+		
+	// 			  </div>
+	// 			</div>
+	// 		  </div>';
+			  
+    //             }
+                
+    //             else{
+                    
+    //                 $date1 = $row->entry_date;
+                
+    //                 if($date1 != $date)
+    //                 {
+    //                     $output .= '<div class="col-12 mb-3">
+    //     				<p class="secondary-text-color">'.$row->entry_date.'</p>
+    //     			  </div>';
+        			  
+    //     			  $date = $row->entry_date;
+    //                 }
+                    
+    //                          $output .= '<div class="col-12 mb-3" data-toggle="modal" data-target="#example'.$row->id.'">
+    //                             <div class="message-container px-3 py-4 justify-content-between d-flex">
+    //                               <div class="d-flex align-items-center">
+    //                                 <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-block">
+    //                                   Rentsmallsmall
+    //                                 </div>
+    //                                 <div class="bss-btn p-2  mr-2 d-md-none d-block">
+    //                                   RSS
+    //                                 </div>
+    //                                 <div class="msg-intro">
+    //                                   <p>'.$row->subject.'</p>
+    //                                   <p style="font-size: 13px;">'.substr($row->details, 0, 14).'...</p>
+    //                                 </div>
+    //                               </div>
+    //                               <div class="align-self-center mr-md-4 mr-1">
+    //                                 <i class="fa-solid fa-greater-than"></i>
+    //                               </div>
+    //                             </div>
+    //                           </div>
+                              
+    //                           <!-- Modal -->
+    //         			  <div class="modal fade" id="example'.$row->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    //         				aria-hidden="true">
+    //         				<div class="modal-dialog " role="document">
+    //         				  <div class="modal-content primary-background">
+    //         					<div class="modal-header">
+    //         					  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    //         						<span aria-hidden="true">&times;</span>
+    //         					  </button>
+    //         					</div>
+    //         					<div class="modal-body">
+    //         					  <div class="py-4">
+    //         						<p class="mb-4">'.$row->entry_date.'</p>
+    //         						<h5 class="mb-4">'.$row->subject.'</h5>
+    //         						<div class=" d-flex align-items-center ">
+    //         						  <div class="inbox-msg-icon py-3  mr-2">
+    //         							<div class="msg-icon d-flex justify-content-center align-items-center">RSS</div>
+    //         						  </div>
+    //         						  <div class="flex-grow-1  py-3 pl-2 text-dark">
+    //         							<p style="font-size: 14px; font-weight: 400;">Rentsmallsmall</p>
+    //         						  </div>
+    //         						</div>
+    //         						<div class="inbox-body">
+    //         						  <p class="mb-4">'.$row->details.'</p>
+    //         						  <p class="mb-4">Please feel free to reach out to us.</p>
+    //         						  <p class="mb-4">Regards,<br>
+    //         							RSS Customer Experience</p>
+    //         						</div>
+            		
+    //         					  </div>
+    //         					</div>
+            		
+    //         				  </div>
+    //         				</div>
+    //         			  </div>';
+    //             }
+
+    //         }
+            
+    //     }
+        
+    //     echo $output;
+        
+    // }
+
+	function fetchMessage(){
 	    
         $output = '';
         
@@ -1607,74 +1770,79 @@ class Rss extends CI_Controller {
             
             foreach($data->result() as $row){
                 
-                if($row->status == 1){
+                if($row->status == 0){
                 
                 $date1 = $row->entry_date;
                 
                 if($date1 != $date)
                 {
-                    $output .= '<div class="col-12 mb-3">
+                    $output .= '<br></br><div class="row mb-4">
+                    
+                    <div class="col-12 mb-3">
     				<p class="secondary-text-color">'.$row->entry_date.'</p>
     			  </div>';
     			  
     			  $date = $row->entry_date;
                 }
                 
-			  $output .= '<div class="col-12 mb-3" data-toggle="modal" data-target="#example'.$row->id.'">
-				<div class="message-container--latest px-3 py-4 justify-content-between d-flex">
-				  <div class="d-flex align-items-center">
-					<div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-block">
-					  Rentsmallsmall
-					</div>
-					<div class="bss-btn p-2  mr-2 d-md-none d-block">
-					  RSS
-					</div>
-					<div class="msg-intro">
-					  <p>'.$row->subject.'</p>
-					  <p style="font-size: 13px;">'.substr($row->details, 0, 14).'...</p>
-					</div>
-				  </div>
-				  <div class="align-self-center mr-md-4 mr-1">
-					<i class="fa-solid fa-greater-than"></i>
-				  </div>
-				</div>
-			  </div>
-		
-			  <!-- Modal -->
-			  <div class="modal fade" id="example'.$row->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-				aria-hidden="true">
-				<div class="modal-dialog " role="document">
-				  <div class="modal-content primary-background">
-					<div class="modal-header">
-					  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					  </button>
-					</div>
-					<div class="modal-body">
-					  <div class="py-4">
-						<p class="mb-4">'.$row->entry_date.'</p>
-						<h5 class="mb-4">'.$row->subject.'</h5>
-						<div class=" d-flex align-items-center ">
-						  <div class="inbox-msg-icon py-3  mr-2">
-							<div class="msg-icon d-flex justify-content-center align-items-center">RSS</div>
-						  </div>
-						  <div class="flex-grow-1  py-3 pl-2 text-dark">
-							<p style="font-size: 14px; font-weight: 400;">Rentsmallsmall</p>
-						  </div>
-						</div>
-						<div class="inbox-body">
-						  <p class="mb-4">'.$row->details.'</p>
-						  <p class="mb-4">Please feel free to reach out to us.</p>
-						  <p class="mb-4">Regards,<br>
-							RSS Customer Experience</p>
-						</div>
-		
-					  </div>
-					</div>
-		
-				  </div>
-				</div>
-			  </div>';
+			  $output .= '
+                  <div class="col-12" onClick= insVal('.$row->id.') data-toggle="modal" data-target="#example'.$row->id.'">
+                    <div class="message-container-border">
+                      <div class="message-container--latest px-3 py-4 justify-content-between d-flex">
+                        <div class="d-flex align-items-center">
+                          <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-flex">
+                            RSS
+                          </div>
+                          <div class="bss-btn p-2  mr-2 d-md-none d-flex">
+                            RSS
+                          </div>
+                          <div class="msg-intro">
+                            <p>'.$row->subject.'</p>
+                            <p style="font-size: 13px;">'.substr($row->details, 0, 14).'...</p>
+                          </div>
+                        </div>
+                        <!-- <div class="align-self-center mr-md-4 mr-1">
+                                  <i class="fa-solid fa-greater-than"></i>
+                                </div> -->
+                      </div>
+                    </div>
+                  </div>
+            
+                  <!-- Modal -->
+                  <div class="modal fade" id="example'.$row->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog " role="document">
+                      <div class="modal-content primary-background">
+                        <div class="modal-header" style="border: none;">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body p-md-5 p-3">
+                          <div class="py-4">
+                            <p class="mb-4">'.$row->entry_date.'</p>
+                            <h5 class="mb-4">'.$row->subject.'</h5>
+                            <div class=" d-flex align-items-center ">
+                              <div class="inbox-msg-icon py-3  mr-2">
+                                <div class="msg-icon d-flex justify-content-center align-items-center">CX</div>
+                              </div>
+                              <div class="flex-grow-1  py-3 pl-2 text-dark">
+                                <p style="font-size: 14px; font-weight: 400;">Customer Experience</p>
+                              </div>
+                            </div>
+                            <div class="inbox-body">
+                              <p class="mb-4">'.$row->details.'</p>
+                              <p class="mb-4">Please feel free to reach out to us.</p>
+                              <p class="mb-4">Regards,<br>
+                                RSS Customer Experience</p>
+                            </div>
+            
+                          </div>
+                        </div>
+            
+                      </div>
+                    </div>
+                  </div>';
 			  
                 }
                 
@@ -1684,33 +1852,36 @@ class Rss extends CI_Controller {
                 
                     if($date1 != $date)
                     {
-                        $output .= '<div class="col-12 mb-3">
+                        $output .= '<br></br><div class="col-12 mb-3">
         				<p class="secondary-text-color">'.$row->entry_date.'</p>
         			  </div>';
         			  
         			  $date = $row->entry_date;
                     }
                     
-                             $output .= '<div class="col-12 mb-3" data-toggle="modal" data-target="#example'.$row->id.'">
-                                <div class="message-container px-3 py-4 justify-content-between d-flex">
-                                  <div class="d-flex align-items-center">
-                                    <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-block">
-                                      Rentsmallsmall
-                                    </div>
-                                    <div class="bss-btn p-2  mr-2 d-md-none d-block">
-                                      RSS
-                                    </div>
-                                    <div class="msg-intro">
-                                      <p>'.$row->subject.'</p>
-                                      <p style="font-size: 13px;">'.substr($row->details, 0, 14).'...</p>
-                                    </div>
+                             $output .= '
+                          <div class="col-12">
+                            <div class="message-container-border">
+                              <div class="message-container px-3 py-4 justify-content-between d-flex">
+                                <div class="d-flex align-items-center">
+                                  <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-flex">
+                                    RSS
                                   </div>
-                                  <div class="align-self-center mr-md-4 mr-1">
-                                    <i class="fa-solid fa-greater-than"></i>
+                                  <div class="bss-btn p-2  mr-2 d-md-none d-flex">
+                                    RSS
+                                  </div>
+                                  <div class="msg-intro" data-toggle="modal" data-target="#example'.$row->id.'">
+                                    <p>'.$row->subject.'</p>
+                                    <p style="font-size: 13px;">'.substr($row->details, 0, 14).'...</p>
                                   </div>
                                 </div>
+                                <!-- <div class="align-self-center mr-md-4 mr-1">
+                                <i class="fa-solid fa-greater-than"></i>
+                              </div> -->
                               </div>
-                              
+                            </div>
+                            </div>
+                                                  
                               <!-- Modal -->
             			  <div class="modal fade" id="example'.$row->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             				aria-hidden="true">
@@ -1755,6 +1926,7 @@ class Rss extends CI_Controller {
         echo $output;
         
     }
+
     
     function fetchLandlordMessages(){
 	    
@@ -7598,7 +7770,35 @@ try {
  
  
 	}
+
+	// public function aws_s3_bucket_test(){
+
+	// 	require 'vendor/autoload.php'; // For aws sdk authoload
+
+	// 	$objAwsS3Client = new S3Client([
+	// 		'version' => 'latest',
+	// 		'region' => AWS_ACCESS_REGION,
+	// 		'credentials' => [
+	// 			'key'    => AWS_ACCESS_KEY_ID,
+	// 			'secret' => AWS_ACCESS_KEY_SECRET
+	// 		]
+	// 	]);
+
+    //     try {
+    //         // List all S3 Buckets
+    //         $buckets = $objAwsS3Client->listBuckets();
+
+    //         if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
+    //             foreach ($buckets['Buckets'] as $bucket) {
+    //                 echo $bucket['Name'] . "\n";
+    //             }
+    //         } else {
+    //             echo "No buckets found.\n";
+    //         }
+    //     } catch (Aws\S3\Exception\S3Exception $e) {
+    //         echo "Error: " . $e->getMessage() . "\n";
+    //     }
+
+	// }
     
-	
 }
-?>

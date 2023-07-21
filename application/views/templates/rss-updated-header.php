@@ -79,6 +79,21 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
     </script>
 	<!-----Amplitude Analytics Script ------>
 
+
+  <!-- TruConversion for rent.smallsmall.com -->
+  <script type="text/javascript">
+    var _tip = _tip || [];
+    (function(d,s,id){
+        var js, tjs = d.getElementsByTagName(s)[0];
+        if(d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.async = true;
+        js.src = d.location.protocol + '//app.truconversion.com/ti-js/29046/90c62.js';
+        tjs.parentNode.insertBefore(js, tjs);
+    }(document, 'script', 'ti-js'));
+  </script>
+  <!-- End TruConversion for rent.smallsmall.com -->
+
   <!-- Favicon link -->
   <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/favicon.png">
 
