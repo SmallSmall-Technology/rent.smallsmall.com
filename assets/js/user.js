@@ -1,4 +1,4 @@
-var baseUrl = "https://dev-rent.smallsmall.com/";
+var baseUrl = "https://rent.smallsmall.com/";
 
 $('.s_modal_close').click(function(){
 	$('.allPurposeOverlay').css("display", "none");

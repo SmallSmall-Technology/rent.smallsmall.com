@@ -437,7 +437,7 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
 
             <?php } else if (@$userID && !@$ongod && @$interest == 'Buy') { ?>
               <!--- Landlord button ---->
-              <!--<li class="mob-top-btn register-btn-mobile"><a href="https://dev-buy.smallsmall.com/user/dashboard"><span></span><span>Dashboard</span></a></li>-->
+              <!--<li class="mob-top-btn register-btn-mobile"><a href="https://buy.smallsmall.com/user/dashboard"><span></span><span>Dashboard</span></a></li>-->
             <?php } else { ?>
             
             <div class="d-md-none d-block">

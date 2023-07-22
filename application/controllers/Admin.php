@@ -2501,7 +2501,7 @@ class Admin extends CI_Controller {
 			$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
 			
 			//Get Images
-			$data['btl_images'] = file_get_contents('https://dev-buy.smallsmall.com/buytolet/get-all-images/'.$data['property']['image_folder'].'/'.$data['property']['featured_image']);
+			$data['btl_images'] = file_get_contents('https://buy.smallsmall.com/buytolet/get-all-images/'.$data['property']['image_folder'].'/'.$data['property']['featured_image']);
 
 			$data['title'] = "Edit Property :: Buytolet";
 
@@ -3089,7 +3089,7 @@ class Admin extends CI_Controller {
 					
 
 					$output .= '
-								<span class="imgCover removal-id-'.$count.'" id="id-'.$data["file_name"].'"><img src="https://dev-stay.smallsmall.com/uploads/apartments/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+								<span class="imgCover removal-id-'.$count.'" id="id-'.$data["file_name"].'"><img src="https://stay.smallsmall.com/uploads/apartments/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
 								<div class="remove-img img-removal" id="img-properties-'.$data['file_name'].'-'.$count.'">remove <i class="fa fa-trash"></i></div>
 								<!--<span class="featTT">featured</span>--></span>';
 				}else{
@@ -5058,7 +5058,7 @@ class Admin extends CI_Controller {
 			
 		}
 		//Connect to buy2let and create property Image folder
-		//$success = file_get_contents("https://dev-buy.smallsmall.com/create-folder/".$folder);
+		//$success = file_get_contents("https://buy.smallsmall.com/create-folder/".$folder);
 		
 		//if(!$success){
 			//Create the floor plan folder
@@ -5105,14 +5105,14 @@ class Admin extends CI_Controller {
 				
     				//$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
     				
-    				//$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$folder);
+    				//$upl_result = file_get_contents('https://buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$folder);
     				
     				//if($upl_result){
 					
 					$data = $this->upload->data();
 					
 					$output .= '
-								<span class="imgCover removal-id-'.$count.'" id="id-'.$data["file_name"].'"><img src="https://dev-buy.smallsmall.com/uploads/buytolet/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+								<span class="imgCover removal-id-'.$count.'" id="id-'.$data["file_name"].'"><img src="https://buy.smallsmall.com/uploads/buytolet/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
 								<div class="remove-btl-img img-removal" id="img-buytolet-'.$data['file_name'].'-'.$count.'">remove <i class="fa fa-trash"></i></div>
 								<!--<span class="featTT">featured</span>--></span>';
 				}else{
@@ -5212,7 +5212,7 @@ class Admin extends CI_Controller {
 				
 				$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
 				
-				$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/'.$data["file_name"].'/'.$site1FileMd5.'/'.$imageFolder."/floor-plan/");
+				$upl_result = file_get_contents('https://buy.smallsmall.com/upload-fp-image/'.$data["file_name"].'/'.$site1FileMd5.'/'.$imageFolder."/floor-plan/");
 				
 				unlink('./tmp/'.$data["file_name"]);
 				
@@ -5335,7 +5335,7 @@ class Admin extends CI_Controller {
 
 					$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
 
-					$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$imageFolder."/floor-plan");
+					$upl_result = file_get_contents('https://buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$imageFolder."/floor-plan");
 
 					unlink('./tmp/'.$data["file_name"]);
 
@@ -5909,7 +5909,7 @@ class Admin extends CI_Controller {
 		
 		if($result){
 			
-			file_get_contents('https://dev-buy.smallsmall.com/delete-images/'.$propFolder);
+			file_get_contents('https://buy.smallsmall.com/delete-images/'.$propFolder);
 			
 			echo 1;
 			
@@ -6079,7 +6079,7 @@ class Admin extends CI_Controller {
 		
 		//Create folder on remote server
 		
-		$success = file_get_contents('https://dev-buy.smallsmall.com/create-folder/'.$imageFolder);
+		$success = file_get_contents('https://buy.smallsmall.com/create-folder/'.$imageFolder);
 		
 		if(!$success){
 			//Create the floor plan folder
@@ -6102,7 +6102,7 @@ class Admin extends CI_Controller {
 		    $destinationFolder = $imageFolder;
 			
 			//Initiate a copy on the remote server
-			$result = file_get_contents('https://dev-buy.smallsmall.com/copy-images/'.$sourceFolder.'/'.$destinationFolder);
+			$result = file_get_contents('https://buy.smallsmall.com/copy-images/'.$sourceFolder.'/'.$destinationFolder);
 			
 			if($result){
 			    
@@ -6626,7 +6626,7 @@ class Admin extends CI_Controller {
 	    if($txn){
 	        //Create invoice and send
 	        
-	        $pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://dev-rent.smallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />rent.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> '.$bookingID.'_'.$randomNum.'<br /><b>Transaction ID:</b> '.$ref.'<br />Invoice date: '.date("d/m/Y").'<br />Email: '.$user['email'].'<br />Phone Number: '.$user['phone'].'</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />'.$user['firstName'].' '.$user['lastName'].'<br />Nigeria.<br />'.$user['phone'].'</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>'.$prop_det['propertyTitle'].'</b><div style="font-family:helvetica;font-size:12px;color:#333333">'.$prop_det['address'].', '.$prop_det['city'].'</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">'.$duration.' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount).'.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">'.$sec_dep_term.' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N '.number_format($security_deposit).'.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount).'.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount).'.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
+	        $pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://rent.smallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />rent.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> '.$bookingID.'_'.$randomNum.'<br /><b>Transaction ID:</b> '.$ref.'<br />Invoice date: '.date("d/m/Y").'<br />Email: '.$user['email'].'<br />Phone Number: '.$user['phone'].'</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />'.$user['firstName'].' '.$user['lastName'].'<br />Nigeria.<br />'.$user['phone'].'</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>'.$prop_det['propertyTitle'].'</b><div style="font-family:helvetica;font-size:12px;color:#333333">'.$prop_det['address'].', '.$prop_det['city'].'</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">'.$duration.' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount).'.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">'.$sec_dep_term.' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N '.number_format($security_deposit).'.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount).'.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount).'.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
             
             if (!is_dir('assets/pdf/tenant/'.$bookingID)) {
 		    
@@ -7127,7 +7127,7 @@ class Admin extends CI_Controller {
 	        
 	    }
 	    
-	    $pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://dev-stay.smallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />stay.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> '.$invoiceID.'<br /><b>Transaction ID:</b> '.$transactionID.'<br />Invoice date: '.date('M d, Y').'<br />Email: '.$email.'<br />Phone Number: '.$phone.'</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />'.$name.'<br />'.$address.'<br />Nigeria.<br />'.$phone.'</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>'.$apartmentName.'</b><div style="font-family:helvetica;font-size:12px;color:#333333">'.$apartmentAddress.'</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">'.$duration.'</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($cost_amount).'.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">1</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($security_deposit).'.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.$subtotal.'.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Discount</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;color:red">- N'.number_format($discount).'0.00</td></tr>'.$pickup.'<tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">VAT</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($vat).'.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount_paid).'.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
+	    $pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://stay.smallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />stay.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> '.$invoiceID.'<br /><b>Transaction ID:</b> '.$transactionID.'<br />Invoice date: '.date('M d, Y').'<br />Email: '.$email.'<br />Phone Number: '.$phone.'</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />'.$name.'<br />'.$address.'<br />Nigeria.<br />'.$phone.'</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>'.$apartmentName.'</b><div style="font-family:helvetica;font-size:12px;color:#333333">'.$apartmentAddress.'</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">'.$duration.'</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($cost_amount).'.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">1</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($security_deposit).'.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.$subtotal.'.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Discount</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;color:red">- N'.number_format($discount).'0.00</td></tr>'.$pickup.'<tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">VAT</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($vat).'.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount_paid).'.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
 	    
 	    return $pdf_content;
 	    

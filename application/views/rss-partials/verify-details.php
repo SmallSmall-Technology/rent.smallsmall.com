@@ -195,7 +195,7 @@
     </div>
     
 	<script>
-	    var baseURL = "https://dev-rent.smallsmall.com/";
+	    var baseURL = "https://rent.smallsmall.com/";
 	    
     	const paymentForm = document.getElementById('paymentForm');
     

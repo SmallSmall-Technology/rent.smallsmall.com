@@ -172,7 +172,7 @@
                 
                 <?php }else if(@$userID && !@$ongod && @$interest == 'Buy' ){ ?>
                         <!--- Landlord button ---->
-                        <li class="mob-top-btn register-btn-mobile"><a href="https://dev-buy.smallsmall.com/dashboard/index"><span></span><span>Dashboard</span></a></li>
+                        <li class="mob-top-btn register-btn-mobile"><a href="https://buy.smallsmall.com/dashboard/index"><span></span><span>Dashboard</span></a></li>
                 
                 <?php }else{ ?>
                         <div class="mob-top-btn register-btn-mobile"><a href="<?php echo base_url('signup'); ?>">Create account</a></div>
