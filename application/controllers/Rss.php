@@ -3311,13 +3311,15 @@ class Rss extends CI_Controller {
 					
 					$propertyID = $order['property'][0]['productID'];
 
+					$propertyTitle = $order['property'][0]['productTitle'];
+
 					// Replace the placeholder in the HTML body with the username
 					
 					$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
 					
 					$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
 					
-					$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
+					$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
 
 					$data['response'] = $htmlBody;
 				
@@ -3326,7 +3328,7 @@ class Rss extends CI_Controller {
             			"message" => [
                 			"recipients" => [
                     			["email" => 'verification@smallsmall.com'],
-					["email" => 'pidah.t@smallsmall.com'],
+					// ["email" => 'pidah.t@smallsmall.com'],
                 			],
                 		"body" => ["html" => $htmlBody],
                 		"subject" => "New Verification alert",

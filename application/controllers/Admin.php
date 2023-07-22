@@ -6149,7 +6149,11 @@ class Admin extends CI_Controller {
 		$id = $this->input->post("id");
 		
 		$prop_id = $this->input->post("prop_id");
-		
+
+		$prop_det = $this->admin_model->get_property_details($prop_id); // Added to get property Name
+	    	    	    
+	    $propertyName = $prop_det['propertyTitle']; // Added
+
 		$result = $this->admin_model->verifyUser($id, $prop_id);
 		
 		$user = $this->admin_model->get_user($id);
@@ -6260,13 +6264,13 @@ class Admin extends CI_Controller {
 					// Get the unique username
 
 					$username = $data['name'];
-					
+
 					$propertyID = $prop_id;
 
 					// Replace the placeholder in the HTML body with the username
 					$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
 					
-					$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
+					$htmlBody = str_replace('{{PropertyID}}', $propertyName, $htmlBody);
 
 					$data['response'] = $htmlBody;
 
