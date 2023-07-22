@@ -2149,6 +2149,7 @@ class Admin extends CI_Controller {
 
 		} 
 	}
+
 	public function app_verifications(){		
 
 		$config['total_rows'] = $this->admin_model->countAppVerifications();		
@@ -2219,6 +2220,7 @@ class Admin extends CI_Controller {
 		} 
 
 	}
+
     public function add_new_buytolet_property(){
 		
 		if ( ! file_exists(APPPATH.'views/admin/pages/new-buytolet-property.php'))
