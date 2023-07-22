@@ -71,7 +71,7 @@ class Buytolet extends CI_Controller {
 				}
                 
                 $output .= '<tr class="tr-content">
-                                <td class="td-content"><div class="td-txt"><a href="https://buy.smallsmall.com/property/'.$row->propertyID.'" target="_blank">'.$row->property_name.'</a></div></td>
+                                <td class="td-content"><div class="td-txt"><a href="https://dev-buy.smallsmall.com/property/'.$row->propertyID.'" target="_blank">'.$row->property_name.'</a></div></td>
                                 <td class="td-content">'.ucfirst($row->plan).'</td>
                                 <td class="td-content">'.number_format($row->payable).'</td>
                                 <td class="td-content '.$stat.'-txt">'.$row->status.'</td>
@@ -116,7 +116,7 @@ class Buytolet extends CI_Controller {
 				}
                 
                 $output .= '<tr class="tr-content">
-                                <td class="td-content"><div class="td-txt"><a href="https://buy.smallsmall.com/property/'.$row->propertyID.'" target="_blank">'.$row->property_name.'</a></div></td>
+                                <td class="td-content"><div class="td-txt"><a href="https://dev-buy.smallsmall.com/property/'.$row->propertyID.'" target="_blank">'.$row->property_name.'</a></div></td>
                                 <td class="td-content">N'.number_format($row->amount).'</td>
                                 <td class="td-content">'.date('d F, Y', strtotime($row->transactionDate)).'</td>
                                 <td class="td-content '.$stat.'-txt">'.$row->payment_status.'</td>

@@ -1,4 +1,4 @@
-    var baseUrl = "https://rent.smallsmall.com/";
+    var baseUrl = "https://dev-rent.smallsmall.com/";
     
     window.onload = function() {
         
