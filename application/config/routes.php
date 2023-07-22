@@ -642,6 +642,10 @@ $route['furnisure/appliances/(:any)'] = 'furnisure/appliances/$1';
 $route['unione-testing'] = 'rss/unione_template_get';
 /* Unione testing    */
 
+// aws s3 testing route
+$route['aws-s3-integration'] = 'rss/aws_s3_integration_test';
+// end aws s3 testing route
+
 $route['payment-summary'] = 'rss/payment_summary';
 
 $route['testemails'] = 'rss/testemails';

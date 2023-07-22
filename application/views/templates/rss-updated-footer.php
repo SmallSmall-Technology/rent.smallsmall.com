@@ -51,10 +51,10 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link pl-0 text-white" href="https://stay.smallsmall.com/">Nightly stay</a>
+                      <a class="nav-link pl-0 text-white" href="https://dev-stay.smallsmall.com/">Nightly stay</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link pl-0 text-white" href="https://buy.smallsmall.com">
+                      <a class="nav-link pl-0 text-white" href="https://dev-buy.smallsmall.com">
                         Buy
                       </a>
                     </li>

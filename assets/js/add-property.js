@@ -1,6 +1,6 @@
 // JavaScript Document
 
-var baseUrl = "https://rent.smallsmall.com/";
+var baseUrl = "https://dev-rent.smallsmall.com/";
 
 $('#addPropForm').submit(function(e){
 

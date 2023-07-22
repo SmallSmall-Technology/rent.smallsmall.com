@@ -119,8 +119,8 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="<?php echo base_url('partner-with-us'); ?>">Property owner</a>
         <a href="<?php echo base_url('properties'); ?>">Rent</a>
-        <a target="_blank" href="https://stay.smallsmall.com">Nightly stay</a>
-        <a target="_blank" href="https://buy.smallsmall.com">Buy</a>
+        <a target="_blank" href="https://dev-stay.smallsmall.com">Nightly stay</a>
+        <a target="_blank" href="https://dev-buy.smallsmall.com">Buy</a>
         <a href="<?php echo base_url('blog'); ?>">Blog</a>
     </div>
     <div class="navigation-header <?php echo @$color; ?> web-header">
@@ -132,8 +132,8 @@
             <div class="navigation-container">
                 <ul class="menu <?php echo @$image; ?>">
                     <li class="menu-item"><a href="<?php echo base_url('properties'); ?>"><span>&nbsp;</span><span>Subscribe</span></a></li>
-                    <li class="menu-item"><a href="https://buy.smallsmall.com"><span>Invest</span><span>BuySmallSmall</span></a></li>
-                    <li class="menu-item"><a href="https://stay.smallsmall.com"><span>Nightly stay</span><span>StaySmallSmall</span></a></li>
+                    <li class="menu-item"><a href="https://dev-buy.smallsmall.com"><span>Invest</span><span>BuySmallSmall</span></a></li>
+                    <li class="menu-item"><a href="https://dev-stay.smallsmall.com"><span>Nightly stay</span><span>StaySmallSmall</span></a></li>
                     <li class="menu-item"><a href="<?php echo base_url('partner-with-us'); ?>"><span>&nbsp;</span><span>Property Owner</span></a></li>
                     <?php if(@$userID && !@$ongod && @$user_type == 'tenant' ){ ?>
                             <!--- Tenant button ---->
@@ -172,7 +172,7 @@
                 
                 <?php }else if(@$userID && !@$ongod && @$interest == 'Buy' ){ ?>
                         <!--- Landlord button ---->
-                        <li class="mob-top-btn register-btn-mobile"><a href="https://buy.smallsmall.com/dashboard/index"><span></span><span>Dashboard</span></a></li>
+                        <li class="mob-top-btn register-btn-mobile"><a href="https://dev-buy.smallsmall.com/dashboard/index"><span></span><span>Dashboard</span></a></li>
                 
                 <?php }else{ ?>
                         <div class="mob-top-btn register-btn-mobile"><a href="<?php echo base_url('signup'); ?>">Create account</a></div>

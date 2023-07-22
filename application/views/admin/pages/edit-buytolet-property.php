@@ -529,7 +529,7 @@
 
 																$dir = '../buy.smallsmall.com/uploads/buytolet/'.$property['image_folder'].'/';
 																
-																$imgPath = 'https://buy.smallsmall.com/uploads/buytolet/'.$property['image_folder'].'/';
+																$imgPath = 'https://dev-buy.smallsmall.com/uploads/buytolet/'.$property['image_folder'].'/';
 
 																if (file_exists($dir) == false) {
 
