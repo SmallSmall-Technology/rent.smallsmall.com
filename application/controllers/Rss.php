@@ -3208,10 +3208,38 @@ class Rss extends CI_Controller
 
 			if ($order['orderType'] == "property") {
 
+<<<<<<< HEAD
 				//Lock the property for 3 days
 				$today = date('Y-m-d');
 
 				$locked_down = date('Y-m-d', strtotime($today . ' +1 day'));
+=======
+					$propertyTitle = $order['property'][0]['productTitle'];
+
+					// Replace the placeholder in the HTML body with the username
+					
+					$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+					
+					$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+					
+					$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
+
+					$data['response'] = $htmlBody;
+				
+        		// Prepare the email data
+       			 	$emailDataTeam = [
+            			"message" => [
+                			"recipients" => [
+                    			["email" => 'verification@smallsmall.com'],
+					// ["email" => 'pidah.t@smallsmall.com'],
+                			],
+                		"body" => ["html" => $htmlBody],
+                		"subject" => "New Verification alert",
+                		"from_email" => "donotreply@smallsmall.com",
+                		"from_name" => "SmallSmall Alert",
+            			],
+        			];
+>>>>>>> admin-upload-permission-fixings
 
 				$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
 
