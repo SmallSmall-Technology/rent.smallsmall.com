@@ -1074,10 +1074,9 @@ class Admin extends CI_Controller {
 
 	} 
 
-	
 	public function download($id){
 	    
-	    $config['upload_path']          = './uploads/agreement/';
+	    $config['upload_path'] = './uploads/agreement/';
 	    
 	    if(!empty($id))
 	    {

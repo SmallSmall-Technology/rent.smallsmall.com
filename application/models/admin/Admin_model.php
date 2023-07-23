@@ -2434,6 +2434,7 @@ class Admin_model extends CI_Model {
 
 		return $query->result_array();
 	}
+
 	public function get_verification($id){
 		
 		$this->db->select('a.id, a.verification_id as vID, a.user_id, a.gross_annual_income, a.marital_status, a.dob, a.birth_place, a.country_id, a.present_address, a.present_country, a.duration_present_address, a.current_renting_status, a.disability, a.pets, a.present_landlord, a.landlord_email, a.landlord_phone, a.landlord_address, a.reason_for_living, a.employment_status, a.occupation, a.company_name, a.company_address, a.hr_manager_name, a.hr_manager_email, a.office_phone, a.guarantor_name, a.guarantor_email, a.guarantor_phone, a.guarantor_occupation, a.guarantor_address, a.created_at, a.updated_at, b.firstName, b.lastName, b.status, b.email, b.verified, c.file_path as valid_id_file_path, d.file_path as bank_statement_file_path, e.propertyID, e.verification_id, f.*, f.propertyID as propID, g.*, h.*');
