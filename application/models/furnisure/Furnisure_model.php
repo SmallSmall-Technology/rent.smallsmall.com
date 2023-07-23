@@ -12,7 +12,7 @@ class Furnisure_model extends CI_Model {
 
 		$this->load->database();
 		
-		$this->db2 = $this->load->database('second', TRUE);
+		// $this->db2 = $this->load->database('second', TRUE);
 
 	}
 
