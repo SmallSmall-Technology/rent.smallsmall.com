@@ -616,11 +616,18 @@ class App extends CI_Controller {
         
         // $headers = $this->input->request_headers();
 
-		// Directly access the 'Authorization' header from $_SERVER
-		$headers = array();
-		if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-    		$headers['Authorization'] = $_SERVER['HTTP_AUTHORIZATION'];
+		$headers = apache_request_headers();
+		if (isset($headers['Authorization'])) {
+    		$authorizationHeader = $headers['Authorization'];
+    	// Process the authorization header as needed.
 		}
+
+		// Directly access the 'Authorization' header from $_SERVER
+		
+		// $headers = array();
+		// if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    	// 	$headers['Authorization'] = $_SERVER['HTTP_AUTHORIZATION'];
+		// }
         
         if(@$headers['Authorization']){
             
