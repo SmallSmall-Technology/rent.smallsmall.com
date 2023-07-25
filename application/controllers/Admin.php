@@ -748,7 +748,7 @@ class Admin extends CI_Controller {
 
         $this->load->library('upload', $config);
         
-        $usrs = $this->session->userdata('userID');
+        echo $usrs = $this->session->userdata('userID');
         
         $usrs = $this->admin_model->get_username($usrs);
 
@@ -766,6 +766,8 @@ class Admin extends CI_Controller {
                 $id = $this->input->post('sub_id');
                 
                 $str_yr = $this->input->post('start-yr');
+
+				echo $usrs['email'];
                 
                 $data = array(
                     'filename' => $data['file_name'],
