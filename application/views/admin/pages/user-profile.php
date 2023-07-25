@@ -380,6 +380,117 @@
             			</div>
             		</div>
                     <!--subscription agreement -->
+
+                    <!--Move-in Checklist-->
+                    <div class="row">
+            			<div class="col-md-12">
+            				<div class="main-card mb-3 card">
+            					<div class="card-header">
+            					    Move-in Checklist
+            						
+            						<div class="btn-actions-pane-right">
+            							
+            						</div>
+            				</div>
+            					
+            					
+            			    <div class="table-responsive">
+                                    <?php echo form_open_multipart('admin/chk_upload');?>  
+                                    
+                                        <br></br><div style= "text-align:center;"><b>Checklist Upload</b></div><br>
+                                        
+                                        <br></br>
+                                        <div class="form-row" style = "margin-left: 10px;">
+                                            
+                                            <div class="col-md-4"><label for="debt-note" class="">Start year</label>
+                                            <select name="start-yr" id="start-yr" class="form-control verify-debt-txt" required>
+                                                
+                                            <?php for($i = 2020; $i < 2071; $i++){ ?>
+                                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                            <?php } ?>
+                                            </select></div>
+                                            
+                                            <div class="col-md-4"><label for="debt-note" class="">End year</label><select required = 'true' name="end-yr" id="end-yr" class="form-control verify-debt-txt">
+                                                
+                                            <?php for($i = 2020; $i < 2071; $i++){ ?>
+                                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                            <?php } ?>
+                                            </select></div></div><br></br>
+                                            
+                                            
+                                        <div class="col-md-4">
+                                        <input type="hidden" name = "sub_id" value = "<?php echo @$ids ?>">
+                                        <div class="position-relative form-group"><label for="debt-note" class="">Property</label><select name="sub-propty" id="sub-propty" class="form-control verify-debt-txt">
+                                        <?php foreach($proptys as $propty => $value){ ?>
+                                            <option value="<?php echo $value['propertyID']; ?>"><?php echo $value['propertyTitle']; ?></option>
+                                        <?php } ?></select>
+                                        </div></div>
+                                        
+                                        <div class="col-md-4">
+                                            <label for="debt-note" class="">Upload Checklist</label>
+                                            <input type="file" name="filename" required/>
+                                        </div><br></br>
+                                        
+                                        <div class="col-md-4">
+                                            <input type="submit" value="upload"/>
+                                        </div><br></br>
+                                            
+                                        </form><hr>
+                                            
+                                            
+                                        <?php echo form_open_multipart('admin/Img_upload');?>
+                                        
+                                        <div style= "text-align:center;"><b>Image Upload</b></div><br>
+                                        
+                                        <div class="col-md-4">
+                                        <input type="hidden" name = "sub_id" value = "<?php echo @$ids ?>">
+                                        <div class="position-relative form-group"><label for="debt-note" class="">Property</label><select name="sub-propty" id="sub-propty" class="form-control verify-debt-txt">
+                                        <?php foreach($proptys as $propty => $value){ ?>
+                                            <option value="<?php echo $value['propertyID']; ?>"><?php echo $value['propertyTitle']; ?></option>
+                                        <?php } ?></select>
+                                        </div></div>
+                                        
+                                        <div class="col-md-4">
+                                            <label for="debt-note" class="">Upload Image</label>
+                                            <input type="file" name="imgName" required/>
+                                        </div><br></br>
+                                        
+                                        <div class="col-md-4">
+                                            <input type="submit" value="upload"/></div><br></br>
+                                            
+                                        </form><hr>
+                                            
+                                            
+                                        <?php echo form_open_multipart('admin/video_upload');?>
+                                        
+                                        <div style= "text-align:center;"><b>Video Upload</b></div><br>
+                                        
+                                        <div class="col-md-4">
+                                        <input type="hidden" name = "sub_id" value = "<?php echo @$ids ?>">
+                                        <div class="position-relative form-group"><label for="debt-note" class="">Property</label><select name="sub-propty" id="sub-propty" class="form-control verify-debt-txt">
+                                        <?php foreach($proptys as $propty => $value){ ?>
+                                            <option value="<?php echo $value['propertyID']; ?>"><?php echo $value['propertyTitle']; ?></option>
+                                        <?php } ?></select>
+                                        </div></div>
+                                        
+                                        <div class="col-md-4">
+                                            <label for="debt-note" class="">Upload Video</label>
+                                            <input type="file" name="videoName" required/>
+                                        </div><br></br>
+                                        
+                                        
+                                        <div class="col-md-4">
+                                            <input type="submit" value="upload"/><br></br>
+                                            
+                                        </div>
+                                            
+            		                    </form>
+            					</div>
+                    
+                    </div>
+            			</div>
+            		</div>
+                    <!--Move-in Checklist-->
                     
                     
                     <!--subscription agreement history -->

@@ -752,7 +752,7 @@ class Admin extends CI_Controller {
         
         $usrs = $this->admin_model->get_username($usrs);
 
-        if (!$this->upload->do_upload('filename'))
+        if(!$this->upload->do_upload('filename'))
         {
             $error = array('error' => $this->upload->display_errors());
 
@@ -1100,6 +1100,194 @@ class Admin extends CI_Controller {
 	         //echo $id;
 	    }
         
+	}
+
+	public function chkdownload($id){
+	    
+	    $config['upload_path']          = './uploads/agreement/';
+	    
+	    if(!empty($id))
+	    {
+	         //load download helper
+	         $this->load->helper('download');
+	         
+	         //get file from db
+	         
+	         $fileInfo = $this->admin_model->getchkRows($id);
+	         
+	         //file path
+	         $file = './uploads/agreement/'.$fileInfo['filename'];
+	         
+	         //download file 
+	         force_download($file, NULL);
+	         
+	         //redirect(dashboard/subscription-agreement);
+	         
+	         //echo $id;
+	    }
+        
+	}
+
+	public function chk_upload(){
+	    
+	    $config['upload_path']          = './uploads/agreement/';
+        $config['allowed_types']        = 'doc|docx|pdf';
+        $config['max_size']             = 0;
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+        
+        $usrs = $this->session->userdata('userID');
+        
+        $usrs = $this->admin_model->get_username($usrs);
+
+        if (!$this->upload->do_upload('filename'))
+        {
+            $error = array('error' => $this->upload->display_errors());
+
+            $this->load->view('agr_error', $error);
+        }
+        
+        else
+        {
+                $data = $this->upload->data();
+                
+                $id = $this->input->post('sub_id');
+                
+                $str_yr = $this->input->post('start-yr');
+                
+                $data = array(
+                    'filename' => $data['file_name'],
+                    'userId'   => $id,
+                    'start_year' => $str_yr,
+                    'end_year' => $this->input->post('end-yr'),
+                    'property' => $this->input->post('sub-propty'),
+                    'admin' => $usrs['email'],
+                    'chkType' => 'doc',
+                    'date' => date('Y-m-d H:i:s')
+                    );
+                    
+                $this->db->insert('checklist', $data);
+                
+                //print_r($data);
+                
+                echo "<script>
+                            alert('Upload Successful');
+                            window.location.href='user-profile/".$id."';
+                      </script>";
+        }
+	}
+
+	public function Img_upload(){
+	    
+	    $config['upload_path']          = './uploads/agreement/';
+        $config['allowed_types']        = 'jpg|png|jpeg';
+        $config['max_size']             = 0;
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+        
+        $usrs = $this->session->userdata('userID');
+        
+        $usrs = $this->admin_model->get_username($usrs);
+
+        if (!$this->upload->do_upload('imgName'))
+        {
+            $error = array('error' => $this->upload->display_errors());
+
+            $this->load->view('agr_error', $error);
+        }
+        
+        else
+        {
+                $data = $this->upload->data();
+                
+                $id = $this->input->post('sub_id');
+                
+                //$str_yr = $this->input->post('start-yr');
+                
+                $data = array(
+                    'filename' => $data['file_name'],
+                    'userId'   => $id,
+                    'property' => $this->input->post('sub-propty'),
+                    'admin' => $usrs['email'],
+                    'chkType' => 'img',
+                    'date' => date('Y-m-d H:i:s')
+                    );
+                    
+                $this->db->insert('checklist', $data);
+                
+                //print_r($data);
+                
+                echo "<script>
+                            alert('Upload Successful');
+                            window.location.href='user-profile/".$id."';
+                      </script>";
+        }
+	}
+	
+	public function video_upload(){
+	    
+	    
+	    $id = $this->input->post('sub_id');
+            
+        $maxsize=2097152;
+        
+        if(($_FILES['videoName']['size'] >= $maxsize)) 
+        {
+            echo "<script>
+                    alert('File too large, File must be less than 2 megabytes');
+                    window.location.href='user-profile/".$id."';
+              </script>";
+        }
+        
+	    $config['upload_path']          = './uploads/agreement/';
+        $config['allowed_types']        = 'mp4';
+        $config['max_size']             = '2500';
+        $config['max_width']            = '1024';
+        $config['max_height']           = '7680';
+
+        $this->load->library('upload', $config);
+        
+        $usrs = $this->session->userdata('userID');
+        
+        $usrs = $this->admin_model->get_username($usrs);
+
+        if (!$this->upload->do_upload('videoName'))
+        {
+            $error = array('error' => $this->upload->display_errors());
+
+            $this->load->view('agr_error', $error);
+        }
+        
+        else
+        {
+            
+            $data = $this->upload->data();
+            
+            //$str_yr = $this->input->post('start-yr');
+            
+            $data = array(
+                'filename' => $data['file_name'],
+                'userId'   => $id,
+                'property' => $this->input->post('sub-propty'),
+                'admin' => $usrs['email'],
+                'chkType' => 'video',
+                'date' => date('Y-m-d H:i:s')
+                );
+                
+            $this->db->insert('checklist', $data);
+            
+            //print_r($data);
+        
+            
+            echo "<script>
+                        alert('Upload Successful');
+                        window.location.href='user-profile/".$id."';
+                  </script>";
+        }
 	}
 	
 	public function user_profile($id){
