@@ -1,6 +1,6 @@
 // JavaScript Document
 
-var baseUrl = "https://dev-rent.smallsmall.com/";
+var baseUrl = "https://rent.smallsmall.com/";
 
 // Initialize Mixpanel with your project token
 mixpanel.init('86e1f301cd45debd226a5a82ad553d5c');

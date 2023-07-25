@@ -1,6 +1,6 @@
 //Javascript Document
 
-var baseUrl = "https://dev-rent.smallsmall.com/";
+var baseUrl = "https://rent.smallsmall.com/";
 
 var cartCount = document.getElementById('cart-counter');
 

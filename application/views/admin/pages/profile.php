@@ -1,4 +1,4 @@
-	<div class="app-main__outer">
+<div class="app-main__outer">
 	    <?php
 
     		$CI =& get_instance();

@@ -258,7 +258,7 @@ else{
         </div>
 
         <div class="mb-4 pl-2">
-          <a href="https://dev-buy.smallsmall.com/user/dashboard" class="btn special-link-button mt-3">
+          <a href="https://buy.smallsmall.com/user/dashboard" class="btn special-link-button mt-3">
             <div>
               <p class="text-left" style="font-size: 10px;">Go to</p>
               <p class="text-right" style="font-size: 11px;">BuySmallsmall<br>dashboard</p>
@@ -272,7 +272,7 @@ else{
 
     <div class="container-fluid">
 
-        <a href="https://dev-buy.smallsmall.com/user/dashboard" class="btn special-link-button mt-3 d-md-inline-block d-none">
+        <a href="https://buy.smallsmall.com/user/dashboard" class="btn special-link-button mt-3 d-md-inline-block d-none">
             <div>
                 <p class="text-left" style="font-size: 10px;">Go to</p>
                 <p class="text-right" style="font-size: 11px;">BuySmallsmall<br>dashboard</p>
@@ -371,10 +371,10 @@ else{
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light justify-content-end">
                 <div>
-                    <a class="mr-3" href="https://dev-rent.smallsmall.com/faq">Rentsmallsmall FAQ</a>
-                    <a class="mr-3" href="https://dev-buy.smallsmall.com/faq">Buysmallsmall FAQ</a>
-                    <a class="mr-3" href="https://dev.smallsmall.com/about">About Us</a>
-                    <a class="" href="https://dev-rent.smallsmall.com/blog">Blog</a>
+                    <a class="mr-3" href="https://rent.smallsmall.com/faq">Rentsmallsmall FAQ</a>
+                    <a class="mr-3" href="https://buy.smallsmall.com/faq">Buysmallsmall FAQ</a>
+                    <a class="mr-3" href="https://smallsmall.com/about">About Us</a>
+                    <a class="" href="https://rent.smallsmall.com/blog">Blog</a>
                 </div>
             </nav>
         </div>

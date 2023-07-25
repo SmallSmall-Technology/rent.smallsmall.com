@@ -159,14 +159,14 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
       <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
         <ul class="navbar-nav w-100 primary-text-color justify-content-center">
           <li class="nav-item mr-5">
-            <a class="nav-link d-sm-inline-block primary-text-color" href="https://dev-stay.smallsmall.com">
+            <a class="nav-link d-sm-inline-block primary-text-color" href="https://stay.smallsmall.com">
               <small>Nightly stay</small>
               <br />
               <span class="font-weight-bold">Stayone</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link d-sm-inline-block primary-text-color" href="https://dev-buy.smallsmall.com">
+            <a class="nav-link d-sm-inline-block primary-text-color" href="https://buy.smallsmall.com">
               <small>Own</small>
               <br />
               <span class="font-weight-bold">BuySmallsmall</span>
@@ -437,7 +437,7 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
 
             <?php } else if (@$userID && !@$ongod && @$interest == 'Buy') { ?>
               <!--- Landlord button ---->
-              <!--<li class="mob-top-btn register-btn-mobile"><a href="https://dev-buy.smallsmall.com/user/dashboard"><span></span><span>Dashboard</span></a></li>-->
+              <!--<li class="mob-top-btn register-btn-mobile"><a href="https://buy.smallsmall.com/user/dashboard"><span></span><span>Dashboard</span></a></li>-->
             <?php } else { ?>
             
             <div class="d-md-none d-block">
@@ -516,9 +516,9 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
                 </p>
               </div>
               <div>
-                <p><a class="text-white" href="https://dev-stay.smallsmall.com"><small class="font-weight-light" style="font-size:10px">Nightly
+                <p><a class="text-white" href="https://stay.smallsmall.com"><small class="font-weight-light" style="font-size:10px">Nightly
                       stay</small><br>StayOne</a> </p>
-                <p><a class="text-white" href="https://dev-buy.smallsmall.com"><small class="font-weight-light"
+                <p><a class="text-white" href="https://buy.smallsmall.com"><small class="font-weight-light"
                       style="font-size:10px">Invest</small><br>BuySmallsmall</a> </p>
               </div>
               <div>

@@ -264,7 +264,7 @@ else{
         </div>
 
         <div class="mb-4 pl-2">
-          <a href="https://dev-buy.smallsmall.com/user/dashboard" class="btn special-link-button mt-3">
+          <a href="https://buy.smallsmall.com/user/dashboard" class="btn special-link-button mt-3">
             <div>
               <p class="text-left" style="font-size: 10px;">Go to</p>
               <p class="text-right" style="font-size: 11px;">RentSmallsmall<br>dashboard</p>
