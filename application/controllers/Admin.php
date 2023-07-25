@@ -752,7 +752,7 @@ class Admin extends CI_Controller {
         
         $usrs = $this->admin_model->get_username($usrs);
 
-        if (!$this->upload->do_upload('filename'))
+        if(!$this->upload->do_upload('filename'))
         {
             $error = array('error' => $this->upload->display_errors());
 
