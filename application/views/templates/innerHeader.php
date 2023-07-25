@@ -39,7 +39,7 @@
                                 </ul>
                             </li>
                             <li class="top-list"><a href="https://buy.smallsmall.com" class="black-menu"><span class="menu-span-desk">Invest</span>Buy2let</a></li>
-                            <li class="top-list"><a href="ttps://stayone.smallsmall.com" class="black-menu"><span class="menu-span-desk">Nightly stay</span>Stayone</a></li>
+                            <li class="top-list"><a href="https://stay.smallsmall.com" class="black-menu"><span class="menu-span-desk">Nightly stay</span>Stayone</a></li>
                             <li class="top-list"><a href="#" class="black-menu">Property owner</a></li>
                             <li class="top-list dropdown"><a id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" href="" class="black-menu">Company<i class="bx bx-chevron-down arrowbtn"></i></a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">

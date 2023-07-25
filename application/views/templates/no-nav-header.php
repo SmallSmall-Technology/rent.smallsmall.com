@@ -40,7 +40,7 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="<?php echo base_url('partner-with-us'); ?>">Property owner</a>
         <a href="<?php echo base_url('properties'); ?>">Rent</a>
-        <a href="https://stayone.smallsmall.com">Nightly stay</a>
+        <a href="https://stay.smallsmall.com">Nightly stay</a>
         <a href="https://buy.smallsmall.com">Buy</a>
         <a href="<?php echo base_url('blog'); ?>">Blog</a>
     </div>

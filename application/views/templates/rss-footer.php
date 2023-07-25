@@ -23,7 +23,7 @@
                     <div class="footer-items">
                         <div class="footer-head">Products</div>                     
                         <div class="footer-links"><a href="<?php echo base_url(); ?>">Rent</a></div>                     
-                        <div class="footer-links"><a href="https://stayone.smallsmall.com">Nightly stay</a></div>                     
+                        <div class="footer-links"><a href="https://stay.smallsmall.com">Nightly stay</a></div>                     
                         <div class="footer-links"><a href="https://buy.smallsmall.com">Buy</a></div>
                     </div>
                     <div class="footer-items">

@@ -15,7 +15,8 @@
 		"guzzlehttp/guzzle": "^7.4",
 		"firebase/php-jwt": "^6.1",
 		"pusher/pusher-push-notifications": "*",
-		"unione/unione-php": "^1.2"
+		"unione/unione-php": "^1.2",
+		"aws/aws-sdk-php": "^3.276"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
