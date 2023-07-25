@@ -2,7 +2,7 @@
 // jQuery(document).ready(function($){
 
  
-//   var baseUrl = "https://dev-rent.smallsmall.com/";
+//   var baseUrl = "https://rent.smallsmall.com/";
 
 //     var dateToday = new Date(); 
     
@@ -512,7 +512,7 @@
 jQuery(document).ready(function($){
 
  
-   var baseUrl = "https://dev-rent.smallsmall.com/";
+   var baseUrl = "https://rent.smallsmall.com/";
 
     var dateToday = new Date(); 
     

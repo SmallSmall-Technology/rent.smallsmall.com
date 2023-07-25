@@ -3208,10 +3208,31 @@ class Rss extends CI_Controller
 
 			if ($order['orderType'] == "property") {
 
-				//Lock the property for 3 days
-				$today = date('Y-m-d');
+					$propertyTitle = $order['property'][0]['productTitle'];
 
-				$locked_down = date('Y-m-d', strtotime($today . ' +1 day'));
+					// Replace the placeholder in the HTML body with the username
+					
+					$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+					
+					$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+					
+					$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
+
+					$data['response'] = $htmlBody;
+				
+        		// Prepare the email data
+       			 	$emailDataTeam = [
+            			"message" => [
+                			"recipients" => [
+                    			["email" => 'verification@smallsmall.com'],
+					// ["email" => 'pidah.t@smallsmall.com'],
+                			],
+                		"body" => ["html" => $htmlBody],
+                		"subject" => "New Verification alert",
+                		"from_email" => "donotreply@smallsmall.com",
+                		"from_name" => "SmallSmall Alert",
+            			],
+        			];
 
 				$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
 
@@ -4894,7 +4915,7 @@ class Rss extends CI_Controller
 
 		$user_agent = $_SERVER['HTTP_USER_AGENT'];
 
-		$referrer = 'https://dev-rent.smallsmall.com';
+		$referrer = 'https://rent.smallsmall.com';
 
 		if (isset($_SERVER['HTTP_REFERER'])) {
 			$referrer = $_SERVER['HTTP_REFERER'];

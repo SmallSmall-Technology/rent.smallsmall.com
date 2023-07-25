@@ -1,4 +1,4 @@
-var baseUrl = "https://dev-rent.smallsmall.com/";
+var baseUrl = "https://rent.smallsmall.com/";
 
 $(document). on('click', '.remove-img', function(){
 	"use strict";

@@ -1,6 +1,6 @@
 // JavaScript Document
 
-var baseUrl = "https://dev-rent.smallsmall.com/";
+var baseUrl = "https://rent.smallsmall.com/";
 
 $('.country').on('change', function(){
 
