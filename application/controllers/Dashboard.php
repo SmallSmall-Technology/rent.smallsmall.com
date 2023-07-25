@@ -172,6 +172,22 @@ class Dashboard extends CI_Controller
 			$data['bss_request_count'] = $this->buytolet_model->count_user_requests($data['userID']);
 			
 			$data['debt'] = $this->rss_model->get_debt($data['userID']);
+
+			$data['propID'] = $this->rss_model->checkPropty($data['userID']);
+
+			$data['sub_dats'] = $this->rss_model->checkChk($data['userID'], $data['propID']);
+
+			$data['propTitle'] = $this->rss_model->checkTitle($data['userID']);
+
+			$data['lst_dats'] = $this->rss_model->checklstData($data['userID']);
+
+			$data['book'] = $this->rss_model->get_bookingVal($data['userID']);
+
+			$data['bookngCount'] = $this->rss_model->get_bookCount($data['userID']);
+
+			$data['bookCount'] = $this->rss_model->count_booking($data['userID']);
+
+			$data['bookVal'] = $this->rss_model->get_bookVal($data['userID']);
 			
 			$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 			
