@@ -5,11 +5,11 @@ $fname = $fname[0];
 $lname = $lname[0];
 
 if($verification_status == 'yes'){
-    $disp = '<span style="color:#DADADA"  class="btn secondary-background text-white">Verified</span>'; 
+    $disp = '<span style="color:#DADADA" type="button" class="btn secondary-background text-white">Verified</span>'; 
 }
 
 else{
-    $disp = '<span style="color:#DADADA"  class="btn btn-light">Verified</span>';
+    $disp = '<span style="color:#DADADA" type="button" class="btn btn-light">Verified</span>';
 }
 ?>
 
@@ -20,8 +20,6 @@ else{
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../assets/css/bootstrap-css/bootstrap.min.css" crossorigin="anonymous" />
@@ -56,7 +54,7 @@ else{
     <header>
         <!-- desktop menu bar -->
         <nav class="navbar navbar-expand-lg nav-bottom-color navbar-light primary-background  px-4 py-0 d-lg-flex d-none">
-            <a class="navbar-brand" href="<?php echo base_url(); ?>">
+            <a class="navbar-brand" href = "<?php echo base_url(); ?>">
                 <img class="img-fluid" src="../assets/images/rss-logo.svg" alt="logo">
             </a>
             <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +63,7 @@ else{
             <div id="my-nav" class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active mr-5">
-                        <a class="nav-link">
+                        <a class="nav-link" href="#">
                             <div class="d-flex user-container">
                                 <div class="user-shorthand d-flex justify-content-center align-items-center mr-2">
                                     <p class="m-0"><?php echo $fname.'.'.$lname ?></p>
@@ -150,7 +148,7 @@ else{
                         </div>
                     </li>
                 </ul>
-                <a href="<?php echo base_url(); ?>/logout">
+                <a href="#">
                     <span class="navbar-text text-dark mr-5">
                         Log out
                         <img class="img-fluid" src="../assets/images/logout.svg" alt="">
@@ -166,12 +164,12 @@ else{
             <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <img class="img-fluid" src="../../assets/images/menu-burger.svg" alt="">
             </button>
-            <a href="<?php echo base_url(); ?>" style="width: 33%" class="flex-grow-1 text-center">
+            <a href="#" style="width: 33%" class="flex-grow-1 text-center">
                 <img class="img-fluid" src="../assets/images/rss-logo.svg" alt="logo">
             </a>
             <div class="d-flex user-container">
                 <div class="user-shorthand d-flex justify-content-center align-items-center mr-2">
-                    <p class="m-0"><?php echo $fname.'.'.$lname ?></p>
+                    <p class="m-0">JD</p>
                     <div class="active-user"></div>
                 </div>
 
@@ -184,7 +182,7 @@ else{
             <div class="dropdown-menu menu_icon--dropdown p-0  logout-dropdown">
                 <!-- Menu mobile view -->
                 <div class=" menu-desktop py-2 px-4 d-flex flex-column">
-                    <a href="<?php echo base_url(); ?>/logout">
+                    <a href="#">
                         <span class="navbar-text text-dark mr-5">
                             <img class="img-fluid" src="../assets/images/logout.svg" alt="">
                             Log out
@@ -341,7 +339,7 @@ else{
                 <div class="d-md-block d-none">
                     <?php echo $disp; ?>
                     <span class="btn secondary-background d-none">Verified</span>
-                    <span style="line-height: 14px;"  class="btn btn-outline-dark">
+                    <span style="line-height: 14px;" type="button" class="btn btn-outline-dark">
                         <small style="font-size: 10px; line-height: 14px;">Referral
                             code
                         </small><br>
@@ -371,37 +369,73 @@ else{
             </div>
 
             <!-- current booking -->
+            
             <div class="col-12 mt-5 collapse show " id="currentBooking">
-                <div class="primary-background p-md-5 p-3">
+            <div class="primary-background p-md-5 p-3">
+            <?php if(@$bookCount > 0){ ?>
                     <div class="row">
                         <div class="col-12">
-                            <h3 class="address-title"><?php echo $bookings['propertyTitle'] ?></h3>
-                            <p><?php echo $bookings['city'] . ', ' . $bookings['state_name']; ?></p>
+                            <h3 class="address-title"><?php echo $bookVal['propertyTitle'] ?></h3>
+                            <p><?php echo $bookVal['city'] . ', ' . $bookVal['state_name']; ?></p>
                         </div>
                     </div>
                     <div class="row my-5">
                         <div class="col-md-2 col-6 ">
                             <p class="font-weight-light custom-font-size-14">Subscription fee</p>
-                            <p class="custom-font-size-26">&#8358;<?php echo number_format($bookings['price'] + $bookings['serviceCharge']); ?></p>
+                            <p class="custom-font-size-26">&#8358;<?php echo number_format($bookVal['price'] + $bookVal['serviceCharge']); ?></p>
                         </div>
                         <div class="col-md-2 col-6 ">
                             <p class="font-weight-light">Service charge</p>
-                            <p class="custom-font-size-26">&#8358;<?php echo number_format($bookings['serviceCharge']); ?></p>
+                            <p class="custom-font-size-26">&#8358;<?php echo number_format($bookVal['serviceCharge']); ?></p>
                         </div>
                         <div class="col-md-2 col-6 ">
                             <p class="font-weight-light custom-font-size-14">Payment plan</p>
-                            <p class="custom-font-size-26"><?php echo $bookings['payment_plan']; ?></p>
+                            <p class="custom-font-size-26"><?php echo $bookVal['payment_plan']; ?></p>
                         </div>
                         <div class="col-md-6 col-12 ">
                             <p class="font-weight-light custom-font-size-14">Subscription date</p>
-                            <p class="d-flex align-items-center custom-font-size-26 subscription-date"><?php echo date('d M, Y', strtotime($bookings['move_in_date'])); ?> <i style="font-size: 13px;" class="mx-2 fa-solid fa-arrow-right"></i>
-                               <?php echo date('d M, Y', strtotime($bookings['rent_expiration'])); ?></p>
+                            <p class="d-flex align-items-center custom-font-size-26 subscription-date"><?php echo date('d M, Y', strtotime($bookVal['move_in_date'])); ?> <i style="font-size: 13px;" class="mx-2 fa-solid fa-arrow-right"></i>
+                               <?php echo date('d M, Y', strtotime($bookVal['rent_expiration'])); ?></p>
                         </div>
                     </div>
+                    <?php }  else{ ?>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            
+                            
+                            <?php if(@$bookngCount == 0){ 
+                                echo '<p class="font-weight-light custom-font-size-14">You have no subscription</p>'; } else{ ?>
+                            <h3 class="address-title"><?php echo $book['propertyTitle'] ?></h3>
+                            <p><?php echo $book['city'] . ', ' . $book['state_name']; ?></p>
+                        </div>
+                    </div>
+                    <div class="row my-5">
+                        <div class="col-md-2 col-6 ">
+                            <p class="font-weight-light custom-font-size-14">Subscription fee</p>
+                            <p class="custom-font-size-26">&#8358;<?php echo number_format($book['price'] + $book['serviceCharge']); ?></p>
+                            
+                        </div>
+                        <div class="col-md-2 col-6 ">
+                            <p class="font-weight-light">Service charge</p>
+                            <p class="custom-font-size-26">&#8358;<?php echo number_format($book['serviceCharge']); ?></p>
+                        </div>
+                        <div class="col-md-2 col-6 ">
+                            <p class="font-weight-light custom-font-size-14">Payment plan</p>
+                            <p class="custom-font-size-26"><?php echo $book['payment_plan']; ?></p>
+                        </div>
+                        <div class="col-md-6 col-12 ">
+                            <p class="font-weight-light custom-font-size-14">Subscription date</p>
+                            <p class="d-flex align-items-center custom-font-size-26 subscription-date"><?php echo date('d M, Y', strtotime($book['move_in_date'])); ?> <i style="font-size: 13px;" class="mx-2 fa-solid fa-arrow-right"></i>
+                               <?php echo date('d M, Y', strtotime($book['rent_expiration'])); ?></p>
+                        </div>
+                    </div>
+                    
+                    
                     <div class="row">
                         <div class="col-md-3 col-12 custom-btn mb-2">
-                            <a href = "<?php echo base_url('dashboard/wallet'); ?>"><button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Pay
-                                Subscription</button></a>
+                           <a href = "<?php echo base_url('dashboard/wallet'); ?>"><button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Renew
+                                Subscription</button></a> 
                         </div>
                         <div class="col-md-3 col-12 custom-btn mb-2">
                             <button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Cancel
@@ -416,6 +450,9 @@ else{
                         </div>
                     </div>
                 </div>
+                <?php } ?>
+                <?php } ?>
+                    
 
             </div>
 
@@ -424,25 +461,37 @@ else{
                 <div class="row">
                     <div class="col-md-4 col-12 mb-4">
                         <div class="row">
-                            <div class="col-md-12 col-6 mb-2">
+                            <?php $title = []; ?>
+                            <?php foreach($lst_dats as $sub_data => $value){ 
+                            if (in_array($value['propertyTitle'], $title))
+                            {
+                                
+                            }
+                            
+                            else
+                            {
+                                echo '<div class="col-md-12 col-6 mb-2">
                                 <div class="secondary-background h-100 p-md-4 p-3 mb-3">
-                                    <p>Penthouse 1 br A13 Olivia Court Lekki</p>
+                                    <p onClick= insPropVal('.$this->session->userdata('userID').','.$value['property'].')>'.$value['propertyTitle'].'</p>
                                 </div>
-                            </div>
-                            <div class="col-md-12 col-6 mb-2">
-                                <div class="secondary-background h-100 p-md-4 p-3 mb-3">
-                                    <p>Premium furnished 2 br Maisonette B2 Olivia Court Lekki</p>
-                                </div>
-                            </div>
+                            </div>';
+                            
+                                 array_push($title, $value['propertyTitle']);
+                            }
+                            
+                            
+                            } ?>
                         </div>
 
 
                     </div>
-                    <div class="col-md-8">
+             
+                    <div class="col-md-8" id = "insPropVal">
                         <div class="primary-background  p-4">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p>Premium furnished 2 br Maisonette B2 Olivia Court Lekki</p>
+                                    <?php if(@$propTitle == ''){ echo 'You have no move-in bookings'; } else{
+                                    echo @$propTitle; } ?>
                                 </div>
 
 
@@ -452,13 +501,13 @@ else{
                                 </div>
                                 <div class="col-md-12">
                                     <div class="checkin-videos d-flex flex-wrap">
+                                        <?php foreach($sub_dats as $sub_data => $value){ if($value['chkType'] == 'video'){?>
                                         <div class="checkin-videos-item  mr-3 mb-3">
                                             <video width="100%" height="" controls>
-                                                <source src="../movie.mp4" type="video/mp4">
-                                                <source src="../movie.ogg" type="video/ogg">
-                                                Your browser does not support the video tag.
+                                                <source src="../uploads/agreement/<?php echo $value['filename']?>" type="video/mp4">
                                             </video>
                                         </div>
+                                        <?php } } ?>
                                     </div>
                                 </div>
                                 <!-- end of videos -->
@@ -470,31 +519,54 @@ else{
                                 </div>
                                 <div class="col-md-12">
                                     <div class="checkin-pictures d-flex flex-wrap">
+                                        <?php foreach($sub_dats as $sub_data => $value){ if($value['chkType'] == 'img'){?>
                                         <div class="checkin-pictures-item  mr-3 mb-3">
-                                            <img class="img-fluid" src="../assets/images/pic-1.png" alt="">
+                                            <img class="img-fluid" src="../uploads/agreement/<?php echo $value['filename']?>" alt="">
                                         </div>
-                                        <div class="checkin-pictures-item  mr-3 mb-3">
-                                            <img class="img-fluid" src="../assets/images/pic-2.png" alt="">
-                                        </div>
-                                        <div class="checkin-pictures-item  mr-3 mb-3">
-                                            <img class="img-fluid" src="../assets/images/pic-1.png" alt="">
-                                        </div>
-                                        <div class="checkin-pictures-item  mr-3 mb-3">
-                                            <img class="img-fluid" src="../assets/images/pic-2.png" alt="">
-                                        </div>
-                                        <div class="checkin-pictures-item  mr-3 mb-3">
-                                            <img class="img-fluid" src="../assets/images/pic-1.png" alt="">
-                                        </div>
-                                        <div class="checkin-pictures-item  mr-3 mb-3">
-                                            <img class="img-fluid" src="../assets/images/pic-2.png" alt="">
-                                        </div>
+                                        <?php } } ?>
+                                        <!--<div class="checkin-pictures-item  mr-3 mb-3">-->
+                                        <!--    <img class="img-fluid" src="../assets/images/pic-2.png" alt="">-->
+                                        <!--</div>-->
+                                        <!--<div class="checkin-pictures-item  mr-3 mb-3">-->
+                                        <!--    <img class="img-fluid" src="../assets/images/pic-1.png" alt="">-->
+                                        <!--</div>-->
+                                        <!--<div class="checkin-pictures-item  mr-3 mb-3">-->
+                                        <!--    <img class="img-fluid" src="../assets/images/pic-2.png" alt="">-->
+                                        <!--</div>-->
+                                        <!--<div class="checkin-pictures-item  mr-3 mb-3">-->
+                                        <!--    <img class="img-fluid" src="../assets/images/pic-1.png" alt="">-->
+                                        <!--</div>-->
+                                        <!--<div class="checkin-pictures-item  mr-3 mb-3">-->
+                                        <!--    <img class="img-fluid" src="../assets/images/pic-2.png" alt="">-->
+                                        <!--</div>-->
                                     </div>
                                 </div>
                                 <!-- end of pictures -->
 
 
                                 <div class="col-md-12 my-3">
-                                    <p class="d-inline-block border-bottom border-dark">Checklist</p>
+                                    <p class="d-inline-block border-bottom border-dark mb-3">Checklist</p>
+                                    <div class="row">
+                                    <?php foreach($sub_dats as $sub_data => $value){ if($value['chkType'] == 'doc'){?>
+                                        <div class="col-md-4 col-12  mb-4">
+                                            <div class="card default-background border-0">
+                                            <div class="card-body pb-5">
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <img class="img-fluid" src="../assets/images/agreement2.svg" alt="">
+                                                    <p class="custom-font-size-14 font-weight-light"><?php echo $value['start_year']; ?>-<?php echo $value['end_year']; ?></p>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="card-text"><?php echo $value['propertyTitle']; ?></p>
+            
+                                                    <div class="mt-3">
+                                                        <a href="<?php echo base_url().'admin/chkdownload/'.$value['id']; ?>" class="btn secondary-background px-3">Download</a>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } } ?>
+                            </div>
                                 </div>
                             </div>
                         </div>
@@ -577,10 +649,10 @@ else{
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light justify-content-end">
                 <div>
-                    <a class="mr-3" href="https://rent.smallsmall.com/faq">Rentsmallsmall FAQ</a>
-                    <a class="mr-3" href="https://buy.smallsmall.com/faq">Buysmallsmall FAQ</a>
-                    <a class="mr-3" href="https://smallsmall.com/about">About Us</a>
-                    <a class="" href="https://rent.smallsmall.com/blog">Blog</a>
+                    <a class="mr-3" href="#">Rentsmallsmall FAQ</a>
+                    <a class="mr-3" href="#">Buysmallsmall FAQ</a>
+                    <a class="mr-3" href="#">About Us</a>
+                    <a class="" href="#">Blog</a>
                 </div>
             </nav>
         </div>
@@ -734,6 +806,51 @@ else{
             });
             
         });
+        
+        
+        function insPropVal(userID, propID)
+        {
+            $.ajax({
+                
+                url:"<?php echo base_url(); ?>rss/chkVal",
+                
+                method:"POST",
+                
+                data:{userID: userID, propID:propID},
+                
+                cache: false,
+                
+                success:function(data){
+                    
+                $('#insPropVal').html(data);
+                    
+                // let div = document.getElementById("insPropVal");
+                
+                // div.replaceChildren();
+                // //document.getElementById("insPropVal").style.display="none";
+                //     $('#insPropVal').append(data);
+                }
+            })
+        }
+        
+        // function insPropVal(userID, propID)
+        // {
+        //     $.ajax({
+        //     type: 'POST',
+        //     url: '<?php echo base_url('rss/chkVal'); ?>',
+        //     data: {
+        //       userID: userID, propID:propID
+        //     },
+        //     datatype: 'json',
+        //     success: function(response) {
+        //       console.log(response); // Debugging purposes
+        //     },
+        //     error: function(xhr, status, error) {
+        //     //   console.log(error); // Debugging purposes
+        //     }
+        //   });
+        // }
+        
     </script>
 
     <script>

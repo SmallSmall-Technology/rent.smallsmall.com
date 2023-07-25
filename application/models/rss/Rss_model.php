@@ -1026,6 +1026,27 @@ class Rss_model extends CI_Model {
 		
 		return $query->row_array();
 	}
+
+	public function checkPropty($id)
+	{
+	    //$ids = $this->session->userdata('userID');
+		
+		$this->db->select('a.*, b.propertyID, b.propertyTitle');
+		
+		$this->db->from('checklist as a');
+		
+		$this->db->join('property_tbl as b', 'a.property = b.propertyID', 'LEFT OUTER');
+		
+		$this->db->where('a.userId', $id);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+	    
+	    return $query->row()->property;
+	}
 	
 	public function check_email($email){
 
@@ -1059,6 +1080,48 @@ class Rss_model extends CI_Model {
 		
 		$this->db->update("user_tbl", $updates);
 		
+	}
+
+	public function checkTitle($id)
+	{
+	    //$ids = $this->session->userdata('userID');
+		
+		$this->db->select('a.*, b.propertyID, b.propertyTitle');
+		
+		$this->db->from('checklist as a');
+		
+		$this->db->join('property_tbl as b', 'a.property = b.propertyID', 'LEFT OUTER');
+		
+		$this->db->where('a.userId', $id);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+	    
+	    return $query->row()->propertyTitle;
+	}
+
+	public function checkChk($id, $propID)
+	{
+	    //$ids = $this->session->userdata('userID');
+		
+		$this->db->select('a.*, b.propertyID, b.propertyTitle');
+		
+		$this->db->from('checklist as a');
+		
+		$this->db->join('property_tbl as b', 'a.property = b.propertyID', 'LEFT OUTER');
+		
+		$this->db->where('a.userId', $id);
+		
+		$this->db->where('a.property', $propID);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$query = $this->db->get();
+	    
+	    return $query->result_array();
 	}
 	
 	public function check_reset_email($email){
@@ -4039,7 +4102,169 @@ class Rss_model extends CI_Model {
 	    
 	    return $query->result_array();
 	}
+
+	public function get_bookingVal($id){
+		
+		$this->db->select('a.*, a.status as transaction_status, b.*, c.*, d.*, e.name as state_name'); 
+		
+		$this->db->from('transaction_tbl as a');
+	    
+	    $this->db->where('a.userID', $id);
+	    
+	    $this->db->where('a.status', 'approved');
+	    
+	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
+	    
+	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
+	    
+	    $this->db->join('user_tbl as d', 'd.userID = b.userID', 'LEFT OUTER');
+	    
+	    $this->db->join('states as e', 'e.id = c.state', 'LEFT OUTER');
+		
+		$this->db->order_by('a.id', 'DESC');
+
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	}
+
+	public function get_bookCount($id){
+		
+		$this->db->select('a.*, a.status as transaction_status, b.*, c.*, d.*, e.name as state_name'); 
+		
+		$this->db->from('transaction_tbl as a');
+	    
+	    $this->db->where('a.userID', $id);
+	    
+	    $this->db->where('a.status', 'approved');
+	    
+	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
+	    
+	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
+	    
+	    $this->db->join('user_tbl as d', 'd.userID = b.userID', 'LEFT OUTER');
+	    
+	    $this->db->join('states as e', 'e.id = c.state', 'LEFT OUTER');
+		
+		return $this->db->count_all_results();
+	}
+
+	public function count_booking($id){
+	    
+	    $this->db->select('a.*, a.status as transaction_status, b.*, c.*, d.*, e.name as state_name');
+	    
+	    $this->db->from('transaction_tbl as a');
+	    
+	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
+	    
+	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
+	    
+	    $this->db->join('user_tbl as d', 'd.userID = b.userID', 'LEFT OUTER');
+	    
+	    $this->db->join('states as e', 'e.id = c.state', 'LEFT OUTER');
+	    
+	    $this->db->where('a.userID', $id);
+	    
+	    $this->db->where('DATEDIFF(now(), b.booked_on) <=', 7);
+	    
+	    return $this->db->count_all_results();
+	    
+	}
+
+	public function get_bookVal($id){
+	    
+	    $this->db->select('a.*, a.status as transaction_status, b.*, DATEDIFF(now(), booked_on) AS date_difference, c.*, d.*, e.name as state_name');
+	    
+	    $this->db->from('transaction_tbl as a');
+	    
+	    $this->db->where('a.userID', $id);
+	    
+	    $this->db->where('DATEDIFF(now(), booked_on) <=', 7);
+	    
+	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
+	    
+	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
+	    
+	    $this->db->join('user_tbl as d', 'd.userID = b.userID', 'LEFT OUTER');
+	    
+	    $this->db->join('states as e', 'e.id = c.state', 'LEFT OUTER');
+	    
+	    $this->db->order_by('date_difference', 'DESC');
+	    
+	    $this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array(); 
+	}
+
+	public function fetch_chkVal($id, $propID)
+	{
+	    //$ids = $this->session->userdata('userID');
+		
+		$this->db->select('a.*, b.propertyID, b.propertyTitle');
+		
+		$this->db->from('checklist as a');
+		
+		$this->db->join('property_tbl as b', 'a.property = b.propertyID', 'LEFT OUTER');
+		
+		$this->db->where('a.userId', $id);
+		
+		$this->db->where('a.property', $propID);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$query = $this->db->get();
+	    
+	    return $query;
+	}
+
+	public function checkPropTitle($id, $propID)
+	{
+	    //$ids = $this->session->userdata('userID');
+		
+		$this->db->select('a.*, b.propertyID, b.propertyTitle');
+		
+		$this->db->from('checklist as a');
+		
+		$this->db->join('property_tbl as b', 'a.property = b.propertyID', 'LEFT OUTER');
+		
+		$this->db->where('a.userId', $id);
+		
+		$this->db->where('a.property', $propID);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+	    
+	    return $query->row()->propertyTitle;
+	}
 	
+
+	public function checklstData($id)
+	{
+	    //$ids = $this->session->userdata('userID');
+		
+		$this->db->select('a.*, b.propertyTitle');
+		
+		$this->db->from('checklist as a');
+		
+		$this->db->join('property_tbl as b', 'a.property = b.propertyID', 'LEFT OUTER');
+		
+		$this->db->where('a.userId', $id);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$query = $this->db->get();
+	    
+	    return $query->result_array();
+	}
+
+
 	public function checkSubsequentPayment($id){
 		
 		$this->db->from('transaction_tbl');

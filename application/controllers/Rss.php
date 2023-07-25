@@ -2521,6 +2521,107 @@ class Rss extends CI_Controller {
 		}
 	}
 
+
+	function chkVal(){
+	    
+        $output = '';
+        
+        $userID = $this->session->userdata('userID');
+        
+        $propID = $this->input->post('propID');
+      
+        $data = $this->rss_model->fetch_chkVal($userID, $propID);
+        
+        $propTitle = $this->rss_model->checkPropTitle($userID, $propID);
+      
+        //if($data->num_rows() > 0){
+                
+			  $output .= '
+                        <div class="primary-background  p-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                     '.$propTitle.'
+                                </div>';
+
+                            $output .= '
+                                <!-- videos -->
+                                <div class="col-md-12 my-3">
+                                    <p class="d-inline-block border-bottom border-dark">Video</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkin-videos d-flex flex-wrap">';
+                                    foreach($data->result() as $row){
+                                        if($row->chkType == 'video')
+                                        {
+                                          $output .= '    
+                                        <div class="checkin-videos-item  mr-3 mb-3">
+                                            <video width="100%" height="" controls>
+                                                <source src="../uploads/agreement/'.$row->filename.'" type="video/mp4">
+                                            </video>
+                                        </div>'; }}
+                                       $output .=' 
+                                    </div>
+                                </div>
+                                <!-- end of videos -->
+
+                                
+                                <!-- pictures -->
+                                <div class="col-md-12 my-3">
+                                    <p class="d-inline-block border-bottom border-dark">Pictures</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkin-pictures d-flex flex-wrap">';
+                                    foreach($data->result() as $row){
+                                         if($row->chkType == 'img'){
+                                             $output .='
+                                        <div class="checkin-pictures-item  mr-3 mb-3">
+                                            <img class="img-fluid" src="../uploads/agreement/'.$row->filename.'" alt="">
+                                        </div>'; }}
+                                            
+                                        $output .='
+                                    </div>
+                                </div>
+                                <!-- end of pictures -->
+
+
+                                <div class="col-md-12 my-3">
+                                    <p class="d-inline-block border-bottom border-dark mb-3">Checklist</p>
+                                    <div class="row">';
+                                    
+                                    foreach($data->result() as $row){
+                                     if($row->chkType == 'doc'){
+                                         $output .= '
+                                        <div class="col-md-4 col-12  mb-4">
+                                            <div class="card default-background border-0">
+                                            <div class="card-body pb-5">
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <img class="img-fluid" src="../assets/images/agreement2.svg" alt="">
+                                                    <p class="custom-font-size-14 font-weight-light">'.$row->start_year.'-'.$row->end_year.'</p>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <p class="card-text">'.$row->propertyTitle.'</p>
+            
+                                        <div class="mt-3">
+                                        <a href="'.base_url().'admin/chkdownload/'.$row->id.'" class="btn secondary-background px-3">Download</a>
+                                                    </div>
+                                        </div>
+            
+                                        </div>
+                                    </div>
+                                    
+                                </div>';
+                                }}
+                            
+                            $output .='
+                            </div>
+                                </div>
+                            </div>
+                    </div>';
+        
+        echo $output;
+        
+    }
+
 	public function bookInspection(){
 	    
 	    require 'vendor/autoload.php'; // For Unione template authoload
