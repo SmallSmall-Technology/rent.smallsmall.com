@@ -614,13 +614,13 @@ class App extends CI_Controller {
 
         $inspectionDate = $json_data->inspectionDate;
         
-        // $headers = $this->input->request_headers();
+        $headers = $this->input->request_headers();
 
-		$headers = apache_request_headers();
-		if (isset($headers['Authorization'])) {
-    		$authorizationHeader = $headers['Authorization'];
-    	// Process the authorization header as needed.
-		}
+		// $headers = apache_request_headers();
+		// if (isset($headers['Authorization'])) {
+    	// 	$authorizationHeader = $headers['Authorization'];
+    	// // Process the authorization header as needed.
+		// }
 
 		// Directly access the 'Authorization' header from $_SERVER
 		
