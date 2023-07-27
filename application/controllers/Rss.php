@@ -3153,59 +3153,59 @@ class Rss extends CI_Controller
 			$data['response'] = $e->getMessage();
 		}
 
-		if ($responseEmail) {
+		// if ($responseEmail) {
 
-			try {
-				$response = $client->request('POST', 'template/get.json', array(
-					'headers' => $headers,
-					'json' => $requestBodyForTeam,
-				));
+		// 	try {
+		// 		$response = $client->request('POST', 'template/get.json', array(
+		// 			'headers' => $headers,
+		// 			'json' => $requestBodyForTeam,
+		// 		));
 
-				$jsonResponse = $response->getBody()->getContents();
+		// 		$jsonResponse = $response->getBody()->getContents();
 
-				$responseData = json_decode($jsonResponse, true);
+		// 		$responseData = json_decode($jsonResponse, true);
 
-				$htmlBody = $responseData['template']['body']['html'];
+		// 		$htmlBody = $responseData['template']['body']['html'];
 
-				$userName = $fname;
+		// 		$userName = $fname;
 
-				$userEmail = $email;
+		// 		$userEmail = $email;
 
-				$propertyID = $order['property'][0]['productID'];
+		// 		$propertyID = $order['property'][0]['productID'];
 
-				// Replace the placeholder in the HTML body with the username
+		// 		// Replace the placeholder in the HTML body with the username
 
-				$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+		// 		$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
 
-				$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+		// 		$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
 
-				$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
+		// 		$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
 
-				$data['response'] = $htmlBody;
+		// 		$data['response'] = $htmlBody;
 
-				// Prepare the email data
-				$emailDataTeam = [
-					"message" => [
-						"recipients" => [
-							["email" => 'verification@smallsmall.com'],
-							["email" => 'pidah.t@smallsmall.com'],
-						],
-						"body" => ["html" => $htmlBody],
-						"subject" => "New Verification alert",
-						"from_email" => "donotreply@smallsmall.com",
-						"from_name" => "SmallSmall Alert",
-					],
-				];
+		// 		// Prepare the email data
+		// 		$emailDataTeam = [
+		// 			"message" => [
+		// 				"recipients" => [
+		// 					["email" => 'verification@smallsmall.com'],
+		// 					// ["email" => 'pidah.t@smallsmall.com'],
+		// 				],
+		// 				"body" => ["html" => $htmlBody],
+		// 				"subject" => "New Verification alert",
+		// 				"from_email" => "donotreply@smallsmall.com",
+		// 				"from_name" => "SmallSmall Alert",
+		// 			],
+		// 		];
 
-				// Send the email using the Unione API
-				$responseEmail = $client->request('POST', 'email/send.json', [
-					'headers' => $headers,
-					'json' => $emailDataTeam,
-				]);
-			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-				$data['response'] = $e->getMessage();
-			}
-		}
+		// 		// Send the email using the Unione API
+		// 		$responseEmail = $client->request('POST', 'email/send.json', [
+		// 			'headers' => $headers,
+		// 			'json' => $emailDataTeam,
+		// 		]);
+		// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+		// 		$data['response'] = $e->getMessage();
+		// 	}
+		// }
 
 		if ($ver_result) {
 
