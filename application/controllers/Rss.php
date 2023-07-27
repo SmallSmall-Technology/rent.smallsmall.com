@@ -7570,51 +7570,99 @@ value1&metadata[meta2]=value2*/
 		}
 	}
 
+	// public function aws_s3_integration_test()
+	// {
+	// 	require 'vendor/autoload.php';
+
+	// 	// use Aws\S3\S3Client;
+
+	// 	// require 'aws.php';
+
+	// 	$ssmClient = new Aws\S3\S3Client([
+	// 		'version' => 'latest',
+	// 		'region' => 'us-east-1', // Replace with your AWS region
+	// 	]);
+
+	// 	try {
+
+	// 		$result = $ssmClient->getParameters([
+	// 			'Names' => ['ACCESS_KEY_ID', 'SECRET_ACCESS_KEY', 'ACCESS_REGION'],
+	// 			'WithDecryption' => true,
+	// 		]);
+
+	// 		$awsAccessKeyId = $result['Parameters'][0]['Value'];
+	// 		$awsSecretAccessKey = $result['Parameters'][1]['Value'];
+	// 		$awsRegion = $result['Parameters'][2]['Value'];
+
+	// 		// Use the retrieved values to create the S3 client
+	// 		$objAwsS3Client = new Aws\S3\S3Client([
+	// 			'version' => 'latest',
+	// 			'region' => $awsRegion,
+	// 			'credentials' => [
+	// 				'key' => $awsAccessKeyId,
+	// 				'secret' => $awsSecretAccessKey,
+	// 			]
+	// 		]);
+
+
+	// 		// List all S3 Buckets
+	// 		$buckets = $objAwsS3Client->listBuckets();
+
+	// 		if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
+	// 			foreach ($buckets['Buckets'] as $bucket) {
+	// 				echo $bucket['Name'] . "\n";
+	// 			}
+	// 		} else {
+	// 			echo "No buckets found.\n";
+	// 		}
+	// 	} catch (Aws\S3\Exception\S3Exception $e) {
+	// 		echo "Error: " . $e->getMessage() . "\n";
+	// 	}
+	// }
+
 	public function aws_s3_integration_test()
-	{
-		require 'vendor/autoload.php';
+{
+    require 'vendor/autoload.php';
 
-		// require 'aws.php';
+    // Initialize the AWS SSM client
+    $ssmClient = new Aws\Ssm\SsmClient([
+        'version' => 'latest',
+        'region' => 'us-east-1', // Replace with your AWS region
+    ]);
 
-		$ssmClient = new Aws\Ssm\SsmClient([
-			'version' => 'latest',
-			'region' => 'us-east-1', // Replace with your AWS region
-		]);
+    try {
+        $result = $ssmClient->getParameters([
+            'Names' => ['ACCESS_KEY_ID', 'SECRET_ACCESS_KEY', 'ACCESS_REGION'],
+            'WithDecryption' => true,
+        ]);
 
-		try {
+        $awsAccessKeyId = $result['Parameters'][0]['Value'];
+        $awsSecretAccessKey = $result['Parameters'][1]['Value'];
+        $awsRegion = $result['Parameters'][2]['Value'];
 
-			$result = $ssmClient->getParameters([
-				'Names' => ['ACCESS_KEY_ID', 'SECRET_ACCESS_KEY', 'ACCESS_REGION'],
-				'WithDecryption' => true,
-			]);
+        // Use the retrieved values to create the S3 client
+        $objAwsS3Client = new Aws\S3\S3Client([
+            'version' => 'latest',
+            'region' => $awsRegion,
+            'credentials' => [
+                'key' => $awsAccessKeyId,
+                'secret' => $awsSecretAccessKey,
+            ],
+        ]);
 
-			$awsAccessKeyId = $result['Parameters'][0]['Value'];
-			$awsSecretAccessKey = $result['Parameters'][1]['Value'];
-			$awsRegion = $result['Parameters'][2]['Value'];
+        // List all S3 Buckets
+        $buckets = $objAwsS3Client->listBuckets();
 
-			// Use the retrieved values to create the S3 client
-			$objAwsS3Client = new Aws\S3\S3Client([
-				'version' => 'latest',
-				'region' => $awsRegion,
-				'credentials' => [
-					'key' => $awsAccessKeyId,
-					'secret' => $awsSecretAccessKey,
-				]
-			]);
+        if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
+            foreach ($buckets['Buckets'] as $bucket) {
+                echo $bucket['Name'] . "\n";
+            }
+        } else {
+            echo "No buckets found.\n";
+        }
+    } catch (Aws\S3\Exception\S3Exception $e) {
+        echo "Error: " . $e->getMessage() . "\n";
+    }
+}
 
-
-			// List all S3 Buckets
-			$buckets = $objAwsS3Client->listBuckets();
-
-			if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
-				foreach ($buckets['Buckets'] as $bucket) {
-					echo $bucket['Name'] . "\n";
-				}
-			} else {
-				echo "No buckets found.\n";
-			}
-		} catch (Aws\S3\Exception\S3Exception $e) {
-			echo "Error: " . $e->getMessage() . "\n";
-		}
-	}
 }
