@@ -1467,7 +1467,7 @@ class App extends CI_Controller {
         
     }
     
-    public function insertBooking(){
+	public function insertBooking(){
         
         $result = FALSE;
 	    
@@ -1644,6 +1644,8 @@ class App extends CI_Controller {
         
     }
     
+	
+
     public function lenco_transactions(){
         
         $result = TRUE;

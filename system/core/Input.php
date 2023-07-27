@@ -752,35 +752,35 @@ class CI_Input
 	// 	return $this->_fetch_from_array($this->headers, NULL, $xss_clean);
 	// }
 
-	public function request_headers($xss_clean = FALSE)
-{
-    // If header is already defined, return it immediately
-    if (!empty($this->headers)) {
-        return $this->_fetch_from_array($this->headers, NULL, $xss_clean);
-    }
+// 	public function request_headers($xss_clean = FALSE)
+// {
+//     // If header is already defined, return it immediately
+//     if (!empty($this->headers)) {
+//         return $this->_fetch_from_array($this->headers, NULL, $xss_clean);
+//     }
 
-    // Check if the load balancer added the 'HTTP_AUTHORIZATION' header
-    if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-        $this->headers['Authorization'] = $_SERVER['HTTP_AUTHORIZATION'];
-    } elseif (function_exists('apache_request_headers')) {
-        // In Apache, you can simply call apache_request_headers()
-        $this->headers = apache_request_headers();
-    } else {
-        isset($_SERVER['CONTENT_TYPE']) && $this->headers['Content-Type'] = $_SERVER['CONTENT_TYPE'];
+//     // Check if the load balancer added the 'HTTP_AUTHORIZATION' header
+//     if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+//         $this->headers['Authorization'] = $_SERVER['HTTP_AUTHORIZATION'];
+//     } elseif (function_exists('apache_request_headers')) {
+//         // In Apache, you can simply call apache_request_headers()
+//         $this->headers = apache_request_headers();
+//     } else {
+//         isset($_SERVER['CONTENT_TYPE']) && $this->headers['Content-Type'] = $_SERVER['CONTENT_TYPE'];
 
-        foreach ($_SERVER as $key => $val) {
-            if (sscanf($key, 'HTTP_%s', $header) === 1) {
-                // take SOME_HEADER and turn it into Some-Header
-                $header = str_replace('_', ' ', strtolower($header));
-                $header = str_replace(' ', '-', ucwords($header));
+//         foreach ($_SERVER as $key => $val) {
+//             if (sscanf($key, 'HTTP_%s', $header) === 1) {
+//                 // take SOME_HEADER and turn it into Some-Header
+//                 $header = str_replace('_', ' ', strtolower($header));
+//                 $header = str_replace(' ', '-', ucwords($header));
 
-                $this->headers[$header] = $_SERVER[$key];
-            }
-        }
-    }
+//                 $this->headers[$header] = $_SERVER[$key];
+//             }
+//         }
+//     }
 
-    return $this->_fetch_from_array($this->headers, NULL, $xss_clean);
-}
+//     return $this->_fetch_from_array($this->headers, NULL, $xss_clean);
+// }
 
 // public function request_headers($xss_clean = FALSE)
 // {
@@ -823,6 +823,40 @@ class CI_Input
 
 //     return $this->_fetch_from_array($this->headers, NULL, $xss_clean);
 // }
+
+
+public function request_headers($xss_clean = FALSE)
+{
+	// If header is already defined, return it immediately
+	if ( ! empty($this->headers))
+	{
+		return $this->_fetch_from_array($this->headers, NULL, $xss_clean);
+	}
+
+	// In Apache, you can simply call apache_request_headers()
+	if (function_exists('apache_request_headers'))
+	{
+		$this->headers = apache_request_headers();
+	}
+	else
+	{
+		isset($_SERVER['CONTENT_TYPE']) && $this->headers['Content-Type'] = $_SERVER['CONTENT_TYPE'];
+
+		foreach ($_SERVER as $key => $val)
+		{
+			if (sscanf($key, 'HTTP_%s', $header) === 1)
+			{
+				// take SOME_HEADER and turn it into Some-Header
+				$header = str_replace('_', ' ', strtolower($header));
+				$header = str_replace(' ', '-', ucwords($header));
+
+				$this->headers[$header] = $_SERVER[$key];
+			}
+		}
+	}
+
+	return $this->_fetch_from_array($this->headers, NULL, $xss_clean);
+}
 
 
 
