@@ -89,14 +89,14 @@
                             </tr>
                             <tr>
                                 <th scope="row">Identification</th>
-                                <td><a rel="nofollow" target="_blank" href="https://buy.smallsmall.com/uploads/financing/'<?php echo $details['idPath']; ?>">Download</a></td>
+                                <td><a rel="nofollow" target="_blank" href="https://dev-buy.smallsmall.com/uploads/financing/'<?php echo $details['idPath']; ?>">Download</a></td>
                             </tr>
                             
                             <tr>
                                 <th scope="row">Bank statement</th>
                                 <td>
                                     <?php if($details['plan'] == 'co-own'){ ?>
-                                    <a rel="nofollow" target="_blank" href="https://buy.smallsmall.com/uploads/financing/'<?php echo $details['statementPath']; ?>">Download</a></td>
+                                    <a rel="nofollow" target="_blank" href="https://dev-buy.smallsmall.com/uploads/financing/'<?php echo $details['statementPath']; ?>">Download</a></td>
                                     <?php }else{ ?>
                                         N/A
                                     <?php } ?>
@@ -263,7 +263,7 @@
                             
                             <tr>
                                 <th scope="row">Identification</th>
-                                <td><a rel="nofollow" target="_blank" href="https://stay.smallsmall.com/uploads/identification/<?php //echo $details['userID'].'/'.$details['identification']; ?>">Download</a></td>
+                                <td><a rel="nofollow" target="_blank" href="https://dev-stay.smallsmall.com/uploads/identification/<?php //echo $details['userID'].'/'.$details['identification']; ?>">Download</a></td>
                             </tr>
                             </tbody>
                         </table>

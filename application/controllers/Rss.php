@@ -4915,7 +4915,7 @@ class Rss extends CI_Controller
 
 		$user_agent = $_SERVER['HTTP_USER_AGENT'];
 
-		$referrer = 'https://rent.smallsmall.com';
+		$referrer = 'https://dev-rent.smallsmall.com';
 
 		if (isset($_SERVER['HTTP_REFERER'])) {
 			$referrer = $_SERVER['HTTP_REFERER'];

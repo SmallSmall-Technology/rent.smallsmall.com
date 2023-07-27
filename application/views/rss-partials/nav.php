@@ -69,7 +69,7 @@ if($aye == 'esit'){ ?>
                                     <li><a class="dropdown-item" href="#">Upcoming homes</a></li>
                                 </ul>
                             </li>
-                            <li class="top-list"><a href="https://buy.smallsmall.com"><span class="menu-span-desk">Invest</span>Buy2let</a></li>
+                            <li class="top-list"><a href="https://dev-buy.smallsmall.com"><span class="menu-span-desk">Invest</span>Buy2let</a></li>
                             <li class="top-list"><a href="ttps://stayone.smallsmall.com"><span class="menu-span-desk">Nightly stay</span>Stayone</a></li>
                             <li class="top-list"><a href="#">Property owner</a></li>
                             <li class="top-list dropdown"><a id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" href="">Company<i class="bx bx-chevron-down arrowbtn"></i></a>

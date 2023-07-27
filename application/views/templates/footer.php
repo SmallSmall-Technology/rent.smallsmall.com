@@ -20,7 +20,7 @@
           <div class="col-sm product-footer">
             <h3>Products</h3>
             <ul>
-                <a href="https://rent.smallsmall.com" target="_blank"><li>Rentsmallsmall</li></a>
+                <a href="https://dev-rent.smallsmall.com" target="_blank"><li>Rentsmallsmall</li></a>
                 <a href="#nogo"><li>Stayone</li></a>
                 <a href="https://buy2let.ng" target="_blank"><li>Buy2let</li></a>
             </ul>

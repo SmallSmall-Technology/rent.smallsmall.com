@@ -190,7 +190,7 @@ class Admin_model extends CI_Model {
 	}
 	public function countAppVerifications() {
 
-		$this->db->from('verifications');
+		$this->db2->from('verifications');
 
 		return $this->db2->count_all_results();
 

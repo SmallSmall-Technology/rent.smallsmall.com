@@ -204,7 +204,7 @@
 
 																$dir = '../stay.smallsmall.com/uploads/apartments/'.$property['folder'].'/';
 																
-																$filePath = 'https://stay.smallsmall.com/uploads/apartments/'.$property['folder'].'/';
+																$filePath = 'https://dev-stay.smallsmall.com/uploads/apartments/'.$property['folder'].'/';
 																
 																if (file_exists($dir) == false) {
 
