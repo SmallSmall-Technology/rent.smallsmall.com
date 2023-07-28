@@ -3225,7 +3225,7 @@ class Rss extends CI_Controller
        			 	$emailDataTeam = [
             			"message" => [
                 			"recipients" => [
-                    			["email" => 'verification@smallsmall.com'],
+                    			["email" => 'customerexperience@smallsmall.com'],
 					// ["email" => 'pidah.t@smallsmall.com'],
                 			],
                 		"body" => ["html" => $htmlBody],
