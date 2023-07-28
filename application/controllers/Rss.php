@@ -4181,8 +4181,6 @@ class Rss extends CI_Controller
 
 		$res = $this->rss_model->check_reset_email($email);
 
-
-
 		if ($res) {
 
 			if ($res['referral'] == 'wordpress') {
@@ -4220,7 +4218,6 @@ class Rss extends CI_Controller
 
 					$htmlBody = $responseData['template']['body']['html'];
 
-
 					// Get the unique username
 					// $user = $this->admin_model->get_user($id);
 
@@ -4233,8 +4230,27 @@ class Rss extends CI_Controller
 
 					$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
-
 					$data['response'] = $htmlBody;
+
+					// Prepare the email data
+					$emailData = [
+						"message" => [
+							"recipients" => [
+								["email" => $email],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Password Reset RentSmallsmall",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "SmallSmall Password Reset",
+						],
+					];
+
+					// Send the email using the Unione API
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailData,
+					]);
+					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 
 					$data['response'] = $e->getMessage();
@@ -4242,14 +4258,13 @@ class Rss extends CI_Controller
 
 				// End Of Unione
 
+				// $this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
 
-				$this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
+				// $this->email->to($email);
 
-				$this->email->to($email);
+				// $this->email->subject("Password Reset RentSmallsmall");
 
-				$this->email->subject("Password Reset RentSmallsmall");
-
-				$this->email->set_mailtype("html");
+				// $this->email->set_mailtype("html");
 
 				// $message = $this->load->view('email/header.php', $data, TRUE);
 
@@ -4257,7 +4272,7 @@ class Rss extends CI_Controller
 
 				// $message .= $this->load->view('email/footer.php', $data, TRUE);
 
-				$message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+				// $message = $this->load->view('email/unione-email-template.php', $data, TRUE);
 
 				// $message = 'This is a test message 1.';
 
@@ -4267,7 +4282,7 @@ class Rss extends CI_Controller
 
 				// var_dump($msg);
 
-				$emailRes = $this->email->send();
+				// $emailRes = $this->email->send();
 
 				// var_dump($emailRes);
 
@@ -4276,7 +4291,7 @@ class Rss extends CI_Controller
 
 				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
 
-				if ($emailRes) {
+				if ($responseEmail) {
 
 					echo 1;
 				} else {
