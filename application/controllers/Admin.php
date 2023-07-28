@@ -6287,6 +6287,12 @@ class Admin extends CI_Controller {
 							"from_name" => "Smallsmall",
 						],
 					];
+
+					// Send the email using the Unione API
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailDataCx,
+					]);
 					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
