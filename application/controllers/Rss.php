@@ -2968,9 +2968,7 @@ class Rss extends CI_Controller
 		if (!is_dir('./uploads/verification/' . $folder)) {
 
 			// mkdir('./uploads/verification/' . $folder, 0711, TRUE);
-
 			mkdir('./uploads/verification/' . $folder, 777, TRUE);
-
 		}
 
 
@@ -3227,7 +3225,7 @@ class Rss extends CI_Controller
        			 	$emailDataTeam = [
             			"message" => [
                 			"recipients" => [
-                    			["email" => 'verification@smallsmall.com'],
+                    			["email" => 'customerexperience@smallsmall.com'],
 					// ["email" => 'pidah.t@smallsmall.com'],
                 			],
                 		"body" => ["html" => $htmlBody],
@@ -4220,7 +4218,6 @@ class Rss extends CI_Controller
 
 					$htmlBody = $responseData['template']['body']['html'];
 
-
 					// Get the unique username
 					// $user = $this->admin_model->get_user($id);
 
@@ -4248,14 +4245,12 @@ class Rss extends CI_Controller
 						],
 					];
 
-
 					// Send the email using the Unione API
-				$responseEmail = $client->request('POST', 'email/send.json', [
-				'headers' => $headers,
-				'json' => $emailData,
-				]);
-
-	
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailData,
+					]);
+					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 
 					$data['response'] = $e->getMessage();
