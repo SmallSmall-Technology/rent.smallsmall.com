@@ -94,6 +94,17 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
     }(document, 'script', 'ti-js'));
   </script>
   <!-- End TruConversion for rent.smallsmall.com -->
+	
+  <!--Start of Record Script-->
+  <script>
+    !function(b,e,d,f){
+    var a=b.createElement("script");a.async=!0,
+    a.id="torecord",a.src="https://cdn.torecord.it/recordLoader.js?key="+d;
+    var c=b.getElementsByTagName("script")[0];
+    c.parentNode.insertBefore(a,c)
+  }(document,window,"bbf79ddc-ad1d-4417-9ed7-43a1977378b1")
+</script>
+<!--End of Record Script-->
 
   <!-- Favicon link -->
   <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/favicon.png">
