@@ -8123,7 +8123,7 @@ class Admin extends CI_Controller {
         
         if($res){
         
-    		$result = $this->admin_model->insertCoOwnRequest($ref, $buyer_type, $payment_plan, $property_id, $cost, $payable, $user_id, $payable, 0, $mop, $payment_period, $unit_amount, $promo_code, $id_path, $beneficiary_id_path, $firstname, $lastname, $email, $phone, $company_name, $position, $occupation, $income_range, $company_address, $adminID, $offer_type);
+    		$result = $this->admin_model->insertCoOwnRequest($ref, $buyer_type, $payment_plan, $property_id, $payable, $user_id, $payable, 0, $mop, $payment_period, $unit_amount, $promo_code, $id_path, $beneficiary_id_path, $firstname, $lastname, $email, $phone, $company_name, $position, $occupation, $income_range, $company_address, $adminID, $offer_type);
     		
     		if($result){
     		    //Update the remaining pool units
