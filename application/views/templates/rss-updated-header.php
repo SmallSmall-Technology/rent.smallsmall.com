@@ -21,7 +21,20 @@
   <!-- Pixel Code for https://www.benifit.app/ -->
     <script defer src="https://www.benifit.app/pixel/svpjnbeodkar3mju8w44lu7mujd5sdj3"></script>
     <!-- END Pixel Code -->
-  
+
+
+<!--Start of Record Script-->
+  <script>
+  !function(b,e,d,f){
+    var a=b.createElement("script");a.async=!0,
+    a.id="torecord",a.src="https://cdn.torecord.it/recordLoader.js?key="+d;
+    var c=b.getElementsByTagName("script")[0];
+    c.parentNode.insertBefore(a,c)
+  }(document,window,"bbf79ddc-ad1d-4417-9ed7-43a1977378b1")
+</script>
+<!--End of Record Script-->
+
+	
   <!--Benifit App Platform authomation pop message for users interaction 2 -->
   
   <script async type=“text/javascript” src=“https://panel.callback24.io/js/callbackWidget.js?name=rent.smallsmall.com”></script>
