@@ -2955,189 +2955,189 @@ class Rss extends CI_Controller
 		}
 	}
 
-	// public function uploadIdentification($folder)
-	// {
-
-	// 	$filename = '';
-
-	// 	if (!$folder) {
-
-	// 		$folder = md5(date("Ymd His"));
-	// 	}
-
-	// 	sleep(1);
-
-
-	// 	if (!is_dir('./uploads/verification/' . $folder)) {
-
-	// 		// mkdir('./uploads/verification/' . $folder, 0711, TRUE);
-	// 		mkdir('./uploads/verification/' . $folder, 777, TRUE);
-	// 	}
-
-
-	// 	if ($_FILES["files"]["name"] != '') {
-
-	// 		$output = '';
-
-	// 		$config["upload_path"] = './uploads/verification/' . $folder;
-
-	// 		$config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
-
-	// 		$config['max_size'] = '5000';
-
-	// 		$config['encrypt_name'] = TRUE;
-
-	// 		$this->load->library('upload', $config);
-
-	// 		$this->upload->initialize($config);
-
-	// 		if (is_array($_FILES["files"]["name"])) {
-
-	// 			for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
-
-	// 				$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
-
-	// 				$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
-
-	// 				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
-
-	// 				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
-
-	// 				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
-
-	// 				if ($this->upload->do_upload('file')) {
-
-	// 					$data = $this->upload->data();
-
-	// 					$output = "success";
-
-	// 					$filename = $data["file_name"];
-
-	// 					//$output .= '<span class="imgCover" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/furnisure/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" /></span>';
-
-	// 				}
-	// 			}
-	// 		} else {
-
-	// 			$_FILES["file"]["name"] = $_FILES["files"]["name"];
-
-	// 			$_FILES["file"]["type"] = $_FILES["files"]["type"];
-
-	// 			$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
-
-	// 			$_FILES["file"]["error"] = $_FILES["files"]["error"];
-
-	// 			$_FILES["file"]["size"] = $_FILES["files"]["size"];
-
-	// 			//$upload_data = $this->upload->do_upload('file');
-
-	// 			//$file_name = $upload_data['file_name'];
-
-	// 			if ($this->upload->do_upload('file')) {
-
-	// 				$data = $this->upload->data();
-
-	// 				$output = "success";
-
-	// 				$filename = $data["file_name"];
-
-	// 				//$output .= '<span class="imgCover" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/furnisure/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" /></span>';
-
-	// 			}
-	// 		}
-
-	// 		//echo $output;
-
-	// 		echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
-	// 	}
-	// }
-
 	public function uploadIdentification($folder)
-    {
-        $filename = '';
+	{
 
-        if (!$folder) {
+		$filename = '';
 
-            $folder = md5(date("Ymd His"));
+		if (!$folder) {
 
-        }
+			$folder = md5(date("Ymd His"));
+		}
 
-        sleep(1);
+		sleep(1);
 
-        if (!is_dir('./uploads/verification/' . $folder)) {
 
-            mkdir('./uploads/verification/' . $folder, 777, TRUE);
+		if (!is_dir('./uploads/verification/' . $folder)) {
 
-        }
+			// mkdir('./uploads/verification/' . $folder, 0711, TRUE);
+			mkdir('./uploads/verification/' . $folder, 0777, TRUE);
+		}
 
-        if ($_FILES["files"]["name"] != '') {
-            $output = '';
 
-            $config["upload_path"] = './uploads/verification/' . $folder;
-            $config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
-            $config['max_size'] = '5000';
-            $config['encrypt_name'] = TRUE;
+		if ($_FILES["files"]["name"] != '') {
 
-            $this->load->library('upload', $config);
+			$output = '';
 
-            $this->upload->initialize($config);
+			$config["upload_path"] = './uploads/verification/' . $folder;
 
-            if (is_array($_FILES["files"]["name"])) {
-                for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
-                    $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
-                    $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
-                    $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
-                    $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
-                    $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+			$config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
 
-                    if ($this->upload->do_upload('file')) {
-                        $data = $this->upload->data();
-                        $output = "success";
-                        $filename = $data["file_name"];
+			$config['max_size'] = '5000';
 
-                        // Handle the file upload to AWS S3
-                        $awsFolder = 'verification/' . $folder . '/';
-                        $awsFilePath = $awsFolder . $data["file_name"];
+			$config['encrypt_name'] = TRUE;
 
-                        if ($this->aws_s3->uploadFile($data["full_path"], $awsFilePath)) {
-                            // The file was uploaded to AWS S3 successfully
-                            // Perform any other necessary actions here
-                        } else {
-                            // Failed to upload the file to AWS S3
-                            // Handle the error
-                        }
-                    }
-                }
-            } else {
-                $_FILES["file"]["name"] = $_FILES["files"]["name"];
-                $_FILES["file"]["type"] = $_FILES["files"]["type"];
-                $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
-                $_FILES["file"]["error"] = $_FILES["files"]["error"];
-                $_FILES["file"]["size"] = $_FILES["files"]["size"];
+			$this->load->library('upload', $config);
 
-                if ($this->upload->do_upload('file')) {
-                    $data = $this->upload->data();
-                    $output = "success";
-                    $filename = $data["file_name"];
+			$this->upload->initialize($config);
 
-                    // Handle the file upload to AWS S3
-                    $awsFolder = 'verification/' . $folder . '/';
-                    $awsFilePath = $awsFolder . $data["file_name"];
+			if (is_array($_FILES["files"]["name"])) {
 
-                    if ($this->aws_s3->uploadFile($data["full_path"], $awsFilePath)) {
-                        // The file was uploaded to AWS S3 successfully
-                        // Perform any other necessary actions here
+				for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
+					$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+
+					$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+
+					$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+
+					$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+
+					$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+					if ($this->upload->do_upload('file')) {
+
+						$data = $this->upload->data();
+
+						$output = "success";
+
+						$filename = $data["file_name"];
+
+						//$output .= '<span class="imgCover" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/furnisure/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" /></span>';
+
+					}
+				}
+			} else {
+
+				$_FILES["file"]["name"] = $_FILES["files"]["name"];
+
+				$_FILES["file"]["type"] = $_FILES["files"]["type"];
+
+				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
+
+				$_FILES["file"]["error"] = $_FILES["files"]["error"];
+
+				$_FILES["file"]["size"] = $_FILES["files"]["size"];
+
+				//$upload_data = $this->upload->do_upload('file');
+
+				//$file_name = $upload_data['file_name'];
+
+				if ($this->upload->do_upload('file')) {
+
+					$data = $this->upload->data();
+
+					$output = "success";
+
+					$filename = $data["file_name"];
+
+					//$output .= '<span class="imgCover" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/furnisure/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" /></span>';
+
+				}
+			}
+
+			//echo $output;
+
+			echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
+		}
+	}
+
+	// public function uploadIdentification($folder)
+    // {
+    //     $filename = '';
+
+    //     if (!$folder) {
+
+    //         $folder = md5(date("Ymd His"));
+
+    //     }
+
+    //     sleep(1);
+
+    //     if (!is_dir('./uploads/verification/' . $folder)) {
+
+    //         mkdir('./uploads/verification/' . $folder, 777, TRUE);
+
+    //     }
+
+    //     if ($_FILES["files"]["name"] != '') {
+    //         $output = '';
+
+    //         $config["upload_path"] = './uploads/verification/' . $folder;
+    //         $config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
+    //         $config['max_size'] = '5000';
+    //         $config['encrypt_name'] = TRUE;
+
+    //         $this->load->library('upload', $config);
+
+    //         $this->upload->initialize($config);
+
+    //         if (is_array($_FILES["files"]["name"])) {
+    //             for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+    //                 $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+    //                 $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+    //                 $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+    //                 $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+    //                 $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+    //                 if ($this->upload->do_upload('file')) {
+    //                     $data = $this->upload->data();
+    //                     $output = "success";
+    //                     $filename = $data["file_name"];
+
+    //                     // Handle the file upload to AWS S3
+    //                     $awsFolder = 'verification/' . $folder . '/';
+    //                     $awsFilePath = $awsFolder . $data["file_name"];
+
+    //                     if ($this->aws_s3->uploadFile($data["full_path"], $awsFilePath)) {
+    //                         // The file was uploaded to AWS S3 successfully
+    //                         // Perform any other necessary actions here
+    //                     } else {
+    //                         // Failed to upload the file to AWS S3
+    //                         // Handle the error
+    //                     }
+    //                 }
+    //             }
+    //         } else {
+    //             $_FILES["file"]["name"] = $_FILES["files"]["name"];
+    //             $_FILES["file"]["type"] = $_FILES["files"]["type"];
+    //             $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
+    //             $_FILES["file"]["error"] = $_FILES["files"]["error"];
+    //             $_FILES["file"]["size"] = $_FILES["files"]["size"];
+
+    //             if ($this->upload->do_upload('file')) {
+    //                 $data = $this->upload->data();
+    //                 $output = "success";
+    //                 $filename = $data["file_name"];
+
+    //                 // Handle the file upload to AWS S3
+    //                 $awsFolder = 'verification/' . $folder . '/';
+    //                 $awsFilePath = $awsFolder . $data["file_name"];
+
+    //                 if ($this->aws_s3->uploadFile($data["full_path"], $awsFilePath)) {
+    //                     // The file was uploaded to AWS S3 successfully
+    //                     // Perform any other necessary actions here
 						
-                    } else {
-                        // Failed to upload the file to AWS S3
-                        // Handle the error
-                    }
-                }
-            }
+    //                 } else {
+    //                     // Failed to upload the file to AWS S3
+    //                     // Handle the error
+    //                 }
+    //             }
+    //         }
 
-            echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
-        }
-    }
+    //         echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
+    //     }
+    // }
 
 
 	public function insertDetails()
