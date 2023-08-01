@@ -739,6 +739,11 @@ class Admin extends CI_Controller {
 	}
 	
 	public function agr_upload(){
+
+		if($this->session->has_userdata('userID')){			
+
+			$usrs = $this->session->userdata('userID');
+		}			
 	    
 	    $config['upload_path']          = './uploads/agreement/';
         $config['allowed_types']        = 'doc|docx|pdf';
@@ -748,7 +753,7 @@ class Admin extends CI_Controller {
 
         $this->load->library('upload', $config);
         
-        echo $usrs = $this->session->userdata('userID');
+        // echo $usrs = $this->session->userdata('userID');
         
         $usrs = $this->admin_model->get_username($usrs);
 
