@@ -37,7 +37,6 @@
 							<tr>
 								<th class="text-left">&nbsp;</th>
 								<th class="text-left">Name</th>
-								<!---<th class="text-left">Property</th>--->
 								<th class="text-left">Frequency</th>
 								<th class="text-left">Subscription Date</th>
 								<th class="text-left">Actions</th>
@@ -49,13 +48,6 @@
 								if (isset($subscriptions) && !empty($subscriptions)) {
 									foreach($subscriptions as $subscription => $value) {
 										
-										/*if($value['available_date'] > date('Y-m-d H:i:s')){
-											$stat = 'badge-danger';
-											$status = "Rented";
-										}else{
-											$stat = 'badge-success';
-											$status = "Vacant";
-										}*/
 							?>	
 
 							<tr id="sub-<?php echo $value['stp_id']; ?>">
@@ -83,9 +75,6 @@
 
 									</div>
 								</td>
-								<!---<td class="text-left"><?php //echo '<a target="_blank" href="'.base_url().'apartment/'.$value['propertyID'].'">'.$value['property_name'].'</a>'; ?></td>--->
-								<!--<td class="text-left"><?php //echo $value['city'].', '.$value['name'] ?></td>
-								<td class="text-left"><?php //echo $value['type'] ?></td>-->
 								<td class="text-left">
 								    <span class="badge badge-success"><?php echo ucfirst($value['frequency']); ?></span>
 								</td>

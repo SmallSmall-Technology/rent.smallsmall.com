@@ -8343,7 +8343,7 @@ class Admin extends CI_Controller {
 
 			$data['page_links'] = $this->pagination->create_links();
 
-			$data['subscribers'] = $this->admin_model->fetchSubscribers();			
+			$data['subscriptions'] = $this->admin_model->fetchSubscribers();			
 
 		}
 
