@@ -740,9 +740,10 @@ class Admin extends CI_Controller {
 	
 	public function agr_upload(){
 
-		if($this->session->has_userdata('userID')){			
+		if($this->session->has_userdata('adminLoggedIn')){			
 
-			$usrs = $this->session->userdata('userID');
+			$userID = $this->session->userdata('userID');
+			$userIDTest = $this->session->userdata('adminID');
 		}			
 	    
 	    $config['upload_path']          = './uploads/agreement/';
@@ -752,10 +753,12 @@ class Admin extends CI_Controller {
         // $config['max_height']           = 768;
 
         $this->load->library('upload', $config);
+
+		echo $userIDTest;
         
         // echo $usrs = $this->session->userdata('userID');
         
-        $usrs = $this->admin_model->get_username($usrs);
+        $usrs = $this->admin_model->get_username($userID);
 
         if (!$this->upload->do_upload('filename'))
         {
@@ -772,7 +775,7 @@ class Admin extends CI_Controller {
                 
                 $str_yr = $this->input->post('start-yr');
 
-				echo $usrs['email'];
+				// echo $usrs['email'];
                 
                 $data = array(
                     'filename' => $data['file_name'],
@@ -1100,7 +1103,7 @@ class Admin extends CI_Controller {
 	         //download file 
 	         force_download($file, NULL);
 	         
-	         redirect(dashboard/subscription-agreement);
+	        //  redirect(dashboard/subscription-agreement);
 	         
 	         //echo $id;
 	    }
