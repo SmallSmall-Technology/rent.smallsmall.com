@@ -619,6 +619,10 @@ class Loans extends CI_Controller {
 			"id" => "56ab446a-0f3c-11ee-93cb-821d93a29a48"
 		];
 
+		$requestBodyCxTeam = [
+			"id" => "283a4246-2fb4-11ee-8fb8-36dbf359d9e9"
+		];
+
 		// end Unione Template
 
 		//Update account balance and insert wallet transaction
@@ -697,7 +701,61 @@ class Loans extends CI_Controller {
 
 			if ($responseEmail) {
 
+				try {
+					$response = $client->request('POST', 'template/get.json', array(
+						'headers' => $headers,
+						'json' => $requestBodyCxTeam,
+					));
+	
+					$jsonResponse = $response->getBody()->getContents();
+	
+					$responseData = json_decode($jsonResponse, true);
+	
+					$htmlBody = $responseData['template']['body']['html'];
+	
+					$username = $data['name'];
+	
+					$TransactioDate = $data['transactioDate'];
+	
+					$topUpAmount = $amount;
+	
+					$transactionID = $reference;
+	
+					// Replace the placeholder in the HTML body with the username
+	
+					$htmlBody = str_replace('{{SubscriberName}}', $username, $htmlBody);
+					$htmlBody = str_replace('{{Date}}', $TransactioDate, $htmlBody);
+					$htmlBody = str_replace('{{DepositAmount}}', $topUpAmount, $htmlBody);
+	
+					$data['response'] = $htmlBody;
+	
+					// Prepare the email data
+					$emailCxTeam = [
+						"message" => [
+							"recipients" => [
+								["email" => 'customerexperience@smallsmall.com'],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "RentSmallsmall Wallet Top up successful notification",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "Smallsmall",
+						],
+					];
+	
+					// Send the email using the Unione API
+					$responseCxEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailCxTeam,
+					]);
+
+				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+					$data['response'] = $e->getMessage();
+					
+				}
+	
 				echo 1;
+
 			} else {
 
 				echo 0;
