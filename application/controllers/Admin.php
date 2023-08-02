@@ -8014,6 +8014,8 @@ class Admin extends CI_Controller {
 	}
 	
 	public function sendShares(){
+
+
 	    
 	    $response = 'error';
 	    
@@ -8134,11 +8136,17 @@ class Admin extends CI_Controller {
     			    $hash = ($offer_type == 'champions')? '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d' : '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d';
     			    
     			    // $email_response = $this->send_mmio_email($firstname, $lastname, $email, $hash);
-					$email_response = $this->send_unione_email($lastname, $unit_amount, $propName, $propLocation, $cost, $paymentPlanPeriod, $buyBackRate, $holdPeriod, $migrationDate, $email, $hash);
+
+					// $email_response = $this->send_unione_email($lastname, $unit_amount, $propName, $propLocation, $cost, $paymentPlanPeriod, $buyBackRate, $holdPeriod, $migrationDate, $email, $hash);
+
+					$email_response = $this->send_buytolet_freeshares_email($lastname, $unit_amount, $propName, $email);
+
 
     			    $response = "success";
     			        
     			    if($email_response){
+
+						$email_CxTeam = $this->send_Cx_freeshares_notification($lastname, $unit_amount, $propName, $email);
     			    
     			        $message = "Successfully sent";
     			        
@@ -8302,6 +8310,169 @@ class Admin extends CI_Controller {
 	    
 	}
 	
+
+	public function send_buytolet_freeshares_email($lastname, $unit_amount, $propName, $email){
+	    
+		require 'vendor/autoload.php'; // For Unione template authoload
+
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "bdf6cc3e-2c92-11ee-a048-725d8dbd0ffa"
+		];
+
+		// end Unione Template
+
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
+
+			$jsonResponse = $response->getBody()->getContents();
+			
+			$responseData = json_decode($jsonResponse, true);
+
+			$htmlBody = $responseData['template']['body']['html'];
+			
+			$username = $lastname;
+			$noOFShares = $unit_amount;
+			$propertyName = $propName;
+
+			// Replace the placeholder in the HTML body with the username
+			
+			$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+			$htmlBody = str_replace('{{SharesAmount}}', $noOFShares, $htmlBody);
+			$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+
+
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailData = [
+				"message" => [
+					"recipients" => [
+						["email" => $email],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "You have been sent Property Shares From Buysmallsmall",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "Buysmallsmall",
+				],
+			];
+
+			// Send the email using the Unione API
+			$responseEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailData,
+			]);
+
+			$response = json_decode($responseEmail->getBody()->getContents(), true);
+
+        	return $response['status'];
+	
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+			$data['response'] = $e->getMessage();
+
+		}
+	    
+	}
+
+	public function send_Cx_freeshares_notification($lastname, $unit_amount, $propName, $email){
+	    
+		require 'vendor/autoload.php'; // For Unione template authoload
+
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "08cf2ff0-2c69-11ee-a93c-9e797bd96141"
+		];
+
+		// end Unione Template
+
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
+
+			$jsonResponse = $response->getBody()->getContents();
+			
+			$responseData = json_decode($jsonResponse, true);
+
+			$htmlBody = $responseData['template']['body']['html'];
+			
+			$username = $lastname;
+			$noOFShares = $unit_amount;
+			$propertyName = $propName;
+			$subscriberEmail = $email;
+			$todayDate = date('m/d/Y');
+
+			// Replace the placeholder in the HTML body with the username
+			
+			$htmlBody = str_replace('{{AmountofFreeShares}}', $noOFShares, $htmlBody);
+			$htmlBody = str_replace('{{Email}}', $username, $htmlBody);
+			$htmlBody = str_replace('{{EmailAddress}}', $subscriberEmail, $htmlBody);
+			$htmlBody = str_replace('{{FreeShares}}', $noOFShares, $htmlBody);
+			$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+			$htmlBody = str_replace('{{Date}}', $todayDate, $htmlBody);
+
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailData = [
+				"message" => [
+					"recipients" => [
+						["email" => 'customerexperience@smallsmall.com'],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "Free Shares has been sent to a User From Buysmallsmall",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "Buysmallsmall",
+				],
+			];
+
+			// Send the email using the Unione API
+			$responseEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailData,
+			]);
+
+			$response = json_decode($responseEmail->getBody()->getContents(), true);
+
+        	return $response['status'];
+	
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+			$data['response'] = $e->getMessage();
+
+		}
+	    
+	}
+
+
+
 	//parameter array
 	public function create_user_account($details){
 
