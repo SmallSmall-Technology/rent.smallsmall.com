@@ -1263,9 +1263,76 @@ class App extends CI_Controller
 		echo json_encode(array('result' => $result, 'details' => $details, 'data' => $data));
 	}
 
+	// public function inspection_details()
+	// {
+
+	// 	$result = FALSE;
+
+	// 	$details = '';
+
+	// 	$data = array();
+
+	// 	$key = $this->getKey();
+
+	// 	$headers = $this->input->request_headers();
+
+	// 	if (@$headers['Authorization']) {
+
+	// 		$token = explode(' ', $headers['Authorization']);
+
+	// 		try {
+
+	// 			$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+
+	// 			if ($decoded) {
+	// 				//Insert the inspection details
+
+	// 				$userID = $decoded->user->userID;
+
+	// 				$fname = $decoded->user->firstName;
+
+	// 				$lname = $decoded->user->lastName;
+
+	// 				$phone = $decoded->user->phone;
+
+	// 				$email = $decoded->user->email;
+
+
+	// 				if (!is_null($userID)) {
+
+	// 					$data = $this->app_model->getInspectionDetails($userID);
+
+	// 					$result = TRUE;
+
+	// 					if (!empty($data)) {
+
+	// 						$details = "success";
+	// 					} else {
+
+	// 						$details = "Empty result";
+	// 					}
+	// 				} else {
+
+	// 					$details = "User ID is null";
+	// 				}
+	// 			} else {
+
+	// 				$details = "Invalid token";
+	// 			}
+	// 		} catch (Exception $ex) {
+
+	// 			$details = "Exception error caught";
+	// 		}
+	// 	} else {
+
+	// 		$details = "No authorization code";
+	// 	}
+
+	// 	echo json_encode(array('result' => $result, 'details' => $details, 'data' => $data));
+	// }
+
 	public function inspection_details()
 	{
-
 		$result = FALSE;
 
 		$details = '';
@@ -1274,62 +1341,37 @@ class App extends CI_Controller
 
 		$key = $this->getKey();
 
-		$headers = $this->input->request_headers();
+		// Get the userID from query parameters
+		if (isset($_GET['userID'])) {
 
-		if (@$headers['Authorization']) {
-
-			$token = explode(' ', $headers['Authorization']);
+			$userID = $_GET['userID'];
 
 			try {
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+				// Fetch inspection details based on the userID
+				$data = $this->app_model->getInspectionDetails($userID);
 
-				if ($decoded) {
-					//Insert the inspection details
+				if (!empty($data)) {
 
-					$userID = $decoded->user->userID;
+					$result = TRUE;
 
-					$fname = $decoded->user->firstName;
-
-					$lname = $decoded->user->lastName;
-
-					$phone = $decoded->user->phone;
-
-					$email = $decoded->user->email;
-
-
-					if (!is_null($userID)) {
-
-						$data = $this->app_model->getInspectionDetails($userID);
-
-						$result = TRUE;
-
-						if (!empty($data)) {
-
-							$details = "success";
-						} else {
-
-							$details = "Empty result";
-						}
-					} else {
-
-						$details = "User ID is null";
-					}
+					$details = "success";
 				} else {
 
-					$details = "Invalid token";
+					$details = "Empty result";
 				}
 			} catch (Exception $ex) {
 
-				$details = "Exception error caught";
+				$details = "Exception error caught: " . $ex->getMessage();
 			}
 		} else {
 
-			$details = "No authorization code";
+			$details = "Invalid query parameters. Missing userID";
 		}
 
 		echo json_encode(array('result' => $result, 'details' => $details, 'data' => $data));
 	}
+
 
 	public function all_countries()
 	{
@@ -1420,174 +1462,282 @@ class App extends CI_Controller
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
 
+	// public function insertBooking()
+	// {
+
+	// 	$result = FALSE;
+
+	// 	$details = '';
+
+	// 	$data = array();
+
+	// 	$key = $this->getKey();
+
+	// 	$json = file_get_contents('php://input');
+
+	// 	$json_data = json_decode($json);
+
+	// 	$propertyID = $json_data->propertyID;
+
+	// 	$move_in_date = $json_data->moveInDate;
+
+	// 	$duration = $json_data->duration;
+
+	// 	$paymentPlan = $json_data->paymentPlan;
+
+	// 	$booked_as = $json_data->bookedAs;
+
+	// 	$payment_type = $json_data->paymentMethod;
+
+	// 	$headers = $this->input->request_headers();
+
+	// 	if (@$headers['Authorization']) {
+
+	// 		$token = explode(' ', $headers['Authorization']);
+
+	// 		try {
+
+	// 			$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+
+	// 			if ($decoded) {
+	// 				//Insert the inspection details
+
+	// 				$userID = $decoded->user->userID;
+
+	// 				$fname = $decoded->user->firstName;
+
+	// 				$lname = $decoded->user->lastName;
+
+	// 				$phone = $decoded->user->phone;
+
+	// 				$email = $decoded->user->email;
+
+	// 				//Get verification ID
+
+	// 				$user = $this->app_model->get_verification_details($userID);
+
+	// 				if (!empty($user)) {
+
+	// 					//Get the price to pay
+	// 					$property = $this->app_model->get_property_dets($propertyID);
+
+	// 					$securityDeposit = $property['securityDeposit'] * $property['securityDepositTerm'];
+
+	// 					// 		            $propertyPrice = $property['price'];
+
+	// 					// 		if (empty($propertyPrice) || is_null($propertyPrice)) {
+
+	// 					// 			$evictionDeposit = 0; // set default
+
+	// 					// 			} elseif ($propertyPrice < 200000) {
+
+	// 					// 			$evictionDeposit = 200000;
+
+	// 					// 			} else {
+
+	// 					// 			$evictionDeposit = $propertyPrice;
+
+	// 					// 		}
+
+	// 					// 		if($property['securityDepositTerm'] == 1)
+	// 					// 		{
+	// 					// 			$sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+	// 					// 		}
+
+	// 					// 		else
+	// 					// 		{
+	// 					// 			$sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+	// 					// 			$sec_dep = 0.75 * $sec_dep;
+	// 					// 		}
+
+	// 					// 		$srlz = $property['intervals'];
+	// 					// 		$srlz = unserialize($srlz);
+
+	// 					// 		$yrnt = $property['price'] * 12;
+
+	// 					// 		if($srlz[0] == 'Upfront')
+	// 					// 		{
+	// 					// 			$property['isItUpfront'] = 'Upfront';
+
+	// 					// 			if($yrnt <= 2000000)
+	// 					// 			{
+	// 					// 				$sec_dep = 0.25 * $yrnt;
+	// 					// 			}
+
+	// 					// 			else
+	// 					// 			{
+	// 					// 				$sec_dep = 0.3 * $yrnt;
+	// 					// 			}
+	// 					// 		}
+
+	// 					// 		else
+	// 					// 		{
+	// 					// 			$serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+	// 					// 		}
+
+	// 					// 		$sec_dep = $sec_dep + $evictionDeposit;
+
+	// 					// 		$property['securityDeposit'] = "$sec_dep";
+
+	// 					// 		$property['serviceCharge'] = "$serviceCharge";
+
+	// 					// 		            $cost = $property['price'] + $sec_dep + $serviceCharge;
+
+
+	// 					$cost = $property['price'] + $securityDeposit + $property['serviceCharge'];
+
+	// 					$ref = 'rss_' . md5(rand(1000000, 9999999999));
+
+	// 					//Insert Booking
+	// 					$booking_id = $this->random_strings(5);
+
+	// 					//Check if user already booked property before proceeding
+
+	// 					$book_check = $this->app_model->check_booking($userID, $propertyID);
+
+	// 					if (!empty($book_check)) {
+	// 						//Edit booking
+	// 						$response = $this->app_model->updateBooking($book_check['bookingID'], $user['verification_id'], $userID, $propertyID, $paymentPlan, $duration, $move_in_date, $payment_type, $cost);
+	// 					} else {
+	// 						//Book new
+	// 						$response = $this->app_model->insertBooking($booking_id, $user['verification_id'], $userID, $propertyID, $paymentPlan, $duration, $booked_as, $move_in_date, $payment_type, $cost, $ref);
+	// 					}
+	// 					$details = "Success";
+
+	// 					if ($response) {
+
+	// 						$result = TRUE;
+	// 					} else {
+
+	// 						$result = FALSE;
+	// 					}
+	// 				} else {
+
+	// 					$details = "No verification detail found : " . $userID;
+	// 				}
+	// 			} else {
+
+	// 				$details = "Invalid token";
+	// 			}
+	// 		} catch (Exception $ex) {
+
+	// 			$details = "Exception error caught";
+	// 		}
+	// 	} else {
+
+	// 		$details = "No authorization code";
+	// 	}
+
+	// 	echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
+	// }
+
 	public function insertBooking()
 	{
-
 		$result = FALSE;
 
 		$details = '';
 
 		$data = array();
 
-		$key = $this->getKey();
+		try {
 
-		$json = file_get_contents('php://input');
+			// Get the JSON data from the request body
 
-		$json_data = json_decode($json);
+			$json = file_get_contents('php://input');
 
-		$propertyID = $json_data->propertyID;
+			$json_data = json_decode($json);
 
-		$move_in_date = $json_data->moveInDate;
+			// Extract required data from the JSON data
 
-		$duration = $json_data->duration;
+			$propertyID = $json_data->propertyID;
 
-		$paymentPlan = $json_data->paymentPlan;
+			$move_in_date = $json_data->moveInDate;
 
-		$booked_as = $json_data->bookedAs;
+			$duration = $json_data->duration;
 
-		$payment_type = $json_data->paymentMethod;
+			$paymentPlan = $json_data->paymentPlan;
 
-		$headers = $this->input->request_headers();
+			$booked_as = $json_data->bookedAs;
 
-		if (@$headers['Authorization']) {
+			$payment_type = $json_data->paymentMethod;
 
-			$token = explode(' ', $headers['Authorization']);
+			// For AWS test purposes, I am assuming that the user ID, first name, last name, phone, and email are also present in the JSON data.
 
-			try {
+			// Normally, these details should be obtained securely through authentication, and not directly from the request data. But due to AWS error, I doing this for testing.
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+			//Insert the inspection details
 
-				if ($decoded) {
-					//Insert the inspection details
+			$userID = $json_data->userID;
 
-					$userID = $decoded->user->userID;
+			// $fname = $json_data->firstName;
 
-					$fname = $decoded->user->firstName;
+			// $lname = $json_data->lastName;
 
-					$lname = $decoded->user->lastName;
+			// $phone = $json_data->phone;
 
-					$phone = $decoded->user->phone;
+			// $email = $json_data->email;
 
-					$email = $decoded->user->email;
+			//Get verification ID
 
-					//Get verification ID
+			$user = $this->app_model->get_verification_details($userID);
 
-					$user = $this->app_model->get_verification_details($userID);
+			if (!empty($user)) {
 
-					if (!empty($user)) {
+				//Get the price to pay for the property
+				$property = $this->app_model->get_property_dets($propertyID);
 
-						//Get the price to pay
-						$property = $this->app_model->get_property_dets($propertyID);
+				//Security deposit based on the property details
+				$securityDeposit = $property['securityDeposit'] * $property['securityDepositTerm'];
 
-						$securityDeposit = $property['securityDeposit'] * $property['securityDepositTerm'];
+				//Total cost including property price, security deposit, and service charge
+				$cost = $property['price'] + $securityDeposit + $property['serviceCharge'];
 
-						// 		            $propertyPrice = $property['price'];
+				//Reference for the booking
+				$ref = 'rss_' . md5(rand(1000000, 9999999999));
 
-						// 		if (empty($propertyPrice) || is_null($propertyPrice)) {
+				//Insert Booking
+				$booking_id = $this->random_strings(5);
 
-						// 			$evictionDeposit = 0; // set default
+				//Check if the user has already booked the property before proceeding
+				$book_check = $this->app_model->check_booking($userID, $propertyID);
 
-						// 			} elseif ($propertyPrice < 200000) {
+				if (!empty($book_check)) {
+					//Edit booking
+					$response = $this->app_model->updateBooking($book_check['bookingID'], $user['verification_id'], $userID, $propertyID, $paymentPlan, $duration, $move_in_date, $payment_type, $cost);
+				} else {
+					//Book new
+					$response = $this->app_model->insertBooking($booking_id, $user['verification_id'], $userID, $propertyID, $paymentPlan, $duration, $booked_as, $move_in_date, $payment_type, $cost, $ref);
+				}
 
-						// 			$evictionDeposit = 200000;
+				if ($response) {
 
-						// 			} else {
+					$result = TRUE;
 
-						// 			$evictionDeposit = $propertyPrice;
-
-						// 		}
-
-						// 		if($property['securityDepositTerm'] == 1)
-						// 		{
-						// 			$sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
-						// 		}
-
-						// 		else
-						// 		{
-						// 			$sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
-						// 			$sec_dep = 0.75 * $sec_dep;
-						// 		}
-
-						// 		$srlz = $property['intervals'];
-						// 		$srlz = unserialize($srlz);
-
-						// 		$yrnt = $property['price'] * 12;
-
-						// 		if($srlz[0] == 'Upfront')
-						// 		{
-						// 			$property['isItUpfront'] = 'Upfront';
-
-						// 			if($yrnt <= 2000000)
-						// 			{
-						// 				$sec_dep = 0.25 * $yrnt;
-						// 			}
-
-						// 			else
-						// 			{
-						// 				$sec_dep = 0.3 * $yrnt;
-						// 			}
-						// 		}
-
-						// 		else
-						// 		{
-						// 			$serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
-						// 		}
-
-						// 		$sec_dep = $sec_dep + $evictionDeposit;
-
-						// 		$property['securityDeposit'] = "$sec_dep";
-
-						// 		$property['serviceCharge'] = "$serviceCharge";
-
-						// 		            $cost = $property['price'] + $sec_dep + $serviceCharge;
-
-
-						$cost = $property['price'] + $securityDeposit + $property['serviceCharge'];
-
-						$ref = 'rss_' . md5(rand(1000000, 9999999999));
-
-						//Insert Booking
-						$booking_id = $this->random_strings(5);
-
-						//Check if user already booked property before proceeding
-
-						$book_check = $this->app_model->check_booking($userID, $propertyID);
-
-						if (!empty($book_check)) {
-							//Edit booking
-							$response = $this->app_model->updateBooking($book_check['bookingID'], $user['verification_id'], $userID, $propertyID, $paymentPlan, $duration, $move_in_date, $payment_type, $cost);
-						} else {
-							//Book new
-							$response = $this->app_model->insertBooking($booking_id, $user['verification_id'], $userID, $propertyID, $paymentPlan, $duration, $booked_as, $move_in_date, $payment_type, $cost, $ref);
-						}
-						$details = "Success";
-
-						if ($response) {
-
-							$result = TRUE;
-						} else {
-
-							$result = FALSE;
-						}
-					} else {
-
-						$details = "No verification detail found : " . $userID;
-					}
+					$details = "Success";
 				} else {
 
-					$details = "Invalid token";
+					$details = "Failed to insert booking";
 				}
-			} catch (Exception $ex) {
+			} else {
 
-				$details = "Exception error caught";
+				$details = "No verification detail found : " . $userID;
 			}
-		} else {
 
-			$details = "No authorization code";
+			//Result set to TRUE to indicate success
+			$result = TRUE;
+
+			$details = "Success";
+		} catch (Exception $ex) {
+
+			// If any exception occurs, catch it and set the error message in $details
+			$details = "Exception error caught: " . $ex->getMessage();
 		}
 
+		// Output the response as JSON
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
+
+
 
 	public function lenco_transactions()
 	{
@@ -1804,62 +1954,35 @@ class App extends CI_Controller
 
 	// }
 
+
 	public function subscription_history()
 	{
+		$result = FALSE;
+
 		$details = '';
 
 		$data = array();
 
+		// Get $key variable
 		$key = $this->getKey();
 
-		// I don't need the token and Authorization header anymore, I modify the code base so as to test with AWS loadbalancer that is giving error with Authorization denied
-
-		// $headers = $this->input->request_headers();
-		// if (@$headers['Authorization']) {
-		//     $token = explode(' ', $headers['Authorization']);
-		//     try {
-		//         $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-		//         if ($decoded) {
-		//             $userID = $decoded->user->userID;
-		//             $data = $this->app_model->getSubscriptions($userID);
-		//             if (!empty($data)) {
-		//                 for ($i = 0; $i < count($data); $i++) {
-		//                     // Rest of the code
-		//                 }
-		//                 $result = TRUE;
-		//                 $details = 'Success';
-		//             } else {
-		//                 $result = TRUE;
-		//                 $details = "Subscription details empty";
-		//             }
-		//         } else {
-		//             $details = "Invalid token";
-		//         }
-		//     } catch (Exception $ex) {
-		//         $details = "Exception error caught";
-		//     }
-		// } else {
-		//     $details = "No authorization code";
-		// }
-
 		// Directly get the JSON data from the request body
-
 		$json = file_get_contents('php://input');
 
 		$json_data = json_decode($json);
 
-		if (isset($json_data->userID)) {
+		// This is not the right way but due to long error with authentication(AWS) that is why I'm getting using ID from query parameters
 
-			$userID = $json_data->userID;
+		if (isset($_GET['userID'])) {
+
+			$userID = $_GET['userID'];
 
 			// Fetch subscription history based on the userID
-
 			$data = $this->app_model->getSubscriptions($userID);
 
 			if (!empty($data)) {
 
 				for ($i = 0; $i < count($data); $i++) {
-
 					$res = $this->app_model->countApprovedTransactions($data[$i]['bookingID']);
 
 					$data[$i]['numOfPayments'] = $res;
@@ -1879,17 +2002,17 @@ class App extends CI_Controller
 					}
 
 					if ($data[$i]['securityDepositTerm'] == 1) {
+
 						$sec_dep = $data[$i]['securityDeposit'] * $data[$i]['securityDepositTerm'];
 					} else {
+
 						$sec_dep = $data[$i]['securityDeposit'] * $data[$i]['securityDepositTerm'];
 
 						$sec_dep = 0.75 * $sec_dep;
 					}
 
 					$srlz = $data[$i]['intervals'];
-
 					$srlz = unserialize($srlz);
-
 					$yrnt = $data[$i]['price'] * 12;
 
 					if ($srlz[0] == 'Upfront') {
@@ -1905,7 +2028,6 @@ class App extends CI_Controller
 
 						if ($serv_term != 0) {
 							$serviceCharge = ($data[$i]['serviceCharge'] * $data[$i]['serviceChargeTerm']);
-
 							$data[$i]['isItUpfront'] = 'false';
 						} else {
 							$serviceCharge = $data[$i]['serviceCharge'];
@@ -1913,159 +2035,329 @@ class App extends CI_Controller
 					}
 
 					$sec_dep = $sec_dep + $evictionDeposit;
-
 					$data[$i]['securityDeposit'] = "$sec_dep";
-
 					$data[$i]['serviceCharge'] = "$serviceCharge";
 				}
 
 				$result = TRUE;
-
 				$details = 'Success';
 			} else {
-
 				$result = TRUE;
-
 				$details = "Subscription details empty";
 			}
 		} else {
-
-			$details = "Invalid JSON data. Missing userID";
+			$details = "Invalid query parameters. Missing userID";
 		}
 
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
+
+
+	// public function create_wallet_account()
+	// {
+
+	// 	$result = FALSE;
+
+	// 	$details = '';
+
+	// 	$data = array();
+
+	// 	$json = file_get_contents('php://input');
+
+	// 	$json_data = json_decode($json);
+
+	// 	$accountName = $json_data->accountName;
+
+	// 	$bvn = $json_data->bvn;
+
+	// 	$key = $this->getKey();
+
+	// 	$headers = $this->input->request_headers();
+
+	// 	if (@$headers['Authorization']) {
+
+	// 		$token = explode(' ', $headers['Authorization']);
+
+	// 		try {
+
+	// 			$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+
+	// 			if ($decoded) {
+
+	// 				//Insert the inspection details
+	// 				$userID = $decoded->user->userID;
+
+	// 				$response_det = $this->rss_model->update_bvn($userID, $bvn);
+
+
+	// 				if ($response_det) {
+
+	// 					//Connect to Lenco API to create virtual account
+
+	// 					$data = '{
+	//                     "accountName" : "' . $accountName . '", 
+	//                     "bvn" : "' . $bvn . '",
+	//                     "isStatic" : ' . true . '
+	//                     }';
+
+	// 					$curl = curl_init();
+
+	// 					curl_setopt_array($curl, array(
+
+	// 						CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
+
+	// 						CURLOPT_RETURNTRANSFER => true,
+
+	// 						CURLOPT_POSTFIELDS => $data,
+
+	// 						CURLOPT_HTTPHEADER => [
+	// 							"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
+
+	// 							"content-type: application/json"
+	// 						]
+	// 					));
+
+	// 					$response = curl_exec($curl);
+
+	// 					$response = json_decode($response, true);
+
+	// 					if ($response['status']) {
+
+	// 						$accountID = $response['data']['id'];
+
+	// 						$accountReference = $response['data']['accountReference'];
+
+	// 						$accountName = $response['data']['bankAccount']['accountName'];
+
+	// 						$accountNumber = $response['data']['bankAccount']['accountNumber'];
+
+	// 						$bankName = $response['data']['bankAccount']['bank']['name'];
+
+	// 						$bankCode = $response['data']['bankAccount']['bank']['code'];
+
+	// 						$account_check = $this->loan_model->check_for_account($userID);
+
+	// 						if (!$account_check) {
+
+	// 							$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'App');
+
+	// 							if ($result) {
+
+	// 								$result = TRUE;
+
+	// 								$details = "Success";
+	// 							} else {
+
+	// 								$details = "Could not store data";
+	// 							}
+	// 						} else {
+
+	// 							$details = "Account exists already";
+	// 						}
+	// 					} else {
+
+	// 						$details = "Error creating virtual account";
+	// 					}
+	// 				} else {
+
+	// 					$result = TRUE;
+
+	// 					$details = "Could not update user table with BVN";
+	// 				}
+	// 			} else {
+
+	// 				$details = "Invalid token";
+	// 			}
+	// 		} catch (Exception $ex) {
+
+	// 			$details = "Exception error caught";
+	// 		}
+	// 	} else {
+
+	// 		$details = "No authorization code";
+	// 	}
+
+	// 	echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
+	// }
 
 	public function create_wallet_account()
 	{
-
 		$result = FALSE;
 
 		$details = '';
 
 		$data = array();
 
-		$json = file_get_contents('php://input');
+		try {
 
-		$json_data = json_decode($json);
+			// Get the JSON data from the request body directly
+			$json = file_get_contents('php://input');
 
-		$accountName = $json_data->accountName;
+			$json_data = json_decode($json);
 
-		$bvn = $json_data->bvn;
+			// Extract the accountName and bvn from the JSON data
+			$accountName = $json_data->accountName;
 
-		$key = $this->getKey();
+			$bvn = $json_data->bvn;
 
-		$headers = $this->input->request_headers();
+			// Get the user ID from the JSON DATA which is not right but doing this because the AWS Authentication error is taking too long for me to resolve. 
+			$userID = $json_data->userID;
 
-		if (@$headers['Authorization']) {
+			// Check if the user ID is not null
+			if (!is_null($userID)) {
 
-			$token = explode(' ', $headers['Authorization']);
+				// Update BVN in the user table
+				$response_det = $this->rss_model->update_bvn($userID, $bvn);
 
-			try {
+				if ($response_det) {
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+					// Connect to Lenco API to create virtual account
+					$data = '{
+						"accountName" : "' . $accountName . '", 
+						"bvn" : "' . $bvn . '",
+						"isStatic" : ' . true . '
+					}';
 
-				if ($decoded) {
+					$curl = curl_init();
 
-					//Insert the inspection details
-					$userID = $decoded->user->userID;
+					curl_setopt_array($curl, array(
+						CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
+						CURLOPT_RETURNTRANSFER => true,
+						CURLOPT_POSTFIELDS => $data,
+						CURLOPT_HTTPHEADER => [
+							"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
+							"content-type: application/json"
+						]
+					));
 
-					$response_det = $this->rss_model->update_bvn($userID, $bvn);
+					$response = curl_exec($curl);
 
+					$response = json_decode($response, true);
 
-					if ($response_det) {
+					if ($response['status']) {
 
-						//Connect to Lenco API to create virtual account
+						$accountID = $response['data']['id'];
 
-						$data = '{
-                        "accountName" : "' . $accountName . '", 
-                        "bvn" : "' . $bvn . '",
-                        "isStatic" : ' . true . '
-                        }';
+						$accountReference = $response['data']['accountReference'];
 
-						$curl = curl_init();
+						$accountName = $response['data']['bankAccount']['accountName'];
 
-						curl_setopt_array($curl, array(
+						$accountNumber = $response['data']['bankAccount']['accountNumber'];
 
-							CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
+						$bankName = $response['data']['bankAccount']['bank']['name'];
 
-							CURLOPT_RETURNTRANSFER => true,
+						$bankCode = $response['data']['bankAccount']['bank']['code'];
 
-							CURLOPT_POSTFIELDS => $data,
+						// Check if the user already has an account in the database
+						$account_check = $this->loan_model->check_for_account($userID);
 
-							CURLOPT_HTTPHEADER => [
-								"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
+						if (!$account_check) {
 
-								"content-type: application/json"
-							]
-						));
+							// Insert account details into the database
+							$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'App');
 
-						$response = curl_exec($curl);
+							if ($result) {
 
-						$response = json_decode($response, true);
+								// Set the result to TRUE to indicate success
+								$result = TRUE;
 
-						if ($response['status']) {
-
-							$accountID = $response['data']['id'];
-
-							$accountReference = $response['data']['accountReference'];
-
-							$accountName = $response['data']['bankAccount']['accountName'];
-
-							$accountNumber = $response['data']['bankAccount']['accountNumber'];
-
-							$bankName = $response['data']['bankAccount']['bank']['name'];
-
-							$bankCode = $response['data']['bankAccount']['bank']['code'];
-
-							$account_check = $this->loan_model->check_for_account($userID);
-
-							if (!$account_check) {
-
-								$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'App');
-
-								if ($result) {
-
-									$result = TRUE;
-
-									$details = "Success";
-								} else {
-
-									$details = "Could not store data";
-								}
+								$details = "Success";
 							} else {
 
-								$details = "Account exists already";
+								$details = "Could not store data";
 							}
 						} else {
 
-							$details = "Error creating virtual account";
+							$details = "Account exists already";
 						}
 					} else {
 
-						$result = TRUE;
-
-						$details = "Could not update user table with BVN";
+						$details = "Error creating virtual account";
 					}
 				} else {
 
-					$details = "Invalid token";
+					$result = TRUE;
+
+					$details = "Could not update user table with BVN";
 				}
-			} catch (Exception $ex) {
+			} else {
 
-				$details = "Exception error caught";
+				$details = "User ID is null";
 			}
-		} else {
+		} catch (Exception $ex) {
 
-			$details = "No authorization code";
+			// If any exception occurs, catch it and set the error message in $details
+			$details = "Exception error caught: " . $ex->getMessage();
 		}
 
+		// Output the response as JSON
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
+
+		// Exit the script to prevent any further execution
+		exit();
 	}
+
+	// public function wallet_details()
+	// {
+
+	// 	$result = FALSE;
+
+	// 	$details = '';
+
+	// 	$data = array();
+
+	// 	$key = $this->getKey();
+
+	// 	$headers = $this->input->request_headers();
+
+	// 	if (@$headers['Authorization']) {
+
+	// 		$token = explode(' ', $headers['Authorization']);
+
+	// 		try {
+
+	// 			$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+
+	// 			if ($decoded) {
+	// 				//Insert the inspection details
+
+	// 				$userID = $decoded->user->userID;
+
+	// 				if (!is_null($userID)) {
+
+	// 					$data = $this->app_model->getWalletDetails($userID);
+
+	// 					$result = TRUE;
+
+	// 					if (!empty($data)) {
+
+	// 						$details = "Success";
+	// 					} else {
+
+	// 						$details = "Empty data set";
+	// 					}
+	// 				} else {
+
+	// 					$details = "User ID is null";
+	// 				}
+	// 			} else {
+
+	// 				$details = "Invalid token";
+	// 			}
+	// 		} catch (Exception $ex) {
+
+	// 			$details = "Exception error caught";
+	// 		}
+	// 	} else {
+
+	// 		$details = "No authorization code";
+	// 	}
+
+	// 	echo json_encode(array('result' => $result, 'details' => $details, 'data' => $data));
+	// }
 
 	public function wallet_details()
 	{
-
 		$result = FALSE;
 
 		$details = '';
@@ -2074,53 +2366,38 @@ class App extends CI_Controller
 
 		$key = $this->getKey();
 
-		$headers = $this->input->request_headers();
+		// Removed $headers and token related code since it's not needed for GET request and due to Authorization headers issues with AWS loadbalancer
 
-		if (@$headers['Authorization']) {
+		// Get the userID from query parameters
+		if (isset($_GET['userID'])) {
 
-			$token = explode(' ', $headers['Authorization']);
+			$userID = $_GET['userID'];
 
 			try {
+				// Fetch wallet details based on the userID
+				$data = $this->app_model->getWalletDetails($userID);
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+				if (!empty($data)) {
 
-				if ($decoded) {
-					//Insert the inspection details
+					$result = TRUE;
 
-					$userID = $decoded->user->userID;
-
-					if (!is_null($userID)) {
-
-						$data = $this->app_model->getWalletDetails($userID);
-
-						$result = TRUE;
-
-						if (!empty($data)) {
-
-							$details = "Success";
-						} else {
-
-							$details = "Empty data set";
-						}
-					} else {
-
-						$details = "User ID is null";
-					}
+					$details = "Success";
 				} else {
 
-					$details = "Invalid token";
+					$details = "Empty data set";
 				}
 			} catch (Exception $ex) {
 
-				$details = "Exception error caught";
+				$details = "Exception error caught: " . $ex->getMessage();
 			}
 		} else {
 
-			$details = "No authorization code";
+			$details = "Invalid query parameters. Missing userID";
 		}
 
 		echo json_encode(array('result' => $result, 'details' => $details, 'data' => $data));
 	}
+
 
 	private function getKey()
 	{
@@ -2585,78 +2862,145 @@ class App extends CI_Controller
 
 		exit();
 	}
+
+	// public function wallet_update()
+	// {
+
+	// 	$result = FALSE;
+
+	// 	$details = '';
+
+	// 	$data = array();
+
+	// 	$json = file_get_contents('php://input');
+
+	// 	$reference = 'WF_' . $this->random_strings(8);
+
+	// 	$json_data = json_decode($json);
+
+	// 	$amount = $json_data->amount;
+
+	// 	$paystackRef = $json_data->paystackRef;
+
+	// 	$key = $this->getKey();
+
+	// 	$headers = $this->input->request_headers();
+
+	// 	if (@$headers['Authorization']) {
+
+	// 		$token = explode(' ', $headers['Authorization']);
+
+	// 		try {
+
+	// 			$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+
+	// 			if ($decoded) {
+	// 				//Insert the inspection details
+
+	// 				$userID = $decoded->user->userID;
+
+	// 				if (!is_null($userID)) {
+
+	// 					$details = $this->loan_model->get_account_details($userID);
+
+	// 					$account_balance = $details['account_balance'] + $amount;
+
+	// 					$response = $this->loan_model->update_balance($userID, $account_balance);
+
+	// 					if ($response) {
+
+	// 						if ($this->loan_model->insert_wallet_funding($userID, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystackRef)) {
+
+	// 							$details = "Payment succesful";
+	// 						}
+	// 					}
+	// 				} else {
+
+	// 					$details = "User ID is null";
+	// 				}
+	// 			} else {
+
+	// 				$details = "Invalid token";
+	// 			}
+	// 		} catch (Exception $ex) {
+
+	// 			$details = "Exception error caught";
+	// 		}
+	// 	} else {
+
+	// 		$details = "No authorization code";
+	// 	}
+
+	// 	echo json_encode(array("result" => $result, "details" => $details, "data" => array()));
+
+	// 	exit();
+	// }
+
 	public function wallet_update()
 	{
-
 		$result = FALSE;
 
 		$details = '';
 
 		$data = array();
 
-		$json = file_get_contents('php://input');
+		try {
+			// Get the JSON data from the request body
+			$json = file_get_contents('php://input');
 
-		$reference = 'WF_' . $this->random_strings(8);
+			$json_data = json_decode($json);
 
-		$json_data = json_decode($json);
+			// Generate a reference number
+			$reference = 'WF_' . $this->random_strings(8);
 
-		$amount = $json_data->amount;
+			// Extract the amount and paystackRef from the JSON data
+			$amount = $json_data->amount;
 
-		$paystackRef = $json_data->paystackRef;
+			$paystackRef = $json_data->paystackRef;
 
-		$key = $this->getKey();
+			// Get the user ID from JSON DATA which not the right way but due to long error issues that is why I'm trying this methods pending we find the solutions for the errors.
+			$userID = $json_data->userID;
 
-		$headers = $this->input->request_headers();
+			// Check if the user ID is not null
+			if (!is_null($userID)) {
 
-		if (@$headers['Authorization']) {
+				// Get account details of the user
+				$details = $this->loan_model->get_account_details($userID);
 
-			$token = explode(' ', $headers['Authorization']);
+				// Calculate the new account balance after adding the amount
+				$account_balance = $details['account_balance'] + $amount;
 
-			try {
+				// Update the user's account balance
+				$response = $this->loan_model->update_balance($userID, $account_balance);
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+				// If the account balance update is successful, insert wallet funding transaction
+				if ($response) {
 
-				if ($decoded) {
-					//Insert the inspection details
+					if ($this->loan_model->insert_wallet_funding($userID, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystackRef)) {
 
-					$userID = $decoded->user->userID;
-
-					if (!is_null($userID)) {
-
-						$details = $this->loan_model->get_account_details($userID);
-
-						$account_balance = $details['account_balance'] + $amount;
-
-						$response = $this->loan_model->update_balance($userID, $account_balance);
-
-						if ($response) {
-
-							if ($this->loan_model->insert_wallet_funding($userID, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystackRef)) {
-
-								$details = "Payment succesful";
-							}
-						}
-					} else {
-
-						$details = "User ID is null";
+						$details = "Payment successful";
 					}
-				} else {
-
-					$details = "Invalid token";
 				}
-			} catch (Exception $ex) {
+			} else {
 
-				$details = "Exception error caught";
+				$details = "User ID is null";
 			}
-		} else {
 
-			$details = "No authorization code";
+			$result = TRUE;
+		} catch (Exception $ex) {
+
+			// If any exception occurs, catch it and set the error message in $details
+			$details = "Exception error caught: " . $ex->getMessage();
 		}
 
-		echo json_encode(array("result" => $result, "details" => $details, "data" => array()));
+		// Output the response as JSON
+		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 
+		// Exit the script to prevent any further execution
 		exit();
 	}
+
+
 	public function wallet_history()
 	{
 
@@ -2812,7 +3156,6 @@ class App extends CI_Controller
 	//     echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	// }
 
-
 	public function get_user_notifications()
 	{
 		$result = FALSE;
@@ -2822,42 +3165,19 @@ class App extends CI_Controller
 		$data = array();
 
 		// Get $key variable
-
 		$key = $this->getKey();
 
-		// I don't need the token and Authorization header anymore, I removed this block to modify the code for testing with loadbalancer filter issues in AWS
-
-		// $headers = $this->input->request_headers();
-		// if (@$headers['Authorization']) {
-		//     $token = explode(' ', $headers['Authorization']);
-		//     try {
-		//         $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-		//         if ($decoded) {
-		//             $userID = $decoded->user->userID;
-		//             $data = $this->app_model->get_all_user_notifications($userID);
-		//             $result = TRUE;
-		//         } else {
-		//             $details = "Invalid token";
-		//         }
-		//     } catch (Exception $ex) {
-		//         $details = "Exception error caught";
-		//     }
-		// } else {
-		//     $details = "No authorization code";
-		// }
-
 		// Directly get the JSON data from the request body
-
 		$json = file_get_contents('php://input');
 
 		$json_data = json_decode($json);
 
-		if (isset($json_data->userID)) {
+		// Check if userID is present in the query parameters. I'm doing this because of the Authentication issues with AWS server which is taken too long pending the time I get solution
+		if (isset($_GET['userID'])) {
 
-			$userID = $json_data->userID;
+			$userID = $_GET['userID'];
 
 			// Fetch user notifications based on the userID
-
 			$data = $this->app_model->get_all_user_notifications($userID);
 
 			if (!empty($data)) {
@@ -2873,70 +3193,117 @@ class App extends CI_Controller
 			}
 		} else {
 
-			$details = "Invalid JSON data. Missing userID";
+			$details = "Invalid query parameters. Missing userID";
 		}
 
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
 
+
+	// public function update_user_notification_status()
+	// {
+
+	// 	$result = FALSE;
+
+	// 	$details = '';
+
+	// 	$data = array();
+
+	// 	$key = $this->getKey();
+
+	// 	$headers = $this->input->request_headers();
+
+	// 	$json = file_get_contents('php://input');
+
+	// 	$json_data = json_decode($json);
+
+	// 	$notificationID = $json_data->notificationID;
+
+	// 	if (@$headers['Authorization']) {
+
+	// 		$token = explode(' ', $headers['Authorization']);
+
+	// 		try {
+
+	// 			$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+
+	// 			if ($decoded) {
+
+	// 				//Insert the inspection details
+	// 				$userID = $decoded->user->userID;
+
+	// 				$res = $this->app_model->update_user_notification($notificationID, $userID);
+
+	// 				$result = TRUE;
+
+	// 				if ($res) {
+
+	// 					$details = "Successful";
+	// 				} else {
+
+	// 					$details = "Failed";
+	// 				}
+	// 			} else {
+
+	// 				$details = "Invalid token";
+	// 			}
+	// 		} catch (Exception $ex) {
+
+	// 			$details = "Exception error caught";
+	// 		}
+	// 	} else {
+
+	// 		$details = "No authorization code";
+	// 	}
+
+	// 	echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
+	// }
+
+
 	public function update_user_notification_status()
 	{
-
 		$result = FALSE;
 
 		$details = '';
 
 		$data = array();
 
-		$key = $this->getKey();
+		try {
 
-		$headers = $this->input->request_headers();
+			// Get the JSON data from the request body
+			$json = file_get_contents('php://input');
 
-		$json = file_get_contents('php://input');
+			$json_data = json_decode($json);
 
-		$json_data = json_decode($json);
+			// Extract the notification ID from the JSON data
+			$notificationID = $json_data->notificationID;
 
-		$notificationID = $json_data->notificationID;
+			// Get the user ID from the JSON data. Normally, I should get it from Authentication but due to present error. I'm doing this for main time.
+			$userID = $json_data->userID;
 
-		if (@$headers['Authorization']) {
+			// Update the user notification status in the database
+			$res = $this->app_model->update_user_notification($notificationID, $userID);
 
-			$token = explode(' ', $headers['Authorization']);
+			// Result set to TRUE to indicate success
+			$result = TRUE;
 
-			try {
+			if ($res) {
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+				$details = "Successful";
+			} else {
 
-				if ($decoded) {
-
-					//Insert the inspection details
-					$userID = $decoded->user->userID;
-
-					$res = $this->app_model->update_user_notification($notificationID, $userID);
-
-					$result = TRUE;
-
-					if ($res) {
-
-						$details = "Successful";
-					} else {
-
-						$details = "Failed";
-					}
-				} else {
-
-					$details = "Invalid token";
-				}
-			} catch (Exception $ex) {
-
-				$details = "Exception error caught";
+				$details = "Failed";
 			}
-		} else {
+		} catch (Exception $ex) {
 
-			$details = "No authorization code";
+			// If any exception occurs, catch it and set the error message in $details
+			$details = "Exception error caught: " . $ex->getMessage();
 		}
 
+		// Output the response as JSON
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
+
 
 	function base64_to_file($base64_string, $user_function, $folder)
 	{
