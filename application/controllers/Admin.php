@@ -748,9 +748,9 @@ class Admin extends CI_Controller {
 
         $this->load->library('upload', $config);
         
-        $usrs = $this->session->userdata('userID');
+        // $usrs = $this->session->userdata('userID');
         
-        $usrs = $this->admin_model->get_username($usrs);
+        // $usrs = $this->admin_model->get_username($usrs);
 
         if (!$this->upload->do_upload('filename'))
         {
@@ -773,7 +773,7 @@ class Admin extends CI_Controller {
                     'start_year' => $str_yr,
                     'end_year' => $this->input->post('end-yr'),
                     'property' => $this->input->post('sub-propty'),
-                    'admin' => $usrs['email'],
+                    // 'admin' => $usrs['email'],
                     'date' => date('Y-m-d H:i:s')
                     );
                     
