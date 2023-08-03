@@ -740,11 +740,11 @@ class Admin extends CI_Controller {
 	
 	public function agr_upload(){
 
-		if($this->session->has_userdata('adminLoggedIn')){			
+		// if($this->session->has_userdata('adminLoggedIn')){			
 
-			$userID = $this->session->userdata('userID');
-			$userIDTest = $this->session->userdata('adminID');
-		}			
+		// 	$userID = $this->session->userdata('userID');
+		// 	$userIDTest = $this->session->userdata('adminID');
+		// }			
 	    
 	    $config['upload_path']          = './uploads/agreement/';
         $config['allowed_types']        = 'doc|docx|pdf';
@@ -758,7 +758,7 @@ class Admin extends CI_Controller {
         
         // echo $usrs = $this->session->userdata('userID');
         
-        $usrs = $this->admin_model->get_username($userID);
+        // $usrs = $this->admin_model->get_username($userID);
 
         if (!$this->upload->do_upload('filename'))
         {
@@ -783,7 +783,7 @@ class Admin extends CI_Controller {
                     'start_year' => $str_yr,
                     'end_year' => $this->input->post('end-yr'),
                     'property' => $this->input->post('sub-propty'),
-                    'admin' => $usrs['email'],
+                    // 'admin' => $usrs['email'],
                     'date' => date('Y-m-d H:i:s')
                     );
                     
