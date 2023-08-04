@@ -4769,6 +4769,7 @@ class Rss extends CI_Controller
 						"recipients" => [
 							["email" => $email],
 							["email" => 'pidah.t@smallsmall.com'], // Just for testing
+							["email" => 'accounts@smallsmall.com'], // Just for testing
 						],
 						"body" => ["html" => $htmlBody],
 						"subject" => "RentSmallsmall Payment successful notification",
