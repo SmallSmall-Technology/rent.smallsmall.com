@@ -734,6 +734,7 @@ class Loans extends CI_Controller {
 						"message" => [
 							"recipients" => [
 								["email" => 'customerexperience@smallsmall.com'],
+								["email" => 'accounts@smallsmall.com'],
 							],
 							"body" => ["html" => $htmlBody],
 							"subject" => "RentSmallsmall Wallet Top up successful notification",
@@ -1272,8 +1273,8 @@ class Loans extends CI_Controller {
     }
     
     public function lenco_transactions(){
-
            
+		
         // only a post with lenco signature header gets our attention
         if((strtoupper($_SERVER['REQUEST_METHOD']) != 'POST' ) || !array_key_exists('HTTP_X_LENCO_SIGNATURE', $_SERVER) )
             exit();
@@ -1348,34 +1349,111 @@ class Loans extends CI_Controller {
        
     }
     
-    public function send_email($title, $reason){
+    // public function send_email($title, $reason){
+		
+        
+    //     $data['ver_title'] = $title;
+		    
+	// 	$data['ver_note'] = $reason;
+        
+    //     $this->email->from('donotreply@rentsmallsmall.com', 'RentSmallSmall Alert');
+
+	// 	$this->email->to('customerexperience@smallsmall.com');
+
+	// 	$this->email->bcc('accounts@smallsmall.com, seuncrowther@yahoo.com');
+
+	// 	$this->email->subject("Lenco deposit alert!");	
+
+	// 	$this->email->set_mailtype("html");
+
+	// 	$message = $this->load->view('email/header.php', $data, TRUE);
+
+	// 	$message .= $this->load->view('email/verification-alert-email.php', $data, TRUE);
+
+	// 	$message .= $this->load->view('email/footer.php', $data, TRUE);
+
+	// 	$this->email->message($message);
+
+	// 	$emailRes = $this->email->send();
+        
+    // }
+    
+
+	public function send_email($title, $reason){
+
+		require 'vendor/autoload.php';
         
         $data['ver_title'] = $title;
 		    
 		$data['ver_note'] = $reason;
-        
-        $this->email->from('donotreply@rentsmallsmall.com', 'RentSmallSmall Alert');
 
-		$this->email->to('customerexperience@smallsmall.com');
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
 
-		$this->email->bcc('accounts@smallsmall.com, seuncrowther@yahoo.com');
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
 
-		$this->email->subject("Lenco deposit alert!");	
+		$requestBodyCxTeam = [
+			"id" => "283a4246-2fb4-11ee-8fb8-36dbf359d9e9"
+		];
 
-		$this->email->set_mailtype("html");
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBodyCxTeam,
+			));
 
-		$message = $this->load->view('email/header.php', $data, TRUE);
+			$jsonResponse = $response->getBody()->getContents();
 
-		$message .= $this->load->view('email/verification-alert-email.php', $data, TRUE);
+			$responseData = json_decode($jsonResponse, true);
 
-		$message .= $this->load->view('email/footer.php', $data, TRUE);
+			$htmlBody = $responseData['template']['body']['html'];
 
-		$this->email->message($message);
+			// $username = $data['name'];
 
-		$emailRes = $this->email->send();
+			$TransactioDate = date("Y-m-d");;
+
+			// Still need to modify the data but still send data and later I pass the write data.
+			$htmlBody = str_replace('{{SubscriberName}}', $title, $htmlBody); 
+			$htmlBody = str_replace('{{Date}}', $TransactioDate, $htmlBody);
+			$htmlBody = str_replace('{{DepositAmount}}', $reason, $htmlBody);
+
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailCxTeam = [
+				"message" => [
+					"recipients" => [
+						["email" => 'customerexperience@smallsmall.com'],
+						["email" => 'accounts@smallsmall.com'],
+						["email" => 'seuncrowther@yahoo.com'],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "Lenco deposit alert!",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "RentSmallsmall Alert",
+				],
+			];
+
+			// Send the email using the Unione API
+			$responseCxEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailCxTeam,
+			]);
+
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+			$data['response'] = $e->getMessage();
+			
+		}
         
     }
-    
+
+
     public function get_virtual_accounts(){
     
         $curl = curl_init();

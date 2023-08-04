@@ -2968,7 +2968,7 @@ class Rss extends CI_Controller
 		if (!is_dir('./uploads/verification/' . $folder)) {
 
 			// mkdir('./uploads/verification/' . $folder, 0711, TRUE);
-			mkdir('./uploads/verification/' . $folder, 777, TRUE);
+			mkdir('./uploads/verification/' . $folder, 0777, TRUE);
 		}
 
 
@@ -3048,6 +3048,7 @@ class Rss extends CI_Controller
 			echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
 		}
 	}
+
 
 
 	public function insertDetails()
@@ -4769,6 +4770,7 @@ class Rss extends CI_Controller
 						"recipients" => [
 							["email" => $email],
 							["email" => 'pidah.t@smallsmall.com'], // Just for testing
+							["email" => 'accounts@smallsmall.com'], // Just for testing
 						],
 						"body" => ["html" => $htmlBody],
 						"subject" => "RentSmallsmall Payment successful notification",

@@ -7417,6 +7417,7 @@ class Admin extends CI_Controller {
 							"message" => [
 								"recipients" => [
 									["email" => 'customerexperience@smallsmall.com'],
+									["email" => 'accounts@smallsmall.com'],
 								],
 							"body" => ["html" => $htmlBody],
 							"subject" => "Wallet Deduction Successful notification!",
@@ -8015,8 +8016,6 @@ class Admin extends CI_Controller {
 	
 	public function sendShares(){
 
-
-	    
 	    $response = 'error';
 	    
 	    $message = '';
@@ -8444,7 +8443,8 @@ class Admin extends CI_Controller {
 			$emailData = [
 				"message" => [
 					"recipients" => [
-						["email" => 'customerexperience@smallsmall.com'],
+						["email" => 'hello@buysmallsmall.ng'],
+						["email" => 'chisom.o@smallsmall.com'],
 					],
 					"body" => ["html" => $htmlBody],
 					"subject" => "Free Shares has been sent to a User From Buysmallsmall",
