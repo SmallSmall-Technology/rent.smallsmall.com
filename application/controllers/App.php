@@ -1737,8 +1737,6 @@ class App extends CI_Controller
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
 
-
-
 	public function lenco_transactions()
 	{
 
@@ -1757,7 +1755,6 @@ class App extends CI_Controller
 
 
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $json_data));
-
 
 
 		// only a post with lenco signature header gets our attention
