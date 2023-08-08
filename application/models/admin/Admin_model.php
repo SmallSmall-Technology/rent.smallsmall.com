@@ -3671,11 +3671,13 @@ class Admin_model extends CI_Model {
 
 public function fetchSubscribers() {
 
-	$this->db->select('a.*, a.id as stp_id, a.userID as user_id, b.*');
+	$this->db->select('a.*, a.id as stp_id, a.userID as user_id, b.*, c.*');
 
 	$this->db->from('target_options as a'); 
 	
 	$this->db->join('user_tbl as b', 'b.userID = a.userID');
+
+	$this->db->join('buytolet_transactions as c', 'c.transaction_id = a.request_id');
     
     	$this->db->limit($this->_pageNumber, $this->_offset);
 
