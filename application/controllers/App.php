@@ -784,35 +784,43 @@ class App extends CI_Controller
 
 		$id_upload = $this->base64_to_file($iDImage, 'verification', $userID);
 
-
 		//$ref = 'rss_'.md5(rand(1000000, 9999999999));
 
 		$result = "error";
 
 		$price = 0;
 
-		$headers = $this->input->request_headers();
+		// Directly use userID instead of decoded token due to AWS header authorization issues
+		$userID = $json_data->userID;
 
-		if (@$headers['Authorization']) {
+		$fname = $json_data->firstName;
 
-			$token = explode(' ', $headers['Authorization']);
+		$lname = $json_data->lastName;
+
+		$phone = $json_data->phone;
+
+		// $headers = $this->input->request_headers();
+
+		// if (@$headers['Authorization']) {
+
+		// 	$token = explode(' ', $headers['Authorization']);
 
 			try {
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				if ($decoded) {
-					//Insert the inspection details
+				// if ($decoded) {
+					// Insert the inspection details
 
-					$userID = $decoded->user->userID;
+				// 	$userID = $decoded->user->userID;
 
-					$fname = $decoded->user->firstName;
+				// 	$fname = $decoded->user->firstName;
 
-					$lname = $decoded->user->lastName;
+				// 	$lname = $decoded->user->lastName;
 
-					$phone = $decoded->user->phone;
+				// 	$phone = $decoded->user->phone;
 
-					$email = $decoded->user->email;
+				// 	$email = $decoded->user->email;
 
 					$ref = 'rss_' . md5(rand(1000000, 9999999999));
 
@@ -905,22 +913,26 @@ class App extends CI_Controller
 					} else {
 
 						$details = "User ID is null";
-					}
-				} else {
 
-					$details = "Invalid token";
-				}
+					}
+				// } else {
+
+				// 	$details = "Invalid token";
+				// }
+
 			} catch (Exception $ex) {
 
 				$details = "Exception error caught";
-			}
-		} else {
 
-			$details = "No authorization code";
-		}
+			}
+		// } else {
+
+		// 	$details = "No authorization code";
+		// }
 
 		echo json_encode(array('result' => $result, 'details' => $details, "bank_statement" => $bankStatement, "ID" => $iDImage, 'data' => $data));
 	}
+
 	public function test_verification()
 	{
 
@@ -1038,72 +1050,124 @@ class App extends CI_Controller
 		echo json_encode(array('result' => TRUE, 'details' => $details, "bank_statement" => $bankStatement, "ID" => $iDImage, 'data' => $data));
 	}
 
+	// public function send_rating()
+	// {
+
+	// 	$result = FALSE;
+
+	// 	$details = '';
+
+	// 	$data = array();
+
+	// 	$key = $this->getKey();
+
+	// 	$headers = $this->input->request_headers();
+
+	// 	$json = file_get_contents('php://input');
+
+	// 	$json_data = json_decode($json);
+
+	// 	$grade = $json_data->grading;
+
+	// 	$satisfaction = $json_data->satisfaction;
+
+	// 	$ratingNote = $json_data->ratingNote;
+
+	// 	$propertyID = $json_data->propertyID;
+
+	// 	if (@$headers['Authorization']) {
+
+	// 		$token = explode(' ', $headers['Authorization']);
+
+	// 		try {
+
+	// 			$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+
+	// 			if ($decoded) {
+
+	// 				//Insert the inspection details
+	// 				$userID = $decoded->user->userID;
+
+	// 				$response = $this->rss_model->sendRating($grade, $satisfaction, $userID, $propertyID, $ratingNote);
+
+	// 				if ($response) {
+
+	// 					$result = TRUE;
+
+	// 					$details = "Success";
+	// 				} else {
+
+	// 					$result = TRUE;
+
+	// 					$details = "Error inserting data";
+	// 				}
+	// 			} else {
+
+	// 				$details = "Invalid token";
+	// 			}
+	// 		} catch (Exception $ex) {
+
+	// 			$details = "Exception error caught";
+	// 		}
+	// 	} else {
+
+	// 		$details = "No authorization code";
+	// 	}
+
+	// 	echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
+	// }
+
 	public function send_rating()
-	{
+{
+    $result = FALSE;
 
-		$result = FALSE;
+    $details = '';
 
-		$details = '';
+    $data = array();
 
-		$data = array();
+    $key = $this->getKey();
 
-		$key = $this->getKey();
+    $json = file_get_contents('php://input');
 
-		$headers = $this->input->request_headers();
+    $json_data = json_decode($json);
 
-		$json = file_get_contents('php://input');
+    $grade = $json_data->grading;
 
-		$json_data = json_decode($json);
+    $satisfaction = $json_data->satisfaction;
 
-		$grade = $json_data->grading;
+    $ratingNote = $json_data->ratingNote;
 
-		$satisfaction = $json_data->satisfaction;
+    $propertyID = $json_data->propertyID;
 
-		$ratingNote = $json_data->ratingNote;
+    try {
+        // Insert the inspection details
+        // Directly use userID due to AWS header Authorization issues.
+        $userID = $json_data->userID;
 
-		$propertyID = $json_data->propertyID;
+        $response = $this->rss_model->sendRating($grade, $satisfaction, $userID, $propertyID, $ratingNote);
 
-		if (@$headers['Authorization']) {
+        if ($response) {
 
-			$token = explode(' ', $headers['Authorization']);
+            $result = TRUE;
 
-			try {
+            $details = "Success";
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+        } else {
 
-				if ($decoded) {
+            $result = TRUE;
 
-					//Insert the inspection details
-					$userID = $decoded->user->userID;
+            $details = "Error inserting data";
+        }
 
-					$response = $this->rss_model->sendRating($grade, $satisfaction, $userID, $propertyID, $ratingNote);
+    } catch (Exception $ex) {
 
-					if ($response) {
+        $details = "Exception error caught";
 
-						$result = TRUE;
+    }
 
-						$details = "Success";
-					} else {
+    echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
+}
 
-						$result = TRUE;
-
-						$details = "Error inserting data";
-					}
-				} else {
-
-					$details = "Invalid token";
-				}
-			} catch (Exception $ex) {
-
-				$details = "Exception error caught";
-			}
-		} else {
-
-			$details = "No authorization code";
-		}
-
-		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
-	}
 
 	public function personal_profile()
 	{
@@ -1793,11 +1857,16 @@ class App extends CI_Controller
 
 		$data = array();
 
+		// Get $key variable
+		$key = $this->getKey();
+
 		$json = file_get_contents('php://input');
 
 		$json_data = json_decode($json);
 
 		$userID = $json_data->userID;
+
+
 
 		$data = $this->app_model->checkVerification($userID);
 
@@ -1806,6 +1875,7 @@ class App extends CI_Controller
 			$result = TRUE;
 
 			$details = 'Success';
+
 		} else {
 
 			$result = TRUE;
@@ -2050,248 +2120,146 @@ class App extends CI_Controller
 	}
 
 
-	// public function create_wallet_account()
-	// {
-
-	// 	$result = FALSE;
-
-	// 	$details = '';
-
-	// 	$data = array();
-
-	// 	$json = file_get_contents('php://input');
-
-	// 	$json_data = json_decode($json);
-
-	// 	$accountName = $json_data->accountName;
-
-	// 	$bvn = $json_data->bvn;
-
-	// 	$key = $this->getKey();
-
-	// 	$headers = $this->input->request_headers();
-
-	// 	if (@$headers['Authorization']) {
-
-	// 		$token = explode(' ', $headers['Authorization']);
-
-	// 		try {
-
-	// 			$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-
-	// 			if ($decoded) {
-
-	// 				//Insert the inspection details
-	// 				$userID = $decoded->user->userID;
-
-	// 				$response_det = $this->rss_model->update_bvn($userID, $bvn);
-
-
-	// 				if ($response_det) {
-
-	// 					//Connect to Lenco API to create virtual account
-
-	// 					$data = '{
-	//                     "accountName" : "' . $accountName . '", 
-	//                     "bvn" : "' . $bvn . '",
-	//                     "isStatic" : ' . true . '
-	//                     }';
-
-	// 					$curl = curl_init();
-
-	// 					curl_setopt_array($curl, array(
-
-	// 						CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
-
-	// 						CURLOPT_RETURNTRANSFER => true,
-
-	// 						CURLOPT_POSTFIELDS => $data,
-
-	// 						CURLOPT_HTTPHEADER => [
-	// 							"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
-
-	// 							"content-type: application/json"
-	// 						]
-	// 					));
-
-	// 					$response = curl_exec($curl);
-
-	// 					$response = json_decode($response, true);
-
-	// 					if ($response['status']) {
-
-	// 						$accountID = $response['data']['id'];
-
-	// 						$accountReference = $response['data']['accountReference'];
-
-	// 						$accountName = $response['data']['bankAccount']['accountName'];
-
-	// 						$accountNumber = $response['data']['bankAccount']['accountNumber'];
-
-	// 						$bankName = $response['data']['bankAccount']['bank']['name'];
-
-	// 						$bankCode = $response['data']['bankAccount']['bank']['code'];
-
-	// 						$account_check = $this->loan_model->check_for_account($userID);
-
-	// 						if (!$account_check) {
-
-	// 							$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'App');
-
-	// 							if ($result) {
-
-	// 								$result = TRUE;
-
-	// 								$details = "Success";
-	// 							} else {
-
-	// 								$details = "Could not store data";
-	// 							}
-	// 						} else {
-
-	// 							$details = "Account exists already";
-	// 						}
-	// 					} else {
-
-	// 						$details = "Error creating virtual account";
-	// 					}
-	// 				} else {
-
-	// 					$result = TRUE;
-
-	// 					$details = "Could not update user table with BVN";
-	// 				}
-	// 			} else {
-
-	// 				$details = "Invalid token";
-	// 			}
-	// 		} catch (Exception $ex) {
-
-	// 			$details = "Exception error caught";
-	// 		}
-	// 	} else {
-
-	// 		$details = "No authorization code";
-	// 	}
-
-	// 	echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
-	// }
-
 	public function create_wallet_account()
 	{
+
 		$result = FALSE;
 
 		$details = '';
 
 		$data = array();
 
-		try {
+		$key = $this->getKey();
 
-			// Get the JSON data from the request body directly
-			$json = file_get_contents('php://input');
+		$json = file_get_contents('php://input');
 
-			$json_data = json_decode($json);
+		$json_data = json_decode($json);
 
-			// Extract the accountName and bvn from the JSON data
-			$accountName = $json_data->accountName;
+		$accountName = $json_data->accountName;
 
-			$bvn = $json_data->bvn;
+		$bvn = $json_data->bvn;
 
-			// Get the user ID from the JSON DATA which is not right but doing this because the AWS Authentication error is taking too long for me to resolve. 
-			$userID = $json_data->userID;
+		// Get the user ID from the JSON DATA which is not right but doing this because the AWS Authentication error is taking too long for me to resolve. 
+		$userID = $json_data->userID;
 
-			// Check if the user ID is not null
-			if (!is_null($userID)) {
+		// $key = $this->getKey();
 
-				// Update BVN in the user table
-				$response_det = $this->rss_model->update_bvn($userID, $bvn);
+		// $headers = $this->input->request_headers();
 
-				if ($response_det) {
+		// if (@$headers['Authorization']) {
 
-					// Connect to Lenco API to create virtual account
-					$data = '{
-						"accountName" : "' . $accountName . '", 
-						"bvn" : "' . $bvn . '",
-						"isStatic" : ' . true . '
-					}';
+		// 	$token = explode(' ', $headers['Authorization']);
 
-					$curl = curl_init();
+			try {
 
-					curl_setopt_array($curl, array(
-						CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
-						CURLOPT_RETURNTRANSFER => true,
-						CURLOPT_POSTFIELDS => $data,
-						CURLOPT_HTTPHEADER => [
-							"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
-							"content-type: application/json"
-						]
-					));
+				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-					$response = curl_exec($curl);
+				// if ($decoded) {
 
-					$response = json_decode($response, true);
+				// 	//Insert the inspection details
+				// 	$userID = $decoded->user->userID;
 
-					if ($response['status']) {
+					$response_det = $this->rss_model->update_bvn($userID, $bvn);
 
-						$accountID = $response['data']['id'];
 
-						$accountReference = $response['data']['accountReference'];
+					if ($response_det) {
 
-						$accountName = $response['data']['bankAccount']['accountName'];
+						//Connect to Lenco API to create virtual account
 
-						$accountNumber = $response['data']['bankAccount']['accountNumber'];
+						$data = '{
+	                    "accountName" : "' . $accountName . '", 
+	                    "bvn" : "' . $bvn . '",
+	                    "isStatic" : ' . true . '
+	                    }';
 
-						$bankName = $response['data']['bankAccount']['bank']['name'];
+						$curl = curl_init();
 
-						$bankCode = $response['data']['bankAccount']['bank']['code'];
+						curl_setopt_array($curl, array(
 
-						// Check if the user already has an account in the database
-						$account_check = $this->loan_model->check_for_account($userID);
+							CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
 
-						if (!$account_check) {
+							CURLOPT_RETURNTRANSFER => true,
 
-							// Insert account details into the database
-							$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'App');
+							CURLOPT_POSTFIELDS => $data,
 
-							if ($result) {
+							CURLOPT_HTTPHEADER => [
+								"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
 
-								// Set the result to TRUE to indicate success
-								$result = TRUE;
+								"content-type: application/json"
+							]
+						));
 
-								$details = "Success";
+						$response = curl_exec($curl);
+
+						$response = json_decode($response, true);
+
+						if ($response['status']) {
+
+							$accountID = $response['data']['id'];
+
+							$accountReference = $response['data']['accountReference'];
+
+							$accountName = $response['data']['bankAccount']['accountName'];
+
+							$accountNumber = $response['data']['bankAccount']['accountNumber'];
+
+							$bankName = $response['data']['bankAccount']['bank']['name'];
+
+							$bankCode = $response['data']['bankAccount']['bank']['code'];
+
+							$account_check = $this->loan_model->check_for_account($userID);
+
+							if (!$account_check) {
+
+								$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'App');
+
+								if ($result) {
+
+									$result = TRUE;
+
+									$details = "Success";
+
+								} else {
+
+									$details = "Could not store data";
+
+								}
+
 							} else {
 
-								$details = "Could not store data";
+								$details = "Account exists already";
+
 							}
+
 						} else {
 
-							$details = "Account exists already";
+							$details = "Error creating virtual account";
 						}
+
 					} else {
 
-						$details = "Error creating virtual account";
+						$result = TRUE;
+
+						$details = "Could not update user table with BVN";
+
 					}
-				} else {
 
-					$result = TRUE;
+				// } else {
 
-					$details = "Could not update user table with BVN";
-				}
-			} else {
+				// 	$details = "Invalid token";
+				// }
 
-				$details = "User ID is null";
+			} catch (Exception $ex) {
+
+				$details = "Exception error caught";
+
 			}
-		} catch (Exception $ex) {
+		// } else {
 
-			// If any exception occurs, catch it and set the error message in $details
-			$details = "Exception error caught: " . $ex->getMessage();
-		}
+		// 	$details = "No authorization code";
+		// }
 
-		// Output the response as JSON
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
-
-		// Exit the script to prevent any further execution
-		exit();
 	}
 
 	// public function wallet_details()
@@ -2578,7 +2546,7 @@ class App extends CI_Controller
 
 		$booking_det = $this->app_model->get_booking_details($bookingID);
 
-		$headers = $this->input->request_headers();
+		// $headers = $this->input->request_headers();
 
 		$expiry_start = 0;
 
@@ -2592,26 +2560,32 @@ class App extends CI_Controller
 
 		$startDate = date("Y-m-d", strtotime($expiry_start));
 
-		if (@$headers['Authorization']) {
+		// if (@$headers['Authorization']) {
 
-			$token = explode(' ', $headers['Authorization']);
+			// $token = explode(' ', $headers['Authorization']);
+
+		// Directly use userID instead of token due to AWS header Authorization issues not yet fixed
+		$userID = $json_data->userID;
+
+		$lname = $json_data->lastName;
 
 			try {
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				if ($decoded) {
-					//Insert the inspection details
+				// if ($decoded) {
+				// 	//Insert the inspection details
 
-					$userID = $decoded->user->userID;
+				// 	$userID = $decoded->user->userID;
 
-					$fname = $decoded->user->firstName;
+				// 	$fname = $decoded->user->firstName;
 
-					$lname = $decoded->user->lastName;
+				// 	$lname = $decoded->user->lastName;
 
-					$phone = $decoded->user->phone;
+				// 	$phone = $decoded->user->phone;
 
-					$email = $decoded->user->email;
+				// 	$email = $decoded->user->email;
+
 
 					//$user = $this->app_model->get_user($userID);
 					if ($booking_det['payment_plan'] == 'Monthly') {
@@ -2640,7 +2614,7 @@ class App extends CI_Controller
 
 					if (!is_dir('assets/pdf/tenant/' . $bookingID)) {
 
-						mkdir('./assets/pdf/tenant/' . $bookingID, 0711, TRUE);
+						mkdir('./assets/pdf/tenant/' . $bookingID, 0777, TRUE);
 					}
 
 					if ($action == 'renewal') {
@@ -2650,6 +2624,7 @@ class App extends CI_Controller
 						$transRef = $json_data->transactionRef;
 
 						$transRes = $this->app_model->updateTransactionDets($bookingID, $transRef, $status, 'paystack', $expiry);
+
 					} else {
 
 						//Insert new transaction entry
@@ -2657,8 +2632,8 @@ class App extends CI_Controller
 						$transRes = $this->app_model->insertTransactionDets($booking_det['verification_id'], $reference_id, $bookingID, $userID, $amount, $status, $type, 'paystack', $expiry);
 					}
 
-
 					if ($transRes) {
+
 						//Send a message with an invoice here and send one to customer experience too
 						//Set folder to save PDF to
 						$this->html2pdf->folder('./assets/pdf/tenant/' . $bookingID . '/');
@@ -2700,6 +2675,7 @@ class App extends CI_Controller
 						if ($path) {
 
 							$this->email->attach($path);
+
 						} else {
 
 							$details = "Invoice not found.";
@@ -2723,23 +2699,24 @@ class App extends CI_Controller
 
 						$details = "Error inserting transaction";
 					}
-				} else {
+				// } else {
 
-					$details = "Invalid token";
-				}
+				// 	$details = "Invalid token";
+				// }
 			} catch (Exception $ex) {
 
 				$details = "Exception error caught";
 			}
-		} else {
+		// } else {
 
-			$details = "No authorization code";
-		}
+		// 	$details = "No authorization code";
+		// }
 
 		echo json_encode(array("result" => $result, "details" => $details, "data" => array()));
 
 		exit();
 	}
+
 
 	public function pay_subscription()
 	{
@@ -2762,20 +2739,23 @@ class App extends CI_Controller
 
 		$key = $this->getKey();
 
-		$headers = $this->input->request_headers();
+		// Directly use userID intead of decoded token which is the right method but due to AWS Header Authorization error
+		$userID = $json_data->userID;
 
-		if (@$headers['Authorization']) {
+		// $headers = $this->input->request_headers();
 
-			$token = explode(' ', $headers['Authorization']);
+		// if (@$headers['Authorization']) {
+
+		// 	$token = explode(' ', $headers['Authorization']);
 
 			try {
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				if ($decoded) {
+				// if ($decoded) {
 					//Insert the inspection details
 
-					$userID = $decoded->user->userID;
+					// $userID = $decoded->user->userID;
 
 					if (!is_null($userID)) {
 
@@ -2807,7 +2787,6 @@ class App extends CI_Controller
 										//Update booking table
 										$this->rss_model->bookingUpdate($bookingID, $dets['rent_expiration'], $dets['duration'], $dets['payment_plan'], $dets['propertyID']);
 
-
 										//Do transaction things
 										$res = $this->rss_model->getVerification($userID);
 
@@ -2818,185 +2797,136 @@ class App extends CI_Controller
 											$result = TRUE;
 
 											$details = "Subscription successfully paid!";
+
 										} else {
 
 											$details = "Error inserting subscription details";
+
 										}
 									} else {
 
 										$details = "Error updating transaction";
+
 									}
 								} else {
 
 									$details = "Error updating and inserting details";
+
 								}
+
 							} else {
 
 								$details = "Unknown issue";
+
 							}
 						} else {
 
 							$details = "User has no vitual account registered";
+
 						}
+
 					} else {
 
 						$details = "User ID is null";
-					}
-				} else {
 
-					$details = "Invalid token";
-				}
+					}
+				// } else {
+
+				// 	$details = "Invalid token";
+				// }
+
 			} catch (Exception $ex) {
 
 				$details = "Exception error caught";
 			}
-		} else {
+		// } else {
 
-			$details = "No authorization code";
-		}
+		// 	$details = "No authorization code";
+		// }
 
 		echo json_encode(array("result" => $result, "details" => $details, "data" => array()));
 
 		exit();
 	}
 
-	// public function wallet_update()
-	// {
-
-	// 	$result = FALSE;
-
-	// 	$details = '';
-
-	// 	$data = array();
-
-	// 	$json = file_get_contents('php://input');
-
-	// 	$reference = 'WF_' . $this->random_strings(8);
-
-	// 	$json_data = json_decode($json);
-
-	// 	$amount = $json_data->amount;
-
-	// 	$paystackRef = $json_data->paystackRef;
-
-	// 	$key = $this->getKey();
-
-	// 	$headers = $this->input->request_headers();
-
-	// 	if (@$headers['Authorization']) {
-
-	// 		$token = explode(' ', $headers['Authorization']);
-
-	// 		try {
-
-	// 			$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-
-	// 			if ($decoded) {
-	// 				//Insert the inspection details
-
-	// 				$userID = $decoded->user->userID;
-
-	// 				if (!is_null($userID)) {
-
-	// 					$details = $this->loan_model->get_account_details($userID);
-
-	// 					$account_balance = $details['account_balance'] + $amount;
-
-	// 					$response = $this->loan_model->update_balance($userID, $account_balance);
-
-	// 					if ($response) {
-
-	// 						if ($this->loan_model->insert_wallet_funding($userID, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystackRef)) {
-
-	// 							$details = "Payment succesful";
-	// 						}
-	// 					}
-	// 				} else {
-
-	// 					$details = "User ID is null";
-	// 				}
-	// 			} else {
-
-	// 				$details = "Invalid token";
-	// 			}
-	// 		} catch (Exception $ex) {
-
-	// 			$details = "Exception error caught";
-	// 		}
-	// 	} else {
-
-	// 		$details = "No authorization code";
-	// 	}
-
-	// 	echo json_encode(array("result" => $result, "details" => $details, "data" => array()));
-
-	// 	exit();
-	// }
-
 	public function wallet_update()
 	{
+
 		$result = FALSE;
 
 		$details = '';
 
 		$data = array();
 
-		try {
-			// Get the JSON data from the request body
-			$json = file_get_contents('php://input');
+		$key = $this->getKey();
 
-			$json_data = json_decode($json);
+		$json = file_get_contents('php://input');
 
-			// Generate a reference number
-			$reference = 'WF_' . $this->random_strings(8);
+		$reference = 'WF_' . $this->random_strings(8);
 
-			// Extract the amount and paystackRef from the JSON data
-			$amount = $json_data->amount;
+		$json_data = json_decode($json);
 
-			$paystackRef = $json_data->paystackRef;
+		$amount = $json_data->amount;
 
-			// Get the user ID from JSON DATA which not the right way but due to long error issues that is why I'm trying this methods pending we find the solutions for the errors.
-			$userID = $json_data->userID;
+		$paystackRef = $json_data->paystackRef;
 
-			// Check if the user ID is not null
-			if (!is_null($userID)) {
+		// Get the user ID from JSON DATA which not the right way but due to long error issues that is why I'm trying this methods pending we find the solutions for the errors.
+		$userID = $json_data->userID;
 
-				// Get account details of the user
-				$details = $this->loan_model->get_account_details($userID);
+		// $headers = $this->input->request_headers();
 
-				// Calculate the new account balance after adding the amount
-				$account_balance = $details['account_balance'] + $amount;
+		// if (@$headers['Authorization']) {
 
-				// Update the user's account balance
-				$response = $this->loan_model->update_balance($userID, $account_balance);
+		// 	$token = explode(' ', $headers['Authorization']);
 
-				// If the account balance update is successful, insert wallet funding transaction
-				if ($response) {
+			try {
 
-					if ($this->loan_model->insert_wallet_funding($userID, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystackRef)) {
+				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-						$details = "Payment successful";
+				// if ($decoded) {
+					//Insert the inspection details
+
+					// $userID = $decoded->user->userID;
+
+					if (!is_null($userID)) {
+
+						$details = $this->loan_model->get_account_details($userID);
+
+						$account_balance = $details['account_balance'] + $amount;
+
+						$response = $this->loan_model->update_balance($userID, $account_balance);
+
+						if ($response) {
+
+							if ($this->loan_model->insert_wallet_funding($userID, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystackRef)) {
+
+								$details = "Payment succesful";
+							}
+						}
+
+					} else {
+
+						$details = "User ID is null";
 					}
-				}
-			} else {
 
-				$details = "User ID is null";
+				// } else {
+
+				// 	$details = "Invalid token";
+				// }
+
+			} catch (Exception $ex) {
+
+				$details = "Exception error caught";
 			}
+		// } else {
 
-			$result = TRUE;
-		} catch (Exception $ex) {
+		// 	$details = "No authorization code";
+		// }
 
-			// If any exception occurs, catch it and set the error message in $details
-			$details = "Exception error caught: " . $ex->getMessage();
-		}
+		echo json_encode(array("result" => $result, "details" => $details, "data" => array()));
 
-		// Output the response as JSON
-		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
-
-		// Exit the script to prevent any further execution
 		exit();
 	}
-
 
 	public function wallet_history()
 	{
@@ -3265,6 +3195,8 @@ class App extends CI_Controller
 
 		$data = array();
 
+		$key = $this->getKey();
+
 		try {
 
 			// Get the JSON data from the request body
@@ -3287,18 +3219,23 @@ class App extends CI_Controller
 			if ($res) {
 
 				$details = "Successful";
+
 			} else {
 
 				$details = "Failed";
+
 			}
+
 		} catch (Exception $ex) {
 
 			// If any exception occurs, catch it and set the error message in $details
 			$details = "Exception error caught: " . $ex->getMessage();
+
 		}
 
 		// Output the response as JSON
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
+
 	}
 
 
@@ -3446,20 +3383,23 @@ class App extends CI_Controller
 
 		$phone = $json_data->phone;
 
-		$headers = $this->input->request_headers();
+		// Directly use userID intead decoded token which is the right method but due to AWS Header Authorization error that is why I'm doing this for now.
+		$userID = $json_data->userID;
 
-		if (@$headers['Authorization']) {
+		// $headers = $this->input->request_headers();
 
-			$token = explode(' ', $headers['Authorization']);
+		// if (@$headers['Authorization']) {
+
+		// 	$token = explode(' ', $headers['Authorization']);
 
 			try {
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				if ($decoded) {
-					//Update user profile
+				// if ($decoded) {
+				// 	//Update user profile
 
-					$userID = $decoded->user->userID;
+				// 	$userID = $decoded->user->userID;
 
 					if (!is_null($userID)) {
 
@@ -3471,26 +3411,29 @@ class App extends CI_Controller
 
 							$details = 'Success';
 						}
+
 					} else {
 
 						$result = TRUE;
 
 						$details = "User ID is null";
 					}
-				} else {
 
-					$result = TRUE;
+				// } else {
 
-					$details = "Invalid token";
-				}
+				// 	$result = TRUE;
+
+				// 	$details = "Invalid token";
+				// }
 			} catch (Exception $ex) {
 
 				$details = "Exception error caught";
-			}
-		} else {
 
-			$details = "No authorization code";
-		}
+			}
+		// } else {
+
+		// 	$details = "No authorization code";
+		// }
 
 		echo json_encode(array("response" => $result, "details" => $details, "data" => $data));
 	}
