@@ -47,10 +47,12 @@ class Landlord extends CI_Controller {
  
 	 public function index()
 	 {
-		 //if($this->session->has_userdata('userID')){
+		if($this->session->has_userdata('userID')){
  
-			 $data['userID'] = $this->session->userdata('userID');			
- 
+			 $data['userID'] = $this->session->userdata('userID');
+			 
+			 $data['proptys'] = $this->landlord_model->get_propty($data['userID']);
+
 			 $data['fname'] = $this->session->userdata('fname');			
  
 			 $data['lname'] = $this->session->userdata('lname');			
@@ -85,16 +87,16 @@ class Landlord extends CI_Controller {
 
 			$this->load->view('landlord/index.php', $data);
  
-		//  }else{			
+		}else{			
  
-		// 	 redirect( base_url()."login" ,'refresh');			
-		//  }
+		  redirect( base_url()."login" ,'refresh');			
+		}
 	}
 
 	
 	public function inbox()
     {
-        //if($this->session->has_userdata('userID')){			
+        if($this->session->has_userdata('userID')){			
 
 			$data['userID'] = $this->session->userdata('userID');
 			
@@ -144,17 +146,17 @@ class Landlord extends CI_Controller {
 
 			//$this->load->view('landlord/footer.php', $data);
  			
-		// }else{			
+		}else{			
 
-		// 	redirect( base_url()."login" ,'refresh');			
+		 	redirect( base_url()."login" ,'refresh');			
 
-		// }
+		}
     }
 
 
 	public function property()
     {
-        //if($this->session->has_userdata('userID')){			
+        if($this->session->has_userdata('userID')){			
 
 			$data['userID'] = $this->session->userdata('userID');
 			
@@ -204,16 +206,16 @@ class Landlord extends CI_Controller {
 
 			//$this->load->view('landlord/footer.php', $data);
  			
-		// }else{			
+		}else{			
 
-		// 	redirect( base_url()."login" ,'refresh');			
+		 	redirect( base_url()."login" ,'refresh');			
 
-		// }
+		}
     }
 
 	public function subscriber()
     {
-        //if($this->session->has_userdata('userID')){			
+        if($this->session->has_userdata('userID')){			
 
 			$data['userID'] = $this->session->userdata('userID');
 			
@@ -263,16 +265,16 @@ class Landlord extends CI_Controller {
 
 			//$this->load->view('landlord/footer.php', $data);
  			
-		// }else{			
+		}else{			
 
-		// 	redirect( base_url()."login" ,'refresh');			
+		  redirect( base_url()."login" ,'refresh');			
 
-		// }
+		}
     }
 
 	public function repair()
     {
-        //if($this->session->has_userdata('userID')){			
+        if($this->session->has_userdata('userID')){			
 
 			$data['userID'] = $this->session->userdata('userID');
 			
@@ -322,16 +324,16 @@ class Landlord extends CI_Controller {
 
 			//$this->load->view('landlord/footer.php', $data);
  			
-		// }else{			
+		}else{			
 
-		// 	redirect( base_url()."login" ,'refresh');			
+		  redirect( base_url()."login" ,'refresh');			
 
-		// }
+		}
     }
 
 	public function agreement()
     {
-        //if($this->session->has_userdata('userID')){			
+        if($this->session->has_userdata('userID')){			
 
 			$data['userID'] = $this->session->userdata('userID');
 			
@@ -381,16 +383,16 @@ class Landlord extends CI_Controller {
 
 			//$this->load->view('landlord/footer.php', $data);
  			
-		// }else{			
+		}else{			
 
-		// 	redirect( base_url()."login" ,'refresh');			
+			redirect( base_url()."login" ,'refresh');			
 
-		// }
+		}
     }
 
 	public function single_property()
     {
-        //if($this->session->has_userdata('userID')){			
+        if($this->session->has_userdata('userID')){			
 
 			$data['userID'] = $this->session->userdata('userID');
 			
@@ -440,16 +442,16 @@ class Landlord extends CI_Controller {
 
 			//$this->load->view('landlord/footer.php', $data);
  			
-		// }else{			
+		}else{			
 
-		// 	redirect( base_url()."login" ,'refresh');			
+		 	redirect( base_url()."login" ,'refresh');			
 
-		// }
+		}
     }
 
 	public function subscriber_profile()
     {
-        //if($this->session->has_userdata('userID')){			
+        if($this->session->has_userdata('userID')){			
 
 			$data['userID'] = $this->session->userdata('userID');
 			
@@ -499,11 +501,11 @@ class Landlord extends CI_Controller {
 
 			//$this->load->view('landlord/footer.php', $data);
  			
-		// }else{			
+		}else{			
 
-		// 	redirect( base_url()."login" ,'refresh');			
+		 	redirect( base_url()."login" ,'refresh');			
 
-		// }
+		}
     }
 	
 }

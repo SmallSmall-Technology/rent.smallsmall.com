@@ -47,12 +47,39 @@
             </div>
             <div class="d-flex justify-content-between mt-3">
               <div class="custom-font-size-14">
-                <p>Olivia court 1 bed</p>
-                <p>Olivia court 2 bed</p>
+                <?php 
+                
+                foreach($proptys as $propty => $value)
+                {
+                    $propTitle = $value['propertyTitle'];
+
+                    echo '<p>'.$propTitle.'<p>';
+
+                    // $data =  $this->landlord_model->fetch_bookings($userID, $this->input->post('limit'), $this->input->post('start'));
+
+                }
+
+                ?>
               </div>
               <div class="mr-md-5 mr-3 custom-font-size-12">
-                <p class="success-color "><span> <img src="./assets/images2/rented-circle.svg" alt=""> </span>rented</p>
-                <p class="danger-color "><span> <img src="./assets/images2/vacant-circle.svg" alt=""> </span>vacant</p>
+
+              <?php 
+
+                foreach($proptys as $propty => $value)
+                {
+                   if(date('Y-m-d') < $value['available_date'])
+                   {
+                      echo '<p class="success-color "><span> <img src="./assets/images2/rented-circle.svg" alt=""> </span>rented</p>';
+                   } 
+
+                   else
+                   {
+                     echo '<p class="danger-color "><span> <img src="./assets/images2/vacant-circle.svg" alt=""> </span>vacant</p>';
+                   }
+                
+                }
+
+                ?>
               </div>
             </div>
 
@@ -129,13 +156,37 @@
                 </div>
               </div>
               <div class="mt-3">
-                <p class="d-flex justify-content-between "><span class="custom-font-size-14">Wall collapse</span><span
-                    class="custom-font-size-12 danger-color">Waiting
-                    for your
-                    approval</span></p>
-                <p class="d-flex justify-content-between "><span class="custom-font-size-14">Painting</span><span
-                    class="custom-font-size-12 in-progress-color">In
-                    progress</span></p>
+                <?php 
+                
+                  foreach($proptys as $propty => $value)
+                  {
+                    $propId = $value['propertyID'];
+
+                    $data =  $this->landlord_model->get_repairs($propId);
+
+                    foreach ($data->result() as $row) 
+                    {
+                      if($row->repair_status == 'waiting')
+                      {
+                          echo '<p class="d-flex justify-content-between "><span class="custom-font-size-14">'.$row->repair_category.'</span><span
+                          class="custom-font-size-12 danger-color">Waiting
+                          for your
+                          approval</span></p>';
+                      }
+
+                      elseif($row->repair_status == 'Processing')
+                      {
+                          echo '<p class="d-flex justify-content-between "><span class="custom-font-size-14">'.$row->repair_category.'</span><span
+                          class="custom-font-size-12 in-progress-color">In
+                          progress</span></p>';
+                      }
+                      
+                    }
+
+                  }
+
+                ?>
+                
               </div>
             </div>
 
@@ -168,7 +219,27 @@
                   </svg>
                 </div>
               </div>
-              <h3 class="card-title">3</h3>
+              <h3 class="card-title">
+              <?php  
+              $num = 0;
+              foreach($proptys as $propty => $value)
+              {
+                $propId = $value['propertyID'];
+
+                $data =  $this->landlord_model->get_subscriber($propId);
+
+                foreach ($data->result() as $row) 
+                {
+                  if(date('Y-m-d') <= $row->available_date)
+                  {
+                      $num += 1;
+                  }
+
+                }
+              }
+              
+              echo $num;
+              ?></h3>
             </div>
             <div class="text-right mt-4">
               <a href="#" class="btn secondary-background">View</a>
