@@ -38,6 +38,7 @@
 								<th class="text-left">&nbsp;</th>
 								<th class="text-left">Name</th>
 								<th class="text-left">Frequency</th>
+								<th class="text-left">Amount</th>
 								<th class="text-left">Subscription Date</th>
 								<th class="text-left">Actions</th>
 							</tr>
@@ -77,6 +78,9 @@
 								</td>
 								<td class="text-left">
 								    <span class="badge badge-success"><?php echo ucfirst($value['frequency']); ?></span>
+								</td>
+								<td class="text-left">
+								    N<?php echo number_format($value['amount']); ?>
 								</td>
 								<td class="text-left"><?php echo date("M d, Y", strtotime($value['date_subscribed'])); ?></td>
 								<td class="text-left">
