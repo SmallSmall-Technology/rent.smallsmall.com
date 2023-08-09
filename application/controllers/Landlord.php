@@ -42,7 +42,7 @@ class Landlord extends CI_Controller {
  
 		 parent::__construct();
  
-		 $this->load->model('landlord/landlord_model');
+		 $this->load->model('landlord/Landlord_model');
 	 }
  
 	 public function index()
