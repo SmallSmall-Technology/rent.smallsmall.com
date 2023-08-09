@@ -2939,20 +2939,19 @@ class App extends CI_Controller
 
 		$key = $this->getKey();
 
-		$headers = $this->input->request_headers();
+		// $headers = $this->input->request_headers();
 
-		if (@$headers['Authorization']) {
+		// if (@$headers['Authorization']) {
 
-			$token = explode(' ', $headers['Authorization']);
+		// 	$token = explode(' ', $headers['Authorization']);
 
 			try {
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				if ($decoded) {
+				if (isset($_GET['userID'])) {
 
-					//Insert the inspection details
-					$userID = $decoded->user->userID;
+					$userID = $_GET['userID'];
 
 					$data = $this->app_model->get_wallet_transactions($userID);
 
@@ -2961,27 +2960,35 @@ class App extends CI_Controller
 						$result = TRUE;
 
 						$details = "Success";
+
 					} else {
 
 						$result = TRUE;
 
 						$details = "Error getting data";
 					}
+
 				} else {
 
-					$details = "Invalid token";
+					$details = "Invalid query parameters. Missing userID";
+
 				}
+
 			} catch (Exception $ex) {
+				
 
 				$details = "Exception error caught";
-			}
-		} else {
 
-			$details = "No authorization code";
-		}
+			}
+
+		// } else {
+
+		// 	$details = "No authorization code";
+		// }
 
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
+
 	public function booking_transaction_count()
 	{
 
