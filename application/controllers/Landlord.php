@@ -83,7 +83,7 @@ class Landlord extends CI_Controller {
  
 			 $data['title'] = "Dashboard";
 
-			$this->load->view('landlord/indexHeader.php', $data);
+			//$this->load->view('landlord/indexHeader.php', $data);
 
 			$this->load->view('landlord/index.php', $data);
  
