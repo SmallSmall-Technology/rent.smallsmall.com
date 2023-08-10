@@ -846,7 +846,6 @@ class Rss_model extends CI_Model {
 	    $query = $this->db->get();
 	    
 	    return $query;
-
 	}
 	
 	public function fetch_landlord_messages($id, $limit, $start) {       
