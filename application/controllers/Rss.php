@@ -3066,7 +3066,7 @@ class Rss extends CI_Controller
 
         if (!is_dir('./uploads/verification/' . $folder)) {
 
-            mkdir('./uploads/verification/' . $folder, 777, TRUE);
+            mkdir('./uploads/verification/' . $folder, 0777, TRUE);
 
         }
 
