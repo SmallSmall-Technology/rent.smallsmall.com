@@ -92,7 +92,7 @@ class Aws_s3
             // Handle error
         }
     }
-        
+            
     // The rest of the code remains the same as before.
 
     public function uploadFile($file_path, $destination)
