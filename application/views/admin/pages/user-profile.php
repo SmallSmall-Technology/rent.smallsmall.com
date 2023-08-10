@@ -380,100 +380,6 @@
             			</div>
             		</div>
                     <!--subscription agreement -->
-
-
-                    <!--Landlord Vacancy Notification-->
-                    <div class="row">
-            			<div class="col-md-12">
-            				<div class="main-card mb-3 card">
-            					<div class="card-header">
-            					    Landlord Vacancy Notification
-            						
-            						<div class="btn-actions-pane-right">
-            							
-            						</div>
-            				</div>
-            					
-            					
-            			    <div class="table-responsive">
-                                    <?php echo form_open_multipart('admin/vacancy');?>  
-                                    
-                                        <br></br>
-                                        <div class="form-row" style = "margin-left: 10px;">
-
-                                        <div class="col-md-4"><label for="debt-note" class="">Details</label><textarea name="lndlrd_det" id="debt-note" class="form-control verify-debt-txt"></textarea></div>
-                                                
-                                        <div class="col-md-4">
-                                        <input type="hidden" name = "sub_id" value = "<?php echo @$ids ?>">
-                                        <div class="position-relative form-group"><label for="debt-note" class="">Property</label><select name="sub-propty" id="sub-propty" class="form-control verify-debt-txt">
-                                        <?php foreach($proptys as $propty => $value){ ?>
-                                            <option value="<?php echo $value['propertyID']; ?>"><?php echo $value['propertyTitle']; ?></option>
-                                        <?php } ?></select>
-                                        </div></div>  
-
-                                        <div class="col-md-4">
-                                        <input type="hidden" name = "sub_id" value = "<?php echo @$ids ?>">
-                                        <div class="position-relative form-group"><label for="debt-note" class="">Status</label><select name="sub-propty" id="sub-propty" class="form-control verify-debt-txt">
-                                            <option value="1">Occupied</option>
-                                            <option value="0">Vacant</option>
-                                        </select>
-                                        </div></div>
- 
-                                        
-                                        <div class="col-md-4">
-                                            <input type="submit" value="Submit"/><br></br>
-                                        </div>
-                                            
-            		                    </form>
-            					</div>
-                    
-                    </div>
-            			</div>
-            		</div>
-                    <!--Landlord Vacancy Notification -->
-
-                    
-                    <!--Landlord Payout Notification-->
-                    <div class="row">
-            			<div class="col-md-12">
-            				<div class="main-card mb-3 card">
-            					<div class="card-header">
-            					    Landlord Payout Notification
-            						
-            						<div class="btn-actions-pane-right">
-            							
-            						</div>
-            				</div>
-            					
-            					
-            			    <div class="table-responsive">
-                                    <?php echo form_open_multipart('admin/payout');?>  
-                                    
-                                        <br></br>
-                                        <div class="form-row" style = "margin-left: 10px;">
-                                            
-                                            
-                                        <div class="col-md-4"><label for="debt-note" class="">Details</label><textarea name="lndlrd_det" id="debt-note" class="form-control verify-debt-txt"></textarea></div>
-                                                
-                                        <div class="col-md-4">
-                                        <input type="hidden" name = "sub_id" value = "<?php echo @$ids ?>">
-                                        <div class="position-relative form-group"><label for="debt-note" class="">Property</label><select name="sub-propty" id="sub-propty" class="form-control verify-debt-txt">
-                                        <?php foreach($proptys as $propty => $value){ ?>
-                                            <option value="<?php echo $value['propertyID']; ?>"><?php echo $value['propertyTitle']; ?></option>
-                                        <?php } ?></select>
-                                        </div></div>
-                                        
-                                        <div class="col-md-4">
-                                            <input type="submit" value="upload"/><br></br>
-                                        </div>
-                                            
-            		                    </form>
-            					</div>
-                    
-                    </div>
-            			</div>
-            		</div>
-                    <!--Landlord Payout Notification -->
                     
                     
                     <!--subscription agreement history -->
@@ -540,7 +446,6 @@
             			</div>
             		</div>
                     <!--subscription agreement history -->
-                    
 
                     <!--- Transaction start pane --->
                     <div class="row">
