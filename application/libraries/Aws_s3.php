@@ -73,6 +73,11 @@ class Aws_s3
                 }
             }
     
+            // Check if the 'region' value is set in the AWS SDK config
+            if (!isset($awsConfig['region'])) {
+                throw new Exception("'region' configuration is missing.");
+            }
+    
             // Initialize the S3 client with the updated AWS SDK config
             $this->s3Client = new S3Client([
                 'version'     => 'latest',
@@ -87,7 +92,7 @@ class Aws_s3
             // Handle error
         }
     }
-    
+        
     // The rest of the code remains the same as before.
 
     public function uploadFile($file_path, $destination)
