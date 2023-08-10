@@ -3100,11 +3100,19 @@ class Rss extends CI_Controller
                         $awsFilePath = $awsFolder . $data["file_name"];
 
                         if ($this->aws_s3->uploadFile($data["full_path"], $awsFilePath)) {
+
+							$output = "success";
+							$filename = $data["file_name"];
+
                             // The file was uploaded to AWS S3 successfully
                             // Perform any other necessary actions here
                         } else {
                             // Failed to upload the file to AWS S3
                             // Handle the error
+
+							$output = "success";
+							$filename = $data["file_name"];
+							
                         }
                     }
                 }

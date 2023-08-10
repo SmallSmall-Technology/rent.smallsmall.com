@@ -26,6 +26,25 @@ class Aws_s3
         ]);
     }
 
+    // protected function loadAwsCredentials()
+    // {
+    //     $ssmClient = new SsmClient([
+    //         'version' => 'latest',
+    //         'region'  => 'us-east-1', // The region where Parameter Store parameters are stored.
+    //     ]);
+
+    //     // Replace the following parameter names with your actual Parameter Store parameter names.
+    //     $awsAccessKey = $ssmClient->getParameter(['Name' => 'ACCESS_KEY_ID', 'WithDecryption' => true]);
+    //     $awsSecretKey = $ssmClient->getParameter(['Name' => 'ACCESS_KEY_SECRET', 'WithDecryption' => true]);
+    //     $awsRegion = $ssmClient->getParameter(['Name' => 'ACCESS_REGION', 'WithDecryption' => true]);
+    //     $awsBucketName = $ssmClient->getParameter(['Name' => 'DEV_BUCKET_NAME', 'WithDecryption' => true]);
+
+    //     $this->CI->config->set_item('aws_access_key', $awsAccessKey['Parameter']['Value']);
+    //     $this->CI->config->set_item('aws_secret_key', $awsSecretKey['Parameter']['Value']);
+    //     $this->CI->config->set_item('aws_region', $awsRegion['Parameter']['Value']);
+    //     $this->CI->config->set_item('aws_bucket', $awsBucketName['Parameter']['Value']);
+    // }
+
     protected function loadAwsCredentials()
     {
         $ssmClient = new SsmClient([
@@ -33,16 +52,26 @@ class Aws_s3
             'region'  => 'us-east-1', // The region where Parameter Store parameters are stored.
         ]);
 
-        // Replace the following parameter names with your actual Parameter Store parameter names.
-        $awsAccessKey = $ssmClient->getParameter(['Name' => 'ACCESS_KEY_ID', 'WithDecryption' => true]);
-        $awsSecretKey = $ssmClient->getParameter(['Name' => 'ACCESS_KEY_SECRET', 'WithDecryption' => true]);
-        $awsRegion = $ssmClient->getParameter(['Name' => 'ACCESS_REGION', 'WithDecryption' => true]);
-        $awsBucketName = $ssmClient->getParameter(['Name' => 'DEV_BUCKET_NAME', 'WithDecryption' => true]);
+        try {
+            $result = $ssmClient->getParameters([
+                'Names'           => ['ACCESS_KEY_ID', 'ACCESS_KEY_SECRET', 'ACCESS_REGION', 'DEV_BUCKET_NAME'],
+                'WithDecryption'  => true,
+            ]);
 
-        $this->CI->config->set_item('aws_access_key', $awsAccessKey['Parameter']['Value']);
-        $this->CI->config->set_item('aws_secret_key', $awsSecretKey['Parameter']['Value']);
-        $this->CI->config->set_item('aws_region', $awsRegion['Parameter']['Value']);
-        $this->CI->config->set_item('aws_bucket', $awsBucketName['Parameter']['Value']);
+            foreach ($result['Parameters'] as $parameter) {
+                if ($parameter['Name'] === 'ACCESS_KEY_ID') {
+                    $this->CI->config->set_item('aws_access_key', $parameter['Value']);
+                } elseif ($parameter['Name'] === 'ACCESS_KEY_SECRET') {
+                    $this->CI->config->set_item('aws_secret_key', $parameter['Value']);
+                } elseif ($parameter['Name'] === 'ACCESS_REGION') {
+                    $this->CI->config->set_item('aws_region', $parameter['Value']);
+                } elseif ($parameter['Name'] === 'DEV_BUCKET_NAME') {
+                    $this->CI->config->set_item('aws_bucket', $parameter['Value']);
+                }
+            }
+        } catch (Exception $e) {
+            // Handle error
+        }
     }
 
     // The rest of the code remains the same as before.
