@@ -3112,7 +3112,7 @@ class Rss extends CI_Controller
 
 							$output = "success";
 							$filename = $data["file_name"];
-							
+
                         }
                     }
                 }
@@ -7716,47 +7716,78 @@ value1&metadata[meta2]=value2*/
 
 	public function aws_s3_integration_test()
 {
-    require 'vendor/autoload.php';
+    // require 'vendor/autoload.php';
 
-    // Initialize the AWS SSM client
-    $ssmClient = new Aws\Ssm\SsmClient([
-        'version' => 'latest',
-        'region' => 'us-east-1', // Replace with your AWS region
-    ]);
+    // // Initialize the AWS SSM client
+    // $ssmClient = new Aws\Ssm\SsmClient([
+    //     'version' => 'latest',
+    //     'region' => 'us-east-1', // Replace with your AWS region
+    // ]);
 
-    try {
-        $result = $ssmClient->getParameters([
-            'Names' => ['ACCESS_KEY_ID', 'SECRET_ACCESS_KEY', 'ACCESS_REGION'],
-            'WithDecryption' => true,
-        ]);
+    // try {
+    //     $result = $ssmClient->getParameters([
+    //         'Names' => ['ACCESS_KEY_ID', 'SECRET_ACCESS_KEY', 'ACCESS_REGION'],
+    //         'WithDecryption' => true,
+    //     ]);
 
-        $awsAccessKeyId = $result['Parameters'][0]['Value'];
-        $awsSecretAccessKey = $result['Parameters'][1]['Value'];
-        $awsRegion = $result['Parameters'][2]['Value'];
+    //     $awsAccessKeyId = $result['Parameters'][0]['Value'];
+    //     $awsSecretAccessKey = $result['Parameters'][1]['Value'];
+    //     $awsRegion = $result['Parameters'][2]['Value'];
 
-        // Use the retrieved values to create the S3 client
-        $objAwsS3Client = new Aws\S3\S3Client([
-            'version' => 'latest',
-            'region' => $awsRegion,
-            'credentials' => [
-                'key' => $awsAccessKeyId,
-                'secret' => $awsSecretAccessKey,
-            ],
-        ]);
+    //     // Use the retrieved values to create the S3 client
+    //     $objAwsS3Client = new Aws\S3\S3Client([
+    //         'version' => 'latest',
+    //         'region' => $awsRegion,
+    //         'credentials' => [
+    //             'key' => $awsAccessKeyId,
+    //             'secret' => $awsSecretAccessKey,
+    //         ],
+    //     ]);
 
-        // List all S3 Buckets
-        $buckets = $objAwsS3Client->listBuckets();
+    //     // List all S3 Buckets
+    //     $buckets = $objAwsS3Client->listBuckets();
 
-        if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
-            foreach ($buckets['Buckets'] as $bucket) {
-                echo $bucket['Name'] . "\n";
-            }
-        } else {
-            echo "No buckets found.\n";
-        }
-    } catch (Aws\S3\Exception\S3Exception $e) {
-        echo "Error: " . $e->getMessage() . "\n";
-    }
+    //     if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
+    //         foreach ($buckets['Buckets'] as $bucket) {
+    //             echo $bucket['Name'] . "\n";
+    //         }
+    //     } else {
+    //         echo "No buckets found.\n";
+    //     }
+    // } catch (Aws\S3\Exception\S3Exception $e) {
+    //     echo "Error: " . $e->getMessage() . "\n";
+    // }
+
+	// require 'vendor/autoload.php';
+
+	require APPPATH . 'vendor/autoload.php'; // Adjust the path if needed
+
+	// use Aws\S3\S3Client;
+	// use Aws\S3\Exception\S3Exception;
+	
+	$bucket = 'dev-rss-uploads';
+	$keyname = 'uploads/hello.txt';
+							
+	$s3 = new Aws\S3\S3Client([
+		'version' => 'latest',
+		'region'  => 'us-east-1'
+	]);
+	
+	try {
+		// Upload data.
+		$result = $s3->putObject([
+			'Bucket' => $bucket,
+			'Key'    => $keyname,
+			'Body'   => 'Hello, Yusuf!',
+			'ACL'    => 'public-read'
+		]);
+	
+		// Print the URL to the object.
+		echo $result['ObjectURL'] . PHP_EOL;
+	} catch (Aws\S3\Exception\S3Exception $e) {
+		echo $e->getMessage() . PHP_EOL;
+	}
+	
 }
 
 }
