@@ -7770,7 +7770,7 @@ value1&metadata[meta2]=value2*/
 							
 	$s3 = new Aws\S3\S3Client([
 		'version' => 'latest',
-		'region'  => 'us-east-1'
+		'region'  => 'eu-west-1'
 	]);
 	
 	try {
