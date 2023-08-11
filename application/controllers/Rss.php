@@ -7716,7 +7716,7 @@ value1&metadata[meta2]=value2*/
 
 	public function aws_s3_integration_test()
 {
-    // require 'vendor/autoload.php';
+    require 'vendor/autoload.php';
 
     // // Initialize the AWS SSM client
     // $ssmClient = new Aws\Ssm\SsmClient([
@@ -7760,7 +7760,7 @@ value1&metadata[meta2]=value2*/
 
 	// require 'vendor/autoload.php';
 
-	require APPPATH . 'vendor/autoload.php'; // Adjust the path if needed
+	// require APPPATH . 'vendor/autoload.php'; // Adjust the path if needed
 
 	// use Aws\S3\S3Client;
 	// use Aws\S3\Exception\S3Exception;
