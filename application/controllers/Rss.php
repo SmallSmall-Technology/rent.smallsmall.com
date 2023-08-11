@@ -3257,11 +3257,11 @@ public function uploadIdentification($folder)
         } else {
             // ... (same logic as before for a single file)
 
-			$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
-			$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
-			$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
-			$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
-			$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+			$_FILES["file"]["name"] = $_FILES["files"]["name"];
+			$_FILES["file"]["type"] = $_FILES["files"]["type"];
+			$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
+			$_FILES["file"]["error"] = $_FILES["files"]["error"];
+			$_FILES["file"]["size"] = $_FILES["files"]["size"];
 
 			// Step 9: Perform file upload
 			if ($this->upload->do_upload('file')) {
