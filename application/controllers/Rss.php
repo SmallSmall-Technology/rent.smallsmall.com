@@ -49,7 +49,7 @@ class Rss extends CI_Controller
 		parent::__construct();
 
 		//aws s3 integration
-		$this->load->library('aws_s3');
+		// $this->load->library('aws_s3');
 	}
 
 	public function login_form()
