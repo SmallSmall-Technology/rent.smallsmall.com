@@ -3052,100 +3052,100 @@ class Rss extends CI_Controller
 	// 	}
 	// }
 
-	public function uploadIdentification($folder)
-    {
-        $filename = '';
+	// public function uploadIdentification($folder)
+    // {
+    //     $filename = '';
 
-        if (!$folder) {
+    //     if (!$folder) {
 
-            $folder = md5(date("Ymd His"));
+    //         $folder = md5(date("Ymd His"));
 
-        }
+    //     }
 
-        sleep(1);
+    //     sleep(1);
 
-        if (!is_dir('./uploads/verification/' . $folder)) {
+    //     if (!is_dir('./uploads/verification/' . $folder)) {
 
-            mkdir('./uploads/verification/' . $folder, 0777, TRUE);
+    //         mkdir('./uploads/verification/' . $folder, 0777, TRUE);
 
-        }
+    //     }
 
-        if ($_FILES["files"]["name"] != '') {
-            $output = '';
+    //     if ($_FILES["files"]["name"] != '') {
+    //         $output = '';
 
-            $config["upload_path"] = './uploads/verification/' . $folder;
-            $config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
-            $config['max_size'] = '5000';
-            $config['encrypt_name'] = TRUE;
+    //         $config["upload_path"] = './uploads/verification/' . $folder;
+    //         $config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
+    //         $config['max_size'] = '5000';
+    //         $config['encrypt_name'] = TRUE;
 
-            $this->load->library('upload', $config);
+    //         $this->load->library('upload', $config);
 
-            $this->upload->initialize($config);
+    //         $this->upload->initialize($config);
 
-            if (is_array($_FILES["files"]["name"])) {
-                for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
-                    $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
-                    $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
-                    $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
-                    $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
-                    $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+    //         if (is_array($_FILES["files"]["name"])) {
+    //             for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+    //                 $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+    //                 $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+    //                 $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+    //                 $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+    //                 $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
 
-                    if ($this->upload->do_upload('file')) {
-                        $data = $this->upload->data();
-                        $output = "success";
-                        $filename = $data["file_name"];
+    //                 if ($this->upload->do_upload('file')) {
+    //                     $data = $this->upload->data();
+    //                     $output = "success";
+    //                     $filename = $data["file_name"];
 
-                        // Handle the file upload to AWS S3
-                        $awsFolder = 'verification/' . $folder . '/';
-                        $awsFilePath = $awsFolder . $data["file_name"];
+    //                     // Handle the file upload to AWS S3
+    //                     $awsFolder = 'verification/' . $folder . '/';
+    //                     $awsFilePath = $awsFolder . $data["file_name"];
 
-                        if ($this->aws_s3->uploadFile($data["full_path"], $awsFilePath)) {
+    //                     if ($this->aws_s3->uploadFile($data["full_path"], $awsFilePath)) {
 
-							$output = "success";
-							$filename = $data["file_name"];
+	// 						$output = "success";
+	// 						$filename = $data["file_name"];
 
-                            // The file was uploaded to AWS S3 successfully
-                            // Perform any other necessary actions here
-                        } else {
-                            // Failed to upload the file to AWS S3
-                            // Handle the error
+    //                         // The file was uploaded to AWS S3 successfully
+    //                         // Perform any other necessary actions here
+    //                     } else {
+    //                         // Failed to upload the file to AWS S3
+    //                         // Handle the error
 
-							$output = "success";
-							$filename = $data["file_name"];
+	// 						$output = "success";
+	// 						$filename = $data["file_name"];
 
-                        }
-                    }
-                }
-            } else {
-                $_FILES["file"]["name"] = $_FILES["files"]["name"];
-                $_FILES["file"]["type"] = $_FILES["files"]["type"];
-                $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
-                $_FILES["file"]["error"] = $_FILES["files"]["error"];
-                $_FILES["file"]["size"] = $_FILES["files"]["size"];
+    //                     }
+    //                 }
+    //             }
+    //         } else {
+    //             $_FILES["file"]["name"] = $_FILES["files"]["name"];
+    //             $_FILES["file"]["type"] = $_FILES["files"]["type"];
+    //             $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
+    //             $_FILES["file"]["error"] = $_FILES["files"]["error"];
+    //             $_FILES["file"]["size"] = $_FILES["files"]["size"];
 
-                if ($this->upload->do_upload('file')) {
-                    $data = $this->upload->data();
-                    $output = "success";
-                    $filename = $data["file_name"];
+    //             if ($this->upload->do_upload('file')) {
+    //                 $data = $this->upload->data();
+    //                 $output = "success";
+    //                 $filename = $data["file_name"];
 
-                    // Handle the file upload to AWS S3
-                    $awsFolder = 'verification/' . $folder . '/';
-                    $awsFilePath = $awsFolder . $data["file_name"];
+    //                 // Handle the file upload to AWS S3
+    //                 $awsFolder = 'verification/' . $folder . '/';
+    //                 $awsFilePath = $awsFolder . $data["file_name"];
 
-                    if ($this->aws_s3->uploadFile($data["full_path"], $awsFilePath)) {
-                        // The file was uploaded to AWS S3 successfully
-                        // Perform any other necessary actions here
+    //                 if ($this->aws_s3->uploadFile($data["full_path"], $awsFilePath)) {
+    //                     // The file was uploaded to AWS S3 successfully
+    //                     // Perform any other necessary actions here
 						
-                    } else {
-                        // Failed to upload the file to AWS S3
-                        // Handle the error
-                    }
-                }
-            }
+    //                 } else {
+    //                     // Failed to upload the file to AWS S3
+    //                     // Handle the error
+    //                 }
+    //             }
+    //         }
 
-            echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
-        }
-    }
+    //         echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
+    //     }
+    // }
 
 
 	public function insertDetails()
