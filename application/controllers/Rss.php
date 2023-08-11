@@ -3086,7 +3086,7 @@ class Rss extends CI_Controller
             'Key'    => $keyPrefix, // Use the key prefix to represent the directory
             'Body'   => '',
         ]);
-    } catch (S3Exception $e) {
+    } catch (Aws\S3\Exception\S3Exception $e) {
 
         echo "S3 Directory Creation Error: " . $e->getMessage() . PHP_EOL;
         return;
@@ -3132,7 +3132,7 @@ class Rss extends CI_Controller
                         echo "File uploaded to S3: " . $objectUrl . PHP_EOL;
 
                         // Perform any additional actions with $objectUrl
-                    } catch (S3Exception $e) {
+                    } catch (Aws\S3\Exception\S3Exception $e) {
 
                         echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
                     }
