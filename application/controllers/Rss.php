@@ -7779,7 +7779,7 @@ value1&metadata[meta2]=value2*/
 			'Bucket' => $bucket,
 			'Key'    => $keyname,
 			'Body'   => 'Hello, Yusuf!',
-			'ACL'    => 'public-read'
+			// 'ACL'    => 'public-read'
 		]);
 	
 		// Print the URL to the object.
