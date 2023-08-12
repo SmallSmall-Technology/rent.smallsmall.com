@@ -97,6 +97,9 @@
 
                                         ]);
 
+                                         // Initialize the count
+                                            $count = 1;
+
                                         // Loop through the list of objects
 
                                         foreach ($objects['Contents'] as $object) {
@@ -116,63 +119,18 @@
                                             echo '</span>';
                                             echo '<div class="ml-auto badge badge-pill badge-secondary"><i class="fa fa-download"></i></div>';
                                             echo '</a>';
+
+                                            // Increment the count
+                                            $count++;
                                         }
+
+
                                     } catch (Aws\S3\Exception\S3Exception $e) {
                                         // Handle S3 error
                                         echo 'S3 Error: ' . $e->getMessage() . PHP_EOL;
                                     }
                                     ?>
                                 </li>
-
-
-                                <!-- <li class="nav-item">
-                                    <?php
-
-                                    $dir = './uploads/verification/' . $details['user_id'] . '/';
-
-                                    if (file_exists($dir) == false) {
-
-                                        echo 'Directory \'', $dir, '\' not found!';
-                                    } else {
-
-                                        $dir_contents = scandir($dir);
-
-                                        $count = 1;
-
-                                        $content_size = count($dir_contents);
-
-                                        //print_r($dir_contents);
-
-                                        foreach ($dir_contents as $file) {
-
-                                            if ($file !== '.' && $file !== '..' && $details['user_id'] . '/' . $file !== $details['valid_id_file_path']) {
-                                    ?>
-                                                    <a target="_blank" href="<?php echo base_url() . '' . $dir . '' . $file; ?>" class="nav-link" rel=”nofollow”>
-                                                        <i class="nav-link-icon lnr-inbox"></i>
-                                                        <span>
-                                                            <?php $the_numbers = $count - 3; ?>
-                                                            Bank Statement <?php
-                                                                            if ($the_numbers < 1) {
-
-                                                                                echo "(1)";
-                                                                            } else {
-
-                                                                                echo "(" . ($count - 3) . ")";
-                                                                            } ?>
-                                                        </span>
-                                                        <div class="ml-auto badge badge-pill badge-secondary"><i class="fa fa-download"></i></div>
-                                                    </a>
-                                                <?php }
-
-                                            $count++;
-                                                ?>
-                                                    
-                                            <?php } ?>
-                                        
-                                        <?php } ?>
-                                </li> -->
-
-
 
                                 <!--<li class="nav-item">
                                     <a href="javascript:void(0);" class="nav-link">
