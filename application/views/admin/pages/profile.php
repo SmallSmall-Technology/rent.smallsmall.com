@@ -106,9 +106,9 @@
 
                                             $objectKey = $object['Key'];
 
-                                            // $objectUrl = $s3->getObjectUrl($bucket, $objectKey);
+                                            $objectUrl = $s3->getObjectUrl($bucket, $objectKey);
 
-                                            $objectUrl = 'https://' . $bucket . '.s3.eu-west-1.amazonaws.com/' . $objectKey; // Construct the object URL
+                                            // $objectUrl = 'https://' . $bucket . '.s3.eu-west-1.amazonaws.com/' . $objectKey; // This works for downloading the document
 
                                             // Extract file name from object key
                                             $fileName = basename($objectKey);
