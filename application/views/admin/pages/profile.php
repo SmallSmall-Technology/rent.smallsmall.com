@@ -114,7 +114,8 @@
                                             $fileName = basename($objectKey);
 
                                             // Display the link for each object
-                                            echo '<a target="_blank" href="' . $objectUrl . '" class="nav-link" rel="nofollow">';
+                                            echo '<a href="javascript:void(0);" onclick="openObjectUrl(\'' . $objectUrl . '\')" class="nav-link" rel="nofollow">';
+                                            // echo '<a target="_blank" href="' . $objectUrl . '" class="nav-link" rel="nofollow">';
                                             echo '<i class="nav-link-icon lnr-inbox"></i>';
                                             echo '<span>';
                                             echo 'Bank Statement (' . ($count - 3) . ')';
@@ -133,6 +134,12 @@
                                     }
                                     ?>
                                 </li>
+
+                                <script>
+                                    function openObjectUrl(url) {
+                                        window.open(url, '_blank');
+                                        }
+                                    </script>
 
                                 <!--<li class="nav-item">
                                     <a href="javascript:void(0);" class="nav-link">
