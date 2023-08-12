@@ -114,11 +114,12 @@
                                             $fileName = basename($objectKey);
 
                                             // Display the link for each object
-                                            echo '<a href="javascript:void(0);" onclick="openObjectUrl(\'' . $objectUrl . '\')" class="nav-link" rel="nofollow">';
+                                            echo '<a href="' . $objectUrl . '" target="_blank" class="nav-link" rel="nofollow">';
+                                            // echo '<a href="javascript:void(0);" onclick="openObjectUrl(\'' . $objectUrl . '\')" class="nav-link" rel="nofollow">';
                                             // echo '<a target="_blank" href="' . $objectUrl . '" class="nav-link" rel="nofollow">';
                                             echo '<i class="nav-link-icon lnr-inbox"></i>';
                                             echo '<span>';
-                                            echo 'Bank Statement (' . ($count - 3) . ')';
+                                            echo 'Bank Statement (' . $count . ')';
                                             echo '</span>';
                                             echo '<div class="ml-auto badge badge-pill badge-secondary"><i class="fa fa-download"></i></div>';
                                             echo '</a>';
