@@ -37,7 +37,7 @@
 							<tr>
 								<th class="text-left">&nbsp;</th>
 								<th class="text-left">Name</th>
-								<!---<th class="text-left">Property</th>--->
+								<th class="text-left">Units</th>
 								<th class="text-left">Purchase Type</th>
 								<th class="text-left">Request Date</th>
 								<th class="text-left">Actions</th>
@@ -83,7 +83,7 @@
 
 									</div>
 								</td>
-								<!---<td class="text-left"><?php //echo '<a target="_blank" href="'.base_url().'apartment/'.$value['propertyID'].'">'.$value['property_name'].'</a>'; ?></td>--->
+								<td class="text-left"><?php echo $value['unit_amount'].' ('.$value['purchase_beneficiary'].')'; ?></td>
 								<!--<td class="text-left"><?php //echo $value['city'].', '.$value['name'] ?></td>
 								<td class="text-left"><?php //echo $value['type'] ?></td>-->
 								<td class="text-left">
