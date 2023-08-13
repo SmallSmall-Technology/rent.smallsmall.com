@@ -3831,12 +3831,7 @@ class Admin extends CI_Controller {
 
             $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
 
-            $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
-
-			$contentType    =   $_FILES['file']['type'];
-
-			$metaHeaders = array();
-			
+            $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];			
 
             if ($this->upload->do_upload('file')) {
 
@@ -3851,10 +3846,6 @@ class Admin extends CI_Controller {
                         'Bucket' => $bucket,
 
                         'Key'    => $s3ObjectKey,
-
-						$metaHeaders,
-
-						$contentType,
 
                         'Body'   => file_get_contents($data["full_path"]),
                     ]);

@@ -69,7 +69,7 @@
                                     </a>
                                 </li>
 
-                                <!-- <li class="nav-item">
+                                <li class="nav-item">
                                     <?php
 
                                     require 'vendor/autoload.php';
@@ -133,76 +133,7 @@
                                         echo 'S3 Error: ' . $e->getMessage() . PHP_EOL;
                                     }
                                     ?>
-                                </li> -->
-
-                                <li class="nav-item">
-    <?php
-
-    require 'vendor/autoload.php';
-
-    // Create an S3 client
-    $s3 = new Aws\S3\S3Client([
-        'version' => 'latest',
-        'region'  => 'eu-west-1'
-    ]);
-
-    $bucket = 'dev-rss-uploads'; // Your bucket name
-
-    $folder = 'uploads/verification/' . $details['user_id'] . '/'; // Specify the folder path in S3
-
-    try {
-
-        // List objects in the specified S3 folder
-
-        $objects = $s3->listObjects([
-
-            'Bucket' => $bucket,
-
-            'Prefix' => $folder,
-
-        ]);
-
-         // Initialize the count
-            $count = 1;
-
-        // Loop through the list of objects
-
-        foreach ($objects['Contents'] as $object) {
-
-            $objectKey = $object['Key'];
-
-            $objectUrl = $s3->getObjectUrl($bucket, $objectKey);
-
-            // Extract file extension
-            $extension = pathinfo($objectKey, PATHINFO_EXTENSION);
-
-            // Determine if the file is an image or a document
-            $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
-
-            // Display the link for each object
-            echo '<a href="' . $objectUrl . '" target="' . ($isImage ? '_blank' : '_self') . '" class="nav-link" rel="nofollow">';
-            // echo '<a href="javascript:void(0);" onclick="openObjectUrl(\'' . $objectUrl . '\')" class="nav-link" rel="nofollow">';
-            // echo '<a target="_blank" href="' . $objectUrl . '" class="nav-link" rel="nofollow">';
-            echo '<i class="nav-link-icon lnr-inbox"></i>';
-            echo '<span>';
-            echo 'Bank Statement (' . $count . ')';
-            echo '</span>';
-            echo '<div class="ml-auto badge badge-pill badge-secondary"><i class="fa fa-download"></i></div>';
-            echo '</a>';
-
-            // Increment the count
-            $count++;
-        }
-
-
-    } catch (Aws\S3\Exception\S3Exception $e) {
-        // Handle S3 error
-        echo 'S3 Error: ' . $e->getMessage() . PHP_EOL;
-    }
-    ?>
-</li>
-
-
+                                </li>
 
                                 <!--<li class="nav-item">
                                     <a href="javascript:void(0);" class="nav-link">
