@@ -547,6 +547,13 @@ function shortenText($text, $maxLength)
 
                     <?php
 
+                    // Include AWS SDK and create S3 client
+                      require 'vendor/autoload.php';
+                      $s3 = new Aws\S3\S3Client([
+                          'version' => 'latest',
+                          'region' => 'eu-west-1'
+                      ]);
+
                     $imageFolder = $value['imageFolder'];
 
                   //   $imageFolderPath = "./uploads/properties/$imageFolder";
