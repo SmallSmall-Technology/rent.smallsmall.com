@@ -3112,10 +3112,6 @@ public function uploadIdentification($folder)
 
                 $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
 
-				$contentType    =   $_FILES['file']['type'];
-
-				$metaHeaders = array();
-
                 // Step 9: Perform file upload
                 if ($this->upload->do_upload('file')) {
 
@@ -3144,10 +3140,6 @@ public function uploadIdentification($folder)
                             'Bucket' => $bucket,
 
                             'Key'    => $keyname,
-
-							$metaHeaders,
-
-							$contentType,
 
                             'Body'   => file_get_contents($data["full_path"]),
                         ]);
@@ -3179,10 +3171,6 @@ public function uploadIdentification($folder)
 
 			$_FILES["file"]["size"] = $_FILES["files"]["size"];
 
-			$contentType    =   $_FILES['file']['type'];
-
-			$metaHeaders = array();
-
 			// Step 9: Perform file upload
 			if ($this->upload->do_upload('file')) {
 
@@ -3210,10 +3198,6 @@ public function uploadIdentification($folder)
 						'Bucket' => $bucket,
 
 						'Key'    => $keyname,
-
-						$metaHeaders,
-
-						$contentType,
 
 						'Body'   => file_get_contents($data["full_path"]),
 					]);
