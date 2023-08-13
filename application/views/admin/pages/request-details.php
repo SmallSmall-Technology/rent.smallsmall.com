@@ -113,7 +113,7 @@
                         <table class="mb-0 table">
                             
                             <tbody>
-			    <?php if($detail['method'] == 'Promotional'){ ?>
+			    <?php if($details['method'] == 'Promotional'){ ?>
 	                            <tr>
 	                                <th width="200px" scope="row">Purchase Type</th>
 	                                <td><?php echo $details['purchase_beneficiary']; ?></td>
