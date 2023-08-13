@@ -173,17 +173,14 @@
 
             $objectUrl = $s3->getObjectUrl($bucket, $objectKey);
 
-            // Determine content type of the file
-            $contentType = $s3->headObject([
-                'Bucket' => $bucket,
-                'Key' => $objectKey
-            ])['ContentType'];
+            // Extract file extension
+            $extension = pathinfo($objectKey, PATHINFO_EXTENSION);
 
-            // Set appropriate Content-Disposition header
-            $contentDisposition = strpos($contentType, 'image/') === 0 ? 'inline' : 'attachment';
+            // Determine if the file is an image or a document
+            $isImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
 
             // Display the link for each object
-            echo '<a href="' . $objectUrl . '" target="_blank" class="nav-link" rel="nofollow" download>';
+            echo '<a href="' . $objectUrl . '" target="' . ($isImage ? '_blank' : '_self') . '" class="nav-link" rel="nofollow">';
             // echo '<a href="javascript:void(0);" onclick="openObjectUrl(\'' . $objectUrl . '\')" class="nav-link" rel="nofollow">';
             // echo '<a target="_blank" href="' . $objectUrl . '" class="nav-link" rel="nofollow">';
             echo '<i class="nav-link-icon lnr-inbox"></i>';
