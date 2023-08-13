@@ -3700,78 +3700,189 @@ class Admin extends CI_Controller {
 
 	}
 
-	public function uploadImages($folder){			
+	// public function uploadImages($folder){			
 
-		if(!$folder){			
+	// 	if(!$folder){			
 
-			$folder = md5(date("Ymd His"));			
+	// 		$folder = md5(date("Ymd His"));			
 
-		}		
+	// 	}		
 
-		sleep(3);		
+	// 	sleep(3);		
 
-		if (!is_dir('./uploads/properties/'.$folder)) {
+	// 	if (!is_dir('./uploads/properties/'.$folder)) {
 
-			mkdir('./uploads/properties/'.$folder, 0777, TRUE);
+	// 		mkdir('./uploads/properties/'.$folder, 0777, TRUE);
 
-		}		
+	// 	}		
 
-		if($_FILES["files"]["name"] != ''){
+	// 	if($_FILES["files"]["name"] != ''){
 			
 
-			$output = '';
+	// 		$output = '';
 			
-			$error = 0;
+	// 		$error = 0;
 
-			$config["upload_path"] = './uploads/properties/'.$folder;
+	// 		$config["upload_path"] = './uploads/properties/'.$folder;
 
-			$config["allowed_types"] = 'jpg|jpeg|png';
+	// 		$config["allowed_types"] = 'jpg|jpeg|png';
 
-			$config['encrypt_name'] = TRUE;
+	// 		$config['encrypt_name'] = TRUE;
 
-			$config['max_size'] = 10 * 1024;
+	// 		$config['max_size'] = 10 * 1024;
 
-			$this->load->library('upload', $config);
+	// 		$this->load->library('upload', $config);
 
-			$this->upload->initialize($config);
+	// 		$this->upload->initialize($config);
 			
 
-			for($count = 0; $count<count($_FILES["files"]["name"]); $count++){
+	// 		for($count = 0; $count<count($_FILES["files"]["name"]); $count++){
 				
 
-				$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+	// 			$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
 
-				$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+	// 			$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
 
-				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+	// 			$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
 
-				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+	// 			$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
 
-				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+	// 			$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
 				
 
-				if($this->upload->do_upload('file')){				
+	// 			if($this->upload->do_upload('file')){				
 
-					$data = $this->upload->data();	
+	// 				$data = $this->upload->data();	
 					
 					
 
-					$output .= '
-								<span class="imgCover removal-id-'.$count.'" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/properties/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
-								<div class="remove-img img-removal" id="img-properties-'.$data['file_name'].'-'.$count.'">remove <i class="fa fa-trash"></i></div>
-								<!--<span class="featTT">featured</span>--></span>';
-				}else{
-					$error = $this->upload->display_errors('', '');
-				}			
+	// 				$output .= '
+	// 							<span class="imgCover removal-id-'.$count.'" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/properties/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+	// 							<div class="remove-img img-removal" id="img-properties-'.$data['file_name'].'-'.$count.'">remove <i class="fa fa-trash"></i></div>
+	// 							<!--<span class="featTT">featured</span>--></span>';
+	// 			}else{
+	// 				$error = $this->upload->display_errors('', '');
+	// 			}			
 
-			}
-			//echo $output;
+	// 		}
+	// 		//echo $output;
 
-			echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));		
+	// 		echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));		
 
-		}		
+	// 	}		
 
-	}
+	// }
+
+
+	public function uploadImages($folder)
+{
+    require 'vendor/autoload.php';
+
+    if (!$folder) {
+
+        $folder = md5(date("Ymd His"));
+
+    }
+
+    sleep(3);
+
+    $bucket = 'dev-rss-uploads'; // bucket name
+
+    if (!is_dir('./uploads/properties/' . $folder)) {
+
+        mkdir('./uploads/properties/' . $folder, 0777, TRUE);
+
+    }
+
+    if ($_FILES["files"]["name"] != '') {
+
+        $output = '';
+
+        $error = 0;
+
+        $config["upload_path"] = './uploads/properties/' . $folder;
+
+        $config["allowed_types"] = 'jpg|jpeg|png';
+
+        $config['encrypt_name'] = TRUE;
+
+        $config['max_size'] = 10 * 1024;
+
+        $this->load->library('upload', $config);
+
+        $this->upload->initialize($config);
+
+        // Create an S3 client
+        $s3 = new Aws\S3\S3Client([
+
+            'version' => 'latest',
+
+            'region'  => 'eu-west-1'
+
+        ]);
+
+        for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
+            $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+
+            $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+
+            $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+
+            $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+
+            $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+			$contentType    =   $_FILES['file']['type'];
+
+			$metaHeaders = array();
+			
+
+            if ($this->upload->do_upload('file')) {
+
+                $data = $this->upload->data();
+
+                // Upload the file to S3
+                $s3ObjectKey = 'uploads/properties/' . $folder . '/' . $data['file_name'];
+
+                try {
+                    $result = $s3->putObject([
+
+                        'Bucket' => $bucket,
+
+                        'Key'    => $s3ObjectKey,
+
+						$metaHeaders,
+
+						$contentType,
+
+                        'Body'   => file_get_contents($data["full_path"]),
+                    ]);
+
+                    $output .= '
+                        <span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '">
+                            <img src="' . $result['ObjectURL'] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+                            <div class="remove-img img-removal" id="img-properties-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
+                        </span>';
+                } catch (Aws\S3\Exception\S3Exception $e) {
+
+                    $error = 'S3 Upload Error: ' . $e->getMessage();
+
+                }
+            } else {
+
+                $error = $this->upload->display_errors('', '');
+
+            }
+        }
+
+        echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));
+
+    }
+}
+
+
+
 
 	public function uploadFurnisureImages($folder){
 
