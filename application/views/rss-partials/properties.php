@@ -462,9 +462,12 @@ function shortenText($text, $maxLength)
   <!-- Properties section -->
 
   <div class="properties-section" id="properties-container">
+
+    <!-- S3 Integration -->
+
     <div class="row">
 
-      <div class="col-12">
+      <!-- <div class="col-12">
         <?php
 
         $cities = array_unique(array_column($properties, 'city'));
@@ -500,7 +503,7 @@ function shortenText($text, $maxLength)
 
         ?>
 
-      </div>
+      </div> -->
 
       <div class="col-12">
         <p><?php echo $total_count ?> properties</p>
@@ -547,51 +550,101 @@ function shortenText($text, $maxLength)
 
                     <?php
 
+                    // Include AWS SDK and create S3 client
+                    require 'vendor/autoload.php';
+
+                    $s3 = new Aws\S3\S3Client([
+                      'version' => 'latest',
+
+                      'region' => 'eu-west-1'
+                    ]);
+
                     $imageFolder = $value['imageFolder'];
 
-                    $imageFolderPath = "./uploads/properties/$imageFolder";
+                    //   $imageFolderPath = "./uploads/properties/$imageFolder";
 
-                    if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
+                    //   if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
 
-                      $imageFiles = scandir($imageFolderPath);
+                    //     $imageFiles = scandir($imageFolderPath);
+
+                    //     $activeClass = 'active';
+
+                    //     $content_size = count($imageFiles);
+
+                    //     $count = 0;
+
+                    //     foreach ($imageFiles as $file) {
+
+                    //       // if ($file === '.' || $file === '..') {
+                    //       //   continue;
+
+                    //       // }
+
+                    //       if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
+
+                    //         $imageSrc = base_url() . 'uploads/properties/' . $value['imageFolder'] . '/' . $file;
+                    //         echo '
+                    //    <div class="carousel-item ' . $activeClass . '">
+                    //      <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
+                    //    </div>
+                    //  ';
+
+                    //         $activeClass = '';
+                    //       }
+
+                    //       $count++;
+                    //     }
+                    //   } else {
+
+                    //     echo '<div class="carousel-item active">
+                    //        <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
+                    //      </div>';
+
+                    //     echo '<div class="carousel-item">
+                    //        <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
+                    //      </div>';
+                    //   }
+
+
+                    //S3 Integration
+
+                    $bucket = 'rss-prod-uploads'; // My bucket name
+
+                    $imageFolderPath = 'uploads/properties/' . $value['imageFolder'];
+
+                    try {
+                      $objects = $s3->listObjects([
+                        'Bucket' => $bucket,
+                        'Prefix' => $imageFolderPath,
+                      ]);
 
                       $activeClass = 'active';
 
-                      $content_size = count($imageFiles);
-
-                      $count = 0;
-
-                      foreach ($imageFiles as $file) {
-
-                        // if ($file === '.' || $file === '..') {
-                        //   continue;
-
-                        // }
-
-                        if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
-
-                          $imageSrc = base_url() . 'uploads/properties/' . $value['imageFolder'] . '/' . $file;
-                          echo '
-                     <div class="carousel-item ' . $activeClass . '">
-                       <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
-                     </div>
-                   ';
-
-                          $activeClass = '';
-                        }
-
-                        $count++;
+                      foreach ($objects['Contents'] as $object) {
+                        $imageSrc = $object['Key'];
+                        echo '
+                              <div class="carousel-item ' . $activeClass . '">
+                                  <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image" class="d-block w-100"/>
+                              </div>
+                          ';
+                        $activeClass = '';
                       }
-                    } else {
+                    } catch (Aws\S3\Exception\S3Exception $e) {
+
+                      // Handle S3 error
 
                       echo '<div class="carousel-item active">
-                         <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
-                       </div>';
+                          <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
+                      </div>';
 
                       echo '<div class="carousel-item">
-                         <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
-                       </div>';
+                          <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
+                      </div>';
                     }
+
+                    //End S3 Integration
+
+
                     ?>
                   </div>
 
@@ -655,7 +708,7 @@ function shortenText($text, $maxLength)
         <?php } ?>
 
         <!--Pagination -->
-        <div class="pagination-section my-5">
+        <!-- <div class="pagination-section my-5">
           <div class="row">
             <div class="col-12">
               <nav aria-label="Page navigation example" class="d-flex d-md-block justify-content-center">
@@ -665,7 +718,7 @@ function shortenText($text, $maxLength)
               </nav>
             </div>
           </div>
-        </div>
+        </div> -->
 
     </div>
 

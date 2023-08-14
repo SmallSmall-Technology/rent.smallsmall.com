@@ -5,94 +5,73 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allPropertyPage.css" />
 
 <?php
-            
-            //Get The Eviction Security Deposit
-            
-            $propertyPrice = $property['price'];
-            
-            // get the eviction deposit value
-            
-           if (empty($propertyPrice) || is_null($propertyPrice)) {
 
-			$evictionDeposit = 0; // set default
+//Get The Eviction Security Deposit
 
-		    } elseif ($propertyPrice < 200000) {
+$propertyPrice = $property['price'];
 
-			$evictionDeposit = 200000;
+// get the eviction deposit value
 
-		    } else {
+if (empty($propertyPrice) || is_null($propertyPrice)) {
 
-			$evictionDeposit = $propertyPrice;
+  $evictionDeposit = 0; // set default
 
-		    }
-            
-            //Multiply the security deposit term by security deposit amount
-            if($property['securityDepositTerm'] == 1)
-            {
-                $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
-            }
+} elseif ($propertyPrice < 200000) {
 
-            else
-            {
-                $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
-                $sec_dep = 0.75 * $sec_dep;
-            }
-            
-            $srlz = $property['intervals'];
-            $srlz = unserialize($srlz);
-            $yrnt = $property['price'] * 12;
+  $evictionDeposit = 200000;
+} else {
 
-            if($srlz[0] == 'Upfront')
-            {
-                $mnth = 'Upfront';
-                $vmnth = 'Upfront';
+  $evictionDeposit = $propertyPrice;
+}
 
-                if($property['price'] > 999999)
-                { 
-                    $prc = (($property['price']/1000000) * 12).'M'; 
-                }
-                else
-                { 
-                    $prc = number_format($property['price'] * 12);
-                }
+//Multiply the security deposit term by security deposit amount
+if ($property['securityDepositTerm'] == 1) {
+  $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+} else {
+  $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+  $sec_dep = 0.75 * $sec_dep;
+}
 
-                if($yrnt <= 2000000)
-                {
-                    $sec_dep = 0.25 * $yrnt;
-                }
+$srlz = $property['intervals'];
+$srlz = unserialize($srlz);
+$yrnt = $property['price'] * 12;
 
-                else
-                {
-                    $sec_dep = 0.3 * $yrnt;
-                }
-                
-                $total =  ($property['price'] * 12) + $sec_dep;
-                
-                $total = number_format($total);
-            }
+if ($srlz[0] == 'Upfront') {
+  $mnth = 'Upfront';
+  $vmnth = 'Upfront';
 
-            else
-            {
-                $mnth = "/Month";
-                $vmnth = "Monthly";
-                
-                if($property['price'] > 999999)
-                { 
-                    $prc = ($property['price']/1000000).'M'; 
-                }
-                
-                else
-                { 
-                    $prc = number_format($property['price']); 
-                }
-                
-                $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
-                
-                $total =  $property['price'] + $sec_dep + $evictionDeposit + $serviceCharge;
-                
-                $total = number_format($total);
-            }
-        
+  if ($property['price'] > 999999) {
+    $prc = (($property['price'] / 1000000) * 12) . 'M';
+  } else {
+    $prc = number_format($property['price'] * 12);
+  }
+
+  if ($yrnt <= 2000000) {
+    $sec_dep = 0.25 * $yrnt;
+  } else {
+    $sec_dep = 0.3 * $yrnt;
+  }
+
+  $total =  ($property['price'] * 12) + $sec_dep;
+
+  $total = number_format($total);
+} else {
+  $mnth = "/Month";
+  $vmnth = "Monthly";
+
+  if ($property['price'] > 999999) {
+    $prc = ($property['price'] / 1000000) . 'M';
+  } else {
+    $prc = number_format($property['price']);
+  }
+
+  $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+  $total =  $property['price'] + $sec_dep + $evictionDeposit + $serviceCharge;
+
+  $total = number_format($total);
+}
+
 
 function shortenText($text, $maxLength)
 {
@@ -122,62 +101,111 @@ function shortenText($text, $maxLength)
   <div class="container">
     <!-- caroisel slider -->
 
+    <!-- AWS S3 Integration -->
+
     <div class="row">
       <div class="col">
         <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
 
-
             <?php
+
+            require 'vendor/autoload.php';
+
+            // Create an S3 client
+            $s3 = new Aws\S3\S3Client([
+
+              'version' => 'latest',
+
+              'region' => 'eu-west-1'
+
+            ]);
+
+            $bucket = 'rss-prod-uploads'; // My bucket name
 
             $imageFolder = $property['imageFolder'];
 
             // $imageFolderPath = "./uploads/properties/$imageFolder";
 
-            $imageFolderPath = "./uploads/properties/$imageFolder";
+            // $imageFolderPath = "./uploads/properties/$imageFolder";
 
-            if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
+            // if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
 
-                $imageFiles = scandir($imageFolderPath);
+            //     $imageFiles = scandir($imageFolderPath);
 
-                $activeClass = 'active';
-              
-                $content_size = count($imageFiles);
-                        
-                $count = 0;
+            //     $activeClass = 'active';
 
-              foreach ($imageFiles as $file) {
+            //     $content_size = count($imageFiles);
 
-                  if ( $file !== '.' && $file !== '..'&& $count <= ($content_size - 2) ){
-                      
-                // if ($file === '.' || $file === '..') {
-                //   continue;
-                // }
+            //     $count = 0;
 
-                $imageSrc = base_url() . 'uploads/properties/' . $property['imageFolder'] . '/' . $file;
+            //   foreach ($imageFiles as $file) {
+
+            //       if ( $file !== '.' && $file !== '..'&& $count <= ($content_size - 2) ){
+
+            //     // if ($file === '.' || $file === '..') {
+            //     //   continue;
+            //     // }
+
+            //     $imageSrc = base_url() . 'uploads/properties/' . $property['imageFolder'] . '/' . $file;
+            //     echo '
+            //             <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+            //               <img src="' . $imageSrc . '"  alt="RSS property image"/>
+            //             </div>
+            //           ';
+
+            //     $activeClass = '';
+            //   }
+
+            //   $count++;
+
+            // }
+
+            // } else {
+
+            //   echo '<div class="carousel-item-imgcarousel-item active" data-interval="10000">
+            //                 <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
+            //               </div>';
+
+            //   echo '<div class="carousel-item-img carousel-item" data-interval="2000">
+            //                 <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
+            //               </div>';
+            // }
+
+
+            // List objects in the specified S3 folder
+            try {
+              $objects = $s3->listObjects([
+                'Bucket' => $bucket,
+                'Prefix' => "uploads/properties/$imageFolder/",
+              ]);
+
+              $activeClass = 'active';
+
+              foreach ($objects['Contents'] as $object) {
+                $imageSrc = $object['Key'];
                 echo '
-                        <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
-                          <img src="' . $imageSrc . '"  alt="RSS property image"/>
-                        </div>
-                      ';
-
+                            <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+                                <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image"/>
+                            </div>
+                        ';
                 $activeClass = '';
               }
-              
-              $count++;
-                        
-            }
-                        
-            } else {
+            } catch (Aws\S3\Exception\S3Exception $e) {
 
-              echo '<div class="carousel-item-imgcarousel-item active" data-interval="10000">
+              // Handle S3 error by displaying a placeholder image
+
+              echo '<div class="carousel-item-img carousel-item active" data-interval="10000">
                             <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
-                          </div>';
+                        </div>';
 
               echo '<div class="carousel-item-img carousel-item" data-interval="2000">
                             <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
-                          </div>';
+                        </div>';
             }
+
+            // End of AWS S3 Integration
+
             ?>
 
           </div>
@@ -207,7 +235,7 @@ function shortenText($text, $maxLength)
               <p class="mb-0 mobile-subscription-price">Subscription Price</p>
               <p class="font-weight-bolder primary-text-color mobile-subscription-amount">&#8358;<?php echo $prc . ' ' . $mnth; ?></p>
               <p class="mb-0 mobile-subscription-security">Security deposit fund</p>
-              <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($sec_dep + $evictionDeposit);?></p>
+              <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></p>
             </div>
 
 
@@ -374,7 +402,7 @@ function shortenText($text, $maxLength)
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <form id="mobPaymentForms" method="POST">
-                            
+
                           <div class="modal-body filter-modal-body secondary-background">
                             <div>
                               <i class="fa-solid fa-xmark fa-3x" data-dismiss="modal"></i>
@@ -395,7 +423,7 @@ function shortenText($text, $maxLength)
                                 </div>
                                 <div class="subscription-deposit--mobile">
                                   <p class="m-0 font-weight-light" style="font-size: 15px">Security deposit fund</p>
-                                  <p class="" style="font-weight:700; font-size: 25px">&#8358;<?php echo number_format($sec_dep + $evictionDeposit);?></p>
+                                  <p class="" style="font-weight:700; font-size: 25px">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></p>
 
                                 </div>
                               </div>
@@ -506,28 +534,28 @@ function shortenText($text, $maxLength)
 
                                       <tr>
                                         <td>Security deposit fund</td>
-                                    
+
                                         <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?><sup class="text-dark"></sup>
                                         </td>
                                       </tr>
-                                     
+
 
                                   </tbody>
 
                                   <tfoot>
-                                      
+
                                     <tr>
 
                                       <td class="text-center" style="border-top: 1px solid #E3EBEF;">Total</td>
                                       <td class="primary-text-color pricing" style="font-size: 20px; border-top: 1px solid #E3EBEF;">&#x20A6;<?php echo $total ?></td>
                                     </tr>
-                                    
+
                                   </tfoot>
 
                                 <?php } ?>
-                                
+
                                 </table>
-                                
+
                               </div>
                             </div>
                           </div>
@@ -535,13 +563,13 @@ function shortenText($text, $maxLength)
                           <?php if (!@$userID) { ?>
 
                             <div class="price-notifier">Login to see price breakdown</div>
-                            
-                              <!--Hidden input fields so as to get all the changes -->
-                    <input type="hidden" class="subscription-fees" name="subscription-fees" value="<?php echo str_replace(',', '', $prc); ?>">
-                    <input type="hidden" class="service-charge-deposit" name="service-charge-deposit" value="<?php echo ($property['serviceChargeTerm'] != '') ? $property['serviceCharge'] * $property['serviceChargeTerm'] : $property['serviceCharge']; ?>">
-                    <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $sec_dep + $evictionDeposit; ?>">
-                    <input type="hidden" class="total" name="total" value="<?php echo str_replace(',', '', $total) ?>">
-                  
+
+                            <!--Hidden input fields so as to get all the changes -->
+                            <input type="hidden" class="subscription-fees" name="subscription-fees" value="<?php echo str_replace(',', '', $prc); ?>">
+                            <input type="hidden" class="service-charge-deposit" name="service-charge-deposit" value="<?php echo ($property['serviceChargeTerm'] != '') ? $property['serviceCharge'] * $property['serviceChargeTerm'] : $property['serviceCharge']; ?>">
+                            <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $sec_dep + $evictionDeposit; ?>">
+                            <input type="hidden" class="total" name="total" value="<?php echo str_replace(',', '', $total) ?>">
+
 
                           <?php } ?>
 
@@ -713,31 +741,25 @@ function shortenText($text, $maxLength)
       <!-- right side -->
       <div class="col-6 pl-5 d-md-block d-none">
         <div class="subscription-container ml-5" style="position: sticky; top: 98px;">
-            <?php
-                $CI = &get_instance();
-                
-                if (date('Y-m-d') < $property['available_date']) {
-                    
-                 echo '<div style="color: red; border-color:red" class="subscription-availability  subscription-available">Unavailable</div>';
-                  
-                } else {
-                    
-                  echo '<div class="subscription-availability  subscription-available">Available</div>';
-                }
-                ?>
+          <?php
+          $CI = &get_instance();
+
+          if (date('Y-m-d') < $property['available_date']) {
+
+            echo '<div style="color: red; border-color:red" class="subscription-availability  subscription-available">Unavailable</div>';
+          } else {
+
+            echo '<div class="subscription-availability  subscription-available">Available</div>';
+          }
+          ?>
           <div class="row">
 
 
             <div class="col-12">
               <div>
                 <p>subscription price</p>
-                <p class="subcription-amount font-weight-bold">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup id="subtips" data-toggle="tooltip"
-                      data-placement="right" title="This is your recurring subscription payment."><img class=" w-25 "
-                        style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
-                <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></span><sup
-                      data-toggle="tooltip" data-placement="right"
-                      title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img
-                        class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+                <p class="subcription-amount font-weight-bold">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup id="subtips" data-toggle="tooltip" data-placement="right" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+                <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></span><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
               </div>
             </div>
 
@@ -784,7 +806,7 @@ function shortenText($text, $maxLength)
               </div>
 
               <div class="input-container mb-3">
-                <input type="text" onclick="(this.type='date')" class="form-control inspection-date" id="insDate" placeholder="Inspection date" name="insDate"/>
+                <input type="text" onclick="(this.type='date')" class="form-control inspection-date" id="insDate" placeholder="Inspection date" name="insDate" />
                 <span class="field-icns"><i class="bx bx-calendar"></i></span>
 
               </div>
@@ -862,40 +884,40 @@ function shortenText($text, $maxLength)
 
   <!--Hidden Input for value taken-->
 
-    <input type="hidden" class="userID" id="userID" value="<?php echo @$userID; ?>" />
-				
-    <input type="hidden" class="verified" id="verified" value="<?php echo @$verified; ?>" />
-        
-    <input type="hidden" class="productName" id="productName" value="<?php echo $property['propertyTitle']; ?>" />
-    
-    <!--<input type="text" id="availableDate" value="<?php echo $property['available_date']; ?>">-->
-        
-    <input type="hidden" class="property-id" id="property_id" value="<?php echo $property['propertyID']; ?>" />
-        
-    <input type="hidden" class="prop-monthly-price" id="monthly-price" value="<?php echo $property['price']; ?>" />
-        
-    <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo ($sec_dep + $evictionDeposit); ?>" />
-        
-    <input type="hidden" class="serv-charge" id="serv-charge" value="<?php echo ($property['serviceCharge']* $property['serviceChargeTerm']); ?>" />
-        		
-    <input type="hidden" class="cvstat" id="cvstat" value="<?php echo @$verified; ?>" />
-        		
-    <input type="hidden" class="verification_profile" id="verification_profile" value="<?php echo @$verification_profile; ?>" />
-    
-        		<?php 
-        		    $inspection_stat = "no";
-        		    if(@$check_inspection){
-        		        $inspection_stat = "yes";
-        		    }
-        		?>
-        		
-    <input type="hidden" class="inspection_stat" id="inspection_stat" value="<?php echo @$inspection_stat ?>" />
-    
-    <input type="hidden" class="apt-type" id="apt-type" value="<?php echo @$property['type_slug']; ?>" />
-        
-    <input type="hidden" class="imageLink" id="imageLink" value="<?php echo base_url().'uploads/properties/'.$property['imageFolder'].'/'.$property['featuredImg']; ?>" />
-        
-    <input type="hidden" class="amount-due" id="amount-due" value="<?php echo $property['price'] + $sec_dep + $property['serviceCharge']; ?>" />
+  <input type="hidden" class="userID" id="userID" value="<?php echo @$userID; ?>" />
+
+  <input type="hidden" class="verified" id="verified" value="<?php echo @$verified; ?>" />
+
+  <input type="hidden" class="productName" id="productName" value="<?php echo $property['propertyTitle']; ?>" />
+
+  <!--<input type="text" id="availableDate" value="<?php echo $property['available_date']; ?>">-->
+
+  <input type="hidden" class="property-id" id="property_id" value="<?php echo $property['propertyID']; ?>" />
+
+  <input type="hidden" class="prop-monthly-price" id="monthly-price" value="<?php echo $property['price']; ?>" />
+
+  <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo ($sec_dep + $evictionDeposit); ?>" />
+
+  <input type="hidden" class="serv-charge" id="serv-charge" value="<?php echo ($property['serviceCharge'] * $property['serviceChargeTerm']); ?>" />
+
+  <input type="hidden" class="cvstat" id="cvstat" value="<?php echo @$verified; ?>" />
+
+  <input type="hidden" class="verification_profile" id="verification_profile" value="<?php echo @$verification_profile; ?>" />
+
+  <?php
+  $inspection_stat = "no";
+  if (@$check_inspection) {
+    $inspection_stat = "yes";
+  }
+  ?>
+
+  <input type="hidden" class="inspection_stat" id="inspection_stat" value="<?php echo @$inspection_stat ?>" />
+
+  <input type="hidden" class="apt-type" id="apt-type" value="<?php echo @$property['type_slug']; ?>" />
+
+  <input type="hidden" class="imageLink" id="imageLink" value="<?php echo base_url() . 'uploads/properties/' . $property['imageFolder'] . '/' . $property['featuredImg']; ?>" />
+
+  <input type="hidden" class="amount-due" id="amount-due" value="<?php echo $property['price'] + $sec_dep + $property['serviceCharge']; ?>" />
 
   <!--End of hidden Input-->
 
@@ -953,13 +975,13 @@ function shortenText($text, $maxLength)
                 ?>
                 <?php
                 //Set fields to disabled if user is not signed in
-                
+
                 $field_stat = '';
                 if (!@$userID) {
                   $field_stat = "disabled";
                 }
                 ?>
-                
+
                 <select <?php echo @$field_stat; ?> class="form-control duration" id="duration">
                   <?php echo $duration; ?>
                 </select>
@@ -967,22 +989,21 @@ function shortenText($text, $maxLength)
               </div>
 
               <div class="input-container mb-3">
-                
+
                 <select <?php echo @$field_stat; ?> class="payment_ppn form-control" name="payment-plan" id="payment-plan">
-                                                <?php
-        
-                    								$intervals = "";
-                    
-                    								$interval = unserialize($property['intervals']);
-                    
-                    								for($i = 0; $i < count($interval); $i++){
-                    
-                    									echo '<option value="'.$interval[$i].'">'.$interval[$i].'</option>';
-                    
-                    								}
-                    
-                    							?>
-                                            </select>
+                  <?php
+
+                  $intervals = "";
+
+                  $interval = unserialize($property['intervals']);
+
+                  for ($i = 0; $i < count($interval); $i++) {
+
+                    echo '<option value="' . $interval[$i] . '">' . $interval[$i] . '</option>';
+                  }
+
+                  ?>
+                </select>
 
               </div>
 
@@ -1020,35 +1041,35 @@ function shortenText($text, $maxLength)
 
                       <tr>
                         <td>Security deposit fund</td>
-                        
+
                         <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></td>
-                        
+
                       </tr>
-                      
+
                   </tbody>
-                  
+
                   <tfoot>
-                      
+
                     <tr>
 
                       <td class="text-center" style="border-top: 1px solid #E3EBEF;">Total</td>
                       <td class="primary-text-color pricing" style="font-size: 20px; border-top: 1px solid #E3EBEF;">&#x20A6;<?php echo $total ?></td>
                     </tr>
-                    
-                  </tfoot>
-                  
 
-                   <!--Hidden input fields so as to get all the changes -->
-                    <input type="hidden" class="subscription-fees" name="subscription-fees" value="<?php echo str_replace(',', '', $prc); ?>">
-                    <input type="hidden" class="service-charge-deposit" name="service-charge-deposit" value="<?php echo ($property['serviceChargeTerm'] != '') ? $property['serviceCharge'] * $property['serviceChargeTerm'] : $property['serviceCharge']; ?>">
-                    <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $sec_dep + $evictionDeposit; ?>">
-                    <input type="hidden" class="total" name="total" value="<?php echo str_replace(',', '', $total) ?>">
-                  
-                  
+                  </tfoot>
+
+
+                  <!--Hidden input fields so as to get all the changes -->
+                  <input type="hidden" class="subscription-fees" name="subscription-fees" value="<?php echo str_replace(',', '', $prc); ?>">
+                  <input type="hidden" class="service-charge-deposit" name="service-charge-deposit" value="<?php echo ($property['serviceChargeTerm'] != '') ? $property['serviceCharge'] * $property['serviceChargeTerm'] : $property['serviceCharge']; ?>">
+                  <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $sec_dep + $evictionDeposit; ?>">
+                  <input type="hidden" class="total" name="total" value="<?php echo str_replace(',', '', $total) ?>">
+
+
                 <?php } ?>
-                
+
                 </table>
-                
+
               </div>
 
               <?php if (!@$userID) { ?>
@@ -1095,6 +1116,8 @@ function shortenText($text, $maxLength)
     </div>
   </div>
 
+  <!-- AWS S3 Integration -->
+
   <div class="container-fluid p-md-5 my-5">
     <div class="row px-md-5">
       <div class="col-12">
@@ -1102,6 +1125,20 @@ function shortenText($text, $maxLength)
       </div>
 
       <?php
+
+      require 'vendor/autoload.php';
+
+      // Create an S3 client
+
+      $s3 = new Aws\S3\S3Client([
+
+        'version' => 'latest',
+        'region' => 'eu-west-1'
+
+      ]);
+
+      $bucket = 'rss-prod-uploads'; // My bucket name
+
       if (isset($properties) && !empty($properties)) {
         $currentPropertyCity = $property['city']; // Get the city of the current property
         $matchingProperties = array_filter($properties, function ($value) use ($currentPropertyCity) {
@@ -1115,80 +1152,114 @@ function shortenText($text, $maxLength)
               <div class="card" id="properties-container">
                 <a style="text-decoration:none" href="<?php echo base_url(); ?>property/<?php echo $value['propertyID']; ?>">
                   <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel">
-                <?php
+                    <?php
                     $CI = &get_instance();
 
                     if (date('Y-m-d') < $value['available_date']) {
-                        
-                        echo '<div class="availablility unavailable d-flex">';
-                        
-                        echo '<img src="' . base_url() . 'assets/updated-assets/images/time-delete.svg" alt="">';
-                         
-                        echo '<span class="ml-2">Rented until: ' . date("M Y", strtotime($value['available_date'])) . '</span>';
-                        
-                        echo '</div>';
-                        
+
+                      echo '<div class="availablility unavailable d-flex">';
+
+                      echo '<img src="' . base_url() . 'assets/updated-assets/images/time-delete.svg" alt="">';
+
+                      echo '<span class="ml-2">Rented until: ' . date("M Y", strtotime($value['available_date'])) . '</span>';
+
+                      echo '</div>';
                     } else {
-                        
-                        echo '<div class="availablility available">';
-                        
-                        echo '<img src="' . base_url() . 'assets/updated-assets/images/check-circle.svg" alt="">';
-                        
-                        echo '<span class="ml-1">Available: Now</span>';
-                        
-                        echo '</div>';
+
+                      echo '<div class="availablility available">';
+
+                      echo '<img src="' . base_url() . 'assets/updated-assets/images/check-circle.svg" alt="">';
+
+                      echo '<span class="ml-1">Available: Now</span>';
+
+                      echo '</div>';
                     }
-                ?>
-                     
+                    ?>
+
                     <div class="carousel-inner listing-image">
                       <?php
-                      
+
                       $imageFolder = $value['imageFolder'];
-                      
-                      $imageFolderPath = "./uploads/properties/$imageFolder";
-                      
-                      if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
-                          
-                        $imageFiles = scandir($imageFolderPath);
-                        
+
+
+
+                      // $imageFolderPath = "./uploads/properties/$imageFolder";
+
+                      // if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
+
+                      //   $imageFiles = scandir($imageFolderPath);
+
+                      //   $activeClass = 'active';
+
+                      //   $content_size = count($imageFiles);
+
+                      //   $count = 0;
+
+                      //   foreach ($imageFiles as $file) {
+
+                      //   //   if ($file === '.' || $file === '..') {
+                      //   //     continue;
+                      //   //   }
+
+                      //   if ( $file !== '.' && $file !== '..'&& $count <= ($content_size - 2) ){
+
+                      //     $imageSrc = base_url() . 'uploads/properties/' . $value['imageFolder'] . '/' . $file;
+                      //     echo '
+                      //                     <div class="carousel-item ' . $activeClass . '">
+                      //                         <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
+                      //                     </div>
+                      //                 ';
+                      //     $activeClass = '';
+                      //   }
+
+                      //   $count++;
+
+                      //   }
+
+                      // } else {
+                      //   echo '<div class="carousel-item active">
+                      //                     <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
+                      //                   </div>';
+                      //   echo '<div class="carousel-item">
+                      //                     <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
+                      //                   </div>';
+                      // }
+
+
+                      // List objects in the specified S3 folder
+                      try {
+                        $objects = $s3->listObjects([
+                          'Bucket' => $bucket,
+                          'Prefix' => "uploads/properties/$imageFolder/",
+                        ]);
+
                         $activeClass = 'active';
-                        
-                        $content_size = count($imageFiles);
-                        
-                        $count = 0;
-                        
-                        foreach ($imageFiles as $file) {
-                            
-                        //   if ($file === '.' || $file === '..') {
-                        //     continue;
-                        //   }
-                        
-                        if ( $file !== '.' && $file !== '..'&& $count <= ($content_size - 2) ){
-                        
-                          $imageSrc = base_url() . 'uploads/properties/' . $value['imageFolder'] . '/' . $file;
+
+                        foreach ($objects['Contents'] as $object) {
+
+                          $imageSrc = $object['Key'];
                           echo '
-                                          <div class="carousel-item ' . $activeClass . '">
-                                              <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
-                                          </div>
-                                      ';
+                                                    <div class="carousel-item ' . $activeClass . '">
+                                                        <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image" class="d-block w-100"/>
+                                                    </div>
+                                                ';
                           $activeClass = '';
                         }
-                        
-                        $count++;
-                        
-                        }
-                        
-                      } else {
+                      } catch (Aws\S3\Exception\S3Exception $e) {
+
+                        // Handle S3 error by displaying a placeholder image
                         echo '<div class="carousel-item active">
-                                          <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
-                                        </div>';
+                                                        <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
+                                                    </div>';
                         echo '<div class="carousel-item">
-                                          <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
-                                        </div>';
+                                                        <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
+                                                    </div>';
                       }
-                      
+
+                      // End of AWS S3
+
                       ?>
-                      
+
                     </div>
                     <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls-<?php echo $value['propertyID']; ?>" data-slide="prev">
                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -1245,30 +1316,30 @@ function shortenText($text, $maxLength)
   <script src="<?php echo base_url(); ?>assets/js/property-form-change.js"></script>
 
   <!------Successful inspection, subscription and payment popups ------->
-    <!---- Inspection popup box ---->
+  <!---- Inspection popup box ---->
 
-<div class="popup-container">
+  <div class="popup-container">
     <div class="popup inspection">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="close-modal-custom pop-modal">
-                        <i class="fa-solid fa-circle-xmark fa-2x close-modal"></i>
-                      </div>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal-custom pop-modal">
+            <i class="fa-solid fa-circle-xmark fa-2x close-modal"></i>
+          </div>
 
-                      <div class="modal-body p-5 text-center">
-                        <div>
-                          <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/success.svg"  alt="successful">
-                        </div>
-                        <h5 class="text-center font-weight-bold my-4">Hurray!!!</h5>
-                        <h6>Visit scheduled successfully!!</h6>
-                        <p class="text-center">Please check your email for more details.</p>
+          <div class="modal-body p-5 text-center">
+            <div>
+              <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/success.svg" alt="successful">
+            </div>
+            <h5 class="text-center font-weight-bold my-4">Hurray!!!</h5>
+            <h6>Visit scheduled successfully!!</h6>
+            <p class="text-center">Please check your email for more details.</p>
 
-                      </div>
+          </div>
 
-                    </div>
-                  </div>
-                </div>
-    
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </main>
@@ -1309,7 +1380,6 @@ function shortenText($text, $maxLength)
 
 <!--Tooltip for share-->
 <script>
-
   function shareLink() {
     if (navigator.share) {
       navigator.share({
@@ -1354,9 +1424,9 @@ function shortenText($text, $maxLength)
 <script src="<?php echo base_url(); ?>assets/updated-assets/js/bootstrap-js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
 <script>
-    $(document).ready(function () {
-      $('[data-toggle="tooltip"]').tooltip();
-    });
+  $(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
 </script>
 
 <script src="<?php echo base_url(); ?>assets/js/favorite.js"></script>
