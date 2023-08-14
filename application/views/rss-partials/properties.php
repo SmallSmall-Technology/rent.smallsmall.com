@@ -708,7 +708,7 @@ function shortenText($text, $maxLength)
         <?php } ?>
 
         <!--Pagination -->
-        <!-- <div class="pagination-section my-5">
+        <div class="pagination-section my-5">
           <div class="row">
             <div class="col-12">
               <nav aria-label="Page navigation example" class="d-flex d-md-block justify-content-center">
@@ -718,7 +718,7 @@ function shortenText($text, $maxLength)
               </nav>
             </div>
           </div>
-        </div> -->
+        </div>
 
     </div>
 
