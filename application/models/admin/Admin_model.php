@@ -1732,6 +1732,25 @@ class Admin_model extends CI_Model {
 		}
 		
 	}
+
+	public function delAgreement($bookingID){
+	    
+	    $this->db-> where('id', $bookingID);
+    	
+		if($this->db->delete('sub_agreement')){
+		    
+		   return 1; 
+		        
+		}
+
+		else{
+			
+			return 0;
+			
+		}
+		
+	}
+
 	public function insertFacilities($propertyID, $facilityName, $facilityCat, $facilityDist, $file_path){		
 
 		$this->db->insert('neighborhood_facility_tbl', array('property' => $propertyID, 'name' => $facilityName, 'category' => $facilityCat, 'distance' => $facilityDist, 'file_path' => $file_path));		

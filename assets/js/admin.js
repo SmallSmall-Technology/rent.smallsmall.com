@@ -5017,6 +5017,64 @@ $(document). on('click', '.close-int', function(){
 		}
 		
 	});
+
+
+	$('.delete-agr').click(function () {
+
+		var the_ids = $(this).attr("id").replace(/booking-/, "").split("-");
+
+		var bookingID = the_ids[0];
+
+		var propertyID = the_ids[1];
+
+		$(this).html('Wait...');
+
+		var data = { "bookingID": bookingID, "propertyID": propertyID };
+
+		if (confirm("Are you sure you want to DELETE Agreement?")) {
+
+			$.ajaxSetup({ cache: false });
+
+			$.ajax({
+				url: baseUrl + "admin/deleteAgreement",
+
+				type: "POST",
+
+				async: true,
+
+				data: data,
+
+				success: function (data) {
+
+					if (data == 1) {
+
+						alert("Agreement Deleted!");
+
+						$(this).html('Delete');
+
+						location.reload(true);
+					} else {
+
+						alert("Error Deleting!!!");
+
+						$(this).html('Delete');
+
+						return false;
+					}
+
+				}
+			});
+		} else {
+
+			$(this).html('Delete');
+
+			return false;
+
+		}
+
+	});
+
+
 	$('#aboutUsFormBuytolet').submit(function(e){
 
 		"use strict";
