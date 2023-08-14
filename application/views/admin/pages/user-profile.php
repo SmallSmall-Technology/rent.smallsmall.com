@@ -434,8 +434,8 @@
             								<td class="text-left"><?php echo $value['date']; ?></td>
 
                                             <td class="text-left">
-                                                <button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/edit-agr/".$value['id']; ?>">Details</a></button>
-                                                
+                                                <button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/edit-agr/".$value['id']; ?>">Edit</a></button>
+                                                <br></br>
                                                 <button type="button" id="booking-<?php echo $value['id']; ?>-<?php echo $value['id']; ?>" class="btn btn-primary btn-sm delete-agr">Delete</button>
                                             </td>
             								
