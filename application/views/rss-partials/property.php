@@ -122,7 +122,7 @@ function shortenText($text, $maxLength)
   <div class="container">
     <!-- caroisel slider -->
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col">
         <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
@@ -191,7 +191,73 @@ function shortenText($text, $maxLength)
           </button>
         </div>
       </div>
+    </div> -->
+
+    <!-- S3 Integration  -->
+
+    <div class="row">
+    <div class="col">
+        <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+
+                <?php
+                require 'vendor/autoload.php';
+
+                // Create an S3 client
+                $s3 = new Aws\S3\S3Client([
+                    'version' => 'latest',
+                    'region' => 'eu-west-1'
+                ]);
+
+                $bucket = 'dev-rss-uploads'; // Your bucket name
+
+                $imageFolder = $property['imageFolder'];
+
+                // List objects in the specified S3 folder
+                try {
+                    $objects = $s3->listObjects([
+                        'Bucket' => $bucket,
+                        'Prefix' => "uploads/properties/$imageFolder/",
+                    ]);
+
+                    $activeClass = 'active';
+
+                    foreach ($objects['Contents'] as $object) {
+                        $imageSrc = $object['Key'];
+                        echo '
+                            <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+                                <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image"/>
+                            </div>
+                        ';
+                        $activeClass = '';
+                    }
+                } catch (Aws\S3\Exception\S3Exception $e) {
+                    // Handle S3 error by displaying a placeholder image
+                    echo '<div class="carousel-item-img carousel-item active" data-interval="10000">
+                            <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
+                        </div>';
+
+                    echo '<div class="carousel-item-img carousel-item" data-interval="2000">
+                            <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
+                        </div>';
+                }
+                ?>
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-target="#carouselExampleInterval" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-target="#carouselExampleInterval" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </button>
+        </div>
     </div>
+</div>
+
+
+    <!-- End of S3 Integration -->
 
     <div class="row mt-4 px-md-0 px-3">
       <!-- Left side -->
