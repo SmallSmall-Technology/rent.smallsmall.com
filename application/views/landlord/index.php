@@ -457,25 +457,42 @@
               </div>
               <h3 class="card-title">
               <?php  
-              $num = 0;
+              // $num = 0;
               
-              foreach($proptys as $propty => $value)
-              {
-                $propId = $value['propertyID'];
+              // foreach($proptys as $propty => $value)
+              // {
+              //   $propId = $value['propertyID'];
 
-                $data =  $this->landlord_model->get_subscriber($propId);
+              //   $data =  $this->landlord_model->get_subscriber($propId);
 
-                foreach ($data->result() as $row) 
+              //   foreach ($data->result() as $row) 
+              //   {
+              //     if(date('Y-m-d') <= $row->available_date)
+              //     {
+              //         $num += 1;
+              //     }
+
+              //   }
+              // }
+              
+              // 
+
+                foreach($proptys as $propty => $value)
                 {
-                  if(date('Y-m-d') <= $row->available_date)
-                  {
-                      $num += 1;
-                  }
+                  $propId = $value['propertyID'];
 
+                  $data =  $this->landlord_model->get_subscriber($propId);
+
+                  foreach ($data->result() as $row) 
+                  {
+                    if(date('Y-m-d') <= $row->available_date)
+                    {
+                      $num += 1;
+                    }          
+                  }
                 }
-              }
-              
-              echo $num;
+
+                echo $num;
               ?></h3>
             </div>
             <div class="text-right mt-4">
