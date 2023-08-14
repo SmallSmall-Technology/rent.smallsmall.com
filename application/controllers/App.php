@@ -631,6 +631,9 @@ class App extends CI_Controller
 
 	public function book_inspection()
 	{
+
+		require 'vendor/autoload.php'; // For Unione template authoload
+
 		$result = FALSE;
 
 		$details = '';
@@ -653,6 +656,32 @@ class App extends CI_Controller
 
 		$userID = $json_data->userID;
 
+		$user = $this->rss_model->get_user($userID);
+
+		$property = $this->rss_model->get_property($propID);
+
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "e5cc9712-0f36-11ee-8170-969a978c88f7"
+		];
+
+		$requestCxBody = [
+			"id" => "c457d6ec-254c-11ee-8e35-ee6e33baccfb"
+		];
+
+		// end Unione Template
+
 		// Insert the inspection details
 
 		// Get userID through the JSON data
@@ -665,7 +694,171 @@ class App extends CI_Controller
 
 				$result = TRUE;
 
+				//Unione Template
+
+				try {
+					$response = $client->request('POST', 'template/get.json', array(
+						'headers' => $headers,
+
+						'json' => $requestBody,
+					));
+
+					$jsonResponse = $response->getBody()->getContents();
+
+					$responseData = json_decode($jsonResponse, true);
+
+					$htmlBody = $responseData['template']['body']['html'];
+
+					$username = $user['firstName'] . ' ' . $user['lastName'];
+
+					$propertyName = $property['propertyTitle'];
+
+					$propertyAddress = $property['address'] . ', ' . $property['city'];
+
+					$dateOfVisit = $inspectionDate;
+
+					$typeOfVisit = $inspectionType;
+
+					$inspectionDateTime = strtotime($inspectionDate);
+
+					$inspectionTime = date('H:i:s', $inspectionDateTime);
+
+					// Replace the placeholder in the HTML body with the username
+
+					$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+
+					$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+
+					$htmlBody = str_replace('{{PropertyAddress}}', $propertyAddress, $htmlBody);
+
+					$htmlBody = str_replace('{{DateofVisit}}', $dateOfVisit, $htmlBody);
+
+					$htmlBody = str_replace('{{TypeofVisit}}', $typeOfVisit, $htmlBody);
+
+					$htmlBody = str_replace('{{Time}}', $inspectionTime, $htmlBody);
+
+					$data['response'] = $htmlBody;
+
+					// Prepare the email data
+
+					$emailData = [
+						"message" => [
+							"recipients" => [
+								["email" => $user['email']],
+							],
+
+							"body" => ["html" => $htmlBody],
+							"subject" => "Property Visit Scheduled RentSmallsmall",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "Small Small Inspection",
+
+						],
+
+					];
+
+					// Send the email using the Unione API
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailData,
+					]);
+				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+					$data['response'] = $e->getMessage();
+				}
+
+
 				$details = 'Success';
+
+
+				if ($responseEmail) {
+
+					$data['custname'] = $user['firstName'] . ' ' . $user['lastName'];
+
+					$data['custemail'] = $user['email'];
+
+					$data['custphone'] = $user['phone'];
+
+					$data['leadchannel'] = $user['referral'];
+
+					$data['leadsource'] = $user['platform'];
+
+					$data['propertyName'] = $property['propertyTitle'];
+
+					$data['income'] = $user['income'];
+
+					$data['signup_date'] = date('d F Y', strtotime($user['regDate']));
+
+					$data['inspectionDate'] = date('d F Y H:i', strtotime($inspectionDate));
+
+					$data['propID'] = $propID;
+
+					try {
+						$response = $client->request('POST', 'template/get.json', array(
+							'headers' => $headers,
+							'json' => $requestCxBody,
+						));
+
+						$jsonResponse = $response->getBody()->getContents();
+
+						$responseData = json_decode($jsonResponse, true);
+
+						$htmlBody = $responseData['template']['body']['html'];
+
+						$subscriberName = $data['custname'];
+
+						$subscriberEmail = $data['custemail'];
+
+						$subscriberPhoneNumber = $data['custphone'];
+
+						$propertyName = $data['propertyName'];
+
+						$dateOfVisit = $data['inspectionDate'];
+
+						$typeOfVisit = $data['inspectionType'];
+
+						$inspectionDateandTime = $data['signup_date'];
+
+						// Replace the placeholder in the HTML body with the username
+
+						$htmlBody = str_replace('{{SubscriberName}}', $subscriberName, $htmlBody);
+
+						$htmlBody = str_replace('{{SubscriberEmail}}', $subscriberEmail, $htmlBody);
+
+						$htmlBody = str_replace('{{SubscriberPhoneNumber}}', $subscriberPhoneNumber, $htmlBody);
+
+						$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+
+						$htmlBody = str_replace('{{PropertyAddress}}', $propertyAddress, $htmlBody);
+
+						$htmlBody = str_replace('{{DateofVisit}}', $inspectionTime, $htmlBody);
+
+						$htmlBody = str_replace('{{InspectionDateandTime}}', $inspectionDateandTime, $htmlBody);
+
+						$htmlBody = str_replace('{{TypeofVisit}}', $typeOfVisit, $htmlBody);
+
+						$data['response'] = $htmlBody;
+
+						// Prepare the email data
+						$emailCxData = [
+							"message" => [
+								"recipients" => [
+									["email" => 'customerexperience@smallsmall.com'],
+								],
+								"body" => ["html" => $htmlBody],
+								"subject" => "New Inspection Request!",
+								"from_email" => "donotreply@smallsmall.com",
+								"from_name" => "Small Small Inspection",
+							],
+						];
+
+						// Send the email using the Unione API
+						$responseEmail = $client->request('POST', 'email/send.json', [
+							'headers' => $headers,
+							'json' => $emailCxData,
+						]);
+					} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+						$data['response'] = $e->getMessage();
+					}
+				}
 			} else {
 
 				$details = 'Failed to book inspection';
@@ -681,6 +874,8 @@ class App extends CI_Controller
 
 	public function verification()
 	{
+
+		require 'vendor/autoload.php'; // For Unione template authoload
 
 		$result = FALSE;
 
@@ -786,12 +981,38 @@ class App extends CI_Controller
 
 		//$ref = 'rss_'.md5(rand(1000000, 9999999999));
 
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "05d45b98-11ae-11ee-9bc2-0a93cf78caa3"
+		];
+
+		$requestBodyForTeam = [
+			"id" => "f368198a-11c2-11ee-8731-76c23e12fa03"
+		];
+
+		// end Unione Template
+
 		$result = "error";
 
 		$price = 0;
 
 		// Directly use userID instead of decoded token due to AWS header authorization issues
 		$userID = $json_data->userID;
+
+		$user = $this->rss_model->get_user($userID);
+
+		$email = $user['email'];
 
 		$fname = $json_data->firstName;
 
@@ -805,126 +1026,234 @@ class App extends CI_Controller
 
 		// 	$token = explode(' ', $headers['Authorization']);
 
-			try {
+		try {
 
-				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+			// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				// if ($decoded) {
-					// Insert the inspection details
+			// if ($decoded) {
+			// Insert the inspection details
 
-				// 	$userID = $decoded->user->userID;
+			// 	$userID = $decoded->user->userID;
 
-				// 	$fname = $decoded->user->firstName;
+			// 	$fname = $decoded->user->firstName;
 
-				// 	$lname = $decoded->user->lastName;
+			// 	$lname = $decoded->user->lastName;
 
-				// 	$phone = $decoded->user->phone;
+			// 	$phone = $decoded->user->phone;
 
-				// 	$email = $decoded->user->email;
+			// 	$email = $decoded->user->email;
 
-					$ref = 'rss_' . md5(rand(1000000, 9999999999));
+			$ref = 'rss_' . md5(rand(1000000, 9999999999));
 
-					if (!is_null($userID)) {
+			if (!is_null($userID)) {
 
-						$user_agent = '';
+				$user_agent = '';
 
-						$bank_statement_upload = $this->base64_to_file($bankStatement, 'verification', $userID);
+				$bank_statement_upload = $this->base64_to_file($bankStatement, 'verification', $userID);
 
-						$id_upload = $this->base64_to_file($iDImage, 'verification', $userID);
+				$id_upload = $this->base64_to_file($iDImage, 'verification', $userID);
 
-						$ver_result = $this->rss_model->insertVerification($fname, $lname, $email, $phone, $grossMonthlyIncome, $dob, $gender, $maritalStatus, $stateOfResidence, $cityOfResidence,  $linkedinUrl, $countryOfResidence, $IDNum, $presentAddress, $countryOfResidence, $stateOfResidence, $cityOfResidence, $timeAtAddress, $currentHousingStatus, $previousEviction, $doYouHavePet, $doYouHaveACriticalIllness, $presentLandlordName, $landlord_email, $landlord_phone, $landlordAddress, $reasonForLeaving, $employmentStatus, $jobTitle, $company, $companyHRName, $companyHREmail, $companyHRPhone, $guarantorName, $guarantorEmail, $guarantorPhone, $guarantorJobTitle, $guarantorAddress, $bank_statement_upload, $id_upload, $userID, $company, 'Mobile App', $user_agent, $propertyID);
+				$ver_result = $this->rss_model->insertVerification($fname, $lname, $email, $phone, $grossMonthlyIncome, $dob, $gender, $maritalStatus, $stateOfResidence, $cityOfResidence,  $linkedinUrl, $countryOfResidence, $IDNum, $presentAddress, $countryOfResidence, $stateOfResidence, $cityOfResidence, $timeAtAddress, $currentHousingStatus, $previousEviction, $doYouHavePet, $doYouHaveACriticalIllness, $presentLandlordName, $landlord_email, $landlord_phone, $landlordAddress, $reasonForLeaving, $employmentStatus, $jobTitle, $company, $companyHRName, $companyHREmail, $companyHRPhone, $guarantorName, $guarantorEmail, $guarantorPhone, $guarantorJobTitle, $guarantorAddress, $bank_statement_upload, $id_upload, $userID, $company, 'Mobile App', $user_agent, $propertyID);
 
-						//Lock the property for 3 days
-						$today = date('Y-m-d');
+				//Lock the property for 3 days
+				$today = date('Y-m-d');
 
-						$locked_down = date('Y-m-d', strtotime($today . ' +1 day'));
+				$locked_down = date('Y-m-d', strtotime($today . ' +1 day'));
 
-						$this->rss_model->setAvailability($locked_down, $propertyID);
+				$this->rss_model->setAvailability($locked_down, $propertyID);
 
-						//Get property details
-						$property = $this->rss_model->get_property($propertyID);
+				//Get property details
+				$property = $this->rss_model->get_property($propertyID);
 
-						$total_cost = ($property['price'] + $property['serviceCharge']) + ($property['securityDeposit'] * $property['securityDepositTerm']);
+				$propertyTitle = $property['propertyTitle'];
 
-						//Insert Booking
-						$booking_id = $this->random_strings(5);
+				$total_cost = ($property['price'] + $property['serviceCharge']) + ($property['securityDeposit'] * $property['securityDepositTerm']);
 
-						$booked = $this->app_model->insertBooking($booking_id, $ver_result, $userID, $propertyID, $payment_plan, $duration, $booked_as, $move_in_date, $paymentMethod, $total_cost, $ref);
+				//Insert Booking
+				$booking_id = $this->random_strings(5);
+
+				$booked = $this->app_model->insertBooking($booking_id, $ver_result, $userID, $propertyID, $payment_plan, $duration, $booked_as, $move_in_date, $paymentMethod, $total_cost, $ref);
 
 
-						if ($ver_result && $booked) {
+				if ($ver_result && $booked) {
 
-							$dets['ver_title'] = "Verification Notification";
+					//Unione Template
 
-							$dets['ver_note'] = "There is a new verification request profile. ";
+					try {
+						$response = $client->request('POST', 'template/get.json', array(
+							'headers' => $headers,
+							'json' => $requestBody,
+						));
 
-							$this->email->from('donotreply@smallsmall.com', 'SmallSmall Alert');
+						$jsonResponse = $response->getBody()->getContents();
 
-							$this->email->to('verification@smallsmall.com');
+						$responseData = json_decode($jsonResponse, true);
 
-							$this->email->bcc('pidah.t@smallsmall.com');
+						$htmlBody = $responseData['template']['body']['html'];
 
-							$this->email->subject("Verification Alert!");
+						$userName = $fname;
 
-							$this->email->set_mailtype("html");
+						// Replace the placeholder in the HTML body with the username
 
-							$message = $this->load->view('email/header.php', $dets, TRUE);
+						$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
 
-							$message .= $this->load->view('email/verification-alert-email.php', $dets, TRUE);
+						$data['response'] = $htmlBody;
 
-							$message .= $this->load->view('email/footer.php', $dets, TRUE);
+						// Prepare the email data
+						$emailData = [
+							"message" => [
+								"recipients" => [
+									["email" => $email],
+								],
+								"body" => ["html" => $htmlBody],
 
-							$this->email->message($message);
+								"subject" => "Verification Submitted notification",
 
-							$emailRes = $this->email->send();
+								"from_email" => "donotreply@smallsmall.com",
 
-							if ($emailRes) {
-								//This is where you send an email to customer for verification process starting
-								$dets['name'] = $fname;
+								"from_name" => "SmallSmall Alert",
+							],
+						];
 
-								$this->email->from('donotreply@smallsmall.com', 'SmallSmall');
+						// Send the email using the Unione API
+						$responseEmail = $client->request('POST', 'email/send.json', [
+							'headers' => $headers,
 
-								$this->email->to($email);
-
-								$this->email->subject("Verification Submitted");
-
-								$this->email->set_mailtype("html");
-
-								$message = $this->load->view('email/header.php', $dets, TRUE);
-
-								$message .= $this->load->view('email/verificationemail.php', $dets, TRUE);
-
-								$message .= $this->load->view('email/footer.php', $dets, TRUE);
-
-								$this->email->message($message);
-
-								$emailRes = $this->email->send();
-
-								$result = TRUE;
-
-								$details = "Success";
-							}
-						} else {
-
-							$result = TRUE;
-
-							$details = "Error entering verification details";
-						}
-					} else {
-
-						$details = "User ID is null";
-
+							'json' => $emailData,
+						]);
+					} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+						$data['response'] = $e->getMessage();
 					}
-				// } else {
 
-				// 	$details = "Invalid token";
-				// }
+					if ($responseEmail) {
 
-			} catch (Exception $ex) {
+						try {
+							$response = $client->request('POST', 'template/get.json', array(
+								'headers' => $headers,
 
-				$details = "Exception error caught";
+								'json' => $requestBodyForTeam,
+							));
 
+							$jsonResponse = $response->getBody()->getContents();
+
+							$responseData = json_decode($jsonResponse, true);
+
+							$htmlBody = $responseData['template']['body']['html'];
+
+							$userName = $fname;
+
+							$userEmail = $email;
+
+							// Replace the placeholder in the HTML body with the username
+
+							$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+
+							$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+
+							$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
+
+							$data['response'] = $htmlBody;
+
+							// Prepare the email data
+							$emailDataTeam = [
+								"message" => [
+									"recipients" => [
+
+										["email" => 'verification@smallsmall.com'],
+
+										["email" => 'pidah.t@smallsmall.com'],
+
+									],
+									"body" => ["html" => $htmlBody],
+
+									"subject" => "New Verification alert",
+
+									"from_email" => "donotreply@smallsmall.com",
+
+									"from_name" => "SmallSmall Alert",
+								],
+							];
+
+							// Send the email using the Unione API
+							$responseEmail = $client->request('POST', 'email/send.json', [
+								'headers' => $headers,
+
+								'json' => $emailDataTeam,
+							]);
+						} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+							$data['response'] = $e->getMessage();
+						}
+
+						// $dets['ver_title'] = "Verification Notification";
+
+						// $dets['ver_note'] = "There is a new verification request profile. ";
+
+						// $this->email->from('donotreply@smallsmall.com', 'SmallSmall Alert');
+
+						// $this->email->to('verification@smallsmall.com');
+
+						// $this->email->bcc('pidah.t@smallsmall.com');
+
+						// $this->email->subject("Verification Alert!");
+
+						// $this->email->set_mailtype("html");
+
+						// $message = $this->load->view('email/header.php', $dets, TRUE);
+
+						// $message .= $this->load->view('email/verification-alert-email.php', $dets, TRUE);
+
+						// $message .= $this->load->view('email/footer.php', $dets, TRUE);
+
+						// $this->email->message($message);
+
+						// $emailRes = $this->email->send();
+
+						// if ($emailRes) {
+						// 	//This is where you send an email to customer for verification process starting
+						// 	$dets['name'] = $fname;
+
+						// 	$this->email->from('donotreply@smallsmall.com', 'SmallSmall');
+
+						// 	$this->email->to($email);
+
+						// 	$this->email->subject("Verification Submitted");
+
+						// 	$this->email->set_mailtype("html");
+
+						// 	$message = $this->load->view('email/header.php', $dets, TRUE);
+
+						// 	$message .= $this->load->view('email/verificationemail.php', $dets, TRUE);
+
+						// 	$message .= $this->load->view('email/footer.php', $dets, TRUE);
+
+						// 	$this->email->message($message);
+
+						// 	$emailRes = $this->email->send();
+
+						$result = TRUE;
+
+						$details = "Success";
+					}
+				} else {
+
+					$result = TRUE;
+
+					$details = "Error entering verification details";
+				}
+			} else {
+
+				$details = "User ID is null";
 			}
+			// } else {
+
+			// 	$details = "Invalid token";
+			// }
+
+		} catch (Exception $ex) {
+
+			$details = "Exception error caught";
+		}
 		// } else {
 
 		// 	$details = "No authorization code";
@@ -1118,55 +1447,52 @@ class App extends CI_Controller
 	// }
 
 	public function send_rating()
-{
-    $result = FALSE;
+	{
+		$result = FALSE;
 
-    $details = '';
+		$details = '';
 
-    $data = array();
+		$data = array();
 
-    $key = $this->getKey();
+		$key = $this->getKey();
 
-    $json = file_get_contents('php://input');
+		$json = file_get_contents('php://input');
 
-    $json_data = json_decode($json);
+		$json_data = json_decode($json);
 
-    $grade = $json_data->grading;
+		$grade = $json_data->grading;
 
-    $satisfaction = $json_data->satisfaction;
+		$satisfaction = $json_data->satisfaction;
 
-    $ratingNote = $json_data->ratingNote;
+		$ratingNote = $json_data->ratingNote;
 
-    $propertyID = $json_data->propertyID;
+		$propertyID = $json_data->propertyID;
 
-    try {
-        // Insert the inspection details
-        // Directly use userID due to AWS header Authorization issues.
-        $userID = $json_data->userID;
+		try {
+			// Insert the inspection details
+			// Directly use userID due to AWS header Authorization issues.
+			$userID = $json_data->userID;
 
-        $response = $this->rss_model->sendRating($grade, $satisfaction, $userID, $propertyID, $ratingNote);
+			$response = $this->rss_model->sendRating($grade, $satisfaction, $userID, $propertyID, $ratingNote);
 
-        if ($response) {
+			if ($response) {
 
-            $result = TRUE;
+				$result = TRUE;
 
-            $details = "Success";
+				$details = "Success";
+			} else {
 
-        } else {
+				$result = TRUE;
 
-            $result = TRUE;
+				$details = "Error inserting data";
+			}
+		} catch (Exception $ex) {
 
-            $details = "Error inserting data";
-        }
+			$details = "Exception error caught";
+		}
 
-    } catch (Exception $ex) {
-
-        $details = "Exception error caught";
-
-    }
-
-    echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
-}
+		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
+	}
 
 
 	public function personal_profile()
@@ -1875,7 +2201,6 @@ class App extends CI_Controller
 			$result = TRUE;
 
 			$details = 'Success';
-
 		} else {
 
 			$result = TRUE;
@@ -2150,110 +2475,102 @@ class App extends CI_Controller
 
 		// 	$token = explode(' ', $headers['Authorization']);
 
-			try {
+		try {
 
-				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+			// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				// if ($decoded) {
+			// if ($decoded) {
 
-				// 	//Insert the inspection details
-				// 	$userID = $decoded->user->userID;
+			// 	//Insert the inspection details
+			// 	$userID = $decoded->user->userID;
 
-					$response_det = $this->rss_model->update_bvn($userID, $bvn);
+			$response_det = $this->rss_model->update_bvn($userID, $bvn);
 
 
-					if ($response_det) {
+			if ($response_det) {
 
-						//Connect to Lenco API to create virtual account
+				//Connect to Lenco API to create virtual account
 
-						$data = '{
+				$data = '{
 	                    "accountName" : "' . $accountName . '", 
 	                    "bvn" : "' . $bvn . '",
 	                    "isStatic" : ' . true . '
 	                    }';
 
-						$curl = curl_init();
+				$curl = curl_init();
 
-						curl_setopt_array($curl, array(
+				curl_setopt_array($curl, array(
 
-							CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
+					CURLOPT_URL => "https://api.lenco.ng/access/v1/virtual-accounts",
 
-							CURLOPT_RETURNTRANSFER => true,
+					CURLOPT_RETURNTRANSFER => true,
 
-							CURLOPT_POSTFIELDS => $data,
+					CURLOPT_POSTFIELDS => $data,
 
-							CURLOPT_HTTPHEADER => [
-								"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
+					CURLOPT_HTTPHEADER => [
+						"Authorization: Bearer 1d0315ecb66cb5153339cad3019098535e565f2409aaf25b9c87eb66a1c9b9d7",
 
-								"content-type: application/json"
-							]
-						));
+						"content-type: application/json"
+					]
+				));
 
-						$response = curl_exec($curl);
+				$response = curl_exec($curl);
 
-						$response = json_decode($response, true);
+				$response = json_decode($response, true);
 
-						if ($response['status']) {
+				if ($response['status']) {
 
-							$accountID = $response['data']['id'];
+					$accountID = $response['data']['id'];
 
-							$accountReference = $response['data']['accountReference'];
+					$accountReference = $response['data']['accountReference'];
 
-							$accountName = $response['data']['bankAccount']['accountName'];
+					$accountName = $response['data']['bankAccount']['accountName'];
 
-							$accountNumber = $response['data']['bankAccount']['accountNumber'];
+					$accountNumber = $response['data']['bankAccount']['accountNumber'];
 
-							$bankName = $response['data']['bankAccount']['bank']['name'];
+					$bankName = $response['data']['bankAccount']['bank']['name'];
 
-							$bankCode = $response['data']['bankAccount']['bank']['code'];
+					$bankCode = $response['data']['bankAccount']['bank']['code'];
 
-							$account_check = $this->loan_model->check_for_account($userID);
+					$account_check = $this->loan_model->check_for_account($userID);
 
-							if (!$account_check) {
+					if (!$account_check) {
 
-								$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'App');
+						$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'App');
 
-								if ($result) {
+						if ($result) {
 
-									$result = TRUE;
+							$result = TRUE;
 
-									$details = "Success";
-
-								} else {
-
-									$details = "Could not store data";
-
-								}
-
-							} else {
-
-								$details = "Account exists already";
-
-							}
-
+							$details = "Success";
 						} else {
 
-							$details = "Error creating virtual account";
+							$details = "Could not store data";
 						}
-
 					} else {
 
-						$result = TRUE;
-
-						$details = "Could not update user table with BVN";
-
+						$details = "Account exists already";
 					}
+				} else {
 
-				// } else {
+					$details = "Error creating virtual account";
+				}
+			} else {
 
-				// 	$details = "Invalid token";
-				// }
+				$result = TRUE;
 
-			} catch (Exception $ex) {
-
-				$details = "Exception error caught";
-
+				$details = "Could not update user table with BVN";
 			}
+
+			// } else {
+
+			// 	$details = "Invalid token";
+			// }
+
+		} catch (Exception $ex) {
+
+			$details = "Exception error caught";
+		}
 		// } else {
 
 		// 	$details = "No authorization code";
@@ -2562,151 +2879,149 @@ class App extends CI_Controller
 
 		// if (@$headers['Authorization']) {
 
-			// $token = explode(' ', $headers['Authorization']);
+		// $token = explode(' ', $headers['Authorization']);
 
 		// Directly use userID instead of token due to AWS header Authorization issues not yet fixed
 		$userID = $json_data->userID;
 
 		$lname = $json_data->lastName;
 
-			try {
+		try {
 
-				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+			// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				// if ($decoded) {
-				// 	//Insert the inspection details
+			// if ($decoded) {
+			// 	//Insert the inspection details
 
-				// 	$userID = $decoded->user->userID;
+			// 	$userID = $decoded->user->userID;
 
-				// 	$fname = $decoded->user->firstName;
+			// 	$fname = $decoded->user->firstName;
 
-				// 	$lname = $decoded->user->lastName;
+			// 	$lname = $decoded->user->lastName;
 
-				// 	$phone = $decoded->user->phone;
+			// 	$phone = $decoded->user->phone;
 
-				// 	$email = $decoded->user->email;
+			// 	$email = $decoded->user->email;
 
 
-					//$user = $this->app_model->get_user($userID);
-					if ($booking_det['payment_plan'] == 'Monthly') {
+			//$user = $this->app_model->get_user($userID);
+			if ($booking_det['payment_plan'] == 'Monthly') {
 
-						$pplan = 1;
-					} elseif ($booking_det['payment_plan'] == 'Quarterly') {
+				$pplan = 1;
+			} elseif ($booking_det['payment_plan'] == 'Quarterly') {
 
-						$pplan = 3;
-					} elseif ($booking_det['payment_plan'] == 'Bi-annually') {
+				$pplan = 3;
+			} elseif ($booking_det['payment_plan'] == 'Bi-annually') {
 
-						$pplan = 6;
-					} elseif ($booking_det['payment_plan'] == 'Annually') {
+				$pplan = 6;
+			} elseif ($booking_det['payment_plan'] == 'Annually') {
 
-						$pplan = 12;
-					}
-
-					$expiry = $this->endCycle($startDate, $pplan); // output: 2014-07-02
-
-					$pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src=' . base_url() . '"assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />' . base_url() . '<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> ' . $bookingID . '<br /><b>Transaction ID:</b> ' . $reference_id . '<br />Invoice date: ' . date("d/m/Y") . '<br />Email: ' . $email . '<br />Phone Number: ' . $phone . '</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />' . $fname . ' ' . $lname . '<!---<br />' . $booking_det['address'] . '<br />' . $booking_det['city'] . ',<br /> Lagos,<br />--->Nigeria.<br />' . $phone . '</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>' . $booking_det['propertyTitle'] . '</b><div style="font-family:helvetica;font-size:12px;color:#333333">' . $booking_det['address'] . ', ' . $booking_det['city'] . '</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $pplan . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($pplan * $booking_det['price']) . '.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $booking_det['securityDepositTerm'] . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($booking_det['securityDepositTerm'] * $booking_det['securityDeposit']) . '.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($pplan * $booking_det['price']) . '.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount) . '.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
-
-					$data['name'] = $lname;
-
-					$data['propertyName'] = $booking_det['propertyTitle'];
-
-					$data['prop_id'] = $booking_det['property_id'];
-
-					if (!is_dir('assets/pdf/tenant/' . $bookingID)) {
-
-						mkdir('./assets/pdf/tenant/' . $bookingID, 0777, TRUE);
-					}
-
-					if ($action == 'renewal') {
-
-						//Update payment table
-
-						$transRef = $json_data->transactionRef;
-
-						$transRes = $this->app_model->updateTransactionDets($bookingID, $transRef, $status, 'paystack', $expiry);
-
-					} else {
-
-						//Insert new transaction entry
-
-						$transRes = $this->app_model->insertTransactionDets($booking_det['verification_id'], $reference_id, $bookingID, $userID, $amount, $status, $type, 'paystack', $expiry);
-					}
-
-					if ($transRes) {
-
-						//Send a message with an invoice here and send one to customer experience too
-						//Set folder to save PDF to
-						$this->html2pdf->folder('./assets/pdf/tenant/' . $bookingID . '/');
-
-						//Set the filename to save/download as
-						$this->html2pdf->filename($bookingID . '_invoice.pdf');
-
-						//Set the paper defaults
-						$this->html2pdf->paper('a4', 'portrait');
-
-						//Load html view
-						$this->html2pdf->html($pdf_content);
-
-						//Create the PDF
-						$path = $this->html2pdf->create('save');
-
-						$this->email->from('no-reply@smallsmall.com', 'SmallSmall Technologies');
-
-						$this->email->to($email);
-
-						$this->email->cc('accounts@smallsmall.com');
-
-						$this->email->bcc('customerexperience@smallsmall.com');
-
-						$this->email->set_mailtype("html");
-
-						$this->email->subject("Successful payment!");
-
-						$message = $this->load->view('email/header.php', $data, TRUE);
-
-						$message .= $this->load->view('email/payment-confirmation-email.php', $data, TRUE);
-
-						$message .= $this->load->view('email/footer.php', $data, TRUE);
-
-						$this->email->message($message);
-
-						$result = TRUE;
-
-						if ($path) {
-
-							$this->email->attach($path);
-
-						} else {
-
-							$details = "Invoice not found.";
-
-							echo json_encode(array("result" => $result, "details" => $details, "data" => array()));
-
-							exit();
-						}
-
-						if (!$this->email->send()) {
-
-							$details = "Error sending email";
-
-							echo json_encode(array("result" => $result, "details" => $details, "data" => array()));
-
-							exit();
-						}
-
-						$details = "success";
-					} else {
-
-						$details = "Error inserting transaction";
-					}
-				// } else {
-
-				// 	$details = "Invalid token";
-				// }
-			} catch (Exception $ex) {
-
-				$details = "Exception error caught";
+				$pplan = 12;
 			}
+
+			$expiry = $this->endCycle($startDate, $pplan); // output: 2014-07-02
+
+			$pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src=' . base_url() . '"assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />' . base_url() . '<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> ' . $bookingID . '<br /><b>Transaction ID:</b> ' . $reference_id . '<br />Invoice date: ' . date("d/m/Y") . '<br />Email: ' . $email . '<br />Phone Number: ' . $phone . '</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />' . $fname . ' ' . $lname . '<!---<br />' . $booking_det['address'] . '<br />' . $booking_det['city'] . ',<br /> Lagos,<br />--->Nigeria.<br />' . $phone . '</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>' . $booking_det['propertyTitle'] . '</b><div style="font-family:helvetica;font-size:12px;color:#333333">' . $booking_det['address'] . ', ' . $booking_det['city'] . '</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $pplan . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($pplan * $booking_det['price']) . '.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $booking_det['securityDepositTerm'] . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($booking_det['securityDepositTerm'] * $booking_det['securityDeposit']) . '.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($pplan * $booking_det['price']) . '.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount) . '.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
+
+			$data['name'] = $lname;
+
+			$data['propertyName'] = $booking_det['propertyTitle'];
+
+			$data['prop_id'] = $booking_det['property_id'];
+
+			if (!is_dir('assets/pdf/tenant/' . $bookingID)) {
+
+				mkdir('./assets/pdf/tenant/' . $bookingID, 0777, TRUE);
+			}
+
+			if ($action == 'renewal') {
+
+				//Update payment table
+
+				$transRef = $json_data->transactionRef;
+
+				$transRes = $this->app_model->updateTransactionDets($bookingID, $transRef, $status, 'paystack', $expiry);
+			} else {
+
+				//Insert new transaction entry
+
+				$transRes = $this->app_model->insertTransactionDets($booking_det['verification_id'], $reference_id, $bookingID, $userID, $amount, $status, $type, 'paystack', $expiry);
+			}
+
+			if ($transRes) {
+
+				//Send a message with an invoice here and send one to customer experience too
+				//Set folder to save PDF to
+				$this->html2pdf->folder('./assets/pdf/tenant/' . $bookingID . '/');
+
+				//Set the filename to save/download as
+				$this->html2pdf->filename($bookingID . '_invoice.pdf');
+
+				//Set the paper defaults
+				$this->html2pdf->paper('a4', 'portrait');
+
+				//Load html view
+				$this->html2pdf->html($pdf_content);
+
+				//Create the PDF
+				$path = $this->html2pdf->create('save');
+
+				$this->email->from('no-reply@smallsmall.com', 'SmallSmall Technologies');
+
+				$this->email->to($email);
+
+				$this->email->cc('accounts@smallsmall.com');
+
+				$this->email->bcc('customerexperience@smallsmall.com');
+
+				$this->email->set_mailtype("html");
+
+				$this->email->subject("Successful payment!");
+
+				$message = $this->load->view('email/header.php', $data, TRUE);
+
+				$message .= $this->load->view('email/payment-confirmation-email.php', $data, TRUE);
+
+				$message .= $this->load->view('email/footer.php', $data, TRUE);
+
+				$this->email->message($message);
+
+				$result = TRUE;
+
+				if ($path) {
+
+					$this->email->attach($path);
+				} else {
+
+					$details = "Invoice not found.";
+
+					echo json_encode(array("result" => $result, "details" => $details, "data" => array()));
+
+					exit();
+				}
+
+				if (!$this->email->send()) {
+
+					$details = "Error sending email";
+
+					echo json_encode(array("result" => $result, "details" => $details, "data" => array()));
+
+					exit();
+				}
+
+				$details = "success";
+			} else {
+
+				$details = "Error inserting transaction";
+			}
+			// } else {
+
+			// 	$details = "Invalid token";
+			// }
+		} catch (Exception $ex) {
+
+			$details = "Exception error caught";
+		}
 		// } else {
 
 		// 	$details = "No authorization code";
@@ -2720,6 +3035,8 @@ class App extends CI_Controller
 
 	public function pay_subscription()
 	{
+
+		require 'vendor/autoload.php'; // For Unione template authoload
 
 		$result = FALSE;
 
@@ -2742,103 +3059,197 @@ class App extends CI_Controller
 		// Directly use userID intead of decoded token which is the right method but due to AWS Header Authorization error
 		$userID = $json_data->userID;
 
+		$user = $this->rss_model->get_user($userID);
+
+		// Unione Template Header
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+
+			"id" => "5d97bd2a-0f33-11ee-99b6-c60fd5919487"
+
+		];
+
+		// end Unione Template
+
+
 		// $headers = $this->input->request_headers();
 
 		// if (@$headers['Authorization']) {
 
 		// 	$token = explode(' ', $headers['Authorization']);
 
-			try {
+		try {
 
-				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+			// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				// if ($decoded) {
-					//Insert the inspection details
+			// if ($decoded) {
+			//Insert the inspection details
 
-					// $userID = $decoded->user->userID;
+			// $userID = $decoded->user->userID;
 
-					if (!is_null($userID)) {
+			if (!is_null($userID)) {
 
-						$details = $this->loan_model->get_account_details($userID);
+				$details = $this->loan_model->get_account_details($userID);
 
-						if (!empty($details)) {
+				if (!empty($details)) {
 
-							if ($details['account_balance'] < $amount) {
+					if ($details['account_balance'] < $amount) {
 
-								$details = "Insufficient balance";
+						$details = "Insufficient balance";
 
-								$insert_resp = $this->loan_model->insert_wallet_funding($userID, $amount, 'Debit', $ref_id, 'Declined', 'Subscription', '');
-							} else if ($details['account_balance'] >= $amount) {
+						$insert_resp = $this->loan_model->insert_wallet_funding($userID, $amount, 'Debit', $ref_id, 'Declined', 'Subscription', '');
+					} else if ($details['account_balance'] >= $amount) {
 
-								//Get booking details
-								$dets = $this->rss_model->get_renewal_det($bookingID);
+						//Get booking details
+						$dets = $this->rss_model->get_renewal_det($bookingID);
 
-								//Proceed to deduct from balance and update tables
-								$new_balance = $details['account_balance'] - $amount;
+						//Proceed to deduct from balance and update tables
+						$new_balance = $details['account_balance'] - $amount;
 
-								$update_response = $this->loan_model->update_balance($userID, $new_balance);
+						$update_response = $this->loan_model->update_balance($userID, $new_balance);
 
-								$insert_resp = $this->loan_model->insert_wallet_funding($userID, $amount, 'Debit', $ref_id, 'Successful', 'Subscription', '');
+						$insert_resp = $this->loan_model->insert_wallet_funding($userID, $amount, 'Debit', $ref_id, 'Successful', 'Subscription', '');
 
-								if ($update_response && $insert_resp) {
+						if ($update_response && $insert_resp) {
 
-									if ($this->rss_model->transUpdate($bookingID, $dets['reference_id'], $amount)) {
+							if ($this->rss_model->transUpdate($bookingID, $dets['reference_id'], $amount)) {
 
-										//Update booking table
-										$this->rss_model->bookingUpdate($bookingID, $dets['rent_expiration'], $dets['duration'], $dets['payment_plan'], $dets['propertyID']);
+								//Update booking table
+								$this->rss_model->bookingUpdate($bookingID, $dets['rent_expiration'], $dets['duration'], $dets['payment_plan'], $dets['propertyID']);
 
-										//Do transaction things
-										$res = $this->rss_model->getVerification($userID);
+								//Do transaction things
+								$res = $this->rss_model->getVerification($userID);
 
-										$sub_response = $this->loan_model->insertSubscriptionTransaction($res['verification_id'], $bookingID, $ref_id, $userID, $amount, 'Approved');
+								$sub_response = $this->loan_model->insertSubscriptionTransaction($res['verification_id'], $bookingID, $ref_id, $userID, $amount, 'Approved');
 
-										if ($sub_response) {
+								if ($sub_response) {
 
-											$result = TRUE;
+									$result = TRUE;
 
-											$details = "Subscription successfully paid!";
+									try {
+										$response = $client->request('POST', 'template/get.json', array(
+											'headers' => $headers,
+											'json' => $requestBody,
+										));
 
-										} else {
+										$jsonResponse = $response->getBody()->getContents();
 
-											$details = "Error inserting subscription details";
+										$responseData = json_decode($jsonResponse, true);
 
-										}
-									} else {
+										$htmlBody = $responseData['template']['body']['html'];
 
-										$details = "Error updating transaction";
+										// $email = $user['email'];
 
+										$email = $user['email'];
+
+										$userName = $user['firstName'] . ' ' . $user['lastName'];
+
+										$propertyTitle = $dets['propertyTitle'];
+
+										$amountPaid = $amount;
+
+										$paymentPlan = $dets['type'];
+
+										$paymentType = $dets['payment_type'];
+
+										$referenceID = $ref_id;
+
+										$paymentPlan = $dets['payment_paln'];
+
+										$duration = $dets['duration'];
+
+										// Replace the placeholder in the HTML body with the username
+
+										$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+
+										$htmlBody = str_replace('{{PropertyTitle}}', $propertyTitle, $htmlBody);
+
+										$htmlBody = str_replace('{{Duration}}', $duration, $htmlBody);
+
+										$htmlBody = str_replace('{{PaymentPlan}}', $paymentPlan, $htmlBody);
+
+										$htmlBody = str_replace('{{AmountPaid}}', $amountPaid, $htmlBody);
+
+										$htmlBody = str_replace('{{ModeOfPayment}}', $paymentType, $htmlBody);
+
+										$htmlBody = str_replace('{{TransactionID}}', $referenceID, $htmlBody);
+
+										$data['response'] = $htmlBody;
+
+										// Prepare the email data
+										$emailData = [
+											"message" => [
+												"recipients" => [
+													["email" => $email],
+
+													["email" => 'pidah.t@smallsmall.com'], // Just for testing
+
+													["email" => 'accounts@smallsmall.com'], // Just for testing
+												],
+												"body" => ["html" => $htmlBody],
+												"subject" => "RentSmallsmall Payment successful notification",
+												"from_email" => "donotreply@smallsmall.com",
+												"from_name" => "SmallSmall Payment Alert",
+											],
+										];
+
+										// Send the email using the Unione API
+										$responseEmail = $client->request('POST', 'email/send.json', [
+											'headers' => $headers,
+											'json' => $emailData,
+										]);
+
+										// echo 1;
+
+									} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+										$data['response'] = $e->getMessage();
 									}
+
+									$details = "Subscription successfully paid!";
 								} else {
 
-									$details = "Error updating and inserting details";
-
+									$details = "Error inserting subscription details";
 								}
-
 							} else {
 
-								$details = "Unknown issue";
-
+								$details = "Error updating transaction";
 							}
 						} else {
 
-							$details = "User has no vitual account registered";
-
+							$details = "Error updating and inserting details";
 						}
-
 					} else {
 
-						$details = "User ID is null";
-
+						$details = "Unknown issue";
 					}
-				// } else {
+				} else {
 
-				// 	$details = "Invalid token";
-				// }
+					$details = "User has no vitual account registered";
+				}
+			} else {
 
-			} catch (Exception $ex) {
-
-				$details = "Exception error caught";
+				$details = "User ID is null";
 			}
+			// } else {
+
+			// 	$details = "Invalid token";
+			// }
+
+		} catch (Exception $ex) {
+
+			$details = "Exception error caught";
+		}
 		// } else {
 
 		// 	$details = "No authorization code";
@@ -2848,6 +3259,7 @@ class App extends CI_Controller
 
 		exit();
 	}
+
 
 	public function wallet_update()
 	{
@@ -2879,45 +3291,44 @@ class App extends CI_Controller
 
 		// 	$token = explode(' ', $headers['Authorization']);
 
-			try {
+		try {
 
-				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+			// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				// if ($decoded) {
-					//Insert the inspection details
+			// if ($decoded) {
+			//Insert the inspection details
 
-					// $userID = $decoded->user->userID;
+			// $userID = $decoded->user->userID;
 
-					if (!is_null($userID)) {
+			if (!is_null($userID)) {
 
-						$details = $this->loan_model->get_account_details($userID);
+				$details = $this->loan_model->get_account_details($userID);
 
-						$account_balance = $details['account_balance'] + $amount;
+				$account_balance = $details['account_balance'] + $amount;
 
-						$response = $this->loan_model->update_balance($userID, $account_balance);
+				$response = $this->loan_model->update_balance($userID, $account_balance);
 
-						if ($response) {
+				if ($response) {
 
-							if ($this->loan_model->insert_wallet_funding($userID, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystackRef)) {
+					if ($this->loan_model->insert_wallet_funding($userID, $amount, 'Credit', $reference, 'Successful', 'Paystack', $paystackRef)) {
 
-								$details = "Payment succesful";
-							}
-						}
-
-					} else {
-
-						$details = "User ID is null";
+						$details = "Payment succesful";
 					}
+				}
+			} else {
 
-				// } else {
-
-				// 	$details = "Invalid token";
-				// }
-
-			} catch (Exception $ex) {
-
-				$details = "Exception error caught";
+				$details = "User ID is null";
 			}
+
+			// } else {
+
+			// 	$details = "Invalid token";
+			// }
+
+		} catch (Exception $ex) {
+
+			$details = "Exception error caught";
+		}
 		// } else {
 
 		// 	$details = "No authorization code";
@@ -2945,41 +3356,36 @@ class App extends CI_Controller
 
 		// 	$token = explode(' ', $headers['Authorization']);
 
-			try {
+		try {
 
-				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+			// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				if (isset($_GET['userID'])) {
+			if (isset($_GET['userID'])) {
 
-					$userID = $_GET['userID'];
+				$userID = $_GET['userID'];
 
-					$data = $this->app_model->get_wallet_transactions($userID);
+				$data = $this->app_model->get_wallet_transactions($userID);
 
-					if ($data) {
+				if ($data) {
 
-						$result = TRUE;
+					$result = TRUE;
 
-						$details = "Success";
-
-					} else {
-
-						$result = TRUE;
-
-						$details = "Error getting data";
-					}
-
+					$details = "Success";
 				} else {
 
-					$details = "Invalid query parameters. Missing userID";
+					$result = TRUE;
 
+					$details = "Error getting data";
 				}
+			} else {
 
-			} catch (Exception $ex) {
-				
-
-				$details = "Exception error caught";
-
+				$details = "Invalid query parameters. Missing userID";
 			}
+		} catch (Exception $ex) {
+
+
+			$details = "Exception error caught";
+		}
 
 		// } else {
 
@@ -3000,7 +3406,7 @@ class App extends CI_Controller
 
 		$key = $this->getKey();
 
-		$headers = $this->input->request_headers();
+		// $headers = $this->input->request_headers();
 
 		$json = file_get_contents('php://input');
 
@@ -3008,36 +3414,39 @@ class App extends CI_Controller
 
 		$bookingID = $json_data->bookingID;
 
-		if (@$headers['Authorization']) {
+		$userID = $json_data->userID;
 
-			$token = explode(' ', $headers['Authorization']);
+		// if (@$headers['Authorization']) {
 
-			try {
+		// 	$token = explode(' ', $headers['Authorization']);
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+		try {
 
-				if ($decoded) {
+			// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-					//Insert the inspection details
-					$userID = $decoded->user->userID;
+			// if ($decoded) {
 
-					$data = $this->app_model->count_booking_transactions($bookingID);
+			//Insert the inspection details
+			// $userID = $decoded->user->userID;
 
-					$result = TRUE;
+			$data = $this->app_model->count_booking_transactions($bookingID);
 
-					$details = $data;
-				} else {
+			$result = TRUE;
 
-					$details = "Invalid token";
-				}
-			} catch (Exception $ex) {
+			$details = $data;
 
-				$details = "Exception error caught";
-			}
-		} else {
+			// } else {
 
-			$details = "No authorization code";
+			// 	$details = "Invalid token";
+			// }
+		} catch (Exception $ex) {
+
+			$details = "Exception error caught";
 		}
+		// } else {
+
+		// 	$details = "No authorization code";
+		// }
 
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
@@ -3226,23 +3635,18 @@ class App extends CI_Controller
 			if ($res) {
 
 				$details = "Successful";
-
 			} else {
 
 				$details = "Failed";
-
 			}
-
 		} catch (Exception $ex) {
 
 			// If any exception occurs, catch it and set the error message in $details
 			$details = "Exception error caught: " . $ex->getMessage();
-
 		}
 
 		// Output the response as JSON
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
-
 	}
 
 
@@ -3399,44 +3803,42 @@ class App extends CI_Controller
 
 		// 	$token = explode(' ', $headers['Authorization']);
 
-			try {
+		try {
 
-				// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+			// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
 
-				// if ($decoded) {
-				// 	//Update user profile
+			// if ($decoded) {
+			// 	//Update user profile
 
-				// 	$userID = $decoded->user->userID;
+			// 	$userID = $decoded->user->userID;
 
-					if (!is_null($userID)) {
+			if (!is_null($userID)) {
 
-						$result = $this->app_model->updateProfile($userID, $firstname, $lastname, $phone);
+				$result = $this->app_model->updateProfile($userID, $firstname, $lastname, $phone);
 
-						if ($result) {
+				if ($result) {
 
-							$result = TRUE;
+					$result = TRUE;
 
-							$details = 'Success';
-						}
+					$details = 'Success';
+				}
+			} else {
 
-					} else {
+				$result = TRUE;
 
-						$result = TRUE;
-
-						$details = "User ID is null";
-					}
-
-				// } else {
-
-				// 	$result = TRUE;
-
-				// 	$details = "Invalid token";
-				// }
-			} catch (Exception $ex) {
-
-				$details = "Exception error caught";
-
+				$details = "User ID is null";
 			}
+
+			// } else {
+
+			// 	$result = TRUE;
+
+			// 	$details = "Invalid token";
+			// }
+		} catch (Exception $ex) {
+
+			$details = "Exception error caught";
+		}
 		// } else {
 
 		// 	$details = "No authorization code";
