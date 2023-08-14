@@ -63,7 +63,7 @@ class Landlord_model extends CI_Model
 
         $query = $this->db->get();
 
-        return $query->row_array();
+        return $query;
     }
 
     public function get_repairs($propId)

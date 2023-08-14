@@ -457,7 +457,7 @@
               </div>
               <h3 class="card-title">
               <?php  
-              // $num = 0;
+              $num = 0;
               
               // foreach($proptys as $propty => $value)
               // {
