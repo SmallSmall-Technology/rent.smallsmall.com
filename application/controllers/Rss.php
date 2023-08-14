@@ -49,7 +49,7 @@ class Rss extends CI_Controller
 		parent::__construct();
 
 		//aws s3 integration
-		$this->load->library('aws_s3');
+		// $this->load->library('aws_s3');
 	}
 
 	public function login_form()
@@ -3052,100 +3052,174 @@ class Rss extends CI_Controller
 	// 	}
 	// }
 
-	public function uploadIdentification($folder)
-    {
-        $filename = '';
 
-        if (!$folder) {
+public function uploadIdentification($folder)
+{
+		require 'vendor/autoload.php';
 
-            $folder = md5(date("Ymd His"));
+    // Step 1: Initialize the variables
+    $filename = '';
 
-        }
+    // Step 2: Generate folder name if not provided
+    if (!$folder) {
 
-        sleep(1);
+        $folder = md5(date("Ymd His"));
 
-        if (!is_dir('./uploads/verification/' . $folder)) {
+    }
 
-            mkdir('./uploads/verification/' . $folder, 0777, TRUE);
+    // Step 3: Wait for 1 second (sleep)
+    sleep(1);
 
-        }
+    // Step 4: Create directory if it doesn't exist
 
-        if ($_FILES["files"]["name"] != '') {
-            $output = '';
+    if (!is_dir('./uploads/verification/' . $folder)) {
 
-            $config["upload_path"] = './uploads/verification/' . $folder;
-            $config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
-            $config['max_size'] = '5000';
-            $config['encrypt_name'] = TRUE;
+        mkdir('./uploads/verification/' . $folder, 0777, TRUE);
 
-            $this->load->library('upload', $config);
+    }
 
-            $this->upload->initialize($config);
+    // Step 5: Check if files were uploaded
+    if ($_FILES["files"]["name"] != '') {
 
-            if (is_array($_FILES["files"]["name"])) {
-                for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
-                    $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
-                    $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
-                    $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
-                    $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
-                    $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+        $output = '';
 
-                    if ($this->upload->do_upload('file')) {
-                        $data = $this->upload->data();
-                        $output = "success";
-                        $filename = $data["file_name"];
+        // Step 6: Configure file upload settings
+        $config["upload_path"] = './uploads/verification/' . $folder;
 
-                        // Handle the file upload to AWS S3
-                        $awsFolder = 'verification/' . $folder . '/';
-                        $awsFilePath = $awsFolder . $data["file_name"];
+        $config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
 
-                        if ($this->aws_s3->uploadFile($data["full_path"], $awsFilePath)) {
+        $config['max_size'] = '5000';
 
-							$output = "success";
-							$filename = $data["file_name"];
+        $config['encrypt_name'] = TRUE;
 
-                            // The file was uploaded to AWS S3 successfully
-                            // Perform any other necessary actions here
-                        } else {
-                            // Failed to upload the file to AWS S3
-                            // Handle the error
+        // Step 7: Load and initialize the upload library
+        $this->load->library('upload', $config);
 
-							$output = "success";
-							$filename = $data["file_name"];
-							
-                        }
-                    }
-                }
-            } else {
-                $_FILES["file"]["name"] = $_FILES["files"]["name"];
-                $_FILES["file"]["type"] = $_FILES["files"]["type"];
-                $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
-                $_FILES["file"]["error"] = $_FILES["files"]["error"];
-                $_FILES["file"]["size"] = $_FILES["files"]["size"];
+        $this->upload->initialize($config);
 
+        // Step 8: Loop through uploaded files
+        if (is_array($_FILES["files"]["name"])) {
+
+            for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
+                $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+
+                $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+
+                $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+
+                $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+
+                $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+                // Step 9: Perform file upload
                 if ($this->upload->do_upload('file')) {
+
                     $data = $this->upload->data();
+
                     $output = "success";
+
                     $filename = $data["file_name"];
 
-                    // Handle the file upload to AWS S3
-                    $awsFolder = 'verification/' . $folder . '/';
-                    $awsFilePath = $awsFolder . $data["file_name"];
+                    // Step 10: Upload the file to AWS S3
+                    $bucket = 'dev-rss-uploads'; // My bucket name
 
-                    if ($this->aws_s3->uploadFile($data["full_path"], $awsFilePath)) {
-                        // The file was uploaded to AWS S3 successfully
-                        // Perform any other necessary actions here
-						
-                    } else {
-                        // Failed to upload the file to AWS S3
-                        // Handle the error
+                    $keyname = 'uploads/verification/' . $folder . '/' . $data["file_name"]; // My Object key for the file
+
+                    $s3 = new Aws\S3\S3Client([
+
+                        'version' => 'latest',
+
+                        'region'  => 'eu-west-1' // My region
+                    ]);
+
+                    try {
+                        // Step 11: Upload data to S3.
+                        $result = $s3->putObject([
+
+                            'Bucket' => $bucket,
+
+                            'Key'    => $keyname,
+
+                            'Body'   => file_get_contents($data["full_path"]),
+                        ]);
+
+                        // Step 12: Display S3 Object URL
+                        $objectUrl = $result['ObjectURL'];
+
+                        echo "File uploaded to S3: " . $objectUrl . PHP_EOL;
+
+                        // Step 13: Perform any additional actions with $objectUrl
+                    } catch (Aws\S3\Exception\S3Exception $e) {
+                        // Step 14: Handle S3 upload error
+
+                        echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+
                     }
                 }
             }
+        } else {
+            // ... (same logic as before for a single file)
 
-            echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
+			$_FILES["file"]["name"] = $_FILES["files"]["name"];
+
+			$_FILES["file"]["type"] = $_FILES["files"]["type"];
+
+			$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
+
+			$_FILES["file"]["error"] = $_FILES["files"]["error"];
+
+			$_FILES["file"]["size"] = $_FILES["files"]["size"];
+
+			// Step 9: Perform file upload
+			if ($this->upload->do_upload('file')) {
+
+				$data = $this->upload->data();
+
+				$output = "success";
+
+				$filename = $data["file_name"];
+
+				// Step 10: Upload the file to AWS S3
+				$bucket = 'dev-rss-uploads'; // My bucket name
+
+				$keyname = 'uploads/verification/' . $folder . '/' . $data["file_name"]; // My Object key for the file
+
+				$s3 = new Aws\S3\S3Client([
+
+					'version' => 'latest',
+
+					'region'  => 'eu-west-1' // My region
+				]);
+
+				try {
+					// Step 11: Upload data to S3.
+					$result = $s3->putObject([
+						'Bucket' => $bucket,
+
+						'Key'    => $keyname,
+
+						'Body'   => file_get_contents($data["full_path"]),
+					]);
+
+					// Step 12: Display S3 Object URL
+					$objectUrl = $result['ObjectURL'];
+
+					echo "File uploaded to S3: " . $objectUrl . PHP_EOL;
+
+					// Step 13: Perform any additional actions with $objectUrl
+				} catch (Aws\S3\Exception\S3Exception $e) {
+
+					// Step 14: Handle S3 upload error
+					echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+				}
+			}
         }
+
+        // Step 15: Output JSON response
+        echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
     }
+}
 
 
 	public function insertDetails()
@@ -7718,45 +7792,76 @@ value1&metadata[meta2]=value2*/
 {
     require 'vendor/autoload.php';
 
-    // Initialize the AWS SSM client
-    $ssmClient = new Aws\Ssm\SsmClient([
-        'version' => 'latest',
-        'region' => 'us-east-1', // Replace with your AWS region
-    ]);
+    // // Initialize the AWS SSM client
+    // $ssmClient = new Aws\Ssm\SsmClient([
+    //     'version' => 'latest',
+    //     'region' => 'us-east-1', // Replace with your AWS region
+    // ]);
 
-    try {
-        $result = $ssmClient->getParameters([
-            'Names' => ['ACCESS_KEY_ID', 'SECRET_ACCESS_KEY', 'ACCESS_REGION'],
-            'WithDecryption' => true,
-        ]);
+    // try {
+    //     $result = $ssmClient->getParameters([
+    //         'Names' => ['ACCESS_KEY_ID', 'SECRET_ACCESS_KEY', 'ACCESS_REGION'],
+    //         'WithDecryption' => true,
+    //     ]);
 
-        $awsAccessKeyId = $result['Parameters'][0]['Value'];
-        $awsSecretAccessKey = $result['Parameters'][1]['Value'];
-        $awsRegion = $result['Parameters'][2]['Value'];
+    //     $awsAccessKeyId = $result['Parameters'][0]['Value'];
+    //     $awsSecretAccessKey = $result['Parameters'][1]['Value'];
+    //     $awsRegion = $result['Parameters'][2]['Value'];
 
-        // Use the retrieved values to create the S3 client
-        $objAwsS3Client = new Aws\S3\S3Client([
-            'version' => 'latest',
-            'region' => $awsRegion,
-            'credentials' => [
-                'key' => $awsAccessKeyId,
-                'secret' => $awsSecretAccessKey,
-            ],
-        ]);
+    //     // Use the retrieved values to create the S3 client
+    //     $objAwsS3Client = new Aws\S3\S3Client([
+    //         'version' => 'latest',
+    //         'region' => $awsRegion,
+    //         'credentials' => [
+    //             'key' => $awsAccessKeyId,
+    //             'secret' => $awsSecretAccessKey,
+    //         ],
+    //     ]);
 
-        // List all S3 Buckets
-        $buckets = $objAwsS3Client->listBuckets();
+    //     // List all S3 Buckets
+    //     $buckets = $objAwsS3Client->listBuckets();
 
-        if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
-            foreach ($buckets['Buckets'] as $bucket) {
-                echo $bucket['Name'] . "\n";
-            }
-        } else {
-            echo "No buckets found.\n";
-        }
-    } catch (Aws\S3\Exception\S3Exception $e) {
-        echo "Error: " . $e->getMessage() . "\n";
-    }
+    //     if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
+    //         foreach ($buckets['Buckets'] as $bucket) {
+    //             echo $bucket['Name'] . "\n";
+    //         }
+    //     } else {
+    //         echo "No buckets found.\n";
+    //     }
+    // } catch (Aws\S3\Exception\S3Exception $e) {
+    //     echo "Error: " . $e->getMessage() . "\n";
+    // }
+
+	// require 'vendor/autoload.php';
+
+	// require APPPATH . 'vendor/autoload.php'; // Adjust the path if needed
+
+	// use Aws\S3\S3Client;
+	// use Aws\S3\Exception\S3Exception;
+	
+	$bucket = 'dev-rss-uploads';
+	$keyname = 'uploads/hello.txt';
+							
+	$s3 = new Aws\S3\S3Client([
+		'version' => 'latest',
+		'region'  => 'eu-west-1'
+	]);
+	
+	try {
+		// Upload data.
+		$result = $s3->putObject([
+			'Bucket' => $bucket,
+			'Key'    => $keyname,
+			'Body'   => 'Hello, Yusuf!',
+			// 'ACL'    => 'public-read'
+		]);
+	
+		// Print the URL to the object.
+		echo $result['ObjectURL'] . PHP_EOL;
+	} catch (Aws\S3\Exception\S3Exception $e) {
+		echo $e->getMessage() . PHP_EOL;
+	}
+	
 }
 
 }
