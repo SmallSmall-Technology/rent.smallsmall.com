@@ -938,3 +938,10 @@
 <!-- Pixel Code for https://www.benifit.app/ -->
 <script defer src="https://www.benifit.app/pixel/p3t5u90cv9dva8170ke1h465ponmbhel"></script>
 <!-- END Pixel Code -->
+
+<script>var nector_params = { customer_id: window.localStorage.getItem("nector-customer-id") }</script>
+<script async src="https://cdn.nector.io/nector-static/no-cache/reward-widget/mainloader.min.js"
+	data-op="referral"
+	data-api_key="ca91f88601fb02c3c90db6bbd20da779dbb3f5d07827db9df99e290617d7d63e"
+	data-platform="custom_website"
+></script>
