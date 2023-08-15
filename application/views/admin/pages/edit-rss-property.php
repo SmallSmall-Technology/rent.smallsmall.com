@@ -890,94 +890,70 @@
 
 								
 
+
 										<div class="card">
+    <div id="headingSix" class="card-header">
+        <button type="button" data-toggle="collapse" data-target="#collapseOne6" aria-expanded="false" aria-controls="collapseSix" class="text-left m-0 p-0 btn btn-link btn-block">
+            <h5 class="m-0 p-0">Images</h5>
+        </button>
+    </div>
+    <div data-parent="#accordion" id="collapseOne6" class="collapse">
+        <div class="card-body">
+            <div class="file_drag_area" id="file_drag_area">
+                Drop Files Here
+            </div>
+            <div id="uploaded_files">
+                <label>Click to upload file(s)</label>
+                <input type="file" name="userfile[]" id="multipleUplFiles" class="multipleUplFiles" multiple />
+            </div>
+            <div id="uploaded_images">
+                <?php
+                require 'vendor/autoload.php';
+                // use Aws\S3\S3Client;
+                // use Aws\S3\Exception\S3Exception;
 
-                                            <div id="headingSix" class="card-header">
+                $s3 = new Aws\S3\S3Client([
+                    'version' => 'latest',
+                    'region' => 'eu-west-1', // Replace with your region
+                ]);
 
-                                                <button type="button" data-toggle="collapse" data-target="#collapseOne6" aria-expanded="false" aria-controls="collapseSix" class="text-left m-0 p-0 btn btn-link btn-block"><h5 class="m-0 p-0">Images</h5></button>
+                $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+                $prefix = 'uploads/properties/' . $property['imageFolder'] . '/';
 
-                                            </div>
+                try {
+                    $objects = $s3->listObjects([
+                        'Bucket' => $bucket,
+                        'Prefix' => $prefix,
+                    ]);
 
-                                            <div data-parent="#accordion" id="collapseOne6" class="collapse">
+                    $count = 0;
+                    foreach ($objects['Contents'] as $object) {
+                        $fileKey = $object['Key'];
+                        $fileUrl = $s3->getObjectUrl($bucket, $fileKey);
 
-                                                <div class="card-body">
+                        if ($count <= ($content_size - 2)) {
+                            echo '<span class="imgCover removal-id-' . $count . '" id="id-' . $fileKey . '">';
+                            echo '<img src="' . $fileUrl . '" id="' . $fileKey . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />';
+                            if ($fileKey == $property['featuredImg']) {
+                                echo '<span class="featTT">Featured</span>';
+                            }
+                            echo '<div class="remove-img img-removal" id="img-properties-' . $fileKey . '-' . $count . '">remove <i class="fa fa-trash"></i></div>';
+                            echo '</span>';
+                        }
+                        $count++;
+                    }
+                } catch (Aws\S3\Exception\S3Exception $e) {
+                    echo 'S3 Error: ' . $e->getMessage() . PHP_EOL;
+                }
+                ?>
+            </div>
+            <input type="hidden" name="foldername" id="foldername" class="folderName" value="<?php echo $property['imageFolder'] ?>" />
+            <input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $property['featuredImg']; ?>" />
+            <input type="hidden" name="propID" id="propID" class="propID" value="<?php echo $property['propertyID']; ?>" />
+        </div>
+    </div>
+</div>
 
-													<div class="file_drag_area" id="file_drag_area">
-
-														Drop Files Here
-														
-													</div>
-
-													<div id="uploaded_files">
-														<label>Click to upload file(s)</label>
-														<input type="file" name='userfile[]' id="multipleUplFiles" class='multipleUplFiles' multiple />
-
-													</div>
-
-													<div id="uploaded_images"> 
-														<?php
-
-																$dir = './uploads/properties/'.$property['imageFolder'].'/';
-
-																if (file_exists($dir) == false) {
-
-																	echo 'Directory \'', $dir, '\' not found!';
-
-																} else {
-
-																	$dir_contents = scandir($dir);
- 
-																	$count = 0;
-																	
-																	$content_size = count($dir_contents);
-																	
-																	//print_r($dir_contents);
-
-																	foreach ($dir_contents as $file) {
-																		
-
-																		//$file_type = strtolower(end(explode('.', $file)));
-
-
-
-																		if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) { 
-
-																?>
-																			<span class="imgCover removal-id-<?php echo $count; ?>" id="id-<?php echo $file; ?>">
-																				<img src="<?php echo base_url().''.$dir.''.$file; ?>" id="<?php echo $file; ?>" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
-																				<?php if($file == $property['featuredImg']){ echo '<span class="featTT">Featured</span>';} ?>
-																				<div class="remove-img img-removal" id="img-properties-<?php echo $file; ?>-<?php echo $count; ?>">remove <i class="fa fa-trash"></i></div>
-																			</span>
-																			<!---<div class="thumb-item" id="<?php //echo base_url().''.$dir.''.$file; ?>">
-
-																				<img src="<?php //echo base_url().''.$dir.''.$file; ?>" />
-
-																			</div>--->
-
-															<?php			
-																			
-																		}
-																		$count++;
-
-																	}
-
-																}
-
-															?>
-													</div>
-
-
-													<input type="hidden" name="foldername" id="foldername" class="folderName" value="<?php echo $property['imageFolder'] ?>" />							
-
-													<input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $property['featuredImg']; ?>" />
-													
-													<input type="hidden" name="propID" id="propID" class="propID" value="<?php echo $property['propertyID']; ?>" />
-
-												</div>
-
-                                            </div>
-
-                                        </div>
 
                                     </div>
 
