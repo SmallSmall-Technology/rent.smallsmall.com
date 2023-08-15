@@ -971,7 +971,6 @@
 
 											</div>
 
-
 											<div id="uploaded_images">
 												<?php
 												require 'vendor/autoload.php';
