@@ -906,11 +906,10 @@
                 <label>Click to upload file(s)</label>
                 <input type="file" name="userfile[]" id="multipleUplFiles" class="multipleUplFiles" multiple />
             </div>
-            <div id="uploaded_images">
+
+			<div id="uploaded_images">
                 <?php
                 require 'vendor/autoload.php';
-                // use Aws\S3\S3Client;
-                // use Aws\S3\Exception\S3Exception;
 
                 $s3 = new Aws\S3\S3Client([
                     'version' => 'latest',
@@ -921,33 +920,30 @@
                 $prefix = 'uploads/properties/' . $property['imageFolder'] . '/';
 
                 try {
-                    $objects = $s3->listObjects([
+                    $objects = $s3->listObjectsV2([
                         'Bucket' => $bucket,
                         'Prefix' => $prefix,
                     ]);
 
-                    $count = 0;
                     foreach ($objects['Contents'] as $object) {
                         $fileKey = $object['Key'];
                         $fileUrl = $s3->getObjectUrl($bucket, $fileKey);
 
-                        if ($count <= ($content_size - 2)) {
-                            echo '<span class="imgCover removal-id-' . $count . '" id="id-' . $fileKey . '">';
-                            echo '<img src="' . $fileUrl . '" id="' . $fileKey . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />';
-                            if ($fileKey == $property['featuredImg']) {
-                                echo '<span class="featTT">Featured</span>';
-                            }
-                            echo '<div class="remove-img img-removal" id="img-properties-' . $fileKey . '-' . $count . '">remove <i class="fa fa-trash"></i></div>';
-                            echo '</span>';
+                        echo '<span class="imgCover" id="id-' . $fileKey . '">';
+                        echo '<img src="' . $fileUrl . '" id="' . $fileKey . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />';
+                        if ($fileKey == $property['featuredImg']) {
+                            echo '<span class="featTT">Featured</span>';
                         }
-                        $count++;
+                        echo '<div class="remove-img img-removal" id="img-properties-' . $fileKey . '">remove <i class="fa fa-trash"></i></div>';
+                        echo '</span>';
                     }
                 } catch (Aws\S3\Exception\S3Exception $e) {
                     echo 'S3 Error: ' . $e->getMessage() . PHP_EOL;
                 }
                 ?>
             </div>
-            <input type="hidden" name="foldername" id="foldername" class="folderName" value="<?php echo $property['imageFolder'] ?>" />
+
+			<input type="hidden" name="foldername" id="foldername" class="folderName" value="<?php echo $property['imageFolder'] ?>" />
             <input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $property['featuredImg']; ?>" />
             <input type="hidden" name="propID" id="propID" class="propID" value="<?php echo $property['propertyID']; ?>" />
         </div>
