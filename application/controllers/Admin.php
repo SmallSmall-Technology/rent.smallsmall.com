@@ -5417,7 +5417,7 @@ class Admin extends CI_Controller
 	
 			$bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-			$objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
+			$objectKey = 'uploads/' . $folder . '/' . $img_name;
 	
 			try {
 				$result = $s3->deleteObject([
@@ -5436,7 +5436,7 @@ class Admin extends CI_Controller
 			} catch (Aws\Exception\AwsException $e) {
 
 				echo $e->getMessage();
-				
+
 			}
 
 		} else {
