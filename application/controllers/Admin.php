@@ -5420,13 +5420,14 @@ class Admin extends CI_Controller
 	
 			$bucket = 'dev-rss-uploads'; // Bucket name
 
-			$objectKey = 'uploads/' . $folder . '/' . $img_name;
+			$objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
 	
 			try {
 				
 				$s3->deleteObject([
 
 					'Bucket' => $bucket,
+					
 					'Key'    => $objectKey,
 
 				]);
