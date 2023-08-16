@@ -136,6 +136,36 @@ $(window).on('load', function(){
 	     $('#paymentModal').addClass('show');
 	     
 	});
+
+
+	$("#live_search").keyup(function(){
+
+		var input = $(this).val();
+
+		if(input != "")
+		{
+			$.ajax({
+
+				url: baseUrl + "admin/proptySearch",
+				type: "POST",
+				data: {input:input},
+	
+				success: function (data) {
+					
+					$("#searchresult").html(data);
+					
+				}
+	
+			});
+		}
+
+		else
+		{
+			$("searchresult").css("display", "none");
+		}
+	});
+
+
 	$(document).on('click', '.lock-transaction', function(){
 	    
 	    $('.lock-transaction').html("Wait...");

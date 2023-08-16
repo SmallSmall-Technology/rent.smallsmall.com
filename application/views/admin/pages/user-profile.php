@@ -357,6 +357,12 @@
                                             
                                         <div class="col-md-4">
                                         <input type="hidden" name = "sub_id" value = "<?php echo @$ids ?>">
+
+                                        <div class="position-relative form-group">
+                                            <input type = "text" id ="live_search" placeholder="Type a property here..." />
+                                            <ul id="searchresult"></ul> 
+                                        </div>
+
                                         <div class="position-relative form-group"><label for="debt-note" class="">Property</label><select name="sub-propty" id="sub-propty" class="form-control verify-debt-txt">
                                         <?php foreach($proptys as $propty => $value){ ?>
                                             <option value="<?php echo $value['propertyID']; ?>"><?php echo $value['propertyTitle']; ?></option>
