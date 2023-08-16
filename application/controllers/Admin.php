@@ -5409,43 +5409,42 @@ class Admin extends CI_Controller
 		if ($folder && $img_name) {
 
 			require 'vendor/autoload.php';
-				
+	
 			$s3 = new Aws\S3\S3Client([
-
 				'version' => 'latest',
-
-				'region' => 'eu-west-1', // Region
-
+				'region' => 'eu-west-1', // Replace with your region
 			]);
 	
-			$bucket = 'dev-rss-uploads'; // Bucket name
+			$bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
 			$objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
 	
 			try {
-				
-				$s3->deleteObject([
-
+				$result = $s3->deleteObject([
 					'Bucket' => $bucket,
-					
 					'Key'    => $objectKey,
-
 				]);
 	
-				echo 1;
+				// Check if the deletion was successful
+				if ($result['DeleteMarker']) {
 
+					echo 1;
+
+				} else {
+					echo 'Image could not be deleted';
+				}
 			} catch (Aws\Exception\AwsException $e) {
 
 				echo $e->getMessage();
-
+				
 			}
+
 		} else {
 
-			echo $objectKey;
-
+			echo 'Missing folder or image name';
 		}
 	}
-	
+			
 
 	public function removeStayoneImg()
 	{
