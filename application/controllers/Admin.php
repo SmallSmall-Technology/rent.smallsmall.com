@@ -5419,7 +5419,7 @@ class Admin extends CI_Controller
 	
 			$bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-			$objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
+			$objectKey = 'uploads/' . $folder . '/' . $img_name;
 			
 			if (file_exists($objectKey)) {
 
@@ -5442,7 +5442,7 @@ class Admin extends CI_Controller
 			} else {
 
 				echo 'Image not found';
-				
+
 			}
 		} else {
 			echo 'Missing folder or image name';
