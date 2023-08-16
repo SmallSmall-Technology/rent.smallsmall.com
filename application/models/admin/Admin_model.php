@@ -1750,6 +1750,38 @@ class Admin_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function searchPropty($id){
+		
+		$this->db->select("*");
+		
+		$this->db->from("property_tbl");
+		
+		$this->db->like('propertyTitle', $id);
+		
+		$query = $this->db->get();
+		
+		return $query;
+		
+	}
+
+	public function delAgreement($bookingID){
+	    
+	    $this->db-> where('id', $bookingID);
+    	
+		if($this->db->delete('sub_agreement')){
+		    
+		   return 1; 
+		        
+		}
+
+		else{
+			
+			return 0;
+			
+		}
+		
+	}
+
 	public function getRows($propID)
 	{
 		$this->db->select('*');
