@@ -5400,51 +5400,44 @@ class Admin extends CI_Controller
 	// }
 
 	// Code modify to make ref to AWS S3 folders.
+
+
 	public function removeImg()
-	{
-		$folder = $this->input->post('folder');
+{
+    $folder = $this->input->post('folder');
+    $img_name = $this->input->post('imgName');
+    
+    if ($folder && $img_name) {
+        require 'vendor/autoload.php';
 
-		$img_name = $this->input->post('imgName');
-		
-		if ($folder && $img_name) {
+        $s3 = new Aws\S3\S3Client([
+            'version' => 'latest',
+            'region' => 'eu-west-1', // Replace with your region
+            
+        ]);
 
-			require 'vendor/autoload.php';
-	
-			$s3 = new Aws\S3\S3Client([
-				'version' => 'latest',
-				'region' => 'eu-west-1', // Replace with your region
-			]);
-	
-			$bucket = 'dev-rss-uploads'; // Replace with your bucket name
+        $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+        $objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
+        
+        try {
+            $result = $s3->deleteObject([
+                'Bucket' => $bucket,
+                'Key'    => $objectKey,
+            ]);
 
-			$objectKey = 'uploads/' . $folder . '/' . $img_name;
-	
-			try {
-				$result = $s3->deleteObject([
-					'Bucket' => $bucket,
-					'Key'    => $objectKey,
-				]);
-	
-				// Check if the deletion was successful
-				if ($result['DeleteMarker']) {
-
-					echo 1;
-
-				} else {
-					echo 'Image could not be deleted';
-				}
-			} catch (Aws\Exception\AwsException $e) {
-
-				echo $e->getMessage();
-
-			}
-
-		} else {
-
-			echo 'Missing folder or image name';
-		}
-	}
-			
+            // Check if the deletion was successful
+            if ($result['@metadata']['statusCode'] == 204) {
+                echo 1;
+            } else {
+                echo 'Image could not be deleted';
+            }
+        } catch (Aws\S3\Exception\S3Exception $e) {
+            echo $e->getMessage();
+        }
+    } else {
+        echo 'Missing folder or image name';
+    }
+}
 
 	public function removeStayoneImg()
 	{
