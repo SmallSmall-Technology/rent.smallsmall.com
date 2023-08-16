@@ -5385,9 +5385,9 @@ class Admin extends CI_Controller
 
 	// 		$filename = "./uploads/".$folder."/".$img_name; 
 
-			// if (file_exists($filename)) {
+	// 		if (file_exists($filename)) {
 
-			// 	unlink($filename);
+	// 			unlink($filename);
 
 	// 		  	echo 1;
 
@@ -5404,52 +5404,41 @@ class Admin extends CI_Controller
 	public function removeImg()
 	{
 		$folder = $this->input->post('folder');
-
 		$img_name = $this->input->post('imgName');
-		
+	
 		if ($folder && $img_name) {
 
 			require 'vendor/autoload.php';
 	
 			$s3 = new Aws\S3\S3Client([
 				'version' => 'latest',
+
 				'region' => 'eu-west-1', // Replace with your region
-				
 			]);
 	
 			$bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
 			$objectKey = 'uploads/' . $folder . '/' . $img_name;
-			
-			if (file_exists($objectKey)) {
-
-				try {
-					$s3->deleteObject([
-						'Bucket' => $bucket,
-						'Key'    => $objectKey,
-					]);
 	
-					echo 1;
+			try {
+				$s3->deleteObject([
 
-				} catch (Aws\S3\Exception\S3Exception $e) {
-
-					echo 'S3 Error: ' . $e->getMessage();
-
-				} catch (\Exception $e) {
-
-					echo 'Error: ' . $e->getMessage();
-				}
-			} else {
-
-				echo 'Image not found';
-
+					'Bucket' => $bucket,
+					'Key' => $objectKey,
+					
+				]);
+	
+				echo 1; // Success
+	
+			} catch (Aws\Exception\AwsException $e) {
+				echo 'S3 Error: ' . $e->getAwsErrorMessage();
 			}
+			
 		} else {
 			echo 'Missing folder or image name';
 		}
 	}
 	
-
 	public function removeStayoneImg()
 	{
 
