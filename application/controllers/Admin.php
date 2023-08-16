@@ -5401,10 +5401,10 @@ class Admin extends CI_Controller
 
 	// Code modify to make ref to AWS S3 folders.
 
-
 	public function removeImg()
 {
     $folder = $this->input->post('folder');
+
     $img_name = $this->input->post('imgName');
     
     if ($folder && $img_name) {
@@ -5413,7 +5413,6 @@ class Admin extends CI_Controller
         $s3 = new Aws\S3\S3Client([
             'version' => 'latest',
             'region' => 'eu-west-1', // Replace with your region
-            
         ]);
 
         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
@@ -5429,15 +5428,18 @@ class Admin extends CI_Controller
             if ($result['@metadata']['statusCode'] == 204) {
                 echo 1;
             } else {
-                echo 'Image could not be deleted';
+                echo 'Image could not be deleted (Status code: ' . $result['@metadata']['statusCode'] . ')';
             }
         } catch (Aws\S3\Exception\S3Exception $e) {
-            echo $e->getMessage();
+            echo 'S3 Error: ' . $e->getMessage();
+        } catch (\Exception $e) {
+            echo 'Error: ' . $e->getMessage();
         }
     } else {
         echo 'Missing folder or image name';
     }
 }
+
 
 	public function removeStayoneImg()
 	{
