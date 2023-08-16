@@ -5404,6 +5404,7 @@ class Admin extends CI_Controller
 	public function removeImg()
 	{
 		$folder = $this->input->post('folder');
+		
 		$img_name = $this->input->post('imgName');
 	
 		if ($folder && $img_name) {
@@ -5418,14 +5419,14 @@ class Admin extends CI_Controller
 	
 			$bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-			$objectKey = 'uploads/' . $folder . '/' . $img_name;
+			$objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
 	
 			try {
 				$s3->deleteObject([
 
 					'Bucket' => $bucket,
 					'Key' => $objectKey,
-					
+
 				]);
 	
 				echo 1; // Success
