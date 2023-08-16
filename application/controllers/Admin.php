@@ -1,8 +1,9 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Admin extends CI_Controller
+{
 
 
 	/**
@@ -35,11 +36,12 @@ class Admin extends CI_Controller {
 
 	 */
 
-	public function __construct() {
+	public function __construct()
+	{
 
 		Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
 
-	   	parent::__construct();  
+		parent::__construct();
 
 
 
@@ -47,36 +49,33 @@ class Admin extends CI_Controller {
 
 	}
 
-	public function login_admin(){
+	public function login_admin()
+	{
 
-		 $username = $this->input->post('username');
+		$username = $this->input->post('username');
 
-		 $password = $this->input->post('password');
+		$password = $this->input->post('password');
 
-		 $data['user'] = $this->admin_model->login($username, $password); 
+		$data['user'] = $this->admin_model->login($username, $password);
 
-		 if($data['user'] === 0)
-		 {
+		if ($data['user'] === 0) {
 
-			echo 0; 
-
-
-		 }else{
+			echo 0;
+		} else {
 
 			$userdata = array('fname' => $data['user']['firstName'], 'lname' => $data['user']['lastName'], 'adminID' => $data['user']['adminID'], 'userAccess' => $data['user']['userAccess'], 'adminLoggedIn' => 'yes', 'photo' => $data['user']['profilePic']);
 
 			$this->session->set_userdata($userdata);
 
 			echo 'admin/dashboard';
+		}
+	}
 
-		 }
+	public function login()
+	{
 
-   	}
+		if (!$this->session->has_userdata('adminLoggedIn')) {
 
-	public function login(){
-
-		if(!$this->session->has_userdata('adminLoggedIn')){	
-		    
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
@@ -86,36 +85,34 @@ class Admin extends CI_Controller {
 			$data['title'] = "RSS Admin Login";
 
 			$this->load->view('admin/pages/login', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url()."admin/dashboard" ,'refresh');
-
+			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
-
 	}
 
-	public function dashboard(){
+	public function dashboard()
+	{
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
-			
+
 			$data['lname'] = $this->session->userdata('lname');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			//All properties
 			$data['prop_count'] = $this->admin_model->countProperties();
-			
+
 			//All registered users
 			$data['user_count'] = $this->admin_model->countUsers();
-			
+
 			//All buy to let properties
 			$data['btl_prop_count'] = $this->admin_model->countBtlProperties();
-			
+
 			$data['snippet_properties'] = $this->admin_model->fetchSnippetProperties();
 
 			$data['title'] = "RSS Dashboard";
@@ -124,318 +121,291 @@ class Admin extends CI_Controller {
 
 			$this->load->view('admin/templates/sidebar', $data);
 
-			$this->load->view('admin/pages/dashboard', $data);		
+			$this->load->view('admin/pages/dashboard', $data);
 
 			$this->load->view('admin/templates/footer', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url()."admin/login" ,'refresh');
-
+			redirect(base_url() . "admin/login", 'refresh');
 		}
-
 	}
 
-	public function statistics(){
+	public function statistics()
+	{
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/statistics.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/statistics.php')) {
 
-            // Whoops, we don't have a page for that!
-            show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['lsd'] = $this->admin_model->visitorsLSD("rss_stats");
 
 			$data['visitslsd'] = $this->admin_model->visitsLSD("rss_stats");
 
 			$data['todayVisitors'] = $this->admin_model->visitorsToday("rss_stats");
-			
+
 			$data['rvt'] = $this->admin_model->returningVisitorsToday("rss_stats");
 
 			$data['visitorsYesterday'] = $this->admin_model->visitorsYesterday("rss_stats");
-			
+
 			$data['visitsYesterday'] = $this->admin_model->visitsYesterday("rss_stats");
 
 			$data['visitorsThirty'] = $this->admin_model->visitorsThirty("rss_stats");
-			
+
 			$data['visitsThirty'] = $this->admin_model->visitsThirty("rss_stats");
 
 			$data['visitorsYear'] = $this->admin_model->visitorsYear("rss_stats");
-			
+
 			$data['visitsYear'] = $this->admin_model->visitsYear("rss_stats");
 
 			$data['totalVisitors'] = $this->admin_model->totalVisitors("rss_stats");
-			
+
 			$data['totalVisits'] = $this->admin_model->totalVisits("rss_stats");
-			
+
 			$data['browsers'] = $this->admin_model->browserTypes("rss_stats");
-			
+
 			$data['countries'] = $this->admin_model->country_visits("rss_stats");
-			
+
 			$data['cities'] = $this->admin_model->city_visits("rss_stats");
-			
+
 			$data['referrers'] = $this->admin_model->referrers("rss_stats");
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['adminID'] = $this->session->userdata('adminID');
 
 			$data['title'] = "Statistics :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/statistics.php' , $data);
+			$this->load->view('admin/pages/statistics.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-
-		}else{
-
-			redirect( base_url().'admin/login','refresh');
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function btl_statistics(){
+	public function btl_statistics()
+	{
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/btl-stats.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/btl-stats.php')) {
 
-            // Whoops, we don't have a page for that!
-            show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['lsd'] = $this->admin_model->visitorsLSD("btl_stats");
 
 			$data['visitslsd'] = $this->admin_model->visitsLSD("btl_stats");
 
 			$data['todayVisitors'] = $this->admin_model->visitorsToday("btl_stats");
-			
+
 			$data['rvt'] = $this->admin_model->returningVisitorsToday("btl_stats");
 
 			$data['visitorsYesterday'] = $this->admin_model->visitorsYesterday("btl_stats");
-			
+
 			$data['visitsYesterday'] = $this->admin_model->visitsYesterday("btl_stats");
 
 			$data['visitorsThirty'] = $this->admin_model->visitorsThirty("btl_stats");
-			
+
 			$data['visitsThirty'] = $this->admin_model->visitsThirty("btl_stats");
 
 			$data['visitorsYear'] = $this->admin_model->visitorsYear("btl_stats");
-			
+
 			$data['visitsYear'] = $this->admin_model->visitsYear("btl_stats");
 
 			$data['totalVisitors'] = $this->admin_model->totalVisitors("btl_stats");
-			
+
 			$data['totalVisits'] = $this->admin_model->totalVisits("btl_stats");
-			
+
 			$data['browsers'] = $this->admin_model->browserTypes("btl_stats");
-			
+
 			$data['countries'] = $this->admin_model->country_visits("btl_stats");
-			
+
 			$data['cities'] = $this->admin_model->city_visits("btl_stats");
-			
+
 			$data['referrers'] = $this->admin_model->referrers("btl_stats");
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['adminID'] = $this->session->userdata('adminID');
 
 			$data['title'] = "Statistics :: Buy2let";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/btl-stats.php' , $data);
+			$this->load->view('admin/pages/btl-stats.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+	public function add_notification()
+	{
 
-			redirect( base_url().'admin/login','refresh');
+		if (!file_exists(APPPATH . 'views/admin/pages/new-notification.php')) {
+			// Whoops, we don't have a page for that!
 
+			show_404();
 		}
 
-	}
-	public function add_notification(){
-
-		if ( ! file_exists(APPPATH.'views/admin/pages/new-notification.php'))
-        {
-                // Whoops, we don't have a page for that!
-
-                show_404();
-
-        }
-
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "New Notification :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/new-notification.php' , $data);
+			$this->load->view('admin/pages/new-notification.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+	public function edit_notification($id)
+	{
 
-		}else{
+		if (!file_exists(APPPATH . 'views/admin/pages/edit-notification.php')) {
+			// Whoops, we don't have a page for that!
 
-			redirect( base_url().'admin/login','refresh');
-
+			show_404();
 		}
 
-	}
-    public function edit_notification($id){
-
-		if ( ! file_exists(APPPATH.'views/admin/pages/edit-notification.php'))
-        {
-                // Whoops, we don't have a page for that!
-
-                show_404();
-
-        }
-
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){
-		    
-		    $data['notification'] = $this->admin_model->get_notification($id);
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['notification'] = $this->admin_model->get_notification($id);
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['adminID'] = $this->session->userdata('adminID');
 
 			$data['title'] = "Edit Notification :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/edit-notification.php' , $data);
+			$this->load->view('admin/pages/edit-notification.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-
-		}else{
-
-			redirect( base_url().'admin/login','refresh');
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function add_admin(){
+	public function add_admin()
+	{
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/add-admin.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/add-admin.php')) {
 
-                // Whoops, we don't have a page for that!
-                show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Add Admin :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/add-admin.php' , $data);
+			$this->load->view('admin/pages/add-admin.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
 
-	public function add_news(){	
+	public function add_news()
+	{
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = 'Post News Article :: RSS'; // Capitalize the first letter
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/add-news.php' , $data);
+			$this->load->view('admin/pages/add-news.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin-login','refresh');		
-
+			redirect(base_url() . 'admin-login', 'refresh');
 		}
-
 	}
-    public function view_all_news(){
-		
-		$config['total_rows'] = $this->admin_model->countAllNews();		
+	public function view_all_news()
+	{
 
-		$data['total_count'] = $config['total_rows'];		
+		$config['total_rows'] = $this->admin_model->countAllNews();
 
-		$config['suffix'] = '';  
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
 
 		if ($config['total_rows'] > 0) {
 
 
 			$page_number = $this->uri->segment(3);
-			
+
 
 			$config['base_url'] = base_url() . 'admin/view-all-news';
 
 			if (empty($page_number))
 
 				$page_number = 1;
-				
+
 			$offset = ($page_number - 1) * $this->pagination->per_page;
 
 			$this->admin_model->setPageNumber($this->pagination->per_page);
@@ -449,85 +419,74 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['articles'] = $this->admin_model->fetchAllNews();
-
 		}
-		
-		if ( ! file_exists(APPPATH.'views/admin/pages/view-all-news.php'))
-        {
-            // Whoops, we don't have a page for that!
-            show_404();
 
-        }
+		if (!file_exists(APPPATH . 'views/admin/pages/view-all-news.php')) {
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "All News :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/view-all-news' , $data);
+			$this->load->view('admin/pages/view-all-news', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);	
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{			
- 
-			redirect( base_url().'admin/login','refresh');				
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function edit_article($id){
-	    
-	    if ( ! file_exists(APPPATH.'views/admin/pages/edit-article.php'))
+	public function edit_article($id)
+	{
 
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/edit-article.php')) {
 			// Whoops, we don't have a page for that!
 
 			show_404();
-
-        } 
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['article'] = $this->admin_model->fetchArticle($id);
 
 			$data['title'] = "Edit Article :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/edit-article.php' , $data);
+			$this->load->view('admin/pages/edit-article.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		
-
-		}else{
-
-			redirect( base_url().'admin/login','refresh');		
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
-	public function amenities(){
+	public function amenities()
+	{
 
 		$config['total_rows'] = $this->admin_model->countAmenity();
 
@@ -536,7 +495,7 @@ class Admin extends CI_Controller {
 		$config['suffix'] = '';
 
 		if ($config['total_rows'] > 0) {
-		    
+
 			$page_number = $this->uri->segment(3);
 
 			$config['base_url'] = base_url() . 'admin/amenities';
@@ -548,56 +507,51 @@ class Admin extends CI_Controller {
 			$offset = ($page_number - 1) * $this->pagination->per_page;
 
 			$this->admin_model->setPageNumber($this->pagination->per_page);
-			
+
 			$this->admin_model->setOffset($offset);
 
 			$this->pagination->cur_page = $page_number;
 
 			$this->pagination->initialize($config);
-			
+
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['amenities'] = $this->admin_model->fetchAmenities();
-
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/amenities.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/amenities.php')) {
 
-            // Whoops, we don't have a page for that!
-            show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Amenities :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/amenities.php' , $data);
+			$this->load->view('admin/pages/amenities.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/amenity-modal.php' , $data);
+			$this->load->view('admin/templates/amenity-modal.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function rss_users(){
+	public function rss_users()
+	{
 
 		$config['total_rows'] = $this->admin_model->countRssUsers();
 
@@ -628,46 +582,41 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['rss_users'] = $this->admin_model->fetchRssUsers();
-
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/rss-users.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/rss-users.php')) {
 
-                // Whoops, we don't have a page for that!
-                show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Small Small Users :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/rss-users.php' , $data);
+			$this->load->view('admin/pages/rss-users.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);	
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');			
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
 
-	public function rss_verfd(){
+	public function rss_verfd()
+	{
 
 		$config['total_rows'] = $this->admin_model->countRssUser();
 
@@ -698,107 +647,99 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['rss_users'] = $this->admin_model->fetchRssUser();
-
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/rss-users.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/rss-users.php')) {
 
-                // Whoops, we don't have a page for that!
-                show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Small Small Users :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/rss-users.php' , $data);
+			$this->load->view('admin/pages/rss-users.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);	
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');			
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	
-	public function agr_upload(){
+
+	public function agr_upload()
+	{
 
 		// if($this->session->has_userdata('adminLoggedIn')){			
 
 		// 	$userID = $this->session->userdata('userID');
 		// 	$userIDTest = $this->session->userdata('adminID');
 		// }			
-	    
-	    $config['upload_path']          = './uploads/agreement/';
-        $config['allowed_types']        = 'doc|docx|pdf';
-        $config['max_size']             = 0;
-        // $config['max_width']            = 1024;
-        // $config['max_height']           = 768;
 
-        $this->load->library('upload', $config);
+		$config['upload_path']          = './uploads/agreement/';
+		$config['allowed_types']        = 'doc|docx|pdf';
+		$config['max_size']             = 0;
+		// $config['max_width']            = 1024;
+		// $config['max_height']           = 768;
+
+		$this->load->library('upload', $config);
 
 		echo $userIDTest;
-        
-        // echo $usrs = $this->session->userdata('userID');
-        
-        // $usrs = $this->admin_model->get_username($userID);
 
-        if (!$this->upload->do_upload('filename'))
-        {
-            $error = array('error' => $this->upload->display_errors());
+		// echo $usrs = $this->session->userdata('userID');
 
-            $this->load->view('agr_error', $error);
-        }
-        
-        else
-        {
-                $data = $this->upload->data();
-                
-                $id = $this->input->post('sub_id');
-                
-                $str_yr = $this->input->post('start-yr');
+		// $usrs = $this->admin_model->get_username($userID);
 
-				// echo $usrs['email'];
-                
-                $data = array(
-                    'filename' => $data['file_name'],
-                    'userId'   => $id,
-                    'start_year' => $str_yr,
-                    'end_year' => $this->input->post('end-yr'),
-                    'property' => $this->input->post('sub-propty'),
-                    // 'admin' => $usrs['email'],
-                    'date' => date('Y-m-d H:i:s')
-                    );
-                    
-                $this->db->insert('sub_agreement', $data);
-                
-                //print_r($data);
-                
-                echo "<script>
+		if (!$this->upload->do_upload('filename')) {
+			$error = array('error' => $this->upload->display_errors());
+
+			$this->load->view('agr_error', $error);
+		} else {
+			$data = $this->upload->data();
+
+			$id = $this->input->post('sub_id');
+
+			$str_yr = $this->input->post('start-yr');
+
+			// echo $usrs['email'];
+
+			$data = array(
+				'filename' => $data['file_name'],
+				'userId'   => $id,
+				'start_year' => $str_yr,
+				'end_year' => $this->input->post('end-yr'),
+				'property' => $this->input->post('sub-propty'),
+				// 'admin' => $usrs['email'],
+				'date' => date('Y-m-d H:i:s')
+			);
+
+			$this->db->insert('sub_agreement', $data);
+
+			//print_r($data);
+
+			echo "<script>
                             alert('Upload Successful');
-                            window.location.href='user-profile/".$id."';
+                            window.location.href='user-profile/" . $id . "';
                       </script>";
-        }
+		}
 	}
 
-	public function edit_agr($id){
-		
+	public function edit_agr($id)
+	{
+
 		$data['ids'] = $id;
 
 		$data['details'] = $this->admin_model->get_user_details($id);
@@ -806,41 +747,40 @@ class Admin extends CI_Controller {
 		$data['bookings'] = $this->admin_model->get_user_bookings($id);
 
 		$data['user_hstry'] = $this->admin_model->get_user_hstry($id);
-		
+
 		$data['proptys'] = $this->admin_model->get_user_propty($id);
-		
+
 		$data['user_transactions'] = $this->admin_model->get_user_transactions($id);
 
 		$data['debts'] = $this->admin_model->get_debts($id);
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/user-profile.php')){
+		if (!file_exists(APPPATH . 'views/admin/pages/user-profile.php')) {
 
-                // Whoops, we don't have a page for that!
+			// Whoops, we don't have a page for that!
 
-                show_404();
+			show_404();
+		}
 
-        }
-        
 		//check if Admin is logged in
 		//if($this->session->has_userdata('adminLoggedIn')){			
 
-			$data['adminPriv'] = $this->functions_model->getUserAccess();
+		$data['adminPriv'] = $this->functions_model->getUserAccess();
 
-			$data['adminID'] = $this->session->userdata('adminID');	
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');		
+		$data['adminID'] = $this->session->userdata('adminID');
 
-			$data['title'] = "User Profile :: RSS";
+		$data['userAccess'] = $this->session->userdata('userAccess');
 
-			$this->load->view('admin/templates/header.php' , $data);
+		$data['title'] = "User Profile :: RSS";
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+		$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/pages/edit-agr.php' , $data);
+		$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+		$this->load->view('admin/pages/edit-agr.php', $data);
 
-			$this->load->view('admin/templates/payment-modal.php' , $data);	
+		$this->load->view('admin/templates/footer.php', $data);
+
+		$this->load->view('admin/templates/payment-modal.php', $data);
 
 		// }else{			
 
@@ -851,57 +791,55 @@ class Admin extends CI_Controller {
 	}
 
 
-	public function edit_upload(){
-	    
-	    $config['upload_path']          = './uploads/agreement/';
-        $config['allowed_types']        = 'doc|docx|pdf';
-        $config['max_size']             = 0;
-        // $config['max_width']            = 1024;
-        // $config['max_height']           = 768;
+	public function edit_upload()
+	{
 
-        $this->load->library('upload', $config);
-        
-        //$usrs = $this->session->userdata('userID');
-        
-        //$usrs = $this->admin_model->get_username($usrs);
+		$config['upload_path']          = './uploads/agreement/';
+		$config['allowed_types']        = 'doc|docx|pdf';
+		$config['max_size']             = 0;
+		// $config['max_width']            = 1024;
+		// $config['max_height']           = 768;
 
-        if (!$this->upload->do_upload('filename'))
-        {
-            $error = array('error' => $this->upload->display_errors());
+		$this->load->library('upload', $config);
 
-            $this->load->view('agr_error', $error);
-        }
-        
-        else
-        {
-                $data = $this->upload->data();
-                
-                $id = $this->input->post('sub_id');
-                
-                $str_yr = $this->input->post('start-yr');
-                
-                $data = array(
-                    'filename' => $data['file_name'],
-                    'start_year' => $str_yr,
-                    'end_year' => $this->input->post('end-yr'),
-                    'property' => $this->input->post('sub-propty'),
-                    'date' => date('Y-m-d H:i:s')
-                    );
-				
-				$this->db->where('id', $id);
-                    
-                $this->db->update('sub_agreement', $data);
-                
-                //print_r($data);
-                
-                echo "<script>
+		//$usrs = $this->session->userdata('userID');
+
+		//$usrs = $this->admin_model->get_username($usrs);
+
+		if (!$this->upload->do_upload('filename')) {
+			$error = array('error' => $this->upload->display_errors());
+
+			$this->load->view('agr_error', $error);
+		} else {
+			$data = $this->upload->data();
+
+			$id = $this->input->post('sub_id');
+
+			$str_yr = $this->input->post('start-yr');
+
+			$data = array(
+				'filename' => $data['file_name'],
+				'start_year' => $str_yr,
+				'end_year' => $this->input->post('end-yr'),
+				'property' => $this->input->post('sub-propty'),
+				'date' => date('Y-m-d H:i:s')
+			);
+
+			$this->db->where('id', $id);
+
+			$this->db->update('sub_agreement', $data);
+
+			//print_r($data);
+
+			echo "<script>
                             alert('Upload Successful');
-                            window.location.href='edit-agr/".$id."';
+                            window.location.href='edit-agr/" . $id . "';
                       </script>";
-        }
+		}
 	}
 
-	public function app_users(){
+	public function app_users()
+	{
 
 		$config['total_rows'] = $this->admin_model->countAppUsers();
 
@@ -919,7 +857,7 @@ class Admin extends CI_Controller {
 			if (empty($page_number))
 
 				$page_number = 1;
-				
+
 			$offset = ($page_number - 1) * $this->pagination->per_page;
 
 			$this->admin_model->setPageNumber($this->pagination->per_page);
@@ -933,44 +871,39 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['app_users'] = $this->admin_model->fetchAppUsers();
-
 		}
-		
-		if ( ! file_exists(APPPATH.'views/admin/pages/app-users.php'))
-        {
 
-            // Whoops, we don't have a page for that!
-            show_404();
+		if (!file_exists(APPPATH . 'views/admin/pages/app-users.php')) {
 
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "App Users :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/app-users.php' , $data);
+			$this->load->view('admin/pages/app-users.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);	
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');			
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function btl_users(){
+	public function btl_users()
+	{
 
 		$config['total_rows'] = $this->admin_model->countBtlUsers();
 
@@ -995,59 +928,54 @@ class Admin extends CI_Controller {
 			$this->admin_model->setOffset($offset);
 
 			$this->pagination->cur_page = $page_number;
-			
+
 			$this->pagination->initialize($config);
 
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['btl_users'] = $this->admin_model->fetchBtlUsers();
-
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/btl-users.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/btl-users.php')) {
 
-            // Whoops, we don't have a page for that!
-            show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
-			
+
 			$data['title'] = "Buytolet Users :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/btl-users.php' , $data);
+			$this->load->view('admin/pages/btl-users.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);	
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');			
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function pages(){		
+	public function pages()
+	{
 
-		$config['total_rows'] = $this->admin_model->countAmenity();		
+		$config['total_rows'] = $this->admin_model->countAmenity();
 
-		$data['total_count'] = $config['total_rows'];		
+		$data['total_count'] = $config['total_rows'];
 
 		$config['suffix'] = '';
 
 
-		if ($config['total_rows'] > 0) {			
+		if ($config['total_rows'] > 0) {
 
 			$page_number = $this->uri->segment(3);
 
@@ -1067,377 +995,351 @@ class Admin extends CI_Controller {
 
 			$this->pagination->initialize($config);
 
-			$data['page_links'] = $this->pagination->create_links();            
+			$data['page_links'] = $this->pagination->create_links();
 
 			$data['amenities'] = $this->admin_model->fetchAmenities();
-
-		}		
-
-		if ( ! file_exists(APPPATH.'views/admin/pages/amenities.php')){
-
-                // Whoops, we don't have a page for that!
-
-                show_404();
-
-        }
-		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){			
-
-			$data['adminPriv'] = $this->functions_model->getUserAccess();
-
-			$data['adminID'] = $this->session->userdata('adminID');	
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');		
-
-			$data['title'] = "Amenities :: RSS";
-
-			$this->load->view('admin/templates/header.php' , $data);
-
-			$this->load->view('admin/templates/sidebar.php' , $data);
-
-			$this->load->view('admin/pages/amenities.php' , $data);
-
-			$this->load->view('admin/templates/footer.php' , $data);
-
-			$this->load->view('admin/templates/amenity-modal.php' , $data);		
-
-		}else{			
-
-			redirect( base_url().'admin/login','refresh');				
-
 		}
 
-	}
-	public function rss_about_us(){		
+		if (!file_exists(APPPATH . 'views/admin/pages/amenities.php')) {
 
-		$data['content'] = $this->admin_model->get_rss_about_us();
+			// Whoops, we don't have a page for that!
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/rss-about-us.php')){
-
-                // Whoops, we don't have a page for that!
-
-                show_404();
-
-        }
-		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){			
-
-			$data['adminPriv'] = $this->functions_model->getUserAccess();
-
-			$data['adminID'] = $this->session->userdata('adminID');	
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');		
-
-			$data['title'] = "About Us :: RSS";
-
-			$this->load->view('admin/templates/header.php' , $data);
-
-			$this->load->view('admin/templates/sidebar.php' , $data);
-
-			$this->load->view('admin/pages/rss-about-us.php' , $data);
-
-			$this->load->view('admin/templates/footer.php' , $data);	
-
-		}else{			
-
-			redirect( base_url().'admin/login','refresh');				
-
+			show_404();
 		}
-
-	}
-	
-	public function profile($id){
-	    
-	    $data['ids'] = $id;
-
-		$data['details'] = $this->admin_model->get_verification($id);
-
-		if ( ! file_exists(APPPATH.'views/admin/pages/profile.php')){
-
-                // Whoops, we don't have a page for that!
-
-                show_404();
-
-        }
-        
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){			
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');			
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['title'] = "Amenities :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/amenities.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+
+			$this->load->view('admin/templates/amenity-modal.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+	public function rss_about_us()
+	{
+
+		$data['content'] = $this->admin_model->get_rss_about_us();
+
+		if (!file_exists(APPPATH . 'views/admin/pages/rss-about-us.php')) {
+
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+		//check if Admin is logged in
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['title'] = "About Us :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/rss-about-us.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+	public function profile($id)
+	{
+
+		$data['ids'] = $id;
+
+		$data['details'] = $this->admin_model->get_verification($id);
+
+		if (!file_exists(APPPATH . 'views/admin/pages/profile.php')) {
+
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+
+		//check if Admin is logged in
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Verification Profile :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/profile.php' , $data);
+			$this->load->view('admin/pages/profile.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);	
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{			
-
-			redirect( base_url().'admin/login','refresh');				
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
-	} 
-
-	public function download($id){
-	    
-	    $config['upload_path'] = './uploads/agreement/';
-	    
-	    if(!empty($id))
-	    {
-	         //load download helper
-	         $this->load->helper('download');
-	         
-	         //get file from db
-	         
-	         $fileInfo = $this->admin_model->getRows($id);
-	         
-	         //file path
-	         $file = './uploads/agreement/'.$fileInfo['filename'];
-	         
-	         //download file 
-	         force_download($file, NULL);
-	         
-	        //  redirect(dashboard/subscription-agreement);
-	         
-	         //echo $id;
-	    }
-        
 	}
-	
-	public function user_profile($id){
-	    
-	    $data['ids'] = $id;
+
+	public function download($id)
+	{
+
+		$config['upload_path'] = './uploads/agreement/';
+
+		if (!empty($id)) {
+			//load download helper
+			$this->load->helper('download');
+
+			//get file from db
+
+			$fileInfo = $this->admin_model->getRows($id);
+
+			//file path
+			$file = './uploads/agreement/' . $fileInfo['filename'];
+
+			//download file 
+			force_download($file, NULL);
+
+			//  redirect(dashboard/subscription-agreement);
+
+			//echo $id;
+		}
+	}
+
+	public function user_profile($id)
+	{
+
+		$data['ids'] = $id;
 
 		$data['details'] = $this->admin_model->get_user_details($id);
 
 		$data['bookings'] = $this->admin_model->get_user_bookings($id);
 
 		$data['user_hstry'] = $this->admin_model->get_user_hstry($id);
-		
+
 		$data['proptys'] = $this->admin_model->get_user_propty($id);
-		
+
 		$data['user_transactions'] = $this->admin_model->get_user_transactions($id);
 
 		$data['debts'] = $this->admin_model->get_debts($id);
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/user-profile.php')){
+		if (!file_exists(APPPATH . 'views/admin/pages/user-profile.php')) {
 
-                // Whoops, we don't have a page for that!
+			// Whoops, we don't have a page for that!
 
-                show_404();
+			show_404();
+		}
 
-        }
-        
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){			
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
-			$data['adminID'] = $this->session->userdata('adminID');	
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');		
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "User Profile :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/user-profile.php' , $data);
+			$this->load->view('admin/pages/user-profile.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/payment-modal.php' , $data);	
+			$this->load->view('admin/templates/payment-modal.php', $data);
+		} else {
 
-		}else{			
-
-			redirect( base_url().'admin/login','refresh');				
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
+	}
 
-	} 
-	
-	public function get_ver_property($id){
-	    
-	    return $this->admin_model->get_ver_property($id);
-	    
+	public function get_ver_property($id)
+	{
+
+		return $this->admin_model->get_ver_property($id);
 	}
-	public function get_ver_furniture($id){
-	    
-	    return $this->admin_model->get_ver_furniture($id);
-	    
+	public function get_ver_furniture($id)
+	{
+
+		return $this->admin_model->get_ver_furniture($id);
 	}
-	public function get_ver_prop($id){
-	    
-	    return $this->admin_model->get_ver_prop($id);
-	    
+	public function get_ver_prop($id)
+	{
+
+		return $this->admin_model->get_ver_prop($id);
 	}
-	public function app_profile($id){		
+	public function app_profile($id)
+	{
 
 		$data['details'] = $this->admin_model->get_app_verification($id);
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/app-profile.php')){
+		if (!file_exists(APPPATH . 'views/admin/pages/app-profile.php')) {
 
-                // Whoops, we don't have a page for that!
+			// Whoops, we don't have a page for that!
 
-                show_404();
-
-        }
+			show_404();
+		}
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){			
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');			
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Verification Profile :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/app-profile.php' , $data);
+			$this->load->view('admin/pages/app-profile.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);	
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{			
-
-			redirect( base_url().'admin/login','refresh');				
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
-	} 
-	public function btl_user($id){		
+	}
+	public function btl_user($id)
+	{
 
 		$data['details'] = $this->admin_model->get_btl_user($id);
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/btl-user.php')){
+		if (!file_exists(APPPATH . 'views/admin/pages/btl-user.php')) {
 
-                // Whoops, we don't have a page for that!
+			// Whoops, we don't have a page for that!
 
-                show_404();
-
-        }
-		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){			
-
-			$data['adminPriv'] = $this->functions_model->getUserAccess();
-
-			$data['adminID'] = $this->session->userdata('adminID');	
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');		
-
-			$data['title'] = "Buy2let Profile";
-
-			$this->load->view('admin/templates/header.php' , $data);
-
-			$this->load->view('admin/templates/sidebar.php' , $data);
-
-			$this->load->view('admin/pages/btl-user.php' , $data);
-
-			$this->load->view('admin/templates/footer.php' , $data);	
-
-		}else{			
-
-			redirect( base_url().'admin/login','refresh');				
-
+			show_404();
 		}
-
-	} 
-	public function buytolet_about_us(){		
-
-		$data['content'] = $this->admin_model->get_buytolet_about_us();
-
-		if ( ! file_exists(APPPATH.'views/admin/pages/buytolet-about-us.php')){
-
-                // Whoops, we don't have a page for that!
-
-                show_404();
-
-        }
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){			
-
-			$data['adminPriv'] = $this->functions_model->getUserAccess();
-
-			$data['adminID'] = $this->session->userdata('adminID');	
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');		
-
-			$data['title'] = "About Us :: Buytolet";
-
-			$this->load->view('admin/templates/header.php' , $data);
-
-			$this->load->view('admin/templates/sidebar.php' , $data);
-
-			$this->load->view('admin/pages/buytolet-about-us.php' , $data);
-
-			$this->load->view('admin/templates/footer.php' , $data);	
-
-		}else{			
-
-			redirect( base_url().'admin/login','refresh');				
-
-		}
-
-	}
-	public function btl_how_it_works(){		
-
-		$data['content'] = $this->admin_model->get_btl_how_it_works();
-
-		if ( ! file_exists(APPPATH.'views/admin/pages/btl-how-it-works.php')){
-
-                // Whoops, we don't have a page for that!
-
-                show_404();
-
-        }
-		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){			
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');			
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['title'] = "Buy2let Profile";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/btl-user.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+	public function buytolet_about_us()
+	{
+
+		$data['content'] = $this->admin_model->get_buytolet_about_us();
+
+		if (!file_exists(APPPATH . 'views/admin/pages/buytolet-about-us.php')) {
+
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+		//check if Admin is logged in
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['title'] = "About Us :: Buytolet";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/buytolet-about-us.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+	public function btl_how_it_works()
+	{
+
+		$data['content'] = $this->admin_model->get_btl_how_it_works();
+
+		if (!file_exists(APPPATH . 'views/admin/pages/btl-how-it-works.php')) {
+
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+		//check if Admin is logged in
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "About Us :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/btl-how-it-works.php' , $data);
+			$this->load->view('admin/pages/btl-how-it-works.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);	
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{			
-
-			redirect( base_url().'admin/login','refresh');				
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function bookings(){
+	public function bookings()
+	{
 
-		
 
-		$config['total_rows'] = $this->admin_model->countPropBookings();		
 
-		$data['total_count'] = $config['total_rows'];		
+		$config['total_rows'] = $this->admin_model->countPropBookings();
 
-		$config['suffix'] = ''; 
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
 
 		if ($config['total_rows'] > 0) {
 
@@ -1450,67 +1352,62 @@ class Admin extends CI_Controller {
 
 				$page_number = 1;
 
-				$offset = ($page_number - 1) * $this->pagination->per_page;
+			$offset = ($page_number - 1) * $this->pagination->per_page;
 
-				$this->admin_model->setPageNumber($this->pagination->per_page);
+			$this->admin_model->setPageNumber($this->pagination->per_page);
 
-				$this->admin_model->setOffset($offset);
+			$this->admin_model->setOffset($offset);
 
-				$this->pagination->cur_page = $page_number;
+			$this->pagination->cur_page = $page_number;
 
-				$this->pagination->initialize($config);
+			$this->pagination->initialize($config);
 
-				$data['page_links'] = $this->pagination->create_links();
+			$data['page_links'] = $this->pagination->create_links();
 
-				$data['bookings'] = $this->admin_model->fetchBookings();
-
+			$data['bookings'] = $this->admin_model->fetchBookings();
 		}
-		
-		if ( ! file_exists(APPPATH.'views/admin/pages/bookings.php'))
-        {
-                // Whoops, we don't have a page for that!
 
-                show_404();
+		if (!file_exists(APPPATH . 'views/admin/pages/bookings.php')) {
+			// Whoops, we don't have a page for that!
 
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
-			
+
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Bookings :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/bookings.php' , $data);
+			$this->load->view('admin/pages/bookings.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/booking-modal.php' , $data);		
+			$this->load->view('admin/templates/booking-modal.php', $data);
+		} else {
 
-		}else{			
- 
-			redirect( base_url().'admin/login','refresh');				
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	
-	
-	public function furnisure_category(){
+
+
+	public function furnisure_category()
+	{
 
 		$config['total_rows'] = $this->admin_model->countFurnisureCategory();
-		
+
 		$data['total_count'] = $config['total_rows'];
 
 		$config['suffix'] = '';
@@ -1522,7 +1419,7 @@ class Admin extends CI_Controller {
 			$config['base_url'] = base_url() . 'admin/furnisure-category';
 
 			if (empty($page_number))
-			
+
 				$page_number = 1;
 
 			$offset = ($page_number - 1) * $this->pagination->per_page;
@@ -1532,53 +1429,48 @@ class Admin extends CI_Controller {
 			$this->admin_model->setOffset($offset);
 
 			$this->pagination->cur_page = $page_number;
-			
+
 			$this->pagination->initialize($config);
 
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['appliances'] = $this->admin_model->fetchFurnisureCategories();
-
 		}
-		if ( ! file_exists(APPPATH.'views/admin/pages/furnisure-category.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/furnisure-category.php')) {
 
-            // Whoops, we don't have a page for that!
-            show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Furnisure Category :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/furnisure-category.php' , $data);
+			$this->load->view('admin/pages/furnisure-category.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
+			$this->load->view('admin/templates/furnisure-category-modal.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
 
-	public function furnisure_type(){
+	public function furnisure_type()
+	{
 
 		$config['total_rows'] = $this->admin_model->countFurnisureType();
 
@@ -1597,7 +1489,7 @@ class Admin extends CI_Controller {
 				$page_number = 1;
 
 			$offset = ($page_number - 1) * $this->pagination->per_page;
-			
+
 			$this->admin_model->setPageNumber($this->pagination->per_page);
 
 			$this->admin_model->setOffset($offset);
@@ -1609,47 +1501,42 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['types'] = $this->admin_model->fetchFurnisureTypes();
-
 		}
-		if ( ! file_exists(APPPATH.'views/admin/pages/furnisure-type.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/furnisure-type.php')) {
 
-            // Whoops, we don't have a page for that!
-            show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Furnisure Type :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/furnisure-type.php' , $data);
+			$this->load->view('admin/pages/furnisure-type.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/furnisure-type-modal.php' , $data);
+			$this->load->view('admin/templates/furnisure-type-modal.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
 
-	public function facility_category(){
+	public function facility_category()
+	{
 
 		$config['total_rows'] = $this->admin_model->countFacilityCategory();
 
@@ -1658,7 +1545,7 @@ class Admin extends CI_Controller {
 		$config['suffix'] = '';
 
 		if ($config['total_rows'] > 0) {
-		    
+
 			$page_number = $this->uri->segment(3);
 
 			$config['base_url'] = base_url() . 'admin/facility-category';
@@ -1679,48 +1566,43 @@ class Admin extends CI_Controller {
 
 			$data['page_links'] = $this->pagination->create_links();
 
-			$data['categories'] = $this->admin_model->fetchFacilityCategories();			
-
+			$data['categories'] = $this->admin_model->fetchFacilityCategories();
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/facility-category.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/facility-category.php')) {
 
-            // Whoops, we don't have a page for that!
-            show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Category :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/facility-category.php' , $data);
+			$this->load->view('admin/pages/facility-category.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/facility-category-modal.php' , $data);
+			$this->load->view('admin/templates/facility-category-modal.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');
-			
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
 
-	public function neighborhood_distance(){
+	public function neighborhood_distance()
+	{
 
 		$config['total_rows'] = $this->admin_model->countNeighborhoodDistance();
 
@@ -1728,20 +1610,20 @@ class Admin extends CI_Controller {
 
 		$config['suffix'] = '';
 
-		if ($config['total_rows'] > 0){
+		if ($config['total_rows'] > 0) {
 
 			$page_number = $this->uri->segment(3);
 
 			$config['base_url'] = base_url() . 'admin/neighborhood-distance';
 
 			if (empty($page_number))
-			
+
 				$page_number = 1;
 
 			$offset = ($page_number - 1) * $this->pagination->per_page;
 
 			$this->admin_model->setPageNumber($this->pagination->per_page);
-			
+
 			$this->admin_model->setOffset($offset);
 
 			$this->pagination->cur_page = $page_number;
@@ -1751,48 +1633,43 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['distances'] = $this->admin_model->fetchNeighborhoodDistance();
-
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/neighborhood-distance.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/neighborhood-distance.php')) {
 
-            // Whoops, we don't have a page for that!
-            show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Neighbourhood :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/neighborhood-distance.php' , $data);
+			$this->load->view('admin/pages/neighborhood-distance.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/neighborhood-distance-modal.php' , $data);
+			$this->load->view('admin/templates/neighborhood-distance-modal.php', $data);
+		} else {
 
-		}else{
-		    
-			redirect( base_url().'admin/login','refresh');
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
 
-	public function apartment_type(){
+	public function apartment_type()
+	{
 
 		$config['total_rows'] = $this->admin_model->countAptType();
 
@@ -1822,48 +1699,43 @@ class Admin extends CI_Controller {
 
 			$data['page_links'] = $this->pagination->create_links();
 
-			$data['types'] = $this->admin_model->fetchAptType();			
-
+			$data['types'] = $this->admin_model->fetchAptType();
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/apartment-type.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/apartment-type.php')) {
 
-            //Whoops, we don't have a page for that!
-            show_404();
-
-        }
+			//Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Apartment Type :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/apartment-type.php' , $data);
+			$this->load->view('admin/pages/apartment-type.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/apartment-type-modal.php' , $data);
+			$this->load->view('admin/templates/apartment-type-modal.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
 
-	public function rent_type(){
+	public function rent_type()
+	{
 
 		$config['total_rows'] = $this->admin_model->countRentType();
 
@@ -1894,76 +1766,70 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['types'] = $this->admin_model->fetchRentType();
-
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/rent-type.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/rent-type.php')) {
 
-            // Whoops, we don't have a page for that!
-            show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Apartment Type :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/rent-type.php' , $data);
+			$this->load->view('admin/pages/rent-type.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/rent-type-modal.php' , $data);
+			$this->load->view('admin/templates/rent-type-modal.php', $data);
+		} else {
 
-		}else{
-		    
-			redirect( base_url().'admin/login','refresh');
-			
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-    public function get_all_admin(){
-	    
-	    $values = array();
-	    
-	    $admins = $this->admin_model->get_all_admin();
-	    
-	    for($i = 0; $i < count($admins); $i++){
-	        
-	        array_push($values, $admins[$i]['adminID']);
-	        
-	    }
-	    
-	    $result = $this->admin_model->get_recieved_msgs($values);
-	    
-	    //print_r($result);
-	    
-	    //exit;
-	}
-	public function inspection_requests(){
+	public function get_all_admin()
+	{
 
 		$values = array();
-		
+
 		$admins = $this->admin_model->get_all_admin();
-	    
-	    for($i = 0; $i < count($admins); $i++){
-	        
-	        array_push($values, $admins[$i]['adminID']);
-	        
-	    }
-		
+
+		for ($i = 0; $i < count($admins); $i++) {
+
+			array_push($values, $admins[$i]['adminID']);
+		}
+
+		$result = $this->admin_model->get_recieved_msgs($values);
+
+		//print_r($result);
+
+		//exit;
+	}
+	public function inspection_requests()
+	{
+
+		$values = array();
+
+		$admins = $this->admin_model->get_all_admin();
+
+		for ($i = 0; $i < count($admins); $i++) {
+
+			array_push($values, $admins[$i]['adminID']);
+		}
+
 		$data['adminID'] = $this->session->userdata('adminID');
 
 		$config['total_rows'] = $this->admin_model->countRequests($data['adminID']);
@@ -1996,48 +1862,43 @@ class Admin extends CI_Controller {
 
 			//$data['inspections'] = $this->admin_model->fetchRequests($data['adminID']);	
 			$data['inspections'] = $this->admin_model->fetchRequests($values);
-			
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/inspection.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/inspection.php')) {
 
-            // Whoops, we don't have a page for that!
+			// Whoops, we don't have a page for that!
 
-            show_404();
-
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			//$data['aptTypes'] = $this->admin_model->fetchAptType();
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['title'] = "Inspection :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/inspection.php' , $data);
+			$this->load->view('admin/pages/inspection.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/request-modal.php' , $data);
+			$this->load->view('admin/templates/request-modal.php', $data);
+		} else {
 
-		}else{ 
-
-			redirect( base_url().'admin/login','refresh');		 	
-
-		} 
-
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
 	}
-	public function app_residential_inspections(){
+	public function app_residential_inspections()
+	{
 
 		$config['total_rows'] = $this->admin_model->countAppRequests();
 
@@ -2069,54 +1930,46 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['inspections'] = $this->admin_model->fetchAppInspRequests();
-
-
-
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/residential-inspections.php'))
+		if (!file_exists(APPPATH . 'views/admin/pages/residential-inspections.php')) {
 
-        {
+			// Whoops, we don't have a page for that!
 
-                // Whoops, we don't have a page for that!
-
-                show_404();
-
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			//$data['aptTypes'] = $this->admin_model->fetchAptType();
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['adminID'] = $this->session->userdata('adminID');
 
 			$data['title'] = "Inspection :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/residential-inspections.php' , $data);
+			$this->load->view('admin/pages/residential-inspections.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/request-modal.php' , $data);
+			$this->load->view('admin/templates/request-modal.php', $data);
+		} else {
 
-		}else{ 
-
-			redirect( base_url().'admin/login','refresh');		 	
-
-		} 
-
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
 	}
-	
-	public function btl_inspection_requests(){
+
+	public function btl_inspection_requests()
+	{
 
 		$config['total_rows'] = $this->admin_model->countBtlInspRequests();
 
@@ -2139,7 +1992,7 @@ class Admin extends CI_Controller {
 			$this->admin_model->setPageNumber($this->pagination->per_page);
 
 			$this->admin_model->setOffset($offset);
-			
+
 			$this->pagination->cur_page = $page_number;
 
 			$this->pagination->initialize($config);
@@ -2147,55 +2000,50 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['inspections'] = $this->admin_model->fetchBtlInspRequests();
-
 		}
-		
-		
-		if ( ! file_exists(APPPATH.'views/admin/pages/btl-inspections.php'))
-        {
 
-            // Whoops, we don't have a page for that!
-            show_404(); 
 
-        }
+		if (!file_exists(APPPATH . 'views/admin/pages/btl-inspections.php')) {
+
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			//$data['aptTypes'] = $this->admin_model->fetchAptType();
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['adminID'] = $this->session->userdata('adminID');
 
 			$data['title'] = "Buy2Let Inspection Requests";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/btl-inspections.php' , $data);
+			$this->load->view('admin/pages/btl-inspections.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
 			/*$this->load->view('admin/templates/request-modal.php' , $data);*/
+		} else {
 
-		}else{ 
-		    
-			redirect( base_url().'admin/login','refresh');		 	
-
-		} 
-
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
 	}
-	
-	public function verifications(){		
 
-		$config['total_rows'] = $this->admin_model->countVerifications();		
+	public function verifications()
+	{
 
-		$data['total_count'] = $config['total_rows'];		
+		$config['total_rows'] = $this->admin_model->countVerifications();
+
+		$data['total_count'] = $config['total_rows'];
 
 		$config['suffix'] = '';
 
@@ -2219,54 +2067,51 @@ class Admin extends CI_Controller {
 
 			$this->pagination->initialize($config);
 
-			$data['page_links'] = $this->pagination->create_links();            
+			$data['page_links'] = $this->pagination->create_links();
 
-			$data['verifications'] = $this->admin_model->fetchVerifications();	
-
+			$data['verifications'] = $this->admin_model->fetchVerifications();
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/rss-verification.php'))
-        {       // Whoops, we don't have a page for that!
+		if (!file_exists(APPPATH . 'views/admin/pages/rss-verification.php')) {       // Whoops, we don't have a page for that!
 
-                show_404();
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){			
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			//$data['aptTypes'] = $this->admin_model->fetchAptType();
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Verifications :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/rss-verification.php' , $data);
+			$this->load->view('admin/pages/rss-verification.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/request-modal.php' , $data);
+			$this->load->view('admin/templates/request-modal.php', $data);
+		} else {
 
-		}else{ 
-
-			redirect( base_url().'admin/login','refresh');		 	
-
-		} 
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
 	}
 
-	public function app_verifications(){		
+	public function app_verifications()
+	{
 
-		$config['total_rows'] = $this->admin_model->countAppVerifications();		
+		$config['total_rows'] = $this->admin_model->countAppVerifications();
 
-		$data['total_count'] = $config['total_rows'];		
+		$data['total_count'] = $config['total_rows'];
 
 		$config['suffix'] = '';
 
@@ -2290,206 +2135,193 @@ class Admin extends CI_Controller {
 
 			$this->pagination->initialize($config);
 
-			$data['page_links'] = $this->pagination->create_links();            
+			$data['page_links'] = $this->pagination->create_links();
 
-			$data['verifications'] = $this->admin_model->fetchAppVerifications();	
-
+			$data['verifications'] = $this->admin_model->fetchAppVerifications();
 		}
-	
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/app-verification.php'))
-        {       // Whoops, we don't have a page for that!
 
-                show_404();
-        }
+		if (!file_exists(APPPATH . 'views/admin/pages/app-verification.php')) {       // Whoops, we don't have a page for that!
+
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){			
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			//$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "App Verifications :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/app-verification.php' , $data);
+			$this->load->view('admin/pages/app-verification.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
 			//$this->load->view('admin/templates/request-modal.php' , $data);
 
-		}else{ 
+		} else {
 
-			redirect( base_url().'admin/login','refresh');		 	
-
-		} 
-
-	}
-
-    public function add_new_buytolet_property(){
-		
-		if ( ! file_exists(APPPATH.'views/admin/pages/new-buytolet-property.php'))
-        {
-                // Whoops, we don't have a page for that!
-                show_404();
-        }
-		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){
-			
-			$data['aptTypes'] = $this->admin_model->fetchAptType();
-			
-			$data['investTypes'] = $this->admin_model->fetchInvestType();
-			
-			$data['adminPriv'] = $this->functions_model->getUserAccess();
-			
-			$data['adminID'] = $this->session->userdata('adminID');
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');
-			
-			$data['countries'] = $this->functions_model->get_countries();
-			
-			$data['title'] = "Add Property :: Buy2Let";
-			$this->load->view('admin/templates/header.php' , $data);
-			$this->load->view('admin/templates/sidebar.php' , $data);
-			$this->load->view('admin/pages/new-buytolet-property.php' , $data);
-			$this->load->view('admin/templates/footer.php' , $data);
-		
-		}else{
-			
-			redirect( base_url().'admin/login','refresh');		
-			
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
-	public function add_new_rss_property(){
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/new-rss-property.php'))
-        {
+	public function add_new_buytolet_property()
+	{
 
-                // Whoops, we don't have a page for that!
-                show_404();
-
-        }
-
+		if (!file_exists(APPPATH . 'views/admin/pages/new-buytolet-property.php')) {
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['aptTypes'] = $this->admin_model->fetchAptType();
-			
+
+			$data['investTypes'] = $this->admin_model->fetchInvestType();
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['countries'] = $this->functions_model->get_countries();
+
+			$data['title'] = "Add Property :: Buy2Let";
+			$this->load->view('admin/templates/header.php', $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
+			$this->load->view('admin/pages/new-buytolet-property.php', $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+	public function add_new_rss_property()
+	{
+
+		if (!file_exists(APPPATH . 'views/admin/pages/new-rss-property.php')) {
+
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
+
+		//check if Admin is logged in
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['aptTypes'] = $this->admin_model->fetchAptType();
+
 			$data['furnishings'] = $this->admin_model->fetchFurnishings();
-			
+
 			$data['services'] = $this->admin_model->fetchServices();
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['countries'] = $this->functions_model->get_countries();
 
 			$data['title'] = "Add Property :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/new-rss-property.php' , $data);
+			$this->load->view('admin/pages/new-rss-property.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function new_apartment(){
-		
-		if($this->session->has_userdata('adminLoggedIn')){	
-		    
-		    $data['stayTypes'] = $this->admin_model->fetchStayType();
-		    
-		    $data['aptTypes'] = $this->admin_model->fetchAptType();
+	public function new_apartment()
+	{
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['stayTypes'] = $this->admin_model->fetchStayType();
+
+			$data['aptTypes'] = $this->admin_model->fetchAptType();
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
-			
+
 			$data['countries'] = $this->functions_model->get_countries();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
-		
-			
+
+
 			$data['title'] = "Stay SmallSmall Apartment";
-			
+
 			$this->load->view('admin/templates/header', $data);
-			
+
 			$this->load->view('admin/templates/sidebar', $data);
-			
-			$this->load->view('admin/pages/new-apartment', $data);	
-			
+
+			$this->load->view('admin/pages/new-apartment', $data);
+
 			$this->load->view('admin/templates/footer', $data);
-			
-		}else{
-			
-			redirect( base_url()."admin/login" ,'refresh');
-			
+		} else {
+
+			redirect(base_url() . "admin/login", 'refresh');
 		}
 	}
-	public function edit_apartment($id){
-		
-		if($this->session->has_userdata('adminLoggedIn')){	
-		    
-		    $data['property'] = $this->admin_model->fetchApartment($id);
-		    
-		    $data['aptTypes'] = $this->admin_model->fetchAptType();
-		    
-		    $data['stayTypes'] = $this->admin_model->fetchStayType();
+	public function edit_apartment($id)
+	{
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['property'] = $this->admin_model->fetchApartment($id);
+
+			$data['aptTypes'] = $this->admin_model->fetchAptType();
+
+			$data['stayTypes'] = $this->admin_model->fetchStayType();
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
-			
+
 			$data['title'] = "Edit apartment";
-			
+
 			$this->load->view('admin/templates/header', $data);
-			
+
 			$this->load->view('admin/templates/sidebar', $data);
-			
-			$this->load->view('admin/pages/edit-apartment', $data);	
-			
+
+			$this->load->view('admin/pages/edit-apartment', $data);
+
 			$this->load->view('admin/templates/footer', $data);
-			
-		}else{
-			
-			redirect( base_url()."admin/login" ,'refresh');
-			
+		} else {
+
+			redirect(base_url() . "admin/login", 'refresh');
 		}
 	}
-	public function add_furniture(){
+	public function add_furniture()
+	{
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/new-furnisure-item.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/new-furnisure-item.php')) {
 
-                // Whoops, we don't have a page for that!
+			// Whoops, we don't have a page for that!
 
-                show_404();
-
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['categories'] = $this->admin_model->fetchFurnisureCategories();
 
@@ -2498,63 +2330,58 @@ class Admin extends CI_Controller {
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Add Furniture :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/new-furnisure-item.php' , $data);
+			$this->load->view('admin/pages/new-furnisure-item.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');	
-			
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	
-	public function edit_property($id){
-		
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/edit-rss-property.php'))
+	public function edit_property($id)
+	{
 
-        {
+
+		if (!file_exists(APPPATH . 'views/admin/pages/edit-rss-property.php')) {
 			// Whoops, we don't have a page for that!
 
 			show_404();
-
-        } 
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
-			
+
 
 			$data['aptTypes'] = $this->admin_model->fetchAptType();
-			
+
 			$data['furnishings'] = $this->admin_model->fetchFurnishings();
-			
+
 			$data['services'] = $this->admin_model->fetchServices();
-			
+
 			$data['facility_categories'] = $this->admin_model->fetchFacilityCategories();
-			
+
 			$data['distances'] = $this->admin_model->fetchNeighborhoodDistance();
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['property'] = $this->admin_model->fetchProperty($id);
-			
+
 			$data['countries'] = $this->functions_model->get_countries();
 
 			$data['states'] = $this->functions_model->get_states($data['property']['country']);
@@ -2563,136 +2390,120 @@ class Admin extends CI_Controller {
 
 			$data['title'] = "Edit Property :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/edit-rss-property.php' , $data);
+			$this->load->view('admin/pages/edit-rss-property.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		
-
-		}else{
-
-			redirect( base_url().'admin/login','refresh');		
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	
-	public function edit_buytolet_property($id){ 
-		
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/edit-buytolet-property.php'))
+	public function edit_buytolet_property($id)
+	{
 
-        {
+
+		if (!file_exists(APPPATH . 'views/admin/pages/edit-buytolet-property.php')) {
 			// Whoops, we don't have a page for that!
 
 			show_404();
-
-        } 
+		}
 
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')){			
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['aptTypes'] = $this->admin_model->fetchAptType();
-			
+
 			$data['investTypes'] = $this->admin_model->fetchInvestType();
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
-			$data['adminID'] = $this->session->userdata('adminID');	
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');		
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['countries'] = $this->functions_model->get_countries();
 
 			$data['property'] = $this->admin_model->fetchBuytoletProperty($id);
-			
+
 			$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
-			
+
 			//Get Images
-			$data['btl_images'] = file_get_contents('https://dev-buy.smallsmall.com/buytolet/get-all-images/'.$data['property']['image_folder'].'/'.$data['property']['featured_image']);
+			$data['btl_images'] = file_get_contents('https://dev-buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
 
 			$data['title'] = "Edit Property :: Buytolet";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/edit-buytolet-property.php' , $data);
+			$this->load->view('admin/pages/edit-buytolet-property.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		
-
-		}else{
-
-			redirect( base_url().'admin/login','refresh');		
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
 
-	public function edit_item($id){
+	public function edit_item($id)
+	{
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/edit-furnisure-item.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/edit-furnisure-item.php')) {
 			// Whoops, we don't have a page for that!
 
 			show_404();
-
-        } 
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
-			
+
 			$data['categories'] = $this->admin_model->fetchFurnisureCategories();
 
 			$data['types'] = $this->admin_model->fetchFurnisureTypes();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['item'] = $this->admin_model->fetchItem($id);
 
 			$data['title'] = "Edit Item :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/edit-furnisure-item.php' , $data);
+			$this->load->view('admin/pages/edit-furnisure-item.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');		
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function createAmenity(){
+	public function createAmenity()
+	{
 
 		$file_element_name = 'userfile';
 
-        $title = $this->input->post('title');
+		$title = $this->input->post('title');
 
-        $amenity_type = $this->input->post('amenity_type');
+		$amenity_type = $this->input->post('amenity_type');
 
 		if (!is_dir('uploads/amenity/')) {
 
 			mkdir('./uploads/amenity/', 0777, TRUE);
-
 		}
-		
+
 		$config['upload_path'] = './uploads/amenity/';
 
 		$config['allowed_types'] = 'jpg|png';
@@ -2703,183 +2514,166 @@ class Admin extends CI_Controller {
 
 		$this->load->library('upload', $config);
 
-		if (!$this->upload->do_upload($file_element_name)){
+		if (!$this->upload->do_upload($file_element_name)) {
 
 			$status = 'error';
 
 			$msg = $this->upload->display_errors('', '');
-
-		}else{
+		} else {
 
 			$data = $this->upload->data();
 
-			if($data){
+			if ($data) {
 
 				$folder = $data['file_name'];
 
 				$res = $this->admin_model->insertAmenity($title, $amenity_type, $folder);
 
-				if($res){
+				if ($res) {
 
 					$status = 'success';
-					
-					$msg = 1;
 
-				}else{
+					$msg = 1;
+				} else {
 
 					$status = 'error';
-					
+
 					$msg = 0;
-
 				}
-
 			}
-
 		}
-
 	}
 
-	public function createFacilityCategory(){
+	public function createFacilityCategory()
+	{
 
-        $category = $this->input->post('category');
+		$category = $this->input->post('category');
 
 		$slug = url_title($category, 'dash', true);
 
 		$res = $this->admin_model->insertFCat($category, $slug);
 
-		if($res){
+		if ($res) {
 
 			echo 1;
-
-		}else{
+		} else {
 
 			echo 0;
-			
 		}
-
 	}
 
-	public function createFurnisureCategory(){
+	public function createFurnisureCategory()
+	{
 
-        $category = $this->input->post('category');
+		$category = $this->input->post('category');
 
 		$slug = url_title($category, 'dash', true);
 
 		$res = $this->admin_model->insertFurnisureCat($category, $slug);
 
-		if($res){
-		    
+		if ($res) {
+
 			echo 1;
-			
-		}else{
+		} else {
 
 			echo 0;
-
 		}
-
 	}
 
-	public function createFurnisureType(){
+	public function createFurnisureType()
+	{
 
-        $type = $this->input->post('type');
+		$type = $this->input->post('type');
 
 		$slug = url_title($type, 'dash', true);
 
 		$res = $this->admin_model->insertFurnisureType($type, $slug);
 
-		if($res){
-		    
+		if ($res) {
+
 			echo 1;
-			
-		}else{
+		} else {
 
 			echo 0;
-
 		}
-
 	}
 
-	public function createAptType(){
+	public function createAptType()
+	{
 
-        $category = $this->input->post('category');
+		$category = $this->input->post('category');
 
 		$slug = url_title($category, 'dash', true);
-		
+
 		$res = $this->admin_model->insertAptType($category, $slug);
 
-		if($res){
+		if ($res) {
 
 			echo 1;
-
-		}else{
+		} else {
 
 			echo 0;
-
 		}
-
 	}
 
-	public function createRentType(){
+	public function createRentType()
+	{
 
-        $rent_type = $this->input->post('rent_type');
+		$rent_type = $this->input->post('rent_type');
 
 		$slug = url_title($rent_type, 'dash', true);
 
 		$res = $this->admin_model->insertRentType($rent_type, $slug);
 
-		if($res){
+		if ($res) {
 
 			echo 1;
-
-		}else{
+		} else {
 
 			echo 0;
-
 		}
-
 	}
 
-	public function createNeighborhoodDistance(){
+	public function createNeighborhoodDistance()
+	{
 
-        $distance = $this->input->post('distance');
+		$distance = $this->input->post('distance');
 
 		$slug = url_title($distance, 'dash', true);
 
 		$res = $this->admin_model->insertNDist($distance, $slug);
 
-		if($res){
+		if ($res) {
 
 			echo 1;
-
-		}else{
+		} else {
 
 			echo 0;
-			
 		}
-
 	}
 
-	public function addAdmin(){        
+	public function addAdmin()
+	{
 
-        $fname = $this->input->post('fname');
+		$fname = $this->input->post('fname');
 
-        $lname = $this->input->post('lname');
+		$lname = $this->input->post('lname');
 
-        $access = $this->input->post('userAccess');
+		$access = $this->input->post('userAccess');
 
-        $email = $this->input->post('email'); 
-		
-		$pass = md5(date('Ymdhis')); 
-		
+		$email = $this->input->post('email');
+
+		$pass = md5(date('Ymdhis'));
+
 		$password = strtoupper(substr($pass, 0, 8));
 
 		$res = $this->admin_model->insertAdmin($fname, $lname, $email, $access, md5($password));
- 
-		if($res){
 
-			$data['lname'] = $lname;                        
+		if ($res) {
 
-			$data['name'] = $fname.' '.$lname; 
+			$data['lname'] = $lname;
+
+			$data['name'] = $fname . ' ' . $lname;
 
 			$data['password'] = $password;
 
@@ -2887,99 +2681,90 @@ class Admin extends CI_Controller {
 
 			$this->email->from('noreply@smallsmall.com', 'Administrator');
 
-			$this->email->to($email);            
+			$this->email->to($email);
 
-			$this->email->subject("Login Password");   
-			
-			$this->email->set_mailtype("html");         
+			$this->email->subject("Login Password");
 
-			$message = $this->load->view('email/header.php', $data, TRUE);            
+			$this->email->set_mailtype("html");
 
-			$message .= $this->load->view('email/admin-password-email.php', $data, TRUE);            
+			$message = $this->load->view('email/header.php', $data, TRUE);
 
-			$message .= $this->load->view('email/footer.php', $data, TRUE);            
+			$message .= $this->load->view('email/admin-password-email.php', $data, TRUE);
 
-			$this->email->message($message);            
+			$message .= $this->load->view('email/footer.php', $data, TRUE);
 
-			$emailRes = $this->email->send();            			
+			$this->email->message($message);
+
+			$emailRes = $this->email->send();
 
 			$status = "success";
-			
+
 			$msg = "You have successfully added user";
+		}
 
-		}  
-
-       	echo json_encode(array('status' => $status, 'msg' => $msg));
-
+		echo json_encode(array('status' => $status, 'msg' => $msg));
 	}
 
-	
 
-	public function getDistance(){
+
+	public function getDistance()
+	{
 
 		$msg = "";
 
 		$error = "";
 
-        
+
 
 		$res = $this->admin_model->getNDist();
 
-		if($res){
+		if ($res) {
 
-			$status = "success";		
+			$status = "success";
 
 			$msg = $res;
-
-
-
-		}else{
+		} else {
 
 			$status = "error";
 
 			$msg = "Error!";
-
 		}
 
-				
 
-		echo json_encode(array('status' => $status, 'msg' => $msg));	
 
+		echo json_encode(array('status' => $status, 'msg' => $msg));
 	}
 
-	public function getCategory(){
+	public function getCategory()
+	{
 
 		$msg = "";
 
 		$error = "";
 
-        
+
 
 		$res = $this->admin_model->getFCat();
 
-		if($res){
+		if ($res) {
 
-			$status = "success";		
+			$status = "success";
 
 			$msg = $res;
-
-
-
-		}else{
+		} else {
 
 			$status = "error";
 
 			$msg = "Error!";
-
 		}
 
-				
 
-		echo json_encode(array('status' => $status, 'msg' => $msg));	
 
+		echo json_encode(array('status' => $status, 'msg' => $msg));
 	}
 
-	public function uploadProperty(){
+	public function uploadProperty()
+	{
 
 		//Get data from AJAX
 
@@ -3001,12 +2786,12 @@ class Admin extends CI_Controller {
 
 		$price = $this->input->post('monthly-price');
 
-		$service_charge = $this->input->post('service-charge'); 
-		
+		$service_charge = $this->input->post('service-charge');
+
 		$service_charge_term = $this->input->post('service-charge-term');
 
 		$security_deposit = $this->input->post('security-deposit');
-		
+
 		$security_deposit_term = $this->input->post('security-deposit-term');
 
 		$payment_plan = $this->input->post('payment-plan');
@@ -3038,58 +2823,54 @@ class Admin extends CI_Controller {
 		$availableFrom = $this->input->post('availableFrom');
 
 		$status = "no";
-		
+
 		$featuredProp = "no";
 
 		$furnishing = $this->input->post('furnishing');
 
 		$renting_as = $this->input->post('suitable-for');
-		
+
 		$is_city = $this->functions_model->check_city($city, $state);
-				
-		if(!$is_city){
-		    
-		    $this->functions_model->insert_city($city, $state);
-		    
-		}
-		
-		if($this->input->post('featuredProp')){
-			
-			$featuredProp = "yes";
-				
-		}
-		
-		if($this->input->post('newProp')){
-			
-			$status = "yes"; 
-				
+
+		if (!$is_city) {
+
+			$this->functions_model->insert_city($city, $state);
 		}
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->input->post('featuredProp')) {
+
+			$featuredProp = "yes";
+		}
+
+		if ($this->input->post('newProp')) {
+
+			$status = "yes";
+		}
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$userID = $this->session->userdata('adminID');
 
-            $city_id = $this->admin_model->get_city_id($city);
+			$city_id = $this->admin_model->get_city_id($city);
 
 			//Populate the property table
 
 			$property = $this->admin_model->insertProperty($propName, $propType, $propDesc, $propNote, $address, $city, $state, $country, $price, $service_charge, $service_charge_term, $security_deposit, $payment_plan, $intervals, $frequency, $imageFolder, $featuredPic, $amenities, $bed, $bath, $toilet, $userID, $status, $furnishing, $renting_as, $services, $featuredProp, $availableFrom, $city_id['id'], $security_deposit_term);
 
-			if($property && is_array($facilityName)){
+			if ($property && is_array($facilityName)) {
 
 				$facility_count = count($facilityName);
 
-				for($i = 0; $i < $facility_count; $i++){
+				for ($i = 0; $i < $facility_count; $i++) {
 
-					if (!is_dir('./uploads/properties/'.$imageFolder.'/facilities')) {
+					if (!is_dir('./uploads/properties/' . $imageFolder . '/facilities')) {
 
-						mkdir('./uploads/properties/'.$imageFolder.'/facilities', 0777, TRUE);
-
+						mkdir('./uploads/properties/' . $imageFolder . '/facilities', 0777, TRUE);
 					}
 
 					$output = '';
 
-					$config["upload_path"] = './uploads/properties/'.$imageFolder.'/facilities';
+					$config["upload_path"] = './uploads/properties/' . $imageFolder . '/facilities';
 
 					$config["allowed_types"] = 'jpg|jpeg|png';
 
@@ -3109,65 +2890,56 @@ class Admin extends CI_Controller {
 
 					$_FILES["file"]["size"] = $_FILES["files"]["size"][$i];
 
-					
 
-					if($this->upload->do_upload('file')){					
 
-						
+					if ($this->upload->do_upload('file')) {
+
+
 
 						$data = $this->upload->data();
-
 					}
 
 					$this->admin_model->insertFacilities($property, $facilityName[$i], $facilityCat[$i], $facilityDist[$i], $data['file_name']);
-
 				}
 				//$facilities = $this->admin_model->insertFacilities($property['id'], $facilityName, $facilityCat, $facilityDist);
 				//Check city if it is in table
-				
-				echo 1;
 
-			}elseif($property){
-			    
-			    echo 1;
-			    
-			}else{
+				echo 1;
+			} elseif ($property) {
+
+				echo 1;
+			} else {
 
 				echo "Could not upload property";
-
 			}
+		} else {
 
-		}else{			
+			redirect(base_url() . "admin/dashboard", 'refresh');
+		}
+	}
+	public function uploadAptImages($folder)
+	{
 
-			redirect( base_url()."admin/dashboard" ,'refresh');			
+		if (!$folder) {
 
+			$folder = md5(date("Ymd His"));
 		}
 
-	}
-	public function uploadAptImages($folder){			
+		sleep(3);
 
-		if(!$folder){			
+		if (!is_dir('../stay.smallsmall.com/uploads/apartments/' . $folder)) {
 
-			$folder = md5(date("Ymd His"));			
+			mkdir('../stay.smallsmall.com/uploads/apartments/' . $folder, 0777, TRUE);
+		}
 
-		}		
+		if ($_FILES["files"]["name"] != '') {
 
-		sleep(3);		
-
-		if (!is_dir('../stay.smallsmall.com/uploads/apartments/'.$folder)) {
-
-			mkdir('../stay.smallsmall.com/uploads/apartments/'.$folder, 0777, TRUE);
-			
-		}		
-
-		if($_FILES["files"]["name"] != ''){
-			
 
 			$output = '';
-			
+
 			$error = 0;
 
-			$config["upload_path"] = '../stay.smallsmall.com/uploads/apartments/'.$folder;
+			$config["upload_path"] = '../stay.smallsmall.com/uploads/apartments/' . $folder;
 
 			$config["allowed_types"] = 'jpg|jpeg|png';
 
@@ -3178,10 +2950,10 @@ class Admin extends CI_Controller {
 			$this->load->library('upload', $config);
 
 			$this->upload->initialize($config);
-			
 
-			for($count = 0; $count<count($_FILES["files"]["name"]); $count++){
-				
+
+			for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
 
 				$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
 
@@ -3192,32 +2964,30 @@ class Admin extends CI_Controller {
 				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
 
 				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
-				
 
-				if($this->upload->do_upload('file')){				
 
-					$data = $this->upload->data();	
-					
-					
+				if ($this->upload->do_upload('file')) {
+
+					$data = $this->upload->data();
+
+
 
 					$output .= '
-								<span class="imgCover removal-id-'.$count.'" id="id-'.$data["file_name"].'"><img src="https://dev-stay.smallsmall.com/uploads/apartments/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
-								<div class="remove-img img-removal" id="img-properties-'.$data['file_name'].'-'.$count.'">remove <i class="fa fa-trash"></i></div>
+								<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://dev-stay.smallsmall.com/uploads/apartments/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+								<div class="remove-img img-removal" id="img-properties-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
 								<!--<span class="featTT">featured</span>--></span>';
-				}else{
+				} else {
 					$error = $this->upload->display_errors('', '');
-				}			
-
+				}
 			}
 			//echo $output;
 
-			echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));		
-
-		}		
-
+			echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));
+		}
 	}
-	
-	public function uplUpcomingProp(){
+
+	public function uplUpcomingProp()
+	{
 
 		//Get data from AJAX
 
@@ -3242,11 +3012,11 @@ class Admin extends CI_Controller {
 		$typeOfTenant = $this->input->post('typeOfTenant');
 
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$userID = $this->session->userdata('adminID');
 
-            $city_id = $this->admin_model->get_city_id($city);
+			$city_id = $this->admin_model->get_city_id($city);
 
 			//Populate the property table
 
@@ -3254,25 +3024,21 @@ class Admin extends CI_Controller {
 
 
 
-			if($property){
-			    
-				echo 1;
+			if ($property) {
 
-			}else{
+				echo 1;
+			} else {
 
 				echo "Could not upload property";
-
 			}
+		} else {
 
-		}else{			
-
-			redirect( base_url()."admin/dashboard" ,'refresh');			
-
+			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
-
 	}
-	
-	public function editProperty(){
+
+	public function editProperty()
+	{
 
 		//Get data from AJAX
 		$propID = $this->input->post('propID');
@@ -3304,9 +3070,9 @@ class Admin extends CI_Controller {
 		$amenities = $this->input->post('amenities');
 
 		$services = $this->input->post('services');
-		
+
 		$service_charge = $this->input->post('service-charge');
-		
+
 		$service_charge_term = $this->input->post('service-charge-term');
 
 		$bed = $this->input->post('bed-number');
@@ -3316,15 +3082,15 @@ class Admin extends CI_Controller {
 		$toilet = $this->input->post('toilet-number');
 
 		$featuredProp = $this->input->post('featuredProp');
-		
+
 		$availableFrom = $this->input->post('availableFrom');
-		
+
 		$payment_plan = $this->input->post('payment-plan');
-		
+
 		$intervals = $this->input->post('intervals');
-		
+
 		$frequency = $this->input->post('frequency');
-		
+
 		$status = 'no';
 
 		$furnishing = $this->input->post('furnishing');
@@ -3336,54 +3102,50 @@ class Admin extends CI_Controller {
 		$facilityCat = $this->input->post('facility-category');
 
 		$facilityDist = $this->input->post('facility-distance');
-		
+
 		$featuredProp = 'no';
-		
+
 		$is_city = $this->functions_model->check_city($city, $states);
-				
-		if(!$is_city){
-		    
-		    $this->functions_model->insert_city($city, $states);
-		    
-		}
-		
-		if($this->input->post('featuredProp')){
-			
-			$featuredProp = "yes";
-				
-		}
-		
-		if($this->input->post('newProp')){
-			
-			$status = "yes";
-				
+
+		if (!$is_city) {
+
+			$this->functions_model->insert_city($city, $states);
 		}
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->input->post('featuredProp')) {
+
+			$featuredProp = "yes";
+		}
+
+		if ($this->input->post('newProp')) {
+
+			$status = "yes";
+		}
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$userID = $this->session->userdata('adminID');
-			
+
 			$city_id = $this->admin_model->get_city_id($city);
 
 			//Populate the property table
 
-			$property = $this->admin_model->editProperty($propID, $propName, $propType, $propDesc, $propNote, $address, $price, $security_deposit, $service_charge_term, $featuredPic, $amenities, $bed, $bath, $toilet, $userID, $furnishing, $renting_as, $services, $featuredProp, $availableFrom, $status, $intervals, $frequency, $payment_plan, $country, $states, $city, $city_id['id'], $security_deposit_term, $service_charge);  
+			$property = $this->admin_model->editProperty($propID, $propName, $propType, $propDesc, $propNote, $address, $price, $security_deposit, $service_charge_term, $featuredPic, $amenities, $bed, $bath, $toilet, $userID, $furnishing, $renting_as, $services, $featuredProp, $availableFrom, $status, $intervals, $frequency, $payment_plan, $country, $states, $city, $city_id['id'], $security_deposit_term, $service_charge);
 
-			if($property && is_array(@$facilityName)){
+			if ($property && is_array(@$facilityName)) {
 
 				$facility_count = count($facilityName);
 
-				for($i = 0; $i < $facility_count; $i++){
+				for ($i = 0; $i < $facility_count; $i++) {
 
-					if (!is_dir('./uploads/properties/'.$imageFolder.'/facilities')) {
+					if (!is_dir('./uploads/properties/' . $imageFolder . '/facilities')) {
 
-						mkdir('./uploads/properties/'.$imageFolder.'/facilities', 0777, TRUE);
-
-					}					
+						mkdir('./uploads/properties/' . $imageFolder . '/facilities', 0777, TRUE);
+					}
 
 					$output = '';
 
-					$config["upload_path"] = './uploads/properties/'.$imageFolder.'/facilities';
+					$config["upload_path"] = './uploads/properties/' . $imageFolder . '/facilities';
 
 					$config["allowed_types"] = 'jpg|jpeg|png';
 
@@ -3403,43 +3165,37 @@ class Admin extends CI_Controller {
 
 					$_FILES["file"]["size"] = $_FILES["files"]["size"][$i];
 
-				
-					if($this->upload->do_upload('file')){					
+
+					if ($this->upload->do_upload('file')) {
 
 						$data = $this->upload->data();
-
 					}
 					$this->admin_model->insertFacilities($property, $facilityName[$i], $facilityCat[$i], $facilityDist[$i], $data['file_name']);
-
 				}
 				//$facilities = $this->admin_model->insertFacilities($property['id'], $facilityName, $facilityCat, $facilityDist);
 				echo 1;
-			}elseif($property){
-			    
-                echo 1;
-                
-			}else{
+			} elseif ($property) {
+
+				echo 1;
+			} else {
 
 				echo "Could not edit property";
-
 			}
+		} else {
 
-		}else{			
-
-			redirect( base_url()."admin/dashboard" ,'refresh');			
-
+			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
-
 	}
-	public function editApt(){
+	public function editApt()
+	{
 		//Get data from AJAX
-		
+
 		$id = $this->input->post('aptID');
 
 		$propName = $this->input->post('propTitle');
 
 		$propType = $this->input->post('propType');
-		
+
 		$stayType = $this->input->post('stayType');
 
 		$propDesc = htmlentities($this->input->post('propDesc', ENT_QUOTES));
@@ -3467,8 +3223,8 @@ class Admin extends CI_Controller {
 		$toilet = $this->input->post('toilet-number');
 
 		$guest = $this->input->post('guest-number');
-		
-		if($this->session->has_userdata('adminLoggedIn')){
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$userID = $this->session->userdata('adminID');
 
@@ -3476,26 +3232,20 @@ class Admin extends CI_Controller {
 
 			$property = $this->admin_model->editApartment($id, $propName, $propType, $stayType, $propDesc, $address, $cost, $security_deposit, $imageFolder, $featuredPic, $amenities, $bed, $bath, $toilet, $guest, $policies, $house_rules);
 
-			if($property != 0){
+			if ($property != 0) {
 
 				echo 1;
-
-			}else{
+			} else {
 
 				echo "Could not upload property";
-
 			}
+		} else {
 
-		}else{			
-
-			redirect( base_url()."admin/dashboard" ,'refresh');			
-
+			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
-
-		
-
 	}
-	public function all_apartments(){
+	public function all_apartments()
+	{
 
 		$config['total_rows'] = $this->admin_model->countApartments();
 
@@ -3525,48 +3275,44 @@ class Admin extends CI_Controller {
 
 			$data['page_links'] = $this->pagination->create_links();
 
-			$data['apartments'] = $this->admin_model->fetchApartments();			
-
+			$data['apartments'] = $this->admin_model->fetchApartments();
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/all-apartments.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/all-apartments.php')) {
 
-                // Whoops, we don't have a page for that!
-                show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Properties :: Stay SmallSmall";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/all-apartments.php' , $data);
+			$this->load->view('admin/pages/all-apartments.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
 			//$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
 
-		}else{
-		    
-			redirect( base_url().'admin/login','refresh');
+		} else {
 
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function all_bookings(){
+	public function all_bookings()
+	{
 
 		$config['total_rows'] = $this->admin_model->countBookings();
 
@@ -3589,116 +3335,111 @@ class Admin extends CI_Controller {
 			$this->admin_model->setPageNumber($this->pagination->per_page);
 
 			$this->admin_model->setOffset($offset);
-			
+
 			$this->pagination->cur_page = $page_number;
 
 			$this->pagination->initialize($config);
 
 			$data['page_links'] = $this->pagination->create_links();
 
-			$data['apartments'] = $this->admin_model->fetchStayoneBookings();			
-
+			$data['apartments'] = $this->admin_model->fetchStayoneBookings();
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/all-stayone-bookings.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/all-stayone-bookings.php')) {
 
-                // Whoops, we don't have a page for that!
-                show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Bookings :: Stay SmallSmall";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/all-stayone-bookings.php' , $data);
+			$this->load->view('admin/pages/all-stayone-bookings.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
 			//$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
-	
-		}else{
-	
-			redirect( base_url().'admin/login','refresh');		
 
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
-	
-	public function booking_details($id){
-		
-		if($this->session->has_userdata('adminLoggedIn')){	
-		    
-		    $data['details'] = $this->admin_model->fetchBookingDetails($id);
+
+	public function booking_details($id)
+	{
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['details'] = $this->admin_model->fetchBookingDetails($id);
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
-		
-			
+
+
 			$data['title'] = "Booking Details";
-			
+
 			$this->load->view('admin/templates/header', $data);
-			
+
 			$this->load->view('admin/templates/sidebar', $data);
-			
+
 			$this->load->view('admin/pages/booking-details', $data);
-			
+
 			$this->load->view('admin/templates/footer', $data);
-			
-		}else{
-			
-			redirect( base_url()."admin/login" ,'refresh');
-			
+		} else {
+
+			redirect(base_url() . "admin/login", 'refresh');
 		}
 	}
-	
-	public function btl_request_details($id){
-		
-		if($this->session->has_userdata('adminLoggedIn')){	
-		    
-		    $data['details'] = $this->admin_model->fetchRequestDetails($id);
-		    
-		    $data['beneficiaries'] = $this->admin_model->fetchRequestBeneficiaries($id);
+
+	public function btl_request_details($id)
+	{
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['details'] = $this->admin_model->fetchRequestDetails($id);
+
+			$data['beneficiaries'] = $this->admin_model->fetchRequestBeneficiaries($id);
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
-		
-			
+
+
 			$data['title'] = "Request Details";
-			
+
 			$this->load->view('admin/templates/header', $data);
-			
+
 			$this->load->view('admin/templates/sidebar', $data);
-			
+
 			$this->load->view('admin/pages/request-details', $data);
-			
+
 			$this->load->view('admin/templates/footer', $data);
-			
-		}else{
-			
-			redirect( base_url()."admin/login" ,'refresh');
-			
+		} else {
+
+			redirect(base_url() . "admin/login", 'refresh');
 		}
 	}
 
-	public function upload_furniture(){
+	public function upload_furniture()
+	{
 
 		//Get data from AJAX
 
@@ -3718,13 +3459,13 @@ class Admin extends CI_Controller {
 
 		$cost = $this->input->post('cost');
 
-		$security_deposit = $this->input->post('securityDep');		
+		$security_deposit = $this->input->post('securityDep');
 
 		$imageFolder = $this->input->post('foldername');
 
 		$featuredPic = $this->input->post('featuredPic');
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$userID = $this->session->userdata('adminID');
 
@@ -3732,24 +3473,21 @@ class Admin extends CI_Controller {
 
 			$furniture = $this->admin_model->insertFurniture($title, $type, $category, $cost, $security_deposit, $desc, $delivery, $spec, $payment, $imageFolder, $featuredPic);
 
-			if($furniture != 0){
+			if ($furniture != 0) {
 
 				echo 1;
-
-			}else{
+			} else {
 
 				echo "Could not upload property";
-
 			}
-		}else{
+		} else {
 
-			redirect( base_url()."admin/dashboard" ,'refresh');
-
+			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
-
 	}
-	
-	public function edit_furniture(){
+
+	public function edit_furniture()
+	{
 
 		//Get data from AJAX
 
@@ -3769,7 +3507,7 @@ class Admin extends CI_Controller {
 
 		$cost = $this->input->post('cost');
 
-		$security_deposit = $this->input->post('securityDep');		
+		$security_deposit = $this->input->post('securityDep');
 
 		$imageFolder = $this->input->post('foldername');
 
@@ -3777,30 +3515,25 @@ class Admin extends CI_Controller {
 
 		$app_id = $this->input->post('app_id');
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$userID = $this->session->userdata('adminID');
 
 			//Populate the property table
 
 			$furniture = $this->admin_model->updateFurniture($title, $type, $category, $cost, $security_deposit, $desc, $delivery, $spec, $payment, $imageFolder, $featuredPic, $app_id);
-			
-			if($furniture != 0){
+
+			if ($furniture != 0) {
 
 				echo 1;
-
-			}else{
+			} else {
 
 				echo "Could not upload property";
-				
 			}
+		} else {
 
-		}else{
-		    
-			redirect( base_url()."admin/dashboard" ,'refresh');
-
+			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
-
 	}
 
 	// public function uploadImages($folder){			
@@ -3820,10 +3553,10 @@ class Admin extends CI_Controller {
 	// 	}		
 
 	// 	if($_FILES["files"]["name"] != ''){
-			
+
 
 	// 		$output = '';
-			
+
 	// 		$error = 0;
 
 	// 		$config["upload_path"] = './uploads/properties/'.$folder;
@@ -3837,10 +3570,10 @@ class Admin extends CI_Controller {
 	// 		$this->load->library('upload', $config);
 
 	// 		$this->upload->initialize($config);
-			
+
 
 	// 		for($count = 0; $count<count($_FILES["files"]["name"]); $count++){
-				
+
 
 	// 			$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
 
@@ -3851,13 +3584,13 @@ class Admin extends CI_Controller {
 	// 			$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
 
 	// 			$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
-				
+
 
 	// 			if($this->upload->do_upload('file')){				
 
 	// 				$data = $this->upload->data();	
-					
-					
+
+
 
 	// 				$output .= '
 	// 							<span class="imgCover removal-id-'.$count.'" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/properties/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
@@ -3878,129 +3611,30 @@ class Admin extends CI_Controller {
 
 
 	public function uploadImages($folder)
-{
-    require 'vendor/autoload.php';
+	{
+		require 'vendor/autoload.php';
 
-    if (!$folder) {
-
-        $folder = md5(date("Ymd His"));
-
-    }
-
-    sleep(3);
-
-    $bucket = 'dev-rss-uploads'; // bucket name
-
-    if (!is_dir('./uploads/properties/' . $folder)) {
-
-        mkdir('./uploads/properties/' . $folder, 0777, TRUE);
-
-    }
-
-    if ($_FILES["files"]["name"] != '') {
-
-        $output = '';
-
-        $error = 0;
-
-        $config["upload_path"] = './uploads/properties/' . $folder;
-
-        $config["allowed_types"] = 'jpg|jpeg|png';
-
-        $config['encrypt_name'] = TRUE;
-
-        $config['max_size'] = 10 * 1024;
-
-        $this->load->library('upload', $config);
-
-        $this->upload->initialize($config);
-
-        // Create an S3 client
-        $s3 = new Aws\S3\S3Client([
-
-            'version' => 'latest',
-
-            'region'  => 'eu-west-1'
-
-        ]);
-
-        for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
-
-            $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
-
-            $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
-
-            $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
-
-            $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
-
-            $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];			
-
-            if ($this->upload->do_upload('file')) {
-
-                $data = $this->upload->data();
-
-                // Upload the file to S3
-                $s3ObjectKey = 'uploads/properties/' . $folder . '/' . $data['file_name'];
-
-                try {
-                    $result = $s3->putObject([
-
-                        'Bucket' => $bucket,
-
-                        'Key'    => $s3ObjectKey,
-
-                        'Body'   => file_get_contents($data["full_path"]),
-                    ]);
-
-                    $output .= '
-                        <span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '">
-                            <img src="' . $result['ObjectURL'] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
-                            <div class="remove-img img-removal" id="img-properties-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
-                        </span>';
-                } catch (Aws\S3\Exception\S3Exception $e) {
-
-                    $error = 'S3 Upload Error: ' . $e->getMessage();
-
-                }
-            } else {
-
-                $error = $this->upload->display_errors('', '');
-
-            }
-        }
-
-        echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));
-
-    }
-}
-
-
-
-
-	public function uploadFurnisureImages($folder){
-
-		if(!$folder){
+		if (!$folder) {
 
 			$folder = md5(date("Ymd His"));
-
 		}
-		
+
 		sleep(3);
 
-		if (!is_dir('./uploads/furnisure/'.$folder)) {
+		$bucket = 'dev-rss-uploads'; // bucket name
 
-			mkdir('./uploads/furnisure/'.$folder, 0777, TRUE);
+		if (!is_dir('./uploads/properties/' . $folder)) {
 
+			mkdir('./uploads/properties/' . $folder, 0777, TRUE);
 		}
 
-		if($_FILES["files"]["name"] != ''){
-		    
+		if ($_FILES["files"]["name"] != '') {
+
 			$output = '';
-			
+
 			$error = 0;
 
-			$config["upload_path"] = './uploads/furnisure/'.$folder;
+			$config["upload_path"] = './uploads/properties/' . $folder;
 
 			$config["allowed_types"] = 'jpg|jpeg|png';
 
@@ -4012,7 +3646,16 @@ class Admin extends CI_Controller {
 
 			$this->upload->initialize($config);
 
-			for($count = 0; $count < count($_FILES["files"]["name"]); $count++){
+			// Create an S3 client
+			$s3 = new Aws\S3\S3Client([
+
+				'version' => 'latest',
+
+				'region'  => 'eu-west-1'
+
+			]);
+
+			for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
 
 				$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
 
@@ -4024,37 +3667,118 @@ class Admin extends CI_Controller {
 
 				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
 
-				if($this->upload->do_upload('file')){
+				if ($this->upload->do_upload('file')) {
+
+					$data = $this->upload->data();
+
+					// Upload the file to S3
+					$s3ObjectKey = 'uploads/properties/' . $folder . '/' . $data['file_name'];
+
+					try {
+						$result = $s3->putObject([
+
+							'Bucket' => $bucket,
+
+							'Key'    => $s3ObjectKey,
+
+							'Body'   => file_get_contents($data["full_path"]),
+						]);
+
+						$output .= '
+                        <span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '">
+                            <img src="' . $result['ObjectURL'] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+                            <div class="remove-img img-removal" id="img-properties-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
+                        </span>';
+					} catch (Aws\S3\Exception\S3Exception $e) {
+
+						$error = 'S3 Upload Error: ' . $e->getMessage();
+					}
+				} else {
+
+					$error = $this->upload->display_errors('', '');
+				}
+			}
+
+			echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));
+		}
+	}
+
+
+
+
+	public function uploadFurnisureImages($folder)
+	{
+
+		if (!$folder) {
+
+			$folder = md5(date("Ymd His"));
+		}
+
+		sleep(3);
+
+		if (!is_dir('./uploads/furnisure/' . $folder)) {
+
+			mkdir('./uploads/furnisure/' . $folder, 0777, TRUE);
+		}
+
+		if ($_FILES["files"]["name"] != '') {
+
+			$output = '';
+
+			$error = 0;
+
+			$config["upload_path"] = './uploads/furnisure/' . $folder;
+
+			$config["allowed_types"] = 'jpg|jpeg|png';
+
+			$config['encrypt_name'] = TRUE;
+
+			$config['max_size'] = 10 * 1024;
+
+			$this->load->library('upload', $config);
+
+			$this->upload->initialize($config);
+
+			for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
+				$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+
+				$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+
+				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+
+				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+
+				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+				if ($this->upload->do_upload('file')) {
 
 					$data = $this->upload->data();
 
 					$output .= '
-								<span class="imgCover removal-id-'.$count.'" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/furnisure/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
-								<div class="remove-img img-removal" id="img-furnisure-'.$data['file_name'].'-'.$count.'">remove <i class="fa fa-trash"></i></div>
+								<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="' . base_url() . 'uploads/furnisure/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+								<div class="remove-img img-removal" id="img-furnisure-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
 								<!--<span class="featTT">featured</span>--></span>';
-
-				}else{
+				} else {
 					$error = $this->upload->display_errors('', '');
-				}			
-
+				}
 			}
 			//echo $output;
 
 			echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));
-
-		}		
-
+		}
 	}
 
-	public function addNews(){
+	public function addNews()
+	{
 
-	    $file_element_name = 'userfile';
+		$file_element_name = 'userfile';
 
-        $title = $this->input->post('title');
+		$title = $this->input->post('title');
 
-        $content = htmlentities($this->input->post('content', ENT_QUOTES));
+		$content = htmlentities($this->input->post('content', ENT_QUOTES));
 
-        $credit = $this->input->post('credit');
+		$credit = $this->input->post('credit');
 
 		$slug = url_title($title, 'dash', true);
 
@@ -4062,13 +3786,12 @@ class Admin extends CI_Controller {
 
 		$userID = $this->session->userdata('adminID');
 
-        if (!is_dir('./uploads/news/'.$slug)) {
+		if (!is_dir('./uploads/news/' . $slug)) {
 
-			mkdir('./uploads/news/'.$slug, 0777, TRUE);
-
+			mkdir('./uploads/news/' . $slug, 0777, TRUE);
 		}
 
-		$config['upload_path'] = './uploads/news/'.$slug;
+		$config['upload_path'] = './uploads/news/' . $slug;
 
 		$config['allowed_types'] = 'jpg|png|jpeg';
 
@@ -4079,73 +3802,67 @@ class Admin extends CI_Controller {
 		$this->load->library('upload', $config);
 
 
-		if (!$this->upload->do_upload($file_element_name)){
+		if (!$this->upload->do_upload($file_element_name)) {
 
 			$status = 'error';
 
 			$msg = $this->upload->display_errors('', '');
-
-		}else{
+		} else {
 
 			$data = $this->upload->data();
-            //($data['file_name'], $category, $parent, $slug);
+			//($data['file_name'], $category, $parent, $slug);
 
-			if($data){
+			if ($data) {
 
-			    $folder = "uploads/news/".$slug;
+				$folder = "uploads/news/" . $slug;
 
-			    $res = $this->admin_model->insertNews($title, $content, $credit, $slug, $data['file_name'], $userID);
+				$res = $this->admin_model->insertNews($title, $content, $credit, $slug, $data['file_name'], $userID);
 
-                if($res){
+				if ($res) {
 
-                    $status = "success";
-                    
-				    $msg = "Successfully Uploaded"; 
+					$status = "success";
 
-                }else{
+					$msg = "Successfully Uploaded";
+				} else {
 
-                    unlink($data['full_path']);
+					unlink($data['full_path']);
 
-                    $status = "error";
+					$status = "error";
 
-				    $msg = "Error inserting article";
-
-                }
-
-			}else{
+					$msg = "Error inserting article";
+				}
+			} else {
 
 				unlink($data['full_path']);
 
 				$status = "error";
 
 				$msg = "Something went wrong when saving the file, please try again.";
-
 			}
-
 		}
 
 		@unlink($_FILES[$file_element_name]);
 
-	    echo json_encode(array('status' => $status, 'msg' => $msg));
-
+		echo json_encode(array('status' => $status, 'msg' => $msg));
 	}
-	public function editNews(){
+	public function editNews()
+	{
 
-	    $file_element_name = 'userfile';
+		$file_element_name = 'userfile';
 
-        $title = $this->input->post('title');
+		$title = $this->input->post('title');
 
-        $content = htmlentities($this->input->post('content', ENT_QUOTES));
+		$content = htmlentities($this->input->post('content', ENT_QUOTES));
 
-        $credit = $this->input->post('credit');
+		$credit = $this->input->post('credit');
 
-        $articleID = $this->input->post('articleID');
+		$articleID = $this->input->post('articleID');
 
-        $featImg = $this->input->post('featImg');
+		$featImg = $this->input->post('featImg');
 
-        $folder = $this->input->post('folder');
-        
-        $data = array();
+		$folder = $this->input->post('folder');
+
+		$data = array();
 
 		$slug = url_title($title, 'dash', true);
 
@@ -4153,13 +3870,12 @@ class Admin extends CI_Controller {
 
 		$userID = $this->session->userdata('adminID');
 
-        if (!is_dir('./uploads/news/'.$folder)) {
+		if (!is_dir('./uploads/news/' . $folder)) {
 
-			mkdir('./uploads/news/'.$folder, 0777, TRUE);
-
+			mkdir('./uploads/news/' . $folder, 0777, TRUE);
 		}
 
-		$config['upload_path'] = './uploads/news/'.$folder;
+		$config['upload_path'] = './uploads/news/' . $folder;
 
 
 
@@ -4171,69 +3887,64 @@ class Admin extends CI_Controller {
 
 		$this->load->library('upload', $config);
 
-		if (!$this->upload->do_upload($file_element_name)){
+		if (!$this->upload->do_upload($file_element_name)) {
 
 			$data['file_name'] = $featImg;
-
-		}else{
+		} else {
 
 			$data = $this->upload->data();
 		}
-			
 
-		if($data){
 
-		    $folder = "uploads/news/".$folder;
+		if ($data) {
 
-		    $res = $this->admin_model->editNews($title, $content, $folder, $data['file_name'], $articleID);
+			$folder = "uploads/news/" . $folder;
 
-            if($res){
+			$res = $this->admin_model->editNews($title, $content, $folder, $data['file_name'], $articleID);
 
-                $status = "success";
+			if ($res) {
 
-			    $msg = "Successfully Uploaded";
+				$status = "success";
 
-            }else{
+				$msg = "Successfully Uploaded";
+			} else {
 
-                $status = "error";
+				$status = "error";
 
-			    $msg = "Error inserting article";
-
-            }
-
-		}else{
+				$msg = "Error inserting article";
+			}
+		} else {
 
 			$status = "error";
 
 			$msg = "Something went wrong when saving the file, please try again.";
-
 		}
 
 		@unlink($_FILES[$file_element_name]);
 
-	    echo json_encode(array('status' => $status, 'msg' => $msg));
-
+		echo json_encode(array('status' => $status, 'msg' => $msg));
 	}
-	
-	
 
-	public function get_userDetails($user_id){
+
+
+	public function get_userDetails($user_id)
+	{
 
 		$profile = $this->functions_model->get_user_details($user_id);
 
 		return $profile;
-
 	}
 
-	public function get_propDetails($prop_id){
+	public function get_propDetails($prop_id)
+	{
 
 		$property = $this->functions_model->get_prop_details($prop_id);
 
 		return $property;
-
 	}
-	
-	public function view_properties(){
+
+	public function view_properties()
+	{
 
 		$config['total_rows'] = $this->admin_model->countProperties();
 
@@ -4264,56 +3975,50 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['properties'] = $this->admin_model->fetchProperties();
-
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/view-properties.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/view-properties.php')) {
 
-                // Whoops, we don't have a page for that!
+			// Whoops, we don't have a page for that!
 
-                show_404();
-
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
-			
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
-			
+
 
 			$data['title'] = "Properties :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/view-properties.php' , $data);
+			$this->load->view('admin/pages/view-properties.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
 			//$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
-		
 
-		}else{
-			
 
-			redirect( base_url().'admin/login','refresh');		
+		} else {
 
-			
 
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	
-	public function property_alert_list(){
-		
+
+	public function property_alert_list()
+	{
+
 
 		$config['total_rows'] = $this->admin_model->countPropertyAlert();
 
@@ -4343,47 +4048,42 @@ class Admin extends CI_Controller {
 
 			$data['page_links'] = $this->pagination->create_links();
 
-			$data['properties'] = $this->admin_model->fetchPropertyAlert();	
-
-
+			$data['properties'] = $this->admin_model->fetchPropertyAlert();
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/property-alerts.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/property-alerts.php')) {
 
-                // Whoops, we don't have a page for that!
-                show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Property Alert List :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/property-alerts.php' , $data);
+			$this->load->view('admin/pages/property-alerts.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	
-	public function all_buytolet_properties(){
+
+	public function all_buytolet_properties()
+	{
 
 		$config['total_rows'] = $this->admin_model->countBuytoletProperties();
 
@@ -4400,7 +4100,7 @@ class Admin extends CI_Controller {
 			if (empty($page_number))
 
 				$page_number = 1;
-				
+
 			$offset = ($page_number - 1) * $this->pagination->per_page;
 
 			$this->admin_model->setPageNumber($this->pagination->per_page);
@@ -4414,436 +4114,412 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['properties'] = $this->admin_model->fetchBuytoletProperties();
-
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/btl-properties.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/btl-properties.php')) {
 
-                // Whoops, we don't have a page for that!
+			// Whoops, we don't have a page for that!
 
-                show_404();
-
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Properties :: Buytolet";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/btl-properties.php' , $data);
+			$this->load->view('admin/pages/btl-properties.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
 			//$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
 
-		}else{
-		    
-			redirect( base_url().'admin/login','refresh');	
+		} else {
 
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+	public function switchProperty()
+	{
+
+		$verificationID = $this->input->post('verificationID');
+
+		$user_id = $this->input->post('userID');
+
+		$propertyID = $this->input->post('propertyID');
+
+		$bookingID = $this->input->post('bookingID');
+
+		$newPropertyID = $this->input->post('newPropertyID');
+
+		$paymentPlan = $this->input->post('paymentPlan');
+
+		$securityDeposit = $this->input->post('securityDeposit');
+
+		$period_paid = $this->input->post('period_paid');
+
+		$duration = 12;
+
+		$booked_as = $this->input->post('renting_as');
+
+		$newBookingId = $this->random_strings(5);
+
+		$move_in_date = date('Y-m-d', strtotime($this->input->post('move_in_date')));
+
+		$payment_type = "Transfer";
+
+		$ref = 'rss_' . md5(rand(1000000, 9999999999));
+
+		//Get Property
+		$prop_response = $this->rss_model->get_vacant_property($newPropertyID);
+
+		if (!$prop_response) {
+
+			$exists = $this->rss_model->get_existing_property($newPropertyID);
+
+			if ($exists) {
+
+				$total_cost = $securityDeposit + ($exists['price'] * $period_paid);
+
+				//Insert booking and insert new date for property
+				$response = $this->rss_model->insertBooking($newBookingId, $verificationID, $user_id, $newPropertyID, '', $paymentPlan, $exists['price'], '', '', $securityDeposit, $duration, $booked_as, $move_in_date, $payment_type, $total_cost, $ref, '', '', '', '');
+
+				//Update previous booking
+				$booking_response = $this->admin_model->update_booking($bookingID, $move_in_date);
+
+				//Get User Details
+				$user = $this->admin_model->get_user($user_id);
+
+				//update new property
+				$this->rss_model->update_available_date($newPropertyID, $move_in_date);
+
+				$this->rss_model->update_available_date($propertyID, '');
+
+				if ($response) {
+
+					//Send email to user
+					$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+					$data['email'] = $user['email'];
+
+					$data['phone'] = $user['phone'];
+
+					$data['propName'] = $exists['propertyTitle'];
+
+					$data['propAddress'] = $exists['address'];
+
+					$data['amount'] = $exists['price'];
+
+					$data['paymentOption'] = $payment_type;
+
+					$data['duration'] = $duration;
+
+					$data['paymentPlan'] = $paymentPlan;
+
+					$this->email->from('noreply@rentsmallsmall.com', 'Automated');
+
+					$this->email->to('customerexperience@rentsmallsmall.com');
+
+					$this->email->subject("Property Booked");
+
+					$this->email->set_mailtype("html");
+
+					$message = $this->load->view('email/header.php', $data, TRUE);
+
+					$message .= $this->load->view('email/apt-booking-email.php', $data, TRUE);
+
+					$message .= $this->load->view('email/footer.php', $data, TRUE);
+
+					$this->email->message($message);
+
+					$emailRes = $this->email->send();
+				}
+			} else {
+
+				echo "Property does not exist";
+			}
+		} else {
+
+			echo "Property is rented";
+		}
+	}
+	public function changeBookingStatus()
+	{
+
+		$reason = $this->input->post("reason");
+
+		$status_note = $this->input->post("status_note");
+
+		$booking_id = $this->input->post("booking_id");
+
+		$user_id = $this->input->post("user_id");
+
+		$move_out_date = $this->input->post("move_out_date");
+
+		$response = $this->admin_model->update_booking($reason, $status_note, $booking_id, $user_id, $move_out_date);
+
+		if ($response) {
+
+			echo 1;
+		} else {
+
+			echo 0;
+		}
+	}
+	public function insertNewBooking()
+	{
+
+		$verificationID = $this->input->post('verificationID');
+
+		$user_id = $this->input->post('userID');
+
+		$productID = $this->input->post('propID');
+
+		$paymentPlan = $this->input->post('paymentPlan');
+
+		$duration = $this->input->post('duration');
+
+		$booked_as = $this->input->post('booked_as');
+
+		$move_in_date = $this->input->post('move_in_date');
+
+		$response = $this->admin_model->insertNewBooking($verificationID, $user_id, $productID, $paymentPlan, $duration, $booked_as, $move_in_date);
+
+		if ($response) {
+			echo 1;
+		} else {
+			echo 0;
+		}
+	}
+	public function changeStayoneBookingStatus()
+	{
+
+		$status = 0;
+
+		$bookingID = $this->input->post('bookingID');
+
+		$action = $this->input->post('action');
+
+		$invoiceID = strtoupper($this->random_strings(8));
+
+		$the_file_name = $invoiceID . '_invoice.pdf';
+
+		if ($action == 'lock') {
+
+			$status = 1;
 		}
 
+		$transaction = $this->admin_model->getStayoneTransaction($bookingID);
+
+		$result = $this->admin_model->changeStayoneBookingStatus($bookingID, $status);
+
+		if ($result) {
+
+			if (!empty($transaction)) {
+
+				if ($this->admin_model->updateStayonePaymentStatus($bookingID, 'Approved')) {
+
+					$details = $this->admin_model->getStayoneBookingDetails($bookingID);
+
+					$name = $details['firstname'] . ' ' . $details['lastname'];
+
+					$user_address = $details['booking_address'] . ', ' . $details['booking_city'];
+
+					$apt_address = $details['apt_address'] . ', ' . $details['apt_city'];
+
+					//Generate PDF here
+					$pdf_content = $this->prep_invoice($invoiceID, $bookingID, $details['email'], $details['phone'], $name, $user_address, $details['apartmentName'], $apt_address, $details['no_of_nights'], $details['cost'], $details['securityDeposit'], $details['amount'], $details['discount'], $details['vat'], $details['pickup_option'], $details['pickup_cost']);
+
+					if (!is_dir('uploads/invoice/' . $invoiceID)) {
+
+						mkdir('./uploads/invoice/' . $invoiceID, 0777, TRUE);
+					}
+
+					//Set folder to save PDF to
+					$this->html2pdf->folder('./uploads/invoice/' . $invoiceID . '/');
+
+					//Set the filename to save/download as
+					$this->html2pdf->filename($the_file_name);
+
+					//Set the paper defaults
+					$this->html2pdf->paper('a4', 'portrait');
+
+					//Load html view
+					$this->html2pdf->html($pdf_content);
+
+					//Create the PDF
+					$path = $this->html2pdf->create('save');
+
+
+					$data['name'] = $details['firstName'] . ' ' . $details['lastName'];
+
+					$data['aptName'] = $details['apartmentName'];
+
+					$data['aptID'] = $details['apartmentID'];
+
+					//Send email to customer and cx
+
+					$notify = $this->functions_model->insert_user_notifications('Payment Approval', 'Your payment has been successfully approved.', $details['userID'], 'Stay');
+
+					$this->email->from('noreply@smallsmall.com', 'Small Small');
+
+					$this->email->to($details['email']);
+
+					$this->email->subject("Payment Approval");
+
+					$this->email->set_mailtype("html");
+
+					$message = $this->load->view('email/header.php', $data, TRUE);
+
+					$message .= $this->load->view('email/payment-approval-email.php', $data, TRUE);
+
+					$message .= $this->load->view('email/footer.php', $data, TRUE);
+
+					$this->email->message($message);
+
+					$inv_update = $this->admin_model->updateStayoneInvoice($bookingID, $the_file_name);
+
+					if ($path || !$inv_update) {
+
+						$this->email->attach($path);
+					} else {
+
+						echo "Could not attach invoice/update invoice in table";
+					}
+
+					if ($this->email->send()) {
+
+						echo 1;
+					} else {
+
+						echo "Email not sent";
+					}
+				} else {
+
+					echo "Payment status update error";
+				}
+			} else {
+
+				echo "Empty transaction dataset";
+			}
+		} else {
+
+			echo "Booking status change failed";
+		}
 	}
-	public function switchProperty(){
-	    
-	    $verificationID = $this->input->post('verificationID');
-	    
-	    $user_id = $this->input->post('userID');
-	    
-	    $propertyID = $this->input->post('propertyID');
-	    
-	    $bookingID = $this->input->post('bookingID');
-	    
-	    $newPropertyID = $this->input->post('newPropertyID');
-	    
-	    $paymentPlan = $this->input->post('paymentPlan');
-	    
-	    $securityDeposit = $this->input->post('securityDeposit');
-	    
-	    $period_paid = $this->input->post('period_paid');
-	    
-	    $duration = 12;
-	    
-	    $booked_as = $this->input->post('renting_as');
-	    
-	    $newBookingId = $this->random_strings(5);
-	    
-	    $move_in_date = date('Y-m-d', strtotime($this->input->post('move_in_date')));
-	    
-	    $payment_type = "Transfer";
-	    
-	    $ref = 'rss_'.md5(rand(1000000, 9999999999));
-	    
-	    //Get Property
-	    $prop_response = $this->rss_model->get_vacant_property($newPropertyID);
-	  
-	    if(!$prop_response){
-	        
-	        $exists = $this->rss_model->get_existing_property($newPropertyID);
-	        
-	        if($exists){
-	        
-    	        $total_cost = $securityDeposit + ($exists['price'] * $period_paid);
-    	        
-    	        //Insert booking and insert new date for property
-    	        $response = $this->rss_model->insertBooking($newBookingId, $verificationID, $user_id, $newPropertyID, '', $paymentPlan, $exists['price'], '', '', $securityDeposit, $duration, $booked_as, $move_in_date, $payment_type, $total_cost, $ref,'','','','');
-    	        
-    	        //Update previous booking
-    	        $booking_response = $this->admin_model->update_booking($bookingID, $move_in_date);
-    	        
-    	        //Get User Details
-    	        $user = $this->admin_model->get_user($user_id);
-    	        
-    	        //update new property
-    	        $this->rss_model->update_available_date($newPropertyID, $move_in_date);
-    	        
-    	        $this->rss_model->update_available_date($propertyID, '');
-    	        
-    	        if($response){
-    	            
-    	           //Send email to user
-        	        $data['name'] = $user['firstName'].' '.$user['lastName'];
-        					
-        			$data['email'] = $user['email'];
-        			
-        			$data['phone'] = $user['phone'];
-        			
-        			$data['propName'] = $exists['propertyTitle'];
-        			
-        			$data['propAddress'] = $exists['address'];
-        			
-        			$data['amount'] = $exists['price'];
-        			
-        			$data['paymentOption'] = $payment_type;
-        			
-        			$data['duration'] = $duration;
-        			
-        			$data['paymentPlan'] = $paymentPlan;
-        			
-                    $this->email->from('noreply@rentsmallsmall.com', 'Automated');
-        
-        			$this->email->to('customerexperience@rentsmallsmall.com');      
-        
-        			$this->email->subject("Property Booked");   
-        			
-        			$this->email->set_mailtype("html");         
-        
-        			$message = $this->load->view('email/header.php', $data, TRUE);  
-        
-        			$message .= $this->load->view('email/apt-booking-email.php', $data, TRUE);            
-        
-        			$message .= $this->load->view('email/footer.php', $data, TRUE); 
-        
-        			$this->email->message($message);            
-        
-        			$emailRes = $this->email->send(); 
-    	        }
-	        }else{
-	            
-	            echo "Property does not exist";
-	            
-	        }
-	    }else{
-	        
-	        echo "Property is rented";
-	        
-	    }
-	    
-	}
-	public function changeBookingStatus(){
-	    
-	    $reason = $this->input->post("reason");
-	    
-	    $status_note = $this->input->post("status_note");
-	    
-	    $booking_id = $this->input->post("booking_id");
-	    
-	    $user_id = $this->input->post("user_id");
-	    
-	    $move_out_date = $this->input->post("move_out_date");
-	    
-	    $response = $this->admin_model->update_booking($reason, $status_note, $booking_id, $user_id, $move_out_date);
-	    
-	    if($response){
-	        
-	        echo 1;
-	        
-	    }else{
-	        
-	        echo 0;
-	        
-	    }
-	}
-	public function insertNewBooking(){
-	    
-	    $verificationID = $this->input->post('verificationID');
-	    
-	    $user_id = $this->input->post('userID'); 
-	    
-	    $productID = $this->input->post('propID');
-	    
-	    $paymentPlan = $this->input->post('paymentPlan'); 
-	    
-	    $duration = $this->input->post('duration');
-	    
-	    $booked_as = $this->input->post('booked_as');
-	    
-	    $move_in_date = $this->input->post('move_in_date');
-	    
-	    $response = $this->admin_model->insertNewBooking($verificationID, $user_id, $productID, $paymentPlan, $duration, $booked_as, $move_in_date);
-	    
-	    if($response){
-	        echo 1;
-	    }else{
-	        echo 0;
-	    }
-    	
-    }
-	public function changeStayoneBookingStatus(){
-	    
-	    $status = 0;
-	    
-	    $bookingID = $this->input->post('bookingID');
-	    
-	    $action = $this->input->post('action');
-	    
-	    $invoiceID = strtoupper($this->random_strings(8));
-	    
-	    $the_file_name = $invoiceID.'_invoice.pdf';
-	    
-	    if($action == 'lock'){
-	        
-	        $status = 1;
-	        
-	    }
-	    
-	    $transaction = $this->admin_model->getStayoneTransaction($bookingID);
-	    
-	    $result = $this->admin_model->changeStayoneBookingStatus($bookingID, $status);
-	    
-	    if($result){
-	        
-	        if(!empty($transaction)){
-	            
-	            if($this->admin_model->updateStayonePaymentStatus($bookingID, 'Approved')){
-	                
-	                $details = $this->admin_model->getStayoneBookingDetails($bookingID);
-	                
-	                $name = $details['firstname'].' '.$details['lastname'];
-	                
-	                $user_address = $details['booking_address'].', '.$details['booking_city'];
-	                
-	                $apt_address = $details['apt_address'].', '.$details['apt_city'];
-	                
-	                //Generate PDF here
-		            $pdf_content = $this->prep_invoice($invoiceID, $bookingID, $details['email'], $details['phone'], $name, $user_address, $details['apartmentName'], $apt_address, $details['no_of_nights'], $details['cost'], $details['securityDeposit'], $details['amount'], $details['discount'], $details['vat'], $details['pickup_option'], $details['pickup_cost']);
-		            
-		            if (!is_dir('uploads/invoice/'.$invoiceID)) {
-		    
-                        mkdir('./uploads/invoice/'.$invoiceID, 0777, TRUE);
-                    
-                    }
-                    
-                    //Set folder to save PDF to
-                    $this->html2pdf->folder('./uploads/invoice/'.$invoiceID.'/');
-                    
-                    //Set the filename to save/download as
-                    $this->html2pdf->filename($the_file_name);
-                    
-                    //Set the paper defaults
-                    $this->html2pdf->paper('a4', 'portrait');
-                    
-                    //Load html view
-                    $this->html2pdf->html($pdf_content); 
-            		 
-                    //Create the PDF
-                    $path = $this->html2pdf->create('save');
-        		    
-        		    
-        		    $data['name'] = $details['firstName'].' '.$details['lastName'];
-        		    
-        		    $data['aptName'] = $details['apartmentName'];
-        		    
-        		    $data['aptID'] = $details['apartmentID'];
-        		    
-        			//Send email to customer and cx
-        			
-			        $notify = $this->functions_model->insert_user_notifications('Payment Approval', 'Your payment has been successfully approved.', $details['userID'], 'Stay');
-        			
-        			$this->email->from('noreply@smallsmall.com', 'Small Small');
-        
-        			$this->email->to($details['email']);            
-        
-        			$this->email->subject("Payment Approval");   
-        			
-        			$this->email->set_mailtype("html");         
-        
-        			$message = $this->load->view('email/header.php', $data, TRUE);            
-        
-        			$message .= $this->load->view('email/payment-approval-email.php', $data, TRUE);            
-        
-        			$message .= $this->load->view('email/footer.php', $data, TRUE);     
-        
-        			$this->email->message($message); 
-        			
-        			$inv_update = $this->admin_model->updateStayoneInvoice($bookingID, $the_file_name);
-        			
-        			if($path || !$inv_update){
-            			
-            		    $this->email->attach($path);
-            		    
-            		}else{
-            		    
-            		    echo "Could not attach invoice/update invoice in table";
-            		    
-            		}
-            		
-            		if($this->email->send()){
-            		    
-            		    echo 1;
-            		    
-            		}else{
-            		    
-            		    echo "Email not sent";
-            		    
-            		}
-	            }else{
-	                
-	                echo "Payment status update error";
-	                
-	            }
-	            
-	        }else{
-	            
-	            echo "Empty transaction dataset";
-	            
-	        }
-	        
-	    }else{
-	        
-	        echo "Booking status change failed";
-	        
-	    }
-	}
-	
-	public function changeStatus(){
-		
+
+	public function changeStatus()
+	{
+
 		$action = $this->input->post('action');
 
 		$details = $this->input->post('details');
-		
-		if(is_array($details)){
-			
-			$det_len = count($details);
-			
-			for($i = 0; $i < $det_len; $i++){
-				
-				if($action == 'delete'){
-				
-					$res = $this->admin_model->del_user($details[$i]['id']);
 
-				}else if($action == 'activate'){
+		if (is_array($details)) {
+
+			$det_len = count($details);
+
+			for ($i = 0; $i < $det_len; $i++) {
+
+				if ($action == 'delete') {
+
+					$res = $this->admin_model->del_user($details[$i]['id']);
+				} else if ($action == 'activate') {
 
 					$res = $this->admin_model->activate_user($details[$i]['id']);
-
-				}else if($action == 'deactivate'){
+				} else if ($action == 'deactivate') {
 
 					$res = $this->admin_model->deactivate_user($details[$i]['id']);
-
-				}else if($action == 'verify'){
+				} else if ($action == 'verify') {
 
 					$res = $this->admin_model->verify_user($details[$i]['id']);
-
 				}
-			 
 			}
 		}
 		echo 1;
 	}
-	
-	public function changePropStatus(){
-		
+
+	public function changePropStatus()
+	{
+
 		$action = $this->input->post('action');
 
 		$details = $this->input->post('details');
-		
-		if(is_array($details)){
-			
-			$det_len = count($details);
-			
-			for($i = 0; $i < $det_len; $i++){
-				
-				if($action == 'delete'){
-				
-					$res = $this->admin_model->del_property($details[$i]['id']);
 
-				}else if($action == 'release'){
+		if (is_array($details)) {
+
+			$det_len = count($details);
+
+			for ($i = 0; $i < $det_len; $i++) {
+
+				if ($action == 'delete') {
+
+					$res = $this->admin_model->del_property($details[$i]['id']);
+				} else if ($action == 'release') {
 
 					$res = $this->admin_model->release_property($details[$i]['id']);
-
 				}
-			 
 			}
 		}
 		echo 1;
 	}
-	
-	public function getInspMsg(){
-		
+
+	public function getInspMsg()
+	{
+
 		$status = "error";
-		
+
 		$request_id = $this->input->post('id');
-		
+
 		$msgID = $this->input->post('msgID');
-		
-		$res = $this->admin_model->getReqMsg($request_id, $msgID); 
-		
-		if($res){
-			
+
+		$res = $this->admin_model->getReqMsg($request_id, $msgID);
+
+		if ($res) {
+
 			$status = "success";
-			
 		}
-		 
+
 		$this->admin_model->setMsgStatus($res['msgID']);
-		
-		echo json_encode(array('status' => $status, 'userID' => $res['user_id'], 'msgID' => $res['inspectionID'], 'content' => $res['content'], 'inspectionDate' => date('d F Y', strtotime($res['inspectionDate'])), 'inspectionType' => $res['inspectionType'], 'firstname' => $res['firstName'], 'lastname' => $res['lastName'] )); 
-				
+
+		echo json_encode(array('status' => $status, 'userID' => $res['user_id'], 'msgID' => $res['inspectionID'], 'content' => $res['content'], 'inspectionDate' => date('d F Y', strtotime($res['inspectionDate'])), 'inspectionType' => $res['inspectionType'], 'firstname' => $res['firstName'], 'lastname' => $res['lastName']));
 	}
-	
-	public function replyInspMsg(){
-		
+
+	public function replyInspMsg()
+	{
+
 		$msgID = $this->input->post("msg_id");
-		
+
 		$userID = $this->input->post("user_id");
-		
+
 		$message = $this->input->post('reply_msg');
-		
+
 		$adminID = $this->session->userdata('adminID');
-		
+
 		$user = $this->rss_model->getUser($userID);
-		
+
 		$res = $this->admin_model->replyInspectionMessage($msgID, $userID, $message, $adminID);
-		
-		if($res){
-		    
-		    //Split name
-			$names = $user['firstName'].' '.$user['lastName'];
-			
+
+		if ($res) {
+
+			//Split name
+			$names = $user['firstName'] . ' ' . $user['lastName'];
+
 			$data['name'] = $names;
-			
+
 			$data['message'] = $message;
-			
+
 			$this->email->from('donotreply@smallsmall.com', 'Small Small');
 
 			$this->email->to($user['email']);
@@ -4859,57 +4535,55 @@ class Admin extends CI_Controller {
 			$message .= $this->load->view('email/footer.php', $data, TRUE);
 
 			$this->email->message($message);
-			
+
 			$notify = $this->functions_model->insert_user_notifications('RE: Inspection Request', 'You have a message waiting for you in your inbox. Thank you.', $user['userID'], 'Rent');
 
-			if($emailRes = $this->email->send()){
-				
+			if ($emailRes = $this->email->send()) {
+
 				$data['msg'] = $message;
-				
+
 				$this->email->to('fieldagent@smallsmall.com');
-				
+
 				$this->email->set_mailtype("html");
-				
+
 				$message = $this->load->view('email/header.php', $data, TRUE);
-				
+
 				$message .= $this->load->view('email/fx-inspection-message.php', $data, TRUE);
 
 				$message .= $this->load->view('email/footer.php', $data, TRUE);
-				
+
 				$this->email->message($message);
-				
+
 				echo 1;
 			}
-			
-		}else{
-		
+		} else {
+
 			echo 0;
-			
 		}
-	
 	}
-	
-	public function transactions($the_page){	
-		
-		
-		$config['total_rows'] = $this->admin_model->countTransactions($the_page);		
 
-		$data['total_count'] = $config['total_rows'];		
+	public function transactions($the_page)
+	{
 
-		$config['suffix'] = '';  
+
+		$config['total_rows'] = $this->admin_model->countTransactions($the_page);
+
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
 
 		if ($config['total_rows'] > 0) {
 
 
 			$page_number = $this->uri->segment(4);
-			
 
-			$config['base_url'] = base_url() . 'admin/transactions/'.$the_page;
+
+			$config['base_url'] = base_url() . 'admin/transactions/' . $the_page;
 
 			if (empty($page_number))
 
 				$page_number = 1;
-				
+
 			$offset = ($page_number - 1) * $this->pagination->per_page;
 
 			$this->admin_model->setPageNumber($this->pagination->per_page);
@@ -4923,53 +4597,48 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['bookings'] = $this->admin_model->fetchTransactions($the_page);
-
 		}
-		
-		if ( ! file_exists(APPPATH.'views/admin/pages/'.$the_page.'-transactions.php'))
-        {
-                // Whoops, we don't have a page for that!
 
-                show_404();
+		if (!file_exists(APPPATH . 'views/admin/pages/' . $the_page . '-transactions.php')) {
+			// Whoops, we don't have a page for that!
 
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Transactions :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/'.$the_page.'-transactions.php' , $data);
+			$this->load->view('admin/pages/' . $the_page . '-transactions.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/booking-modal.php' , $data);		
+			$this->load->view('admin/templates/booking-modal.php', $data);
+		} else {
 
-		}else{			
- 
-			redirect( base_url().'admin/login','refresh');				
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function wallet_accounts(){
-		
-		$config['total_rows'] = $this->admin_model->countWalletAccounts();		
+	public function wallet_accounts()
+	{
 
-		$data['total_count'] = $config['total_rows'];		
+		$config['total_rows'] = $this->admin_model->countWalletAccounts();
 
-		$config['suffix'] = '';  
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
 
 		if ($config['total_rows'] > 0) {
 
@@ -4980,7 +4649,7 @@ class Admin extends CI_Controller {
 			if (empty($page_number))
 
 				$page_number = 1;
-				
+
 			$offset = ($page_number - 1) * $this->pagination->per_page;
 
 			$this->admin_model->setPageNumber($this->pagination->per_page);
@@ -4994,60 +4663,56 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['accounts'] = $this->admin_model->fetchWalletAccounts();
-
 		}
-		
-		if ( ! file_exists(APPPATH.'views/admin/pages/wallet-accounts.php'))
-        {
-                // Whoops, we don't have a page for that!
 
-                show_404();
+		if (!file_exists(APPPATH . 'views/admin/pages/wallet-accounts.php')) {
+			// Whoops, we don't have a page for that!
 
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Wallets :: SS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/wallet-accounts' , $data);
+			$this->load->view('admin/pages/wallet-accounts', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
 			//$this->load->view('admin/templates/booking-modal.php' , $data);		
 
-		}else{			
- 
-			redirect( base_url().'admin/login','refresh');				
+		} else {
 
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	
-	public function search_accounts(){
-	    
-	    $s_data['s_query']  = $this->input->post('search-input');
-		
-		if ($s_data['s_query'] === null ) $s_data = $this->session->userdata('search');
-		
+
+	public function search_accounts()
+	{
+
+		$s_data['s_query']  = $this->input->post('search-input');
+
+		if ($s_data['s_query'] === null) $s_data = $this->session->userdata('search');
+
 		else $this->session->set_userdata('search', $s_data);
-		
-		$config['total_rows'] = $this->admin_model->countWalletAccountsSearch($s_data);		
 
-		$data['total_count'] = $config['total_rows'];		
+		$config['total_rows'] = $this->admin_model->countWalletAccountsSearch($s_data);
 
-		$config['suffix'] = '';  
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
 
 		if ($config['total_rows'] > 0) {
 
@@ -5058,7 +4723,7 @@ class Admin extends CI_Controller {
 			if (empty($page_number))
 
 				$page_number = 1;
-				
+
 			$offset = ($page_number - 1) * $this->pagination->per_page;
 
 			$this->admin_model->setPageNumber($this->pagination->per_page);
@@ -5072,20 +4737,17 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['accounts'] = $this->admin_model->searchWalletAccounts($s_data);
-
 		}
-		
-		if ( ! file_exists(APPPATH.'views/admin/pages/wallet-accounts.php'))
-        {
-                // Whoops, we don't have a page for that!
 
-                show_404();
+		if (!file_exists(APPPATH . 'views/admin/pages/wallet-accounts.php')) {
+			// Whoops, we don't have a page for that!
 
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
@@ -5093,42 +4755,41 @@ class Admin extends CI_Controller {
 
 			$data['title'] = "Wallets :: SS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/wallet-accounts' , $data);
+			$this->load->view('admin/pages/wallet-accounts', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
 			//$this->load->view('admin/templates/booking-modal.php' , $data);		
 
-		}else{			
- 
-			redirect( base_url().'admin/login','refresh');				
+		} else {
 
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
 
-	public function wallet_transactions($userID){
-		
-		$config['total_rows'] = $this->admin_model->countUserWalletAccounts($userID);		
+	public function wallet_transactions($userID)
+	{
 
-		$data['total_count'] = $config['total_rows'];		
+		$config['total_rows'] = $this->admin_model->countUserWalletAccounts($userID);
 
-		$config['suffix'] = '';  
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
 
 		if ($config['total_rows'] > 0) {
 
 			$page_number = $this->uri->segment(4);
 
-			$config['base_url'] = base_url() . 'admin/wallet/'.$userID;
+			$config['base_url'] = base_url() . 'admin/wallet/' . $userID;
 
 			if (empty($page_number))
 
 				$page_number = 1;
-				
+
 			$offset = ($page_number - 1) * $this->pagination->per_page;
 
 			$this->admin_model->setPageNumber($this->pagination->per_page);
@@ -5142,67 +4803,63 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['transactions'] = $this->admin_model->fetchUserWalletAccounts($userID);
-
 		}
-		
-		if ( ! file_exists(APPPATH.'views/admin/pages/wallet-transactions.php'))
-        {
-                // Whoops, we don't have a page for that!
 
-                show_404();
+		if (!file_exists(APPPATH . 'views/admin/pages/wallet-transactions.php')) {
+			// Whoops, we don't have a page for that!
 
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Transactions :: SS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/wallet-transactions' , $data);
+			$this->load->view('admin/pages/wallet-transactions', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
 			//$this->load->view('admin/templates/booking-modal.php' , $data);		
 
-		}else{			
- 
-			redirect( base_url().'admin/login','refresh');				
+		} else {
 
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function app_transactions(){	
-		
-		
-		$config['total_rows'] = $this->admin_model->countAppTransactions();		
+	public function app_transactions()
+	{
 
-		$data['total_count'] = $config['total_rows'];		
 
-		$config['suffix'] = '';  
+		$config['total_rows'] = $this->admin_model->countAppTransactions();
+
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
 
 		if ($config['total_rows'] > 0) {
 
 
 			$page_number = $this->uri->segment(4);
-			
+
 
 			$config['base_url'] = base_url() . 'admin/app-transactions';
 
 			if (empty($page_number))
 
 				$page_number = 1;
-				
+
 			$offset = ($page_number - 1) * $this->pagination->per_page;
 
 			$this->admin_model->setPageNumber($this->pagination->per_page);
@@ -5216,132 +4873,123 @@ class Admin extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['txns'] = $this->admin_model->fetchAppTransactions();
-
 		}
-		
-		if ( ! file_exists(APPPATH.'views/admin/pages/app-transactions.php'))
-        {
-                // Whoops, we don't have a page for that!
 
-                show_404();
+		if (!file_exists(APPPATH . 'views/admin/pages/app-transactions.php')) {
+			// Whoops, we don't have a page for that!
 
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 
 			$data['title'] = "Transactions :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/app-transactions.php' , $data);
+			$this->load->view('admin/pages/app-transactions.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);	
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		}else{			
- 
-			redirect( base_url().'admin/login','refresh');				
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	
-	public function uploadBuytoletImages($folder){
-				
-		if(!$folder){
-			
-			$folder = md5(date("Ymd His"));
-			
-		}
-		
-		//sleep(3);
-		
-		if (!is_dir('../buy.smallsmall.com/uploads/buytolet/'.$folder)) {
 
-			mkdir('../buy.smallsmall.com/uploads/buytolet/'.$folder, 0777, TRUE);
-			
+	public function uploadBuytoletImages($folder)
+	{
+
+		if (!$folder) {
+
+			$folder = md5(date("Ymd His"));
+		}
+
+		//sleep(3);
+
+		if (!is_dir('../buy.smallsmall.com/uploads/buytolet/' . $folder)) {
+
+			mkdir('../buy.smallsmall.com/uploads/buytolet/' . $folder, 0777, TRUE);
 		}
 		//Connect to buy2let and create property Image folder
 		//$success = file_get_contents("https://dev-buy.smallsmall.com/create-folder/".$folder);
-		
+
 		//if(!$success){
-			//Create the floor plan folder
-			//file_get_contents("https://www.buy2let.ng/create-folder/".$folder."/floor-plan");
-			//$error = "Could not create remote folder";
-			
+		//Create the floor plan folder
+		//file_get_contents("https://www.buy2let.ng/create-folder/".$folder."/floor-plan");
+		//$error = "Could not create remote folder";
+
 		//}		
-		
-		if($_FILES["files"]["name"] != ''){
-			
+
+		if ($_FILES["files"]["name"] != '') {
+
 			$output = '';
-			
+
 			$error = 0;
-			
-			$config["upload_path"] = '../buy.smallsmall.com/uploads/buytolet/'.$folder;
-			
+
+			$config["upload_path"] = '../buy.smallsmall.com/uploads/buytolet/' . $folder;
+
 			$config["allowed_types"] = 'jpg|jpeg|png';
 
 			$config['encrypt_name'] = TRUE;
-			
-			$config['max_size'] = 10 * 1024;
-			
-			$this->load->library('upload', $config);
-			
-			$this->upload->initialize($config);
-			
-			for($count = 0; $count < count($_FILES["files"]["name"]); $count++){
-				
-				$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
-				
-				$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
-				
-				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
-				
-				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
-				
-				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
-				
-				//$this->upload->do_upload('file');
-				
-				//$data = $this->upload->data();
-				
-				if($this->upload->do_upload('file')){
-				
-    				//$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
-    				
-    				//$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$folder);
-    				
-    				//if($upl_result){
-					
-					$data = $this->upload->data();
-					
-					$output .= '
-								<span class="imgCover removal-id-'.$count.'" id="id-'.$data["file_name"].'"><img src="https://dev-buy.smallsmall.com/uploads/buytolet/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
-								<div class="remove-btl-img img-removal" id="img-buytolet-'.$data['file_name'].'-'.$count.'">remove <i class="fa fa-trash"></i></div>
-								<!--<span class="featTT">featured</span>--></span>';
-				}else{
-				    
-					$error = $this->upload->display_errors('', '');
-					
-				}			
 
+			$config['max_size'] = 10 * 1024;
+
+			$this->load->library('upload', $config);
+
+			$this->upload->initialize($config);
+
+			for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
+				$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+
+				$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+
+				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+
+				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+
+				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+				//$this->upload->do_upload('file');
+
+				//$data = $this->upload->data();
+
+				if ($this->upload->do_upload('file')) {
+
+					//$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
+
+					//$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$folder);
+
+					//if($upl_result){
+
+					$data = $this->upload->data();
+
+					$output .= '
+								<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://dev-buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+								<div class="remove-btl-img img-removal" id="img-buytolet-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
+								<!--<span class="featTT">featured</span>--></span>';
+				} else {
+
+					$error = $this->upload->display_errors('', '');
+				}
 			}
 
-			echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));	
-			
-		}		
+			echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));
+		}
 	}
-	public function uploadBuytoletProperty(){
+	public function uploadBuytoletProperty()
+	{
 		//Get data from AJAX
 		$propName = $this->input->post('propTitle');
 		$propType = $this->input->post('propType');
@@ -5387,21 +5035,20 @@ class Admin extends CI_Controller {
 		$co_appr = explode(',', $this->input->post('co_appr'));
 		$co_rent = explode(',', $this->input->post('co_rent'));
 		$status = "";
-		
-		
-		if($this->session->has_userdata('adminLoggedIn')){
-			
+
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
 			$userID = $this->session->userdata('adminID');
 			$file_element_name = 'plan-image';
-			
+
 			//Check if upload folder exists
 			if (!is_dir('./tmp/')) {
 
 				mkdir('./tmp/', 0777, TRUE);
-
 			}
-			
-			
+
+
 			$config['upload_path'] = './tmp/';
 
 			$config['allowed_types'] = 'jpg|png|jpeg';
@@ -5409,58 +5056,53 @@ class Admin extends CI_Controller {
 			$config['max_size'] = 1024 * 10;
 
 			$config['encrypt_name'] = TRUE;
-			
+
 			$this->load->library('upload', $config);
-			
-			if (!$this->upload->do_upload($file_element_name)){
+
+			if (!$this->upload->do_upload($file_element_name)) {
 
 				$status = 'error';
 
 				$msg = $this->upload->display_errors('', '');
+			} else {
 
-			}else{
+				$data = $this->upload->data();
 
-				$data = $this->upload->data();	
-				
-				$folder = 
-				
-				$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
-				
-				$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/'.$data["file_name"].'/'.$site1FileMd5.'/'.$imageFolder."/floor-plan/");
-				
-				unlink('./tmp/'.$data["file_name"]);
-				
+				$folder =
+
+					$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
+
+				$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
+
+				unlink('./tmp/' . $data["file_name"]);
+
 				//Populate the property table
 				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
-				 
-				if($property != 0){					
+
+				if ($property != 0) {
 
 					$status = "success";
-					
-					$msg = "Property successfully uploaded";
 
-				}else{
+					$msg = "Property successfully uploaded";
+				} else {
 					$status = "error";
 
 					$msg = "Could not upload property";
-
 				}
 			}
-			
-		}else{
-			
-			redirect( base_url()."admin/dashboard" ,'refresh');
-			
+		} else {
+
+			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
-		
+
 		@unlink($_FILES[$file_element_name]);
 
 
 		echo json_encode(array('status' => $status, 'msg' => $msg));
-		
 	}
-	
-	public function editBuytoletProperty(){
+
+	public function editBuytoletProperty()
+	{
 		//Get data from AJAX
 		$propID = $this->input->post('propID');
 		$propName = $this->input->post('propTitle');
@@ -5507,26 +5149,26 @@ class Admin extends CI_Controller {
 		$co_appr = explode(',', $this->input->post('co_appr'));
 		$co_rent = explode(',', $this->input->post('co_rent'));
 		$status = "";
-		
-		
-		if($this->session->has_userdata('adminLoggedIn')){
-			
+
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
 			$userID = $this->session->userdata('adminID');
-			
+
 			$file_element_name = 'plan-image';
-			
+
 			/*if($_FILES[$file_element_name]['name']){
 				print_r($_FILES[$file_element_name]['name']);
 			}else{
 				echo "Nothing in here brody!";
-			}*/		
-			
-			
-			if($_FILES[$file_element_name]['name']){
-				
-			
-			
-				$config['upload_path'] = './uploads/buytolet/'.$imageFolder.'/floor-plan/';
+			}*/
+
+
+			if ($_FILES[$file_element_name]['name']) {
+
+
+
+				$config['upload_path'] = './uploads/buytolet/' . $imageFolder . '/floor-plan/';
 
 				$config['allowed_types'] = 'jpg|png|jpeg';
 
@@ -5536,268 +5178,288 @@ class Admin extends CI_Controller {
 
 				$this->load->library('upload', $config);
 
-				if (!$this->upload->do_upload($file_element_name)){
+				if (!$this->upload->do_upload($file_element_name)) {
 
 					$status = 'error';
 
 					$msg = $this->upload->display_errors('', '');
+				} else {
 
-				}else{
-
-					$data = $this->upload->data();				
+					$data = $this->upload->data();
 
 
-					$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
+					$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
 
-					$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$imageFolder."/floor-plan");
+					$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan");
 
-					unlink('./tmp/'.$data["file_name"]);
+					unlink('./tmp/' . $data["file_name"]);
 
 					//Populate the property table
 					$property = $this->admin_model->editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
 
-					if($property != 0){					
+					if ($property != 0) {
 
 						$status = "success";
 
 						$msg = "Property successfully uploaded";
-
-					}else{
+					} else {
 						$status = "error";
 
 						$msg = "Could not upload property";
-
 					}
 				}
-			}else{
+			} else {
 				$property = $this->admin_model->editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, 'no', $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
 
-				if($property != 0){					
+				if ($property != 0) {
 
 					$status = "success";
 
 					$msg = "Property successfully uploaded";
-
-				}else{
+				} else {
 					$status = "error";
 
 					$msg = "Could not upload property";
-
 				}
 			}
-			
-		}else{
-			
-			redirect( base_url()."admin/dashboard" ,'refresh');
-			
+		} else {
+
+			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
-		
+
 		@unlink($_FILES[$file_element_name]);
 
 
 		echo json_encode(array('status' => $status, 'msg' => $msg));
-		
 	}
-	
-	public function updateAbout(){
-		
+
+	public function updateAbout()
+	{
+
 		$title = $this->input->post('title');
-		
+
 		$content = htmlentities($this->input->post('content', ENT_QUOTES));
-		
+
 		$id = $this->input->post('id');
-		
+
 		$story_one = htmlentities($this->input->post('story_one', ENT_QUOTES));
-		
+
 		$story_two = htmlentities($this->input->post('story_two', ENT_QUOTES));
-		
+
 		$res = $this->admin_model->update_about($title, $content, $id, $story_one, $story_two);
-		
-		if($res){
-			
+
+		if ($res) {
+
 			echo 1;
-			
-		}else{
-			
+		} else {
+
 			echo 0;
-			
 		}
 	}
-	
-	public function updateBuytoletAbout(){
-		
+
+	public function updateBuytoletAbout()
+	{
+
 		$what_we_do = htmlentities($this->input->post('what_we_do', ENT_QUOTES));
-		
+
 		$id = $this->input->post('id');
-		
+
 		$story = htmlentities($this->input->post('our_story', ENT_QUOTES));
-		
+
 		$res = $this->admin_model->update_buytolet_about($what_we_do, $story, $id);
-		
-		if($res){
-			
+
+		if ($res) {
+
 			echo 1;
-			
-		}else{
-			
+		} else {
+
 			echo 0;
-			
 		}
 	}
-	
-	public function updateBtlHiw(){
-		
+
+	public function updateBtlHiw()
+	{
+
 		$search = htmlentities($this->input->post('search', ENT_QUOTES));
-		
+
 		$analyse = htmlentities($this->input->post('analyse', ENT_QUOTES));
-		
+
 		$id = $this->input->post('id');
-		
+
 		$qualify = htmlentities($this->input->post('qualify', ENT_QUOTES));
-		
+
 		$checkout = htmlentities($this->input->post('checkout', ENT_QUOTES));
-		
+
 		$res = $this->admin_model->update_btl_hiw($search, $analyse, $qualify, $checkout, $id);
-		
-		if($res){
-			
+
+		if ($res) {
+
 			echo 1;
-			
-		}else{
-			
+		} else {
+
 			echo 0;
-			
 		}
 	}
-	
-	public function deleteBooking(){
-		
+
+	public function deleteBooking()
+	{
+
 		$id = $this->input->post('bookingID');
-		
-		$propID = $this->input->post('propertyID');		
-				
+
+		$propID = $this->input->post('propertyID');
+
 		$res = $this->admin_model->delBooking($id, $propID);
 
-		if($res){
-			
+		if ($res) {
+
 			echo 1;
-			
-		}else{
-			
+		} else {
+
 			echo 0;
-			
 		}
 	}
 
-	public function deleteAgreement(){
-		
+	public function deleteAgreement()
+	{
+
 		$id = $this->input->post('bookingID');
-		
+
 		//$propID = $this->input->post('propertyID');		
-				
+
 		$res = $this->admin_model->delAgreement($id);
 
-		if($res){
-			
+		if ($res) {
+
 			echo 1;
-			
-		}else{
-			
+		} else {
+
 			echo 0;
-			
 		}
 	}
 
-	public function deleteType(){
-		
-		$id = $this->input->post('type_id');		
-				
+	public function deleteType()
+	{
+
+		$id = $this->input->post('type_id');
+
 		$res = $this->admin_model->del_apt_type($id);
 
-		if($res){
-			
+		if ($res) {
+
 			echo 1;
-			
-		}else{
-			
+		} else {
+
 			echo 0;
-			
 		}
 	}
-	public function removeBtlImg(){
-		
+	public function removeBtlImg()
+	{
+
 		$folder = $this->input->post('folder');
-		
+
 		$img_name = $this->input->post('imgName');
-		
+
 		if ($folder && $img_name) {
-		    
-		    $filename = "../buy.smallsmall.com/uploads/".$folder."/".$img_name; 
-			
+
+			$filename = "../buy.smallsmall.com/uploads/" . $folder . "/" . $img_name;
+
 			if (file_exists($filename)) {
-				
+
 				unlink($filename);
-				
-			  	echo 1;
-				
+
+				echo 1;
 			} else {
-				
-			  	echo $filename;
-				
+
+				echo $filename;
 			}
 		}
 	}
-	
-	public function removeImg(){
-		
+
+	// public function removeImg(){
+
+	// 	$folder = $this->input->post('folder');
+
+	// 	$img_name = $this->input->post('imgName');
+
+	// 	if ($folder && $img_name) {
+
+	// 		$filename = "./uploads/".$folder."/".$img_name; 
+
+	// 		if (file_exists($filename)) {
+
+	// 			unlink($filename);
+
+	// 		  	echo 1;
+
+	// 		} else {
+
+	// 		  	echo $filename;
+
+	// 		}
+	// 	}
+	// }
+
+	// Code modify to make ref to AWS S3 folders.
+	public function removeImg()
+	{
 		$folder = $this->input->post('folder');
-		
+
 		$img_name = $this->input->post('imgName');
-		
+
 		if ($folder && $img_name) {
-			
-			$filename = "./uploads/".$folder."/".$img_name; 
-			
-			if (file_exists($filename)) {
-				
-				unlink($filename);
-				
-			  	echo 1;
-				
-			} else {
-				
-			  	echo $filename;
-				
+
+			require 'vendor/autoload.php';
+
+			$s3 = new Aws\S3\S3Client([
+				'version' => 'latest',
+				'region' => 'eu-west-1', // My Region
+			]);
+
+			$bucket = 'dev-rss-uploads'; // Bucket name
+			$objectKey = 'uploads/' . $folder . '/' . $img_name;
+
+			try {
+				$result = $s3->deleteObject([
+					'Bucket' => $bucket,
+					'Key'    => $objectKey,
+				]);
+
+				echo json_encode(['success' => true]);
+			} catch (Aws\Exception\AwsException $e) {
+
+				echo json_encode(['success' => false, 'error' => $e->getMessage()]);
 			}
 		}
 	}
-	public function removeStayoneImg(){
-		
+
+
+	public function removeStayoneImg()
+	{
+
 		$folder = $this->input->post('folder');
-		
+
 		$img_name = $this->input->post('imgName');
-		
+
 		if ($folder && $img_name) {
-			
-			$filename = "../stay.smallsmall.com/uploads/".$folder."/".$img_name; 
-			
+
+			$filename = "../stay.smallsmall.com/uploads/" . $folder . "/" . $img_name;
+
 			if (file_exists($filename)) {
-				
+
 				unlink($filename);
-				
-			  	echo 1;
-				
+
+				echo 1;
 			} else {
-				
-			  	echo $filename;
-				
+
+				echo $filename;
 			}
 		}
 	}
-	public function search_properties(){
+	public function search_properties()
+	{
 
 		$s_data['s_query']  = $this->input->post('search-input');
-			
+
 
 		$config['total_rows'] = $this->admin_model->getSearchCount($s_data);
 
@@ -5825,53 +5487,50 @@ class Admin extends CI_Controller {
 
 			$this->pagination->initialize($config);
 
-			$data['page_links'] = $this->pagination->create_links(); 
+			$data['page_links'] = $this->pagination->create_links();
 
 			$data['properties'] = $this->admin_model->get_property_list($s_data);
-			
-
 		}
 
 		//if ( ! file_exists(APPPATH.'views/admin/pages/search-properties.php')){
 
-			// Whoops, we don't have a page for that!
+		// Whoops, we don't have a page for that!
 
-			//show_404();
+		//show_404();
 
 		//}
-		
-		if($this->session->has_userdata('adminLoggedIn')){
-			
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
-		
+
 			$data['title'] = "Search Result Small Small";
-			
-			$this->load->view('admin/templates/header.php' , $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/pages/search-properties.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
-		}else{
-			
-			redirect( base_url().'admin/login','refresh');
-			
+			$this->load->view('admin/pages/search-properties.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	
-	public function search_users(){
+
+	public function search_users()
+	{
 
 		$s_data['s_query']  = $this->input->post('search-input');
-		
-		if ($s_data['s_query'] === null ) $s_data = $this->session->userdata('search');
-		
+
+		if ($s_data['s_query'] === null) $s_data = $this->session->userdata('search');
+
 		else $this->session->set_userdata('search', $s_data);
 
 		$config['total_rows'] = $this->admin_model->getUserSearchCount($s_data);
@@ -5900,70 +5559,67 @@ class Admin extends CI_Controller {
 
 			$this->pagination->initialize($config);
 
-			$data['page_links'] = $this->pagination->create_links(); 
+			$data['page_links'] = $this->pagination->create_links();
 
 			$data['rss_users'] = $this->admin_model->get_user_list($s_data);
-			
-
 		}
-		
-		if($this->session->has_userdata('adminLoggedIn')){
-			
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
-		
+
 			$data['title'] = "User Search Result Small Small";
-			
-			$this->load->view('admin/templates/header.php' , $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/pages/rss-users.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
-		}else{
-			
-			redirect( base_url().'admin/login','refresh');
-			
+			$this->load->view('admin/pages/rss-users.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	public function get_facilities($id){
+	public function get_facilities($id)
+	{
 
 		$facilities = $this->rss_model->getNearbyFacilities($id);
 
 		return $facilities;
-
 	}
-	public function logout(){
+	public function logout()
+	{
 
 		$this->session->sess_destroy();
 
 		//$url = $_SERVER['HTTP_REFERER'];
 
 		redirect(base_url('admin'));
+	}
 
-   	}
-	
-	public function view_items(){
+	public function view_items()
+	{
 
-		
+
 
 		$config['total_rows'] = $this->admin_model->countItems();
 
-		
+
 
 		$data['total_count'] = $config['total_rows'];
 
-		
+
 
 		$config['suffix'] = '';
 
-        
+
 
 
 
@@ -6009,392 +5665,366 @@ class Admin extends CI_Controller {
 
 			$data['page_links'] = $this->pagination->create_links();
 
-            
-
-			$data['furnitures'] = $this->admin_model->fetchItems();			
 
 
-
+			$data['furnitures'] = $this->admin_model->fetchItems();
 		}
 
-		
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/view-furnisure-items.php'))
 
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/view-furnisure-items.php')) {
 
-                // Whoops, we don't have a page for that!
+			// Whoops, we don't have a page for that!
 
-                show_404();
-
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
-			
+
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Furnisure Items :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/view-furnisure-items.php' , $data);
+			$this->load->view('admin/pages/view-furnisure-items.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
-		
 
-		}else{
 
-			
-
-			redirect( base_url().'admin/login','refresh');		
-
-			
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	
-	public function delProp(){
-		
-		$propID = $this->input->post("propID");		
-		
+
+	public function delProp()
+	{
+
+		$propID = $this->input->post("propID");
+
 		//Get the image folders
 		$prop = $this->admin_model->get_folder_name($propID);
-		
-		$target =  base_url().'uploads/properties/'.$prop['imageFolder'].'/facilities/';
-		
-		$this->delete_files($target);
-		
-		$target2 =  base_url().'uploads/properties/'.$prop['imageFolder'].'/';
-		
-		$this->delete_files($target2);
-		
-		$result = $this->admin_model->delProp($propID);
-		
-		if($result){
-			
-			echo 1;
-			
-		}else{
-			
-			echo 0;
-			
-		} 
-	}
-	public function delArticle(){
-		
-		$articleID = $this->input->post("articleID");
-		
-		$folder = $this->input->post("folder");
-		
-		$target =  base_url().'uploads/news/'.$folder.'/';
-		
-		$this->delete_files($target);
-		
-		$result = $this->admin_model->delArticle($articleID);
-		
-		if($result){
-			
-			echo 1;
-			
-		}else{
-			
-			echo 0;
-			
-		} 
-	}
-	public function delete_files($target){
-		
-		if(is_dir($target)){
-			
-			$files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
 
-			foreach( $files as $file ){
-				
-				delete_files( $file ); 
-				
+		$target =  base_url() . 'uploads/properties/' . $prop['imageFolder'] . '/facilities/';
+
+		$this->delete_files($target);
+
+		$target2 =  base_url() . 'uploads/properties/' . $prop['imageFolder'] . '/';
+
+		$this->delete_files($target2);
+
+		$result = $this->admin_model->delProp($propID);
+
+		if ($result) {
+
+			echo 1;
+		} else {
+
+			echo 0;
+		}
+	}
+	public function delArticle()
+	{
+
+		$articleID = $this->input->post("articleID");
+
+		$folder = $this->input->post("folder");
+
+		$target =  base_url() . 'uploads/news/' . $folder . '/';
+
+		$this->delete_files($target);
+
+		$result = $this->admin_model->delArticle($articleID);
+
+		if ($result) {
+
+			echo 1;
+		} else {
+
+			echo 0;
+		}
+	}
+	public function delete_files($target)
+	{
+
+		if (is_dir($target)) {
+
+			$files = glob($target . '*', GLOB_MARK); //GLOB_MARK adds a slash to directories returned
+
+			foreach ($files as $file) {
+
+				delete_files($file);
 			}
 
-			rmdir( $target );
-			
-		} elseif(is_file($target)) {
-			
-			unlink( $target ); 
-			
+			rmdir($target);
+		} elseif (is_file($target)) {
+
+			unlink($target);
 		}
 	}
-	public function delBtlProp(){
-		
+	public function delBtlProp()
+	{
+
 		$propID = $this->input->post("propID");
 
-        $propFolder = $this->input->post("propFolder");
-        
+		$propFolder = $this->input->post("propFolder");
+
 		$result = $this->admin_model->delBtlProp($propID);
-		
-		if($result){
-			
-			file_get_contents('https://dev-buy.smallsmall.com/delete-images/'.$propFolder);
-			
+
+		if ($result) {
+
+			file_get_contents('https://dev-buy.smallsmall.com/delete-images/' . $propFolder);
+
 			echo 1;
-			
-		}else{
-			
+		} else {
+
 			echo 0;
-			
 		}
 	}
-	
-	public function propListing(){
-		
+
+	public function propListing()
+	{
+
 		$propID = $this->input->post("propID");
-		
+
 		$theState = $this->input->post("propState");
-		
+
 		$result = $this->admin_model->propListing($propID, $theState);
-		
-		if($result){
-			
+
+		if ($result) {
+
 			echo 1;
-			
-		}else{
-			
+		} else {
+
 			echo 0;
-			
 		}
 	}
-	
-	public function clone_property($propID){
-		
+
+	public function clone_property($propID)
+	{
+
 		$digits = 12;
 
 		$randomNumber = '';
 
 		$count = 0;
 
-		while($count < $digits){
+		while ($count < $digits) {
 
 			$randomDigit = mt_rand(0, 9);
 
 			$randomNumber .= $randomDigit;
 
 			$count++;
-
 		}
-		
+
 		$imageFolder = md5(date("Y-m-d H:i:s"));
-		
+
 		$id = $randomNumber;
-		
+
 		$property = $this->admin_model->get_property_details($propID);
-		
+
 		$facilities = $this->admin_model->get_facilities($propID);
-	
-		
+
+
 		$userID = $this->session->userdata('adminID');
-		
-		if (!is_dir('./uploads/properties/'.$imageFolder)) {
 
-			mkdir('./uploads/properties/'.$imageFolder, 0777, TRUE);
+		if (!is_dir('./uploads/properties/' . $imageFolder)) {
 
+			mkdir('./uploads/properties/' . $imageFolder, 0777, TRUE);
 		}
-		
+
 		// Store the path of source file 
-		$source = './uploads/properties/'.$property['imageFolder'];  
+		$source = './uploads/properties/' . $property['imageFolder'];
 
 		// Store the path of destination file 
-		$destination = './uploads/properties/'.$imageFolder;  
-		
+		$destination = './uploads/properties/' . $imageFolder;
+
 		$dir = opendir($source);
 		// Copy the file from /user/desktop/geek.txt  
 		// to user/Downloads/geeksforgeeks.txt' 
 		// directory 
-		while($file = readdir($dir)){
+		while ($file = readdir($dir)) {
 			// Skip . and .. 
-			if(($file != '.') && ($file != '..')){  
-			  	// Check if it's folder / directory or file 
-			  	if(is_dir($source.'/'.$file)){  
+			if (($file != '.') && ($file != '..')) {
+				// Check if it's folder / directory or file 
+				if (is_dir($source . '/' . $file)) {
 					// Recursively calling this function for sub directory  
 					//recursive_files_copy($source.'/'.$file, $destination.'/'.$file); 
-			  	}else{  
+				} else {
 					// Copying the files
-					copy($source.'/'.$file, $destination.'/'.$file);  
-			  	}  
-			}  
-		}  
+					copy($source . '/' . $file, $destination . '/' . $file);
+				}
+			}
+		}
 
 		closedir($dir);
 		//Get city ID
 		$city_id = $this->admin_model->get_city_id($property['city']);
 		//Insert new property 
-		
-		
+
+
 		$new_id = $this->admin_model->insertPropertyClone($id, $property['propertyTitle'], $property['propertyType'], $property['propertyDescription'], $property['rentalCondition'], $property['address'], $property['city'], $property['state'], $property['country'], $property['price'], $property['serviceCharge'], $property['securityDeposit'], $property['paymentPlan'], $property['intervals'], $property['frequency'], $imageFolder, $property['featuredImg'], $property['amenities'], $property['bed'], $property['bath'], $property['toilet'], $userID, $property['status'], $property['furnishing'], $property['renting_as'], $property['services'], $property['featured_property'], $property['available_date'], $city_id['id']);
-		
-		if($new_id){
-			
-			if (!is_dir('./uploads/properties/'.$imageFolder.'/facilities')) {
 
-				mkdir('./uploads/properties/'.$imageFolder.'/facilities', 0777, TRUE);
+		if ($new_id) {
 
+			if (!is_dir('./uploads/properties/' . $imageFolder . '/facilities')) {
+
+				mkdir('./uploads/properties/' . $imageFolder . '/facilities', 0777, TRUE);
 			}
-			
-			$source_2 = './uploads/properties/'.$property['imageFolder']."/facilities";
-			
-			$destination_2 = './uploads/properties/'.$imageFolder."/facilities";
-			
+
+			$source_2 = './uploads/properties/' . $property['imageFolder'] . "/facilities";
+
+			$destination_2 = './uploads/properties/' . $imageFolder . "/facilities";
+
 			$dir2 = opendir($source_2);
-			
-			while($file = readdir($dir2)){
+
+			while ($file = readdir($dir2)) {
 				// Skip . and .. 
-				if(($file != '.') && ($file != '..')){  
+				if (($file != '.') && ($file != '..')) {
 					// Check if it's folder / directory or file 
-					if(is_dir($source_2.'/'.$file)){  
+					if (is_dir($source_2 . '/' . $file)) {
 						// Recursively calling this function for sub directory  
 						//recursive_files_copy($source.'/'.$file, $destination.'/'.$file); 
-					}else{  
+					} else {
 						// Copying the files
-						copy($source_2.'/'.$file, $destination_2.'/'.$file);  
-					}  
-				}  
-			}  
+						copy($source_2 . '/' . $file, $destination_2 . '/' . $file);
+					}
+				}
+			}
 
 			closedir($dir2);
-			
-			foreach($facilities as $facility){
+
+			foreach ($facilities as $facility) {
 
 				//echo $facility['name']."<br />";
 				$this->admin_model->insertFacilities($new_id, $facility['name'], $facility['category'], $facility['distance'], $facility['file_path']);
-
 			}
-			
 		}
-		
-		
-		redirect( base_url()."admin/view-properties" ,'refresh');
-		
+
+
+		redirect(base_url() . "admin/view-properties", 'refresh');
 	}
-	
-	public function clone_btl_property($propID){
-		
+
+	public function clone_btl_property($propID)
+	{
+
 		$digits = 12;
 
 		$randomNumber = '';
 
 		$count = 0;
 
-		while($count < $digits){
+		while ($count < $digits) {
 
 			$randomDigit = mt_rand(0, 9);
 
 			$randomNumber .= $randomDigit;
 
 			$count++;
-
 		}
-		
+
 		$imageFolder = md5(date("Y-m-d H:i:s"));
-		
+
 		$id = $randomNumber;
-		
+
 		$property = $this->admin_model->get_btl_property_details($propID);
-	
-		
+
+
 		$userID = $this->session->userdata('adminID');
-		
+
 		//Create folder on remote server
-		
-		$success = file_get_contents('https://dev-buy.smallsmall.com/create-folder/'.$imageFolder);
-		
-		if(!$success){
+
+		$success = file_get_contents('https://dev-buy.smallsmall.com/create-folder/' . $imageFolder);
+
+		if (!$success) {
 			//Create the floor plan folder
 			//file_get_contents("https://www.buy2let.ng/create-folder/".$folder."/floor-plan");
 			$error = "Could not create remote folder";
-			
 		}
-		
-		
-		
+
+
+
 		//Insert new property
 		$views = 0;
-		
-		$new_id = $this->admin_model->insertBtlPropertyClone($id, $property['property_name'], $property['apartment_type'], $property['price'], $property['promo_price'], $property['promo_category'] , $property['address'], $property['city'], $property['state'], $property['country'], $property['bed'], $property['bath'], $property['toilet'], $property['tenantable'], $property['expected_rent'], $property['hpi'], $property['developer'], $property['mortgage'], $property['payment_plan'], $property['payment_plan_period'], $imageFolder, $property['pool_units'], $property['available_units'],  $userID, $property['pool_buy'], $property['property_size'], $property['property_info'], $property['location_info'], $property['floor_plan'], $property['featured_image'], $property['status'], $views, $property['availability'], $property['asset_appreciation_1'], $property['asset_appreciation_2'], $property['asset_appreciation_3'], $property['asset_appreciation_4'], $property['asset_appreciation_5'], $property['floor_level'], $property['construction_lvl'], $property['start_date'], $property['finish_date'], $property['investment_type'], $property['marketValue']);
-		
-		if($new_id){
-		    
-		    $sourceFolder = $property['image_folder'];
-		    
-		    $destinationFolder = $imageFolder;
-			
+
+		$new_id = $this->admin_model->insertBtlPropertyClone($id, $property['property_name'], $property['apartment_type'], $property['price'], $property['promo_price'], $property['promo_category'], $property['address'], $property['city'], $property['state'], $property['country'], $property['bed'], $property['bath'], $property['toilet'], $property['tenantable'], $property['expected_rent'], $property['hpi'], $property['developer'], $property['mortgage'], $property['payment_plan'], $property['payment_plan_period'], $imageFolder, $property['pool_units'], $property['available_units'],  $userID, $property['pool_buy'], $property['property_size'], $property['property_info'], $property['location_info'], $property['floor_plan'], $property['featured_image'], $property['status'], $views, $property['availability'], $property['asset_appreciation_1'], $property['asset_appreciation_2'], $property['asset_appreciation_3'], $property['asset_appreciation_4'], $property['asset_appreciation_5'], $property['floor_level'], $property['construction_lvl'], $property['start_date'], $property['finish_date'], $property['investment_type'], $property['marketValue']);
+
+		if ($new_id) {
+
+			$sourceFolder = $property['image_folder'];
+
+			$destinationFolder = $imageFolder;
+
 			//Initiate a copy on the remote server
-			$result = file_get_contents('https://dev-buy.smallsmall.com/copy-images/'.$sourceFolder.'/'.$destinationFolder);
-			
-			if($result){
-			    
-			    echo 1;
-			    
-			}else{
-			    
-			    echo $result;
-			    
+			$result = file_get_contents('https://dev-buy.smallsmall.com/copy-images/' . $sourceFolder . '/' . $destinationFolder);
+
+			if ($result) {
+
+				echo 1;
+			} else {
+
+				echo $result;
 			}
-			
 		}
-		
-		
-		redirect( base_url()."admin/all-buytolet-properties" ,'refresh');
-		
+
+
+		redirect(base_url() . "admin/all-buytolet-properties", 'refresh');
 	}
-	
-	public function count_unread_requests(){
-		
+
+	public function count_unread_requests()
+	{
+
 		return $this->admin_model->countUnreadRequests();
-		
 	}
-	
-	public function get_unverifieds(){
-		
+
+	public function get_unverifieds()
+	{
+
 		return $this->admin_model->get_unverifieds();
 	}
-	public function soldProp(){
-	    
-	    $prop_id = $this->input->post("propID");
-	    
-	    $result = $this->admin_model->soldProp($prop_id);
-	    
-	    if($result){
-	        echo 1;
-	    }else{
-	        echo 0;
-	    }
+	public function soldProp()
+	{
+
+		$prop_id = $this->input->post("propID");
+
+		$result = $this->admin_model->soldProp($prop_id);
+
+		if ($result) {
+			echo 1;
+		} else {
+			echo 0;
+		}
 	}
 
-	public function verifyUser(){
-	    
-	    require 'vendor/autoload.php'; // For Unione template authoload
+	public function verifyUser()
+	{
+
+		require 'vendor/autoload.php'; // For Unione template authoload
 
 		$id = $this->input->post("id");
-		
+
 		$prop_id = $this->input->post("prop_id");
 
 		$prop_det = $this->admin_model->get_property_details($prop_id); // Added to get property Name
-	    	    	    
-	    $propertyName = $prop_det['propertyTitle']; // Added
+
+		$propertyName = $prop_det['propertyTitle']; // Added
 
 		$result = $this->admin_model->verifyUser($id, $prop_id);
-		
+
 		$user = $this->admin_model->get_user($id);
-		
+
 		// Unione Template
 
 		$headers = array(
@@ -6410,81 +6040,80 @@ class Admin extends CI_Controller {
 		$requestBody = [
 			"id" => "0470bdea-11a5-11ee-8c98-92b7969ef90b"
 		];
-		
-		$requestBodyAdmin =[
-		     "id" => "6ce150b0-11aa-11ee-9147-b2a7eef590f9"
-		    ];
+
+		$requestBodyAdmin = [
+			"id" => "6ce150b0-11aa-11ee-9147-b2a7eef590f9"
+		];
 
 		// end Unione Template
-		
-		if($result){
-			
+
+		if ($result) {
+
 			//Send email to user to notify them of verification
 			$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
-			
+
 			$data['result_title'] = "Verification Successful!";
-			
+
 			$data['result_note'] = "Thank you for showing interest in renting one of our properties. This is to inform you that your verification has been completed and you are eligible to rent this property . You can now proceed to pay for your already booked apartment/Furniture. Proceed to your dashboard to continue.
 			<p><strong style='font-size:14px'>Please note: If payment is not made within 12 hours, the property will be available for the next person in the queue. Also, if payment is made after the stipulated time, the process of initiating a refund takes 7 days or a sum of two thousand naira (N2000) will be charged for an immediate refund. If you choose to cancel your booking, a 5% deduction would be applied.</strong></p>
 			<p style='font-size:12px'>
 			    Rent payment is easy on our platform, we use Paystack to collect payments on a modern secure payment gateway, this gateway offers users different modes of payment.  Small Small does not store bank card or personal account data.<br /><br />
 			    If you encounter any problem using the payment gateway please contact Small Small Customer experience at<br /><br /> customerexperience@smallsmall.com or Call 070-877 89 815/ 0903-722-2669/ 0903-633-9800 for assistance <br />Thanks
 			</p>";
-			
-			$data['login_button'] = '<div style="width:100px;line-height:30px;border-radius:4px;text-align:center;margin:auto;border-radius:4px;" class="verify-but"><a style="text-decoration:none;display:inline-block;width:100%;height:100%;background:#00CDA6;color:#000;font-family:avenir-demi;border-radius:4px;font-size:14px;" href="'.base_url().'login">Dashboard</a></div>';
-			
-		//Unione Template
 
-				try {
-					$response = $client->request('POST', 'template/get.json', array(
-						'headers' => $headers,
-						'json' => $requestBody,
-					));
+			$data['login_button'] = '<div style="width:100px;line-height:30px;border-radius:4px;text-align:center;margin:auto;border-radius:4px;" class="verify-but"><a style="text-decoration:none;display:inline-block;width:100%;height:100%;background:#00CDA6;color:#000;font-family:avenir-demi;border-radius:4px;font-size:14px;" href="' . base_url() . 'login">Dashboard</a></div>';
 
-					$jsonResponse = $response->getBody()->getContents();
-					
-					$responseData = json_decode($jsonResponse, true);
+			//Unione Template
 
-					$htmlBody = $responseData['template']['body']['html'];
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestBody,
+				));
 
-					// Get the unique username
-					// $user = $this->admin_model->get_user($id);
-					
-					$username = $data['name'];
-					
-					// Replace the placeholder in the HTML body with the username
-					$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+				$jsonResponse = $response->getBody()->getContents();
 
-					$data['response'] = $htmlBody;
+				$responseData = json_decode($jsonResponse, true);
 
-					// Prepare the email data
-					$emailData = [
-						"message" => [
-							"recipients" => [
-								["email" => $user['email']],
-							],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Verification Successful!",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "Smallsmall",
+				$htmlBody = $responseData['template']['body']['html'];
+
+				// Get the unique username
+				// $user = $this->admin_model->get_user($id);
+
+				$username = $data['name'];
+
+				// Replace the placeholder in the HTML body with the username
+				$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailData = [
+					"message" => [
+						"recipients" => [
+							["email" => $user['email']],
 						],
-					];
+						"body" => ["html" => $htmlBody],
+						"subject" => "Verification Successful!",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "Smallsmall",
+					],
+				];
 
-					// Send the email using the Unione API
-					$responseEmail = $client->request('POST', 'email/send.json', [
-						'headers' => $headers,
-						'json' => $emailData,
-					]);
-					
-				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-					$data['response'] = $e->getMessage();
-				}
-			
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailData,
+				]);
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
+			}
+
 			$notify = $this->functions_model->insert_user_notifications('Verification Successful!', 'We are glad to inform you that your verification process has been successful, you can now start subscribing with us.', $user['userID'], 'Rent');
-			
-			if($responseEmail){
-			    
-			    	//Unione Template for CX
+
+			if ($responseEmail) {
+
+				//Unione Template for CX
 
 				try {
 					$response = $client->request('POST', 'template/get.json', array(
@@ -6493,7 +6122,7 @@ class Admin extends CI_Controller {
 					));
 
 					$jsonResponse = $response->getBody()->getContents();
-					
+
 					$responseData = json_decode($jsonResponse, true);
 
 					$htmlBody = $responseData['template']['body']['html'];
@@ -6506,7 +6135,7 @@ class Admin extends CI_Controller {
 
 					// Replace the placeholder in the HTML body with the username
 					$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-					
+
 					$htmlBody = str_replace('{{PropertyID}}', $propertyName, $htmlBody);
 
 					$data['response'] = $htmlBody;
@@ -6529,46 +6158,43 @@ class Admin extends CI_Controller {
 						'headers' => $headers,
 						'json' => $emailDataCx,
 					]);
-					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
-			
 			}
-			
+
 			echo 1;
-						
-		}else{
-			
+		} else {
+
 			echo 0;
-			
 		}
 	}
 
-	public function unverifyUser(){
-		
+	public function unverifyUser()
+	{
+
 		$id = $this->input->post("id");
-		
+
 		$result = $this->admin_model->verificationFailed($id);
-		
+
 		$user = $this->admin_model->get_user($id);
-		
-		if($result){
-			
+
+		if ($result) {
+
 			//Send email to user to notify them of verification
 			$data['name'] = $user['firstName'];
-			
+
 			$data['result_title'] = "Verification Failed!";
-			
+
 			$data['result_note'] = "Thank you for showing interest in renting with us.<br /><br />We are sorry to inform that you did not pass our verification process and are therefore not eligible to rent with us at the moment, therefore you can’t make payment.";
-			
+
 			$data['login_button'] = ' ';
 
 			$this->email->from('donotreply@smallsmall.com', 'Small Small');
 
 			$this->email->to($user['email']);
 
-			$this->email->subject("Verification failed!");	
+			$this->email->subject("Verification failed!");
 
 			$this->email->set_mailtype("html");
 
@@ -6581,205 +6207,196 @@ class Admin extends CI_Controller {
 			$this->email->message($message);
 
 			$emailRes = $this->email->send();
-			
+
 			$notify = $this->functions_model->insert_user_notifications('Verification Failed!', 'We are sorry to inform that you did not pass our verification process and are therefore not eligible to rent with us at the moment, therefore you can’t make payment.', $user['userID'], 'Rent');
-			
+
 			echo 1;
-						
-		}else{
-			
+		} else {
+
 			echo 0;
-			
 		}
 	}
-	public function approvePayment(){
-		
+	public function approvePayment()
+	{
+
 		$transactionID = $this->input->post("transactionID");
-		
+
 		$refID = $this->input->post("refID");
-		
+
 		$approvedBy = $this->session->userdata('adminID');
-		
+
 		//Get transaction Details
 		$transaction = $this->admin_model->get_transaction($transactionID, $refID);
-		
-		
+
+
 		//Get the rent expiry date from the bookings table
 		$result = $this->admin_model->get_booking($transactionID);
-		
-		$the_file_name = $transactionID.'_'.$randomNum.'_invoice.pdf';
-		
+
+		$the_file_name = $transactionID . '_' . $randomNum . '_invoice.pdf';
+
 		//Update the transaction table		
 		$res = $this->admin_model->updatePaymentTransaction($transactionID, $refID, $result['propertyID'], $result['rent_expiration'], $approvedBy, $the_file_name);
-		
+
 		$prop = $this->admin_model->get_property_details($result['propertyID']);
-		
+
 		$path = "";
-		
+
 		$rent_amount = 0;
-		
+
 		$security_deposit = 0;
-		
+
 		$randomNum = rand(10, 99999);
-		
+
 		//$rent_amount = $prop['price'];
-		
+
 		$security_deposit = $prop['price'] * $prop['securityDepositTerm'];
-		
-		if($security_deposit > $transaction['amount']){
-		    
-		    $rent_amount = $security_deposit - $transaction['amount'];
-		    
-		}else if($transaction['amount'] > $security_deposit){
-		    
-		    $rent_amount = $transaction['amount'] - $security_deposit;
-		    
-		}else{
-		    
-		    $rent_amount = $transaction['amount'];
-		    
+
+		if ($security_deposit > $transaction['amount']) {
+
+			$rent_amount = $security_deposit - $transaction['amount'];
+		} else if ($transaction['amount'] > $security_deposit) {
+
+			$rent_amount = $transaction['amount'] - $security_deposit;
+		} else {
+
+			$rent_amount = $transaction['amount'];
 		}
-		
+
 		//Get the sum of months paid for
 		$duration = $rent_amount / $prop['price'];
-		
-		if($res){
-			
-		    //get user information
-		    $user = $this->admin_model->get_user($result['userID']);
-		    
-		    
-		    
-		    $name = $user['firstName'].' '.$user['lastName'];
-		    
-		    //Generate PDF here
-		    $pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://www.rentsmallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />www.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> '.$transactionID.'_'.$randomNum.'<br /><b>Transaction ID:</b> '.$refID.'<br />Invoice date: '.date("d/m/Y").'<br />Email: '.$user['email'].'<br />Phone Number: '.$user['phone'].'</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />'.$name.'<br /><!---9b Adedapo Williams Close, Off Emeka Nweze Str<br />Lekki Phase 1,<br />Lekki Lagos,<br />--->Nigeria.<br />'.$user['phone'].'</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>'.$prop['propertyTitle'].'</b><div style="font-family:helvetica;font-size:12px;color:#333333">'.$prop['address'].', '.$prop['city'].'</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">'.$duration.' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($rent_amount).'.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">'.$prop['securityDepositTerm'].' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N '.number_format($security_deposit).'.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($transaction['amount']).'.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($transaction['amount']).'.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
-		    
-		    if (!is_dir('assets/pdf/tenant/'.$transactionID)) {
-		    
-                mkdir('./assets/pdf/tenant/'.$transactionID, 0777, TRUE);
-            
-            }
-            
-            //Set folder to save PDF to
-            $this->html2pdf->folder('./assets/pdf/tenant/'.$transactionID.'/');
-            
-            //Set the filename to save/download as
-            $this->html2pdf->filename($the_file_name);
-            
-            //Set the paper defaults
-            $this->html2pdf->paper('a4', 'portrait');
-            
-            //Load html view
-            $this->html2pdf->html($pdf_content); 
-    		 
-            //Create the PDF
-            $path = $this->html2pdf->create('save');
-		    
-		    
-		    $data['name'] = $user['firstName'].' '.$user['lastName'];
-		    
-		    $data['propertyName'] = $prop['propertyTitle'];
-		    
-		    $data['prop_id'] = $prop['propertyID'];
-		    
+
+		if ($res) {
+
+			//get user information
+			$user = $this->admin_model->get_user($result['userID']);
+
+
+
+			$name = $user['firstName'] . ' ' . $user['lastName'];
+
+			//Generate PDF here
+			$pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://www.rentsmallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />www.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> ' . $transactionID . '_' . $randomNum . '<br /><b>Transaction ID:</b> ' . $refID . '<br />Invoice date: ' . date("d/m/Y") . '<br />Email: ' . $user['email'] . '<br />Phone Number: ' . $user['phone'] . '</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />' . $name . '<br /><!---9b Adedapo Williams Close, Off Emeka Nweze Str<br />Lekki Phase 1,<br />Lekki Lagos,<br />--->Nigeria.<br />' . $user['phone'] . '</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>' . $prop['propertyTitle'] . '</b><div style="font-family:helvetica;font-size:12px;color:#333333">' . $prop['address'] . ', ' . $prop['city'] . '</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $duration . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($rent_amount) . '.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $prop['securityDepositTerm'] . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N ' . number_format($security_deposit) . '.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($transaction['amount']) . '.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($transaction['amount']) . '.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
+
+			if (!is_dir('assets/pdf/tenant/' . $transactionID)) {
+
+				mkdir('./assets/pdf/tenant/' . $transactionID, 0777, TRUE);
+			}
+
+			//Set folder to save PDF to
+			$this->html2pdf->folder('./assets/pdf/tenant/' . $transactionID . '/');
+
+			//Set the filename to save/download as
+			$this->html2pdf->filename($the_file_name);
+
+			//Set the paper defaults
+			$this->html2pdf->paper('a4', 'portrait');
+
+			//Load html view
+			$this->html2pdf->html($pdf_content);
+
+			//Create the PDF
+			$path = $this->html2pdf->create('save');
+
+
+			$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+			$data['propertyName'] = $prop['propertyTitle'];
+
+			$data['prop_id'] = $prop['propertyID'];
+
 			$notify = $this->functions_model->insert_user_notifications('Payment Approved!', 'Your payment has been successfully approved.', $user['userID'], 'Rent');
-		    
+
 			//Send email to customer and cx
-			
+
 			$this->email->from('customerexperience@smallsmall.com', 'Small Small');
 
-			$this->email->to($user['email']);            
+			$this->email->to($user['email']);
 
-			$this->email->subject("Payment Approval");   
-			
-			$this->email->set_mailtype("html");         
+			$this->email->subject("Payment Approval");
 
-			$message = $this->load->view('email/header.php', $data, TRUE);            
+			$this->email->set_mailtype("html");
 
-			$message .= $this->load->view('email/payment-approval-email.php', $data, TRUE);            
+			$message = $this->load->view('email/header.php', $data, TRUE);
 
-			$message .= $this->load->view('email/footer.php', $data, TRUE);     
+			$message .= $this->load->view('email/payment-approval-email.php', $data, TRUE);
 
-			$this->email->message($message); 
-			
-			if($path){
-    			
-    		    $this->email->attach($path);
-    		    
-    		}
-    		
-    		$emailSent = $this->email->send();
+			$message .= $this->load->view('email/footer.php', $data, TRUE);
 
-			if($emailSent){
-			    
-			    $this->email->from('no-reply@smallsmall.com', 'Small Small');
-			    
-			    $this->email->to('customerexperience@smallsmall.com');      
+			$this->email->message($message);
 
-    			$this->email->subject("Payment Approval");   
-    			
-    			$this->email->set_mailtype("html");         
-    
-    			$message = $this->load->view('email/header.php', $data, TRUE);            
-    
-    			$message .= $this->load->view('email/cx-payment-approval-notification.php', $data, TRUE);            
-    
-    			$message .= $this->load->view('email/footer.php', $data, TRUE);
-    			
-    			$this->email->message($message); 
-			
-    			if($path){
-        			
-        		    $this->email->attach($path);
-        		}
-        		
-        		$this->email->send();
-			    
-			    echo 1;
+			if ($path) {
+
+				$this->email->attach($path);
 			}
-			
-			
-		}else{
-			
+
+			$emailSent = $this->email->send();
+
+			if ($emailSent) {
+
+				$this->email->from('no-reply@smallsmall.com', 'Small Small');
+
+				$this->email->to('customerexperience@smallsmall.com');
+
+				$this->email->subject("Payment Approval");
+
+				$this->email->set_mailtype("html");
+
+				$message = $this->load->view('email/header.php', $data, TRUE);
+
+				$message .= $this->load->view('email/cx-payment-approval-notification.php', $data, TRUE);
+
+				$message .= $this->load->view('email/footer.php', $data, TRUE);
+
+				$this->email->message($message);
+
+				if ($path) {
+
+					$this->email->attach($path);
+				}
+
+				$this->email->send();
+
+				echo 1;
+			}
+		} else {
+
 			echo 0;
-			
 		}
 	}
-	
-	public function shorten_title($string){
-		
+
+	public function shorten_title($string)
+	{
+
 		if (strlen($string) >= 20) {
-			return substr($string, 0, 20). " ... ";
-		}
-		else {
+			return substr($string, 0, 20) . " ... ";
+		} else {
 			return $string;
 		}
-		
 	}
-	
-	public function send_another_verification_email($id, $prop_id){
-	    
-	    $result = $this->admin_model->verifyUser($id, $prop_id);
-	    
-	    $user = $this->admin_model->get_user($id);
-	     
-		if($result){
-			
+
+	public function send_another_verification_email($id, $prop_id)
+	{
+
+		$result = $this->admin_model->verifyUser($id, $prop_id);
+
+		$user = $this->admin_model->get_user($id);
+
+		if ($result) {
+
 			//Send email to user to notify them of verification
 			$data['name'] = $user['firstName'];
-			
+
 			$data['result_title'] = "Verification Successful!";
-			
-			
+
+
 			$data['result_note'] = "Thank you for showing interest in renting one of our properties. This is to inform you that your verification has been completed and you are eligible to rent this property . You can now proceed to pay for your already booked apartment. Proceed to your dashboard to continue.
 			<p><strong style='font-size:14px'>Please note: If payment is not made within 12 hours, the property will be available for the next person in the queue. Also, if payment is made after the stipulated time, the process of initiating a refund takes 7 days or a sum of two thousand naira (N2000) will be charged for an immediate refund. If you choose to cancel your booking, a 5% deduction would be applied.</strong></p>
 			<p style='font-size:12px'>
 			    Rent payment is easy on our platform, we use Paystack to collect payments on a modern secure payment gateway, this gateway offers users different modes of payment.  Small Small does not store bank card or personal account data.<br /><br />
 			    If you encounter any problem using the payment gateway please contact Small Small Customer experience at<br /><br /> customerexperience@smallsmall.com or Call 070-877 89 815/ 0903-722-2669/ 0903-633-9800 for assistance <br />Thanks
 			</p>";
-			
-			$data['login_button'] = '<div style="width:100px;line-height:30px;border-radius:4px;text-align:center;margin:auto;border-radius:4px;" class="verify-but"><a style="text-decoration:none;display:inline-block;width:100%;height:100%;background:#00CDA6;color:#000;font-family:avenir-demi;border-radius:4px;font-size:14px;" href="'.base_url().'login">Dashboard</a></div>';
+
+			$data['login_button'] = '<div style="width:100px;line-height:30px;border-radius:4px;text-align:center;margin:auto;border-radius:4px;" class="verify-but"><a style="text-decoration:none;display:inline-block;width:100%;height:100%;background:#00CDA6;color:#000;font-family:avenir-demi;border-radius:4px;font-size:14px;" href="' . base_url() . 'login">Dashboard</a></div>';
 
 			$this->email->from('donotreply@smallsmall.com', 'Small Small');
 
@@ -6787,7 +6404,7 @@ class Admin extends CI_Controller {
 
 			$this->email->bcc('customerexperience@smallsmall.com');
 
-			$this->email->subject("Congratulations!");	
+			$this->email->subject("Congratulations!");
 
 			$this->email->set_mailtype("html");
 
@@ -6800,196 +6417,190 @@ class Admin extends CI_Controller {
 			$this->email->message($message);
 
 			$emailRes = $this->email->send();
-			
+
 			echo "Successful";
-						
-		}else{
-			
+		} else {
+
 			echo "Errors";
-			
-		}   
-	
+		}
 	}
-	
-	public function lockTransaction(){
-	    
-	    $verificationID = $this->input->post("verID");
-	    
-	    $rent_amount = $this->input->post("rent_amount");
-	    
-	    $propID = $this->input->post("propID");
-	    
-	    $userID = $this->input->post("userID");
-	    
-	    $bookingID = $this->input->post("bookingID");
-	    
-	    $duration = $this->input->post("duration");
-	    
-	    $due_date = $this->input->post("rentDue");
-	    
-	    $security_deposit = $this->input->post("security_deposit");
-	    
-	    $sec_dep_term = $this->input->post("sec_dep_term");
-	    
-	    $payment_lvl = $this->input->post("payment_lvl");
-	    
-	    $nMonths = $duration;
-	    
-	    $path = "";
-	    
-	    $expiry = $due_date;
-	    
-	    if($payment_lvl == 'Full' ){
-		
-    		$startdate = date("Y-m-d", strtotime($due_date));
-    		
-    		$expiry = $this->endCycle($startdate, $nMonths);
-	    }
-	    
-	    $prop_det = $this->admin_model->get_property_details($propID);
-	    
-	    $user = $this->rss_model->get_user($userID);
-	    
-	    $data['name'] = $user['firstName'].' '.$user['lastName'];
-	    
-	    $data['propertyName'] = $prop_det['propertyTitle'];
-	    
-	    $data['prop_id'] = $prop_det['propertyID'];
-	    
-	    $amount = $rent_amount + $security_deposit; //($prop_det['price'] * $duration) + $security_deposit;
-	    
-	    $randomNum = rand(10, 99999);
-	    
-	    $ref = 'rss_'.md5(rand(1000000, 9999999999));
-	    
-	    $txn = $this->admin_model->createTransaction($userID, $bookingID, $amount, $verificationID, $expiry, $ref, $bookingID.'_'.$randomNum.'_invoice.pdf', $duration);
-	    
-	    if($txn){
-	        //Create invoice and send
-	        
-	        $pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://dev-rent.smallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />dev-rent.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> '.$bookingID.'_'.$randomNum.'<br /><b>Transaction ID:</b> '.$ref.'<br />Invoice date: '.date("d/m/Y").'<br />Email: '.$user['email'].'<br />Phone Number: '.$user['phone'].'</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />'.$user['firstName'].' '.$user['lastName'].'<br />Nigeria.<br />'.$user['phone'].'</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>'.$prop_det['propertyTitle'].'</b><div style="font-family:helvetica;font-size:12px;color:#333333">'.$prop_det['address'].', '.$prop_det['city'].'</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">'.$duration.' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount).'.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">'.$sec_dep_term.' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N '.number_format($security_deposit).'.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount).'.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount).'.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
-            
-            if (!is_dir('assets/pdf/tenant/'.$bookingID)) {
-		    
-                mkdir('./assets/pdf/tenant/'.$bookingID, 0777, TRUE);
-            
-            }
-            
-            //Set folder to save PDF to
-            $this->html2pdf->folder('./assets/pdf/tenant/'.$bookingID.'/');
-            
-            //Set the filename to save/download as
-            $this->html2pdf->filename($bookingID.'_'.$randomNum.'_invoice.pdf');
-            
-            //Set the paper defaults
-            $this->html2pdf->paper('a4', 'portrait');
-            
-            //Load html view
-            $this->html2pdf->html($pdf_content); 
-    		 
-            //Create the PDF
-            $path = $this->html2pdf->create('save');
-            
-            $this->email->from('no-reply@smallsmall.com', 'SmallSmall');
-    
-    		$this->email->to($user['email']);
-    		
-    		$this->email->cc('accounts@smallsmall.com');
-    		
-    		$this->email->bcc('customerexperience@smallsmall.com');
-    				
-    		$this->email->set_mailtype("html");
-    
-    		$this->email->subject("Successful renewal!");	
-    
-    		$message = $this->load->view('email/header.php', $data, TRUE);
-    
-    		$message .= $this->load->view('email/payment-confirmation-email.php', $data, TRUE);
-    
-    		$message .= $this->load->view('email/footer.php', $data, TRUE);
-    
-    		$this->email->message($message);
-            
-            if($path){
-    			
-    		    $this->email->attach($path);
-    		    
-    		}
-    
-    		$emailRes = $this->email->send();
-    		
-    		if($emailRes){
-    		    
-    		    echo 1;
-    		    
-    		}else{
-    		    
-    		    echo 0;
-    		}
-	    }
+
+	public function lockTransaction()
+	{
+
+		$verificationID = $this->input->post("verID");
+
+		$rent_amount = $this->input->post("rent_amount");
+
+		$propID = $this->input->post("propID");
+
+		$userID = $this->input->post("userID");
+
+		$bookingID = $this->input->post("bookingID");
+
+		$duration = $this->input->post("duration");
+
+		$due_date = $this->input->post("rentDue");
+
+		$security_deposit = $this->input->post("security_deposit");
+
+		$sec_dep_term = $this->input->post("sec_dep_term");
+
+		$payment_lvl = $this->input->post("payment_lvl");
+
+		$nMonths = $duration;
+
+		$path = "";
+
+		$expiry = $due_date;
+
+		if ($payment_lvl == 'Full') {
+
+			$startdate = date("Y-m-d", strtotime($due_date));
+
+			$expiry = $this->endCycle($startdate, $nMonths);
+		}
+
+		$prop_det = $this->admin_model->get_property_details($propID);
+
+		$user = $this->rss_model->get_user($userID);
+
+		$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+		$data['propertyName'] = $prop_det['propertyTitle'];
+
+		$data['prop_id'] = $prop_det['propertyID'];
+
+		$amount = $rent_amount + $security_deposit; //($prop_det['price'] * $duration) + $security_deposit;
+
+		$randomNum = rand(10, 99999);
+
+		$ref = 'rss_' . md5(rand(1000000, 9999999999));
+
+		$txn = $this->admin_model->createTransaction($userID, $bookingID, $amount, $verificationID, $expiry, $ref, $bookingID . '_' . $randomNum . '_invoice.pdf', $duration);
+
+		if ($txn) {
+			//Create invoice and send
+
+			$pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://dev-rent.smallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />dev-rent.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> ' . $bookingID . '_' . $randomNum . '<br /><b>Transaction ID:</b> ' . $ref . '<br />Invoice date: ' . date("d/m/Y") . '<br />Email: ' . $user['email'] . '<br />Phone Number: ' . $user['phone'] . '</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />' . $user['firstName'] . ' ' . $user['lastName'] . '<br />Nigeria.<br />' . $user['phone'] . '</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>' . $prop_det['propertyTitle'] . '</b><div style="font-family:helvetica;font-size:12px;color:#333333">' . $prop_det['address'] . ', ' . $prop_det['city'] . '</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $duration . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount) . '.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $sec_dep_term . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N ' . number_format($security_deposit) . '.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount) . '.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount) . '.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
+
+			if (!is_dir('assets/pdf/tenant/' . $bookingID)) {
+
+				mkdir('./assets/pdf/tenant/' . $bookingID, 0777, TRUE);
+			}
+
+			//Set folder to save PDF to
+			$this->html2pdf->folder('./assets/pdf/tenant/' . $bookingID . '/');
+
+			//Set the filename to save/download as
+			$this->html2pdf->filename($bookingID . '_' . $randomNum . '_invoice.pdf');
+
+			//Set the paper defaults
+			$this->html2pdf->paper('a4', 'portrait');
+
+			//Load html view
+			$this->html2pdf->html($pdf_content);
+
+			//Create the PDF
+			$path = $this->html2pdf->create('save');
+
+			$this->email->from('no-reply@smallsmall.com', 'SmallSmall');
+
+			$this->email->to($user['email']);
+
+			$this->email->cc('accounts@smallsmall.com');
+
+			$this->email->bcc('customerexperience@smallsmall.com');
+
+			$this->email->set_mailtype("html");
+
+			$this->email->subject("Successful renewal!");
+
+			$message = $this->load->view('email/header.php', $data, TRUE);
+
+			$message .= $this->load->view('email/payment-confirmation-email.php', $data, TRUE);
+
+			$message .= $this->load->view('email/footer.php', $data, TRUE);
+
+			$this->email->message($message);
+
+			if ($path) {
+
+				$this->email->attach($path);
+			}
+
+			$emailRes = $this->email->send();
+
+			if ($emailRes) {
+
+				echo 1;
+			} else {
+
+				echo 0;
+			}
+		}
 	}
-	public function add_months($months, DateTime $dateObject) 
-    {
-        $next = new DateTime($dateObject->format('Y-m-d'));
-        $next->modify('last day of +'.$months.' month');
+	public function add_months($months, DateTime $dateObject)
+	{
+		$next = new DateTime($dateObject->format('Y-m-d'));
+		$next->modify('last day of +' . $months . ' month');
 
-        if($dateObject->format('d') > $next->format('d')) {
-            return $dateObject->diff($next);
-        } else {
-            return new DateInterval('P'.$months.'M');
-        }
-    }
-
-    public function endCycle($d1, $months)
-    {
-        $date = new DateTime($d1);
-
-        // call second function to add the months
-        $newDate = $date->add($this->add_months($months, $date));
-
-        // goes back 1 day from date, remove if you want same day of month
-        //$newDate->sub(new DateInterval('P1D')); 
-
-        //formats final date to Y-m-d form
-        $dateReturned = $newDate->format('Y-m-d'); 
-
-        return $dateReturned;
-    }
-	
-	public function addDebt(){
-	    
-	    $d_data = $this->input->post();
-	    
-	    $res = $this->admin_model->insert_debt($d_data);
-	    
-	    if($res){
-	        
-	        echo 1;
-	        
-	    }else{
-	        
-	        echo 0;
-	        
-	    }
+		if ($dateObject->format('d') > $next->format('d')) {
+			return $dateObject->diff($next);
+		} else {
+			return new DateInterval('P' . $months . 'M');
+		}
 	}
-	public function search_inspection(){
+
+	public function endCycle($d1, $months)
+	{
+		$date = new DateTime($d1);
+
+		// call second function to add the months
+		$newDate = $date->add($this->add_months($months, $date));
+
+		// goes back 1 day from date, remove if you want same day of month
+		//$newDate->sub(new DateInterval('P1D')); 
+
+		//formats final date to Y-m-d form
+		$dateReturned = $newDate->format('Y-m-d');
+
+		return $dateReturned;
+	}
+
+	public function addDebt()
+	{
+
+		$d_data = $this->input->post();
+
+		$res = $this->admin_model->insert_debt($d_data);
+
+		if ($res) {
+
+			echo 1;
+		} else {
+
+			echo 0;
+		}
+	}
+	public function search_inspection()
+	{
 
 		$values = array();
-		
+
 		$admins = $this->admin_model->get_all_admin();
-		
+
 		$s_data['s_query']  = $this->input->post('search-input');
-		
-		if ($s_data['s_query'] === null ) $s_data = $this->session->userdata('search');
-		
+
+		if ($s_data['s_query'] === null) $s_data = $this->session->userdata('search');
+
 		else $this->session->set_userdata('search', $s_data);
-	    
-	    for($i = 0; $i < count($admins); $i++){
-	        
-	        array_push($values, $admins[$i]['adminID']);
-	        
-	    }
-		
+
+		for ($i = 0; $i < count($admins); $i++) {
+
+			array_push($values, $admins[$i]['adminID']);
+		}
+
 		$data['adminID'] = $this->session->userdata('adminID');
 
 		$config['total_rows'] = $this->admin_model->countInspSearchRequests($data['adminID'], $s_data);
@@ -6997,7 +6608,7 @@ class Admin extends CI_Controller {
 		$data['total_count'] = $config['total_rows'];
 
 		$config['suffix'] = '';
-		
+
 		if ($config['total_rows'] > 0) {
 
 			$page_number = $this->uri->segment(3);
@@ -7005,7 +6616,7 @@ class Admin extends CI_Controller {
 			$config['base_url'] = base_url() . 'admin/search-inspection';
 
 			if (empty($page_number))
-			
+
 				$page_number = 1;
 
 			$offset = ($page_number - 1) * $this->pagination->per_page;
@@ -7022,21 +6633,18 @@ class Admin extends CI_Controller {
 
 			//$data['inspections'] = $this->admin_model->fetchRequests($data['adminID']);	
 			$data['inspections'] = $this->admin_model->fetchInspSearchRequests($values, $s_data);
-
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/inspection.php'))
-        {
-            // Whoops, we don't have a page for that!
+		if (!file_exists(APPPATH . 'views/admin/pages/inspection.php')) {
+			// Whoops, we don't have a page for that!
 
-            show_404();
-
-        }
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
-			
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			//$data['aptTypes'] = $this->admin_model->fetchAptType();
@@ -7045,85 +6653,82 @@ class Admin extends CI_Controller {
 
 			$data['title'] = "Inspection :: RSS";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/inspection.php' , $data);
+			$this->load->view('admin/pages/inspection.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/request-modal.php' , $data);
+			$this->load->view('admin/templates/request-modal.php', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');		 	
-
-		} 
-
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
 	}
-	public function alert_landlord_payout(){
-	    
-	    if($this->input->is_cli_request()){
-	        
-	        $config['hostname'] = 'localhost';
-        	$config['username'] = 'rentsmallsmall_buytolet';
-        	$config['password'] = 'Buytolet@2021';
-        	$config['database'] = 'rentsmallsmall_furnisure_buytolet_database';
-        	/*$config['username'] = 'rentsmallsmall_seuncrowther';
+	public function alert_landlord_payout()
+	{
+
+		if ($this->input->is_cli_request()) {
+
+			$config['hostname'] = 'localhost';
+			$config['username'] = 'rentsmallsmall_buytolet';
+			$config['password'] = 'Buytolet@2021';
+			$config['database'] = 'rentsmallsmall_furnisure_buytolet_database';
+			/*$config['username'] = 'rentsmallsmall_seuncrowther';
         	$config['password'] = 'RSSpassw0rd';
         	$config['database'] = 'rentsmallsmall_test_db';*/
-        	$config['dbdriver'] = 'mysqli';
-        	$config['dbprefix'] = '';
-        	$config['pconnect'] = FALSE;
-        	$config['db_debug'] = (ENVIRONMENT !== 'production');
-        	$config['cache_on'] = FALSE;
-        	$config['cachedir'] = '';
-        	$config['char_set'] = 'utf8';
-        	$config['dbcollat'] = 'utf8_general_ci';
-        	$config['swap_pre'] = '';
-        	$config['encrypt'] = FALSE;
-        	$config['compress'] = FALSE;
-        	$config['stricton'] = FALSE;
-        	$config['failover'] = array();
-        	$config['save_queries'] = TRUE;
-        	
-        	$this->db = $this->load->database($config, TRUE);
-	        
-	        $due_date = date('Y-m-d', strtotime(' +2 day'));
-	        
-	        $results = $this->admin_model->get_next_payouts($due_date);
-	        
-	        if(count($results) > 0){
-	        
-    	        for($i = 0; $i < count($results); $i++){
+			$config['dbdriver'] = 'mysqli';
+			$config['dbprefix'] = '';
+			$config['pconnect'] = FALSE;
+			$config['db_debug'] = (ENVIRONMENT !== 'production');
+			$config['cache_on'] = FALSE;
+			$config['cachedir'] = '';
+			$config['char_set'] = 'utf8';
+			$config['dbcollat'] = 'utf8_general_ci';
+			$config['swap_pre'] = '';
+			$config['encrypt'] = FALSE;
+			$config['compress'] = FALSE;
+			$config['stricton'] = FALSE;
+			$config['failover'] = array();
+			$config['save_queries'] = TRUE;
 
-        			$data['name'] = $results[$i]['landlord_name'];
-        	        
-        	        $this->email->from('donotreply@smallsmall.com', 'Auto Notification');
-        
-        			$this->email->to('customerexperience@smallsmall.com');
-        
-        			$this->email->subject("Payout Notifier");	
-        			
-        			$this->email->set_mailtype("html");
-        
-        			$message = $this->load->view('email/header.php', $data, TRUE);
-        
-        			$message .= $this->load->view('email/payoutnotifier.php', $data, TRUE);
-        
-        			$message .= $this->load->view('email/footer.php', $data, TRUE);
-        
-        			$this->email->message($message);
-        
-        			$emailRes = $this->email->send();
-    	            
-    	        }
-	        }
-	        
-	    }
+			$this->db = $this->load->database($config, TRUE);
+
+			$due_date = date('Y-m-d', strtotime(' +2 day'));
+
+			$results = $this->admin_model->get_next_payouts($due_date);
+
+			if (count($results) > 0) {
+
+				for ($i = 0; $i < count($results); $i++) {
+
+					$data['name'] = $results[$i]['landlord_name'];
+
+					$this->email->from('donotreply@smallsmall.com', 'Auto Notification');
+
+					$this->email->to('customerexperience@smallsmall.com');
+
+					$this->email->subject("Payout Notifier");
+
+					$this->email->set_mailtype("html");
+
+					$message = $this->load->view('email/header.php', $data, TRUE);
+
+					$message .= $this->load->view('email/payoutnotifier.php', $data, TRUE);
+
+					$message .= $this->load->view('email/footer.php', $data, TRUE);
+
+					$this->email->message($message);
+
+					$emailRes = $this->email->send();
+				}
+			}
+		}
 	}
-	public function uploadApt(){
+	public function uploadApt()
+	{
 		//Get data from AJAX
 
 		$propName = $this->input->post('propTitle');
@@ -7163,10 +6768,10 @@ class Admin extends CI_Controller {
 		$toilet = $this->input->post('toilet-number');
 
 		$guest = $this->input->post('guest-number');
-		
 
-		
-		if($this->session->has_userdata('adminLoggedIn')){
+
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$userID = $this->session->userdata('adminID');
 
@@ -7176,117 +6781,106 @@ class Admin extends CI_Controller {
 
 
 
-			if($property != 0){
+			if ($property != 0) {
 
 				echo 1;
-
-			}else{
+			} else {
 
 				echo "Could not upload property";
-
 			}
+		} else {
 
-		}else{			
-
-			redirect( base_url()."admin/dashboard" ,'refresh');			
-
+			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
-
-		
-
 	}
-	
-	public function startProcessing(){
-	    
-	    $user_id = $this->input->post('user_id');
-	    
-	    $res = $this->admin_model->start_processing($user_id);
-	    
-	    $user = $this->admin_model->get_user_details($user_id);
-	    
-	    if($res){
-	        
-	        $data['name'] = $user['lastName'];
-	        
-	        $this->email->from('noreply@smallsmall.com', 'Small Small');
 
-			$this->email->to($user['email']);            
+	public function startProcessing()
+	{
 
-			$this->email->subject("Verification in process.");   
-			
-			$this->email->set_mailtype("html");         
+		$user_id = $this->input->post('user_id');
 
-			$message = $this->load->view('email/header.php', $data, TRUE);     
+		$res = $this->admin_model->start_processing($user_id);
 
-			$message .= $this->load->view('email/verification-in-process.php', $data, TRUE);            
+		$user = $this->admin_model->get_user_details($user_id);
 
-			$message .= $this->load->view('email/footer.php', $data, TRUE);     
+		if ($res) {
 
-			$this->email->message($message);            
+			$data['name'] = $user['lastName'];
+
+			$this->email->from('noreply@smallsmall.com', 'Small Small');
+
+			$this->email->to($user['email']);
+
+			$this->email->subject("Verification in process.");
+
+			$this->email->set_mailtype("html");
+
+			$message = $this->load->view('email/header.php', $data, TRUE);
+
+			$message .= $this->load->view('email/verification-in-process.php', $data, TRUE);
+
+			$message .= $this->load->view('email/footer.php', $data, TRUE);
+
+			$this->email->message($message);
 
 			$emailRes = $this->email->send();
-	        
-	        echo 1;
-	        
-	    }else{
-	        
-	        echo 0;
-	        
-	    }
-	}
-	public function addNotification(){
 
-        $title = $this->input->post('title');
-        
-        $link = $this->input->post('link');
-        
-        $startDate = $this->input->post('startDate');
-        
-        $endDate = $this->input->post('endDate');
+			echo 1;
+		} else {
+
+			echo 0;
+		}
+	}
+	public function addNotification()
+	{
+
+		$title = $this->input->post('title');
+
+		$link = $this->input->post('link');
+
+		$startDate = $this->input->post('startDate');
+
+		$endDate = $this->input->post('endDate');
 
 		$userID = $this->session->userdata('adminID');
 
-        $res = $this->admin_model->insertNotification($title, $link, $startDate, $endDate);
+		$res = $this->admin_model->insertNotification($title, $link, $startDate, $endDate);
 
-		if($res){
-		    
-		    echo 1;
-		    
-		}else{
-		    
-		    echo 0;
-		    
+		if ($res) {
+
+			echo 1;
+		} else {
+
+			echo 0;
 		}
-
 	}
-	public function editNotification(){
+	public function editNotification()
+	{
 
-        $title = $this->input->post('title');
-        
-        $link = $this->input->post('link');
-        
-        $startDate = $this->input->post('startDate');
-        
-        $endDate = $this->input->post('endDate');
+		$title = $this->input->post('title');
+
+		$link = $this->input->post('link');
+
+		$startDate = $this->input->post('startDate');
+
+		$endDate = $this->input->post('endDate');
 
 		$id = $this->input->post('id');
 
 		$userID = $this->session->userdata('adminID');
 
-        $res = $this->admin_model->editNotification($title, $link, $startDate, $endDate, $id);
+		$res = $this->admin_model->editNotification($title, $link, $startDate, $endDate, $id);
 
-		if($res){
-		    
-		    echo 1;
-		    
-		}else{
-		    
-		    echo 0;
-		    
+		if ($res) {
+
+			echo 1;
+		} else {
+
+			echo 0;
 		}
-
 	}
-	public function all_notifications(){
+	public function all_notifications()
+	{
 
 		$config['total_rows'] = $this->admin_model->countNotifications();
 
@@ -7316,64 +6910,59 @@ class Admin extends CI_Controller {
 
 			$data['page_links'] = $this->pagination->create_links();
 
-			$data['notifications'] = $this->admin_model->fetchNotifications();			
-
+			$data['notifications'] = $this->admin_model->fetchNotifications();
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/all-notifications.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/all-notifications.php')) {
 
-                // Whoops, we don't have a page for that!
-                show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Notifications :: SmallSmall";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/all-notifications.php' , $data);
+			$this->load->view('admin/pages/all-notifications.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
 			//$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
 
-		}else{
-		    
-			redirect( base_url().'admin/login','refresh');
+		} else {
 
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+	public function prep_invoice($invoiceID, $transactionID, $email, $phone, $name, $address, $apartmentName, $apartmentAddress, $duration, $cost_amount, $security_deposit, $amount_paid, $discount, $vat, $pickup_option, $pickup_cost)
+	{
+
+		$pickup = "";
+
+		if ($pickup_option == 'yes') {
+
+			$pickup = '<tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Pickup Cost</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($pickup_cost) . '.00</td></tr>';
 		}
 
+		$pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://dev-stay.smallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />stay.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> ' . $invoiceID . '<br /><b>Transaction ID:</b> ' . $transactionID . '<br />Invoice date: ' . date('M d, Y') . '<br />Email: ' . $email . '<br />Phone Number: ' . $phone . '</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />' . $name . '<br />' . $address . '<br />Nigeria.<br />' . $phone . '</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>' . $apartmentName . '</b><div style="font-family:helvetica;font-size:12px;color:#333333">' . $apartmentAddress . '</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $duration . '</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($cost_amount) . '.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">1</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($security_deposit) . '.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . $subtotal . '.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Discount</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;color:red">- N' . number_format($discount) . '0.00</td></tr>' . $pickup . '<tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">VAT</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($vat) . '.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount_paid) . '.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
+
+		return $pdf_content;
 	}
-	
-	public function prep_invoice($invoiceID, $transactionID, $email, $phone, $name, $address, $apartmentName, $apartmentAddress, $duration, $cost_amount, $security_deposit, $amount_paid, $discount, $vat, $pickup_option, $pickup_cost){
-	    
-	    $pickup = "";
-	    
-	    if($pickup_option == 'yes'){
-	        
-	        $pickup = '<tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Pickup Cost</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($pickup_cost).'.00</td></tr>';
-	        
-	    }
-	    
-	    $pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://dev-stay.smallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />stay.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> '.$invoiceID.'<br /><b>Transaction ID:</b> '.$transactionID.'<br />Invoice date: '.date('M d, Y').'<br />Email: '.$email.'<br />Phone Number: '.$phone.'</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />'.$name.'<br />'.$address.'<br />Nigeria.<br />'.$phone.'</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>'.$apartmentName.'</b><div style="font-family:helvetica;font-size:12px;color:#333333">'.$apartmentAddress.'</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">'.$duration.'</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($cost_amount).'.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">1</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($security_deposit).'.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.$subtotal.'.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Discount</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;color:red">- N'.number_format($discount).'0.00</td></tr>'.$pickup.'<tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">VAT</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($vat).'.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N'.number_format($amount_paid).'.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
-	    
-	    return $pdf_content;
-	    
-	}
-	public function buytolet_property_requests(){
+	public function buytolet_property_requests()
+	{
 
 		$config['total_rows'] = $this->admin_model->countBuytoletRequests();
 
@@ -7396,68 +6985,65 @@ class Admin extends CI_Controller {
 			$this->admin_model->setPageNumber($this->pagination->per_page);
 
 			$this->admin_model->setOffset($offset);
-			
+
 			$this->pagination->cur_page = $page_number;
 
 			$this->pagination->initialize($config);
 
 			$data['page_links'] = $this->pagination->create_links();
 
-			$data['requests'] = $this->admin_model->fetchBuytoletRequests();			
-
+			$data['requests'] = $this->admin_model->fetchBuytoletRequests();
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/btl-property-requests.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/btl-property-requests.php')) {
 
-                // Whoops, we don't have a page for that!
-                show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Requests :: Stay SmallSmall";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/btl-property-requests.php' , $data);
+			$this->load->view('admin/pages/btl-property-requests.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+			$this->load->view('admin/templates/footer.php', $data);
 
 			//$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
-	
-		}else{
-	
-			redirect( base_url().'admin/login','refresh');		
 
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
-	public function approve_finance(){
-	    
-	    $refID = $this->input->post('refID');
-	    
-	    $userID = $this->input->post('userID');
-	    
-	    $result = $this->admin_model->approve_finance($refID);
-	    
-	    if($result){
-	        //Send approved email and populate the payment schedule table
-	        
-	        $details = $this->admin_model->fetchRequestDetails($refID);
-	        
-	        $res = $this->fill_payment_table($userID, $refID, $details['payment_period'], $details['finance_balance']);
-	        
-	        $data['name'] = $details['firstName'];	
+	public function approve_finance()
+	{
+
+		$refID = $this->input->post('refID');
+
+		$userID = $this->input->post('userID');
+
+		$result = $this->admin_model->approve_finance($refID);
+
+		if ($result) {
+			//Send approved email and populate the payment schedule table
+
+			$details = $this->admin_model->fetchRequestDetails($refID);
+
+			$res = $this->fill_payment_table($userID, $refID, $details['payment_period'], $details['finance_balance']);
+
+			$data['name'] = $details['firstName'];
 
 			$data['email'] = $details['email'];
 
@@ -7465,7 +7051,7 @@ class Admin extends CI_Controller {
 
 			$this->email->to($details['email']);
 
-			$this->email->subject("Finance Approval SmallSmall");	
+			$this->email->subject("Finance Approval SmallSmall");
 
 			$this->email->set_mailtype("html");
 
@@ -7478,35 +7064,33 @@ class Admin extends CI_Controller {
 			$this->email->message($message);
 
 			$emailRes = $this->email->send();
-			
-	        echo 1;
-	        
-	    }else{
-	        
-	        echo 0;
-	        
-	    }
-	    
+
+			echo 1;
+		} else {
+
+			echo 0;
+		}
 	}
 
 
-	public function deductWallet(){
+	public function deductWallet()
+	{
 
 		require 'vendor/autoload.php'; // For Unione template authoload
-	    
-	    $result = 0;
-	    
-	    $message = "";
-	    
-	    $adminID = $this->session->userdata('adminID');
-	    
-	    $amount = $this->input->post('amount');
-	    
-	    $purpose = $this->input->post('purpose');
-	    
-	    $userID = $this->input->post('userID');
-	    
-	    $new_amount = $this->deduct_wallet($userID, $amount);
+
+		$result = 0;
+
+		$message = "";
+
+		$adminID = $this->session->userdata('adminID');
+
+		$amount = $this->input->post('amount');
+
+		$purpose = $this->input->post('purpose');
+
+		$userID = $this->input->post('userID');
+
+		$new_amount = $this->deduct_wallet($userID, $amount);
 
 		// Unione Template
 
@@ -7529,24 +7113,24 @@ class Admin extends CI_Controller {
 		];
 
 		// end Unione Template
-	    
-	    if($new_amount["result"]){
-	    
-    	    //Update wallet
-    	    if($this->admin_model->update_wallet($userID, $new_amount['amount'])){
-    	        
-    	        $reference = 'RSS_C_'.$this->random_strings(10);
-    	        
-    	        //Proceed to update transaction table
-    	        if($this->loan_model->insert_wallet_transaction($reference, $userID, $amount, 'Debit', 'Successful', 'Wallet', $purpose, $adminID)){
-    	            
-    	            $result = 1;
-    	            
-    	            $message = "success";
-    	            
-    	            $user = $this->rss_model->get_user($userID);
 
-					$data['name'] = $user['firstName'].' '.$user['lastName'];
+		if ($new_amount["result"]) {
+
+			//Update wallet
+			if ($this->admin_model->update_wallet($userID, $new_amount['amount'])) {
+
+				$reference = 'RSS_C_' . $this->random_strings(10);
+
+				//Proceed to update transaction table
+				if ($this->loan_model->insert_wallet_transaction($reference, $userID, $amount, 'Debit', 'Successful', 'Wallet', $purpose, $adminID)) {
+
+					$result = 1;
+
+					$message = "success";
+
+					$user = $this->rss_model->get_user($userID);
+
+					$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
 
 					//Unione Template
 
@@ -7554,7 +7138,7 @@ class Admin extends CI_Controller {
 						$response = $client->request('POST', 'template/get.json', array(
 							'headers' => $headers,
 							'json' => $requestBody,
-					));
+						));
 
 						$jsonResponse = $response->getBody()->getContents();
 
@@ -7565,7 +7149,7 @@ class Admin extends CI_Controller {
 						$username = $data['name'];
 
 						$deductionType = $purpose;
-					
+
 						$deductionAmount = $amount;
 
 						$transactionDate = date('Y-m-d H:i:s');
@@ -7588,20 +7172,20 @@ class Admin extends CI_Controller {
 
 						$data['response'] = $htmlBody;
 
-					// Prepare the email data
+						// Prepare the email data
 						$emailData = [
 							"message" => [
 								"recipients" => [
 									["email" => $user['email']],
 								],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Wallet Deduction Successful notification!",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "SmallSmall Alert",
+								"body" => ["html" => $htmlBody],
+								"subject" => "Wallet Deduction Successful notification!",
+								"from_email" => "donotreply@smallsmall.com",
+								"from_name" => "SmallSmall Alert",
 							],
 						];
 
-					// Send the email using the Unione API
+						// Send the email using the Unione API
 						$responseEmail = $client->request('POST', 'email/send.json', [
 							'headers' => $headers,
 							'json' => $emailData,
@@ -7614,659 +7198,601 @@ class Admin extends CI_Controller {
 
 						//Unione Template
 
-					try {
-						$response = $client->request('POST', 'template/get.json', array(
-							'headers' => $headers,
-							'json' => $requestCxBody,
-					));
+						try {
+							$response = $client->request('POST', 'template/get.json', array(
+								'headers' => $headers,
+								'json' => $requestCxBody,
+							));
 
-						$jsonResponse = $response->getBody()->getContents();
+							$jsonResponse = $response->getBody()->getContents();
 
-						$responseData = json_decode($jsonResponse, true);
+							$responseData = json_decode($jsonResponse, true);
 
-						$htmlBody = $responseData['template']['body']['html'];
+							$htmlBody = $responseData['template']['body']['html'];
 
-						$username = $data['name'];
+							$username = $data['name'];
 
-						$deductionType = $purpose;
+							$deductionType = $purpose;
 
-						$deductionAmount = $amount;
+							$deductionAmount = $amount;
 
-						$transactionDate = date('Y-m-d H:i:s');
+							$transactionDate = date('Y-m-d H:i:s');
 
-						$transactionID = $reference;
+							$transactionID = $reference;
 
-						$walletBallance = $new_amount;
+							$walletBallance = $new_amount;
 
-						// Replace the placeholder in the HTML body with the username
+							// Replace the placeholder in the HTML body with the username
 
-						$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-						$htmlBody = str_replace('{{DeductionAmount}}', $deductionAmount, $htmlBody);
-						$htmlBody = str_replace('{{TransactionDate}}', $transactionDate, $htmlBody);
-						$htmlBody = str_replace('{{DeductionType}}', $deductionType, $htmlBody);
-						$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
+							$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+							$htmlBody = str_replace('{{DeductionAmount}}', $deductionAmount, $htmlBody);
+							$htmlBody = str_replace('{{TransactionDate}}', $transactionDate, $htmlBody);
+							$htmlBody = str_replace('{{DeductionType}}', $deductionType, $htmlBody);
+							$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
 
-						$data['response'] = $htmlBody;
+							$data['response'] = $htmlBody;
 
-					// Prepare the email data
-						$emailData = [
-							"message" => [
-								"recipients" => [
-									["email" => 'customerexperience@smallsmall.com'],
+							// Prepare the email data
+							$emailData = [
+								"message" => [
+									"recipients" => [
+										["email" => 'customerexperience@smallsmall.com'],
+									],
+									"body" => ["html" => $htmlBody],
+									"subject" => "Wallet Deduction Successful notification!",
+									"from_email" => "donotreply@smallsmall.com",
+									"from_name" => "SmallSmall Alert",
 								],
-							"body" => ["html" => $htmlBody],
-							"subject" => "Wallet Deduction Successful notification!",
-							"from_email" => "donotreply@smallsmall.com",
-							"from_name" => "SmallSmall Alert",
-							],
-						];
+							];
 
-					// Send the email using the Unione API
-						$responseCxEmail = $client->request('POST', 'email/send.json', [
-							'headers' => $headers,
-							'json' => $emailData,
-						]);
-					} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-						$data['response'] = $e->getMessage();
+							// Send the email using the Unione API
+							$responseCxEmail = $client->request('POST', 'email/send.json', [
+								'headers' => $headers,
+								'json' => $emailData,
+							]);
+						} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+							$data['response'] = $e->getMessage();
+						}
 					}
-				} 
 
-				if ($responseCxEmail) {
+					if ($responseCxEmail) {
 
-					//Unione Template
+						//Unione Template
 
-				try {
-					$response = $client->request('POST', 'template/get.json', array(
-						'headers' => $headers,
-						'json' => $requestCxBody,
-				));
+						try {
+							$response = $client->request('POST', 'template/get.json', array(
+								'headers' => $headers,
+								'json' => $requestCxBody,
+							));
 
-					$jsonResponse = $response->getBody()->getContents();
+							$jsonResponse = $response->getBody()->getContents();
 
-					$responseData = json_decode($jsonResponse, true);
+							$responseData = json_decode($jsonResponse, true);
 
-					$htmlBody = $responseData['template']['body']['html'];
+							$htmlBody = $responseData['template']['body']['html'];
 
-					$username = $data['name'];
+							$username = $data['name'];
 
-					$deductionType = $purpose;
+							$deductionType = $purpose;
 
-					$deductionAmount = $amount;
+							$deductionAmount = $amount;
 
-					$transactionDate = date('Y-m-d H:i:s');
+							$transactionDate = date('Y-m-d H:i:s');
 
-					$transactionID = $reference;
+							$transactionID = $reference;
 
-					$walletBallance = $new_amount;
+							$walletBallance = $new_amount;
 
-					// Replace the placeholder in the HTML body with the username
+							// Replace the placeholder in the HTML body with the username
 
-					$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-					$htmlBody = str_replace('{{DeductionAmount}}', $deductionAmount, $htmlBody);
-					$htmlBody = str_replace('{{TransactionDate}}', $transactionDate, $htmlBody);
-					$htmlBody = str_replace('{{DeductionType}}', $deductionType, $htmlBody);
-					$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
+							$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+							$htmlBody = str_replace('{{DeductionAmount}}', $deductionAmount, $htmlBody);
+							$htmlBody = str_replace('{{TransactionDate}}', $transactionDate, $htmlBody);
+							$htmlBody = str_replace('{{DeductionType}}', $deductionType, $htmlBody);
+							$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
 
-					$data['response'] = $htmlBody;
+							$data['response'] = $htmlBody;
 
-				// Prepare the email data
-					$emailData = [
-						"message" => [
-							"recipients" => [
-								["email" => 'accounts@smallsmall.com'],
-							],
-						"body" => ["html" => $htmlBody],
-						"subject" => "Wallet Deduction Successful notification!",
-						"from_email" => "donotreply@smallsmall.com",
-						"from_name" => "SmallSmall Alert",
-						],
-					];
+							// Prepare the email data
+							$emailData = [
+								"message" => [
+									"recipients" => [
+										["email" => 'accounts@smallsmall.com'],
+									],
+									"body" => ["html" => $htmlBody],
+									"subject" => "Wallet Deduction Successful notification!",
+									"from_email" => "donotreply@smallsmall.com",
+									"from_name" => "SmallSmall Alert",
+								],
+							];
 
-				// Send the email using the Unione API
-					$responseCxEmail = $client->request('POST', 'email/send.json', [
-						'headers' => $headers,
-						'json' => $emailData,
-					]);
-				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-					$data['response'] = $e->getMessage();
+							// Send the email using the Unione API
+							$responseCxEmail = $client->request('POST', 'email/send.json', [
+								'headers' => $headers,
+								'json' => $emailData,
+							]);
+						} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+							$data['response'] = $e->getMessage();
+						}
+					}
+
+					// else {
+
+					// // echo 0;
+					// // }
+
+
+					//Send email to user
+					// $data['name'] = $user['lastName'];
+
+					// $data['amount'] = $amount;
+
+					// $this->email->from('donotreply@smallsmall.com', 'SmallSmall Alert');
+
+					// $this->email->to($user['email']);
+
+					// $this->email->subject("Debit Alert!");	
+
+					// $this->email->set_mailtype("html");
+
+					// $message = $this->load->view('email/header.php', $data, TRUE);
+
+					// $message .= $this->load->view('email/debitalert.php', $data, TRUE);
+
+					// $message .= $this->load->view('email/footer.php', $data, TRUE);
+
+					// $this->email->message($message);
+
+					// $emailRes = $this->email->send();
 				}
-			} 
-				
-				// else {
+			} else {
 
-				// // echo 0;
-				// // }
+				$message = "Error updating wallet";
+			}
+		} else {
 
-    	            
-    	            //Send email to user
-    	            // $data['name'] = $user['lastName'];
-    	            
-    	            // $data['amount'] = $amount;
+			$message = "Account balance not sufficient";
+		}
 
-            	    // $this->email->from('donotreply@smallsmall.com', 'SmallSmall Alert');
-            
-            		// $this->email->to($user['email']);
-            
-            		// $this->email->subject("Debit Alert!");	
-            
-            		// $this->email->set_mailtype("html");
-            
-            		// $message = $this->load->view('email/header.php', $data, TRUE);
-            
-            		// $message .= $this->load->view('email/debitalert.php', $data, TRUE);
-            
-            		// $message .= $this->load->view('email/footer.php', $data, TRUE);
-            
-            		// $this->email->message($message);
-            
-            		// $emailRes = $this->email->send();
-    	        }
-    	    }else{
-    	        
-    	        $message = "Error updating wallet";
-    	        
-    	    }
-	    }else{
-	        
-	        $message = "Account balance not sufficient";
-	    }
-	    
-	    echo json_encode(array("response" => $result, "message" => $message));
-	    
+		echo json_encode(array("response" => $result, "message" => $message));
 	}
 
-	
-	public function deduct_wallet($userID, $amount = 0){
-	    
-	    $result = 0;
-	    
-	    $new_amount = 0;
-	    
-	    //Get wallet amount
-	    $wallet_details = $this->admin_model->walletDetails($userID);
-	    
-	    if(!empty($wallet_details) && $amount > 0 && $wallet_details['account_balance'] >= $amount){
-	        
-	        $new_amount = $wallet_details['account_balance'] - $amount;
-	        
-	        //$amount = $new_amount;
-	        
-	        $result = 1;
-	    }
-	    
-	    return array("result" => $result, "amount" => $new_amount);
-	    
+
+	public function deduct_wallet($userID, $amount = 0)
+	{
+
+		$result = 0;
+
+		$new_amount = 0;
+
+		//Get wallet amount
+		$wallet_details = $this->admin_model->walletDetails($userID);
+
+		if (!empty($wallet_details) && $amount > 0 && $wallet_details['account_balance'] >= $amount) {
+
+			$new_amount = $wallet_details['account_balance'] - $amount;
+
+			//$amount = $new_amount;
+
+			$result = 1;
+		}
+
+		return array("result" => $result, "amount" => $new_amount);
 	}
-	public function fill_payment_table($userID, $refID, $payment_period, $finance_balance){
-	    
-	    $year_one = 0;
-        $year_one_months = 0;
-        $year_two = 0;
-        $year_two_months = 0;
-        $year_three = 0;
-        $year_three_months = 0;
-        $year_four = 0;
-        $year_four_months = 0;
-        $year_five = 0;
-        $year_five_months = 0;
-        $year_six = 0;
-        $year_six_months = 0;
-        
-        if($payment_period == 1){
-            
-            $year_one = $finance_balance;
-            
-            $year_one_payments = $year_one / 12;
-            
-            $year_one_months = $payment_period * 12;
-            
-            $payDate = date('Y-m-d');
-            
-            for($i = 1; $i <= $year_one_months; $i++){
-            
-                $this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
-                
-                $payDate = $this->endCycle($payDate, 1);
-            
-            }
-            
-        }else if($payment_period == 2){
-            
-            $year_two_months = $payment_period * 12;
-            
-            $year_one = $finance_balance * 0.6;
-            
-            $year_two = $inance_balance * 0.4;
-            
-            $year_one_payments = $year_one / 12;
-            
-            $year_two_payments = $year_two / 12;
-            
-            $payDate = date('Y-m-d');
-            
-            for($i = 1; $i <= $year_two_months; $i++){
-                
-                if($i <= 12){
-            
-                    $this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
-                    
-                    $payDate = $this->endCycle($payDate, 1);
-                    
-                }else if($i > 12 && $i <= 24){
-                
-                    for($i = 13; $i <= $year_two_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }
-            
-            }
-            
-            
-        }else if($payment_period == 3){
-            
-            $year_three_months = $payment_period * 12;
-            
-            $year_one = $finance_balance * 0.45;
-            
-            $year_two = $finance_balance * 0.35;
-            
-            $year_three = $finance_balance * 0.2;
-            
-            $year_one_payments = $year_one / 12;
-            
-            $year_two_payments = $year_two/ 12;
-            
-            $year_three_payments = $year_three / 12;
-            
-            $payDate = date('Y-m-d');
-            
-            for($i = 1; $i <= $year_three_months; $i++){
-                
-                if($i <= 12){
-            
-                    $this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
-                    
-                    $payDate = $this->endCycle($payDate, 1);
-                    
-                }else if($i > 12 && $i <= 24){
-                
-                    for($i = 25; $i <= $year_three_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }else if($i > 24 && $i <= 36){
-                
-                    for($i = 37; $i <= $year_three_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }
-            
-            }
-            
-        }else if($payment_period == 4){
-            
-            $year_four_months = $payment_period * 12;
-            
-            $year_one = $finance_balance * 0.4;
-            
-            $year_two = $finance_balance * 0.3;
-            
-            $year_four = $finance_balance * 0.1;
-            
-            $year_three = $finance_balance * 0.2;
-            
-            $year_one_payments = $year_one / 12;
-            
-            $year_two_payments = $year_two / 12;
-            
-            $year_three_payments = $year_three / 12;
-            
-            $year_four_payments = $year_four / 12;
-            
-            $payDate = date('Y-m-d');
-            
-            for($i = 1; $i <= $year_four_months; $i++){
-                
-                if($i <= 12){
-            
-                    $this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
-                    
-                    $payDate = $this->endCycle($payDate, 1);
-                    
-                }else if($i > 12 && $i <= 24){
-                
-                    for($i = 25; $i <= $year_four_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }else if($i > 24 && $i <= 36){
-                
-                    for($i = 37; $i <= $year_four_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }else if($i > 37 && $i <= 48){
-                
-                    for($i = 49; $i <= $year_four_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_four_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }
-            
-            }
-            
-        }else if($payment_period == 5){
-            
-            $year_five_months = $payment_period * 12;
-            
-            $year_one = $finance_balance * 0.4;
-            
-            $year_two = $finance_balance * 0.25;
-            
-            $year_three = $finance_balance * 0.2;
-            
-            $year_four = $finance_balance * 0.1;
-            
-            $year_five = $finance_balance * 0.05;
-            
-            $year_one_payments = $year_one / 12;
-            
-            $year_two_payments = $year_two / 12;
-            
-            $year_three_payments = $year_three / 12;
-            
-            $year_four_payments = $year_four / 12;
-            
-            $year_five_payments = $year_five / 12;
-            
-            $payDate = date('Y-m-d');
-            
-            for($i = 1; $i <= $year_five_months; $i++){
-                
-                if($i <= 12){
-            
-                    $this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
-                    
-                    $payDate = $this->endCycle($payDate, 1);
-                    
-                }else if($i > 12 && $i <= 24){
-                
-                    for($i = 25; $i <= $year_five_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }else if($i > 24 && $i <= 36){
-                
-                    for($i = 37; $i <= $year_five_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }else if($i > 37 && $i <= 48){
-                
-                    for($i = 49; $i <= $year_five_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_four_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }else if($i > 49 && $i <= 60){
-                
-                    for($i = 61; $i <= $year_five_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_five_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }
-            
-            }
-            
-        }else if($unit['payment_period'] == 6){
-            
-            $year_six_months = $payment_period * 12;
-            
-            $year_one = $finance_balance * 0.35;
-            
-            $year_two = $finance_balance * 0.25;
-            
-            $year_three = $finance_balance * 0.20;
-            
-            $year_four = $finance_balance * 0.1;
-            
-            $year_five = $finance_balance * 0.05;
-            
-            $year_six = $finance_balance * 0.05;
-            
-            $year_one_payments = $year_one / 12;
-            
-            $year_two_payments = $year_two / 12;
-            
-            $year_three_payments = $year_three / 12;
-            
-            $year_four_payments = $year_four / 12;
-            
-            $year_five_payments = $year_five / 12;
-            
-            $year_six_payments = $year_six / 12;
-            
-            $payDate = date('Y-m-d');
-            
-            for($i = 1; $i <= $year_six_months; $i++){
-                
-                if($i <= 12){
-            
-                    $this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
-                    
-                    $payDate = $this->endCycle($payDate, 1);
-                    
-                }else if($i > 12 && $i <= 24){
-                
-                    for($i = 25; $i <= $year_six_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }else if($i > 24 && $i <= 36){
-                
-                    for($i = 37; $i <= $year_six_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }else if($i > 37 && $i <= 48){
-                
-                    for($i = 49; $i <= $year_six_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_four_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }else if($i > 49 && $i <= 60){
-                
-                    for($i = 61; $i <= $year_six_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_five_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }else if($i > 61 && $i <= 72){
-                
-                    for($i = 73; $i <= $year_six_months; $i++){
-                    
-                        $this->admin_model->insert_schedule($userID, $refID, $year_six_payments, $payDate);
-                        
-                        $payDate = $this->endCycle($payDate, 1);
-                        
-                    }
-                    
-                }
-            
-            }
-            
-        }
-        
-        return 1;
-	    
+	public function fill_payment_table($userID, $refID, $payment_period, $finance_balance)
+	{
+
+		$year_one = 0;
+		$year_one_months = 0;
+		$year_two = 0;
+		$year_two_months = 0;
+		$year_three = 0;
+		$year_three_months = 0;
+		$year_four = 0;
+		$year_four_months = 0;
+		$year_five = 0;
+		$year_five_months = 0;
+		$year_six = 0;
+		$year_six_months = 0;
+
+		if ($payment_period == 1) {
+
+			$year_one = $finance_balance;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_one_months = $payment_period * 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_one_months; $i++) {
+
+				$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+				$payDate = $this->endCycle($payDate, 1);
+			}
+		} else if ($payment_period == 2) {
+
+			$year_two_months = $payment_period * 12;
+
+			$year_one = $finance_balance * 0.6;
+
+			$year_two = $inance_balance * 0.4;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_two_payments = $year_two / 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_two_months; $i++) {
+
+				if ($i <= 12) {
+
+					$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+					$payDate = $this->endCycle($payDate, 1);
+				} else if ($i > 12 && $i <= 24) {
+
+					for ($i = 13; $i <= $year_two_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				}
+			}
+		} else if ($payment_period == 3) {
+
+			$year_three_months = $payment_period * 12;
+
+			$year_one = $finance_balance * 0.45;
+
+			$year_two = $finance_balance * 0.35;
+
+			$year_three = $finance_balance * 0.2;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_two_payments = $year_two / 12;
+
+			$year_three_payments = $year_three / 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_three_months; $i++) {
+
+				if ($i <= 12) {
+
+					$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+					$payDate = $this->endCycle($payDate, 1);
+				} else if ($i > 12 && $i <= 24) {
+
+					for ($i = 25; $i <= $year_three_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 24 && $i <= 36) {
+
+					for ($i = 37; $i <= $year_three_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				}
+			}
+		} else if ($payment_period == 4) {
+
+			$year_four_months = $payment_period * 12;
+
+			$year_one = $finance_balance * 0.4;
+
+			$year_two = $finance_balance * 0.3;
+
+			$year_four = $finance_balance * 0.1;
+
+			$year_three = $finance_balance * 0.2;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_two_payments = $year_two / 12;
+
+			$year_three_payments = $year_three / 12;
+
+			$year_four_payments = $year_four / 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_four_months; $i++) {
+
+				if ($i <= 12) {
+
+					$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+					$payDate = $this->endCycle($payDate, 1);
+				} else if ($i > 12 && $i <= 24) {
+
+					for ($i = 25; $i <= $year_four_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 24 && $i <= 36) {
+
+					for ($i = 37; $i <= $year_four_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 37 && $i <= 48) {
+
+					for ($i = 49; $i <= $year_four_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_four_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				}
+			}
+		} else if ($payment_period == 5) {
+
+			$year_five_months = $payment_period * 12;
+
+			$year_one = $finance_balance * 0.4;
+
+			$year_two = $finance_balance * 0.25;
+
+			$year_three = $finance_balance * 0.2;
+
+			$year_four = $finance_balance * 0.1;
+
+			$year_five = $finance_balance * 0.05;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_two_payments = $year_two / 12;
+
+			$year_three_payments = $year_three / 12;
+
+			$year_four_payments = $year_four / 12;
+
+			$year_five_payments = $year_five / 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_five_months; $i++) {
+
+				if ($i <= 12) {
+
+					$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+					$payDate = $this->endCycle($payDate, 1);
+				} else if ($i > 12 && $i <= 24) {
+
+					for ($i = 25; $i <= $year_five_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 24 && $i <= 36) {
+
+					for ($i = 37; $i <= $year_five_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 37 && $i <= 48) {
+
+					for ($i = 49; $i <= $year_five_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_four_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 49 && $i <= 60) {
+
+					for ($i = 61; $i <= $year_five_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_five_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				}
+			}
+		} else if ($unit['payment_period'] == 6) {
+
+			$year_six_months = $payment_period * 12;
+
+			$year_one = $finance_balance * 0.35;
+
+			$year_two = $finance_balance * 0.25;
+
+			$year_three = $finance_balance * 0.20;
+
+			$year_four = $finance_balance * 0.1;
+
+			$year_five = $finance_balance * 0.05;
+
+			$year_six = $finance_balance * 0.05;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_two_payments = $year_two / 12;
+
+			$year_three_payments = $year_three / 12;
+
+			$year_four_payments = $year_four / 12;
+
+			$year_five_payments = $year_five / 12;
+
+			$year_six_payments = $year_six / 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_six_months; $i++) {
+
+				if ($i <= 12) {
+
+					$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+					$payDate = $this->endCycle($payDate, 1);
+				} else if ($i > 12 && $i <= 24) {
+
+					for ($i = 25; $i <= $year_six_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 24 && $i <= 36) {
+
+					for ($i = 37; $i <= $year_six_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 37 && $i <= 48) {
+
+					for ($i = 49; $i <= $year_six_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_four_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 49 && $i <= 60) {
+
+					for ($i = 61; $i <= $year_six_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_five_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 61 && $i <= 72) {
+
+					for ($i = 73; $i <= $year_six_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_six_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				}
+			}
+		}
+
+		return 1;
 	}
-	
-	public function share_form(){
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/send-shares.php'))
-        {
+	public function share_form()
+	{
 
-                // Whoops, we don't have a page for that!
-                show_404();
+		if (!file_exists(APPPATH . 'views/admin/pages/send-shares.php')) {
 
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Send Shares";
 
-			$this->load->view('admin/templates/header' , $data);
+			$this->load->view('admin/templates/header', $data);
 
-			$this->load->view('admin/templates/sidebar' , $data);
+			$this->load->view('admin/templates/sidebar', $data);
 
-			$this->load->view('admin/pages/send-shares' , $data);
+			$this->load->view('admin/pages/send-shares', $data);
 
-			$this->load->view('admin/templates/footer' , $data);
+			$this->load->view('admin/templates/footer', $data);
+		} else {
 
-		}else{
-
-			redirect( base_url().'admin/login','refresh');
-
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
-
 	}
-	
-	public function promo_form(){
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/promo-form.php'))
-        {
+	public function promo_form()
+	{
 
-                // Whoops, we don't have a page for that!
-                show_404();
+		if (!file_exists(APPPATH . 'views/admin/pages/promo-form.php')) {
 
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "Send Shares";
 
-			$this->load->view('admin/templates/header' , $data);
+			$this->load->view('admin/templates/header', $data);
 
-			$this->load->view('admin/templates/sidebar' , $data);
+			$this->load->view('admin/templates/sidebar', $data);
 
-			$this->load->view('admin/pages/promo-form' , $data);
+			$this->load->view('admin/pages/promo-form', $data);
 
-			$this->load->view('admin/templates/footer' , $data);
+			$this->load->view('admin/templates/footer', $data);
+		} else {
 
-		}else{
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
 
-			redirect( base_url().'admin/login','refresh');
+	public function getBuytoletProperties()
+	{
 
+		$response = 'error';
+
+		$result = $this->admin_model->getBuytoletProperties();
+
+		if (!empty($result)) {
+
+			$response = 'success';
 		}
 
+		echo json_encode(array("response" => $response, "data" => $result));
 	}
-	
-	public function getBuytoletProperties(){
-	    
-	    $response = 'error';
-	    
-	    $result = $this->admin_model->getBuytoletProperties();
-	    
-	    if(!empty($result)){
-	        
-	        $response = 'success';
-	        
-	    }
-	    
-	    echo json_encode(array("response" => $response, "data" => $result));
-	    
-	}
-	
-	public function sendShares(){
-	    
-	    $response = 'error';
-	    
-	    $message = '';
-	    
-	    $ref = md5(date('YmdHis'));
-                        
-        $user_id = '';
-		
+
+	public function sendShares()
+	{
+
+		$response = 'error';
+
+		$message = '';
+
+		$ref = md5(date('YmdHis'));
+
+		$user_id = '';
+
 		$adminID = $this->session->userdata('adminID');
-		
+
 		$buyer_type = 'Investor';
-		
+
 		$payment_plan = 'co-own';
-		
+
 		$property_id = $this->input->post("properties");
-		
+
 		$prop = $this->admin_model->getBytoletPropertyByID($property_id);
 
 		$buyBackReturnsRate = $prop['co_appr_1'] + $prop['co_appr_2'] + $prop['co_appr_3'] + $prop['co_appr_4'] + $prop['co_appr_5'] + $prop['co_appr_6'] +  $prop['co_rent_1'] + $prop['co_rent_2'] + $prop['co_rent_3'] + $prop['co_rent_4'] + $prop['co_rent_5'] + $prop['co_rent_6'];
@@ -8276,75 +7802,74 @@ class Admin extends CI_Controller {
 		$propLocation = $prop['location_info'];
 
 		$buyBackRate = $buyBackReturnsRate;
-		
+
 		$holdPeriod = $prop['hold_period'];
 
 		$migrationDate = $prop['closing_date'];
 
 		$paymentPlanPeriod = $prop['payment_plan_period'];
-		
+
 		$email = $this->input->post('email');
-		
+
 		$company_name = $this->input->post('company');
-		
+
 		$position = $this->input->post('position');
-		
+
 		$occupation = $this->input->post('occupation');
-		
+
 		$income_range = $this->input->post('income');
-		
+
 		$company_address = $this->input->post('company-address');
-		
+
 		$promo_code = "";
-		
+
 		$unit_amount = $this->input->post("shares-amount");
-		
+
 		$offer_type = $this->input->post("offer-type");
 
 		$payable = $unit_amount * $prop['price'];
-		
+
 		$cost = $prop['marketValue'];
-		
+
 		$payment_period = '';
-		
+
 		$mop = "Promotional";
-		
+
 		$beneficiary_id_path = 0;
-		
+
 		$id_path = 0;
-		
+
 		$res = TRUE;
-		
+
 		$user_email = 'new_user';
-		
+
 		//Get user
-	    $user = $this->admin_model->check_email($email);
-        
-        if($user){
-            //Get user ID
-            $user_details = $this->admin_model->get_user_by_email($email);
-            
-            $user_id = $user_details['userID'];
-            
-            $firstname = $user_details['firstName'];
-            
-            $lastname = $user_details['lastName'];
-            
-            $phone = $user_details['phone'];
-            
-            $user_email == 'old_user';
-            
-        }else{
-            //Generate new ID
-            $user_id = $this->generate_user_id(12);
-            
-            $firstname = $this->input->post('firstname');
-		
-		    $lastname = $this->input->post('lastname');
-		    
-		    $phone = $this->input->post('phone');
-            
-            $details['userID'] =  $user_id;
+		$user = $this->admin_model->check_email($email);
+
+		if ($user) {
+			//Get user ID
+			$user_details = $this->admin_model->get_user_by_email($email);
+
+			$user_id = $user_details['userID'];
+
+			$firstname = $user_details['firstName'];
+
+			$lastname = $user_details['lastName'];
+
+			$phone = $user_details['phone'];
+
+			$user_email == 'old_user';
+		} else {
+			//Generate new ID
+			$user_id = $this->generate_user_id(12);
+
+			$firstname = $this->input->post('firstname');
+
+			$lastname = $this->input->post('lastname');
+
+			$phone = $this->input->post('phone');
+
+			$details['userID'] =  $user_id;
 
 			$details['fname'] = $firstname;
 
@@ -8355,103 +7880,97 @@ class Admin extends CI_Controller {
 			$details['phone'] = $phone;
 
 			$res = $this->create_user_account($details);
-        }
-        
-        if($res){
-        
-    		$result = $this->admin_model->insertCoOwnRequest($ref, $buyer_type, $payment_plan, $property_id, $cost, $payable, $user_id, $payable, 0, $mop, $payment_period, $unit_amount, $promo_code, $id_path, $beneficiary_id_path, $firstname, $lastname, $email, $phone, $company_name, $position, $occupation, $income_range, $company_address, $adminID, $offer_type);
-    		
-    		if($result){
-    		    //Update the remaining pool units
-    		    $new_pool_units = $prop['available_units'] - $unit_amount;
-    		    
-    			if($this->admin_model->update_buytolet_units($new_pool_units, $property_id)){
-    			    
-    			    $hash = ($offer_type == 'champions')? '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d' : '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d';
-    			    
-    			    // $email_response = $this->send_mmio_email($firstname, $lastname, $email, $hash);
+		}
+
+		if ($res) {
+
+			$result = $this->admin_model->insertCoOwnRequest($ref, $buyer_type, $payment_plan, $property_id, $cost, $payable, $user_id, $payable, 0, $mop, $payment_period, $unit_amount, $promo_code, $id_path, $beneficiary_id_path, $firstname, $lastname, $email, $phone, $company_name, $position, $occupation, $income_range, $company_address, $adminID, $offer_type);
+
+			if ($result) {
+				//Update the remaining pool units
+				$new_pool_units = $prop['available_units'] - $unit_amount;
+
+				if ($this->admin_model->update_buytolet_units($new_pool_units, $property_id)) {
+
+					$hash = ($offer_type == 'champions') ? '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d' : '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d';
+
+					// $email_response = $this->send_mmio_email($firstname, $lastname, $email, $hash);
 					$email_response = $this->send_unione_email($lastname, $unit_amount, $propName, $propLocation, $cost, $paymentPlanPeriod, $buyBackRate, $holdPeriod, $migrationDate, $email, $hash);
 
-    			    $response = "success";
-    			        
-    			    if($email_response){
-    			    
-    			        $message = "Successfully sent";
-    			        
-    			    }else{
-    			        
-    			        $message = "Email send error";
-    			        
-    			    }
-    			    
-    			}else{
-    			    
-    			    $message = "Error updating";
-    			    
-    			}
-    			
-    		}else{
-    		    
-    		    $message = "Could not insert request";
-    		    
-    		}
-        }else{
-            $message = "Could not create new user";
-        }
-		
+					$response = "success";
+
+					if ($email_response) {
+
+						$message = "Successfully sent";
+					} else {
+
+						$message = "Email send error";
+					}
+				} else {
+
+					$message = "Error updating";
+				}
+			} else {
+
+				$message = "Could not insert request";
+			}
+		} else {
+			$message = "Could not create new user";
+		}
+
 		echo json_encode(array("response" => $response, "msg" => $message));
 	}
-	
-	public function publishPromo(){
-	    
-	    $response = 'error';
-	    
-	    $message = '';
-	    
-	    $adminID = $this->session->userdata('adminID');
-	    
-	    $details = $this->input->post();
-	    
-	    $result = $this->admin_model->publish_promo($details, $adminID);
-	    
-	    if($result){
-	        
-	        $response = "success";
-	        
-	        $message = "Successfully uploaded";
-	        
-	    }else{
-	        
-	        $message = "Error uploading promo";
-	        
-	    }
-	    
-	    echo json_encode(array("response" => $response, "msg" => $message));
+
+	public function publishPromo()
+	{
+
+		$response = 'error';
+
+		$message = '';
+
+		$adminID = $this->session->userdata('adminID');
+
+		$details = $this->input->post();
+
+		$result = $this->admin_model->publish_promo($details, $adminID);
+
+		if ($result) {
+
+			$response = "success";
+
+			$message = "Successfully uploaded";
+		} else {
+
+			$message = "Error uploading promo";
+		}
+
+		echo json_encode(array("response" => $response, "msg" => $message));
 	}
-	
-	public function generate_user_id($number){
-	    
-	    $digits = $number;
-	    
+
+	public function generate_user_id($number)
+	{
+
+		$digits = $number;
+
 		$randomNumber = '';
-		
+
 		$count = 0;
 
-		while($count < $digits){
+		while ($count < $digits) {
 
 			$randomDigit = mt_rand(0, 9);
 
 			$randomNumber .= $randomDigit;
 
 			$count++;
-
-		}		
+		}
 
 		return $randomNumber;
 	}
-	
-	public function send_unione_email($lastname, $unit_amount, $propName, $propLocation, $cost, $paymentPlanPeriod, $buyBackRate, $holdPeriod, $migrationDate, $email, $hash){
-	    
+
+	public function send_unione_email($lastname, $unit_amount, $propName, $propLocation, $cost, $paymentPlanPeriod, $buyBackRate, $holdPeriod, $migrationDate, $email, $hash)
+	{
+
 		require 'vendor/autoload.php'; // For Unione template authoload
 
 		// Unione Template
@@ -8479,11 +7998,11 @@ class Admin extends CI_Controller {
 			));
 
 			$jsonResponse = $response->getBody()->getContents();
-			
+
 			$responseData = json_decode($jsonResponse, true);
 
 			$htmlBody = $responseData['template']['body']['html'];
-			
+
 			$username = $lastname;
 			$noOFSharesBought = $unit_amount;
 			$propertyInfo = $propName;
@@ -8495,7 +8014,7 @@ class Admin extends CI_Controller {
 			$propMigrationDate = $migrationDate;
 
 			// Replace the placeholder in the HTML body with the username
-			
+
 			$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
 			$htmlBody = str_replace('{{sharesAmount}}', $noOFSharesBought, $htmlBody);
 			$htmlBody = str_replace('{{propertyName}}', $propertyInfo, $htmlBody);
@@ -8530,26 +8049,25 @@ class Admin extends CI_Controller {
 
 			$response = json_decode($responseEmail->getBody()->getContents(), true);
 
-        	return $response['status'];
-	
+			return $response['status'];
 		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 			$data['response'] = $e->getMessage();
 		}
-	    
 	}
-	
+
 	//parameter array
-	public function create_user_account($details){
+	public function create_user_account($details)
+	{
 
 		$password = md5('Password@123');
 
 		$confirmationCode = md5(date('YmdHis'));
 
 		return $this->admin_model->create_user_account($details['id'], $details['fname'], $details['lname'], $details['email'], $password, $details['phone'], $details['refCode'], $confirmationCode);
-
 	}
-	
-	public function buytolet_stp_subscribers(){
+
+	public function buytolet_stp_subscribers()
+	{
 
 		$config['total_rows'] = $this->admin_model->countSubscribers();
 
@@ -8572,54 +8090,48 @@ class Admin extends CI_Controller {
 			$this->admin_model->setPageNumber($this->pagination->per_page);
 
 			$this->admin_model->setOffset($offset);
-			
+
 			$this->pagination->cur_page = $page_number;
 
 			$this->pagination->initialize($config);
 
 			$data['page_links'] = $this->pagination->create_links();
 
-			$data['subscribers'] = $this->admin_model->fetchSubscribers();			
-
+			$data['subscribers'] = $this->admin_model->fetchSubscribers();
 		}
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/stp-subscribers.php'))
-        {
+		if (!file_exists(APPPATH . 'views/admin/pages/stp-subscribers.php')) {
 
-                // Whoops, we don't have a page for that!
-                show_404();
-
-        }
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
 		//check if Admin is logged in
 
-		if($this->session->has_userdata('adminLoggedIn')){
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
 			$data['adminID'] = $this->session->userdata('adminID');
-			
+
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = "STP :: Stay SmallSmall";
 
-			$this->load->view('admin/templates/header.php' , $data);
+			$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/stp-subscribers.php' , $data);
+			$this->load->view('admin/pages/stp-subscribers.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
-	
-		}else{
-	
-			redirect( base_url().'admin/login','refresh');		
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
 
+			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
-	function random_strings($length_of_string) 
-    { 
-        $str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz'; 
-        return substr(str_shuffle($str_result), 0, $length_of_string); 
-    } 
-	
+	function random_strings($length_of_string)
+	{
+		$str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz';
+		return substr(str_shuffle($str_result), 0, $length_of_string);
+	}
 }
