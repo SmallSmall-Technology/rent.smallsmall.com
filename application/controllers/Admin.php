@@ -5405,33 +5405,46 @@ class Admin extends CI_Controller
 		$folder = $this->input->post('folder');
 
 		$img_name = $this->input->post('imgName');
-
+		
 		if ($folder && $img_name) {
 
 			require 'vendor/autoload.php';
-
+				
 			$s3 = new Aws\S3\S3Client([
+
 				'version' => 'latest',
-				'region' => 'eu-west-1', // My Region
+
+				'region' => 'eu-west-1', // Region
+
 			]);
-
+	
 			$bucket = 'dev-rss-uploads'; // Bucket name
-			$objectKey = 'uploads/' . $folder . '/' . $img_name;
 
+			$objectKey = 'uploads/' . $folder . '/' . $img_name;
+	
 			try {
-				$result = $s3->deleteObject([
+				
+				$s3->deleteObject([
+
 					'Bucket' => $bucket,
 					'Key'    => $objectKey,
-				]);
 
-				echo json_encode(['success' => true]);
+				]);
+	
+				echo 1;
+
 			} catch (Aws\Exception\AwsException $e) {
 
-				echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+				echo $e->getMessage();
+
 			}
+		} else {
+
+			echo $objectKey;
+
 		}
 	}
-
+	
 
 	public function removeStayoneImg()
 	{
