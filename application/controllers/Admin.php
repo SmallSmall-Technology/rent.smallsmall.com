@@ -2596,6 +2596,143 @@ class Admin extends CI_Controller
 	}
 
 
+	public function proptySearch(){
+	    
+	    $value =  $this->input->post("input");
+
+		$data = $this->admin_model->searchPropty($value);
+
+		foreach ($data->result() as $row) 
+        {
+            // echo "<li  id='getVal-$row->propertyID-$row->propertyTitle' class='checkagr' onclick= >$row->propertyTitle</li>";
+
+			echo "<li id = '$row->propertyID' class = '$row->propertyTitle' onClick= getsVal($row->propertyID) >$row->propertyTitle</li>";	
+		}
+	}
+
+	public function deleteAgreement(){
+		
+		$id = $this->input->post('bookingID');
+		
+		//$propID = $this->input->post('propertyID');		
+				
+		$res = $this->admin_model->delAgreement($id);
+
+		if($res){
+			
+			echo 1;
+			
+		}else{
+			
+			echo 0;
+			
+		}
+	}
+
+	public function edit_agr($id){
+		
+		$data['ids'] = $id;
+
+		$data['details'] = $this->admin_model->get_user_details($id);
+
+		$data['bookings'] = $this->admin_model->get_user_bookings($id);
+
+		$data['user_hstry'] = $this->admin_model->get_user_hstry($id);
+		
+		$data['proptys'] = $this->admin_model->get_user_propty($id);
+		
+		$data['user_transactions'] = $this->admin_model->get_user_transactions($id);
+
+		$data['debts'] = $this->admin_model->get_debts($id);
+
+		if ( ! file_exists(APPPATH.'views/admin/pages/user-profile.php')){
+
+                // Whoops, we don't have a page for that!
+
+                show_404();
+
+        }
+        
+		//check if Admin is logged in
+		//if($this->session->has_userdata('adminLoggedIn')){			
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');	
+			
+			$data['userAccess'] = $this->session->userdata('userAccess');		
+
+			$data['title'] = "User Profile :: RSS";
+
+			$this->load->view('admin/templates/header.php' , $data);
+
+			$this->load->view('admin/templates/sidebar.php' , $data);
+
+			$this->load->view('admin/pages/edit-agr.php' , $data);
+
+			$this->load->view('admin/templates/footer.php' , $data);
+
+			$this->load->view('admin/templates/payment-modal.php' , $data);	
+
+		// }else{			
+
+		// 	redirect( base_url().'admin/login','refresh');				
+
+		// }
+
+	}
+
+
+	public function edit_upload(){
+	    
+	    $config['upload_path']          = './uploads/agreement/';
+        $config['allowed_types']        = 'doc|docx|pdf';
+        $config['max_size']             = 0;
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+        
+        //$usrs = $this->session->userdata('userID');
+        
+        //$usrs = $this->admin_model->get_username($usrs);
+
+        if (!$this->upload->do_upload('filename'))
+        {
+            $error = array('error' => $this->upload->display_errors());
+
+            $this->load->view('agr_error', $error);
+        }
+        
+        else
+        {
+                $data = $this->upload->data();
+                
+                $id = $this->input->post('sub_id');
+                
+                $str_yr = $this->input->post('start-yr');
+                
+                $data = array(
+                    'filename' => $data['file_name'],
+                    'start_year' => $str_yr,
+                    'end_year' => $this->input->post('end-yr'),
+                    'property' => $this->input->post('sub-propty'),
+                    'date' => date('Y-m-d H:i:s')
+                    );
+				
+				$this->db->where('id', $id);
+                    
+                $this->db->update('sub_agreement', $data);
+                
+                //print_r($data);
+                
+                echo "<script>
+                            alert('Upload Successful');
+                            window.location.href='edit-agr/".$id."';
+                      </script>";
+        }
+	}
+
 
 	public function getDistance()
 	{

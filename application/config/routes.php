@@ -115,6 +115,8 @@ $route['admin/all-apartments'] = 'admin/all_apartments';
 
 $route['admin/new-apartment'] = 'admin/new_apartment';
 
+$route['admin/edit-agr/(:any)'] = 'admin/edit_agr/$1';
+
 $route['admin/edit-apartment/(:any)'] = 'admin/edit_apartment/$1';
 /********** Stay SmallSmall *******************/
 //Webhook for Lenco transactions

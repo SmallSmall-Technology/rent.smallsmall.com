@@ -330,54 +330,63 @@
             					
             					
             			    <div class="table-responsive">
-                                    <?php echo form_open_multipart('admin/agr-upload');?>  
+                            <?php echo form_open_multipart('admin/agr_upload');?>  
                                     
-                                        <br></br>
-                                        <div class="form-row" style = "margin-left: 10px;">
-                                            
-                                            
-                                            <div class="col-md-4"><label for="debt-note" class="">Start year</label>
-                                            <select name="start-yr" id="start-yr" class="form-control verify-debt-txt" required>
-                                                
-                                            <?php for($i = 2020; $i < 2071; $i++){ ?>
-                                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                            <?php } ?>
-                                            </select></div>
-                                            
-                                            
-                                            
-                                            
-                                            <div class="col-md-4"><label for="debt-note" class="">End year</label><select required = 'true' name="end-yr" id="end-yr" class="form-control verify-debt-txt">
-                                                
-                                            <?php for($i = 2020; $i < 2071; $i++){ ?>
-                                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                            <?php } ?>
-                                            </select></div></div><br></br>
-                                            
-                                            
-                                        <div class="col-md-4">
-                                        <input type="hidden" name = "sub_id" value = "<?php echo @$ids ?>">
-                                        <div class="position-relative form-group"><label for="debt-note" class="">Property</label><select name="sub-propty" id="sub-propty" class="form-control verify-debt-txt">
-                                        <?php foreach($proptys as $propty => $value){ ?>
-                                            <option value="<?php echo $value['propertyID']; ?>"><?php echo $value['propertyTitle']; ?></option>
-                                        <?php } ?></select>
-                                        </div></div>  
-                                        
-                                        <div class="col-md-4">
-                                            <label for="debt-note" class="">Upload Document</label>
-                                            <input type="file" name="filename" required/>
-                                        </div><br></br>
+                                    <br></br>
+                                    <div class="form-row" style = "margin-left: 10px;">
                                         
                                         
-                                        <div class="col-md-4">
-                                            <input type="submit" value="upload"/><br></br>
-                                        </div>
+                                        <div class="col-md-4"><label for="debt-note" class="">Start year</label>
+                                        <select name="start-yr" id="start-yr" class="form-control verify-debt-txt" required>
                                             
-            		                    </form>
-            					</div>
-                    
-                    </div>
-            			</div>
+                                        <?php for($i = 2020; $i < 2071; $i++){ ?>
+                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                        <?php } ?>
+                                        </select></div>
+                                        
+                                        
+                                        
+                                        
+                                        <div class="col-md-4"><label for="debt-note" class="">End year</label><select required = 'true' name="end-yr" id="end-yr" class="form-control verify-debt-txt">
+                                            
+                                        <?php for($i = 2020; $i < 2071; $i++){ ?>
+                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                        <?php } ?>
+                                        </select></div></div><br></br>
+                                        
+                                        
+                                    <div class="col-md-4">
+                                    <input type="hidden" name = "sub_id" value = "<?php echo @$ids ?>">
+
+                                    <input type="hidden" name = "sub-propty" id= "sub-propty" value = "">
+
+                                    <div class="position-relative form-group">
+                                        <input type = "text" id = "live_search" placeholder="Type a property here..." value="" style = "width:100%" />
+                                        <ul id="searchresult" style = " display: none; list-style: none; padding: 2em; border: 1px solid black; margin-top: 2em; border-radius: 10px; cursor: pointer;"></ul> 
+                                    </div>
+
+                                    <!-- <div class="position-relative form-group"><label for="debt-note" class="">Property</label><select name="sub-propty" id="sub-propty" class="form-control verify-debt-txt">
+                                    <?php foreach($proptys as $propty => $value){ ?>
+                                        <option value="<?php echo $value['propertyID']; ?>"><?php echo $value['propertyTitle']; ?></option>
+                                    <?php } ?></select>
+                                    </div></div>   -->
+                                    
+                                    <div class="col-md-4">
+                                        <label for="debt-note" class="">Upload Document</label>
+                                        <input type="file" name="filename" required/>
+                                    </div><br></br>
+                                    
+                                    
+                                    <div class="col-md-4">
+                                        <input type="submit" value="upload"/><br></br>
+                                        
+                                    </div>
+                                        
+                                    </form>
+                            </div>
+                
+                            </div>
+                        </div>
             		</div>
                     <!--subscription agreement -->
                     
@@ -431,6 +440,12 @@
             								<td class="text-left"><?php echo $value['admin']; ?></td>
             								
             								<td class="text-left"><?php echo $value['date']; ?></td>
+
+                                            <td class="text-left">
+                                                <button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/edit-agr/".$value['id']; ?>">Edit</a></button>
+                                                <br></br>
+                                                <button type="button" id="booking-<?php echo $value['id']; ?>-<?php echo $value['id']; ?>" class="btn btn-primary btn-sm delete-agr">Delete</button>
+                                            </td>
             								
             							</tr>    
             							<?php    

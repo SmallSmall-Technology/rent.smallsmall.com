@@ -98,6 +98,110 @@ $(window).on('load', function(){
 			
 		}
 	});
+
+
+	$("#live_search").keyup(function(){
+
+		var input = $(this).val();
+
+		if(input != "")
+		{
+			$.ajax({
+
+				url: baseUrl + "admin/proptySearch/",
+				type: "POST",
+				data: {input:input},
+	
+				success: function (data) {
+					
+					$("#searchresult").css("display", "block");
+					$("#searchresult").html(data);
+
+				}
+	
+			});
+		}
+
+		else
+		{
+			$("#searchresult").css("display", "none");
+		}
+	});
+
+	$('.delete-agr').click(function () {
+
+		var the_ids = $(this).attr("id").replace(/booking-/, "").split("-");
+
+		var bookingID = the_ids[0];
+
+		var propertyID = the_ids[1];
+
+		$(this).html('Wait...');
+
+		var data = { "bookingID": bookingID, "propertyID": propertyID };
+
+		if (confirm("Are you sure you want to DELETE Agreement?")) {
+
+			$.ajaxSetup({ cache: false });
+
+			$.ajax({
+				url: baseUrl + "admin/deleteAgreement",
+
+				type: "POST",
+
+				async: true,
+
+				data: data,
+
+				success: function (data) {
+
+					if (data == 1) {
+
+						alert("Agreement Deleted!");
+
+						$(this).html('Delete');
+
+						location.reload(true);
+					} else {
+
+						alert("Error Deleting!!!");
+
+						$(this).html('Delete');
+
+						return false;
+					}
+
+				}
+			});
+		} else {
+
+			$(this).html('Delete');
+
+			return false;
+
+		}
+
+	});
+
+	
+	$('.checkagr').click(function () {
+
+		var the_ids = $(this).attr("id").replace(/getVal-/, "").split("-");
+
+		var id = the_ids[0];
+
+		var title = the_ids[1];
+
+		let inputId = document.getElementById("sub-propty");
+		
+		let inputTitle = document.getElementById("live_search")
+
+		inputId.value = id;
+		inputTitle.value = title;
+
+		alert('hello');
+
+	});
 	
 
 	$('.close-msg').click(function(){
@@ -6196,3 +6300,14 @@ $(document). on('click', '.close-int', function(){
 
 	});
 });
+
+function getsVal(id)
+{
+	let inputId = document.getElementById("sub-propty");
+	
+	let inputTitle = document.getElementById("live_search")
+
+	var conT = document.getElementById(id).className;
+	inputId.value = id;
+	inputTitle.value = conT;
+}
