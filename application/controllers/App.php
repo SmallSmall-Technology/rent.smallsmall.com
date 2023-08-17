@@ -4,6 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $client = new \GuzzleHttp\Client();
 
+use Treblle\Factory\TreblleFactory; // For teblle
+
 //$beamsClient = new \Pusher\PushNotifications(array("instanceId" => "7a875a81-0a32-4474-aa9f-3064b42a2857", "secretKey" => "D1DE06AD6DE82E4DE9081BB39F994586E3B4FF020F6CBF653FA315E714A4E897"));
 
 class App extends CI_Controller
@@ -1723,11 +1725,23 @@ class App extends CI_Controller
 
 	public function inspection_details()
 	{
+		require 'vendor/autoload.php';
+
 		$result = FALSE;
 
 		$details = '';
 
 		$data = array();
+
+		// // Load Treblle configuration
+        // $treblle = TreblleFactory::create('aQzx6RjUyy2AMBZnwLNKZ1yOvBFZB6CF', 'PjPYQOh9vStbnLYW');
+
+		// Load Treblle configuration
+        $treblle = TreblleFactory::create(
+            'aQzx6RjUyy2AMBZnwLNKZ1yOvBFZB6CF',
+            'PjPYQOh9vStbnLYW',
+            true // Debug mode
+        );
 
 		$key = $this->getKey();
 
@@ -1752,7 +1766,11 @@ class App extends CI_Controller
 				}
 			} catch (Exception $ex) {
 
-				$details = "Exception error caught: " . $ex->getMessage();
+				// Log exception to Treblle
+                $treblle->logException($ex);
+                $details = "Exception error caught: " . $ex->getMessage();
+
+				// $details = "Exception error caught: " . $ex->getMessage();
 			}
 		} else {
 
