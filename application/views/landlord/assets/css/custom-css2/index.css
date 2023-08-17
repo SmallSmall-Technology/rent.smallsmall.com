@@ -1,0 +1,11 @@
+.special-link-button {
+  background-color: #662D91;
+  color: #ffffff;
+  position: absolute;
+}
+
+.special-link-button:hover {
+  background-color: #8b28d7;
+  color: #ffffff;
+
+}
