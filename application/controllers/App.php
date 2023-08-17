@@ -1740,7 +1740,7 @@ class App extends CI_Controller
         $treblle = TreblleFactory::create(
             'aQzx6RjUyy2AMBZnwLNKZ1yOvBFZB6CF',
             'PjPYQOh9vStbnLYW',
-            true // Debug mode
+            false // Debug mode
         );
 
 		$key = $this->getKey();
@@ -1766,11 +1766,18 @@ class App extends CI_Controller
 				}
 			} catch (Exception $ex) {
 
-				// Log exception to Treblle
-                $treblle->logException($ex);
+				// // Log exception to Treblle
+                // $treblle->logException($ex);
+                // $details = "Exception error caught: " . $ex->getMessage();
+
+				// // $details = "Exception error caught: " . $ex->getMessage();
+
+				// Log exception to Treblle and capture the response
+                $treblleResponse = $treblle->logException($ex);
                 $details = "Exception error caught: " . $ex->getMessage();
 
-				// $details = "Exception error caught: " . $ex->getMessage();
+                // Echo response to Treblle
+                echo json_encode($treblleResponse);
 			}
 		} else {
 
