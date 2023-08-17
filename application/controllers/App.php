@@ -2370,6 +2370,7 @@ class App extends CI_Controller
 	//     echo json_encode(array("result" => TRUE, "details" => $details, "data" => $data));
 
 	// }
+	
 
 
 	public function subscription_history()
@@ -3526,14 +3527,26 @@ class App extends CI_Controller
 
 	public function get_user_notifications()
 	{
+
+		require 'vendor/autoload.php';
+
 		$result = FALSE;
 
 		$details = '';
 
 		$data = array();
 
+		// Load Treblle configuration
+		$treblle = TreblleFactory::create(
+			'aQzx6RjUyy2AMBZnwLNKZ1yOvBFZB6CF',
+			'PjPYQOh9vStbnLYW',
+			false // Debug mode
+		);
+
 		// Get $key variable
 		$key = $this->getKey();
+
+		 try {
 
 		// Directly get the JSON data from the request body
 		$json = file_get_contents('php://input');
@@ -3563,6 +3576,17 @@ class App extends CI_Controller
 
 			$details = "Invalid query parameters. Missing userID";
 		}
+
+	} catch (Exception $ex) {
+        // Log exception to Treblle with the final response data
+        $treblle->logException($ex, array(
+            'result' => $result,
+            'details' => $details,
+            'data' => $data
+        ));
+
+        $details = "Exception error caught: " . $ex->getMessage();
+    }
 
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
