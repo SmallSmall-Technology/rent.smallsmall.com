@@ -5401,45 +5401,88 @@ class Admin extends CI_Controller
 
 	// Code modify to make ref to AWS S3 folders.
 
-	public function removeImg()
-	{
-		$folder = $this->input->post('folder');
+	// public function removeImg()
+	// {
+	// 	$folder = $this->input->post('folder');
 		
-		$img_name = $this->input->post('imgName');
+	// 	$img_name = $this->input->post('imgName');
 	
-		if ($folder && $img_name) {
+	// 	if ($folder && $img_name) {
 
-			require 'vendor/autoload.php';
+	// 		require 'vendor/autoload.php';
 	
-			$s3 = new Aws\S3\S3Client([
-				'version' => 'latest',
+	// 		$s3 = new Aws\S3\S3Client([
+	// 			'version' => 'latest',
 
-				'region' => 'eu-west-1', // Replace with your region
-			]);
+	// 			'region' => 'eu-west-1', // Replace with your region
+	// 		]);
 	
-			$bucket = 'dev-rss-uploads'; // Replace with your bucket name
+	// 		$bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-			$objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
+	// 		$objectKey = 'uploads/' . $folder . '/' . $img_name;
 	
-			try {
-				$s3->deleteObject([
+	// 		try {
+	// 			$s3->deleteObject([
 
-					'Bucket' => $bucket,
-					'Key' => $objectKey,
+	// 				'Bucket' => $bucket,
+	// 				'Key' => $objectKey,
 
-				]);
+	// 			]);
 	
-				echo 1; // Success
+	// 			echo 1; // Success
 	
-			} catch (Aws\Exception\AwsException $e) {
-				echo 'S3 Error: ' . $e->getAwsErrorMessage();
-			}
+	// 		} catch (Aws\Exception\AwsException $e) {
+	// 			echo 'S3 Error: ' . $e->getAwsErrorMessage();
+	// 		}
 			
-		} else {
-			echo 'Missing folder or image name';
-		}
-	}
+	// 	} else {
+	// 		echo 'Missing folder or image name';
+	// 	}
+	// }
 	
+	public function removeImg()
+{
+    $folder = $this->input->post('folder');
+    $img_name = $this->input->post('imgName');
+
+    if ($folder && $img_name) {
+		
+        require 'vendor/autoload.php';
+    
+        $s3 = new Aws\S3\S3Client([
+            'version' => 'latest',
+            'region' => 'eu-west-1', // Replace with your region
+        ]);
+
+        $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+        $objectKey = 'uploads/' . $folder . '/' . $img_name;
+
+        try {
+            // List all versions of the object
+            $versions = $s3->listObjectVersions([
+                'Bucket' => $bucket,
+                'Prefix' => $objectKey,
+            ]);
+
+            // Delete all versions of the object
+            foreach ($versions['Versions'] as $version) {
+                $s3->deleteObject([
+                    'Bucket' => $bucket,
+                    'Key' => $version['Key'],
+                    'VersionId' => $version['VersionId'],
+                ]);
+            }
+            
+            echo 1; // Success
+        } catch (Aws\Exception\AwsException $e) {
+            echo 'S3 Error: ' . $e->getAwsErrorMessage();
+        }
+    } else {
+        echo 'Missing folder or image name';
+    }
+}
+
 	public function removeStayoneImg()
 	{
 
