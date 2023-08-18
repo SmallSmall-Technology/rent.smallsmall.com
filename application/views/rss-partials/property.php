@@ -55,15 +55,38 @@ if ($srlz[0] == 'Upfront') {
   $total =  ($property['price'] * 12) + $sec_dep;
 
   $total = number_format($total);
+
+  if($property['securityDepositTerm'] == 1)
+  {
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+  
+    $total =  $property['price'] + $sec_dep + $evictionDeposit + $serviceCharge;
+    
+    $total = number_format($total);
+  }
+
+  elseif($property['securityDepositTerm'] == 2)
+  {
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+    $sec_dep = 0.75 * $sec_dep;
+    
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+  
+    $total =  $property['price'] + $sec_dep + $evictionDeposit + $serviceCharge;
+    
+    $total = number_format($total);
+  }
 } else {
   $mnth = "/Month";
   $vmnth = "Monthly";
 
-  if ($property['price'] > 999999) {
-    $prc = ($property['price'] / 1000000) . 'M';
-  } else {
-    $prc = number_format($property['price']);
-  }
+  // if ($property['price'] > 999999) {
+  //   $prc = ($property['price'] / 1000000) . 'M';
+  // } else {
+  //   $prc = number_format($property['price']);
+  // }
 
   $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
 
