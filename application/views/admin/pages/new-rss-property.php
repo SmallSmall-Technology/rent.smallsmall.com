@@ -354,9 +354,9 @@
 															    
 															    <select name="security-deposit-term" id="security-deposit-term" class="form-control">
 															        
-                            										<option selected="selected" value="1">One Year</option>
+                            										<option selected="selected" value="1">One Month</option>
 															        
-                            										<option value="2">Two Years</option>
+                            										<option value="2">Two Month</option>
                             
                             									</select>
 															</div>
