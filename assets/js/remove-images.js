@@ -62,6 +62,7 @@ $(document). on('click', '.remove-img', function(){
 	
 }); 
 
+
 $(document). on('click', '.remove-btl-img', function(){
     
 	"use strict";
@@ -118,7 +119,9 @@ $(document). on('click', '.remove-btl-img', function(){
 
 		});
 	}else{
+
 		$(".remove-btl-img").html('remove <i class"fa fa-trash"></i>');
+
 	}
 	
 }); 

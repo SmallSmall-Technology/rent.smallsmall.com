@@ -920,7 +920,7 @@
                 $prefix = 'uploads/properties/' . $property['imageFolder'] . '/';
 
                 try {
-                    $objects = $s3->listObjectsV2([
+                    $objects = $s3->listObjects([
                         'Bucket' => $bucket,
                         'Prefix' => $prefix,
                     ]);
