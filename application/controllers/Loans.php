@@ -1317,9 +1317,9 @@ class Loans extends CI_Controller {
 		    $walletInsert = $this->loan_model->insert_wallet_funding($acct_detail['userID'], $event['data']['transactionAmount'], 'Credit', $reference, 'Successful', 'Bank Deposit', $event['data']['transactionReference']);
 		    
 		    //Optional email to notify RSS of transaction
-		    if($this->send_cx_email("Success", "Deposit of N".$event['data']['transactionAmount']." made by ".$event['data']['virtualAccount']['bankAccount']['accountName'], $event['data']['virtualAccount']['bankAccount']['accountName'], $event['data']['transactionAmount'])){
+		    if($this->send_cx_email($event['data']['virtualAccount']['bankAccount']['accountName'], $event['data']['transactionAmount'])){
 
-		    	$this->send_user_email("Success", "Successful Transfer", $event['data']['virtualAccount']['bankAccount']['accountName'], $event['data']['transactionAmount'], $event['data']['id']);
+		    	$this->send_user_email($event['data']['virtualAccount']['bankAccount']['accountName'], $event['data']['transactionAmount'], $event['data']['id']);
 		    
 		    }
 		
