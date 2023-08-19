@@ -898,7 +898,8 @@
         </button>
     </div>
     <div data-parent="#accordion" id="collapseOne6" class="collapse">
-        <div class="card-body">
+
+        <!-- <div class="card-body">
             <div class="file_drag_area" id="file_drag_area">
                 Drop Files Here
             </div>
@@ -908,7 +909,7 @@
             </div>
 
 			<div id="uploaded_images">
-                <?php
+                </?php
                 require 'vendor/autoload.php';
 
                 $s3 = new Aws\S3\S3Client([
@@ -946,7 +947,82 @@
 			<input type="hidden" name="foldername" id="foldername" class="folderName" value="<?php echo $property['imageFolder'] ?>" />
             <input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $property['featuredImg']; ?>" />
             <input type="hidden" name="propID" id="propID" class="propID" value="<?php echo $property['propertyID']; ?>" />
-        </div>
+        </div> -->
+
+
+		<div class="card-body">
+    <div class="file_drag_area" id="file_drag_area">
+        Drop Files Here
+    </div>
+    <div id="uploaded_files">
+        <label>Click to upload file(s)</label>
+        <input type="file" name='userfile[]' id="multipleUplFiles" class='multipleUplFiles' multiple />
+    </div>
+    <div id="uploaded_images"> 
+
+        <?php
+
+        require 'vendor/autoload.php';
+
+        // Create an S3 client
+        $s3 = new Aws\S3\S3Client([
+            'version' => 'latest',
+
+            'region' => 'eu-west-1',
+        ]);
+
+        $bucket = 'dev-rss-uploads';
+
+        $imageFolder = $property['imageFolder'];
+
+        try {
+            $objects = $s3->listObjects([
+                'Bucket' => $bucket,
+
+                'Prefix' => "uploads/properties/$imageFolder/",
+            ]);
+
+            $content_size = count($objects['Contents']);
+
+            $count = 0;
+
+            foreach ($objects['Contents'] as $object) {
+
+                $file = basename($object['Key']);
+
+                if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
+
+                    $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
+        ?>
+                    <span class="imgCover removal-id-<?php echo $count; ?>" id="id-<?php echo $file; ?>">
+                        <img src="<?php echo $imageSrc; ?>" id="<?php echo $file; ?>" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as the featured image" />
+                        <?php if ($file == $property['featuredImg']) { echo '<span class="featTT">Featured</span>'; } ?>
+                        <div class="remove-img img-removal" id="img-properties-<?php echo $file; ?>-<?php echo $count; ?>">remove <i class="fa fa-trash"></i></div>
+                    </span>
+        <?php
+
+                }
+
+                $count++;
+            }
+
+        } catch (Aws\S3\Exception\S3Exception $e) {
+
+            // Handle S3 error here
+            echo 'Error listing S3 objects: ' . $e->getMessage();
+
+        }
+
+        ?>
+
+    </div>
+
+    <input type="hidden" name="foldername" id="foldername" class="folderName" value="<?php echo $property['imageFolder'] ?>" />
+    <input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $property['featuredImg']; ?>" />
+    <input type="hidden" name="propID" id="propID" class="propID" value="<?php echo $property['propertyID']; ?>" />
+</div>
+
+
     </div>
 </div>
 
