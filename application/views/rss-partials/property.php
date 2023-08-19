@@ -1198,7 +1198,7 @@ function shortenText($text, $maxLength)
         'region' => 'eu-west-1'
       ]);
 
-      $bucket = 'dev-rss-uploads'; // Bucket name
+      $bucket = 'rss-prod-uploads'; // Your bucket name
 
       if (isset($properties) && !empty($properties)) {
         $currentPropertyCity = $property['city']; // Get the city of the current property
@@ -1217,25 +1217,18 @@ function shortenText($text, $maxLength)
                     $CI = &get_instance();
 
                     if (date('Y-m-d') < $value['available_date']) {
-
                       echo '<div class="availablility unavailable d-flex">';
-
                       echo '<img src="' . base_url() . 'assets/updated-assets/images/time-delete.svg" alt="">';
-
                       echo '<span class="ml-2">Rented until: ' . date("M Y", strtotime($value['available_date'])) . '</span>';
-
                       echo '</div>';
                     } else {
-
                       echo '<div class="availablility available">';
-
                       echo '<img src="' . base_url() . 'assets/updated-assets/images/check-circle.svg" alt="">';
-
                       echo '<span class="ml-1">Available: Now</span>';
-
                       echo '</div>';
                     }
                     ?>
+
                     <div class="carousel-inner listing-image">
                       <?php
                       $imageFolder = $value['imageFolder'];
@@ -1243,51 +1236,39 @@ function shortenText($text, $maxLength)
                       // List objects in the specified S3 folder
                       try {
                         $objects = $s3->listObjects([
-
                           'Bucket' => $bucket,
-
                           'Prefix' => "uploads/properties/$imageFolder/",
-
                         ]);
 
                         $activeClass = 'active';
-
                         $content_size = count($objects['Contents']);
-
                         $count = 0;
 
                         foreach ($objects['Contents'] as $object) {
-
-                          // Filter Out Unwanted Image/Object (Filter out the property image from neighbourhood image)
+                          // filter out the property images
 
                           if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
-
-                            $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
-
-                            // $imageSrc = $object['Key'];
-
+                            $imageSrc = $object['Key'];
                             echo '
-                                <div class="carousel-item ' . $activeClass . '">
-                                    <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100/>
-                                </div>
-                            ';
-
+                                                        <div class="carousel-item ' . $activeClass . '">
+                                                            <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image" class="d-block w-100"/>
+                                                        </div>
+                                                    ';
                             $activeClass = '';
                           }
+                          $count++;
                         }
-
-                        $count++;
                       } catch (Aws\S3\Exception\S3Exception $e) {
-
                         // Handle S3 error by displaying a placeholder image
                         echo '<div class="carousel-item active">
-                                                        <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
-                                                    </div>';
+                                                            <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
+                                                        </div>';
                         echo '<div class="carousel-item">
-                                                        <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
-                                                    </div>';
+                                                            <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
+                                                        </div>';
                       }
                       ?>
+
                     </div>
                     <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls-<?php echo $value['propertyID']; ?>" data-slide="prev">
                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -1302,10 +1283,10 @@ function shortenText($text, $maxLength)
                     <p class="card-text">
                       &#8358;<?php echo ($value['price'] > 999999) ? ($value['price'] / 1000000) . 'M' : number_format($value['price']); ?>/month&nbsp;&nbsp;
                       <small style="
-                                            text-decoration: line-through;
-                                            text-decoration-color: #007dc1;
-                                            text-decoration-thickness: 3px;
-                                        ">
+                                                    text-decoration: line-through;
+                                                    text-decoration-color: #007dc1;
+                                                    text-decoration-thickness: 3px;
+                                                ">
                         &#8358;<?php $annual_price = $value['price'] * 12;
                                 echo ($annual_price > 999999) ? number_format($annual_price / 1000000) . 'M' : number_format($annual_price); ?>/year
                       </small>
@@ -1315,6 +1296,7 @@ function shortenText($text, $maxLength)
                       <p class="card-text">
                         &bull;<?php echo $value['bed']; ?> Bed
                         &bull;<?php echo $value['bath']; ?> Bath
+                        <!--&bull;<?php echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
                         &bull;<?php echo ($value['city']); ?>
                       </p>
                     </div>
@@ -1322,17 +1304,14 @@ function shortenText($text, $maxLength)
                 </a>
               </div>
             </div>
-          <?php
-          }
-        } else { ?>
+          <?php } ?>
+
+        <?php } else { ?>
           <div style="width:100%;padding:15px 0;font-family:gotham-medium;color:#414042">No results matching your search</div>
-        <?php
-        }
+        <?php }
       } else { ?>
         <div style="width:100%;padding:15px 0;font-family:gotham-medium;color:#414042">No results matching your search</div>
-      <?php
-      } ?>
-
+      <?php } ?>
     </div>
   </div>
 
