@@ -32,6 +32,8 @@ if ($property['securityDepositTerm'] == 1) {
   $sec_dep = 0.75 * $sec_dep;
 }
 
+$evc_dep = ($sec_dep + $evictionDeposit);
+
 $srlz = $property['intervals'];
 $srlz = unserialize($srlz);
 $yrnt = $property['price'] * 12;
@@ -61,8 +63,10 @@ if ($srlz[0] == 'Upfront') {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    $evc_dep = $property['securityDeposit'];
   
-    $total =  $property['price'] + $sec_dep + $evictionDeposit + $serviceCharge;
+    $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
     
     $total = number_format($total);
   }
@@ -74,11 +78,11 @@ if ($srlz[0] == 'Upfront') {
     
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
   
-    $total =  $property['price'] + $sec_dep + $evictionDeposit + $serviceCharge;
+    $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
     
     $total = number_format($total);
   }
-  
+
 } else {
   $mnth = "/Month";
   $vmnth = "Monthly";
@@ -274,7 +278,7 @@ function shortenText($text, $maxLength)
               <p class="mb-0 mobile-subscription-price">Subscription Price</p>
               <p class="font-weight-bolder primary-text-color mobile-subscription-amount">&#8358;<?php echo $prc . ' ' . $mnth; ?></p>
               <p class="mb-0 mobile-subscription-security">Security deposit fund</p>
-              <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></p>
+              <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($evc_dep); ?></p>
             </div>
 
 
@@ -574,10 +578,9 @@ function shortenText($text, $maxLength)
                                       <tr>
                                         <td>Security deposit fund</td>
 
-                                        <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?><sup class="text-dark"></sup>
+                                        <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($evc_dep); ?><sup class="text-dark"></sup>
                                         </td>
                                       </tr>
-
 
                                   </tbody>
 
@@ -798,7 +801,7 @@ function shortenText($text, $maxLength)
               <div>
                 <p>subscription price</p>
                 <p class="subcription-amount font-weight-bold">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup id="subtips" data-toggle="tooltip" data-placement="right" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
-                <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></span><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+                <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($evc_dep); ?></span><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
               </div>
             </div>
 
