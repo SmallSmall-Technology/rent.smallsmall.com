@@ -1,0 +1,65 @@
+.current-booking {
+  background: #F6F7F8;
+  border-radius: 10px;
+  padding: 4em;
+}
+
+.subscription-btn {
+  background: #007DC1;
+  border-radius: 4px;
+  min-width: 211px;
+  color: #ffffff;
+  height: 100%;
+    /* padding: 2em; */
+}
+
+
+.wallet-btn {
+  background: #EDEDEF;
+  border-radius: 4px;
+
+}
+
+.wallet-input{
+  background: #F3F6F8;
+  border-radius: 5px;
+  border: none;
+  width: 75%;
+}
+
+.wallet-balance-container{
+  width: 100%;
+}
+
+/*****MEDIA QUERY****/
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (max-width: 480px) {
+  .subscription-btn {
+    min-width: 100%;
+    padding: 2em 3em;
+  }
+
+  .current-booking {
+    background: #F6F7F8;
+    border-radius: 10px;
+    padding: 2em;
+
+  }
+
+  .wallet-btn{
+    width: 100%;
+  } 
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (min-width: 576px) {}
+
+/* Medium devices (tablets, 768px and up)*/
+@media screen and (min-width: 768px) {}
+
+/* Large devices (desktops, 992px and up)*/
+@media screen and (992px <=width <=1024px) {}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media screen and (min-width: 1200px) {}
