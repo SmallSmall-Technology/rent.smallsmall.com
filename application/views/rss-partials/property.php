@@ -127,6 +127,7 @@ function shortenText($text, $maxLength)
 
 <main class="">
   <div class="container">
+    
     <!-- caroisel slider -->
 
     <!-- <div class="row">
@@ -134,8 +135,7 @@ function shortenText($text, $maxLength)
         <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
 
-
-            <?php
+            </?php
 
             $imageFolder = $property['imageFolder'];
 
@@ -210,32 +210,64 @@ function shortenText($text, $maxLength)
 
             // Create an S3 client
             $s3 = new Aws\S3\S3Client([
+
               'version' => 'latest',
+
               'region' => 'eu-west-1'
+
             ]);
 
             $bucket = 'dev-rss-uploads'; // Your bucket name
 
             $imageFolder = $property['imageFolder'];
 
+            $activeClass = 'active';
+
+            $content_size = count($objects['Contents']);
+
+            $count = 0;
+
             // List objects in the specified S3 folder
             try {
               $objects = $s3->listObjects([
+
                 'Bucket' => $bucket,
+
                 'Prefix' => "uploads/properties/$imageFolder/",
+
               ]);
 
               $activeClass = 'active';
 
               foreach ($objects['Contents'] as $object) {
-                $imageSrc = $object['Key'];
-                echo '
-                            <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
-                                <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image"/>
-                            </div>
-                        ';
-                $activeClass = '';
-              }
+
+                if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+
+                    $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
+
+                    echo '
+                        <div class="carousel-item ' . $activeClass . '">
+                            <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
+                        </div>
+                    ';
+                    $activeClass = '';
+                }
+
+                $count++;
+
+            }
+
+              // foreach ($objects['Contents'] as $object) {
+
+              //   $imageSrc = $object['Key'];
+              //   echo '
+              //               <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+              //                   <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image"/>
+              //               </div>
+              //           ';
+              //   $activeClass = '';
+              // }
+
             } catch (Aws\S3\Exception\S3Exception $e) {
               // Handle S3 error by displaying a placeholder image
               echo '<div class="carousel-item-img carousel-item active" data-interval="10000">
