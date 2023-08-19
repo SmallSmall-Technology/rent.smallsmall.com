@@ -66,7 +66,7 @@ if ($srlz[0] == 'Upfront') {
 
     $evc_dep = $property['securityDeposit'];
   
-    $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
+    $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
     
     $total = number_format($total);
   }
