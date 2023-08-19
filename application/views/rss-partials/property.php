@@ -58,31 +58,26 @@ if ($srlz[0] == 'Upfront') {
 
   $total = number_format($total);
 
-  if($property['securityDepositTerm'] == 1)
-  {
+  if ($property['securityDepositTerm'] == 1) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
 
     $evc_dep = $property['securityDeposit'];
-  
-    $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
-    
-    $total = number_format($total);
-  }
 
-  elseif($property['securityDepositTerm'] == 2)
-  {
+    $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
+
+    $total = number_format($total);
+  } elseif ($property['securityDepositTerm'] == 2) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
     $sec_dep = 0.75 * $sec_dep;
-    
+
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
-  
+
     $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
-    
+
     $total = number_format($total);
   }
-
 } else {
   $mnth = "/Month";
   $vmnth = "Monthly";
@@ -127,7 +122,7 @@ function shortenText($text, $maxLength)
 
 <main class="">
   <div class="container">
-    
+
     <!-- caroisel slider -->
 
     <!-- <div class="row">
@@ -223,39 +218,37 @@ function shortenText($text, $maxLength)
 
             $activeClass = 'active';
 
-                    // List objects in the specified S3 folder
-                    try {
-                      $objects = $s3->listObjects([
-                          'Bucket' => $bucket,
+            // List objects in the specified S3 folder
+            try {
+              $objects = $s3->listObjects([
+                'Bucket' => $bucket,
 
-                          'Prefix' => "uploads/properties/$imageFolder/",
-                      ]);
-  
-                      $content_size = count($objects['Contents']);
+                'Prefix' => "uploads/properties/$imageFolder/",
+              ]);
 
-                      $count = 0;
-  
-                      foreach ($objects['Contents'] as $object) {
+              $content_size = count($objects['Contents']);
 
-                        // filter out unwanted images in property page
+              $count = 0;
 
-                          if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+              foreach ($objects['Contents'] as $object) {
 
-                              $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
+                // filter out unwanted images in property page
 
-                              echo '
+                if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+
+                  $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
+
+                  echo '
                                   <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
                                       <img src="' . $imageSrc . '" alt="RSS property image"/>
                                   </div>
                               ';
 
-                              $activeClass = '';
+                  $activeClass = '';
+                }
 
-                          }
-
-                          $count++;
-                          
-                      }
+                $count++;
+              }
 
               // foreach ($objects['Contents'] as $object) {
 
@@ -1205,7 +1198,7 @@ function shortenText($text, $maxLength)
         'region' => 'eu-west-1'
       ]);
 
-      $bucket = 'dev-rss-uploads'; // Your bucket name
+      $bucket = 'dev-rss-uploads'; // Bucket name
 
       if (isset($properties) && !empty($properties)) {
         $currentPropertyCity = $property['city']; // Get the city of the current property
@@ -1250,22 +1243,42 @@ function shortenText($text, $maxLength)
                       // List objects in the specified S3 folder
                       try {
                         $objects = $s3->listObjects([
+
                           'Bucket' => $bucket,
+
                           'Prefix' => "uploads/properties/$imageFolder/",
+
                         ]);
 
                         $activeClass = 'active';
 
+                        $content_size = count($objects['Contents']);
+
+                        $count = 0;
+
                         foreach ($objects['Contents'] as $object) {
-                          $imageSrc = $object['Key'];
-                          echo '
-                                                    <div class="carousel-item ' . $activeClass . '">
-                                                        <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image" class="d-block w-100"/>
-                                                    </div>
-                                                ';
-                          $activeClass = '';
+
+                          // Filter Out Unwanted Image/Object (Filter out the property image from neighbourhood image)
+
+                          if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+
+                            $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
+
+                            // $imageSrc = $object['Key'];
+
+                            echo '
+                                <div class="carousel-item ' . $activeClass . '">
+                                    <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100/>
+                                </div>
+                            ';
+
+                            $activeClass = '';
+                          }
                         }
+
+                        $count++;
                       } catch (Aws\S3\Exception\S3Exception $e) {
+
                         // Handle S3 error by displaying a placeholder image
                         echo '<div class="carousel-item active">
                                                         <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
