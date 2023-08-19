@@ -223,39 +223,39 @@ function shortenText($text, $maxLength)
 
             $activeClass = 'active';
 
-            $content_size = count($objects['Contents']);
+                    // List objects in the specified S3 folder
+                    try {
+                      $objects = $s3->listObjects([
+                          'Bucket' => $bucket,
 
-            $count = 0;
+                          'Prefix' => "uploads/properties/$imageFolder/",
+                      ]);
+  
+                      $content_size = count($objects['Contents']);
 
-            // List objects in the specified S3 folder
-            try {
-              $objects = $s3->listObjects([
+                      $count = 0;
+  
+                      foreach ($objects['Contents'] as $object) {
 
-                'Bucket' => $bucket,
+                        // filter out unwanted images in property page
 
-                'Prefix' => "uploads/properties/$imageFolder/",
+                          if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
 
-              ]);
+                              $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
 
-              $activeClass = 'active';
+                              echo '
+                                  <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+                                      <img src="' . $imageSrc . '" alt="RSS property image"/>
+                                  </div>
+                              ';
 
-              foreach ($objects['Contents'] as $object) {
+                              $activeClass = '';
 
-                if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+                          }
 
-                    $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
-
-                    echo '
-                        <div class="carousel-item ' . $activeClass . '">
-                            <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
-                        </div>
-                    ';
-                    $activeClass = '';
-                }
-
-                $count++;
-
-            }
+                          $count++;
+                          
+                      }
 
               // foreach ($objects['Contents'] as $object) {
 
