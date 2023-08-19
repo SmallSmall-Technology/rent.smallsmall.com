@@ -66,7 +66,7 @@ if ($srlz[0] == 'Upfront') {
 
     $evc_dep = $property['securityDeposit'];
   
-    $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
+    $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
     
     $total = number_format($total);
   }
@@ -466,7 +466,7 @@ function shortenText($text, $maxLength)
                                 </div>
                                 <div class="subscription-deposit--mobile">
                                   <p class="m-0 font-weight-light" style="font-size: 15px">Security deposit fund</p>
-                                  <p class="" style="font-weight:700; font-size: 25px">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></p>
+                                  <p class="" style="font-weight:700; font-size: 25px">&#8358;<?php echo number_format($evc_dep); ?></p>
 
                                 </div>
                               </div>
@@ -1084,7 +1084,7 @@ function shortenText($text, $maxLength)
                       <tr>
                         <td>Security deposit fund</td>
 
-                        <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></td>
+                        <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($evc_dep); ?></td>
 
                       </tr>
 
