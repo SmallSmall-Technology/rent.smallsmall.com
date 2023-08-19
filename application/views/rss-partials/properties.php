@@ -574,19 +574,31 @@ function shortenText($text, $maxLength)
 
                       $count = 0;
 
-                      foreach ($objects['Contents'] as $object) {
-                        if ($object !== '.' && $object !== '..' && $count <= ($content_size - 2)) {
-                            $imageSrc = $s3->getObjectUrl($bucket, 'uploads/properties/' . $value['imageFolder'] . '/' . $object);
-                            echo '
-                                <div class="carousel-item ' . $activeClass . '">
-                                    <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
-                                </div>
-                            ';
-                            $activeClass = '';
-                        }
-                        $count++;
-                    }
+                    //   foreach ($objects['Contents'] as $object) {
+                    //     if ($object !== '.' && $object !== '..' && $count <= ($content_size - 2)) {
+                    //         $imageSrc = $s3->getObjectUrl($bucket, 'uploads/properties/' . $value['imageFolder'] . '/' . $object);
+                    //         echo '
+                    //             <div class="carousel-item ' . $activeClass . '">
+                    //                 <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
+                    //             </div>
+                    //         ';
+                    //         $activeClass = '';
+                    //     }
+                    //     $count++;
+                    // }
 
+                    foreach ($objects['Contents'] as $object) {
+                      if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+                          $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
+                          echo '
+                              <div class="carousel-item ' . $activeClass . '">
+                                  <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
+                              </div>
+                          ';
+                          $activeClass = '';
+                      }
+                      $count++;
+                  }
                     
                   } catch (Aws\S3\Exception\S3Exception $e) {
                       // Handle S3 error
