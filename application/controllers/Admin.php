@@ -5573,11 +5573,13 @@ public function propertiesFeatureImage()
             'region' => 'eu-west-1', // Replace with your region
         ]);
 
+		sleep(3);
+
         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
 		// $s3ObjectKey = 'uploads/properties/' . $folder . '/' . $data['file_name'];
 
-        $objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
+        $objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
 
         try {
 
@@ -5614,16 +5616,22 @@ public function propertiesFeatureImage()
             //     // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
             // ]);
 
-            echo 1; // Success
+			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
+
+            // echo 1; // Success
 
         } catch (Aws\Exception\AwsException $e) {
 
-            echo 'S3 Error: ' . $e->getAwsErrorMessage();
+			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
+
+            // echo 'S3 Error: ' . $e->getAwsErrorMessage();
 
         }
     } else {
 
-        echo 'Missing foldername or imageKey';
+		echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
+
+        // echo 'Missing foldername or imageKey';
 
     }
 }
