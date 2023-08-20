@@ -29,7 +29,9 @@ $(document). on('click', '.remove-img', function(){
 		$.ajaxSetup ({ cache: false });
 		$.ajax({
 
-			url : baseUrl+'admin/removeImg/',
+			// url : baseUrl+'admin/removeImg/',
+			url : baseUrl+'admin/removeImg/propertiesFeatureImage',
+
 
 			type: "POST",
 

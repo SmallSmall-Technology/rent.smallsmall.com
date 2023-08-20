@@ -5485,8 +5485,11 @@ class Admin extends CI_Controller
 
 public function propertiesFeatureImage()
 {
-    $folder = $this->input->post('foldername'); // Retrieve foldername from POST data
-    $img_name = $this->input->post('imageKey'); // The image key selected as featured
+	$folder = $this->input->post('folder');
+    $img_name = $this->input->post('imgName');
+
+    // $folder = $this->input->post('foldername'); // Retrieve foldername from POST data
+    // $img_name = $this->input->post('imageKey'); // The image key selected as featured
 
     if ($folder && $img_name) {
         require 'vendor/autoload.php';
