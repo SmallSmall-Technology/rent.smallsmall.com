@@ -5575,15 +5575,27 @@ public function propertiesFeatureImage()
 
         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
+		// $s3ObjectKey = 'uploads/properties/' . $folder . '/' . $data['file_name'];
+
         $objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
 
         try {
+
+			$result = $s3->putObject([
+
+				'Bucket' => $bucket,
+
+				'Key'    => $objectKey,
+
+				'Body'   => file_get_contents($img_name),
+			]);
+
             // Move the object to the beginning of the bucket
-            $s3->copyObject([
-                'Bucket' => $bucket,
-                'CopySource' => $bucket . '/' . $objectKey,
-                'Key' => $objectKey, // Same key to overwrite the original
-            ]);
+            // $s3->copyObject([
+            //     'Bucket' => $bucket,
+            //     'CopySource' => $bucket . '/' . $objectKey,
+            //     'Key' => $objectKey, // Same key to overwrite the original
+            // ]);
 
             // Delete the original object
             // $s3->deleteObject([
@@ -5592,15 +5604,15 @@ public function propertiesFeatureImage()
             // ]);
 
 			// Read the file contents using file_get_contents
-            $fileContents = file_get_contents($objectKey);
+            // $fileContents = file_get_contents($objectKey);
 
 			// Re-upload the object with the same key to move it to the beginning
-            $s3->putObject([
-                'Bucket' => $bucket,
-                'Key' => $objectKey,
-                'Body' => $fileContents, // Use the file contents as the 'Body'
-                // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
-            ]);
+            // $s3->putObject([
+            //     'Bucket' => $bucket,
+            //     'Key' => $objectKey,
+            //     'Body' => $fileContents, // Use the file contents as the 'Body'
+            //     // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
+            // ]);
 
             echo 1; // Success
 
