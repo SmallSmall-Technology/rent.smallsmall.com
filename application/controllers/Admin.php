@@ -5558,15 +5558,71 @@ class Admin extends CI_Controller
 //     // }
 // }
 
+// public function propertiesFeatureImage()
+// {
+// 	require 'vendor/autoload.php';
+
+//     $folder = $this->input->post('foldername'); // Use foldername instead of folder
+
+//     $img_name = $this->input->post('imageKey');
+
+//     if ($folder && $img_name) {
+
+//         $s3 = new Aws\S3\S3Client([
+//             'version' => 'latest',
+//             'region' => 'eu-west-1', // Replace with your region
+//         ]);
+
+//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+//         $objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
+
+//         try {
+//             // Move the object to the beginning of the bucket
+//             $s3->copyObject([
+//                 'Bucket' => $bucket,
+//                 'CopySource' => $bucket . '/' . $objectKey,
+//                 'Key' => $objectKey, // Same key to overwrite the original
+//             ]);
+
+//             // Delete the original object
+//             $s3->deleteObject([
+//                 'Bucket' => $bucket,
+//                 'Key' => $objectKey,
+//             ]);
+
+// 			// Read the file contents using file_get_contents
+//             $fileContents = file_get_contents($objectKey);
+
+// 			// Re-upload the object with the same key to move it to the beginning
+//             $s3->putObject([
+//                 'Bucket' => $bucket,
+//                 'Key' => $objectKey,
+//                 'Body' => $fileContents, // Use the file contents as the 'Body'
+//                 // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
+//             ]);
+
+//             echo 1; // Success
+
+//         } catch (Aws\Exception\AwsException $e) {
+
+//             echo 'S3 Error: ' . $e->getAwsErrorMessage();
+
+//         }
+//     } else {
+
+//         echo 'Missing foldername or imageKey';
+
+//     }
+// }
+
 public function propertiesFeatureImage()
 {
-	require 'vendor/autoload.php';
-
     $folder = $this->input->post('foldername'); // Use foldername instead of folder
-
     $img_name = $this->input->post('imageKey');
 
     if ($folder && $img_name) {
+        require 'vendor/autoload.php';
 
         $s3 = new Aws\S3\S3Client([
             'version' => 'latest',
@@ -5575,46 +5631,45 @@ public function propertiesFeatureImage()
 
         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-        $objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
-
         try {
-            // Move the object to the beginning of the bucket
-            $s3->copyObject([
+            // List all objects in the folder
+            $objects = $s3->listObjects([
                 'Bucket' => $bucket,
-                'CopySource' => $bucket . '/' . $objectKey,
-                'Key' => $objectKey, // Same key to overwrite the original
+                'Prefix' => 'uploads/properties/' . $folder . '/',
             ]);
 
-            // Delete the original object
-            $s3->deleteObject([
-                'Bucket' => $bucket,
-                'Key' => $objectKey,
-            ]);
+            // Determine the new order of objects with the featured image first
+            $newOrder = [];
+            foreach ($objects['Contents'] as $object) {
+                if ($object['Key'] === 'uploads/properties/' . $folder . '/' . $img_name) {
+                    // Featured image, add it to the beginning
+                    array_unshift($newOrder, $object['Key']);
+                } else {
+                    // Other images, add them to the new order
+                    $newOrder[] = $object['Key'];
+                }
+            }
 
-			// Read the file contents using file_get_contents
-            $fileContents = file_get_contents($objectKey);
+            // Re-upload objects in the new order
+            foreach ($newOrder as $objectKey) {
+                $fileContents = file_get_contents($objectKey);
+                $s3->putObject([
+                    'Bucket' => $bucket,
+                    'Key' => $objectKey,
+                    'Body' => $fileContents,
+                    // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
+                ]);
+            }
 
-			// Re-upload the object with the same key to move it to the beginning
-            $s3->putObject([
-                'Bucket' => $bucket,
-                'Key' => $objectKey,
-                'Body' => $fileContents, // Use the file contents as the 'Body'
-                // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
-            ]);
-
-            echo 1; // Success
-
+            echo 'Image featured successfully and reordered.';
         } catch (Aws\Exception\AwsException $e) {
-
             echo 'S3 Error: ' . $e->getAwsErrorMessage();
-
         }
     } else {
-
         echo 'Missing foldername or imageKey';
-		
     }
 }
+
 
 
 
