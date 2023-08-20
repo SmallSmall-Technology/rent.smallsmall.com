@@ -5485,65 +5485,61 @@ class Admin extends CI_Controller
 
 public function propertiesFeatureImage()
 {
+    require 'vendor/autoload.php';
 
-require 'vendor/autoload.php';
-
-// Create an S3 client
-$s3 = new Aws\S3\S3Client([
-    'version' => 'latest',
-    'region' => 'eu-west-1',
-]);
-
-$bucket = 'dev-rss-uploads';
-
-$imageFolder = $_POST['foldername'];
-
-$imageKey = $_POST['imageKey']; // The image key selected as featured
-
-try {
-
-    // List all objects in the S3 bucket
-    $objects = $s3->listObjects([
-        'Bucket' => $bucket,
-        'Prefix' => "uploads/properties/$imageFolder/",
-
+    // Create an S3 client
+    $s3 = new Aws\S3\S3Client([
+        'version' => 'latest',
+        'region' => 'eu-west-1',
     ]);
 
-    // Extract the list of keys from the objects
-    $imageKeys = [];
+    $bucket = 'dev-rss-uploads';
 
-    foreach ($objects['Contents'] as $object) {
-        $imageKeys[] = $object['Key'];
-    }
+    $imageFolder = $_POST['foldername']; // Retrieve foldername from POST data
 
-    // Find the index of the selected image in the list
-    $index = array_search("uploads/properties/$imageFolder/$imageKey", $imageKeys);
+    $imageKey = $_POST['imageKey']; // The image key selected as featured
 
-    if ($index !== false) {
-        // Move the selected image to the beginning of the list
-        array_splice($imageKeys, $index, 1);
-        array_unshift($imageKeys, "uploads/properties/$imageFolder/$imageKey");
+    try {
+        // List all objects in the S3 bucket
+        $objects = $s3->listObjects([
+            'Bucket' => $bucket,
+            'Prefix' => "uploads/properties/$imageFolder/",
+        ]);
 
-        // Update the S3 bucket by reordering the objects
-        foreach ($imageKeys as $newKey) {
-            $s3->copyObject([
-                'CopySource' => "$bucket/$newKey",
-                'Bucket' => $bucket,
-                'Key' => $newKey,
-            ]);
+        // Extract the list of keys from the objects
+        $imageKeys = [];
+        foreach ($objects['Contents'] as $object) {
+            $imageKeys[] = $object['Key'];
         }
 
-        // Respond with a success message
-        echo 'Image featured successfully and reordered.';
-    } else {
-        echo 'Image not found in the S3 bucket.';
+        // Find the index of the selected image in the list
+        $index = array_search("uploads/properties/$imageFolder/$imageKey", $imageKeys);
+
+        if ($index !== false) {
+            // Move the selected image to the beginning of the list
+            array_splice($imageKeys, $index, 1);
+            array_unshift($imageKeys, "uploads/properties/$imageFolder/$imageKey");
+
+            // Update the S3 bucket by reordering the objects
+            foreach ($imageKeys as $newKey) {
+                $s3->copyObject([
+                    'CopySource' => "$bucket/$newKey",
+                    'Bucket' => $bucket,
+                    'Key' => $newKey,
+                ]);
+            }
+
+            // Respond with a success message
+            echo 'Image featured successfully and reordered.';
+        } else {
+            echo 'Image not found in the S3 bucket.';
+        }
+    } catch (Aws\S3\Exception\S3Exception $e) {
+        // Handle S3 error here
+        echo 'Error updating S3 bucket: ' . $e->getMessage();
     }
-} catch (Aws\S3\Exception\S3Exception $e) {
-    // Handle S3 error here
-    echo 'Error updating S3 bucket: ' . $e->getMessage();
 }
 
-}
 
 	public function removeStayoneImg()
 	{
