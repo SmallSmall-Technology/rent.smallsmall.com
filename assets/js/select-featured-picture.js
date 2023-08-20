@@ -47,6 +47,9 @@ function selectFeatured(evt) {
     var featPicField = document.getElementById('featuredPic');
     featPicField.value = evt;
 
+    // Get the folder name from the hidden input field
+    var foldername = document.getElementById('foldername').value;
+
     // Remove the "featuredImg" class from all images
     for (let i = 0; i < pictureList.length; i++) {
         pictureList[i].classList.remove('featuredImg');
@@ -76,8 +79,8 @@ function selectFeatured(evt) {
     // Make an AJAX request to the PHP controller to update the S3 bucket
     $.ajax({
         type: "POST",
-        url: baseUrl+'admin/propertiesFeatureImage/', // Modify the URL to match your controller route
-        data: { imageKey: evt },
+        url: baseUrl + 'admin/propertiesFeatureImage/',
+        data: { imageKey: evt, foldername: foldername }, // Include the folder name in the request
         success: function (response) {
             // Handle the response from the controller (e.g., display a success message)
             console.log('Image featured successfully.');
@@ -87,4 +90,3 @@ function selectFeatured(evt) {
         }
     });
 }
-
