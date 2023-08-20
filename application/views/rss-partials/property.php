@@ -32,8 +32,6 @@ if ($property['securityDepositTerm'] == 1) {
   $sec_dep = 0.75 * $sec_dep;
 }
 
-$evc_dep = ($sec_dep + $evictionDeposit);
-
 $srlz = $property['intervals'];
 $srlz = unserialize($srlz);
 $yrnt = $property['price'] * 12;
@@ -261,7 +259,7 @@ function shortenText($text, $maxLength)
               <p class="mb-0 mobile-subscription-price">Subscription Price</p>
               <p class="font-weight-bolder primary-text-color mobile-subscription-amount">&#8358;<?php echo $prc . ' ' . $mnth; ?></p>
               <p class="mb-0 mobile-subscription-security">Security deposit fund</p>
-              <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($evc_dep); ?></p>
+              <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></p>
             </div>
 
 
@@ -449,7 +447,7 @@ function shortenText($text, $maxLength)
                                 </div>
                                 <div class="subscription-deposit--mobile">
                                   <p class="m-0 font-weight-light" style="font-size: 15px">Security deposit fund</p>
-                                  <p class="" style="font-weight:700; font-size: 25px">&#8358;<?php echo number_format($evc_dep); ?></p>
+                                  <p class="" style="font-weight:700; font-size: 25px">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></p>
 
                                 </div>
                               </div>
@@ -561,7 +559,7 @@ function shortenText($text, $maxLength)
                                       <tr>
                                         <td>Security deposit fund</td>
 
-                                        <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($evc_dep); ?><sup class="text-dark"></sup>
+                                        <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?><sup class="text-dark"></sup>
                                         </td>
                                       </tr>
 
@@ -593,7 +591,7 @@ function shortenText($text, $maxLength)
                             <!--Hidden input fields so as to get all the changes -->
                             <input type="hidden" class="subscription-fees" name="subscription-fees" value="<?php echo str_replace(',', '', $prc); ?>">
                             <input type="hidden" class="service-charge-deposit" name="service-charge-deposit" value="<?php echo ($property['serviceChargeTerm'] != '') ? $property['serviceCharge'] * $property['serviceChargeTerm'] : $property['serviceCharge']; ?>">
-                            <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $evc_dep; ?>">
+                            <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $sec_dep + $evictionDeposit; ?>">
                             <input type="hidden" class="total" name="total" value="<?php echo str_replace(',', '', $total) ?>">
 
 
@@ -785,7 +783,7 @@ function shortenText($text, $maxLength)
               <div>
                 <p>subscription price</p>
                 <p class="subcription-amount font-weight-bold">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup id="subtips" data-toggle="tooltip" data-placement="right" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
-                <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($evc_dep); ?></span><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+                <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></span><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
               </div>
             </div>
 
@@ -922,7 +920,7 @@ function shortenText($text, $maxLength)
 
   <input type="hidden" class="prop-monthly-price" id="monthly-price" value="<?php echo $property['price']; ?>" />
 
-  <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo ($evc_dep); ?>" />
+  <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo ($sec_dep + $evictionDeposit); ?>" />
 
   <input type="hidden" class="serv-charge" id="serv-charge" value="<?php echo ($property['serviceCharge'] * $property['serviceChargeTerm']); ?>" />
 
@@ -1068,7 +1066,7 @@ function shortenText($text, $maxLength)
                       <tr>
                         <td>Security deposit fund</td>
 
-                        <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($evc_dep); ?></td>
+                        <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($sec_dep + $evictionDeposit); ?></td>
 
                       </tr>
 
@@ -1088,7 +1086,7 @@ function shortenText($text, $maxLength)
                   <!--Hidden input fields so as to get all the changes -->
                   <input type="hidden" class="subscription-fees" name="subscription-fees" value="<?php echo str_replace(',', '', $prc); ?>">
                   <input type="hidden" class="service-charge-deposit" name="service-charge-deposit" value="<?php echo ($property['serviceChargeTerm'] != '') ? $property['serviceCharge'] * $property['serviceChargeTerm'] : $property['serviceCharge']; ?>">
-                  <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $evc_dep; ?>">
+                  <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $sec_dep + $evictionDeposit; ?>">
                   <input type="hidden" class="total" name="total" value="<?php echo str_replace(',', '', $total) ?>">
 
 
