@@ -5488,12 +5488,13 @@ public function propertiesFeatureImage()
 	$folder = $this->input->post('folder');
     $img_name = $this->input->post('imageKey');
 
-    // $folder = $this->input->post('foldername'); // Retrieve foldername from POST data
-    // $img_name = $this->input->post('imageKey'); // The image key selected as featured
+	// $folder = $this->input->post('folder');
+    // $img_name = $this->input->post('imgName');
 
-    // if ($folder && $img_name) {
+    if ($folder && $img_name) {
+		
         require 'vendor/autoload.php';
-
+    
         $s3 = new Aws\S3\S3Client([
             'version' => 'latest',
             'region' => 'eu-west-1', // Replace with your region
@@ -5510,41 +5511,76 @@ public function propertiesFeatureImage()
                 'Prefix' => $objectKey,
             ]);
 
-            // Create an array to store version IDs
-            $versionIds = [];
-
-            // Collect version IDs of the object
-            foreach ($versions['Versions'] as $version) {
-                $versionIds[] = [
-                    'Key' => $version['Key'],
-                    'VersionId' => $version['VersionId'],
-                ];
-            }
-
             // Delete all versions of the object
-            foreach ($versionIds as $versionId) {
+            foreach ($versions['Versions'] as $version) {
                 $s3->deleteObject([
                     'Bucket' => $bucket,
-                    'Key' => $versionId['Key'],
-                    'VersionId' => $versionId['VersionId'],
+                    'Key' => $version['Key'],
+                    'VersionId' => $version['VersionId'],
                 ]);
             }
-
-            // Read the file contents using file_get_contents
-            $fileContents = file_get_contents($objectKey);
-
-            // Re-upload the object with the same key to move it to the beginning
-            $s3->putObject([
-                'Bucket' => $bucket,
-                'Key' => $objectKey,
-                'Body' => $fileContents, // Use the file contents as the 'Body'
-                // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
-            ]);
-
-            echo 'Image featured successfully and reordered.';
+            
+            echo 1; // Success
         } catch (Aws\Exception\AwsException $e) {
             echo 'S3 Error: ' . $e->getAwsErrorMessage();
         }
+    } else {
+        echo 'Missing folder or image name';
+    }
+    // if ($folder && $img_name) {
+        // require 'vendor/autoload.php';
+
+        // $s3 = new Aws\S3\S3Client([
+        //     'version' => 'latest',
+        //     'region' => 'eu-west-1', // Replace with your region
+        // ]);
+
+        // $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+        // $objectKey = 'uploads/' . $folder . '/' . $img_name;
+
+        // try {
+        //     // List all versions of the object
+        //     $versions = $s3->listObjectVersions([
+        //         'Bucket' => $bucket,
+        //         'Prefix' => $objectKey,
+        //     ]);
+
+        //     // Create an array to store version IDs
+        //     $versionIds = [];
+
+        //     // Collect version IDs of the object
+        //     foreach ($versions['Versions'] as $version) {
+        //         $versionIds[] = [
+        //             'Key' => $version['Key'],
+        //             'VersionId' => $version['VersionId'],
+        //         ];
+        //     }
+
+        //     // Delete all versions of the object
+        //     foreach ($versionIds as $versionId) {
+        //         $s3->deleteObject([
+        //             'Bucket' => $bucket,
+        //             'Key' => $versionId['Key'],
+        //             'VersionId' => $versionId['VersionId'],
+        //         ]);
+        //     }
+
+        //     // Read the file contents using file_get_contents
+        //     $fileContents = file_get_contents($objectKey);
+
+        //     // Re-upload the object with the same key to move it to the beginning
+        //     $s3->putObject([
+        //         'Bucket' => $bucket,
+        //         'Key' => $objectKey,
+        //         'Body' => $fileContents, // Use the file contents as the 'Body'
+        //         // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
+        //     ]);
+
+        //     echo 'Image featured successfully and reordered.';
+        // } catch (Aws\Exception\AwsException $e) {
+        //     echo 'S3 Error: ' . $e->getAwsErrorMessage();
+        // }
     // } else {
     //     echo 'Missing folder or image name';
     // }
