@@ -38,38 +38,6 @@ $srlz = $property['intervals'];
 $srlz = unserialize($srlz);
 $yrnt = $property['price'] * 12;
 
-//Get The Eviction Security Deposit
-
-$propertyPrice = $property['price'];
-
-// get the eviction deposit value
-
-if (empty($propertyPrice) || is_null($propertyPrice)) {
-
-  $evictionDeposit = 0; // set default
-
-} elseif ($propertyPrice < 200000) {
-
-  $evictionDeposit = 200000;
-} else {
-
-  $evictionDeposit = $propertyPrice;
-}
-
-//Multiply the security deposit term by security deposit amount
-if ($property['securityDepositTerm'] == 1) {
-  $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
-} else {
-  $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
-  $sec_dep = 0.75 * $sec_dep;
-}
-
-$evc_dep = ($sec_dep + $evictionDeposit);
-
-$srlz = $property['intervals'];
-$srlz = unserialize($srlz);
-$yrnt = $property['price'] * 12;
-
 if ($srlz[0] == 'Upfront') {
   $mnth = 'Upfront';
   $vmnth = 'Upfront';
@@ -97,19 +65,24 @@ if ($srlz[0] == 'Upfront') {
 
     $evc_dep = $property['securityDeposit'];
 
+
     $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
 
+
     $total = number_format($total);
+  } elseif ($property['securityDepositTerm'] == 2) {
   } elseif ($property['securityDepositTerm'] == 2) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
     $sec_dep = 0.75 * $sec_dep;
 
+
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
 
     $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
 
+
     $total = number_format($total);
-  }
 } else {
   $mnth = "/Month";
   $vmnth = "Monthly";
