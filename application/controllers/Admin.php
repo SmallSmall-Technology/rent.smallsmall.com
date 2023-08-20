@@ -5491,7 +5491,7 @@ public function propertiesFeatureImage()
     // $folder = $this->input->post('foldername'); // Retrieve foldername from POST data
     // $img_name = $this->input->post('imageKey'); // The image key selected as featured
 
-    if ($folder && $img_name) {
+    // if ($folder && $img_name) {
         require 'vendor/autoload.php';
 
         $s3 = new Aws\S3\S3Client([
@@ -5545,9 +5545,9 @@ public function propertiesFeatureImage()
         } catch (Aws\Exception\AwsException $e) {
             echo 'S3 Error: ' . $e->getAwsErrorMessage();
         }
-    } else {
-        echo 'Missing folder or image name';
-    }
+    // } else {
+    //     echo 'Missing folder or image name';
+    // }
 }
 
 
