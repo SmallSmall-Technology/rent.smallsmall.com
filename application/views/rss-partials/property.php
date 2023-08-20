@@ -65,24 +65,19 @@ if ($srlz[0] == 'Upfront') {
 
     $evc_dep = $property['securityDeposit'];
 
-
     $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
 
-
     $total = number_format($total);
-  } elseif ($property['securityDepositTerm'] == 2) {
   } elseif ($property['securityDepositTerm'] == 2) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
     $sec_dep = 0.75 * $sec_dep;
 
-
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
-
 
     $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
 
-
     $total = number_format($total);
+  }
 } else {
   $mnth = "/Month";
   $vmnth = "Monthly";
