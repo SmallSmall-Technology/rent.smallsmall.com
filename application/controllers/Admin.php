@@ -5567,7 +5567,7 @@ public function propertiesFeatureImage()
     $img_name = $this->input->post('imageKey');
 
     if ($folder && $img_name) {
-		
+
         $s3 = new Aws\S3\S3Client([
             'version' => 'latest',
             'region' => 'eu-west-1', // Replace with your region
@@ -5591,12 +5591,28 @@ public function propertiesFeatureImage()
                 'Key' => $objectKey,
             ]);
 
+			// Read the file contents using file_get_contents
+            $fileContents = file_get_contents($objectKey);
+
+			// Re-upload the object with the same key to move it to the beginning
+            $s3->putObject([
+                'Bucket' => $bucket,
+                'Key' => $objectKey,
+                'Body' => $fileContents, // Use the file contents as the 'Body'
+                // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
+            ]);
+
             echo 1; // Success
+
         } catch (Aws\Exception\AwsException $e) {
+
             echo 'S3 Error: ' . $e->getAwsErrorMessage();
+
         }
     } else {
+
         echo 'Missing foldername or imageKey';
+		
     }
 }
 
