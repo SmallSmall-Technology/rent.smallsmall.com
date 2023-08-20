@@ -5485,58 +5485,65 @@ class Admin extends CI_Controller
 
 public function propertiesFeatureImage()
 {
-    require 'vendor/autoload.php';
+    $folder = $this->input->post('foldername'); // Retrieve foldername from POST data
+    $img_name = $this->input->post('imageKey'); // The image key selected as featured
 
-    // Create an S3 client
-    $s3 = new Aws\S3\S3Client([
-        'version' => 'latest',
-        'region' => 'eu-west-1',
-    ]);
+    if ($folder && $img_name) {
+        require 'vendor/autoload.php';
 
-    $bucket = 'dev-rss-uploads';
-
-    $imageFolder = $_POST['foldername']; // Retrieve foldername from POST data
-
-    $imageKey = $_POST['imageKey']; // The image key selected as featured
-
-    try {
-        // List all objects in the S3 bucket
-        $objects = $s3->listObjects([
-            'Bucket' => $bucket,
-            'Prefix' => "uploads/properties/$imageFolder/",
+        $s3 = new Aws\S3\S3Client([
+            'version' => 'latest',
+            'region' => 'eu-west-1', // Replace with your region
         ]);
 
-        // Extract the list of keys from the objects
-        $imageKeys = [];
-        foreach ($objects['Contents'] as $object) {
-            $imageKeys[] = $object['Key'];
-        }
+        $bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-        // Find the index of the selected image in the list
-        $index = array_search("uploads/properties/$imageFolder/$imageKey", $imageKeys);
+        $objectKey = 'uploads/' . $folder . '/' . $img_name;
 
-        if ($index !== false) {
-            // Move the selected image to the beginning of the list
-            array_splice($imageKeys, $index, 1);
-            array_unshift($imageKeys, "uploads/properties/$imageFolder/$imageKey");
+        try {
+            // List all versions of the object
+            $versions = $s3->listObjectVersions([
+                'Bucket' => $bucket,
+                'Prefix' => $objectKey,
+            ]);
 
-            // Update the S3 bucket by reordering the objects
-            foreach ($imageKeys as $newKey) {
-                $s3->copyObject([
-                    'CopySource' => "$bucket/$newKey",
+            // Create an array to store version IDs
+            $versionIds = [];
+
+            // Collect version IDs of the object
+            foreach ($versions['Versions'] as $version) {
+                $versionIds[] = [
+                    'Key' => $version['Key'],
+                    'VersionId' => $version['VersionId'],
+                ];
+            }
+
+            // Delete all versions of the object
+            foreach ($versionIds as $versionId) {
+                $s3->deleteObject([
                     'Bucket' => $bucket,
-                    'Key' => $newKey,
+                    'Key' => $versionId['Key'],
+                    'VersionId' => $versionId['VersionId'],
                 ]);
             }
 
-            // Respond with a success message
+            // Read the file contents using file_get_contents
+            $fileContents = file_get_contents($objectKey);
+
+            // Re-upload the object with the same key to move it to the beginning
+            $s3->putObject([
+                'Bucket' => $bucket,
+                'Key' => $objectKey,
+                'Body' => $fileContents, // Use the file contents as the 'Body'
+                // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
+            ]);
+
             echo 'Image featured successfully and reordered.';
-        } else {
-            echo 'Image not found in the S3 bucket.';
+        } catch (Aws\Exception\AwsException $e) {
+            echo 'S3 Error: ' . $e->getAwsErrorMessage();
         }
-    } catch (Aws\S3\Exception\S3Exception $e) {
-        // Handle S3 error here
-        echo 'Error updating S3 bucket: ' . $e->getMessage();
+    } else {
+        echo 'Missing folder or image name';
     }
 }
 

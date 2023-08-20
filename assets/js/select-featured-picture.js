@@ -73,16 +73,11 @@ function selectFeatured(evt) {
     var outerSpan = document.getElementById(spanID);
     outerSpan.appendChild(featuredSpan);
 
-    // Make an AJAX request to the PHP controller to update the S3 bucket using jQuery
-    $.ajaxSetup({ cache: false });
-
+    // Make an AJAX request to the PHP controller to update the S3 bucket
     $.ajax({
         type: "POST",
-        url: baseUrl + 'admin/propertiesFeatureImage/',
-        data: {
-            foldername: $('#foldername').val(), // Send foldername as well
-            imageKey: evt
-        },
+        url: baseUrl+'admin/propertiesFeatureImage/', // Modify the URL to match your controller route
+        data: { imageKey: evt },
         success: function (response) {
             // Handle the response from the controller (e.g., display a success message)
             console.log('Image featured successfully.');
