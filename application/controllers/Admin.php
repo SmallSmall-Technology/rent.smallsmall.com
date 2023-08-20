@@ -5642,7 +5642,7 @@ public function propertiesFeatureImage()
             // Determine the new order of objects with the featured image first
             $newOrder = [];
             foreach ($objects['Contents'] as $object) {
-                if ($object['Key'] === 'uploads/properties/' . $folder . '/' . $img_name) {
+                if (basename($object['Key']) ==  $img_name) {
                     // Featured image, add it to the beginning
                     array_unshift($newOrder, $object['Key']);
                 } else {
