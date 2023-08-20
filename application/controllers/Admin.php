@@ -5635,7 +5635,8 @@ public function propertiesFeatureImage()
             // List all objects in the folder
             $objects = $s3->listObjects([
                 'Bucket' => $bucket,
-                'Prefix' => 'uploads/properties/' . $folder . '/',
+                // 'Prefix' => 'uploads/' . $folder . '/',
+				'Prefix' => "uploads/properties/$folder/",
             ]);
 
             // Determine the new order of objects with the featured image first
