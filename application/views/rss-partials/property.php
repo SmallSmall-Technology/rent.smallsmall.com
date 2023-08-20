@@ -98,6 +98,8 @@ if ($srlz[0] == 'Upfront') {
   $total = number_format($total);
 }
 
+} // It break the site
+
 
 function shortenText($text, $maxLength)
 {
