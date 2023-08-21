@@ -715,7 +715,7 @@ class Admin extends CI_Controller
 		$this->db->insert('landlord_notification', $data);
 
 		// Assuming you're using CodeIgniter, use the URL helper to create URLs
-		$user_profile_url = site_url('user-profile/' . $id);
+		$user_profile_url = site_url('admin/user-profile/' . $id);
 
 		// Redirect to user profile with a success message
 		echo "<script>
