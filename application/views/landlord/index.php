@@ -292,7 +292,6 @@
                     echo '<p>'.$propTitle.'<p>';
 
                     // $data =  $this->landlord_model->fetch_bookings($userID, $this->input->post('limit'), $this->input->post('start'));
-
                 }
 
                 ?>

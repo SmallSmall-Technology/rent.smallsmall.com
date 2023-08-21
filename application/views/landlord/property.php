@@ -356,6 +356,8 @@
               </div>
             </div>
 
+            <?php foreach($proptys as $propty => $value){ ?>
+
             <div class="col-md-4 col-12  mb-4">
               <div class="card default-background border-0">
                 <div class="card-body pb-5">
@@ -373,10 +375,12 @@
                         </clipPath>
                       </defs>
                     </svg>
-                    <p class="custom-font-size-14 font-weight-light">Listed January 2023<br>Vacant</p>
+                    <p class="custom-font-size-14 font-weight-light">Listed <?php $date = $value['dateOfEntry']; $date = date('Y-m-d', $date); echo $date; ?><br><?php if(date('Y-m-d') < $value['available_date']){ echo 'rented'; } else{ echo 'vacant'; }
+                    ?>
+                   </p>
                   </div>
                   <div class="mt-3">
-                    <p class="card-text">1 br Maisonette B2 Olivia Court Lekki</p>
+                    <p class="card-text"><?php echo $value['propertyTitle'];?></p>
 
                     <div class="mt-3">
                       <a href="<?php echo base_url('landlord/single_property'); ?>" class="btn secondary-background px-5">View</a>
@@ -387,6 +391,7 @@
               </div>
             </div>
 
+            <?php } ?>
           </div>
         </div>
 
