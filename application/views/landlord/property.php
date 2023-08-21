@@ -344,7 +344,7 @@
                         </clipPath>
                       </defs>
                     </svg>
-                    <p class="custom-font-size-14 font-weight-light">Listed <?php $date = strtotime($value['dateOfEntry']); $date = date('Y-m-d', $date); echo $date; ?><br><?php if(date('Y-m-d') < $value['available_date']){ echo 'rented'; } else{ echo 'vacant'; }
+                    <p class="custom-font-size-14 font-weight-light">Listed <?php $date = strtotime($value['dateOfEntry']); $year = date("Y", $date); $month = date("m", $date);  echo $month.'of'.$year; ?><br><?php if(date('Y-m-d') < $value['available_date']){ echo 'rented'; } else{ echo 'vacant'; }
                     ?>
                    </p>
                   </div>
