@@ -5445,45 +5445,6 @@ class Admin extends CI_Controller
 	// }
 
 	// Code modify to make ref to AWS S3 folders.
-
-	// public function removeImg()
-	// {
-	// 	$folder = $this->input->post('folder');
-		
-	// 	$img_name = $this->input->post('imgName');
-	
-	// 	if ($folder && $img_name) {
-
-	// 		require 'vendor/autoload.php';
-	
-	// 		$s3 = new Aws\S3\S3Client([
-	// 			'version' => 'latest',
-
-	// 			'region' => 'eu-west-1', // Replace with your region
-	// 		]);
-	
-	// 		$bucket = 'dev-rss-uploads'; // Replace with your bucket name
-
-	// 		$objectKey = 'uploads/' . $folder . '/' . $img_name;
-	
-	// 		try {
-	// 			$s3->deleteObject([
-
-	// 				'Bucket' => $bucket,
-	// 				'Key' => $objectKey,
-
-	// 			]);
-	
-	// 			echo 1; // Success
-	
-	// 		} catch (Aws\Exception\AwsException $e) {
-	// 			echo 'S3 Error: ' . $e->getAwsErrorMessage();
-	// 		}
-			
-	// 	} else {
-	// 		echo 'Missing folder or image name';
-	// 	}
-	// }
 	
 	public function removeImg()
 {
@@ -5507,26 +5468,276 @@ class Admin extends CI_Controller
             // List all versions of the object
             $versions = $s3->listObjectVersions([
                 'Bucket' => $bucket,
+
                 'Prefix' => $objectKey,
+
             ]);
 
             // Delete all versions of the object
             foreach ($versions['Versions'] as $version) {
                 $s3->deleteObject([
+
                     'Bucket' => $bucket,
+
                     'Key' => $version['Key'],
+
                     'VersionId' => $version['VersionId'],
+
                 ]);
             }
             
             echo 1; // Success
+
         } catch (Aws\Exception\AwsException $e) {
+
             echo 'S3 Error: ' . $e->getAwsErrorMessage();
+
         }
     } else {
+
         echo 'Missing folder or image name';
+		
     }
 }
+
+// public function propertiesFeatureImage()
+// {
+// 	$folder = $this->input->post('folder');
+//     $img_name = $this->input->post('imageKey');
+
+// 	// $folder = $this->input->post('folder');
+//     // $img_name = $this->input->post('imgName');
+
+//     if ($folder && $img_name) {
+		
+//         require 'vendor/autoload.php';
+    
+//         $s3 = new Aws\S3\S3Client([
+//             'version' => 'latest',
+//             'region' => 'eu-west-1', // Replace with your region
+//         ]);
+
+//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+//         $objectKey = 'uploads/' . $folder . '/' . $img_name;
+
+//         try {
+//             // List all versions of the object
+//             $versions = $s3->listObjectVersions([
+//                 'Bucket' => $bucket,
+//                 'Prefix' => $objectKey,
+//             ]);
+
+//             // Delete all versions of the object
+//             foreach ($versions['Versions'] as $version) {
+//                 $s3->deleteObject([
+//                     'Bucket' => $bucket,
+//                     'Key' => $version['Key'],
+//                     'VersionId' => $version['VersionId'],
+//                 ]);
+//             }
+            
+//             echo 1; // Success
+//         } catch (Aws\Exception\AwsException $e) {
+//             echo 'S3 Error: ' . $e->getAwsErrorMessage();
+//         }
+//     } else {
+//         echo 'Missing folder or image name';
+//     }
+//     // if ($folder && $img_name) {
+//         // require 'vendor/autoload.php';
+
+//         // $s3 = new Aws\S3\S3Client([
+//         //     'version' => 'latest',
+//         //     'region' => 'eu-west-1', // Replace with your region
+//         // ]);
+
+//         // $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+//         // $objectKey = 'uploads/' . $folder . '/' . $img_name;
+
+//         // try {
+//         //     // List all versions of the object
+//         //     $versions = $s3->listObjectVersions([
+//         //         'Bucket' => $bucket,
+//         //         'Prefix' => $objectKey,
+//         //     ]);
+
+//         //     // Create an array to store version IDs
+//         //     $versionIds = [];
+
+//         //     // Collect version IDs of the object
+//         //     foreach ($versions['Versions'] as $version) {
+//         //         $versionIds[] = [
+//         //             'Key' => $version['Key'],
+//         //             'VersionId' => $version['VersionId'],
+//         //         ];
+//         //     }
+
+//         //     // Delete all versions of the object
+//         //     foreach ($versionIds as $versionId) {
+//         //         $s3->deleteObject([
+//         //             'Bucket' => $bucket,
+//         //             'Key' => $versionId['Key'],
+//         //             'VersionId' => $versionId['VersionId'],
+//         //         ]);
+//         //     }
+
+//         //     // Read the file contents using file_get_contents
+//         //     $fileContents = file_get_contents($objectKey);
+
+//         //     // Re-upload the object with the same key to move it to the beginning
+//         //     $s3->putObject([
+//         //         'Bucket' => $bucket,
+//         //         'Key' => $objectKey,
+//         //         'Body' => $fileContents, // Use the file contents as the 'Body'
+//         //         // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
+//         //     ]);
+
+//         //     echo 'Image featured successfully and reordered.';
+//         // } catch (Aws\Exception\AwsException $e) {
+//         //     echo 'S3 Error: ' . $e->getAwsErrorMessage();
+//         // }
+//     // } else {
+//     //     echo 'Missing folder or image name';
+//     // }
+// }
+
+public function propertiesFeatureImage()
+{
+	require 'vendor/autoload.php';
+
+    $folder = $this->input->post('foldername'); // Use foldername instead of folder
+
+    $img_name = $this->input->post('imageKey');
+
+    if ($folder && $img_name) {
+
+        $s3 = new Aws\S3\S3Client([
+            'version' => 'latest',
+            'region' => 'eu-west-1', // Replace with your region
+        ]);
+
+		sleep(3);
+
+        $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+		// $s3ObjectKey = 'uploads/properties/' . $folder . '/' . $data['file_name'];
+
+        $objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
+
+        try {
+
+			$result = $s3->putObject([
+
+				'Bucket' => $bucket,
+
+				'Key'    => $objectKey,
+
+				'Body'   => file_get_contents($img_name),
+			]);
+
+            // Move the object to the beginning of the bucket
+            // $s3->copyObject([
+            //     'Bucket' => $bucket,
+            //     'CopySource' => $bucket . '/' . $objectKey,
+            //     'Key' => $objectKey, // Same key to overwrite the original
+            // ]);
+
+            // Delete the original object
+            // $s3->deleteObject([
+            //     'Bucket' => $bucket,
+            //     'Key' => $objectKey,
+            // ]);
+
+			// Read the file contents using file_get_contents
+            // $fileContents = file_get_contents($objectKey);
+
+			// Re-upload the object with the same key to move it to the beginning
+            // $s3->putObject([
+            //     'Bucket' => $bucket,
+            //     'Key' => $objectKey,
+            //     'Body' => $fileContents, // Use the file contents as the 'Body'
+            //     // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
+            // ]);
+
+			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
+
+            // echo 1; // Success
+
+        } catch (Aws\Exception\AwsException $e) {
+
+			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
+
+            // echo 'S3 Error: ' . $e->getAwsErrorMessage();
+
+        }
+    } else {
+
+		echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
+
+        // echo 'Missing foldername or imageKey';
+
+    }
+}
+
+// public function propertiesFeatureImage()
+// {
+//     $folder = $this->input->post('foldername'); // Use foldername instead of folder
+//     $img_name = $this->input->post('imageKey');
+
+//     if ($folder && $img_name) {
+//         require 'vendor/autoload.php';
+
+//         $s3 = new Aws\S3\S3Client([
+//             'version' => 'latest',
+//             'region' => 'eu-west-1', // Replace with your region
+//         ]);
+
+//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+//         try {
+//             // List all objects in the folder
+//             $objects = $s3->listObjects([
+//                 'Bucket' => $bucket,
+//                 // 'Prefix' => 'uploads/' . $folder . '/',
+// 				'Prefix' => "uploads/properties/$folder/",
+//             ]);
+
+//             // Determine the new order of objects with the featured image first
+//             $newOrder = [];
+//             foreach ($objects['Contents'] as $object) {
+//                 if (basename($object['Key']) ==  $img_name) {
+//                     // Featured image, add it to the beginning
+//                     array_unshift($newOrder, $object['Key']);
+//                 } else {
+//                     // Other images, add them to the new order
+//                     $newOrder[] = $object['Key'];
+//                 }
+//             }
+
+//             // Re-upload objects in the new order
+//             foreach ($newOrder as $objectKey) {
+//                 $fileContents = file_get_contents($objectKey);
+//                 $s3->putObject([
+//                     'Bucket' => $bucket,
+//                     'Key' => $objectKey,
+//                     'Body' => $fileContents,
+//                     // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
+//                 ]);
+//             }
+
+//             echo 'Image featured successfully and reordered.';
+//         } catch (Aws\Exception\AwsException $e) {
+//             echo 'S3 Error: ' . $e->getAwsErrorMessage();
+//         }
+//     } else {
+//         echo 'Missing foldername or imageKey';
+//     }
+// }
+
+
+
 
 	public function removeStayoneImg()
 	{
