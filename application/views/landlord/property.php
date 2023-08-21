@@ -325,37 +325,6 @@
         <div class="p-md-5 p-4 primary-background">
           <div class="row">
 
-            <div class="col-md-4 col-12  mb-4">
-              <div class="card default-background border-0">
-                <div class="card-body pb-5">
-                  <div class="d-flex justify-content-between mb-2">
-                    <!-- <img class="img-fluid" src="../assets/images2/agreement2.svg" alt=""> -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
-                      <g clip-path="url(#clip0_4862_265)">
-                        <path
-                          d="M8.33333 27.0833H14.5833V31.25H8.33333V27.0833ZM18.75 31.25H25V27.0833H18.75V31.25ZM8.33333 39.5833H14.5833V35.4167H8.33333V39.5833ZM18.75 39.5833H25V35.4167H18.75V39.5833ZM8.33333 14.5833H14.5833V10.4167H8.33333V14.5833ZM18.75 14.5833H25V10.4167H18.75V14.5833ZM8.33333 22.9167H14.5833V18.75H8.33333V22.9167ZM18.75 22.9167H25V18.75H18.75V22.9167ZM50 16.6667V50H0V6.25C0 4.5924 0.65848 3.00268 1.83058 1.83058C3.00268 0.65848 4.5924 0 6.25 0L27.0833 0C28.7409 0 30.3306 0.65848 31.5028 1.83058C32.6749 3.00268 33.3333 4.5924 33.3333 6.25V10.4167H43.75C45.4076 10.4167 46.9973 11.0751 48.1694 12.2472C49.3415 13.4194 50 15.0091 50 16.6667ZM29.1667 6.25C29.1667 5.69747 28.9472 5.16756 28.5565 4.77686C28.1658 4.38616 27.6359 4.16667 27.0833 4.16667H6.25C5.69747 4.16667 5.16756 4.38616 4.77686 4.77686C4.38616 5.16756 4.16667 5.69747 4.16667 6.25V45.8333H29.1667V6.25ZM45.8333 16.6667C45.8333 16.1141 45.6138 15.5842 45.2231 15.1935C44.8324 14.8028 44.3025 14.5833 43.75 14.5833H33.3333V45.8333H45.8333V16.6667ZM37.5 31.25H41.6667V27.0833H37.5V31.25ZM37.5 39.5833H41.6667V35.4167H37.5V39.5833ZM37.5 22.9167H41.6667V18.75H37.5V22.9167Z"
-                          fill="#222224" />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_4862_265">
-                          <rect width="50" height="50" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                    <p class="custom-font-size-14 font-weight-light">Listed January 2023<br>Tenated</p>
-                  </div>
-                  <div class="mt-3">
-                    <p class="card-text">2 br Maisonette B2 Olivia Court Lekki</p>
-
-                    <div class="mt-3">
-                      <a href="<?php echo base_url('landlord/single_property'); ?>" class="btn secondary-background px-5">View</a>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
             <?php foreach($proptys as $propty => $value){ ?>
 
             <div class="col-md-4 col-12  mb-4">
@@ -375,7 +344,7 @@
                         </clipPath>
                       </defs>
                     </svg>
-                    <p class="custom-font-size-14 font-weight-light">Listed <?php $date = $value['dateOfEntry']; $date = date('Y-m-d', $date); echo $date; ?><br><?php if(date('Y-m-d') < $value['available_date']){ echo 'rented'; } else{ echo 'vacant'; }
+                    <p class="custom-font-size-14 font-weight-light">Listed <?php $date = strtotime($value['dateOfEntry']); $date = date('Y-m-d', $date); echo $date; ?><br><?php if(date('Y-m-d') < $value['available_date']){ echo 'rented'; } else{ echo 'vacant'; }
                     ?>
                    </p>
                   </div>
