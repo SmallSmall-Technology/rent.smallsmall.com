@@ -5626,7 +5626,7 @@ public function propertiesFeatureImage()
 
         // $objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
 
-		$objectKey = 'uploads/properties/' . $folder . '/' . $img_name ;
+		$objectKey = 'uploads/properties/' . $folder . $img_name ;
 
         try {
 
