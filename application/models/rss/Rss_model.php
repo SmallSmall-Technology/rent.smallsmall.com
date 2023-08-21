@@ -847,6 +847,23 @@ class Rss_model extends CI_Model {
 	    
 	    return $query;
 	}
+
+	public function fetch_Landlordmessage($id, $limit, $start) {       
+         
+		$this->db->select('*');
+	    
+	    $this->db->from('landlord_notification');
+	    
+	    $this->db->where('user_id', $id);
+	    
+	    $this->db->order_by('entry_date', 'DESC');
+	    
+	    $this->db->limit($limit, $start);
+	    
+	    $query = $this->db->get();
+	    
+	    return $query;
+	}
 	
 	public function fetch_landlord_messages($id, $limit, $start) {       
 

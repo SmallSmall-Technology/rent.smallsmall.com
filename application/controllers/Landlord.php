@@ -47,7 +47,7 @@ class Landlord extends CI_Controller {
  
 	 public function index()
 	 {
-		//if($this->session->has_userdata('userID')){
+		if($this->session->has_userdata('userID')){
  
 			 $data['userID'] = $this->session->userdata('userID');
 			 
@@ -87,10 +87,11 @@ class Landlord extends CI_Controller {
 
 			$this->load->view('landlord/index.php', $data);
  
-		// }else{			
+		}
+		else{			
  
-		//   redirect( base_url()."login" ,'refresh');			
-		// }
+		  redirect( base_url()."login" ,'refresh');			
+		}
 	}
 
 	
@@ -507,5 +508,13 @@ class Landlord extends CI_Controller {
 
 		}
     }
-	
+
+	public function mark_as_read()
+	{
+		$notificationID = $this->input->post('notification_id');
+
+		$this->buytolet_model->markNotificationAsReads($notificationID);
+
+		echo $notificationID; // Return a response to the AJAX call
+	}
 }

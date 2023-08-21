@@ -680,6 +680,51 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function vacancy()
+	{
+		$id = $this->input->post('sub_id');
+		$details = $this->input->post('lndlrd_det');
+		$propty = $this->input->post('sub-propty');
+		$vacancy = $this->input->post('vacancy');
+		$status = 0;
+		$type = 'vacancy';
+
+		if($vacancy == 0)
+		{
+			$subject = 'Property Vacant';
+		}
+
+		else
+		{
+			$subject = 'Property Tenanted';
+		}
+
+		// Build the data array
+		$data = array(
+			'propertyID' => $propty,
+			'type' => $type,
+			'details' => $details,
+			'platform' => 'rent',
+			'status' => $status,
+			'user_id' => $id,
+			'entry_date' => date('Y-m-d H:i:s'),
+			'subject' => $subject
+		);
+
+		// Insert data into the database
+		$this->db->insert('landlord_notification', $data);
+
+		// Assuming you're using CodeIgniter, use the URL helper to create URLs
+		$user_profile_url = site_url('user-profile/' . $id);
+
+		// Redirect to user profile with a success message
+		echo "<script>
+				alert('Upload Successful');
+				window.location.href='$user_profile_url';
+			</script>";
+	}
+
+
 	public function agr_upload()
 	{
 

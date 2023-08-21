@@ -139,6 +139,15 @@ class Buytolet_model extends CI_Model {
 
 		$this->db->update('user_notification');
 	}
+
+	public function markNotificationAsReads($notificationID)
+	{
+		$this->db->set('status', 1); // set the status as read
+
+		$this->db->where('id', $notificationID);
+
+		$this->db->update('landlord_notification');
+	}
 	
 }
 

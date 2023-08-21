@@ -268,145 +268,65 @@
       </div>
     </div>
 
-    <!-- latest message -->
-    <div class="row mb-4">
-      <div class="col-12 mb-3">
-        <p class="secondary-text-color">March 15,2023</p>
-      </div>
-      <div class="col-12" data-toggle="modal" data-target="#exampleModal">
-        <div class="message-container-border">
-          <div class="message-container--latest px-3 py-4 justify-content-between d-flex">
-            <div class="d-flex align-items-center">
-              <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-flex">
-                RSS
-              </div>
-              <div class="bss-btn p-2  mr-2 d-md-none d-flex">
-                RSS
-              </div>
-              <div class="msg-intro">
-                <p>Property Tenanted</p>
-                <p style="font-size: 13px;">Dear John, Your shares are....</p>
-              </div>
-            </div>
-            <!-- <div class="align-self-center mr-md-4 mr-1">
-                      <i class="fa-solid fa-greater-than"></i>
-                    </div> -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog " role="document">
-          <div class="modal-content primary-background">
-            <div class="modal-header" style="border: none;">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body p-md-5 p-3">
-              <div class="py-4">
-                <p class="mb-4">23 Feb, 2023</p>
-                <h5 class="mb-4">Rent Due for March</h5>
-                <div class=" d-flex align-items-center ">
-                  <div class="inbox-msg-icon py-3  mr-2">
-                    <div class="msg-icon d-flex justify-content-center align-items-center">CX</div>
-                  </div>
-                  <div class="flex-grow-1  py-3 pl-2 text-dark">
-                    <p style="font-size: 14px; font-weight: 400;">Customer Experience</p>
-                  </div>
-                </div>
-                <div class="inbox-body">
-                  <p class="mb-4">Dear John,</p>
-                  <p class="mb-4">Your rent is due for March 2023 pls pay before the due date to avoid late rent
-                    payment
-                    charges</p>
-                  <p class="mb-4">Please feel free to reach out to us.</p>
-                  <p class="mb-4">Regards,<br>
-                    RSS Customer Experience</p>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12">
-        <div class="message-container-border">
-          <div class="message-container--latest px-3 py-4 justify-content-between d-flex">
-            <div class="d-flex align-items-center">
-              <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-flex">
-                RSS
-              </div>
-              <div class="bss-btn p-2  mr-2 d-md-none d-flex">
-                RSS
-              </div>
-              <div class="msg-intro">
-                <p>Payout Sent</p>
-                <p style="font-size: 13px;">Dear John, Your shares are....</p>
-              </div>
-            </div>
-            <!-- <div class="align-self-center mr-md-4 mr-1">
-            <i class="fa-solid fa-greater-than"></i>
-          </div> -->
-          </div>
-        </div>
-      </div>
-
+    <div id="inbox-messages">
+                                
     </div>
+        
+    
+    <br></br>
+    <div class="row mb-4">
 
+        <div style="text-align:center;width:100%;font-size:14px;color:#138E3D" id="inbox-data-loading"> </div>
+        <div class="text-right load-more-bar" id="load-inbox-messages">
+            <a href="#" class="btn secondary-background">Load more</a>
+        </div>
+    </div>
+      
     <!-- Older messages -->
-    <div class="row mb-4">
-      <div class="col-12 mb-3">
-        <p class="secondary-text-color">March 10,2023</p>
-      </div>
-      <div class="col-12">
-        <div class="message-container-border">
-          <div class="message-container px-3 py-4 justify-content-between d-flex">
-            <div class="d-flex align-items-center">
-              <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-flex">
-                RSS
-              </div>
-              <div class="bss-btn p-2  mr-2 d-md-none d-flex">
-                RSS
-              </div>
-              <div class="msg-intro">
-                <p>Repair request</p>
-                <p style="font-size: 13px;">Dear John, Your shares are....</p>
-              </div>
-            </div>
-            <!-- <div class="align-self-center mr-md-4 mr-1">
-            <i class="fa-solid fa-greater-than"></i>
-          </div> -->
-          </div>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="message-container-border">
-          <div class="message-container px-3 py-4 justify-content-between d-flex">
-            <div class="d-flex align-items-center">
-              <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-flex">
-                RSS
-              </div>
-              <div class="bss-btn p-2  mr-2 d-md-none d-flex">
-                RSS
-              </div>
-              <div class="msg-intro">
-                <p>Property Vacant</p>
-                <p style="font-size: 13px;">Dear John, Your shares are....</p>
-              </div>
-            </div>
-            <!-- <div class="align-self-center mr-md-4 mr-1">
-            <i class="fa-solid fa-greater-than"></i>
-          </div> -->
-          </div>
-        </div>
-      </div>
+    <!--<div class="row mb-4">-->
+    <!--  <div class="col-12 mb-3">-->
+    <!--    <p class="secondary-text-color">March 10,2023</p>-->
+    <!--  </div>-->
+    <!--  <div class="col-12 mb-3">-->
+    <!--    <div class="message-container px-3 py-4 justify-content-between d-flex">-->
+    <!--      <div class="d-flex align-items-center">-->
+    <!--        <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-block">-->
+    <!--          Rentsmallsmall-->
+    <!--        </div>-->
+    <!--        <div class="bss-btn p-2  mr-2 d-md-none d-block">-->
+    <!--          RSS-->
+    <!--        </div>-->
+    <!--        <div class="msg-intro">-->
+    <!--          <p>Property shares notification</p>-->
+    <!--          <p style="font-size: 13px;">Dear John, Your shares are....</p>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="align-self-center mr-md-4 mr-1">-->
+    <!--        <i class="fa-solid fa-greater-than"></i>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--  <div class="col-12 mb-3">-->
+    <!--    <div class="message-container px-3 py-4 justify-content-between d-flex">-->
+    <!--      <div class="d-flex align-items-center">-->
+    <!--        <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-block">-->
+    <!--          Rentsmallsmall-->
+    <!--        </div>-->
+    <!--        <div class="bss-btn p-2  mr-2 d-md-none d-block">-->
+    <!--          BSS-->
+    <!--        </div>-->
+    <!--        <div class="msg-intro">-->
+    <!--          <p>Property shares notification</p>-->
+    <!--          <p style="font-size: 13px;">Dear John, Your shares are....</p>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="align-self-center mr-md-4 mr-1">-->
+    <!--        <i class="fa-solid fa-greater-than"></i>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
 
-    </div>
+    <!--</div>-->
 
   </main>
 
@@ -424,9 +344,6 @@
   </footer>
 
 
-
-
-
   <!-- Jquery js -->
   <script src="../assets/js/jquery.min.js"
     crossorigin="anonymous"></script>
@@ -436,6 +353,109 @@
   <script src="../assets/js/bootstrap-js/bootstrap.min.js"
     crossorigin="anonymous"></script>
 
+
+    <script src="<?php echo base_url(); ?>assets/js/message-opener.js" type="text/javascript"></script>
+    <script>
+    $(document).ready(function(){
+        
+        var limit = 10;
+        
+        var start = 0;
+        
+        var action = 'inactive';
+    
+        function lazzy_loader(limit){
+            
+            var output = '';
+          
+            for(var count=0; count<limit; count++){
+              
+                output += '<div class="post-data">';
+                output += '<p><span class="content-placeholder" style="width:100%; height: 30px;">&nbsp;</span></p>';
+                output += '<p><span class="content-placeholder" style="width:100%; height: 100px;">&nbsp;</span></p>';
+                output += '</div>';
+                
+            }
+            
+            $('#inbox-data-loading').html(output);
+            
+        }
+    
+        lazzy_loader(limit);
+    
+        function load_data(limit, start)
+        {
+            $.ajax({
+                
+                url:"<?php echo base_url(); ?>rss/fetchLandlordMessage",
+                
+                method:"POST",
+                
+                data:{limit:limit, start:start},
+                
+                cache: false,
+                
+                success:function(data){
+                    
+                    if(data == ''){
+                        
+                        $('#inbox-data-loading').html('No more result found');
+                        action = 'active';
+                        
+                    }else{
+                        
+                        $('#inbox-messages').append(data);
+                        
+                        $('#inbox-data-loading').html("");
+                        
+                        action = 'inactive';
+                    }
+                }
+            })
+        }
+        
+        if(action == 'inactive'){
+            
+            action = 'active';
+            
+            load_data(limit, start);         
+        }
+        
+        $('#load-inbox-messages').click(function(){
+            
+            lazzy_loader(limit);
+            
+            action = 'active';
+            
+            start = start + limit;
+            
+            setTimeout(function(){
+                
+                load_data(limit, start);
+                
+            }, 1000);
+            
+        });
+        
+    });
+    
+    function insVal(val)
+    {
+        $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url('landlord/mark_as_read'); ?>',
+        data: {
+          notification_id: val
+        },
+        success: function(response) {
+          console.log(response); // Debugging purposes
+        },
+        error: function(xhr, status, error) {
+        //   console.log(error); // Debugging purposes
+        }
+      });
+    }
+</script>
 
 </body>
 
