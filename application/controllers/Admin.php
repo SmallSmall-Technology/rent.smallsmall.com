@@ -5624,7 +5624,9 @@ public function propertiesFeatureImage()
 
 		// $s3ObjectKey = 'uploads/properties/' . $folder . '/' . $data['file_name'];
 
-        $objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
+        // $objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
+
+		$objectKey = 'uploads/properties/' . $folder . '/';
 
         try {
 
