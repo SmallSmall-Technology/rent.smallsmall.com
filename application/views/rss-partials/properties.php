@@ -614,22 +614,55 @@ function shortenText($text, $maxLength)
 
                     try {
                       $objects = $s3->listObjects([
-                        'Bucket' => $bucket,
-                        'Prefix' => $imageFolderPath,
-                      ]);
 
+                          'Bucket' => $bucket,
+
+                          'Prefix' => $imageFolderPath,
+                          
+                      ]);
+                  
                       $activeClass = 'active';
 
-                      foreach ($objects['Contents'] as $object) {
-                        $imageSrc = $object['Key'];
-                        echo '
+                      $content_size = count($objects['Contents']);
+
+                      $count = 0;
+
+                    //   foreach ($objects['Contents'] as $object) {
+                    //     if ($object !== '.' && $object !== '..' && $count <= ($content_size - 2)) {
+                    //         $imageSrc = $s3->getObjectUrl($bucket, 'uploads/properties/' . $value['imageFolder'] . '/' . $object);
+                    //         echo '
+                    //             <div class="carousel-item ' . $activeClass . '">
+                    //                 <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
+                    //             </div>
+                    //         ';
+                    //         $activeClass = '';
+                    //     }
+                    //     $count++;
+                    // }
+
+                    foreach ($objects['Contents'] as $object) {
+                      if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+                          $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
+                          echo '
                               <div class="carousel-item ' . $activeClass . '">
-                                  <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image" class="d-block w-100"/>
+                                  <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
                               </div>
                           ';
-                        $activeClass = '';
+                          $activeClass = '';
                       }
-                    } catch (Aws\S3\Exception\S3Exception $e) {
+                      $count++;
+                  }
+                    
+                  } catch (Aws\S3\Exception\S3Exception $e) {
+                      // Handle S3 error
+                      echo '<div class="carousel-item active">
+                          <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
+                      </div>';
+                  
+                      echo '<div class="carousel-item">
+                          <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
+                      </div>';
+                  }
 
                       // Handle S3 error
 

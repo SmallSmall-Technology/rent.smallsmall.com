@@ -128,10 +128,10 @@ function shortenText($text, $maxLength)
     <div class="row">
       <div class="col">
         <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+
           <div class="carousel-inner">
 
             <?php
-
             require 'vendor/autoload.php';
 
             // Create an S3 client
@@ -143,80 +143,57 @@ function shortenText($text, $maxLength)
 
             ]);
 
-            $bucket = 'rss-prod-uploads'; // My bucket name
+            $bucket = 'dev-rss-uploads'; // Your bucket name
 
             $imageFolder = $property['imageFolder'];
 
-            // $imageFolderPath = "./uploads/properties/$imageFolder";
-
-            // $imageFolderPath = "./uploads/properties/$imageFolder";
-
-            // if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
-
-            //     $imageFiles = scandir($imageFolderPath);
-
-            //     $activeClass = 'active';
-
-            //     $content_size = count($imageFiles);
-
-            //     $count = 0;
-
-            //   foreach ($imageFiles as $file) {
-
-            //       if ( $file !== '.' && $file !== '..'&& $count <= ($content_size - 2) ){
-
-            //     // if ($file === '.' || $file === '..') {
-            //     //   continue;
-            //     // }
-
-            //     $imageSrc = base_url() . 'uploads/properties/' . $property['imageFolder'] . '/' . $file;
-            //     echo '
-            //             <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
-            //               <img src="' . $imageSrc . '"  alt="RSS property image"/>
-            //             </div>
-            //           ';
-
-            //     $activeClass = '';
-            //   }
-
-            //   $count++;
-
-            // }
-
-            // } else {
-
-            //   echo '<div class="carousel-item-imgcarousel-item active" data-interval="10000">
-            //                 <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
-            //               </div>';
-
-            //   echo '<div class="carousel-item-img carousel-item" data-interval="2000">
-            //                 <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
-            //               </div>';
-            // }
-
+            $activeClass = 'active';
 
             // List objects in the specified S3 folder
             try {
               $objects = $s3->listObjects([
                 'Bucket' => $bucket,
+
                 'Prefix' => "uploads/properties/$imageFolder/",
               ]);
 
-              $activeClass = 'active';
+              $content_size = count($objects['Contents']);
+
+              $count = 0;
 
               foreach ($objects['Contents'] as $object) {
-                $imageSrc = $object['Key'];
-                echo '
-                            <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
-                                <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image"/>
-                            </div>
-                        ';
-                $activeClass = '';
+
+                // filter out unwanted images in property page
+
+                if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+
+                  $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
+
+                  echo '
+                                  <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+                                      <img src="' . $imageSrc . '" alt="RSS property image"/>
+                                  </div>
+                              ';
+
+                  $activeClass = '';
+                }
+
+                $count++;
               }
+
+              // foreach ($objects['Contents'] as $object) {
+
+              //   $imageSrc = $object['Key'];
+              //   echo '
+              //               <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+              //                   <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image"/>
+              //               </div>
+              //           ';
+              //   $activeClass = '';
+              // }
+
             } catch (Aws\S3\Exception\S3Exception $e) {
-
               // Handle S3 error by displaying a placeholder image
-
               echo '<div class="carousel-item-img carousel-item active" data-interval="10000">
                             <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
                         </div>';
@@ -225,12 +202,10 @@ function shortenText($text, $maxLength)
                             <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
                         </div>';
             }
-
-            // End of AWS S3 Integration
-
             ?>
 
           </div>
+
           <button class="carousel-control-prev" type="button" data-target="#carouselExampleInterval" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
@@ -255,17 +230,12 @@ function shortenText($text, $maxLength)
             <p><?php echo $property['address'] . ' ' . $property['city'] . ' ' . $property['name']; ?></p>
             <div class="d-md-none mobile-subscription">
               <p class="mb-0 mobile-subscription-price">Subscription Price</p>
-              <p class="font-weight-bolder primary-text-color mobile-subscription-amount">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup
-                    data-toggle="tooltip" data-placement="top" title="This is your recurring subscription payment."><img
-                      class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup>
-                    </p>
+              <p class="font-weight-bolder primary-text-color mobile-subscription-amount">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup data-toggle="tooltip" data-placement="top" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup>
+              </p>
               <p class="mb-0 mobile-subscription-security">Security deposit fund</p>
               <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($evc_dep); ?>
-              <sup data-toggle="tooltip"
-                    data-placement="right"
-                    title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img
-                      class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> 
-                    </sup>
+                <sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt="">
+                </sup>
               </p>
             </div>
 
@@ -1266,28 +1236,32 @@ function shortenText($text, $maxLength)
                         ]);
 
                         $activeClass = 'active';
+                        $content_size = count($objects['Contents']);
+                        $count = 0;
 
                         foreach ($objects['Contents'] as $object) {
+                          // filter out the property images
 
-                          $imageSrc = $object['Key'];
-                          echo '
-                                                    <div class="carousel-item ' . $activeClass . '">
-                                                        <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image" class="d-block w-100"/>
-                                                    </div>
-                                                ';
-                          $activeClass = '';
+                          if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+                            $imageSrc = $object['Key'];
+                            echo '
+                                                        <div class="carousel-item ' . $activeClass . '">
+                                                            <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image" class="d-block w-100"/>
+                                                        </div>
+                                                    ';
+                            $activeClass = '';
+                          }
+                          $count++;
                         }
                       } catch (Aws\S3\Exception\S3Exception $e) {
-
                         // Handle S3 error by displaying a placeholder image
                         echo '<div class="carousel-item active">
-                                                        <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
-                                                    </div>';
+                                                            <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
+                                                        </div>';
                         echo '<div class="carousel-item">
-                                                        <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
-                                                    </div>';
+                                                            <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
+                                                        </div>';
                       }
-
                       // End of AWS S3
 
                       ?>
