@@ -285,8 +285,13 @@ $route['user/transactions'] = 'rss/transactions';
 
 $route['user/feedback'] = 'rss/feedback';
 
-/**RSS Frontend Landlord profile Routes Starts Here ***/
 
+/** Landlord routes*/
+$route['landlord/single-property/(:any)'] = 'landlord/single_property/$1';
+
+
+
+/**RSS Frontend Landlord profile Routes Starts Here ***/
 $route['landlord/dashboard'] = 'rss/landlord_dashboard';
 
 $route['landlord/subscribers/(:any)'] = 'rss/subscribers/$1';
