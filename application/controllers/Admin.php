@@ -5450,6 +5450,7 @@ class Admin extends CI_Controller
 	public function propertiesFeatureImage()
 {
     $folder = $this->input->post('folder');
+	
     // $img_name = $this->input->post('imgName');
 	$img_name = $this->input->post('imageKey');
 
