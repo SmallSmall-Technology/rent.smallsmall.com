@@ -5445,8 +5445,9 @@ class Admin extends CI_Controller
 	// }
 
 	// Code modify to make ref to AWS S3 folders.
-	
-	public function removeImg()
+	// public function removeImg()
+
+	public function propertiesFeatureImage()
 {
     $folder = $this->input->post('folder');
     $img_name = $this->input->post('imgName');
@@ -5500,41 +5501,41 @@ class Admin extends CI_Controller
     }
 }
 
-public function propertiesFeatureImage()
-{
-    require 'vendor/autoload.php';
+// public function propertiesFeatureImage()
+// {
+//     require 'vendor/autoload.php';
 
-    $folder = $this->input->post('foldername');
-    $img_name = $this->input->post('imageKey');
+//     $folder = $this->input->post('foldername');
+//     $img_name = $this->input->post('imageKey');
 
-    if ($folder && $img_name) {
-        $s3 = new Aws\S3\S3Client([
-            'version' => 'latest',
-            'region' => 'eu-west-1', // Replace with your region
-        ]);
+//     if ($folder && $img_name) {
+//         $s3 = new Aws\S3\S3Client([
+//             'version' => 'latest',
+//             'region' => 'eu-west-1', // Replace with your region
+//         ]);
 
-        $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-        $objectKey = 'uploads/properties' . $folder . '/' . $img_name;
+//         $objectKey = 'uploads/properties' . $folder . '/' . $img_name;
 
-        try {
-            // Delete the object
-            $s3->deleteObject([
-                'Bucket' => $bucket,
-                'Key' => $objectKey,
-            ]);
+//         try {
+//             // Delete the object
+//             $s3->deleteObject([
+//                 'Bucket' => $bucket,
+//                 'Key' => $objectKey,
+//             ]);
 
-			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
-            // echo 1; // Success
-        } catch (Aws\Exception\AwsException $e) {
+// 			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
+//             // echo 1; // Success
+//         } catch (Aws\Exception\AwsException $e) {
 
-			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
-            // echo 'S3 Error: ' . $e->getAwsErrorMessage();
-        }
-    } else {
-        echo 'Missing folder or image name';
-    }
-}
+// 			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
+//             // echo 'S3 Error: ' . $e->getAwsErrorMessage();
+//         }
+//     } else {
+//         echo 'Missing folder or image name';
+//     }
+// }
 
 
 // public function propertiesFeatureImage()
