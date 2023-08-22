@@ -5742,7 +5742,7 @@ public function propertiesFeatureImage()
 			// Generate the URL for the copied image
             $url = $s3->getObjectUrl($bucket, $targetKey);
    
-            echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
+            echo json_encode(['success' => true, 'message' => 'Image uploaded successfully', 'url' => $url]);
 
         } catch (Aws\Exception\AwsException $e) {
             echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
