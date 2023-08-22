@@ -210,7 +210,7 @@ function shortenText($text, $maxLength)
 
               foreach ($objects['Contents'] as $object) {
 
-                if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+                if ($object['Key'] !== '.' && $object['Key'] !== '..' ) {
 
                   $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
 
