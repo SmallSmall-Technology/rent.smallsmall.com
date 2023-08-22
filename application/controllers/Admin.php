@@ -5711,6 +5711,59 @@ class Admin extends CI_Controller
 //     }
 // }
 
+public function propertiesFeatureImage()
+{
+    require 'vendor/autoload.php';
+
+    $folder = $this->input->post('foldername');
+    $img_name = $this->input->post('imageKey');
+
+    if ($folder && $img_name) {
+        $s3 = new Aws\S3\S3Client([
+            'version' => 'latest',
+            'region' => 'eu-west-1', // Replace with your region
+        ]);
+
+        $bucket = 'dev-rss-uploads';
+        $folderPath = 'uploads/properties/' . $folder . '/';
+        $targetKey = $folderPath . $img_name;
+
+        try {
+            // List objects in the folder
+            $objects = $s3->listObjects([
+                'Bucket' => $bucket,
+                'Prefix' => $folderPath,
+            ]);
+
+            // Delete the existing image if it exists
+            // foreach ($objects['Contents'] as $object) {
+                $s3->deleteObject([
+                    'Bucket' => $bucket,
+                    'Key' => $targetKey,
+                ]);
+            // }
+
+            // Upload the image to the folder with the same name
+            $s3->putObject([
+                'Bucket' => $bucket,
+                'Key' => $targetKey,
+                'Body' => $img_name,
+                'ContentType' => 'image/' . pathinfo($img_name, PATHINFO_EXTENSION),
+            ]);
+
+            // Generate the URL for the uploaded image
+            $url = $s3->getObjectUrl($bucket, $targetKey);
+
+            echo json_encode(['success' => true, 'message' => 'Image moved to the front successfully', 'url' => $url]);
+
+        } catch (Aws\Exception\AwsException $e) {
+            echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
+    }
+}
+
 // public function propertiesFeatureImage()
 // {
 //     require 'vendor/autoload.php';
@@ -5729,17 +5782,17 @@ class Admin extends CI_Controller
 //         $targetKey = $folderPath . $img_name;
 
 //         try {
-//             // List objects in the folder
-//             $objects = $s3->listObjects([
+//             // Check if the existing image with the same name exists
+//             $existingObject = $s3->headObject([
 //                 'Bucket' => $bucket,
-//                 'Prefix' => $folderPath,
+//                 'Key' => $targetKey,
 //             ]);
 
-//             // Delete the existing image if it exists
-//             foreach ($objects['Contents'] as $object) {
+//             // If the existing image exists, delete it
+//             if ($existingObject) {
 //                 $s3->deleteObject([
 //                     'Bucket' => $bucket,
-//                     'Key' => $object['Key'],
+//                     'Key' => $targetKey,
 //                 ]);
 //             }
 
@@ -5763,59 +5816,6 @@ class Admin extends CI_Controller
 //         echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
 //     }
 // }
-
-public function propertiesFeatureImage()
-{
-    require 'vendor/autoload.php';
-
-    $folder = $this->input->post('foldername');
-    $img_name = $this->input->post('imageKey');
-
-    if ($folder && $img_name) {
-        $s3 = new Aws\S3\S3Client([
-            'version' => 'latest',
-            'region' => 'eu-west-1', // Replace with your region
-        ]);
-
-        $bucket = 'dev-rss-uploads';
-        $folderPath = 'uploads/properties/' . $folder . '/';
-        $targetKey = $folderPath . $img_name;
-
-        try {
-            // Check if the existing image with the same name exists
-            $existingObject = $s3->headObject([
-                'Bucket' => $bucket,
-                'Key' => $targetKey,
-            ]);
-
-            // If the existing image exists, delete it
-            if ($existingObject) {
-                $s3->deleteObject([
-                    'Bucket' => $bucket,
-                    'Key' => $targetKey,
-                ]);
-            }
-
-            // Upload the image to the folder with the same name
-            $s3->putObject([
-                'Bucket' => $bucket,
-                'Key' => $targetKey,
-                'Body' => $img_name,
-                'ContentType' => 'image/' . pathinfo($img_name, PATHINFO_EXTENSION),
-            ]);
-
-            // Generate the URL for the uploaded image
-            $url = $s3->getObjectUrl($bucket, $targetKey);
-
-            echo json_encode(['success' => true, 'message' => 'Image moved to the front successfully', 'url' => $url]);
-
-        } catch (Aws\Exception\AwsException $e) {
-            echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
-        }
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
-    }
-}
 
 
 	public function removeStayoneImg()
