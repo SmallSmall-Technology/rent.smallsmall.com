@@ -5725,24 +5725,36 @@ public function propertiesFeatureImage()
         ]);
 
         $bucket = 'dev-rss-uploads';
-
-        // Define the target and source object keys
-        $targetKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
-        $sourceKey = 'uploads/properties/' . $folder . '/' . $img_name;
+        $folderPath = 'uploads/properties/' . $folder . '/';
+        $targetKey = $folderPath . $img_name;
 
         try {
-            // Copy the image to S3 with a new name but keep the original file
-            $s3->copyObject([
+            // List objects in the folder
+            $objects = $s3->listObjects([
                 'Bucket' => $bucket,
-                'CopySource' => "{$bucket}/{$sourceKey}",
+                'Prefix' => $folderPath,
+            ]);
+
+            // Delete the existing image if it exists
+            foreach ($objects['Contents'] as $object) {
+                $s3->deleteObject([
+                    'Bucket' => $bucket,
+                    'Key' => $object['Key'],
+                ]);
+            }
+
+            // Upload the image to the folder with the same name
+            $s3->putObject([
+                'Bucket' => $bucket,
                 'Key' => $targetKey,
+                'Body' => $img_name,
                 'ContentType' => 'image/' . pathinfo($img_name, PATHINFO_EXTENSION),
             ]);
 
-			// Generate the URL for the copied image
+            // Generate the URL for the uploaded image
             $url = $s3->getObjectUrl($bucket, $targetKey);
-   
-            echo json_encode(['success' => true, 'message' => 'Image uploaded successfully', 'url' => $url]);
+
+            echo json_encode(['success' => true, 'message' => 'Image moved to the front successfully', 'url' => $url]);
 
         } catch (Aws\Exception\AwsException $e) {
             echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
@@ -5751,7 +5763,6 @@ public function propertiesFeatureImage()
         echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
     }
 }
-
 
 
 	public function removeStayoneImg()
