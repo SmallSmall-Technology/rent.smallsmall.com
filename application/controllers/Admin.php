@@ -5637,6 +5637,8 @@ public function propertiesFeatureImage()
 				'Key'    => $objectKey,
 
 				'Body'   => $img_name,
+
+				'ContentType' => 'image/png',
 			]);
 
             // Move the object to the beginning of the bucket
