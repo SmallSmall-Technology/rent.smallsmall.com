@@ -83,7 +83,7 @@ class Landlord_model extends CI_Model
     
     public function get_userinfo($userID, $propId)
     {
-        $this->db->select('a.status as transaction_status, d.userID as tenant_id, d.firstName, d.lastName, e.name as state_name'); 
+        $this->db->select('a.status as transaction_status, c.*, d.userID as tenant_id, d.firstName, d.lastName, e.name as state_name'); 
 		
 		$this->db->from('transaction_tbl as a');
 	    
