@@ -5502,20 +5502,17 @@ class Admin extends CI_Controller
 
 public function propertiesFeatureImage()
 {
-	$folder = $this->input->post('folder');
+	require 'vendor/autoload.php';
+
+	$folder = $this->input->post('foldername');
     $img_name = $this->input->post('imageKey');
 
-	// $folder = $this->input->post('folder');
-    // $img_name = $this->input->post('imgName');
-
     if ($folder && $img_name) {
-		
-        require 'vendor/autoload.php';
-    
         $s3 = new Aws\S3\S3Client([
             'version' => 'latest',
             'region' => 'eu-west-1', // Replace with your region
         ]);
+
 
         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
