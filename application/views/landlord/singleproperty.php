@@ -304,7 +304,7 @@
           <span>></span>
           <span>Property</span>
           <span>></span>
-          <span>2 br Maisonette B2 Olivia Court Lekki</span>
+          <span><?php echo $userdata['propertyTitle'] ?></span>
         </div>
 
       </div>
@@ -338,15 +338,15 @@
         <div class="primary-background p-md-5 p-3">
           <div class="row">
             <div class="col-12">
-              <h3 class="address-title">2 bed, Trinity Apartments</h3>
-              <p>Agungi, Lekki, Lagos</p>
+              <h3 class="address-title"><?php echo $userdata['propertyTitle'] ?></h3>
+              <p><?php echo $userdata['address'] .','. $userdata['state_name']?></p>
             </div>
           </div>
           <div class="row my-5">
             <div class=" col-12 ">
               <p class="font-weight-light custom-font-size-14">Current Tenant</p>
               <div class="d-flex">
-                <p class="custom-font-size-30 mr-3">Tara Bello</p>
+                <p class="custom-font-size-30 mr-3"><?php echo $userdata['firstName'] .','. $userdata['lastName']?></p>
                 <a href="subscriber-profile.html" class="btn secondary-background px-3">View profile</a>
               </div>
             </div>
@@ -358,7 +358,7 @@
             </div>
             <div class="col-md-2 col-6 ">
               <p class="font-weight-light">Service charge</p>
-              <p class="custom-font-size-26">&#8358;50,000</p>
+              <p class="custom-font-size-26">&#8358;<?php echo $userdata['serviceCharge']; ?></p>
             </div>
             <div class="col-md-2 col-6 ">
               <p class="font-weight-light custom-font-size-14">Payment plan</p>
@@ -366,17 +366,17 @@
             </div>
             <div class="col-md-2 col-6 ">
               <p class="font-weight-light custom-font-size-14">Tenancy Status</p>
-              <p class="custom-font-size-26">Tenanted</p>
+              <p class="custom-font-size-26"><?php if(date('Y-m-d') < $userdata['available_date']){ echo 'Tenanted'; } else {echo 'Vacant';} ?></p>
             </div>
             <div class="col-md-3 col-6 ">
               <p class="font-weight-light custom-font-size-14">Listed date</p>
-              <p class="custom-font-size-26">15 May, 2021</p>
+              <p class="custom-font-size-26">15 May, 2021<?php $date = strtotime($value['dateOfEntry']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date);  echo $day.' '.$month.', '.$year; ?></p>
             </div>
           </div>
           <div class="row my-md-3">
             <div class="col-md-3 col-6 ">
               <p class="font-weight-light custom-font-size-14">Next Payout Date</p>
-              <p class="custom-font-size-26">Aug,12 2023</p>
+              <p class="custom-font-size-26"><?php $date = strtotime($value['available_date']); $year = date("Y", $date); $month = date("F", strtotime("+1 month", $date)); $day = date("d", $date); echo $month.' '.$day.', '.$year; ?></p>
             </div>
             <div class="col-md-3 col-6 ">
               <p class="font-weight-light custom-font-size-14">Total Payout Received</p>

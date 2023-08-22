@@ -352,7 +352,7 @@
                     <p class="card-text"><?php echo $value['propertyTitle'];?></p>
 
                     <div class="mt-3">
-                      <a href="<?php echo base_url('landlord/single_property'); ?>" class="btn secondary-background px-5">View</a>
+                      <a href="<?php echo base_url().'landlord/single_property/'.$value['propertyID']; ?>" class="btn secondary-background px-5">View</a>
                     </div>
                   </div>
 
