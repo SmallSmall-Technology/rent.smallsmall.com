@@ -5603,93 +5603,115 @@ class Admin extends CI_Controller
 //     // }
 // }
 
+// public function propertiesFeatureImage()
+// {
+// 	require 'vendor/autoload.php';
+
+//     $folder = $this->input->post('foldername'); // Use foldername instead of folder
+
+//     $img_name = $this->input->post('imageKey');
+
+//     if ($folder && $img_name) {
+
+//         $s3 = new Aws\S3\S3Client([
+//             'version' => 'latest',
+//             'region' => 'eu-west-1', // Replace with your region
+//         ]);
+
+// 		sleep(3);
+
+//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+//         // $objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
+
+// 		$objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
+
+//         try {
+
+// 			$content_types = [
+// 				'jpg' => 'image/jpeg',
+// 				'jpeg' => 'image/jpeg',
+// 				'png' => 'image/png',
+// 				'gif' => 'image/gif',
+// 				// Add more file extensions and content types as needed
+// 			];
+
+// 			$result = $s3->putObject([
+
+// 				'Bucket' => $bucket,
+
+// 				'Key'    => $objectKey,
+
+// 				'Body'   => $img_name,
+
+// 				'ContentType' => $content_types,
+// 			]);
+// 			// Print the URL to the object.
+
+// 			echo $img_name;
+
+// 			echo $result['ObjectURL'] . PHP_EOL;
+
+// 			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
+
+//             // echo 1; // Success
+
+//         } catch (Aws\Exception\AwsException $e) {
+
+// 			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
+
+//             // echo 'S3 Error: ' . $e->getAwsErrorMessage();
+
+//         }
+//     } else {
+
+// 		echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
+
+//         // echo 'Missing foldername or imageKey';
+
+//     }
+// }
+
 public function propertiesFeatureImage()
 {
-	require 'vendor/autoload.php';
+    require 'vendor/autoload.php';
 
     $folder = $this->input->post('foldername'); // Use foldername instead of folder
-
     $img_name = $this->input->post('imageKey');
 
     if ($folder && $img_name) {
-
         $s3 = new Aws\S3\S3Client([
             'version' => 'latest',
             'region' => 'eu-west-1', // Replace with your region
         ]);
 
-		sleep(3);
-
         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-		// $s3ObjectKey = 'uploads/properties/' . $folder . '/' . $data['file_name'];
-
-        // $objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
-
-		$objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
+        // Generate a unique name for the image in S3
+        $s3ImageName = uniqid() . '.' . pathinfo($img_name, PATHINFO_EXTENSION);
 
         try {
+            // Upload the image to S3
+            $s3->putObject([
+                'Bucket' => $bucket,
+                'Key'    => 'uploads/properties/' . $folder . '/' . $s3ImageName,
+                'Body'   => file_get_contents($img_name), // Read the image content
+                'ACL'    => 'public-read', // Make the image publicly accessible
+            ]);
 
-			$result = $s3->putObject([
+            // Get the URL of the uploaded image
+            $imageURL = $s3->getObjectUrl($bucket, 'uploads/properties/' . $folder . '/' . $s3ImageName);
 
-				'Bucket' => $bucket,
-
-				'Key'    => $objectKey,
-
-				'Body'   => $img_name,
-
-				'ContentType' => 'image/jpg',
-			]);
-
-            // Move the object to the beginning of the bucket
-            // $s3->copyObject([
-            //     'Bucket' => $bucket,
-            //     'CopySource' => $bucket . '/' . $objectKey,
-            //     'Key' => $objectKey, // Same key to overwrite the original
-            // ]);
-
-            // Delete the original object
-            // $s3->deleteObject([
-            //     'Bucket' => $bucket,
-            //     'Key' => $objectKey,
-            // ]);
-
-			// Read the file contents using file_get_contents
-            // $fileContents = file_get_contents($objectKey);
-
-			// Re-upload the object with the same key to move it to the beginning
-            // $s3->putObject([
-            //     'Bucket' => $bucket,
-            //     'Key' => $objectKey,
-            //     'Body' => $fileContents, // Use the file contents as the 'Body'
-            //     // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
-            // ]);
-
-			// Print the URL to the object.
-
-			echo $img_name;
-			
-			echo $result['ObjectURL'] . PHP_EOL;
-
-			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
-
-            // echo 1; // Success
-
+            // Return the URL to the uploaded image
+            echo json_encode(['success' => true, 'image_url' => $imageURL, 'message' => 'Image uploaded successfully']);
         } catch (Aws\Exception\AwsException $e) {
-
-			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
-
-            // echo 'S3 Error: ' . $e->getAwsErrorMessage();
-
+            echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
         }
     } else {
-
-		echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
-
-        // echo 'Missing foldername or imageKey';
-
+        echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
     }
 }
+
 
 // public function propertiesFeatureImage()
 // {
