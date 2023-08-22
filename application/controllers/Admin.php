@@ -5515,7 +5515,7 @@ public function propertiesFeatureImage()
 
         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-        $objectKey = 'uploads/' . $folder . '/' . $img_name;
+        $objectKey = 'uploads/properties' . $folder . '/' . $img_name;
 
         try {
             // Delete the object
@@ -5524,9 +5524,12 @@ public function propertiesFeatureImage()
                 'Key' => $objectKey,
             ]);
 
-            echo 1; // Success
+			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
+            // echo 1; // Success
         } catch (Aws\Exception\AwsException $e) {
-            echo 'S3 Error: ' . $e->getAwsErrorMessage();
+
+			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
+            // echo 'S3 Error: ' . $e->getAwsErrorMessage();
         }
     } else {
         echo 'Missing folder or image name';
