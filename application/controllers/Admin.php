@@ -5626,7 +5626,7 @@ public function propertiesFeatureImage()
 
         // $objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
 
-		$objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name) ;
+		$objectKey = 'uploads/properties/' . $folder . '/' ;
 
         try {
 
@@ -5662,6 +5662,9 @@ public function propertiesFeatureImage()
             //     'Body' => $fileContents, // Use the file contents as the 'Body'
             //     // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
             // ]);
+
+			// Print the URL to the object.
+			echo $result['ObjectURL'] . PHP_EOL;
 
 			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
 
