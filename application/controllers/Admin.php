@@ -5696,7 +5696,6 @@ public function propertiesFeatureImage()
                 'Bucket' => $bucket,
                 'Key'    => 'uploads/properties/' . $folder . '/' . $s3ImageName,
                 'Body'   => file_get_contents($img_name), // Read the image content
-                'ACL'    => 'public-read', // Make the image publicly accessible
             ]);
 
             // Get the URL of the uploaded image
