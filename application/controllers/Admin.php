@@ -5500,108 +5500,108 @@ class Admin extends CI_Controller
     }
 }
 
-// public function propertiesFeatureImage()
-// {
-// 	$folder = $this->input->post('folder');
-//     $img_name = $this->input->post('imageKey');
+public function propertiesFeatureImage()
+{
+	$folder = $this->input->post('folder');
+    $img_name = $this->input->post('imageKey');
 
-// 	// $folder = $this->input->post('folder');
-//     // $img_name = $this->input->post('imgName');
+	// $folder = $this->input->post('folder');
+    // $img_name = $this->input->post('imgName');
 
-//     if ($folder && $img_name) {
+    if ($folder && $img_name) {
 		
-//         require 'vendor/autoload.php';
+        require 'vendor/autoload.php';
     
-//         $s3 = new Aws\S3\S3Client([
-//             'version' => 'latest',
-//             'region' => 'eu-west-1', // Replace with your region
-//         ]);
+        $s3 = new Aws\S3\S3Client([
+            'version' => 'latest',
+            'region' => 'eu-west-1', // Replace with your region
+        ]);
 
-//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+        $bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-//         $objectKey = 'uploads/' . $folder . '/' . $img_name;
+        $objectKey = 'uploads/' . $folder . '/' . $img_name;
 
-//         try {
-//             // List all versions of the object
-//             $versions = $s3->listObjectVersions([
-//                 'Bucket' => $bucket,
-//                 'Prefix' => $objectKey,
-//             ]);
+        try {
+            // List all versions of the object
+            $versions = $s3->listObjectVersions([
+                'Bucket' => $bucket,
+                'Prefix' => $objectKey,
+            ]);
 
-//             // Delete all versions of the object
-//             foreach ($versions['Versions'] as $version) {
-//                 $s3->deleteObject([
-//                     'Bucket' => $bucket,
-//                     'Key' => $version['Key'],
-//                     'VersionId' => $version['VersionId'],
-//                 ]);
-//             }
+            // Delete all versions of the object
+            foreach ($versions['Versions'] as $version) {
+                $s3->deleteObject([
+                    'Bucket' => $bucket,
+                    'Key' => $version['Key'],
+                    'VersionId' => $version['VersionId'],
+                ]);
+            }
             
-//             echo 1; // Success
-//         } catch (Aws\Exception\AwsException $e) {
-//             echo 'S3 Error: ' . $e->getAwsErrorMessage();
-//         }
-//     } else {
-//         echo 'Missing folder or image name';
-//     }
-//     // if ($folder && $img_name) {
-//         // require 'vendor/autoload.php';
+            echo 1; // Success
+        } catch (Aws\Exception\AwsException $e) {
+            echo 'S3 Error: ' . $e->getAwsErrorMessage();
+        }
+    } else {
+        echo 'Missing folder or image name';
+    }
+    // if ($folder && $img_name) {
+        // require 'vendor/autoload.php';
 
-//         // $s3 = new Aws\S3\S3Client([
-//         //     'version' => 'latest',
-//         //     'region' => 'eu-west-1', // Replace with your region
-//         // ]);
+        // $s3 = new Aws\S3\S3Client([
+        //     'version' => 'latest',
+        //     'region' => 'eu-west-1', // Replace with your region
+        // ]);
 
-//         // $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+        // $bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-//         // $objectKey = 'uploads/' . $folder . '/' . $img_name;
+        // $objectKey = 'uploads/' . $folder . '/' . $img_name;
 
-//         // try {
-//         //     // List all versions of the object
-//         //     $versions = $s3->listObjectVersions([
-//         //         'Bucket' => $bucket,
-//         //         'Prefix' => $objectKey,
-//         //     ]);
+        // try {
+        //     // List all versions of the object
+        //     $versions = $s3->listObjectVersions([
+        //         'Bucket' => $bucket,
+        //         'Prefix' => $objectKey,
+        //     ]);
 
-//         //     // Create an array to store version IDs
-//         //     $versionIds = [];
+        //     // Create an array to store version IDs
+        //     $versionIds = [];
 
-//         //     // Collect version IDs of the object
-//         //     foreach ($versions['Versions'] as $version) {
-//         //         $versionIds[] = [
-//         //             'Key' => $version['Key'],
-//         //             'VersionId' => $version['VersionId'],
-//         //         ];
-//         //     }
+        //     // Collect version IDs of the object
+        //     foreach ($versions['Versions'] as $version) {
+        //         $versionIds[] = [
+        //             'Key' => $version['Key'],
+        //             'VersionId' => $version['VersionId'],
+        //         ];
+        //     }
 
-//         //     // Delete all versions of the object
-//         //     foreach ($versionIds as $versionId) {
-//         //         $s3->deleteObject([
-//         //             'Bucket' => $bucket,
-//         //             'Key' => $versionId['Key'],
-//         //             'VersionId' => $versionId['VersionId'],
-//         //         ]);
-//         //     }
+        //     // Delete all versions of the object
+        //     foreach ($versionIds as $versionId) {
+        //         $s3->deleteObject([
+        //             'Bucket' => $bucket,
+        //             'Key' => $versionId['Key'],
+        //             'VersionId' => $versionId['VersionId'],
+        //         ]);
+        //     }
 
-//         //     // Read the file contents using file_get_contents
-//         //     $fileContents = file_get_contents($objectKey);
+        //     // Read the file contents using file_get_contents
+        //     $fileContents = file_get_contents($objectKey);
 
-//         //     // Re-upload the object with the same key to move it to the beginning
-//         //     $s3->putObject([
-//         //         'Bucket' => $bucket,
-//         //         'Key' => $objectKey,
-//         //         'Body' => $fileContents, // Use the file contents as the 'Body'
-//         //         // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
-//         //     ]);
+        //     // Re-upload the object with the same key to move it to the beginning
+        //     $s3->putObject([
+        //         'Bucket' => $bucket,
+        //         'Key' => $objectKey,
+        //         'Body' => $fileContents, // Use the file contents as the 'Body'
+        //         // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
+        //     ]);
 
-//         //     echo 'Image featured successfully and reordered.';
-//         // } catch (Aws\Exception\AwsException $e) {
-//         //     echo 'S3 Error: ' . $e->getAwsErrorMessage();
-//         // }
-//     // } else {
-//     //     echo 'Missing folder or image name';
-//     // }
-// }
+        //     echo 'Image featured successfully and reordered.';
+        // } catch (Aws\Exception\AwsException $e) {
+        //     echo 'S3 Error: ' . $e->getAwsErrorMessage();
+        // }
+    // } else {
+    //     echo 'Missing folder or image name';
+    // }
+}
 
 // public function propertiesFeatureImage()
 // {
