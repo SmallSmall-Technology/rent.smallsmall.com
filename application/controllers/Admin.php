@@ -5626,7 +5626,7 @@ public function propertiesFeatureImage()
 
         // $objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
 
-		$objectKey = 'uploads/properties/' . $folder . '/' ;
+		$objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
 
         try {
 
@@ -5638,7 +5638,7 @@ public function propertiesFeatureImage()
 
 				'Body'   => $img_name,
 
-				'ContentType' => 'image/png',
+				'ContentType' => 'image/jpg',
 			]);
 
             // Move the object to the beginning of the bucket
@@ -5666,6 +5666,9 @@ public function propertiesFeatureImage()
             // ]);
 
 			// Print the URL to the object.
+
+			echo $img_name;
+			
 			echo $result['ObjectURL'] . PHP_EOL;
 
 			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
