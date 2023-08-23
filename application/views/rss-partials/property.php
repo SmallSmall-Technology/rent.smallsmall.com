@@ -109,6 +109,11 @@ function shortenText($text, $maxLength)
   }
 }
 
+ // Function to check if a string starts with a specific prefix
+ function startsWith($string, $prefix) {
+  return substr($string, 0, strlen($prefix)) === $prefix;
+}
+
 ?>
 
 <!-- MAIN SECTION -->
@@ -212,7 +217,7 @@ function shortenText($text, $maxLength)
 
                 // if ($object['Key'] !== '.' && $object['Key'] !== '..' ) {
 
-                  if (!$object['Size']) {
+                  if (!startsWith($object['Key'], 'facilities/')) {
 
                   $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
 
@@ -1292,7 +1297,7 @@ function shortenText($text, $maxLength)
 
                           // if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
 
-                            if (!$object['Size'] && $count <= (count($objects['Contents']) - 2)) {
+                            if (!startsWith($object['Key'], 'facilities/') && $count <= (count($objects['Contents']) - 2)) {
 
                             $imageSrc = $object['Key'];
                             echo '
@@ -1360,6 +1365,7 @@ function shortenText($text, $maxLength)
         <?php }
       } else { ?>
         <div style="width:100%;padding:15px 0;font-family:gotham-medium;color:#414042">No results matching your search</div>
+        
       <?php } ?>
 
 

@@ -10,6 +10,11 @@ function shortenText($text, $maxLength)
   }
 }
 
+// Function to check if a string starts with a specific prefix
+function startsWith($string, $prefix) {
+  return substr($string, 0, strlen($prefix)) === $prefix;
+}
+
 ?>
 
 
@@ -630,8 +635,7 @@ function shortenText($text, $maxLength)
                       foreach ($objects['Contents'] as $object) {
                         // check if an object in the S3 bucket is not a directory/folder.
 
-                        if (!$object['Size'] && $count <= (count($objects['Contents']) - 2)) {
-
+                        if (!startsWith($object['Key'], 'facilities/') && $count <= (count($objects['Contents']) - 2)) {
                         // if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
 
                           $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
@@ -646,6 +650,7 @@ function shortenText($text, $maxLength)
                         }
                         $count++;
                       }
+
                     } catch (Aws\S3\Exception\S3Exception $e) {
                       // Handle S3 error
                       echo '<div class="carousel-item active">
