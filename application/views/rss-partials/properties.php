@@ -628,7 +628,11 @@ function shortenText($text, $maxLength)
                       $count = 0;
 
                       foreach ($objects['Contents'] as $object) {
-                        if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+                        // check if an object in the S3 bucket is not a directory/folder.
+
+                        if (!$object['Size'] && $count <= (count($objects['Contents']) - 2)) {
+
+                        // if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
 
                           $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
 
