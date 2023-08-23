@@ -2781,6 +2781,8 @@ class App extends CI_Controller
 	public function passwordReset()
 	{
 
+		require 'vendor/autoload.php';
+
 		$result = FALSE;
 
 		$details = '';
@@ -2792,6 +2794,24 @@ class App extends CI_Controller
 		$json_data = json_decode($json);
 
 		$email = $json_data->email;
+
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48"
+		];
+
+		// end Unione Template
 
 		//Check if email exists the create onetime code for password reset
 
@@ -2811,23 +2831,77 @@ class App extends CI_Controller
 
 				$data['name'] = $res['firstName'];
 
-				$this->email->from('donotreply@smallsmall.com', 'SmallSmall Password Reset');
+				//Unione Template
 
-				$this->email->to($email);
+				try {
+					$response = $client->request('POST', 'template/get.json', array(
+						'headers' => $headers,
+						'json' => $requestBody,
+					));
 
-				$this->email->subject("Password Reset Instructions");
+					$jsonResponse = $response->getBody()->getContents();
 
-				$this->email->set_mailtype("html");
+					$responseData = json_decode($jsonResponse, true);
 
-				$message = $this->load->view('email/header.php', $data, TRUE);
+					$htmlBody = $responseData['template']['body']['html'];
 
-				$message .= $this->load->view('email/emailreset.php', $data, TRUE);
+					// Get the unique username
+					// $user = $this->admin_model->get_user($id);
 
-				$message .= $this->load->view('email/footer.php', $data, TRUE);
+					$username = $data['name'];
 
-				$this->email->message($message);
+					$resetLink = $data['resetLink'];
 
-				$emailRes = $this->email->send();
+					// Replace the placeholder in the HTML body with the username
+
+					$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+
+					$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+
+					$data['response'] = $htmlBody;
+
+					// Prepare the email data
+					$emailData = [
+						"message" => [
+							"recipients" => [
+								["email" => $email],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Password Reset RentSmallsmall",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "SmallSmall Password Reset",
+						],
+					];
+
+					// Send the email using the Unione API
+					$emailRes = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailData,
+					]);
+				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+					$data['response'] = $e->getMessage();
+				}
+
+				// End Of Unione
+
+				// $this->email->from('donotreply@smallsmall.com', 'SmallSmall Password Reset');
+
+				// $this->email->to($email);
+
+				// $this->email->subject("Password Reset Instructions");
+
+				// $this->email->set_mailtype("html");
+
+				// $message = $this->load->view('email/header.php', $data, TRUE);
+
+				// $message .= $this->load->view('email/emailreset.php', $data, TRUE);
+
+				// $message .= $this->load->view('email/footer.php', $data, TRUE);
+
+				// $this->email->message($message);
+
+				// $emailRes = $this->email->send();
 
 				if ($emailRes) {
 
