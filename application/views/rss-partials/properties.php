@@ -634,8 +634,8 @@ function startsWith($string, $prefix) {
 
                       foreach ($objects['Contents'] as $object) {
                         // check if an object in the S3 bucket is not a directory/folder.
-
-                        if (!startsWith($object['Key'], 'facilities/') && $count <= (count($objects['Contents']) - 2)) {
+                        if (strpos($object['Key'], 'uploads/properties/' . $value['imageFolder'] . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
+                        // if (!startsWith($object['Key'], $value['imageFolder'] . '/') && $count <= (count($objects['Contents']) - 2)) {
                         // if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
 
                           $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);

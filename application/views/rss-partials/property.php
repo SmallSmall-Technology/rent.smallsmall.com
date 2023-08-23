@@ -217,7 +217,7 @@ function shortenText($text, $maxLength)
 
                 // if ($object['Key'] !== '.' && $object['Key'] !== '..' ) {
 
-                  if (!startsWith($object['Key'], 'facilities/')) {
+                  if (strpos($object['Key'], 'uploads/properties/' . $imageFolder . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
 
                   $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
 
@@ -1297,7 +1297,7 @@ function shortenText($text, $maxLength)
 
                           // if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
 
-                            if (!startsWith($object['Key'], 'facilities/') && $count <= (count($objects['Contents']) - 2)) {
+                            if (strpos($object['Key'], 'uploads/properties/' . $imageFolder . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
 
                             $imageSrc = $object['Key'];
                             echo '
