@@ -210,7 +210,9 @@ function shortenText($text, $maxLength)
 
               foreach ($objects['Contents'] as $object) {
 
-                if ($object['Key'] !== '.' && $object['Key'] !== '..' ) {
+                // if ($object['Key'] !== '.' && $object['Key'] !== '..' ) {
+
+                  if (!$object['Size']) {
 
                   $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
 
@@ -1288,7 +1290,10 @@ function shortenText($text, $maxLength)
                         foreach ($objects['Contents'] as $object) {
                           // filter out the property images
 
-                          if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+                          // if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+
+                            if (!$object['Size'] && $count <= (count($objects['Contents']) - 2)) {
+
                             $imageSrc = $object['Key'];
                             echo '
                                                         <div class="carousel-item ' . $activeClass . '">
