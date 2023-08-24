@@ -339,7 +339,7 @@
           <div class="row">
             <div class="col-12">
               <h3 class="address-title"><?php echo $userdata['propertyTitle'] ?></h3>
-              <p><?php echo $userdata['address'] .','. $userdata['state_name']?></p>
+              <p><?php echo $userdata['address'] .' che'. $userdata['state_name']?></p>
             </div>
           </div>
           <div class="row my-5">
@@ -370,7 +370,7 @@
             </div>
             <div class="col-md-3 col-6 ">
               <p class="font-weight-light custom-font-size-14">Listed date</p>
-              <p class="custom-font-size-26">15 May, 2021<?php $date = strtotime($userdata['dateOfEntry']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date);  echo $day.' '.$month.', '.$year; ?></p>
+              <p class="custom-font-size-26"><?php $date = strtotime($userdata['dateOfEntry']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date);  echo $day.' '.$month.', '.$year; ?></p>
             </div>
           </div>
           <div class="row my-md-3">
