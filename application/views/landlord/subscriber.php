@@ -328,7 +328,7 @@
         <div class="p-md-5 p-4 primary-background">
           <div class="row">
 
-          $propty = array("1");
+          $propty = {};
 
           <?php foreach($usersdata as $propty => $value){ 
 
@@ -358,7 +358,7 @@
                 </div>
               </div>
             </div>
-            <?php array_push($propty, $value['proptyID']); } }?>
+            <?php array_push($propty, $value['propertyID']); } }?>
 
           </div>
 
