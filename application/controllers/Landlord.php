@@ -224,6 +224,8 @@ class Landlord extends CI_Controller {
 			
 			$data['count'] = $this->rss_model->get_counts($data['userID']);
 
+			$data['usersdata'] = $this->landlord_model->get_SubscriberInfo($data['userID']);
+
 			$data['fname'] = $this->session->userdata('fname');			
 
 			$data['lname'] = $this->session->userdata('lname');			

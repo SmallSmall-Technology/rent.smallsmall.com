@@ -107,4 +107,27 @@ class Landlord_model extends CI_Model
 		
 		return $query->row_array();
     }
+
+    public function get_SubscriberInfo($userID)
+    {
+        $this->db->select('a.status as transaction_status, a.transaction_date, c.*, d.userID as tenant_id, d.firstName, d.lastName, d.gender, e.name as state_name'); 
+		
+		$this->db->from('transaction_tbl as a');
+	    
+	    $this->db->where('c.property_owner', $userID);
+	    
+	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
+	    
+	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
+	    
+	    $this->db->join('user_tbl as d', 'd.userID = a.userID', 'LEFT OUTER');
+	    
+	    $this->db->join('states as e', 'e.id = c.state', 'LEFT OUTER');
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$query = $this->db->get();
+		
+		return $query;
+    }
 }

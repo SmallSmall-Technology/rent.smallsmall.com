@@ -328,6 +328,7 @@
         <div class="p-md-5 p-4 primary-background">
           <div class="row">
 
+          <?php foreach($usersdata as $propty => $value){ ?>
             <div class="col-md-4 col-12  mb-4">
               <div class="card default-background border-0">
                 <div class="card-body">
@@ -338,48 +339,21 @@
                         d="M27.2463 6.92371L18.4963 1.01871C16.3725 -0.413789 13.6275 -0.413789 11.5037 1.01871L2.75375 6.92371C1.02875 8.08871 0 10.025 0 12.1062V23.75C0 27.1962 2.80375 30 6.25 30H23.75C27.1963 30 30 27.1962 30 23.75V12.1062C30 10.0262 28.9713 8.08871 27.2463 6.92371ZM10 27.5C10 24.7425 12.2425 22.5 15 22.5C17.7575 22.5 20 24.7425 20 27.5H10ZM27.5 23.75C27.5 25.8175 25.8175 27.5 23.75 27.5H22.5C22.5 23.3637 19.1362 20 15 20C10.8638 20 7.5 23.3637 7.5 27.5H6.25C4.1825 27.5 2.5 25.8175 2.5 23.75V12.1062C2.5 10.8575 3.1175 9.69496 4.1525 8.99746L12.9025 3.09246C13.54 2.66246 14.27 2.44746 15 2.44746C15.73 2.44746 16.46 2.66246 17.0975 3.09246L25.8475 8.99746C26.8825 9.69621 27.5 10.8575 27.5 12.1062V23.75ZM15 8.74996C12.2425 8.74996 10 10.9925 10 13.75C10 16.5075 12.2425 18.75 15 18.75C17.7575 18.75 20 16.5075 20 13.75C20 10.9925 17.7575 8.74996 15 8.74996ZM15 16.25C13.6213 16.25 12.5 15.1287 12.5 13.75C12.5 12.3712 13.6213 11.25 15 11.25C16.3787 11.25 17.5 12.3712 17.5 13.75C17.5 15.1287 16.3787 16.25 15 16.25Z"
                         fill="#222224" />
                     </svg>
-                    <p class="custom-font-size-14 font-weight-light">January 2023</p>
+                    <p class="custom-font-size-14 font-weight-light"><?php $date = strtotime($value['transaction_date']); $year = date("Y", $date); $month = date("F", $date);  echo $month.' '.$year; ?></p>
                   </div>
                   <div class="mt-3">
-                    <P class="custom-font-size-18">Miss Tara Bello</P>
-                    <p class="custom-font-size-14">2 br Maisonette B2 Olivia Court Lekki</p>
+                    <P class="custom-font-size-18"><?php if($value['gender'] == 'Male'){ $mr = 'Mr'; echo $mr .' '.$value['firstName'].' '.$value['lastName'];} elseif($value['gender'] == 'female'){$mrs = 'Miss'; echo $mrs .' '.$value['firstName'].' '.$value['lastName'];} ?></P>
+                    <p class="custom-font-size-14"><?php echo $value['propertyTitle']; ?> </p>
 
                     <div class="mt-4">
-                      <a href="<?php echo base_url('landlord/subscriber_profile'); ?>" class="btn secondary-background px-5">View</a>
+                      <a href="<?php echo base_url('landlord/subscriber_profile/'.$value['tenant_id']); ?>" class="btn secondary-background px-5">View</a>
                     </div>
                   </div>
 
                 </div>
               </div>
             </div>
-
-            <div class="col-md-4 col-12  mb-4">
-              <div class="card default-background border-0">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between mb-2">
-                    <!-- <img class="img-fluid" src="../assets/images2/agreement2.svg" alt=""> -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-                      <path
-                        d="M27.2463 6.92371L18.4963 1.01871C16.3725 -0.413789 13.6275 -0.413789 11.5037 1.01871L2.75375 6.92371C1.02875 8.08871 0 10.025 0 12.1062V23.75C0 27.1962 2.80375 30 6.25 30H23.75C27.1963 30 30 27.1962 30 23.75V12.1062C30 10.0262 28.9713 8.08871 27.2463 6.92371ZM10 27.5C10 24.7425 12.2425 22.5 15 22.5C17.7575 22.5 20 24.7425 20 27.5H10ZM27.5 23.75C27.5 25.8175 25.8175 27.5 23.75 27.5H22.5C22.5 23.3637 19.1362 20 15 20C10.8638 20 7.5 23.3637 7.5 27.5H6.25C4.1825 27.5 2.5 25.8175 2.5 23.75V12.1062C2.5 10.8575 3.1175 9.69496 4.1525 8.99746L12.9025 3.09246C13.54 2.66246 14.27 2.44746 15 2.44746C15.73 2.44746 16.46 2.66246 17.0975 3.09246L25.8475 8.99746C26.8825 9.69621 27.5 10.8575 27.5 12.1062V23.75ZM15 8.74996C12.2425 8.74996 10 10.9925 10 13.75C10 16.5075 12.2425 18.75 15 18.75C17.7575 18.75 20 16.5075 20 13.75C20 10.9925 17.7575 8.74996 15 8.74996ZM15 16.25C13.6213 16.25 12.5 15.1287 12.5 13.75C12.5 12.3712 13.6213 11.25 15 11.25C16.3787 11.25 17.5 12.3712 17.5 13.75C17.5 15.1287 16.3787 16.25 15 16.25Z"
-                        fill="#222224" />
-                    </svg>
-                    <p class="custom-font-size-14 font-weight-light">Mar 2023</p>
-                  </div>
-                  <div class="mt-3">
-                    <p class="custom-font-size-18">Mr Ade John</p>
-                    <p class="custom-font-size-14">1 br Maisonette B2 Olivia Court Lekki</p>
-
-                    <div class="mt-4">
-                      <a href="<?php echo base_url('landlord/subscriber_profile'); ?>" class="btn secondary-background px-5">View</a>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-
-
+            <?php } ?>
 
 
           </div>
