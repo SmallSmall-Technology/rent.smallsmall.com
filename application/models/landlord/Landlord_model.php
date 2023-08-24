@@ -128,6 +128,6 @@ class Landlord_model extends CI_Model
 		
 		$query = $this->db->get();
 		
-		return $query;
+		return $query->result_array();
     }
 }
