@@ -116,13 +116,13 @@ class Landlord_model extends CI_Model
 	    
 	    $this->db->where('c.property_owner', $userID);
 	    
-	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
+	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id');
 	    
-	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
+	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID');
 	    
-	    $this->db->join('user_tbl as d', 'd.userID = a.userID', 'LEFT OUTER');
+	    $this->db->join('user_tbl as d', 'd.userID = a.userID');
 	    
-	    $this->db->join('states as e', 'e.id = c.state', 'LEFT OUTER');
+	    $this->db->join('states as e', 'e.id = c.state');
 		
 		$this->db->order_by('a.id', 'DESC');
 		
