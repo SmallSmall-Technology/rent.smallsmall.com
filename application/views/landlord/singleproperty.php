@@ -339,7 +339,7 @@
           <div class="row">
             <div class="col-12">
               <h3 class="address-title"><?php echo $userdata['propertyTitle'] ?></h3>
-              <p><?php echo $userdata['address'] .' che'. $userdata['state_name']?></p>
+              <p><?php echo $userdata['address'] .' '. $userdata['state_name']?></p>
             </div>
           </div>
           <div class="row my-5">
