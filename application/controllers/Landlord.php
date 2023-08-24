@@ -456,12 +456,14 @@ class Landlord extends CI_Controller {
 		}
     }
 
-	public function subscriber_profile()
+	public function subscriber_profile($id)
     {
         if($this->session->has_userdata('userID')){			
 
 			$data['userID'] = $this->session->userdata('userID');
 			
+			$data['userdata'] = $this->landlord_model->get_subscriberprofile($data['userID'], $id);
+
 			$data['count'] = $this->rss_model->get_counts($data['userID']);
 
 			$data['fname'] = $this->session->userdata('fname');			

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="../assets/css/bootstrap-css2/bootstrap.min.css"/>
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-css2/bootstrap.min.css"/>
 
   <!-- google fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,14 +19,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <link href="../assets/fontawesome/css/fontawesome.css" rel="stylesheet" />
-  <link href="../assets/fontawesome/css/brands.css" rel="stylesheet" />
-  <link href="../assets/fontawesome/css/solid.css" rel="stylesheet" />
+  <link href="<?php echo base_url(); ?>assets/fontawesome/css/fontawesome.css" rel="stylesheet" />
+  <link href="<?php echo base_url(); ?>assets/fontawesome/css/brands.css" rel="stylesheet" />
+  <link href="<?php echo base_url(); ?>assets/fontawesome/css/solid.css" rel="stylesheet" />
 
   <!-- custom CSS -->
-  <link rel="stylesheet" href="../assets/css/custom-css2/header.css" />
-  <link rel="stylesheet" href="../assets/css/custom-css2/footer.css" />
-  <link rel="stylesheet" href="../assets/css/custom-css2/booking.css" />
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom-css2/header.css" />
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom-css2/footer.css" />
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom-css2/booking.css" />
 
   <title>Subscriber | profile</title>
 </head>
@@ -36,7 +36,7 @@
     <!-- desktop menu bar -->
     <nav class="navbar navbar-expand-lg nav-bottom-color navbar-light primary-background px-4 py-0 d-lg-flex d-none">
       <a class="navbar-brand">
-        <img class="img-fluid" src="../assets/images2/rss-logo.svg" alt="logo" />
+        <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/rss-logo.svg" alt="logo" />
       </a>
       <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@
           <li class="nav-item d-flex align-items-center">
             <a class="nav-link p-0" href="#" tabindex="-1" aria-disabled="true">
               <div class="menu-logo mr-2">
-                <img class="img-fluid" src="../assets/images2/dashboard-icon.svg" alt="" />
+                <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/dashboard-icon.svg" alt="" />
               </div>
             </a>
           </li>
@@ -73,7 +73,7 @@
             <a class="nav-link p-0" href="<?php echo base_url('landlord/inbox'); ?>" tabindex="-1" aria-disabled="true">
               <div class="menu-logo mr-2 position-relative">
                 <div class="notification-circle d-md-flex d-none justify-content-center align-items-center">2</div>
-                <img class="img-fluid" src="../assets/images2/inbox-icon.svg" alt="" />
+                <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/inbox-icon.svg" alt="" />
               </div>
             </a>
           </li>
@@ -85,7 +85,7 @@
           <li class="nav-item d-flex align-items-center">
             <a class="nav-link p-0" href="#" tabindex="-1" aria-disabled="true">
               <div class="menu-logo mr-2">
-                <img class="img-fluid" src="../assets/images2/myProperty-icon.svg" alt="">
+                <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/myProperty-icon.svg" alt="">
               </div>
             </a>
           </li>
@@ -97,7 +97,7 @@
           <li class="nav-item d-flex align-items-center">
             <a class="nav-link p-0" href="wallet.html" tabindex="-1" aria-disabled="true">
               <div class="menu-logo mr-2">
-                <img class="img-fluid" src="../assets/images2/payout-icon.svg" alt="">
+                <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/payout-icon.svg" alt="">
               </div>
             </a>
           </li>
@@ -109,7 +109,7 @@
           <li class="nav-item d-flex align-items-center">
             <a class="nav-link p-0" href="#" tabindex="-1" aria-disabled="true">
               <div class="menu-logo mr-2">
-                <img class="img-fluid" src="../assets/images2/profile-icon.svg" alt="">
+                <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/profile-icon.svg" alt="">
               </div>
             </a>
           </li>
@@ -122,7 +122,7 @@
         <a href="#">
           <span class="navbar-text text-dark mr-5">
             Log out
-            <img class="img-fluid" src="../assets/images2/logout.svg" alt="" />
+            <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/logout.svg" alt="" />
           </span>
         </a>
       </div>
@@ -132,10 +132,10 @@
     <nav class="navbar d-flex menu-navbar-bg nav-mobile d-flex d-lg-none">
       <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav"
         aria-expanded="false" aria-label="Toggle navigation">
-        <img class="img-fluid" src="../assets/images2/menu-burger.svg" alt="">
+        <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/menu-burger.svg" alt="">
       </button>
       <a href="#" style="width: 33%" class="flex-grow-1 text-center">
-        <img class="img-fluid" src="../assets/images2/rss-logo.svg" alt="logo">
+        <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/rss-logo.svg" alt="logo">
       </a>
       <div class="d-flex user-container">
         <div class="user-shorthand d-flex justify-content-center align-items-center mr-2">
@@ -146,7 +146,7 @@
       </div>
       <div class="d-md-none d-block  nav-link text-dark dropdown-toggle dropdown-toggle--custom p-0"
         data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-        <img class="img-fluid" src="../assets/images2/user-mobile2.svg" alt="">
+        <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/user-mobile2.svg" alt="">
       </div>
 
 
@@ -155,7 +155,7 @@
         <div class=" menu-desktop py-2 px-4 d-flex flex-column">
           <a href="#">
             <span class="navbar-text text-dark mr-5">
-              <img class="img-fluid" src="../assets/images2/logout.svg" alt="">
+              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/logout.svg" alt="">
               Log out
             </span>
           </a>
@@ -173,7 +173,7 @@
         <div class="mb-4 pl-2">
           <p>
             <a href="<?php echo base_url('landlord/index'); ?>" class=" text-dark" style="text-decoration: none;">
-              <img class="img-fluid" src="../assets/images2/dashboard-icon.svg" alt="">
+              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/dashboard-icon.svg" alt="">
               &nbsp;&nbsp; Dashboard
             </a>
           </p>
@@ -182,7 +182,7 @@
         <div class="mb-4 pl-2">
           <p>
             <a href="<?php echo base_url('landlord/inbox'); ?>" class=" text-dark" style="text-decoration: none;">
-              <img class="img-fluid" src="../assets/images2/inbox-icon.svg" alt="">
+              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/inbox-icon.svg" alt="">
               &nbsp;&nbsp; Notification
             </a>
           </p>
@@ -191,7 +191,7 @@
         <div class="mb-4 pl-2 dashboard-active">
           <p>
             <a href="<?php echo base_url('landlord/property'); ?>" class=" text-dark" style="text-decoration: none;">
-              <img class="img-fluid" src="../assets/images2/myProperty-icon.svg" alt="">
+              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/myProperty-icon.svg" alt="">
               &nbsp;&nbsp; MyProperty
             </a>
         </div>
@@ -199,7 +199,7 @@
         <div class="mb-4 pl-2">
           <p>
             <a href="<?php echo base_url('landlord/wallet'); ?>" class=" text-dark" style="text-decoration: none;">
-              <img class="img-fluid" src="../assets/images2/payout-icon.svg" alt="">
+              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/payout-icon.svg" alt="">
               &nbsp;&nbsp; Payout
             </a>
           </p>
@@ -208,7 +208,7 @@
         <div class="mb-4 pl-2">
           <p>
             <a href="<?php echo base_url('landlord/profile'); ?>" class=" text-dark" style="text-decoration: none;">
-              <img class="img-fluid" src="../assets/images2/profile-icon.svg" alt="">
+              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/profile-icon.svg" alt="">
               &nbsp;&nbsp; Profile
             </a>
           </p>
@@ -325,19 +325,19 @@
               <div class="row">
                 <div class="col-12">
                   <p>Subscriber name</p>
-                  <h3 class="address-title">Tara Bello</h3>
+                  <h3 class="address-title"><?php echo $userdata['firstName'] .' '. $userdata['lastName']?></h3>
                 </div>
               </div>
               <div class="row my-5">
                 <div class="col-12">
                   <p class="font-weight-light custom-font-size-14">Property</p>
-                  <p class="custom-font-size-26">2 br Maisonette B2 Olivia Court Lekki</p>
+                  <p class="custom-font-size-26"><?php echo $userdata['propertyTitle'];?></p>
                 </div>
                 </div>
                 <div class="row my-5">
                 <div class="col-md-2 col-6 mb-3">
-                  <p class="font-weight-light custom-font-size-14">Genger</p>
-                  <p class="custom-font-size-26">Female</p>
+                  <p class="font-weight-light custom-font-size-14">Gender</p>
+                  <p class="custom-font-size-26"><?php echo $userdata['gender'];?></p>
                 </div>
                 <div class="col-md-2 col-6 mb-3">
                   <p class="font-weight-light">Marital status</p>
@@ -383,12 +383,12 @@
   </footer>
 
   <!-- Jquery js -->
-  <script src="../assets/js/jquery.min.js"
+  <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"
     crossorigin="anonymous"></script>
   <!-- Bootstrap js and Popper js -->
-  <script src="../assets/js/popper.min.js"
+  <script src="<?php echo base_url(); ?>assets/js/popper.min.js"
     crossorigin="anonymous"></script>
-  <script src="../assets/js/bootstrap-js/bootstrap.min.js"
+  <script src="<?php echo base_url(); ?>assets/js/bootstrap-js/bootstrap.min.js"
     crossorigin="anonymous"></script>
 
   <script>

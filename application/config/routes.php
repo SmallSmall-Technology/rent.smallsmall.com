@@ -288,7 +288,7 @@ $route['user/feedback'] = 'rss/feedback';
 
 /** Landlord routes*/
 $route['landlord/single-property/(:any)'] = 'landlord/single_property/$1';
-
+$route['landlord/subscriber_profile/(:any)'] = 'landlord/subscriber_profile/$1';
 
 
 /**RSS Frontend Landlord profile Routes Starts Here ***/
