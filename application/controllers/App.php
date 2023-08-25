@@ -357,7 +357,7 @@ class App extends CI_Controller
 			'version' => 'latest',
 
 			'region' => 'eu-west-1'
-			
+
 		]);
 
 
@@ -540,7 +540,7 @@ class App extends CI_Controller
 
 			foreach ($objects['Contents'] as $object) {
 
-				if (strpos($object['Key'], 'uploads/properties/' . $value['imageFolder'] . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
+				if (strpos($object['Key'], 'uploads/properties/' . $data['property']['imageFolder'] . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
 
 					// if ($fileName !== '.' && $fileName !== '..') {
 					$data['images'][] = basename($object['Key']);
