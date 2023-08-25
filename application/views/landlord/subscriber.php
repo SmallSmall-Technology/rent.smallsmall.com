@@ -328,11 +328,11 @@
         <div class="p-md-5 p-4 primary-background">
           <div class="row">
 
-         <?php $propty = []; ?>
+         <?php $property = []; ?>
 
           <?php foreach($usersdata as $propty => $value){ 
 
-            if (in_array($value['propertyID'], $propty)){}
+            if (in_array($value['propertyID'], $property)){}
             else{ ?>
             <div class="col-md-4 col-12  mb-4">
               <div class="card default-background border-0">
@@ -358,7 +358,7 @@
                 </div>
               </div>
             </div>
-            <?php array_push($propty, $value['propertyID']); } }?>
+            <?php array_push($property, $value['propertyID']); } }?>
 
           </div>
 
