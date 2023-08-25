@@ -350,16 +350,15 @@ class App extends CI_Controller
 	{
 
 		// Include AWS SDK and create S3 client
-		require 'vendor/autoload.php';
+		// require 'vendor/autoload.php';
 
-		$s3 = new Aws\S3\S3Client([
+		// $s3 = new Aws\S3\S3Client([
 
-			'version' => 'latest',
+		// 	'version' => 'latest',
 
-			'region' => 'eu-west-1'
+		// 	'region' => 'eu-west-1'
 
-		]);
-
+		// ]);
 
 		$result = FALSE;
 
@@ -434,7 +433,6 @@ class App extends CI_Controller
 
 		$data['property']['serviceCharge'] = "$serviceCharge";
 
-
 		$data['property']['renting_as'] = array();
 
 		$data['property']['amenities'] = array();
@@ -479,76 +477,76 @@ class App extends CI_Controller
 
 		$data['property']['propertyDescription'] = preg_replace("/\r|\n|\t|&nbsp;/", "", $formatted_txt);
 
-		// $dir = './uploads/properties/' . $data['property']['imageFolder'] . '/';
+		$dir = './uploads/properties/' . $data['property']['imageFolder'] . '/';
 
-		// if (file_exists($dir) == false) {
+		if (file_exists($dir) == false) {
 
-		// 	$result = TRUE;
-
-		// 	$details = "Image folder does not exist";
-		// } else {
-
-		// 	$dir_contents = scandir($dir);
-
-		// 	$count = 0;
-
-		// 	$content_size = count($dir_contents);
-
-		// 	$data['images'] = array();
-
-		// 	foreach ($dir_contents as $file) {
-
-		// 		if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
-
-		// 			array_push($data['images'], $file);
-		// 		}
-
-		// 		$count++;
-		// 	}
-		// }
-
-		// Using S3
-
-		//S3 Integration
-
-		$bucket = 'rss-prod-uploads'; // My bucket name
-
-		$objectPrefix = 'uploads/properties/' . $data['property']['imageFolder'] . '/'; // Adjust the prefix to match your S3 structure
-
-		$objects = $s3->listObjects([
-
-			'Bucket' => $bucket,
-
-			'Prefix' => $objectPrefix,
-
-		]);
-
-		if (count($objects['Contents']) === 0) {
-
-			$result = true;
+			$result = TRUE;
 
 			$details = "Image folder does not exist";
 		} else {
 
-			// List the contents of the image folder on S3
-
-			$content_size = count($objects['Contents']);
+			$dir_contents = scandir($dir);
 
 			$count = 0;
 
-			$data['images'] = [];
+			$content_size = count($dir_contents);
 
-			foreach ($objects['Contents'] as $object) {
+			$data['images'] = array();
 
-				if (strpos($object['Key'], 'uploads/properties/' . $data['property']['imageFolder'] . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
+			foreach ($dir_contents as $file) {
 
-					// if ($fileName !== '.' && $fileName !== '..') {
-					$data['images'][] = basename($object['Key']);
+				if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
+
+					array_push($data['images'], $file);
 				}
 
 				$count++;
 			}
 		}
+
+		// Using S3
+
+		//S3 Integration
+
+		// $bucket = 'rss-prod-uploads'; // My bucket name
+
+		// $objectPrefix = 'uploads/properties/' . $data['property']['imageFolder'] . '/'; // Adjust the prefix to match your S3 structure
+
+		// $objects = $s3->listObjects([
+
+		// 	'Bucket' => $bucket,
+
+		// 	'Prefix' => $objectPrefix,
+
+		// ]);
+
+		// if (count($objects['Contents']) === 0) {
+
+		// 	$result = true;
+
+		// 	$details = "Image folder does not exist";
+		// } else {
+
+		// 	// List the contents of the image folder on S3
+
+		// 	$content_size = count($objects['Contents']);
+
+		// 	$count = 0;
+
+		// 	$data['images'] = [];
+
+		// 	foreach ($objects['Contents'] as $object) {
+
+		// 		if (strpos($object['Key'], 'uploads/properties/' . $data['property']['imageFolder'] . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
+
+		// 			// if ($fileName !== '.' && $fileName !== '..') {
+		// 			$data['images'][] = basename($object['Key']);
+		// 		}
+
+		// 		$count++;
+		// 	}
+		// }
 
 		// End of S3
 
