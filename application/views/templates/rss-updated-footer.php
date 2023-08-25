@@ -72,7 +72,8 @@
                       <a class="nav-link pl-0 text-white" href="<?php echo base_url('blog'); ?>">Blogs</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link pl-0 text-white" href="<?php echo base_url('careers'); ?>">
+                      <!-- <a class="nav-link pl-0 text-white" href="<?php echo base_url('careers'); ?>"> -->
+                      <a class="nav-link pl-0 text-white" href="https://jobs.cvviz.com/smallsmall_">
                         Careers
                       </a>
                     </li>
