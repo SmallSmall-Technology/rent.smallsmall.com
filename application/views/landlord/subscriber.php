@@ -328,7 +328,7 @@
         <div class="p-md-5 p-4 primary-background">
           <div class="row">
 
-          $propty = {};
+         <?php $propty = []; ?>
 
           <?php foreach($usersdata as $propty => $value){ 
 
