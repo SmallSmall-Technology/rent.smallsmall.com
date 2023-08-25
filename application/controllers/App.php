@@ -349,6 +349,18 @@ class App extends CI_Controller
 	public function property()
 	{
 
+		// Include AWS SDK and create S3 client
+		require 'vendor/autoload.php';
+
+		$s3 = new Aws\S3\S3Client([
+
+			'version' => 'latest',
+
+			'region' => 'eu-west-1'
+			
+		]);
+
+
 		$result = FALSE;
 
 		$details = '';
@@ -462,37 +474,83 @@ class App extends CI_Controller
 				array_push($data['property']['intervals'], $unserialized_intervals[$i]);
 			}
 		}
+
 		$formatted_txt = preg_replace("/<\/?(div|b|span|br|ul|li|p|strong)[^>]*\>/i", " ", html_entity_decode($data['property']['propertyDescription']));
 
 		$data['property']['propertyDescription'] = preg_replace("/\r|\n|\t|&nbsp;/", "", $formatted_txt);
 
-		$dir = './uploads/properties/' . $data['property']['imageFolder'] . '/';
+		// $dir = './uploads/properties/' . $data['property']['imageFolder'] . '/';
 
-		if (file_exists($dir) == false) {
+		// if (file_exists($dir) == false) {
 
-			$result = TRUE;
+		// 	$result = TRUE;
+
+		// 	$details = "Image folder does not exist";
+		// } else {
+
+		// 	$dir_contents = scandir($dir);
+
+		// 	$count = 0;
+
+		// 	$content_size = count($dir_contents);
+
+		// 	$data['images'] = array();
+
+		// 	foreach ($dir_contents as $file) {
+
+		// 		if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
+
+		// 			array_push($data['images'], $file);
+		// 		}
+
+		// 		$count++;
+		// 	}
+		// }
+
+		// Using S3
+
+		//S3 Integration
+
+		$bucket = 'rss-prod-uploads'; // My bucket name
+
+		$objectPrefix = 'uploads/properties/' . $data['property']['imageFolder'] . '/'; // Adjust the prefix to match your S3 structure
+
+		$objects = $s3->listObjects([
+
+			'Bucket' => $bucket,
+
+			'Prefix' => $objectPrefix,
+
+		]);
+
+		if (count($objects['Contents']) === 0) {
+
+			$result = true;
 
 			$details = "Image folder does not exist";
 		} else {
 
-			$dir_contents = scandir($dir);
+			// List the contents of the image folder on S3
+
+			$content_size = count($objects['Contents']);
 
 			$count = 0;
 
-			$content_size = count($dir_contents);
+			$data['images'] = [];
 
-			$data['images'] = array();
+			foreach ($objects['Contents'] as $object) {
 
-			foreach ($dir_contents as $file) {
+				if (strpos($object['Key'], 'uploads/properties/' . $value['imageFolder'] . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
 
-				if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
-
-					array_push($data['images'], $file);
+					// if ($fileName !== '.' && $fileName !== '..') {
+					$data['images'][] = basename($object['Key']);
 				}
 
 				$count++;
 			}
 		}
+
+		// End of S3
 
 		if (!empty($data)) {
 
@@ -1734,14 +1792,14 @@ class App extends CI_Controller
 		$data = array();
 
 		// // Load Treblle configuration
-        // $treblle = TreblleFactory::create('aQzx6RjUyy2AMBZnwLNKZ1yOvBFZB6CF', 'PjPYQOh9vStbnLYW');
+		// $treblle = TreblleFactory::create('aQzx6RjUyy2AMBZnwLNKZ1yOvBFZB6CF', 'PjPYQOh9vStbnLYW');
 
 		// Load Treblle configuration
-        $treblle = TreblleFactory::create(
-            'aQzx6RjUyy2AMBZnwLNKZ1yOvBFZB6CF',
-            'PjPYQOh9vStbnLYW',
-            false // Debug mode
-        );
+		$treblle = TreblleFactory::create(
+			'aQzx6RjUyy2AMBZnwLNKZ1yOvBFZB6CF',
+			'PjPYQOh9vStbnLYW',
+			false // Debug mode
+		);
 
 		$key = $this->getKey();
 
@@ -1767,17 +1825,17 @@ class App extends CI_Controller
 			} catch (Exception $ex) {
 
 				// // Log exception to Treblle
-                // $treblle->logException($ex);
-                // $details = "Exception error caught: " . $ex->getMessage();
+				// $treblle->logException($ex);
+				// $details = "Exception error caught: " . $ex->getMessage();
 
 				// // $details = "Exception error caught: " . $ex->getMessage();
 
 				// Log exception to Treblle and capture the response
-                $treblleResponse = $treblle->logException($ex);
-                $details = "Exception error caught: " . $ex->getMessage();
+				$treblleResponse = $treblle->logException($ex);
+				$details = "Exception error caught: " . $ex->getMessage();
 
-                // Echo response to Treblle
-                echo json_encode($treblleResponse);
+				// Echo response to Treblle
+				echo json_encode($treblleResponse);
 			}
 		} else {
 
@@ -2370,7 +2428,7 @@ class App extends CI_Controller
 	//     echo json_encode(array("result" => TRUE, "details" => $details, "data" => $data));
 
 	// }
-	
+
 
 
 	public function subscription_history()
@@ -3620,47 +3678,46 @@ class App extends CI_Controller
 		// Get $key variable
 		$key = $this->getKey();
 
-		 try {
+		try {
 
-		// Directly get the JSON data from the request body
-		$json = file_get_contents('php://input');
+			// Directly get the JSON data from the request body
+			$json = file_get_contents('php://input');
 
-		$json_data = json_decode($json);
+			$json_data = json_decode($json);
 
-		// Check if userID is present in the query parameters. I'm doing this because of the Authentication issues with AWS server which is taken too long pending the time I get solution
-		if (isset($_GET['userID'])) {
+			// Check if userID is present in the query parameters. I'm doing this because of the Authentication issues with AWS server which is taken too long pending the time I get solution
+			if (isset($_GET['userID'])) {
 
-			$userID = $_GET['userID'];
+				$userID = $_GET['userID'];
 
-			// Fetch user notifications based on the userID
-			$data = $this->app_model->get_all_user_notifications($userID);
+				// Fetch user notifications based on the userID
+				$data = $this->app_model->get_all_user_notifications($userID);
 
-			if (!empty($data)) {
+				if (!empty($data)) {
 
-				$result = TRUE;
+					$result = TRUE;
 
-				$details = 'Success';
+					$details = 'Success';
+				} else {
+
+					$result = TRUE;
+
+					$details = "Profile does not exist";
+				}
 			} else {
 
-				$result = TRUE;
-
-				$details = "Profile does not exist";
+				$details = "Invalid query parameters. Missing userID";
 			}
-		} else {
+		} catch (Exception $ex) {
+			// Log exception to Treblle with the final response data
+			$treblle->logException($ex, array(
+				'result' => $result,
+				'details' => $details,
+				'data' => $data
+			));
 
-			$details = "Invalid query parameters. Missing userID";
+			$details = "Exception error caught: " . $ex->getMessage();
 		}
-
-	} catch (Exception $ex) {
-        // Log exception to Treblle with the final response data
-        $treblle->logException($ex, array(
-            'result' => $result,
-            'details' => $details,
-            'data' => $data
-        ));
-
-        $details = "Exception error caught: " . $ex->getMessage();
-    }
 
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
