@@ -350,7 +350,8 @@ class App extends CI_Controller
 	{
 
 		// Include AWS SDK and create S3 client
-		// require 'vendor/autoload.php';
+
+		require 'vendor/autoload.php';
 
 		$s3 = new Aws\S3\S3Client([
 
@@ -569,6 +570,17 @@ class App extends CI_Controller
 	public function get_all_images()
 	{
 
+		require 'vendor/autoload.php';
+
+		$s3 = new Aws\S3\S3Client([
+
+			'version' => 'latest',
+
+			'region' => 'eu-west-1'
+
+		]);
+
+
 		$imageFolder = '0a19697e01e81a9dc83cfdc4387443a8';
 
 		$result = FALSE;
@@ -577,26 +589,65 @@ class App extends CI_Controller
 
 		$data = array();
 
-		$dir = './uploads/properties/' . $imageFolder . '/';
+		// $dir = './uploads/properties/' . $imageFolder . '/';
 
-		if (file_exists($dir) == false) {
+		// if (file_exists($dir) == false) {
 
-			$result = TRUE;
+		// 	$result = TRUE;
+
+		// 	$details = "Image folder does not exist";
+		// } else {
+
+		// 	$dir_contents = scandir($dir);
+
+		// 	$count = 0;
+
+		// 	$content_size = count($dir_contents);
+
+		// 	foreach ($dir_contents as $file) {
+
+		// 		if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
+
+		// 			array_push($data, $file);
+		// 		}
+
+		// 		$count++;
+		// 	}
+		// }
+
+		$bucket = 'rss-prod-uploads'; // My bucket name
+
+		$objectPrefix = 'uploads/properties/' . $imageFolder . '/'; // Adjust the prefix to match your S3 structure
+
+		$objects = $s3->listObjects([
+
+			'Bucket' => $bucket,
+
+			'Prefix' => $objectPrefix,
+
+		]);
+
+		if (count($objects['Contents']) == false) {
+
+			$result = true;
 
 			$details = "Image folder does not exist";
+
 		} else {
 
-			$dir_contents = scandir($dir);
+			// List the contents of the image folder on S3
+
+			$content_size = count($objects['Contents']);
 
 			$count = 0;
 
-			$content_size = count($dir_contents);
+			$data = [];
 
-			foreach ($dir_contents as $file) {
+			foreach ($objects['Contents'] as $object) {
 
-				if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
+				if (strpos($object['Key'], 'uploads/properties/' . $imageFolder . '/facilities/') !== 0) {
 
-					array_push($data, $file);
+					$data = $s3->getObjectUrl($bucket, $object['Key']);
 				}
 
 				$count++;
