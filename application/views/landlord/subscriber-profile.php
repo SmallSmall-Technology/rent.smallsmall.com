@@ -341,25 +341,25 @@
                 </div>
                 <div class="col-md-2 col-6 mb-3">
                   <p class="font-weight-light">Marital status</p>
-                  <p class="custom-font-size-26">Single</p>
+                  <p class="custom-font-size-26"><?php echo $userdata['marital_status'];?></p>
                 </div>
                 <div class="col-md-2 col-6 mb-3">
                   <p class="font-weight-light custom-font-size-14">Occupation</p>
-                  <p class="custom-font-size-26">Doctor</p>
+                  <p class="custom-font-size-26"><?php echo $userdata['occupation'];?></p>
                 </div>
                 <div class="col-md-3 col-6 mb-3">
                   <p class="font-weight-light custom-font-size-14">DOB</p>
-                  <p class="custom-font-size-26">15 May, 1993</p>
+                  <p class="custom-font-size-26"><?php $date = strtotime($userdata['dob']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?></p>
                 </div>
                 <div class="col-md-3 col-12 mb-3">
                   <p class="font-weight-light custom-font-size-14">Contract start / Move-in date</p>
-                  <p class="custom-font-size-26">15 May, 2023</p>
+                  <p class="custom-font-size-26"><?php $date = strtotime($userdata['moveInDate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?></p>
                 </div>
                 </div>
                 <div class="row my-md-3">
                 <div class="col-12">
                   <p class="font-weight-light custom-font-size-14">Company</p>
-                  <p class="custom-font-size-26">Evercare Hospital Lekki, Lagos</p>
+                  <p class="custom-font-size-26"><?php echo $userdata['company_name'];?></p>
                 </div>
                 </div>
             </div>

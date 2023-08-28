@@ -133,7 +133,7 @@ class Landlord_model extends CI_Model
 
     public function get_subscriberprofile($landlordID, $userID)
     {
-        $this->db->select('a.status as transaction_status, b.move_in_date as moveInDate, a.transaction_date, c.*, d.userID as tenant_id, d.*, e.name as state_name'); 
+        $this->db->select('a.status as transaction_status, b.move_in_date as moveInDate, a.transaction_date, c.*, d.userID as tenant_id, d.*, e.name as state_name, f.*'); 
 		
 		$this->db->from('transaction_tbl as a');
 	    
@@ -146,6 +146,8 @@ class Landlord_model extends CI_Model
 	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID');
 	    
 	    $this->db->join('user_tbl as d', 'd.userID = a.userID');
+
+        $this->db->join('verifications as f', 'f.user_id = a.userID');
 	    
 	    $this->db->join('states as e', 'e.id = c.state');
 		
