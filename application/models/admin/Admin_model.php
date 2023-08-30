@@ -45,6 +45,45 @@ class Admin_model extends CI_Model {
 
 	}
 	
+
+	public function searchPropty($id){
+		
+		$this->db->select("*");
+		
+		$this->db->from("property_tbl");
+		
+		$this->db->like('propertyTitle', $id);
+		
+		$query = $this->db->get();
+		
+		return $query;
+		
+	}
+
+	public function insertCxrepairs($type, $cost, $date, $property, $status){
+		
+		$this->repair_type = $type; // please read the below note
+
+		$this->cost = $cost;
+
+		$this->Date = $date; // please read the below note
+
+		$this->propertyId = $property;
+
+		$this->status = $status; 
+
+		if($this->db->insert('cx_repairs', $this)){
+
+			return 1;
+
+		}else{
+
+			return 0;
+
+		}	
+		
+	}
+
 	public function getSearchCount($s_data) {
 
 

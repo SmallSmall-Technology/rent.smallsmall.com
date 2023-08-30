@@ -360,6 +360,41 @@ class Admin extends CI_Controller
 		}
 	}
 
+
+	public function addRepairs()
+	{
+
+		if (!file_exists(APPPATH . 'views/admin/pages/add-admin.php')) {
+
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
+
+		//check if Admin is logged in
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['title'] = "Add Admin :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/add-repairs.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
 	public function add_news()
 	{
 
@@ -835,6 +870,20 @@ class Admin extends CI_Controller
 
 	}
 
+	public function proptySearch(){
+	    
+	    $value =  $this->input->post("input");
+
+		$data = $this->admin_model->searchPropty($value);
+
+		foreach ($data->result() as $row) 
+        {
+            // echo "<li  id='getVal-$row->propertyID-$row->propertyTitle' class='checkagr' onclick= >$row->propertyTitle</li>";
+
+			echo "<li id = '$row->propertyID' class = '$row->propertyTitle' onClick= getsVal($row->propertyID) >$row->propertyTitle</li>";	
+		}
+	}
+
 
 	public function edit_upload()
 	{
@@ -1199,7 +1248,7 @@ class Admin extends CI_Controller
 		}
 
 		//check if Admin is logged in
-		if ($this->session->has_userdata('adminLoggedIn')) {
+		//if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
@@ -1218,10 +1267,10 @@ class Admin extends CI_Controller
 			$this->load->view('admin/templates/footer.php', $data);
 
 			$this->load->view('admin/templates/payment-modal.php', $data);
-		} else {
+		// } else {
 
-			redirect(base_url() . 'admin/login', 'refresh');
-		}
+		// 	redirect(base_url() . 'admin/login', 'refresh');
+		// }
 	}
 
 	public function get_ver_property($id)
@@ -2751,6 +2800,32 @@ class Admin extends CI_Controller
 	}
 
 
+	public function add_repairs()
+	{
+		$type = $this->input->post('type');
+
+		$cost = $this->input->post('cost');
+
+		$date = $this->input->post('date');
+
+		$property = $this->input->post('property');
+
+		$status = $this->input->post('status');
+
+		$res = $this->landlord_model->insertCxrepairs($type, $cost, $date, $property, $status);
+
+		if ($res) {
+
+			// Assuming you're using CodeIgniter, use the URL helper to create URLs
+		$user_profile_url = site_url('admin/addRepairs/');
+
+		// Redirect to user profile with a success message
+		echo "<script>
+				alert('Upload Successful');
+				window.location.href='$user_profile_url';
+			</script>";
+		}
+	}
 
 	public function getDistance()
 	{

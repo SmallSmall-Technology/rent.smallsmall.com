@@ -527,4 +527,31 @@ class Landlord extends CI_Controller {
 
 		echo $notificationID; // Return a response to the AJAX call
 	}
+
+	public function add_repairs()
+	{
+		$type = $this->input->post('repair_type');
+
+		$cost = $this->input->post('cost');
+
+		$date = $this->input->post('repair_date');
+
+		$property = $this->input->post('sub-propty');
+
+		$status = $this->input->post('repair_status');
+
+		$res = $this->landlord_model->insertCxrepairs($type, $cost, $date, $property, $status);
+
+		if ($res) {
+
+			// Assuming you're using CodeIgniter, use the URL helper to create URLs
+		$user_profile_url = site_url('admin/addRepairs/');
+
+		// Redirect to user profile with a success message
+		echo "<script>
+				alert('Upload Successful');
+				window.location.href='$user_profile_url';
+			</script>";
+		}
+	}
 }

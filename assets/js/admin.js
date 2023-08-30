@@ -5,6 +5,8 @@ $(window).on('load', function(){
 
 	var baseUrl = "https://dev-rent.smallsmall.com/";
 
+	//var baseUrl = "http://localhost/devrent.smallsmall.com/";
+
 	var distance = "";
 
 	var theCat = "";
@@ -146,14 +148,15 @@ $(window).on('load', function(){
 		{
 			$.ajax({
 
-				url: baseUrl + "admin/proptySearch",
+				url: baseUrl + "admin/proptySearch/",
 				type: "POST",
 				data: {input:input},
 	
 				success: function (data) {
 					
+					$("#searchresult").css("display", "block");
 					$("#searchresult").html(data);
-					
+
 				}
 	
 			});
@@ -161,9 +164,10 @@ $(window).on('load', function(){
 
 		else
 		{
-			$("searchresult").css("display", "none");
+			$("#searchresult").css("display", "none");
 		}
 	});
+
 
 
 	$(document).on('click', '.lock-transaction', function(){
@@ -429,7 +433,96 @@ $(window).on('load', function(){
 
 		});
 
-	});	
+	});
+	
+	$('#adminRepairForm').submit(function(e){
+
+	    e.preventDefault();
+
+		$("#add-admin-but").html("Sending...");
+
+	    var type = $('#repair_type').val();
+
+	    var cost = $('#cost').val();
+
+	    var date = $('#repair_date').val();
+
+		var property = $('#sub-propty').val();
+
+	    var status = $('#repair_status').val();
+
+	    var filteredList = $('.verify-txt').filter(function(){
+
+			return $(this).val() == "";
+
+		});
+
+		if(filteredList.length > 0){
+
+			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
+
+
+
+			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			
+			$("#add-admin-but").html("Submit");
+
+			return false;
+
+		}
+
+		var data = {
+
+			'type' : type,
+
+			'cost' : cost,
+
+			'date' : date,
+
+			'property' : property,
+
+			'status' : status
+		};
+
+		$.ajaxSetup ({ cache: false });
+
+		$.ajax({
+
+			url: baseUrl+"admin/add_repairs/",
+
+			type: "POST",
+
+			async: true,
+
+			data: data,
+
+			dataType : 'json', 
+
+			success	: function (data){			
+
+				if(data.status == 'error'){					
+
+					alert("Upload error: "+data.msg);
+					
+					$("#add-admin-but").html("Submit");
+
+					return false;					
+
+				}else if(data.status == 'success'){				    
+
+				    alert("Repair Successfully Added!");
+				    
+				    $("#add-admin-but").html("Submit");
+
+				    $(".verify-txt").val("");			    
+
+				}			
+
+			}
+
+		});
+
+	});
 	
 	$('#landlordForm').submit(function(e){
 
@@ -6284,3 +6377,16 @@ $(document). on('click', '.close-int', function(){
 
 	});
 });
+
+function getsVal(id)
+{
+	let inputId = document.getElementById("sub-propty");
+	
+	let inputTitle = document.getElementById("live_search")
+
+	var conT = document.getElementById(id).className;
+	inputId.value = id;
+	inputTitle.value = conT;
+
+	$("#searchresult").css("display", "none");
+}

@@ -157,4 +157,26 @@ class Landlord_model extends CI_Model
 		
 		return $query->row_array();
     }
+
+    public function insertCxrepairs($type, $cost, $date, $property, $status){
+
+        $data = array(
+            'repair_type' => $type,
+            'cost'   => $cost,
+            'Date' => $date,
+            'propertyId' => $property,
+            'status' => $status
+        );
+
+		if($this->db->insert('cx_repairs', $data)){
+
+			return 1;
+
+		}else{
+
+			return 0;
+
+		}	
+		
+	}
 } 

@@ -406,7 +406,7 @@
                                     </clipPath>
                                   </defs>
                                 </svg>
-                                <p class="custom-font-size-14 font-weight-light">'.$month.' '.$day.', '.$year.';</p>
+                                <p class="custom-font-size-14 font-weight-light">'.$month.' '.$day.', '.$year.'</p>
                               </div>
                               <div class="mt-3">
                                 <p class="card-text" style="font-size: 18px; font-weight: 500;">'.$row->repair_category.'</p>

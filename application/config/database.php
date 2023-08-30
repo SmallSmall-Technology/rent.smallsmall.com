@@ -73,6 +73,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+// dev database connection
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
@@ -119,6 +120,7 @@ $db['second'] = array(
 );
 
 
+//localhost db connection
 // $db['default'] = array(
 // 	'dsn'	=> '',
 // 	// 'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
