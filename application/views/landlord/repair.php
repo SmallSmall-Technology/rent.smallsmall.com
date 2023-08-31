@@ -446,7 +446,7 @@
                 </thead>
                 <tbody>
 
-                <?php foreach($history as $propty => $value){ ?>
+                <?php foreach($history as $histry => $value){ ?>
                   <tr>
                     <td><?php echo  $value['propertyTitle']?></td>
                     <td><?php echo  $value['repair_type']?></td>
