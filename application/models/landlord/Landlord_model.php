@@ -54,7 +54,7 @@ class Landlord_model extends CI_Model
 
     public function get_history($userId)
     {
-        $this->db->select('a.*');
+        $this->db->select('a.*, b.*');
 
         $this->db->from('property_tbl as a');
 
