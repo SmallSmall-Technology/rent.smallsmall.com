@@ -345,6 +345,8 @@ class Landlord extends CI_Controller {
         if($this->session->has_userdata('userID')){			
 
 			$data['userID'] = $this->session->userdata('userID');
+
+			$data['sub_dats'] = $this->landlord_model->checkSub($data['userID']);
 			
 			$data['count'] = $this->rss_model->get_counts($data['userID']);
 

@@ -67,6 +67,25 @@ class Landlord_model extends CI_Model
         return $query->result_array();
     }
 
+    public function checkSub($id)
+	{
+	    //$ids = $this->session->userdata('userID');
+		
+		$this->db->select('a.id, a.start_year, a.filename, a.end_year, b.propertyTitle');
+		
+		$this->db->from('sub_agreement as a');
+		
+		$this->db->join('property_tbl as b', 'a.property = b.propertyID', 'LEFT OUTER');
+		
+		$this->db->where('a.userId', $id);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$query = $this->db->get();
+	    
+	    return $query->result_array();
+	}
+
 
     public function get_subscriber($propId)
     {

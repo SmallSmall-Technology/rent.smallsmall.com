@@ -325,6 +325,7 @@
           <p>Repository of your property agreement with RentSmallsmall</p>
           <div class="row mt-4">
 
+          <?php foreach($sub_dats as $sub_data => $value){?>
             <div class="col-md-4 col-12  mb-4">
               <div class="card default-background border-0">
                 <div class="card-body pb-5">
@@ -341,13 +342,13 @@
                         d="M33.1436 5.72852C33.1436 5.72852 17.1499 5.73685 17.1249 5.73685C11.3749 5.77227 7.81445 9.5556 7.81445 15.3264V34.4848C7.81445 40.2848 11.402 44.0827 17.202 44.0827C17.202 44.0827 33.1936 44.0764 33.2207 44.0764C38.9707 44.041 42.5332 40.2556 42.5332 34.4848V15.3264C42.5332 9.52643 38.9436 5.72852 33.1436 5.72852Z"
                         stroke="#222224" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    <p class="custom-font-size-14 font-weight-light">2022 - 2023</p>
+                    <p class="custom-font-size-14 font-weight-light"><?php echo $value['start_year']; ?>-<?php echo $value['end_year']; ?></p>
                   </div>
                   <div class="mt-3">
-                    <p class="card-text">Premium furnished 2 br Maisonette B2 Olivia Court Lekki</p>
+                    <p class="card-text"><?php echo $value['propertyTitle']; ?></p>
 
                     <div class="mt-3">
-                      <a href="#" class="btn secondary-background px-3">Download</a>
+                      <a href="<?php echo base_url().'admin/download/'.$value['id']; ?>" class="btn secondary-background px-3">Download</a>
                     </div>
                   </div>
 
@@ -355,66 +356,8 @@
               </div>
             </div>
 
-            <div class="col-md-4 col-12  mb-4">
-              <div class="card default-background border-0">
-                <div class="card-body pb-5">
-                  <div class="d-flex justify-content-between mb-2">
-                    <!-- <img class="img-fluid" src="../assets/images2/agreement2.svg" alt=""> -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
-                      <path d="M32.7428 33.7979H17.7012" stroke="#222224" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                      <path d="M32.7428 25.0771H17.7012" stroke="#222224" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                      <path d="M23.4408 16.375H17.7012" stroke="#222224" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                      <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M33.1436 5.72852C33.1436 5.72852 17.1499 5.73685 17.1249 5.73685C11.3749 5.77227 7.81445 9.5556 7.81445 15.3264V34.4848C7.81445 40.2848 11.402 44.0827 17.202 44.0827C17.202 44.0827 33.1936 44.0764 33.2207 44.0764C38.9707 44.041 42.5332 40.2556 42.5332 34.4848V15.3264C42.5332 9.52643 38.9436 5.72852 33.1436 5.72852Z"
-                        stroke="#222224" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <p class="custom-font-size-14 font-weight-light">2022 - 2023</p>
-                  </div>
-                  <div class="mt-3">
-                    <p class="card-text">Premium furnished 2 br Maisonette B2 Olivia Court Lekki</p>
-
-                    <div class="mt-3">
-                      <a href="#" class="btn secondary-background px-3">Download</a>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4 col-12  mb-4">
-              <div class="card default-background border-0">
-                <div class="card-body pb-5">
-                  <div class="d-flex justify-content-between mb-2">
-                    <!-- <img class="img-fluid" src="../assets/images2/agreement2.svg" alt=""> -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
-                      <path d="M32.7428 33.7979H17.7012" stroke="#222224" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                      <path d="M32.7428 25.0771H17.7012" stroke="#222224" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                      <path d="M23.4408 16.375H17.7012" stroke="#222224" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                      <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M33.1436 5.72852C33.1436 5.72852 17.1499 5.73685 17.1249 5.73685C11.3749 5.77227 7.81445 9.5556 7.81445 15.3264V34.4848C7.81445 40.2848 11.402 44.0827 17.202 44.0827C17.202 44.0827 33.1936 44.0764 33.2207 44.0764C38.9707 44.041 42.5332 40.2556 42.5332 34.4848V15.3264C42.5332 9.52643 38.9436 5.72852 33.1436 5.72852Z"
-                        stroke="#222224" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <p class="custom-font-size-14 font-weight-light">2022 - 2023</p>
-                  </div>
-                  <div class="mt-3">
-                    <p class="card-text">Premium furnished 2 br Maisonette B2 Olivia Court Lekki</p>
-
-                    <div class="mt-3">
-                      <a href="#" class="btn secondary-background px-3">Download</a>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
+            <?php } ?>
+            
           </div>
         </div>
 
