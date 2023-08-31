@@ -445,32 +445,21 @@
                   </tr>
                 </thead>
                 <tbody>
+
+                <?php foreach($history as $propty => $value){ ?>
                   <tr>
-                    <td>2 br Maisonette B2 Olivia Court Lekki</td>
-                    <td>Replace pipes</td>
-                    <td>&#8358;20,000</td>
-                    <td>3 May, 2022</td>
-                    <td>Completed <a href="#" class="btn secondary-background px-2">View</a></td>
+                    <td><?php echo  $value['propertyTitle']?></td>
+                    <td><?php echo  $value['repair_type']?></td>
+                    <td><?php echo  $value['cost']?></td>
+                    <td><?php $date = strtotime($userdata['available_date']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?></td>
+                    <td><?php echo  $value['status']?> <a href="#" class="btn secondary-background px-2">View</a></td>
                   </tr>
-                  <tr>
-                    <td>2 br Maisonette B2 Olivia Court Lekki</td>
-                    <td>Paint</td>
-                    <td>&#8358;20,000</td>
-                    <td>3 May, 2022</td>
-                    <td>Completed <a href="#" class="btn secondary-background px-2">View</a></td>
-                  </tr>
-                  <tr>
-                    <td>2 br Maisonette B2 Olivia Court Lekki</td>
-                    <td>Replace pipes</td>
-                    <td>&#8358;20,000</td>
-                    <td>3 May, 2022</td>
-                    <td>Completed <a href="#" class="btn secondary-background px-2">View</a></td>
-                  </tr>
+                <?php } ?>
 
                 </tbody>
               </table>
             </div>
-
+            
           </div>
 
         </div>

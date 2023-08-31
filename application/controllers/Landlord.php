@@ -284,6 +284,8 @@ class Landlord extends CI_Controller {
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['proptys'] = $this->landlord_model->get_propty($data['userID']);
+
+			$data['history'] = $this->landlord_model->get_history($data['userID']);
 			
 			$data['count'] = $this->rss_model->get_counts($data['userID']);
 

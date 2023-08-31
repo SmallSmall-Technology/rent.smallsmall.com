@@ -52,6 +52,21 @@ class Landlord_model extends CI_Model
         return $query->result_array();
     }
 
+    public function get_history($userId)
+    {
+        $this->db->select('a.*');
+
+        $this->db->from('property_tbl as a');
+
+        $this->db->where('a.property_owner', $userId);
+
+        $this->db->join('cx_repairs as b', 'b.propertyId = a.propertyID');
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
 
     public function get_subscriber($propId)
     {
