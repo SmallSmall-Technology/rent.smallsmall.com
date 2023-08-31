@@ -60,7 +60,7 @@ class Landlord_model extends CI_Model
 
         $this->db->where('a.property_owner', $userId);
 
-        $this->db->join('cx_repairs as b', 'b.propertyId = a.propertyID');
+        $this->db->join('cx_repairs as b', 'b.propertyId = a.propertyID', 'LEFT OUTER');
 
         $query = $this->db->get();
 

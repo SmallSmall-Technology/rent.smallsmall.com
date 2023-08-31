@@ -446,13 +446,13 @@
                 </thead>
                 <tbody>
 
-                <?php foreach($history as $histry => $value){ ?>
+                <?php foreach($history as $row){ ?>
                   <tr>
-                    <td><?php echo  $value['propertyTitle']?></td>
-                    <td><?php echo  $value['repair_type']?></td>
-                    <td><?php echo  $value['cost']?></td>
-                    <td><?php $date = strtotime($userdata['available_date']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?></td>
-                    <td><?php echo  $value['status']?> <a href="#" class="btn secondary-background px-2">View</a></td>
+                    <td><?php echo  $row->propertyTitle; ?></td>
+                    <td><?php echo  $row->repair_type; ?></td>
+                    <td><?php echo  $row->cost; ?></td>
+                    <td><?php $date = strtotime($row->Date); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?></td>
+                    <td><?php echo  $row->status; ?> <a href="#" class="btn secondary-background px-2">View</a></td>
                   </tr>
                 <?php } ?>
 
