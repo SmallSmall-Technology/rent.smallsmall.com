@@ -412,36 +412,19 @@
               </tr>
             </thead>
             <tbody>
+
+              <?php foreach($prophistory as $propty => $value){ ?>
               <tr>
-                <td>John Doe</td>
-                <td>Male</td>
-                <td>Married</td>
+                <td><?php echo $userdata['firstName'] .' '. $userdata['lastName']?></td>
+                <td><?php echo $userdata['gender'];?></td>
+                <td><?php echo $userdata['marital_status'];?></td>
                 <td>
-                  <p class="d-flex align-items-center">15 May, 2021 <i style="font-size: 13px;"
+                  <p class="d-flex align-items-center"><?php $date = strtotime($userdata['moveIndate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?><i style="font-size: 13px;"
                       class="mx-2 fa-solid fa-arrow-right"></i>
-                    15 May, 2022</p>
+                      <?php $date = strtotime($userdata['moveOutdate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?></p>
                 </td>
               </tr>
-              <tr>
-                <td>Mary John</td>
-                <td>Female</td>
-                <td>Married</td>
-                <td>
-                  <p class="d-flex align-items-center">15 May, 2021 <i style="font-size: 13px;"
-                      class="mx-2 fa-solid fa-arrow-right"></i>
-                    15 May, 2022</p>
-                </td>
-              </tr>
-              <tr>
-                <td>Sade Doe</td>
-                <td>Female</td>
-                <td>Single</td>
-                <td>
-                  <p class="d-flex align-items-center">15 May, 2021 <i style="font-size: 13px;"
-                      class="mx-2 fa-solid fa-arrow-right"></i>
-                    15 May, 2022</p>
-                </td>
-              </tr>
+              <?php } ?>
 
             </tbody>
           </table>
