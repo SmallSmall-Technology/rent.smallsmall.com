@@ -454,7 +454,6 @@
                 <td><?php $date = strtotime($value['inspectionDate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); if($value['inspectionDate'] != ''){echo $day.' '.$month.', '.$year;} ?></td>
                 <td><?php echo $value['inspection_remarks'];?></td>
                 <td><?php echo $value['comment'];?></td>
-      
               </tr>
             <?php } ?>
 
