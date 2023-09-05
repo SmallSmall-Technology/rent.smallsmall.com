@@ -171,6 +171,22 @@ class Landlord_model extends CI_Model
 		return $query->result_array();
     }
 
+    
+    public function get_Inspectioninfo($propId)
+    {
+        $this->db->select('a.*'); 
+		
+		$this->db->from('inspection_tbl as a');
+	    
+	    $this->db->where('c.propertyID', $propId);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$query = $this->db->get();
+		
+		return $query->result_array();
+    }
+
     public function get_SubscriberInfo($userID)
     {
         $this->db->select('a.status as transaction_status, a.transaction_date, c.*, d.userID as tenant_id, d.firstName, d.lastName, d.gender, e.name as state_name'); 

@@ -449,25 +449,15 @@
               </tr>
             </thead>
             <tbody>
+            <?php foreach($inspectiondata as $propty => $value){ ?>
               <tr>
-                <td>20 May, 2021</td>
-                <td>Interested</td>
-                <td>Too dirty</td>
+                <td><?php $date = strtotime($value['inspectionDate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); if($value['inspectionDate'] != ''){echo $day.' '.$month.', '.$year;} ?></td>
+                <td><?php echo $value['inspection_remarks'];?></td>
+                <td><?php echo $value['comment'];?></td>
       
               </tr>
-              <tr>
-                <td>20 May, 2021</td>
-                <td>Non Interested</td>
-                <td>Too dirty</td>
-      
-              </tr>
-              <tr>
-                <td>20 May, 2021</td>
-                <td>Interested</td>
-                <td>Too dirty</td>
-      
-              </tr>
-      
+            <?php } ?>
+
             </tbody>
           </table>
         </div>
