@@ -178,7 +178,7 @@ class Landlord_model extends CI_Model
 		
 		$this->db->from('inspection_tbl as a');
 	    
-	    $this->db->where('c.propertyID', $propId);
+	    $this->db->where('a.propertyID', $propId);
 		
 		$this->db->order_by('a.id', 'DESC');
 		
