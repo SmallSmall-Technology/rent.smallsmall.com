@@ -3117,5 +3117,7 @@ class App extends CI_Controller {
         
         echo $total_cost;
     }
+
+	
     
 }
