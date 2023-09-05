@@ -120,6 +120,8 @@ class Landlord_model extends CI_Model
         $this->db->select('a.status as transaction_status, c.*, d.userID as tenant_id, d.firstName, d.lastName, e.name as state_name'); 
 		
 		$this->db->from('transaction_tbl as a');
+
+        $this->db->where('a.status', 'Approved');
 	    
 	    $this->db->where('c.property_owner', $userID);
 
@@ -201,6 +203,8 @@ class Landlord_model extends CI_Model
 		$this->db->from('transaction_tbl as a');
 	    
 	    $this->db->where('c.property_owner', $landlordID);
+
+        $this->db->where('a.status', 'Approved');
 
         $this->db->where('d.userID', $userID);
 	    

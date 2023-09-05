@@ -415,13 +415,13 @@
 
               <?php foreach($prophistory as $propty => $value){ ?>
               <tr>
-                <td><?php echo $userdata['firstName'] .' '. $userdata['lastName']?></td>
-                <td><?php echo $userdata['gender'];?></td>
-                <td><?php echo $userdata['marital_status'];?></td>
+                <td><?php echo $value['firstName'] .' '. $value['lastName']?></td>
+                <td><?php echo $value['gender'];?></td>
+                <td><?php echo $value['marital_status'];?></td>
                 <td>
-                  <p class="d-flex align-items-center"><?php $date = strtotime($userdata['moveIndate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?><i style="font-size: 13px;"
+                  <p class="d-flex align-items-center"><?php $date = strtotime($value['moveIndate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?><i style="font-size: 13px;"
                       class="mx-2 fa-solid fa-arrow-right"></i>
-                      <?php $date = strtotime($userdata['moveOutdate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?></p>
+                      <?php $date = strtotime($value['moveOutdate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?></p>
                 </td>
               </tr>
               <?php } ?>
