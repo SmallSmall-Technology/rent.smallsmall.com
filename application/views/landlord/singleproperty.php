@@ -448,16 +448,15 @@
       
               </tr>
             </thead>
-            <tbody>
-            <?php foreach($inspectiondata as $propty => $value){ ?>
-              <tr>
-                <td><?php $date = strtotime($value['inspectionDate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); if($value['inspectionDate'] != ''){echo $day.' '.$month.', '.$year;} ?></td>
-                <td><?php echo $value['inspection_remarks'];?></td>
-                <td><?php echo $value['comment'];?></td>
-              </tr>
-            <?php } ?>
 
+            <tbody id="inspection-data">
+                    
             </tbody>
+
+            <div class="text-right" id="load-inspection">
+              <a href="#" class="btn secondary-background">Load more</a>
+            </div>
+
           </table>
         </div>
       
@@ -605,6 +604,93 @@
 
     });
   </script>
+
+
+<script>
+$(document).ready(function(){
+        
+        var limit = 10;
+        
+        var start = 0;
+        
+        var action = 'inactive';
+    
+        function so_lazzy_loader(limit){
+            
+            var output = '';
+          
+            for(var count=0; count<limit; count++){
+              
+                output += '<div class="post-data">';
+                output += '<p><span class="content-placeholder" style="width:100%; height: 30px;">&nbsp;</span></p>';
+                output += '</div>';
+                
+            }
+            
+            $('#inspection-data-loading').html(output);
+            
+        }
+    
+        so_lazzy_loader(limit);
+    
+        function load_inspection_data(limit, start)
+        {
+            $.ajax({
+                
+                url:"<?php echo base_url(); ?>landlord/fetchInspections",
+                
+                method:"POST",
+                
+                data:{limit:limit, start:start},
+                
+                cache: false,
+                
+                success:function(data){
+                    
+                    if(data == ''){
+                        
+                        $('#inspection-data-loading').html('No more result found');
+                        
+                        action = 'active';
+                        
+                    }else{
+                        
+                        $('#inspection-data').append(data);
+                        
+                        $('#inspection-data-loading').html("");
+                        
+                        action = 'inactive';
+                    }
+                }
+            })
+        }
+        
+        if(action == 'inactive'){
+            
+            action = 'active';
+            
+            load_inspection_data(limit, start);
+            
+        }
+        
+        $('#load-inspection').click(function(){
+            
+            so_lazzy_loader(limit);
+            
+            action = 'active';
+            
+            start = start + limit;
+            
+            setTimeout(function(){
+                
+                load_inspection_data(limit, start);
+                
+            }, 1000);
+            
+        });
+        
+    });
+</script>
 
 
 </body>

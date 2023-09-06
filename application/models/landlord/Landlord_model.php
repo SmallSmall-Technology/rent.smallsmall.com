@@ -172,7 +172,7 @@ class Landlord_model extends CI_Model
     }
 
     
-    public function get_Inspectioninfo($propId)
+    public function get_Inspectioninfo($propId, $limit, $start)
     {
         $this->db->select('a.*'); 
 		
@@ -181,6 +181,8 @@ class Landlord_model extends CI_Model
 	    $this->db->where('a.propertyID', $propId);
 		
 		$this->db->order_by('a.id', 'DESC');
+
+        $this->db->limit($limit, $start);
 		
 		$query = $this->db->get();
 		

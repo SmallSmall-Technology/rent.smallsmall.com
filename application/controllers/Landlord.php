@@ -466,6 +466,38 @@ class Landlord extends CI_Controller {
 		}
     }
 
+	function fetchInspections()
+	{
+
+		$output = '';
+
+		$userID = $this->session->userdata('userID');
+
+		$data = $this->landlord_model->get_Inspectioninfo($prop_id, $this->input->post('limit'), $this->input->post('start'));
+
+		if ($data->num_rows() > 0) {
+
+			foreach ($data->result() as $row) {
+
+				$date = strtotime($row->inspectionDate);
+
+				$year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); if($row->inspectionDate != ''){ $time = $day.' '.$month.', '.$year;}
+
+				$remarks = $row->inspection_remarks;
+
+				$comment = $row->comment;
+
+				$output .= '<tr>
+							<td>'.$time.'</td>
+							<td>'.$remarks.'</td>
+							<td>'.$comment.'</td>
+						</tr>';
+			}
+		}
+
+		echo $output;
+	}
+
 	public function subscriber_profile($id)
     {
         if($this->session->has_userdata('userID')){			
