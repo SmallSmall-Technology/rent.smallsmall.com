@@ -409,7 +409,7 @@ class Landlord extends CI_Controller {
 
 			$data['userdata'] = $this->landlord_model->get_userinfo($data['userID'], $prop_id);
 
-			$data['inspectiondata'] = $this->landlord_model->get_Inspectioninfo($prop_id);
+			//$data['inspectiondata'] = $this->landlord_model->get_Inspectioninfo($prop_id);
 			
 			$data['prophistory'] = $this->landlord_model->get_prophstry($data['userID'], $prop_id);
 
