@@ -407,6 +407,8 @@ class Landlord extends CI_Controller {
 
 			$data['userID'] = $this->session->userdata('userID');
 
+			$data['propID'] = $prop_id;
+
 			$data['userdata'] = $this->landlord_model->get_userinfo($data['userID'], $prop_id);
 
 			//$data['inspectiondata'] = $this->landlord_model->get_Inspectioninfo($prop_id);
@@ -473,7 +475,7 @@ class Landlord extends CI_Controller {
 
 		$userID = $this->session->userdata('userID');
 
-		$data = $this->landlord_model->get_Inspectioninfo($prop_id, $this->input->post('limit'), $this->input->post('start'));
+		$data = $this->landlord_model->get_Inspectioninfo($this->input->post('prop_id'), $this->input->post('limit'), $this->input->post('start'));
 
 		if ($data->num_rows() > 0) {
 

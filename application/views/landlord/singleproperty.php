@@ -613,6 +613,8 @@ $(document).ready(function(){
         
         var start = 0;
         
+        var prop_id = <?php echo @$propID; ?>;
+
         var action = 'inactive';
     
         function so_lazzy_loader(limit){
@@ -641,7 +643,7 @@ $(document).ready(function(){
                 
                 method:"POST",
                 
-                data:{limit:limit, start:start},
+                data:{limit:limit, start:start, prop_id:prop_id},
                 
                 cache: false,
                 
