@@ -657,7 +657,7 @@ $(document).ready(function(){
 
             $('#load-transactions').click(function(){
                 
-                lazzy_loader(limit);
+                //lazzy_loader(limit);
                 
                 actions = 'active';
                 
