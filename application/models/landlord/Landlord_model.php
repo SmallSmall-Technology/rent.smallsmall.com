@@ -144,7 +144,7 @@ class Landlord_model extends CI_Model
 		return $query->row_array();
     }
 
-    public function get_prophstry($userID, $propId)
+    public function get_prophstry($userID, $propId, $limit, $start)
     {
         $this->db->select('a.status as transaction_status, a.transaction_date, b.move_in_date as moveIndate, b.move_out_date as moveOutdate, c.*, d.userID as tenant_id, d.firstName, d.lastName, d.gender, e.name as state_name'); 
 		
@@ -165,10 +165,12 @@ class Landlord_model extends CI_Model
 	    $this->db->join('states as e', 'e.id = c.state');
 		
 		$this->db->order_by('a.id', 'DESC');
+
+        $this->db->limit($limit, $start);
 		
 		$query = $this->db->get();
 		
-		return $query->result_array();
+		return $query;
     }
 
     

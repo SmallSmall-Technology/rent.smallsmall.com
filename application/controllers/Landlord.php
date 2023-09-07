@@ -500,6 +500,47 @@ class Landlord extends CI_Controller {
 		echo $output;
 	}
 
+	function fetchTenantHistory()
+	{
+
+		$output = '';
+
+		$userID = $this->session->userdata('userID');
+		
+		$data = $this->landlord_model->get_prophstry($userID, $this->input->post('prop_id'), $this->input->post('limits'), $this->input->post('starts'));
+
+		if ($data->num_rows() > 0) {
+
+			foreach ($data->result() as $row) {
+
+				$name = $row->firstName .' '. $row->lastName;
+
+				$gender = $row->gender;
+
+				$marrital_sts =	$row->marital_status;
+
+				$date = strtotime($row->moveIndate); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date);
+
+				$moveindt = $day.' '.$month.', '.$year;
+
+				$date = strtotime($row->moveOutdate); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); if($row->moveOutdate != ''){$moveoutdt = $day.' '.$month.', '.$year;}
+				
+				$output .= '<tr>
+                <td>'.$name.'</td>
+                <td>'.$gender.'</td>
+                <td>'.$marrital_sts.'</td>
+                <td>
+                  <p class="d-flex align-items-center">'.$moveindt.'<i style="font-size: 13px;"
+                      class="mx-2 fa-solid fa-arrow-right"></i>
+                      '.$moveoutdt.'</p>
+                </td>
+              </tr>';
+			}
+		}
+
+		echo $output;
+	}
+
 	public function subscriber_profile($id)
     {
         if($this->session->has_userdata('userID')){			

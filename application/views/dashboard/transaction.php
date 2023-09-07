@@ -152,13 +152,13 @@ else{
                         </div>
                     </li>
                 </ul>
+                
                 <a href="<?php echo base_url(); ?>/logout">
                     <span class="navbar-text text-dark mr-5">
                         Log out
                         <img class="img-fluid" src="../assets/images/logout.svg" alt="">
                     </span>
                 </a>
-
 
             </div>
         </nav>

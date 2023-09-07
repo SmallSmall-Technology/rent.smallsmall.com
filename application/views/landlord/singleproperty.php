@@ -411,6 +411,15 @@
                   out date</th>
               </tr>
             </thead>
+
+            <tbody id="transaction-data">
+
+              <div style="text-align:center;width:100%;font-size:14px;color:#138E3D" id="transaction-data-loading"> </div>
+              
+              <button class="btn secondary-background" id="load-transactions">
+                  Load more
+              </button>
+
             <tbody>
 
               <?php foreach($prophistory as $propty => $value){ ?>
@@ -616,6 +625,68 @@ $(document).ready(function(){
         var prop_id = <?php echo @$propID; ?>;
 
         var action = 'inactive';
+
+        var limits = 10;
+            
+        var starts = 0;
+            
+        var actions = 'inactive';
+
+
+        function loads_data(limits, starts)
+            {
+                $.ajax({
+                    
+                    url:"<?php echo base_url(); ?>landlord/fetchTenantHistory",
+                    
+                    method:"POST",
+                    
+                    data:{limits:limits, starts:starts, prop_id:prop_id},
+                    
+                    cache: false,
+                    
+                    success:function(data){
+                        
+                        if(data == ''){
+                            
+                            $('#transaction-data-loading').html('No more result found');
+                            action = 'active';
+                            
+                        }else{
+                            
+                            $('#transaction-data').append(data);
+                            
+                            $('#transaction-data-loading').html("");
+                            
+                            action = 'inactive';
+                        }
+                    }
+                })
+            }
+            
+            if(actions == 'inactive'){
+                
+                actions = 'active';
+                
+                loads_data(limits, starts);    
+            }
+
+            $('#load-transactions').click(function(){
+                
+                lazzy_loader(limit);
+                
+                actions = 'active';
+                
+                starts = starts + limits;
+                
+                setTimeout(function(){
+                    
+                    loads_data(limits, starts);
+                    
+                }, 1000);
+                
+            });
+        
     
         function so_lazzy_loader(limit){
             
@@ -693,6 +764,7 @@ $(document).ready(function(){
         
     });
 </script>
+
 
 
 </body>
