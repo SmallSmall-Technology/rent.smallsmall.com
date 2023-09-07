@@ -281,41 +281,29 @@
                 </svg>
               </div>
             </div>
-            <div class="d-flex justify-content-between mt-3">
-              <div class="custom-font-size-14">
-                <?php 
+            <div class="mt-3">
+              
+            <?php 
                 
-                foreach($proptys as $propty => $value)
+              foreach($proptys as $propty => $value)
+              {
+                $propTitle = $value['propertyTitle'];
+
+                if(date('Y-m-d') < $value['available_date'])
                 {
-                    $propTitle = $value['propertyTitle'];
+                  echo '<div class="custom-font-size-14 d-flex justify-content-between w-100"><p>'.$propTitle.'</p>
+                  <p class="success-color "><span> <img src="../assets/images2/rented-circle.svg" alt=""> </span>rented</p></div>';
+                } 
 
-                    echo '<p>'.$propTitle.'<p>';
-
-                    // $data =  $this->landlord_model->fetch_bookings($userID, $this->input->post('limit'), $this->input->post('start'));
-                }
-
-                ?>
-              </div>
-              <div class="mr-md-5 mr-3 custom-font-size-12">
-
-              <?php 
-
-                foreach($proptys as $propty => $value)
+                else
                 {
-                   if(date('Y-m-d') < $value['available_date'])
-                   {
-                      echo '<p class="success-color "><span> <img src="./assets/images2/rented-circle.svg" alt=""> </span>rented</p>';
-                   } 
-
-                   else
-                   {
-                     echo '<p class="danger-color "><span> <img src="./assets/images2/vacant-circle.svg" alt=""> </span>vacant</p>';
-                   }
-                
+                  echo '<div class="custom-font-size-14 d-flex justify-content-between w-100"><p>'.$propTitle.'</p>
+                  <p class="danger-color "><span> <img src="../assets/images2/vacant-circle.svg" alt=""> </span>vacant</p></div>';
                 }
+              }
 
-                ?>
-              </div>
+            ?>
+            
             </div>
 
             <div class="text-right mt-5">
