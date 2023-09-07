@@ -131,7 +131,7 @@
                         <div class="form-input-cont">
                             <div class="input-holder">                                
                                 <label>Landlord's Name</label>                      
-                                <input type="text" class="rss-text-f light-blue-bg landlord_full_name verify-txt-f" id="" />
+                                <input type="text" class="rss-text-f light-blue-bg landlord_full_name verify-txt-f" id="" required/>
                             </div>
                             <div class="input-holder"> 
                                 <label>Lanlord's Email</label>                       
@@ -141,13 +141,13 @@
                         <div class="form-input-cont"> 
                             <div class="input-holder">                                
                                 <label>Landlord's Phone</label>                      
-                                <input type="text" class="rss-text-f light-blue-bg landlord_phone verify-txt-f" id="" />
+                                <input type="text" class="rss-text-f light-blue-bg landlord_phone verify-txt-f" id="" /required>
                             </div>
                         </div>
                         <div class="form-input-cont"> 
                             <div class="input-holder">                                
                                 <label>Landlord's address</label>                      
-                                <textarea class="rss-text-area light-blue-bg landlord_address verify-txt-f" id=""></textarea>
+                                <textarea class="rss-text-area light-blue-bg landlord_address verify-txt-f" id="" required></textarea>
                             </div>
                             <div class="input-holder">                                
                                 <label>Reason for leaving</label>                      
