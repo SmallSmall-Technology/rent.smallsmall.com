@@ -610,7 +610,7 @@ $(document).ready(function(){
 
         var action = 'inactive';
 
-        var limits = 10;
+        var limits = 5;
             
         var starts = 0;
             
