@@ -523,6 +523,8 @@ class Landlord extends CI_Controller {
 
 				$moveindt = $day.' '.$month.', '.$year;
 
+				$moveoutdt = '';
+
 				$date = strtotime($row->moveOutdate); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); if($row->moveOutdate != ''){$moveoutdt = $day.' '.$month.', '.$year;}
 				
 				$output .= '<tr>
