@@ -292,18 +292,18 @@
                 if(date('Y-m-d') < $value['available_date'])
                 {
                   echo '<div class="custom-font-size-14 d-flex justify-content-between w-100"><p>'.$propTitle.'</p>
-                  <p class="success-color "><span> <img src="../assets/images2/rented-circle.svg" alt=""> </span>rented</p></div>';
+                  <p class="success-color d-flex justify-content-between"><span class="mr-1"> <img src="../assets/images2/rented-circle.svg" alt=""> </span>rented</p></div>';
                 } 
 
                 else
                 {
                   echo '<div class="custom-font-size-14 d-flex justify-content-between w-100"><p>'.$propTitle.'</p>
-                  <p class="danger-color "><span> <img src="../assets/images2/vacant-circle.svg" alt=""> </span>vacant</p></div>';
+                  <p class="danger-color d-flex justify-content-between"><span class="mr-1"> <img src="../assets/images2/vacant-circle.svg" alt=""> </span>vacant</p></div>';
                 }
               }
 
             ?>
-            
+
             </div>
 
             <div class="text-right mt-5">
