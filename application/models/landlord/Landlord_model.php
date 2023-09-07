@@ -146,7 +146,7 @@ class Landlord_model extends CI_Model
 
     public function get_prophstry($userID, $propId, $limit, $start)
     {
-        $this->db->select('a.status as transaction_status, a.transaction_date, b.move_in_date as moveIndate, b.move_out_date as moveOutdate, c.*, d.userID as tenant_id, d.firstName, d.lastName, d.gender, e.name as state_name'); 
+        $this->db->select('a.status as transaction_status, a.transaction_date, b.move_in_date as moveIndate, b.move_out_date as moveOutdate, c.*, d.userID as tenant_id, d.firstName, d.lastName, d.gender, e.name as state_name, f.marital_status'); 
 		
 		$this->db->from('transaction_tbl as a');
 	    
@@ -163,6 +163,8 @@ class Landlord_model extends CI_Model
 	    $this->db->join('user_tbl as d', 'd.userID = a.userID');
 	    
 	    $this->db->join('states as e', 'e.id = c.state');
+
+        $this->db->join('verifications as f', 'f.user_id = a.userID');
 		
 		$this->db->order_by('a.id', 'DESC');
 

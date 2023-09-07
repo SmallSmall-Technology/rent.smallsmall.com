@@ -420,22 +420,6 @@
                   Load more
               </button>
 
-            <tbody>
-
-              <?php foreach($prophistory as $propty => $value){ ?>
-              <tr>
-                <td><?php echo $value['firstName'] .' '. $value['lastName']?></td>
-                <td><?php echo $value['gender'];?></td>
-                <td><?php echo $value['marital_status'];?></td>
-                <td>
-                  <p class="d-flex align-items-center"><?php $date = strtotime($value['moveIndate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); echo $day.' '.$month.', '.$year; ?><i style="font-size: 13px;"
-                      class="mx-2 fa-solid fa-arrow-right"></i>
-                      <?php $date = strtotime($value['moveOutdate']); $year = date("Y", $date); $month = date("F", $date); $day = date("d", $date); if($value['moveOutdate'] != ''){echo $day.' '.$month.', '.$year;} ?></p>
-                </td>
-              </tr>
-              <?php } ?>
-
-            </tbody>
           </table>
         </div>
 
