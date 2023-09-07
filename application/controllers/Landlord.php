@@ -413,7 +413,7 @@ class Landlord extends CI_Controller {
 
 			//$data['inspectiondata'] = $this->landlord_model->get_Inspectioninfo($prop_id);
 			
-			$data['prophistory'] = $this->landlord_model->get_prophstry($data['userID'], $prop_id);
+			//$data['prophistory'] = $this->landlord_model->get_prophstry($data['userID'], $prop_id);
 
 			$data['count'] = $this->rss_model->get_counts($data['userID']);
 
