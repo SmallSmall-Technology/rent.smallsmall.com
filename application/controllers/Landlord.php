@@ -401,6 +401,67 @@ class Landlord extends CI_Controller {
 		}
     }
 
+	public function repair_details($id)
+    {
+        if($this->session->has_userdata('userID')){			
+
+			$data['userID'] = $this->session->userdata('userID');
+
+			$data['sub_dats'] = $this->landlord_model->checkSub($data['userID']);
+			
+			$data['count'] = $this->rss_model->get_counts($data['userID']);
+
+			$data['fname'] = $this->session->userdata('fname');			
+
+			$data['lname'] = $this->session->userdata('lname');			
+
+			$data['email'] = $this->session->userdata('email');	
+
+			$data['refCode'] = $this->session->userdata('referral_code');
+			
+			//$data['rss_count'] = $this->rss_model->get_counts($data['userID']//);
+
+			$data['user_type'] = $this->session->userdata('user_type');	
+			
+			$data['interest'] = $this->session->userdata('interest');
+			
+			$data['profile'] = $this->rss_model->get_user($data['userID']);
+			
+			$data['rss_points'] = $this->rss_model->get_points($data['userID']);
+			
+			$data['verification_status'] = $this->session->userdata('verified');
+			
+			$data['profile_pic'] = $this->rss_model->get_user_pic($data['userID']);
+			
+			$data['rss_transaction'] = $this->rss_model->checkRSSLastTrans($data['userID']);
+			
+			$data['bss_request_count'] = $this->buytolet_model->count_user_requests($data['userID']);
+			
+			$data['debt'] = $this->rss_model->get_debt($data['userID']);
+			
+			$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+			
+			$data['furnisure_transaction'] = $this->rss_model->checkFurnisureLastTrans($data['userID']);
+
+			//$data['messages'] = $this->rss_model->get_messages($data['userID']);		
+
+			$data['profile_title'] = "Messages";
+
+			$data['title'] = "Profile SmallSmall";
+
+			//$this->load->view('landlord/indexHeader.php', $data);
+
+			$this->load->view('landlord/repair-details.php', $data);
+
+			//$this->load->view('landlord/footer.php', $data);
+ 			
+		}else{			
+
+			redirect( base_url()."login" ,'refresh');			
+
+		}
+    }
+
 	public function single_property($prop_id)
     {
         if($this->session->has_userdata('userID')){			
@@ -615,6 +676,28 @@ class Landlord extends CI_Controller {
 
 	public function add_repairs()
 	{
+
+		$config['upload_path']          = './uploads/agreement/';
+        $config['allowed_types']        = 'jpg|png|jpeg';
+        $config['max_size']             = 0;
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+
+		if (!$this->upload->do_upload('imgName'))
+        {
+            $error = array('error' => $this->upload->display_errors());
+
+            $this->load->view('agr_error', $error);
+        }
+
+		$data = $this->upload->data();
+
+		$filename = $data['file_name'];
+		
+		$details = $this->input->post('details');
+				
 		$type = $this->input->post('repair_type');
 
 		$cost = $this->input->post('cost');
@@ -625,7 +708,7 @@ class Landlord extends CI_Controller {
 
 		$status = $this->input->post('repair_status');
 
-		$res = $this->landlord_model->insertCxrepairs($type, $cost, $date, $property, $status);
+		$res = $this->landlord_model->insertCxrepairs($type, $cost, $date, $property, $status, $filename, $details);
 
 		if ($res) {
 

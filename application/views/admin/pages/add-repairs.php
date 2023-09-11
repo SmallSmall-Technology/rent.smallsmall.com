@@ -56,6 +56,17 @@
 
                     </div>
 
+                    <div class="position-relative row form-group"><label for="lname" class="col-sm-2 col-form-label">Details</label>
+
+                        <div class="col-sm-10"><textarea name="details" id="details" class="form-control verify-debt-txt"></div>
+
+                    </div>
+
+                    <div class="position-relative row form-group">
+                        <label for="debt-note" class="">Upload Image</label>
+                        <input type="file" name="imgName" required/>
+                    </div>
+
                     <div class="position-relative row form-group"><label for="email" class="col-sm-2 col-form-label">Date</label>
 
                         <div class="col-sm-10"><input name="repair_date" id="repair_date" placeholder="date" type="date" class="verify-txt form-control"></div>
