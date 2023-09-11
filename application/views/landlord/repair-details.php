@@ -314,7 +314,7 @@
               <span>></span>
               <span>Current repair request</span>
               <span>></span>
-              <span>2 br Maisonette B2 Olivia Court Lekki</span>
+              <span><?php echo $repairdata['propertyTitle'] ?></span>
             </div>
 
           </div>
@@ -337,27 +337,17 @@
             <div class="primary-background p-5 ">
               <div class="row">
                 <div class="col-12 my-4">
-                  <p class="property-name">2 bed, Trinity Apartments</p>
-                  <p class="custom-font-size-18">Agungi, Lekki, Lagos</p>
+                  <p class="property-name"><?php echo $repairdata['propertyTitle'] ?></p>
+                  <p class="custom-font-size-18"><?php echo $repairdata['city'] .','. $repairdata['stateName']?></p>
                 </div>
                 <div class="col-12 my-4">
                   <p class="custom-font-size-14">Type of Issue</p>
-                  <p class="custom-font-size-22">Structural Wall Collapse</p>
+                  <p class="custom-font-size-22"><?php echo $repairdata['repair_type'] ?></p>
                 </div>
                 <div class="col-12 my-4">
                   <p class="custom-font-size-14 mb-3">Details of fix</p>
                   <div class="detail-container">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation irure dolor in pariatur Excepteur sint
-                      occaecat cupidatat non
-                      proident, sunt</p>
-                    <ul>
-                      <li>Execution</li>
-                      <li>parlor</li>
-                      <li>lorem</li>
-                      <li>lorem</li>
-                    </ul>
+                    <p><?php echo $repairdata['repairDetails'] ?></p>
                   </div>
                 </div>
                 <div class="col-md-12 my-4">
@@ -366,22 +356,7 @@
                 <div class="col-md-12">
                   <div class="checkin-pictures d-flex flex-wrap">
                     <div class="checkin-pictures-item  mr-3 mb-3">
-                      <img class="img-fluid" src="../assets/images2/pic-1.png" alt="">
-                    </div>
-                    <div class="checkin-pictures-item  mr-3 mb-3">
-                      <img class="img-fluid" src="../assets/images2/pic-2.png" alt="">
-                    </div>
-                    <div class="checkin-pictures-item  mr-3 mb-3">
-                      <img class="img-fluid" src="../assets/images2/pic-1.png" alt="">
-                    </div>
-                    <div class="checkin-pictures-item  mr-3 mb-3">
-                      <img class="img-fluid" src="../assets/images2/pic-2.png" alt="">
-                    </div>
-                    <div class="checkin-pictures-item  mr-3 mb-3">
-                      <img class="img-fluid" src="../assets/images2/pic-1.png" alt="">
-                    </div>
-                    <div class="checkin-pictures-item  mr-3 mb-3">
-                      <img class="img-fluid" src="../assets/images2/pic-2.png" alt="">
+                      <img class="img-fluid" src="../uploads/agreement/<?php echo $repairdata['filename']; ?>" alt="">
                     </div>
                   </div>
                 </div>
@@ -424,7 +399,7 @@
 
                 <div class="col-md-3 col-12 my-3">
                   <p class="custom-font-size-14">Cost of repairs</p>
-                  <p class="custom-font-size-26">&#8358;50,000</p>
+                  <p class="custom-font-size-26">&#8358;<?php echo $repairdata['cost']; ?></p>
                 </div>
                 <div class="col-md-8 col-12 my-3">
                   <p class="custom-font-size-14">Cost of repairs</p>

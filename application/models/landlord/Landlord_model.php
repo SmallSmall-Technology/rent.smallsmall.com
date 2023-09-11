@@ -193,6 +193,23 @@ class Landlord_model extends CI_Model
 		return $query;
     }
 
+    public function checkrepairdata($propId)
+    {
+        $this->db->select('a.* a.details as repairDetails, b.*, c.name as stateName'); 
+		
+		$this->db->from('cx_repairs as a');
+	    
+	    $this->db->where('a.propertyId', $propId);
+		
+        $this->db->join('property_tbl as b', 'b.propertyID = a.propertyId');
+
+        $this->db->join('states as c', 'c.id = b.state');
+
+		$query = $this->db->get();
+		
+		return $query->row_array();
+    }
+
     public function get_SubscriberInfo($userID)
     {
         $this->db->select('a.status as transaction_status, a.transaction_date, c.*, d.userID as tenant_id, d.firstName, d.lastName, d.gender, e.name as state_name'); 
