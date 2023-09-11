@@ -195,7 +195,7 @@ class Landlord_model extends CI_Model
 
     public function checkrepairdata($propId)
     {
-        $this->db->select('a.* a.details as repairDetails, b.*, c.name as stateName'); 
+        $this->db->select('a.*, a.details as repairDetails, b.*, c.name as stateName'); 
 		
 		$this->db->from('cx_repairs as a');
 	    
