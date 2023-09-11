@@ -408,6 +408,8 @@ class Landlord extends CI_Controller {
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['sub_dats'] = $this->landlord_model->checkSub($data['userID']);
+
+			$data['repairdata'] = $this->landlord_model->checkrepairdata($id);
 			
 			$data['count'] = $this->rss_model->get_counts($data['userID']);
 

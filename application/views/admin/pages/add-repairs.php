@@ -58,7 +58,7 @@
 
                     <div class="position-relative row form-group"><label for="lname" class="col-sm-2 col-form-label">Details</label>
 
-                        <div class="col-sm-10"><textarea name="details" id="details" class="form-control verify-debt-txt"></div>
+                        <div class="col-sm-10"><textarea name="details" id="details" class="form-control verify-debt-txt"></textarea></div>
 
                     </div>
 
