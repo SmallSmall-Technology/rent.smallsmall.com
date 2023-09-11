@@ -134,6 +134,20 @@
     </div>
   </details>
 
+  <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <summary itemprop="name">What happens if I request a refund after making a payment as a prospective subscriber?</summary>
+    <div class="details-expanded" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p>If you request a refund after making a payment, please be aware that a 5% charge on the entire fee will apply. </p>
+    </div>
+  </details>
+
+  <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <summary itemprop="name">Are there any conditions under which I won’t receive a refund?</summary>
+    <div class="details-expanded" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p>Yes, once an agreement is signed, a complete forfeiture of the fee will be enforced, and no refund will be granted. </p>
+    </div>
+  </details>
+
 </div>
 
 </main>
