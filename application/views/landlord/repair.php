@@ -413,7 +413,7 @@
                                 <p class="card-text" style="font-size: 12px">'.$row->propertyTitle.'</p>
 
                                 <div class="mt-3">
-                                  <a href="single-property.html" class="btn secondary-background px-3">View details</a>
+                                  <a href="../landlord/repair_details/'.$row->property_id.'" class="btn secondary-background px-3">View details</a>
                                 </div>
                               </div>
 

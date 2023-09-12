@@ -356,7 +356,7 @@
                 <div class="col-md-12">
                   <div class="checkin-pictures d-flex flex-wrap">
                     <div class="checkin-pictures-item  mr-3 mb-3">
-                      <img class="img-fluid" src="<?php echo base_url(); ?>uploads/agreement/<?php echo $repairdata['filename']; ?>" alt="">
+                      <img class="img-fluid" src="<?php echo base_url(); ?>uploads/agreement/<?php echo $repairdata['filename']; ?>" width = "100px" alt="">
                     </div>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
 .current-booking {
-  background: #F6F7F8;
+  background: #f6f7f8;
   border-radius: 10px;
   padding: 4em;
 }
@@ -8,22 +8,94 @@
   background: #222224;
   border-radius: 4px;
   min-width: 211px;
-  color: #ffffff
-    /* padding: 2em; */
+  color: #ffffff;
+  /* padding: 2em; */
 }
-
 
 .wallet-btn {
-  background: #EDEDEF;
+  background: #ededef;
   border-radius: 4px;
-
 }
 
-
 .upload-btn {
-  background: #EAF6F8;
-  border: 1.5px dashed #CCCCD3;
+  background: #eaf6f8;
+  border: 1.5px dashed #ccccd3;
   border-radius: 7px;
   padding: 1em 3em;
   width: 100%;
+}
+
+.detail-container {
+  border-radius: 7px;
+  border: 2px solid #f3f6f8;
+  background: #fff;
+  padding: 2em;
+}
+
+.property-name {
+  color: #222224;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.order-track-step {
+  display: flex;
+  height: 7rem;
+}
+
+.order-track-step:last-child {
+  overflow: hidden;
+  height: 4rem;
+}
+
+.order-track-step:last-child .order-track-status span:last-of-type {
+  /* display: none; */
+  background: #dadada;
+}
+
+.order-track-step:nth-last-child(2) .order-track-status-line:last-of-type {
+  /* display: none; */
+  background: #dadada;
+}
+
+.order-track-step:last-child {
+  color: #dadada;
+}
+
+.order-track-status {
+  margin-right: 1.5rem;
+  position: relative;
+}
+
+.order-track-status-dot {
+  display: block;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: #9bd7f6;
+}
+
+.order-track-status-line {
+  display: block;
+  margin: 0 auto;
+  width: 2px;
+  height: 7rem;
+  background: #9bd7f6;
+}
+
+.order-track-text-stat {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+.order-track-text-sub {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.order-track {
+  transition: all 0.3s height 0.3s;
+  transform-origin: top center;
 }
