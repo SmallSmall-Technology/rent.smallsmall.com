@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-css2/bootstrap.min.css" crossorigin="anonymous" />
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="./assets/css/bootstrap-css2/bootstrap.min.css"
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-css2/bootstrap.min.css"
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
 
 

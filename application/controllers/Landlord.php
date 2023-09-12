@@ -678,24 +678,36 @@ class Landlord extends CI_Controller {
 
 	public function add_repairs()
 	{
+		$count = count($_FILES['imgName']['name']);
 
-		$config['upload_path']          = './uploads/agreement/';
-        $config['allowed_types']        = 'jpg|png|jpeg';
-        $config['max_size']             = 0;
-        // $config['max_width']            = 1024;
-        // $config['max_height']           = 768;
+		$val = '';
 
-        $this->load->library('upload', $config);
-
-		if (!$this->upload->do_upload('imgName'))
+		for($i=0; $i<$count; $i++)
         {
-            $error = array('error' => $this->upload->display_errors());
+			$config['upload_path']          = './uploads/agreement/';
+			$config['allowed_types']        = 'jpg|png|jpeg';
+			$config['max_size']             = 0;
+			// $config['max_width']            = 1024;
+			// $config['max_height']           = 768;
+			$config['file_name'] = $_FILES['imgName']['name'][$i];
 
-            $this->load->view('agr_error', $error);
-        }
+			$this->load->library('upload', $config);
 
-		$data = $this->upload->data();
+			if (!$this->upload->do_upload('imgName'))
+			{
+				$error = array('error' => $this->upload->display_errors());
 
+				$this->load->view('agr_error', $error);
+			}
+
+			$data = $this->upload->data();
+
+			$img = $_FILES['imgName']['name'][$i];
+
+			$val .= $img." ";
+		}
+
+		
 		$filename = $data['file_name'];
 		
 		$details = $this->input->post('details');
