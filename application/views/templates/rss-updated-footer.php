@@ -69,7 +69,8 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link pl-0 text-white" href="<?php echo base_url('blog'); ?>">Blogs</a>
+                      <!-- <a class="nav-link pl-0 text-white" href="<?php echo base_url('blog'); ?>">Blogs</a> -->
+                      <a class="nav-link pl-0 text-white" href="https://blog.smallsmall.com/">Blogs</a>
                     </li>
                     <li class="nav-item">
                       <!-- <a class="nav-link pl-0 text-white" href="<?php echo base_url('careers'); ?>"> -->
