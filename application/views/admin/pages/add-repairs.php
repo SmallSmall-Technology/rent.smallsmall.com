@@ -64,7 +64,7 @@
 
                     <div class="position-relative row form-group">
                         <label for="debt-note" class="">Upload Image</label>
-                        <input type="file" name="imgName[]" required/>
+                        <input type="file" name="imgName[]" multiple required/>
                     </div>
 
                     <div class="position-relative row form-group"><label for="email" class="col-sm-2 col-form-label">Date</label>
