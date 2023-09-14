@@ -355,12 +355,12 @@
                 </div>
                 <div class="col-md-12">
                   <div class="checkin-pictures d-flex flex-wrap">
-                    <div class="checkin-pictures-item  mr-3 mb-3">
-                      <?php $res = $repairdata['filename'];  $res = explode(" ", $res); $count = count($res)-1;
+                  <?php $res = $repairdata['filename'];  $res = explode(" ", $res); $count = count($res)-1;
                       for($i=0; $i<$count; $i++){ ?>
+                    <div class="checkin-pictures-item  mr-3 mb-3">
                         <img class="img-fluid" src="<?php echo base_url(); ?>uploads/agreement/<?php echo $res[$i]; ?>" width = "100px" alt="">
-                      <?php } ?> 
                     </div>
+                    <?php } ?> 
                   </div>
                 </div>
 
