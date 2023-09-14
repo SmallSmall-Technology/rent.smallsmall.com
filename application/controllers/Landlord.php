@@ -693,12 +693,12 @@ class Landlord extends CI_Controller {
 
 			$this->load->library('upload', $config);
 
-			if (!$this->upload->do_upload('imgName'))
-			{
-				$error = array('error' => $this->upload->display_errors());
+			// if (!$this->upload->do_upload('imgName'))
+			// {
+			// 	$error = array('error' => $this->upload->display_errors());
 
-				$this->load->view('agr_error', $error);
-			}
+			// 	$this->load->view('agr_error', $error);
+			// }
 
 			$data = $this->upload->data();
 
@@ -708,7 +708,7 @@ class Landlord extends CI_Controller {
 		}
 
 		
-		$filename = $data['file_name'];
+		$filename = $val;
 		
 		$details = $this->input->post('details');
 				

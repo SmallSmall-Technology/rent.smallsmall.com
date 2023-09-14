@@ -2300,6 +2300,7 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
+	
 	public function add_new_rss_property()
 	{
 
