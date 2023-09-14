@@ -58,7 +58,7 @@ if ($srlz[0] == 'Upfront') {
 
   $total = number_format($total);
 
-  if ($property['securityDepositTerm'] == 1) {
+  if($property['securityDepositTerm'] == 1) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
