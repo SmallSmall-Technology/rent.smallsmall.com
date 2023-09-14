@@ -703,7 +703,7 @@ class Landlord extends CI_Controller {
 			$img = $_FILES['imgName']['name'][$i];
 
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            move_uploaded_file($postimg_tmp,"../uploads/agreement/$img");
+            move_uploaded_file($postimg_tmp,"uploads/agreement/$img");
 
 			$data = $this->upload->data();
 
