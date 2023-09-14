@@ -644,6 +644,8 @@ $route['furnisure/appliances/(:any)'] = 'furnisure/appliances/$1';
 
 /*$route['rss/encdec'] = 'rss/encdec'; */ 
 
+// Direct Debit
+$route['rss/direct-debit-subscription'] = 'admin/direct_debit_subscription';
 
 /* Unione API testing    */
 $route['unione-testing'] = 'rss/unione_template_get';

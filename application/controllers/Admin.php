@@ -8628,4 +8628,31 @@ class Admin extends CI_Controller
 		$str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz';
 		return substr(str_shuffle($str_result), 0, $length_of_string);
 	}
+
+
+	public function direct_debit_subscription ()
+	{
+        // Check if it's an AJAX request
+        if ($this->input->is_ajax_request()) {
+
+            // Get the data from the AJAX request
+            $data = $this->input->post();
+
+            // Insert the data into the 'user_account' table
+            $this->db->insert('direct_debit_subsciber', $data);
+
+            // Return a response (e.g., success message)
+
+            $response = array('message' => 'Data inserted successfully');
+
+            echo json_encode($response);
+
+        } else {
+
+            // Handle non-AJAX requests as needed
+        }
+
+		
+	}
+
 }

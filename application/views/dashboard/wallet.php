@@ -605,7 +605,7 @@ else{
 
 <!-- Direct Debit -->
 
-<script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Get the "Subscribe to wallet direct debit" button by its ID
     var subscribeButton = document.getElementById("subscribe-button");
@@ -637,6 +637,73 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("First Name: " + fname);
 
         // You can now use this data to perform further actions or send it to a backend API, for example.
+    });
+});
+</script> -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Get the "Subscribe to wallet direct debit" button by its ID
+    var subscribeButton = document.getElementById("subscribe-button");
+
+    // Add a click event listener to the button
+    subscribeButton.addEventListener("click", function() {
+        // Display a confirmation dialog
+        var confirmation = window.confirm("Are you sure you want to subscribe to direct wallet debit?");
+        
+        // If the user confirms, proceed with the subscription
+        if (confirmation) {
+            // Extract and store the required data
+            var accountBalance = <?php echo json_encode(@$account_details['account_balance']); ?>;
+            var accountName = <?php echo json_encode($acc_name); ?>;
+            var accountNumber = <?php echo json_encode(@$account_details['account_number']); ?>;
+            var bankName = <?php echo json_encode(@$account_details['bank_name']); ?>;
+            var price = <?php echo json_encode(@$new_subscription['price']); ?>;
+            var serviceCharge = <?php echo json_encode(@$new_subscription['serviceCharge']); ?>;
+            var bookingID = <?php echo json_encode(@$new_subscription['bookingID']); ?>;
+            var userID = <?php echo json_encode($userID); ?>;
+            var email = <?php echo json_encode($email); ?>;
+            var fname = <?php echo json_encode($fname); ?>;
+            
+            // Create a data object to send via AJAX
+            var dataToSend = {
+                accountBalance: accountBalance,
+                accountName: accountName,
+                accountNumber: accountNumber,
+                bankName: bankName,
+                price: price,
+                serviceCharge: serviceCharge,
+                bookingID: bookingID,
+                userID: userID,
+                email: email,
+                fname: fname
+            };
+            
+            // Send an AJAX request to the controller
+            $.ajax({
+                type: "POST", // Use POST method
+
+                url: "<?php echo base_url('rss/direct-debit-subscription'); ?>", // Replace with the correct URL
+
+                data: dataToSend, // Send the data object
+
+                success: function(response) {
+                    // Handle the response from the controller if needed
+                    console.log(response);
+
+                },
+
+                error: function(xhr, status, error) {
+                    // Handle any AJAX errors if needed
+                    console.error(xhr.responseText);
+                }
+            });
+            
+        } else {
+
+            // If the user cancels, do nothing or handle as needed
+
+        }
     });
 });
 </script>
