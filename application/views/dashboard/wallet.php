@@ -427,7 +427,7 @@ else{
                                 Subscription</button>
                         </div>
                         <div class="col-md-6 col-12">
-                            <button class="btn font-weight-light wallet-btn p-3 text-dark" type="button">Subscribe to
+                            <button class="btn font-weight-light wallet-btn p-3 text-dark" type="button" id="subscribe-button">Subscribe to
                                 wallet
                                 direct
                                 debit</button>
@@ -603,8 +603,46 @@ else{
         </div>
     </footer>
 
+<!-- Direct Debit -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Get the "Subscribe to wallet direct debit" button by its ID
+    var subscribeButton = document.getElementById("subscribe-button");
+
+    // Add a click event listener to the button
+    subscribeButton.addEventListener("click", function() {
+        // Extract and store the required data
+        var accountBalance = <?php echo json_encode(@$account_details['account_balance']); ?>;
+        var accountName = <?php echo json_encode($acc_name); ?>;
+        var accountNumber = <?php echo json_encode(@$account_details['account_number']); ?>;
+        var bankName = <?php echo json_encode(@$account_details['bank_name']); ?>;
+        var price = <?php echo json_encode(@$new_subscription['price']); ?>;
+        var serviceCharge = <?php echo json_encode(@$new_subscription['serviceCharge']); ?>;
+        var bookingID = <?php echo json_encode(@$new_subscription['bookingID']); ?>;
+        var userID = <?php echo json_encode($userID); ?>;
+        var email = <?php echo json_encode($email); ?>;
+        var fname = <?php echo json_encode($fname); ?>;
+        
+        // Output the data to the browser's console (for testing purposes)
+        console.log("Account Balance: " + accountBalance);
+        console.log("Account Name: " + accountName);
+        console.log("Account Number: " + accountNumber);
+        console.log("Bank Name: " + bankName);
+        console.log("Price: " + price);
+        console.log("Service Charge: " + serviceCharge);
+        console.log("Booking ID: " + bookingID);
+        console.log("User ID: " + userID);
+        console.log("Email: " + email);
+        console.log("First Name: " + fname);
+
+        // You can now use this data to perform further actions or send it to a backend API, for example.
+    });
+});
+</script>
 
 
+<!--End Direct Debit -->
 
 
     <!-- Jquery js -->
