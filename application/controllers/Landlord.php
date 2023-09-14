@@ -700,9 +700,12 @@ class Landlord extends CI_Controller {
 			// 	$this->load->view('agr_error', $error);
 			// }
 
-			$data = $this->upload->data();
-
 			$img = $_FILES['imgName']['name'][$i];
+
+			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
+            move_uploaded_file($postimg_tmp,"../uploads/agreement/$img");
+
+			$data = $this->upload->data();
 
 			$val .= $img." ";
 		}
