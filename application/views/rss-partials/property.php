@@ -93,6 +93,28 @@ if ($srlz[0] == 'Upfront') {
   $total =  $property['price'] + $sec_dep + $evictionDeposit + $serviceCharge;
 
   $total = number_format($total);
+
+  if ($property['securityDepositTerm'] == 1) {
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    $evc_dep = $property['securityDeposit'];
+
+    $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
+
+    $total = number_format($total);
+  } elseif ($property['securityDepositTerm'] == 2) {
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+    $sec_dep = 0.75 * $sec_dep;
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
+
+    $total = number_format($total);
+  }
+  
 }
 
 function shortenText($text, $maxLength)
