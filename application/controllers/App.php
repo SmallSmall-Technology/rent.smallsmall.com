@@ -438,9 +438,17 @@ class App extends CI_Controller
 			} else {
 				$serviceCharge = $data['property']['serviceCharge'];
 			}
+
+			if ($data['property']['securityDepositTerm'] == 1) {
+				$sec_dep = $data['property']['securityDeposit'] * $data['property']['securityDepositTerm'];
+			} else {
+				$sec_dep = $data['property']['securityDeposit'] * $data['property']['securityDepositTerm'];
+				$sec_dep = 0.75 * $sec_dep;
+			}
+
+			$sec_dep = $sec_dep + $evictionDeposit;
 		}
 
-		$sec_dep = $sec_dep + $evictionDeposit;
 
 		$data['property']['securityDeposit'] = "$sec_dep";
 
