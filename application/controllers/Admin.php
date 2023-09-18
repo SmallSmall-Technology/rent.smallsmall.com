@@ -8638,8 +8638,11 @@ class Admin extends CI_Controller
             // Get the data from the AJAX request
             $data = $this->input->post();
 
-            // Insert the data into the 'user_account' table
-            $this->db->insert('direct_debit_subsciber', $data);
+			// Insert the data into the 'direct debit subscriber table' table using the model
+            $insert_result = $this->Admin_model->directDebitSubsciber($data);
+
+            // // Insert the data into the 'user_account' table
+            // $this->db->insert('direct_debit_subsciber', $data);
 
             // Return a response (e.g., success message)
 

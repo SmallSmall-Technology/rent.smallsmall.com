@@ -3742,5 +3742,12 @@ public function fetchSubscribers() {
 	return $query->result_array();
 
 }
+
+public function directDebitSubsciber()
+{
+	// Insert data into the 'user_account' table
+	return $this->db->insert('direct_debit_subsciber', $data);
+
+}
 	
 }

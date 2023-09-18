@@ -605,7 +605,7 @@ else{
 
 <!-- Direct Debit -->
 
-<script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Get the "Subscribe to wallet direct debit" button by its ID
     var subscribeButton = document.getElementById("subscribe-button");
@@ -679,9 +679,9 @@ document.addEventListener("DOMContentLoaded", function() {
         // You can now use this data to perform further actions or send it to a backend API, for example.
     });
 });
-</script>
+</script> -->
 
-<!-- <script>
+<script>
 document.addEventListener("DOMContentLoaded", function() {
     // Get the "Subscribe to wallet direct debit" button by its ID
     var subscribeButton = document.getElementById("subscribe-button");
@@ -705,8 +705,6 @@ document.addEventListener("DOMContentLoaded", function() {
             var email = <?php echo json_encode($email); ?>;
             var fname = <?php echo json_encode($fname); ?>;
 
-
-
             var moveInDate = <?php echo json_encode(@$new_subscription['move_in_date']); ?>;
             var rentExpirationDate = <?php echo json_encode(@$new_subscription['rent_expiration']); ?>;
             var rentStatus = <?php echo json_encode(@$new_subscription['rent_status']); ?>;
@@ -726,7 +724,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 bookingID: bookingID,
                 userID: userID,
                 email: email,
-                fname: fname
+                fname: fname,
+                moveInDate: moveInDate,
+                rentExpirationDate: rentExpirationDate,
+                rentStatus: rentStatus,
+                propertyTitle: propertyTitle,
+                paymentPlan: paymentPlan
             };
             
             // Send an AJAX request to the controller
@@ -756,7 +759,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-</script> -->
+</script>
 
 
 <!--End Direct Debit -->
