@@ -605,7 +605,7 @@ else{
 
 <!-- Direct Debit -->
 
-<!-- <script>
+<script>
 document.addEventListener("DOMContentLoaded", function() {
     // Get the "Subscribe to wallet direct debit" button by its ID
     var subscribeButton = document.getElementById("subscribe-button");
@@ -620,6 +620,22 @@ document.addEventListener("DOMContentLoaded", function() {
         var price = <?php echo json_encode(@$new_subscription['price']); ?>;
         var serviceCharge = <?php echo json_encode(@$new_subscription['serviceCharge']); ?>;
         var bookingID = <?php echo json_encode(@$new_subscription['bookingID']); ?>;
+
+
+
+
+
+        var moveInDate = <?php echo json_encode(@$new_subscription['move_in_date']); ?>;
+        var rentExpirationDate = <?php echo json_encode(@$new_subscription['rent_expiration']); ?>;
+        var rentStatus = <?php echo json_encode(@$new_subscription['rent_status']); ?>;
+        var propertyTitle = <?php echo json_encode(@$new_subscription['propertyTitle']); ?>;
+        var paymentPlan = <?php echo json_encode(@$new_subscription['payment_plan']); ?>;
+        var paymentType = <?php echo json_encode(@$new_subscription['payment_type']); ?>;
+
+
+
+
+
         var userID = <?php echo json_encode($userID); ?>;
         var email = <?php echo json_encode($email); ?>;
         var fname = <?php echo json_encode($fname); ?>;
@@ -636,12 +652,25 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Email: " + email);
         console.log("First Name: " + fname);
 
+
+        console.log("moveInDate: " + accountNumber);
+        console.log("rentExpirationDate: " + bankName);
+        console.log("Price: " + price);
+        console.log("Service Charge: " + serviceCharge);
+        console.log("Booking ID: " + bookingID);
+        console.log("User ID: " + userID);
+        console.log("Email: " + email);
+        console.log("First Name: " + fname);
+
+
+
+
         // You can now use this data to perform further actions or send it to a backend API, for example.
     });
 });
-</script> -->
+</script>
 
-<script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Get the "Subscribe to wallet direct debit" button by its ID
     var subscribeButton = document.getElementById("subscribe-button");
@@ -664,6 +693,16 @@ document.addEventListener("DOMContentLoaded", function() {
             var userID = <?php echo json_encode($userID); ?>;
             var email = <?php echo json_encode($email); ?>;
             var fname = <?php echo json_encode($fname); ?>;
+
+
+
+            var moveInDate = <?php echo json_encode(@$new_subscription['move_in_date']); ?>;
+            var rentExpirationDate = <?php echo json_encode(@$new_subscription['rent_expiration']); ?>;
+            var rentStatus = <?php echo json_encode(@$new_subscription['rent_status']); ?>;
+            var propertyTitle = <?php echo json_encode(@$new_subscription['propertyTitle']); ?>;
+            var paymentPlan = <?php echo json_encode(@$new_subscription['payment_plan']); ?>;
+            var paymentType = <?php echo json_encode(@$new_subscription['payment_type']); ?>;
+
             
             // Create a data object to send via AJAX
             var dataToSend = {
@@ -706,7 +745,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-</script>
+</script> -->
 
 
 <!--End Direct Debit -->
