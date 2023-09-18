@@ -632,6 +632,13 @@ document.addEventListener("DOMContentLoaded", function() {
         var paymentPlan = <?php echo json_encode(@$new_subscription['payment_plan']); ?>;
         var paymentType = <?php echo json_encode(@$new_subscription['payment_type']); ?>;
 
+        var transaction_id = <?php echo json_encode(@$new_subscription['transaction_id']); ?>;
+        var status = <?php echo json_encode(@$new_subscription['status']); ?>;
+        var transaction_type = <?php echo json_encode(@$new_subscription['transaction_type']); ?>;
+        var transaction_date = <?php echo json_encode(@$new_subscription['transaction_date']); ?>;
+        var duration = <?php echo json_encode(@$new_subscription['duration']); ?>;
+        var next_rental = <?php echo json_encode(@$new_subscription['next_rental']); ?>;
+        var booked_on = <?php echo json_encode(@$new_subscription['booked_on']); ?>;
 
 
 
@@ -660,6 +667,14 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("paymentPlan: " + paymentPlan);
         console.log("paymentType: " + paymentType);
 
+
+        console.log("transaction_id: " + transaction_id);
+        console.log("status: " + status);
+        console.log("transaction_type: " + transaction_type);
+        console.log("transaction_date: " + transaction_date);
+        console.log("duration: " + duration);
+        console.log("next_rental: " + next_rental);
+        console.log("booked_on: " + booked_on);
 
         // You can now use this data to perform further actions or send it to a backend API, for example.
     });
