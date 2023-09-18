@@ -509,9 +509,11 @@
 															    <label for="security-deposit-term" class="">Security Deposit Term</label>
 															    <select name="security-deposit-term" id="security-deposit-term" class="form-control">
 															        
-                            										<option <?php if($property['securityDepositTerm'] == 1){ echo 'selected="selected"'; } ?> value="1">One Year</option>
+                            										<option <?php if($property['securityDepositTerm'] == 1){ echo 'selected="selected"'; } ?> value="1">One Month</option>
 															        
-                            										<option <?php if($property['securityDepositTerm'] == 2){ echo 'selected="selected"'; } ?> value="2">Two Years</option>
+                            										<option <?php if($property['securityDepositTerm'] == 2){ echo 'selected="selected"'; } ?> value="2">Two Month</option>
+
+																	<option <?php if($property['securityDepositTerm'] == 3){ echo 'selected="selected"'; } ?> value="2">Reset</option>
                             
                             									</select>
 															    

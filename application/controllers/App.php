@@ -423,7 +423,7 @@ class App extends CI_Controller
 				$sec_dep = $data['property']['securityDeposit'] * $data['property']['securityDepositTerm'];
 			}
 
-			else
+			elseif($data['property']['securityDepositTerm'] == 2)
 			{
 				$sec_dep = $data['property']['securityDeposit'] * $data['property']['securityDepositTerm'];
 				$sec_dep = 0.75 * $sec_dep;
