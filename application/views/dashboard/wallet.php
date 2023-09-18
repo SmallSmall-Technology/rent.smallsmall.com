@@ -653,16 +653,12 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("First Name: " + fname);
 
 
-        console.log("moveInDate: " + accountNumber);
-        console.log("rentExpirationDate: " + bankName);
-        console.log("Price: " + price);
-        console.log("Service Charge: " + serviceCharge);
-        console.log("Booking ID: " + bookingID);
-        console.log("User ID: " + userID);
-        console.log("Email: " + email);
-        console.log("First Name: " + fname);
-
-
+        console.log("moveInDate: " + moveInDate);
+        console.log("rentExpirationDate: " + rentExpirationDate);
+        console.log("rentStatus: " + rentStatus);
+        console.log("propertyTitle: " + propertyTitle);
+        console.log("paymentPlan: " + paymentPlan);
+        console.log("paymentType: " + paymentType);
 
 
         // You can now use this data to perform further actions or send it to a backend API, for example.
