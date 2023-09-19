@@ -43,7 +43,7 @@ class Admin extends CI_Controller
 
 		parent::__construct();
 
-		$this->load->model('admin/admin_model');
+		// $this->load->model('admin/admin_model');
 
 	}
 
