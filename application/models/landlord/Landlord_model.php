@@ -106,7 +106,7 @@ class Landlord_model extends CI_Model
 
         $this->db->from('cx_repairs as a');
 
-        $this->db->where('a.property_id', $propId);
+        $this->db->where('a.propertyId', $propId);
 
         $this->db->join('property_tbl as b', 'b.propertyID = a.propertyId');
 
