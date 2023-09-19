@@ -43,9 +43,7 @@ class Admin extends CI_Controller
 
 		parent::__construct();
 
-
-
-		//$this->load->model('admin/admin_model');
+		$this->load->model('admin/admin_model');
 
 	}
 
@@ -8630,32 +8628,81 @@ class Admin extends CI_Controller
 	}
 
 
-	public function direct_debit_subscription ()
-	{
-        // Check if it's an AJAX request
-        if ($this->input->is_ajax_request()) {
+	// public function direct_debit_subscription ()
+	// {
+    //     // Check if it's an AJAX request
+    //     if ($this->input->is_ajax_request()) {
 
-            // Get the data from the AJAX request
-            $data = $this->input->post();
+    //         // Get the data from the AJAX request
+    //         $data = $this->input->post();
 
-			// Insert the data into the 'direct debit subscriber table' table using the model
-            $insert_result = $this->Admin_model->directDebitSubsciber($data);
+	// 		// Insert the data into the 'direct debit subscriber table' table using the model
+    //         $insert_result = $this->Admin_model->directDebitSubsciber($data);
 
-            // // Insert the data into the 'user_account' table
-            // $this->db->insert('direct_debit_subsciber', $data);
+	// 		if ($insert_result) {
+    //             // Data inserted successfully
+    //             $response = array('message' => 'Data inserted successfully');
 
-            // Return a response (e.g., success message)
+    //             echo json_encode($response);
 
-            $response = array('message' => 'Data inserted successfully');
+    //         } else {
 
-            echo json_encode($response);
+    //             // Handle insert failure
+    //             $response = array('message' => 'Data insertion failed');
 
-        } else {
+    //             echo json_encode($response);
 
-            // Handle non-AJAX requests as needed
-        }
+    //         }
+
+    //         // // Insert the data into the 'user_account' table
+    //         // $this->db->insert('direct_debit_subsciber', $data);
+
+    //         // Return a response (e.g., success message)
+
+    //         $response = array('message' => 'Data inserted successfully');
+
+    //         echo json_encode($response);
+
+    //     } else {
+
+    //         // Handle non-AJAX requests as needed
+    //     }
 
 		
-	}
+	// }
+
+    public function direct_debit_subscription() {
+        // Check if it's an AJAX request
+        if ($this->input->is_ajax_request()) {
+            // Get the data from the AJAX request
+            $data = array(
+                'accountBalance' => $this->input->post('accountBalance'),
+                'accountName' => $this->input->post('accountName'),
+                'accountNumber' => $this->input->post('accountNumber'),
+                'bankName' => $this->input->post('bankName'),
+                'price' => $this->input->post('price'),
+                'serviceCharge' => $this->input->post('serviceCharge'),
+                'bookingID' => $this->input->post('bookingID'),
+                'userID' => $this->input->post('userID'),
+                'email' => $this->input->post('email'),
+                'fname' => $this->input->post('fname')
+            );
+
+            // Insert the data into the 'direct_debit_subscriber' table using the model
+            $insert_result = $this->Admin_model->directDebitSubscriber($data);
+
+            if ($insert_result) {
+                // Data inserted successfully
+                $response = array('message' => 'Data inserted successfully');
+                echo json_encode($response);
+            } else {
+                // Handle insert failure
+                $response = array('message' => 'Data insertion failed');
+                echo json_encode($response);
+            }
+        } else {
+            // Handle non-AJAX requests as needed
+        }
+    }
 
 }
