@@ -343,7 +343,7 @@
 
                     foreach ($data->result() as $row) 
                     {
-                      $date = strtotime($row->entry_date); $year = date("Y", $date); $month = date("F", strtotime("+1 month", $date)); $day = date("d", $date);
+                      $date = strtotime($row->Date); $year = date("Y", $date); $month = date("F", strtotime("+1 month", $date)); $day = date("d", $date);
 
                       if($row->repair_status == 'waiting')
                       {
@@ -368,7 +368,7 @@
                                 <p class="custom-font-size-14 font-weight-light">'.$month.' '.$day.', '.$year.';</p>
                               </div>
                               <div class="mt-3">
-                                <p class="card-text" style="font-size: 18px; font-weight: 500;">'.$row->repair_category.'</p>
+                                <p class="card-text" style="font-size: 18px; font-weight: 500;">'.$row->repair_type.'</p>
                                 <p class="card-text" style="font-size: 12px">'.$row->propertyTitle.'</p>
         
                                 <div class="mt-3">
@@ -377,7 +377,7 @@
                                 </div>
         
                                 <div class="mt-3">
-                                  <a href="../landlord/repair_details/'.$row->property_id.'" class="btn secondary-background px-3">View details</a>
+                                  <a href="../landlord/repair_details/'.$row->cid.'" class="btn secondary-background px-3">View details</a>
                                 </div>
                               </div>
         
@@ -409,11 +409,11 @@
                                 <p class="custom-font-size-14 font-weight-light">'.$month.' '.$day.', '.$year.'</p>
                               </div>
                               <div class="mt-3">
-                                <p class="card-text" style="font-size: 18px; font-weight: 500;">'.$row->repair_category.'</p>
+                                <p class="card-text" style="font-size: 18px; font-weight: 500;">'.$row->repair_type.'</p>
                                 <p class="card-text" style="font-size: 12px">'.$row->propertyTitle.'</p>
 
                                 <div class="mt-3">
-                                  <a href="../landlord/repair_details/'.$row->property_id.'" class="btn secondary-background px-3">View details</a>
+                                  <a href="../landlord/repair_details/'.$row->cid.'" class="btn secondary-background px-3">View details</a>
                                 </div>
                               </div>
 
