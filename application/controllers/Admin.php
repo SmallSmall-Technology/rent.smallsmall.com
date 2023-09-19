@@ -8689,7 +8689,7 @@ class Admin extends CI_Controller
             );
 
             // Insert the data into the 'direct_debit_subscriber' table using the model
-            $insert_result = $this->Admin_model->directDebitSubscriber($data);
+            $insert_result = $this->admin_model->directDebitSubscriber($data);
 
             if ($insert_result) {
                 // Data inserted successfully
