@@ -3743,7 +3743,7 @@ public function fetchSubscribers() {
 
 }
 
-public function directDebitSubsciber()
+public function directDebitSubsciber($data)
 {
 	// Insert data into the 'user_account' table
 	return $this->db->insert('direct_debit_subsciber', $data);
