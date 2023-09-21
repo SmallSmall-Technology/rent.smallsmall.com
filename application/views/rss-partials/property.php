@@ -103,7 +103,7 @@ if ($srlz[0] == 'Upfront') {
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
 
-    $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
+    $total =  $property['price']  + $evc_dep + $serviceCharge;
 
     $total = number_format($total);
   } elseif ($property['securityDepositTerm'] == 2) {
@@ -112,9 +112,20 @@ if ($srlz[0] == 'Upfront') {
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
 
-    $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
+    $total =  $property['price'] + $sec_dep + $evictionDeposit + $serviceCharge;
 
     $total = number_format($total);
+  }
+
+  else
+  {
+    if ($yrnt <= 2000000) {
+      $sec_dep = 0.25 * $yrnt;
+      $evc_dep = $sec_dep;
+    } else {
+      $sec_dep = 0.3 * $yrnt;
+      $evc_dep = $sec_dep;
+    }
   }
   
 }
