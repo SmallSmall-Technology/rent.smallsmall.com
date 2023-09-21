@@ -8685,7 +8685,7 @@ class Admin extends CI_Controller
                 'bookingID' => $this->input->post('bookingID'),
                 'userID' => $this->input->post('userID'),
                 'email' => $this->input->post('email'),
-                'fname' => $this->input->post('fname')
+                'fname' => $this->input->post('rentExpirationDate')
             );
 
             // Insert the data into the 'direct_debit_subscriber' table using the model
