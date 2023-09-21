@@ -7371,9 +7371,77 @@ class Admin extends CI_Controller
 			echo 0;
 		}
 	}
+	
 	public function all_notifications()
 	{
 
+		$config['total_rows'] = $this->admin_model->countNotifications();
+
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
+
+		if ($config['total_rows'] > 0) {
+
+			$page_number = $this->uri->segment(3);
+
+			$config['base_url'] = base_url() . 'admin/all-notifications';
+
+			if (empty($page_number))
+
+				$page_number = 1;
+
+			$offset = ($page_number - 1) * $this->pagination->per_page;
+
+			$this->admin_model->setPageNumber($this->pagination->per_page);
+
+			$this->admin_model->setOffset($offset);
+
+			$this->pagination->cur_page = $page_number;
+
+			$this->pagination->initialize($config);
+
+			$data['page_links'] = $this->pagination->create_links();
+
+			$data['notifications'] = $this->admin_model->fetchNotifications();
+		}
+
+		if (!file_exists(APPPATH . 'views/admin/pages/all-notifications.php')) {
+
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
+
+		//check if Admin is logged in
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['title'] = "Notifications :: SmallSmall";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/all-notifications.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+
+			//$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
+
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+	public function all_adverts()
+	{
 		$config['total_rows'] = $this->admin_model->countNotifications();
 
 		$data['total_count'] = $config['total_rows'];
@@ -7871,6 +7939,7 @@ class Admin extends CI_Controller
 
 		return array("result" => $result, "amount" => $new_amount);
 	}
+	
 	public function fill_payment_table($userID, $refID, $payment_period, $finance_balance)
 	{
 

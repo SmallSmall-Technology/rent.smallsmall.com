@@ -102,13 +102,13 @@ class Landlord_model extends CI_Model
 
     public function get_repairs($propId)
     {
-        $this->db->select('a.*, a.status as repair_status, b.*');
+        $this->db->select('a.*, a.id as cid, a.status as repair_status, b.*');
 
-        $this->db->from('repair_tbl as a');
+        $this->db->from('cx_repairs as a');
 
-        $this->db->where('a.property_id', $propId);
+        $this->db->where('a.propertyId', $propId);
 
-        $this->db->join('property_tbl as b', 'b.propertyID = a.property_id');
+        $this->db->join('property_tbl as b', 'b.propertyID = a.propertyId');
 
         $query = $this->db->get();
 
@@ -199,7 +199,7 @@ class Landlord_model extends CI_Model
 		
 		$this->db->from('cx_repairs as a');
 	    
-	    $this->db->where('a.propertyId', $propId);
+	    $this->db->where('a.id', $propId);
 		
         $this->db->join('property_tbl as b', 'b.propertyID = a.propertyId');
 

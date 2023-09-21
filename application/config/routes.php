@@ -498,6 +498,10 @@ $route['admin/edit-notification/(:any)'] = 'admin/edit_notification/$1';
 
 $route['admin/add-notification'] = 'admin/add_notification';
 
+$route['admin/all-adverts'] = 'admin/all_adverts';
+
+$route['admin/add-advert'] = 'admin/add_advert';
+
 $route['admin/all-notifications/(:any)'] = 'admin/all_notifications/$1';
 
 $route['admin/all-notifications'] = 'admin/all_notifications';
