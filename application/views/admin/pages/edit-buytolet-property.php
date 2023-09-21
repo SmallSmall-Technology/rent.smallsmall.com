@@ -280,7 +280,7 @@
 														</div>
 														
 													</div>
-													<div class="position-relative form-group"><label for="lockdownFee" class="">Lockdown Fee Percentage</label><input name="lockdownFee" id="lockdownFee" placeholder="Lockdown Fee" value="@$property['lockdown_fee']" type="text" class="form-control verify-field allFields"></div>
+													<div class="position-relative form-group"><label for="lockdownFee" class="">Lockdown Fee Percentage</label><input name="lockdownFee" id="lockdownFee" placeholder="Lockdown Fee" value="<?php echo @$property['lockdown_fee']; ?>" type="text" class="form-control verify-field allFields"></div>
                                             	</div>
 											</div>
                                         </div>
