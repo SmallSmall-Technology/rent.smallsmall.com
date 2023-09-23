@@ -5063,7 +5063,7 @@ class Admin extends CI_Controller
 		$hold_period = $this->input->post('hold_period');
 		$co_appr = explode(',', $this->input->post('co_appr'));
 		$co_rent = explode(',', $this->input->post('co_rent'));
-		$lockdownFee = $this->input->post('lockdownFee);
+		$lockdownFee = $this->input->post('lockdownFee');
 		$status = "";
 
 
@@ -5178,7 +5178,7 @@ class Admin extends CI_Controller
 		$hold_period = $this->input->post('hold_period');
 		$co_appr = explode(',', $this->input->post('co_appr'));
 		$co_rent = explode(',', $this->input->post('co_rent'));
-		$lockdownFee = $this->input->post('lockdownFee);
+		$lockdownFee = $this->input->post('lockdownFee');
 		$status = "";
 
 
