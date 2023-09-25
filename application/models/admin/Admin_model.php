@@ -84,6 +84,27 @@ class Admin_model extends CI_Model {
 		
 	}
 
+	public function insertCxAdvert($link, $filename){
+
+        $data = array(
+            'link' => $link,
+            'filename'   => $filename,
+            'Date' => date('Y-m-d'),
+        );
+
+		if($this->db->insert('cx_adverts', $data)){
+
+			return 1;
+
+		}else{
+
+			return 0;
+
+		}	
+		
+	}
+
+
 	public function getSearchCount($s_data) {
 
 

@@ -258,6 +258,7 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
+
 	public function add_notification()
 	{
 
@@ -290,6 +291,96 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
+	
+	public function add_advert()
+	{
+
+		if (!file_exists(APPPATH . 'views/admin/pages/new-notification.php')) {
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+
+		//check if Admin is logged in
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['title'] = "New Notification :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/new-notification.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+	public function prc_adverts()
+	{
+		$count = count($_FILES['imgName']['name']);
+
+		$val = '';
+
+		for($i=0; $i<$count; $i++)
+        {
+			$config['upload_path']          = './uploads/agreement/';
+			$config['allowed_types']        = 'jpg|png|jpeg';
+			$config['max_size']             = 0;
+			// $config['max_width']            = 1024;
+			// $config['max_height']           = 768;
+			$config['file_name'] = $_FILES['imgName']['name'][$i];
+
+			$this->load->library('upload', $config);
+
+			// if (!$this->upload->do_upload('imgName'))
+			// {
+			// 	$error = array('error' => $this->upload->display_errors());
+
+			// 	$this->load->view('agr_error', $error);
+			// }
+
+			$img = $_FILES['imgName']['name'][$i];
+
+			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
+            move_uploaded_file($postimg_tmp,"uploads/agreement/$img");
+
+			$data = $this->upload->data();
+
+			$val .= $img." ";
+		}
+
+		
+		$filename = $val;
+		
+		$link = $this->input->post('advertTitle');
+
+		//$date = 
+				
+		$res = $this->admin_model->insertCxAdvert($link, $filename);
+
+		if ($res) {
+
+			// Assuming you're using CodeIgniter, use the URL helper to create URLs
+		$user_profile_url = site_url('admin/add_advert/');
+
+		// Redirect to user profile with a success message
+		echo "<script>
+				alert('Upload Successful');
+				window.location.href='$user_profile_url';
+			</script>";
+		}
+	}
+
 	public function edit_notification($id)
 	{
 
