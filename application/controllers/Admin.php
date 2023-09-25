@@ -316,7 +316,7 @@ class Admin extends CI_Controller
 
 			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/new-notification.php', $data);
+			$this->load->view('admin/pages/new-adverts.php', $data);
 
 			$this->load->view('admin/templates/footer.php', $data);
 		} else {
