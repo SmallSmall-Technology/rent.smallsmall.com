@@ -42,11 +42,11 @@ if ($srlz[0] == 'Upfront') {
   $mnth = 'Upfront';
   $vmnth = 'Upfront';
 
-  // if ($property['price'] > 999999) {
-  //   $prc = (($property['price'] / 1000000) * 12) . 'M';
-  // } else {
-  //   $prc = number_format($property['price'] * 12);
-  // }
+  if ($property['price'] > 999999) {
+    $prc = (($property['price'] / 1000000) * 12) . 'M';
+  } else {
+    $prc = number_format($property['price'] * 12);
+  }
 
   $total =  ($property['price'] * 12) + $sec_dep;
 
@@ -101,11 +101,11 @@ elseif($srlz[0] == 'Monthly')
   $mnth = "/Month";
   $vmnth = "Monthly";
 
-  // if ($property['price'] > 999999) {
-  //   $prc = ($property['price'] / 1000000) . 'M';
-  // } else {
-  //   $prc = number_format($property['price']);
-  // }
+  if ($property['price'] > 999999) {
+    $prc = ($property['price'] / 1000000) . 'M';
+  } else {
+    $prc = number_format($property['price']);
+  }
 
   $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
 
@@ -158,11 +158,11 @@ elseif($srlz[0] == 'Quarterly')
   $mnth = "Quarterly";
   $vmnth = "Quarterly";
 
-  // if ($property['price'] > 999999) {
-  //   $prc = ($property['price'] / 1000000) . 'M';
-  // } else {
-  //   $prc = number_format($property['price']);
-  // }
+  if ($property['price'] > 999999) {
+    $prc = ($property['price'] / 1000000) . 'M';
+  } else {
+    $prc = number_format($property['price']);
+  }
 
   $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
 
@@ -212,11 +212,11 @@ elseif($srlz[0] == 'Bi-annually')
   $mnth = "Bi-annually";
   $vmnth = "Bi-annually";
 
-  // if ($property['price'] > 999999) {
-  //   $prc = ($property['price'] / 1000000) . 'M';
-  // } else {
-  //   $prc = number_format($property['price']);
-  // }
+  if ($property['price'] > 999999) {
+    $prc = ($property['price'] / 1000000) . 'M';
+  } else {
+    $prc = number_format($property['price']);
+  }
 
   $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
 
