@@ -351,12 +351,12 @@ class Admin extends CI_Controller
 
 			$img = $_FILES['imgName']['name'][$i];
 
-			$img = "/uploads/agreement/'.$img.'";
-
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
             move_uploaded_file($postimg_tmp,"uploads/agreement/$img");
 
 			$data = $this->upload->data();
+
+			$img = "/uploads/agreement/'.$img.'";
 
 			$val .= $img." ";
 		}
