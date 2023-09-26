@@ -188,9 +188,9 @@ elseif($srlz[0] == 'Quarterly')
   $vmnth = "Quarterly";
 
   if ($property['price'] > 999999) {
-    $prc = ($property['price'] / 1000000) . 'M';
+    $prc = (($property['price'] / 1000000) * 3) . 'M';
   } else {
-    $prc = number_format($property['price']);
+    $prc = number_format($property['price'] * 3);
   }
 
   $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -260,9 +260,9 @@ elseif($srlz[0] == 'Bi-annually')
   $vmnth = "Bi-annually";
 
   if ($property['price'] > 999999) {
-    $prc = ($property['price'] / 1000000) . 'M';
+    $prc = (($property['price'] / 1000000) * 6) . 'M';
   } else {
-    $prc = number_format($property['price']);
+    $prc = number_format($property['price'] * 6);
   }
 
   $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
