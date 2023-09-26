@@ -203,6 +203,17 @@ class App_model extends CI_Model {
 	    
 	    return $query->result_array();
 	}
+
+	public function adverts(){
+	    
+	    $this->db->select('a.*');
+	    
+	    $this->db->from('cx_adverts as a');
+	    
+	    $query = $this->db->get();
+	    
+	    return $query->result_array();
+	}
 	
 	public function fetchLocations(){
 	    
