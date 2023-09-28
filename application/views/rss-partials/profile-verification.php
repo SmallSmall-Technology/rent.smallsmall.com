@@ -1,3 +1,6 @@
+
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom-css/verification.css" />
+
 <!-- MAIN SECTION -->
 <main class="container-fluid">
     <div class="row">
