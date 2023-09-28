@@ -190,6 +190,8 @@ $route['app/properties/(:any)'] = 'app/properties/$1';
 
 $route['app/properties'] = 'app/properties';
 
+$route['app/adverts'] = 'app/adverts';
+
 $route['app/register'] = 'app/register';
 
 $route['app/login'] = 'app/app_login';

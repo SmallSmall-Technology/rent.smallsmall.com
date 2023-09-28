@@ -48,17 +48,11 @@ if ($srlz[0] == 'Upfront') {
     $prc = number_format($property['price'] * 12);
   }
 
-  if ($yrnt <= 2000000) {
-    $sec_dep = 0.25 * $yrnt;
-  } else {
-    $sec_dep = 0.3 * $yrnt;
-  }
-
   $total =  ($property['price'] * 12) + $sec_dep;
 
   $total = number_format($total);
 
-  if($property['securityDepositTerm'] == 1) {
+  if($property['securityDepositTerm'] == 1){
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -72,13 +66,51 @@ if ($srlz[0] == 'Upfront') {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
     $sec_dep = 0.75 * $sec_dep;
 
+    //$evc_dep = $sec_dep;
+
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
 
     $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
 
     $total = number_format($total);
   }
-} else {
+
+  elseif ($property['securityDepositTerm'] == 3)
+  {
+    if ($yrnt <= 2000000) {
+      $sec_dep = 0.25 * $yrnt;
+      $evc_dep = $sec_dep;
+
+      $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
+
+      $total = number_format($total);
+    } else {
+      $sec_dep = 0.3 * $yrnt;
+      $evc_dep = $sec_dep;
+
+      $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
+
+      $total = number_format($total);
+    }
+  }
+
+  elseif ($property['securityDepositTerm'] == 4) {
+    $sec_dep = $property['securityDeposit'];
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    //$evc_dep = $property['securityDeposit'];
+
+    $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
+
+    $total = number_format($total);
+  }
+
+} 
+
+
+elseif($srlz[0] == 'Monthly') 
+{
   $mnth = "/Month";
   $vmnth = "Monthly";
 
@@ -93,8 +125,206 @@ if ($srlz[0] == 'Upfront') {
   $total =  $property['price'] + $sec_dep + $evictionDeposit + $serviceCharge;
 
   $total = number_format($total);
+
+  if($property['securityDepositTerm'] == 1){
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    $evc_dep = $property['securityDeposit'];
+
+    $total =  ($property['price'] * 1) + $evc_dep + $serviceCharge;
+
+    $total = number_format($total);
+  } elseif ($property['securityDepositTerm'] == 2) {
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+    $sec_dep = 0.75 * $sec_dep;
+
+    //$evc_dep = $sec_dep;
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    $total =  ($property['price'] * 1) + $sec_dep + $evictionDeposit + $serviceCharge;
+
+    $total = number_format($total);
+  }
+
+  elseif ($property['securityDepositTerm'] == 3)
+  {
+    if ($yrnt <= 2000000) {
+      $sec_dep = 0.25 * $yrnt;
+      $evc_dep = $sec_dep;
+
+      $total =  ($property['price'] * 1) + $evc_dep + $serviceCharge;
+
+      $total = number_format($total);
+    } else {
+      $sec_dep = 0.3 * $yrnt;
+      $evc_dep = $sec_dep;
+
+      $total =  ($property['price'] * 1) + $evc_dep + $serviceCharge;
+
+      $total = number_format($total);
+    }
+  }
+
+  elseif ($property['securityDepositTerm'] == 4) {
+    $sec_dep = $property['securityDeposit'];
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    //$evc_dep = $property['securityDeposit'];
+
+    $total =  ($property['price'] * 1) + $evc_dep + $serviceCharge;
+
+    $total = number_format($total);
+  }
+  
 }
 
+elseif($srlz[0] == 'Quarterly') 
+{
+  $mnth = "Quarterly";
+  $vmnth = "Quarterly";
+
+  if ($property['price'] > 999999) {
+    $prc = (($property['price'] / 1000000) * 3) . 'M';
+  } else {
+    $prc = number_format($property['price'] * 3);
+  }
+
+  $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+  $total =  ($property['price'] * 3) + $sec_dep + $evictionDeposit + $serviceCharge;
+
+  $total = number_format($total);
+
+  if($property['securityDepositTerm'] == 1){
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    $evc_dep = $property['securityDeposit'];
+
+    $total =  ($property['price'] * 3) + $evc_dep + $serviceCharge;
+
+    $total = number_format($total);
+  } elseif ($property['securityDepositTerm'] == 2) {
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+    $sec_dep = 0.75 * $sec_dep;
+
+    //$evc_dep = $sec_dep;
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    $total =  ($property['price'] * 3) + $sec_dep + $evictionDeposit + $serviceCharge;
+
+    $total = number_format($total);
+  }
+
+  elseif ($property['securityDepositTerm'] == 3)
+  {
+    if ($yrnt <= 2000000) {
+      $sec_dep = 0.25 * $yrnt;
+      $evc_dep = $sec_dep;
+
+      $total =  ($property['price'] * 3) + $evc_dep + $serviceCharge;
+
+      $total = number_format($total);
+    } else {
+      $sec_dep = 0.3 * $yrnt;
+      $evc_dep = $sec_dep;
+
+      $total =  ($property['price'] * 3) + $evc_dep + $serviceCharge;
+
+      $total = number_format($total);
+    }
+  }
+
+  elseif ($property['securityDepositTerm'] == 4) {
+    $sec_dep = $property['securityDeposit'];
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    //$evc_dep = $property['securityDeposit'];
+
+    $total =  ($property['price'] * 3) + $evc_dep + $serviceCharge;
+
+    $total = number_format($total);
+  }
+}
+
+elseif($srlz[0] == 'Bi-annually') 
+{
+  $mnth = "Bi-annually";
+  $vmnth = "Bi-annually";
+
+  if ($property['price'] > 999999) {
+    $prc = (($property['price'] / 1000000) * 6) . 'M';
+  } else {
+    $prc = number_format($property['price'] * 6);
+  }
+
+  $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+  $total =  ($property['price'] * 6) + $sec_dep + $evictionDeposit + $serviceCharge;
+
+  $total = number_format($total);
+
+  if($property['securityDepositTerm'] == 1){
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    $evc_dep = $property['securityDeposit'];
+
+    $total =  ($property['price'] * 6) + $evc_dep + $serviceCharge;
+
+    $total = number_format($total);
+  } elseif ($property['securityDepositTerm'] == 2) {
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+    $sec_dep = 0.75 * $sec_dep;
+
+    //$evc_dep = $sec_dep;
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    $total =  ($property['price'] * 6) + $sec_dep + $evictionDeposit + $serviceCharge;
+
+    $total = number_format($total);
+  }
+
+  elseif ($property['securityDepositTerm'] == 3)
+  {
+    if ($yrnt <= 2000000) {
+      $sec_dep = 0.25 * $yrnt;
+      $evc_dep = $sec_dep;
+
+      $total =  ($property['price'] * 6) + $evc_dep + $serviceCharge;
+
+      $total = number_format($total);
+    } else {
+      $sec_dep = 0.3 * $yrnt;
+      $evc_dep = $sec_dep;
+
+      $total =  ($property['price'] * 6) + $evc_dep + $serviceCharge;
+
+      $total = number_format($total);
+    }
+  }
+
+  elseif ($property['securityDepositTerm'] == 4) {
+    $sec_dep = $property['securityDeposit'];
+
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+
+    //$evc_dep = $property['securityDeposit'];
+
+    $total =  ($property['price'] * 6) + $evc_dep + $serviceCharge;
+
+    $total = number_format($total);
+  }
+}
 
 function shortenText($text, $maxLength)
 {
@@ -109,6 +339,25 @@ function shortenText($text, $maxLength)
     return $text;
   }
 }
+
+ // Function to check if a string starts with a specific prefix
+ function startsWith($string, $prefix) {
+  return substr($string, 0, strlen($prefix)) === $prefix;
+}
+
+// function shortenText($text, $maxLength)
+// {
+
+//   if (strlen($text) > $maxLength) {
+
+//     $shortenedText = substr($text, 0, $maxLength) . '...';
+
+//     return $shortenedText;
+//   } else {
+
+//     return $text;
+//   }
+// }
 
 ?>
 

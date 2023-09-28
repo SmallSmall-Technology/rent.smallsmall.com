@@ -323,11 +323,31 @@ class App extends CI_Controller {
 	        
 	        $result = TRUE;
 	        
-	        $details = "Success";
-	        
+	        $details = "Success";    
 	    }
         
         echo json_encode(array("response" => $result, "details" => $details, "data" => $data));
+	}
+
+	public function adverts(){
+	    
+	    $result = FALSE;
+	    
+	    $details = '';
+	    
+	    $data = array();
+	    
+	    $data['details'] = $this->app_model->adverts();
+	
+	    
+	    if(is_array($data)){
+	        
+	        $result = TRUE;
+	        
+	        //$details = "Success";    
+	    }
+        
+        echo json_encode(array("response" => $result, "data" => $data));
 	}
 	
 	public function featured_properties(){
