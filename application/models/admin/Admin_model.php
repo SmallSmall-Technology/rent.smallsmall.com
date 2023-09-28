@@ -3290,7 +3290,7 @@ class Admin_model extends CI_Model {
 
 	public function editCxAdvert($link, $filename, $title, $id){
 	    
-	    $edits = array("link" => $link, "filename" => $filename, "title" => $title);
+	    $edits = array("link" => $link, "filename" => $filename, "title" => $title, "date" => date('Y-m-d'));
 	    
 	    $this->db->where("id", $id);
 	    
