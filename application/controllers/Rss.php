@@ -501,13 +501,13 @@ class Rss extends CI_Controller
 
 		if ($this->session->has_userdata('userID')) {
 
-			$data['mob_color'] = "white";
+			// $data['mob_color'] = "white";
 
-			$data['mob_icons'] = "blue";
+			// $data['mob_icons'] = "blue";
 
-			$data['color'] = "white";
+			// $data['color'] = "white";
 
-			$data['logo'] = "blue";
+			// $data['logo'] = "blue";
 
 			$data['image'] = "without-image";
 
@@ -526,11 +526,18 @@ class Rss extends CI_Controller
 
 			$data['title'] = "Profile Verification";
 
-			$this->load->view('templates/rss-header', $data);
+			// $this->load->view('templates/rss-header', $data);
+
+			// $this->load->view('rss-partials/' . $page, $data);
+
+			// $this->load->view('templates/rss-footer', $data);
+
+			$this->load->view('templates/rss-updated-header', $data);
 
 			$this->load->view('rss-partials/' . $page, $data);
 
-			$this->load->view('templates/rss-footer', $data);
+			$this->load->view('templates/rss-updated-footer', $data);
+
 		} else {
 
 			//$userdata = array('page_link' => base_url().'verification/'.$page);
