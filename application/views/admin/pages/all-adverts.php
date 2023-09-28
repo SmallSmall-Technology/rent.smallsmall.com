@@ -31,8 +31,8 @@
 								<th class="text-left">Title</th>
 								<!--<th class="text-left">Location</th>
 								<th class="text-left">Type</th>-->
-								<th class="text-left">Starts</th>
-								<th class="text-left">Ends</th>
+								<th class="text-left">link</th>
+								<th class="text-left">Date</th>
 								<th class="text-left">Actions</th>
 							</tr>
 							</thead>
@@ -47,10 +47,10 @@
 
 							<tr>
 								<td class="text-left"><input type="checkbox" class="notification-checkbox" id="<?php echo $value['id'] ?>" /></td> 
-								<td class="text-left"><?php echo $value['message']; ?></td>
+								<td class="text-left"><?php echo $value['title']; ?></td>
 								
-								<td class="text-left"><?php echo date("d M Y" , strtotime($value['start_date'])); ?></td>
-								<td class="text-left"><?php echo date("d M Y" , strtotime($value['end_date'])); ?></td>
+								<td class="text-left"><?php echo $value['link']; ?></td>
+								<td class="text-left"><?php echo date("d M Y" , strtotime($value['date'])); ?></td>
 								
 					
 								<td class="text-left">
