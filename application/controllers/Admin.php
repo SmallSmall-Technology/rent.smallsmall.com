@@ -356,7 +356,7 @@ class Admin extends CI_Controller
 
 			$data = $this->upload->data();
 
-			$img = "/uploads/agreement/'.$img.'";
+			$img = "/uploads/agreement/$img";
 
 			$val .= $img." ";
 		}
@@ -366,9 +366,11 @@ class Admin extends CI_Controller
 		
 		$link = $this->input->post('advertTitle');
 
+		$title = $this->input->post('notificationTitle');
+
 		//$date = 
 				
-		$res = $this->admin_model->insertCxAdvert($link, $filename);
+		$res = $this->admin_model->insertCxAdvert($link, $filename, $title);
 
 		if ($res) {
 
@@ -7535,7 +7537,7 @@ class Admin extends CI_Controller
 
 	public function all_adverts()
 	{
-		$config['total_rows'] = $this->admin_model->countNotifications();
+		$config['total_rows'] = $this->admin_model->countAdverts();
 
 		$data['total_count'] = $config['total_rows'];
 
@@ -7545,7 +7547,7 @@ class Admin extends CI_Controller
 
 			$page_number = $this->uri->segment(3);
 
-			$config['base_url'] = base_url() . 'admin/all-notifications';
+			$config['base_url'] = base_url() . 'admin/all-adverts';
 
 			if (empty($page_number))
 
@@ -7563,10 +7565,10 @@ class Admin extends CI_Controller
 
 			$data['page_links'] = $this->pagination->create_links();
 
-			$data['notifications'] = $this->admin_model->fetchNotifications();
+			$data['notifications'] = $this->admin_model->fetchadverts();
 		}
 
-		if (!file_exists(APPPATH . 'views/admin/pages/all-notifications.php')) {
+		if (!file_exists(APPPATH . 'views/admin/pages/all-adverts.php')) {
 
 			// Whoops, we don't have a page for that!
 			show_404();
@@ -7588,7 +7590,7 @@ class Admin extends CI_Controller
 
 			$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/all-notifications.php', $data);
+			$this->load->view('admin/pages/all-adverts.php', $data);
 
 			$this->load->view('admin/templates/footer.php', $data);
 

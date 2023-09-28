@@ -84,9 +84,10 @@ class Admin_model extends CI_Model {
 		
 	}
 
-	public function insertCxAdvert($link, $filename){
+	public function insertCxAdvert($link, $filename, $title){
 
         $data = array(
+			'title' => $title,
             'link' => $link,
             'filename'   => $filename,
             'Date' => date('Y-m-d'),
@@ -206,7 +207,15 @@ class Admin_model extends CI_Model {
 
 		return $this->db->count_all_results();
 
+	} 
+
+	public function countAdverts() {
+
+		$this->db->from('cx_adverts');
+
+		return $this->db->count_all_results();
 	}
+
 	public function countInspSearchRequests($id, $s_data) {
 	
 		$this->db->select('a.*, b.*');
@@ -3381,6 +3390,7 @@ class Admin_model extends CI_Model {
 	    
 	    return $query->result_array();
 	}
+	
 	public function fetchNotifications() {       
 
 		$this->db->select('*');
@@ -3394,6 +3404,21 @@ class Admin_model extends CI_Model {
 		return $query->result_array();
 
 	}
+
+	public function fetchadverts() {       
+
+		$this->db->select('*');
+
+		$this->db->from('cx_adverts');          
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+
+	}
+
 	public function get_notification($id) {       
 
 		$this->db->select('*');
