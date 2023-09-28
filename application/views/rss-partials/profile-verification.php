@@ -26,11 +26,9 @@
 
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <div class="customized-select">
                                     <div class="customized-select">
                                         <input type="text" class="form-control verify-txt-f" id="first-name" placeholder="Firstname" />
                                     </div>
-                                </div>
                             </div>
                         </div>
 
@@ -132,33 +130,25 @@
                             </div>
                         </div>
 
-
                         <!-- State -->
-
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <div class="customized-select">
-
+                                <div class="select customized-select">
                                     <select class="standard-select states verify-txt-f">
                                         <option value="" selected="selected">State</option>
-
                                     </select>
                                 </div>
                             </div>
                         </div>
 
-
                         <!-- City -->
-
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <div class="customized-select">
-                                    <input type="text" disabled class="form-control verify-txt-f" id="city" placeholder="City" />
+                                <div class="select customized-select">
+                                    <input type="text" class="form-control rss-text-f verify-txt-f" id="city" placeholder="City" />
                                 </div>
                             </div>
                         </div>
-
-
 
                         <!-- ID Number -->
 
@@ -169,8 +159,6 @@
                                 </div>
                             </div>
                         </div>
-
-
 
                         <!-- Linkedin Url -->
 
