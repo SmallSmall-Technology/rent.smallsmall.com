@@ -55,7 +55,7 @@
 					
 								<td class="text-left">
 									<div class="action-container">
-										<a href="<?php echo base_url()."admin/edit-notification/".$value['id']; ?>" type="button" id="notification-<?php echo $value['id']; ?>" class="btn btn-primary btn-sm article-detail">Edit</a>
+										<a href="<?php echo base_url()."admin/edit-advert/".$value['id']; ?>" type="button" id="notification-<?php echo $value['id']; ?>" class="btn btn-primary btn-sm article-detail">Edit</a>
 
 										<button type="button" id="notification-<?php echo $value['id']; ?>" class="btn btn-primary btn-sm notification-delete">Delete</button>
 

@@ -3287,6 +3287,17 @@ class Admin_model extends CI_Model {
 	    return $this->db->update("user_tbl", $edits);
 	    
 	}
+
+	public function editCxAdvert($link, $filename, $title, $id){
+	    
+	    $edits = array("link" => $link, "filename" => $filename, "title" => $title, "date" => date('Y-m-d'));
+	    
+	    $this->db->where("id", $id);
+	    
+	    return $this->db->update("cx_adverts", $edits);
+	    
+	}
+
 	public function changeStayoneBookingStatus($bookingID, $status){
 	    
 	    $this->status = $status;
@@ -3432,6 +3443,20 @@ class Admin_model extends CI_Model {
 		return $query->row_array();
 
 	}
+
+	public function get_advert($id) {       
+
+		$this->db->select('*');
+
+		$this->db->from('cx_adverts');          
+
+		$this->db->where('id', $id);
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+	
 	public function updateStayoneInvoice($bookingID, $invoice){
 	    
 	    $updates = array("invoice" => $invoice, "updated_on" => date('Y-m-d H:i:s'));
