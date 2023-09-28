@@ -498,6 +498,8 @@ $route['admin/btl-how-it-works'] = 'admin/btl_how_it_works';
 
 $route['admin/edit-notification/(:any)'] = 'admin/edit_notification/$1';
 
+$route['admin/edit-advert/(:any)'] = 'admin/edit_advert/$1';
+
 $route['admin/add-notification'] = 'admin/add_notification';
 
 $route['admin/all-adverts'] = 'admin/all_adverts';
