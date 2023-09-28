@@ -171,7 +171,7 @@
                         </div>
 
                         <div class="col-12 mt-5 text-center">
-                        <button type="submit" class="rss-form-button verifyBut" id="verifyBut">Next</div>
+                        <button type="submit" class="btn verify-btn px-5 py-2 rss-form-button verifyBut" id="verifyBut">Next</div>
                         <!-- <a href="" class="btn verify-btn px-5 py-2 rss-form-button verifyBut">Next</a> -->
                         </div>
 
