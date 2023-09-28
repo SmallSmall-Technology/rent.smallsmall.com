@@ -5649,6 +5649,23 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function deleteAdvert()
+	{
+		$id = $this->input->post('bookingID');
+
+		//$propID = $this->input->post('propertyID');		
+
+		$res = $this->admin_model->delAdvert($id);
+
+		if ($res) {
+
+			echo 1;
+		} else {
+
+			echo 0;
+		}
+	}
+
 	public function deleteType()
 	{
 
