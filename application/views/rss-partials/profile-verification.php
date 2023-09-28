@@ -155,7 +155,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <div class="customized-select">
-                                    <input type="text" disabled class="form-control verify-txt-f" id="passport-number" placeholder="ID Number/Driver's License" />
+                                    <input type="text" class="form-control verify-txt-f" id="passport-number" placeholder="ID Number/Driver's License" />
                                 </div>
                             </div>
                         </div>
@@ -171,7 +171,8 @@
                         </div>
 
                         <div class="col-12 mt-5 text-center">
-                            <a href="verificationTwo.html" class="btn verify-btn px-5 py-2">Next</a>
+                        <button type="submit" class="rss-form-button verifyBut" id="verifyBut">Next</div>
+                        <!-- <a href="" class="btn verify-btn px-5 py-2 rss-form-button verifyBut">Next</a> -->
                         </div>
 
 
