@@ -31,7 +31,7 @@
   <!-- custom CSS -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom-css2/header.css" />
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom-css2/footer.css" />
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom-css2/index.css" />
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom-css2/requestRepair.css" />
 
 
   <title>Dashboard Home</title>
