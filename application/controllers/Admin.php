@@ -328,91 +328,73 @@ class Admin extends CI_Controller
 	public function prc_adverts()
 	{
 		require 'vendor/autoload.php';
-
+		
 		sleep(3);
 
 		$bucket = 'dev-rss-uploads'; // bucket name
 
-		if ($_FILES["files"]["name"] != '') {
 
-			$output = '';
 
-			$error = 0;
+		$count = count($_FILES['imgName']['name']);
 
-			$config["upload_path"] = './uploads/properties/' . $folder;
+		$val = '';
 
-			$config["allowed_types"] = 'jpg|jpeg|png';
+		$s3 = new Aws\S3\S3Client([
 
-			$config['encrypt_name'] = TRUE;
+			'version' => 'latest',
 
-			$config['max_size'] = 10 * 1024;
+			'region'  => 'eu-west-1'
+
+		]);
+
+
+		for($i=0; $i<$count; $i++)
+        {
+			$config['upload_path']          = './uploads/agreement/';
+			$config['allowed_types']        = 'jpg|png|jpeg';
+			$config['max_size']             = 0;
+			// $config['max_width']            = 1024;
+			// $config['max_height']           = 768;
+			$config['file_name'] = $_FILES['imgName']['name'][$i];
 
 			$this->load->library('upload', $config);
 
-			$this->upload->initialize($config);
+			// if (!$this->upload->do_upload('imgName'))
+			// {
+			// 	$error = array('error' => $this->upload->display_errors());
 
-			// Create an S3 client
-			$s3 = new Aws\S3\S3Client([
+			// 	$this->load->view('agr_error', $error);
+			// }
 
-				'version' => 'latest',
+			$img = $_FILES['imgName']['name'][$i];
 
-				'region'  => 'eu-west-1'
+			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
+            move_uploaded_file($postimg_tmp,"uploads/agreement/$img");
 
-			]);
+			$s3ObjectKey = 'uploads/properties/'. $img;
 
+			$data = $this->upload->data();
 
+			$img = "/uploads/agreement/$img";
 
-			$count = count($_FILES['imgName']['name']);
+			$val .= $img." ";
 
-			$val = '';
+			try {
+				$result = $s3->putObject([
 
-			for($i=0; $i<$count; $i++)
-			{
-				$config['upload_path']          = './uploads/agreement/';
-				$config['allowed_types']        = 'jpg|png|jpeg';
-				$config['max_size']             = 0;
-				// $config['max_width']            = 1024;
-				// $config['max_height']           = 768;
-				$config['file_name'] = $_FILES['imgName']['name'][$i];
+					'Bucket' => $bucket,
 
-				$this->load->library('upload', $config);
+					'Key'    => $s3ObjectKey,
 
-				// if (!$this->upload->do_upload('imgName'))
-				// {
-				// 	$error = array('error' => $this->upload->display_errors());
+					'Body'   => file_get_contents($data["full_path"]),
+				]);
 
-				// 	$this->load->view('agr_error', $error);
-				// }
+			} catch (Aws\S3\Exception\S3Exception $e) {
 
-				$img = $_FILES['imgName']['name'][$i];
-
-				$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-				move_uploaded_file($postimg_tmp,"uploads/agreement/$img");
-
-				$s3ObjectKey = 'uploads/agreement/' . $img;
-
-				$data = $this->upload->data();
-
-				// try {
-				// 	$result = $s3->putObject([
-
-				// 		'Bucket' => $bucket,
-
-				// 		'Key'    => $s3ObjectKey,
-
-				// 		'Body'   => file_get_contents($data["full_path"]),
-				// 	]);
-
-				// } catch (Aws\S3\Exception\S3Exception $e) {
-
-				// 	$error = 'S3 Upload Error: ' . $e->getMessage();
-				// }
-
-				$img = "/uploads/agreement/$img";
-
-				$val .= $img." ";
+				$error = 'S3 Upload Error: ' . $e->getMessage();
 			}
 		}
+
 		
 		$filename = $val;
 		
@@ -435,7 +417,7 @@ class Admin extends CI_Controller
 				window.location.href='$user_profile_url';
 			</script>";
 		}
-	} 
+	}
 
 	public function edit_adverts()
 	{
