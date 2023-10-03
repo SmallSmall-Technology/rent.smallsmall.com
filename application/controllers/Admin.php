@@ -362,57 +362,57 @@ class Admin extends CI_Controller
 
 
 
-		$count = count($_FILES['imgName']['name']);
+			$count = count($_FILES['imgName']['name']);
 
-		$val = '';
+			$val = '';
 
-		for($i=0; $i<$count; $i++)
-        {
-			$config['upload_path']          = './uploads/agreement/';
-			$config['allowed_types']        = 'jpg|png|jpeg';
-			$config['max_size']             = 0;
-			// $config['max_width']            = 1024;
-			// $config['max_height']           = 768;
-			$config['file_name'] = $_FILES['imgName']['name'][$i];
+			for($i=0; $i<$count; $i++)
+			{
+				$config['upload_path']          = './uploads/agreement/';
+				$config['allowed_types']        = 'jpg|png|jpeg';
+				$config['max_size']             = 0;
+				// $config['max_width']            = 1024;
+				// $config['max_height']           = 768;
+				$config['file_name'] = $_FILES['imgName']['name'][$i];
 
-			$this->load->library('upload', $config);
+				$this->load->library('upload', $config);
 
-			// if (!$this->upload->do_upload('imgName'))
-			// {
-			// 	$error = array('error' => $this->upload->display_errors());
+				// if (!$this->upload->do_upload('imgName'))
+				// {
+				// 	$error = array('error' => $this->upload->display_errors());
 
-			// 	$this->load->view('agr_error', $error);
-			// }
+				// 	$this->load->view('agr_error', $error);
+				// }
 
-			$img = $_FILES['imgName']['name'][$i];
+				$img = $_FILES['imgName']['name'][$i];
 
-			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            move_uploaded_file($postimg_tmp,"uploads/agreement/$img");
+				$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
+				move_uploaded_file($postimg_tmp,"uploads/agreement/$img");
 
-			$s3ObjectKey = 'uploads/agreement/' . $img;
+				$s3ObjectKey = 'uploads/agreement/' . $img;
 
-			$data = $this->upload->data();
+				$data = $this->upload->data();
 
-			try {
-				$result = $s3->putObject([
+				// try {
+				// 	$result = $s3->putObject([
 
-					'Bucket' => $bucket,
+				// 		'Bucket' => $bucket,
 
-					'Key'    => $s3ObjectKey,
+				// 		'Key'    => $s3ObjectKey,
 
-					'Body'   => file_get_contents($data["full_path"]),
-				]);
+				// 		'Body'   => file_get_contents($data["full_path"]),
+				// 	]);
 
-			} catch (Aws\S3\Exception\S3Exception $e) {
+				// } catch (Aws\S3\Exception\S3Exception $e) {
 
-				$error = 'S3 Upload Error: ' . $e->getMessage();
+				// 	$error = 'S3 Upload Error: ' . $e->getMessage();
+				// }
+
+				$img = "/uploads/agreement/$img";
+
+				$val .= $img." ";
 			}
-
-			$img = "/uploads/agreement/$img";
-
-			$val .= $img." ";
 		}
-
 		
 		$filename = $val;
 		
@@ -435,7 +435,7 @@ class Admin extends CI_Controller
 				window.location.href='$user_profile_url';
 			</script>";
 		}
-	}
+	} 
 
 	public function edit_adverts()
 	{
