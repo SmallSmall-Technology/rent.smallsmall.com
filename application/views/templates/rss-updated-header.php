@@ -182,14 +182,15 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
 
       <!-- Navbar links -->
       <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
-        <ul class="navbar-nav w-100 primary-text-color justify-content-center">
-          <li class="nav-item mr-5">
+      <ul class="navbar-nav w-100 primary-text-color">
+      <!-- <ul class="navbar-nav w-100 primary-text-color justify-content-center"> -->
+          <!-- <li class="nav-item mr-5">
             <a class="nav-link d-sm-inline-block primary-text-color" href="https://stay.smallsmall.com">
               <small>Nightly stay</small>
               <br />
               <span class="font-weight-bold">Staysmallsmall</span>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link d-sm-inline-block primary-text-color" href="https://buy.smallsmall.com">
               <small>Own</small>
@@ -541,8 +542,8 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
                 </p>
               </div>
               <div>
-                <p><a class="text-white" href="https://stay.smallsmall.com"><small class="font-weight-light" style="font-size:10px">Nightly
-                      stay</small><br>Staysmallsmall</a> </p>
+                <!-- <p><a class="text-white" href="https://stay.smallsmall.com"><small class="font-weight-light" style="font-size:10px">Nightly
+                      stay</small><br>Staysmallsmall</a> </p> -->
                 <p><a class="text-white" href="https://buy.smallsmall.com"><small class="font-weight-light"
                       style="font-size:10px">Invest</small><br>BuySmallsmall</a> </p>
               </div>
