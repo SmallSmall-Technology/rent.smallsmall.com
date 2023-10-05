@@ -345,7 +345,6 @@ class Admin extends CI_Controller
 
 		]);
 
-
 		for($i=0; $i<$count; $i++)
         {
 			$config['upload_path']          = './uploads/agreement/';
@@ -367,13 +366,13 @@ class Admin extends CI_Controller
 			$img = $_FILES['imgName']['name'][$i];
 
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            move_uploaded_file($postimg_tmp,"uploads/agreement/$img");
+            move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
 
-			$s3ObjectKey = 'uploads/agreement/'. $img;
+			$s3ObjectKey = 'uploads/adverts/'. $img;
 
 			$data = $this->upload->data();
 
-			$img = "/uploads/agreement/$img";
+			$img = "/uploads/adverts/$img";
 
 			$val .= $img." ";
 
