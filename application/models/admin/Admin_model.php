@@ -167,6 +167,59 @@ class Admin_model extends CI_Model {
 		return $this->db->count_all_results();
 
 	}
+
+	public function countAdverts() {
+
+		$this->db->from('cx_adverts');
+
+		return $this->db->count_all_results();
+	}
+
+	public function get_advert($id) {       
+
+		$this->db->select('*');
+
+		$this->db->from('cx_adverts');          
+
+		$this->db->where('id', $id);
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
+	public function delAdvert($bookingID){
+	    
+	    $this->db-> where('id', $bookingID);
+    	
+		if($this->db->delete('cx_adverts')){
+		    
+		   return 1; 
+		        
+		}
+
+		else{
+			
+			return 0;
+			
+		}
+		
+	}
+
+	public function fetchadverts() {       
+
+		$this->db->select('*');
+
+		$this->db->from('cx_adverts');          
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+
+	}
+
 	public function countBookings() {
 
 		$this->db->from('stayone_booking');

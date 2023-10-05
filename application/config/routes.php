@@ -467,6 +467,12 @@ $route['admin/rss-verfd'] = 'admin/rss_verfd';
 
 $route['admin/agr-upload'] = 'admin/agr_upload';
 
+$route['admin/edit-advert/(:any)'] = 'admin/edit_advert/$1';
+
+$route['admin/all-adverts'] = 'admin/all_adverts';
+
+$route['admin/add-advert'] = 'admin/add_advert';
+
 $route['admin/rss-verfd/(:any)'] = 'admin/rss_verfd/$1';
 
 $route['admin/download/(:any)'] = 'admin/download/$1';

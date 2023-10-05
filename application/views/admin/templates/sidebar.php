@@ -121,6 +121,41 @@
 							</li>
                         </ul>
 					</li>
+
+					<li>
+						<a href="" >
+
+							<i class="metismenu-icon pe-7s-chat"></i>
+
+							Adverts
+
+						</a>
+                        <ul>
+							<li>
+
+								<a href="<?php echo base_url(); ?>admin/all-adverts">
+
+									<i class="metismenu-icon"></i>
+
+									All Adverts
+
+								</a>
+
+							</li>
+							<li>
+
+								<a href="<?php echo base_url(); ?>admin/add-advert">
+
+									<i class="metismenu-icon"></i>
+
+									Add Advert
+
+								</a>
+
+							</li>
+                        </ul>
+					</li>
+
                     <?php } ?>
                     <?php if($userAccess != 6){ ?>
 					<li>
