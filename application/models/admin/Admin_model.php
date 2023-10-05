@@ -3454,6 +3454,7 @@ class Admin_model extends CI_Model {
 	    return $query->row_array();
 	    
 	}
+	
 	public function update_wallet($userID, $amount){
 	    
 	    $update = array("account_balance" => $amount);
