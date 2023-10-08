@@ -1301,6 +1301,17 @@ class Admin_model extends CI_Model {
 	        return 0;
 	    }
 	}
+
+	public function editCxAdvert($link, $filename, $title, $id){
+	    
+	    $edits = array("link" => $link, "filename" => $filename, "title" => $title, "date" => date('Y-m-d'));
+	    
+	    $this->db->where("id", $id);
+	    
+	    return $this->db->update("cx_adverts", $edits);
+	    
+	}
+
 	public function editApartment($id, $propName, $propType, $stayType, $propDesc, $address, $cost, $security_deposit, $imageFolder, $featuredPic, $amenities, $bed, $bath, $toilet, $guest, $policies, $house_rules){
 	  
 	    
@@ -3584,6 +3595,30 @@ class Admin_model extends CI_Model {
 		return $query->row_array();
 
 	}
+
+
+	public function insertCxAdvert($link, $filename, $title){
+
+        $data = array(
+			'title' => $title,
+            'link' => $link,
+            'filename'   => $filename,
+            'Date' => date('Y-m-d'),
+        );
+
+		if($this->db->insert('cx_adverts', $data)){
+
+			return 1;
+
+		}else{
+
+			return 0;
+
+		}	
+		
+	}
+
+
 	
 	public function insertCoOwnRequest($ref, $buyer_type, $payment_plan, $property_id, $cost, $userID, $payable, $balance, $mop, $payment_period, $unit_amount, $promo_code, $id_path, $statement_path, $firstname, $lastname, $email, $phone, $company_name, $position, $occupation, $income_range, $company_address, $admin_id, $offer_type, $share_condition = 1){ 
 	    
