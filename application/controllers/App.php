@@ -135,6 +135,27 @@ class App extends CI_Controller
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
 
+	public function adverts(){
+	    
+	    $result = FALSE;
+	    
+	    $details = '';
+	    
+	    $data = array();
+	    
+	    $data['details'] = $this->app_model->adverts();
+	
+	    
+	    if(is_array($data)){
+	        
+	        $result = TRUE;
+	        
+	        //$details = "Success";    
+	    }
+        
+        echo json_encode(array("response" => $result, "data" => $data));
+	}
+
 
 	public function app_login()
 	{
