@@ -1301,17 +1301,7 @@ class Admin_model extends CI_Model {
 	        return 0;
 	    }
 	}
-
-	public function editCxAdvert($link, $filename, $title, $id){
-	    
-	    $edits = array("link" => $link, "filename" => $filename, "title" => $title, "date" => date('Y-m-d'));
-	    
-	    $this->db->where("id", $id);
-	    
-	    return $this->db->update("cx_adverts", $edits);
-	    
-	}
-
+	
 	public function editApartment($id, $propName, $propType, $stayType, $propDesc, $address, $cost, $security_deposit, $imageFolder, $featuredPic, $amenities, $bed, $bath, $toilet, $guest, $policies, $house_rules){
 	  
 	    
@@ -3594,6 +3584,16 @@ class Admin_model extends CI_Model {
 
 		return $query->row_array();
 
+	}
+
+	public function editCxAdvert($link, $filename, $title, $id){
+	    
+	    $edits = array("link" => $link, "filename" => $filename, "title" => $title, "date" => date('Y-m-d'));
+	    
+	    $this->db->where("id", $id);
+	    
+	    return $this->db->update("cx_adverts", $edits);
+	    
 	}
 
 
