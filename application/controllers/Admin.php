@@ -526,7 +526,7 @@ class Admin extends CI_Controller
 
 		for($i=0; $i<$count; $i++)
         {
-			$config['upload_path']          = './rss-prod-uploads/adverts/';
+			$config['upload_path']          = './uploads/adverts/';
 			$config['allowed_types']        = 'jpg|png|jpeg';
 			$config['max_size']             = 0;
 			// $config['max_width']            = 1024;
@@ -545,9 +545,9 @@ class Admin extends CI_Controller
 			$img = $_FILES['imgName']['name'][$i];
 
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
+            //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
 
-			$s3ObjectKey = 'rss-prod-uploads/adverts/'. $img;
+			$s3ObjectKey = 'uploads/adverts/'. $img;
 
 			$data = $this->upload->data();
 
@@ -563,7 +563,7 @@ class Admin extends CI_Controller
 
 					'Key'    => $s3ObjectKey,
 
-					'Body'   => file_get_contents($data["full_path"]),
+					//'Body'   => file_get_contents($data["full_path"]),
 				]);
 
 			} catch (Aws\S3\Exception\S3Exception $e) {
@@ -620,7 +620,7 @@ class Admin extends CI_Controller
 
 		for($i=0; $i<$count; $i++)
         {
-			$config['upload_path']          = './rss-prod-uploads/adverts/';
+			$config['upload_path']          = './uploads/agreement/';
 			$config['allowed_types']        = 'jpg|png|jpeg';
 			$config['max_size']             = 0;
 			// $config['max_width']            = 1024;
@@ -639,9 +639,9 @@ class Admin extends CI_Controller
 			$img = $_FILES['imgName']['name'][$i];
 
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
+            //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
 
-			$s3ObjectKey = 'rss-prod-uploads/adverts/'. $img;
+			$s3ObjectKey = 'uploads/adverts/'. $img;
 			$data = $this->upload->data();
 
 			$img = "/uploads/adverts/$img";
@@ -655,7 +655,7 @@ class Admin extends CI_Controller
 
 					'Key'    => $s3ObjectKey,
 
-					'Body'   => file_get_contents($data["full_path"]),
+					//'Body'   => file_get_contents($data["full_path"]),
 				]);
 
 			} catch (Aws\S3\Exception\S3Exception $e) {
