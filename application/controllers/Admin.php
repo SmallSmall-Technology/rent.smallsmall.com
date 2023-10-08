@@ -514,6 +514,7 @@ class Admin extends CI_Controller
 		$count = count($_FILES['imgName']['name']);
 
 		$val = '';
+		$x = '';
 
 		$s3 = new Aws\S3\S3Client([
 
@@ -554,6 +555,7 @@ class Admin extends CI_Controller
 
 			$val .= $img." ";
 
+			
 			try {
 				$result = $s3->putObject([
 
