@@ -523,6 +523,15 @@ class Rss extends CI_Controller
 
 			$data['interest'] = $this->session->userdata('interest');
 
+			//Get users detail 
+
+			$user = $this->rss_model->get_user($data['userID']);
+
+			$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+			$data['phone'] = $user['phone'];
+
+			$data['gender'] = $user['gender'];
 
 			$data['title'] = "Profile Verification";
 

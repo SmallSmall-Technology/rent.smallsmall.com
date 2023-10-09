@@ -169,7 +169,7 @@
                     <!-- Submit or next button -->
                     <div class="row mb-5">
                         <div class="col-12 mt-5 text-center">
-                            <a href="#" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
+                            <a href="https://dev-rent.smallsmall.com/rss/verification/renting-history" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
                             <button type="submit" class="btn verify-btn px-5 py-2 rss-form-button verifyBut" id="verifyBut">Next</button>
                         </div>
                     </div>

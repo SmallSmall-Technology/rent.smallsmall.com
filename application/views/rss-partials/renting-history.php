@@ -169,12 +169,29 @@
             </div>
             <div class=" row">
 
+            <!-- //Landlord Name -->
+
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <div class="customized-select">
                     <input type="text" class="form-control landlord_full_name verify-txt-f" placeholder="Current Landlord name" id="">
                   </div>
                 </div>
+
+                <!-- Landlord Email -->
+                <div class="form-group">
+                  <div class="customized-select">
+                    <input type="text" class="form-control landlord_email verify-txt-f" placeholder="Current Landlord email" id="">
+                  </div>
+                </div>
+
+                <!-- Landlord Phone Number -->
+                <div class="form-group">
+                  <div class="customized-select">
+                    <input type="text" class="form-control landlord_phone verify-txt-f" placeholder="Landlord Phone Number " id="">
+                  </div>
+                </div>
+
               </div>
 
               <div class=" col-md-6 col-12">
@@ -190,7 +207,7 @@
 
           <div class="row mb-5">
             <div class="col-12 mt-5 text-center">
-              <a href="#" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
+              <a href="https://dev-rent.smallsmall.com/rss/verification/profile-verification" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
               <button type="submit" class="btn verify-btn px-5 py-2 rss-form-button verifyBut" id="verifyBut">Next
                 <!-- <a href="verificationThree.html" class="btn verify-btn px-5 py-2">Next</a> -->
             </div>

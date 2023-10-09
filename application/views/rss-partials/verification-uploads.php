@@ -25,15 +25,33 @@
               <div class="verify-icon mb-4">
                 <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/bank-icon.svg" alt="">
               </div>
+
+
               <div>
+
+              <!-- File upload input for Verify income (hidden by default) -->
+              <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
+
+              <!-- File submit button (hidden by default) -->
+              <input type="submit" id="verify-income-submit" hidden />
+
+              <!-- Show this button when not verified and make it trigger the file input -->
+              <a href="#" class="btn verify-btn px-5 py-2" onclick="document.getElementById('verify-income-upload').click(); return false;">Verify income</a>
+
+              <!-- Show this button when verified -->
+              <button class="btn verified-btn px-5 py-2 d-none">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
+
                 <!-- show this when not verified -->
-                <a href="#" class="btn verify-btn px-5 py-2">Verify income</a>
+                <!-- <a href="#" class="btn verify-btn px-5 py-2">Verify income</a> -->
 
                 <!-- show this when verified -->
-                <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check"
-                    style="color:#00CD2D"></i></button>
+                <!-- <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check"
+                    style="color:#00CD2D"></i></button> -->
               </div>
+
+
             </div>
+
           </div>
           <div class="col-md-6 col-12">
             <div class="d-flex flex-column align-items-center">
@@ -52,7 +70,7 @@
         </div>
         <div class="row mb-5">
           <div class="col-12 mt-5 text-center">
-            <a class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
+            <a href="https://dev-rent.smallsmall.com/rss/verification/employment-verification" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
             <a href="#" class="btn verify-btn px-5 py-2">Finish</a>
           </div>
         </div>
