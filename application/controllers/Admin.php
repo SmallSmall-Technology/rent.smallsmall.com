@@ -418,6 +418,22 @@ class Admin extends CI_Controller
 
 	public function edit_adverts()
 	{
+		require 'vendor/autoload.php';
+		
+		//sleep(3);
+
+		$bucket = 'rss-prod-uploads'; // bucket name
+
+		$val = '';
+
+		$s3 = new Aws\S3\S3Client([
+
+			'version' => 'latest',
+
+			'region'  => 'eu-west-1'
+
+		]);
+
 		$count = count($_FILES['imgName']['name']);
 
 		$val = '';
@@ -443,13 +459,29 @@ class Admin extends CI_Controller
 			$img = $_FILES['imgName']['name'][$i];
 
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            move_uploaded_file($postimg_tmp,"uploads/agreement/$img");
+            //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
 
+			$s3ObjectKey = 'uploads/adverts/'. $img;
 			$data = $this->upload->data();
 
-			$img = "/uploads/agreement/$img";
+			$img = "/uploads/adverts/$img";
 
 			$val .= $img." ";
+
+			try {
+				$result = $s3->putObject([
+
+					'Bucket' => $bucket,
+
+					'Key'    => $s3ObjectKey,
+
+					'Body'   => file_get_contents($data["full_path"]),
+				]);
+
+			} catch (Aws\S3\Exception\S3Exception $e) {
+
+				$error = 'S3 Upload Error: ' . $e->getMessage();
+			}
 		}
 
 		
