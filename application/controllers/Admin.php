@@ -331,89 +331,166 @@ class Admin extends CI_Controller
 		
 		//sleep(3);
 
-		$bucket = 'dev-rss-uploads'; // bucket name
+		// $bucket = 'dev-rss-uploads'; // bucket name
 
+		// $count = count($_FILES['imgName']['name']);
+
+		// $val = '';
+
+		// $s3 = new Aws\S3\S3Client([
+
+		// 	'version' => 'latest',
+
+		// 	'region'  => 'eu-west-1'
+
+		// ]);
+
+		// for($i=0; $i<$count; $i++)
+        // {
+		// 	$config['upload_path']          = './uploads/adverts/';
+		// 	$config['allowed_types']        = 'jpg|png|jpeg';
+		// 	$config['max_size']             = 0;
+		// 	// $config['max_width']            = 1024;
+		// 	// $config['max_height']           = 768;
+		// 	$config['file_name'] = $_FILES['imgName']['name'][$i];
+
+		// 	$this->load->library('upload', $config);
+
+		// 	// if (!$this->upload->do_upload('imgName'))
+		// 	// {
+		// 	// 	$error = array('error' => $this->upload->display_errors());
+
+		// 	// 	$this->load->view('agr_error', $error);
+		// 	// }
+
+		// 	$img = $_FILES['imgName']['name'][$i];
+
+		// 	$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
+        //     //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
+
+		// 	$s3ObjectKey = 'uploads/adverts/'. $img;
+
+		// 	$data = $this->upload->data();
+
+		// 	$img = "/uploads/adverts/$img";
+
+		// 	$val .= $img." ";
+
+		// 	try {
+		// 		$result = $s3->putObject([
+
+		// 			'Bucket' => $bucket,
+
+		// 			'Key'    => $s3ObjectKey,
+
+		// 			'Body'   => file_get_contents($data["full_path"]),
+		// 		]);
+
+		// 	} catch (Aws\S3\Exception\S3Exception $e) {
+
+		// 		$error = 'S3 Upload Error: ' . $e->getMessage();
+		// 	}
+		// }
+
+		
+		// $filename = $val;
+		
+		// $link = $this->input->post('advertTitle');
+
+		// $title = $this->input->post('notificationTitle');
+
+		// //$date = 
+				
+		// $res = $this->admin_model->insertCxAdvert($link, $filename, $title);
+
+		// if ($res) {
+
+		// 	// Assuming you're using CodeIgniter, use the URL helper to create URLs
+		// $user_profile_url = site_url('admin/add_advert/');
+
+		// // Redirect to user profile with a success message
+		// echo "<script>
+		// 		alert('Upload Successful');
+		// 		window.location.href='$user_profile_url';
+		// 	</script>";
+		// }
+
+
+		$bucket = 'dev-rss-uploads'; // S3 bucket name
 		$count = count($_FILES['imgName']['name']);
-
 		$val = '';
-
+		$error = '';
+	
 		$s3 = new Aws\S3\S3Client([
-
 			'version' => 'latest',
-
 			'region'  => 'eu-west-1'
-
 		]);
-
-		for($i=0; $i<$count; $i++)
-        {
-			$config['upload_path']          = './uploads/adverts/';
-			$config['allowed_types']        = 'jpg|png|jpeg';
-			$config['max_size']             = 0;
-			// $config['max_width']            = 1024;
-			// $config['max_height']           = 768;
+	
+		for ($i = 0; $i < $count; $i++) {
+			$config['upload_path'] = './uploads/adverts/';
+			$config['allowed_types'] = 'jpg|png|jpeg';
+			$config['max_size'] = 0;
 			$config['file_name'] = $_FILES['imgName']['name'][$i];
-
+	
 			$this->load->library('upload', $config);
-
-			// if (!$this->upload->do_upload('imgName'))
-			// {
-			// 	$error = array('error' => $this->upload->display_errors());
-
-			// 	$this->load->view('agr_error', $error);
-			// }
-
+	
+			if (!$this->upload->do_upload('imgName')) {
+				// Handle file upload error
+				$error = 'File upload error: ' . $this->upload->display_errors();
+				break; // Stop processing further if there's an error
+			}
+	
 			$img = $_FILES['imgName']['name'][$i];
-
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
-
-			$s3ObjectKey = 'uploads/adverts/'. $img;
-
-			$data = $this->upload->data();
-
-			$img = "/uploads/adverts/$img";
-
-			$val .= $img." ";
-
+			$s3ObjectKey = 'uploads/adverts/' . $img;
+	
 			try {
 				$result = $s3->putObject([
-
 					'Bucket' => $bucket,
-
 					'Key'    => $s3ObjectKey,
-
-					'Body'   => file_get_contents($data["full_path"]),
+					'Body'   => file_get_contents($this->upload->data()['full_path']),
 				]);
-
 			} catch (Aws\S3\Exception\S3Exception $e) {
-
+				// Handle S3 upload error
 				$error = 'S3 Upload Error: ' . $e->getMessage();
+				break; // Stop processing further if there's an error
+			}
+	
+			$img = "/uploads/adverts/$img";
+			$val .= $img . " ";
+		}
+	
+		if (empty($error)) {
+			// No errors occurred during file uploads and S3 upload
+	
+			$filename = $val;
+			$link = $this->input->post('advertTitle');
+			$title = $this->input->post('notificationTitle');
+	
+			$res = $this->admin_model->insertCxAdvert($link, $filename, $title);
+	
+			if ($res) {
+				// Assuming you're using CodeIgniter, use the URL helper to create URLs
+				$user_profile_url = site_url('admin/add_advert/');
+	
+				// Redirect to user profile with a success message
+				echo "<script>
+					alert('Upload Successful');
+					window.location.href='$user_profile_url';
+				</script>";
+			} else {
+				// Handle database insertion error
+				$error = 'Database insertion error';
 			}
 		}
-
-		
-		$filename = $val;
-		
-		$link = $this->input->post('advertTitle');
-
-		$title = $this->input->post('notificationTitle');
-
-		//$date = 
-				
-		$res = $this->admin_model->insertCxAdvert($link, $filename, $title);
-
-		if ($res) {
-
-			// Assuming you're using CodeIgniter, use the URL helper to create URLs
-		$user_profile_url = site_url('admin/add_advert/');
-
-		// Redirect to user profile with a success message
-		echo "<script>
-				alert('Upload Successful');
-				window.location.href='$user_profile_url';
+	
+		if (!empty($error)) {
+			// Handle and display the error to the user
+			echo "<script>
+				alert('Error: $error');
 			</script>";
 		}
+		
 	}
 
 	public function edit_adverts()
@@ -475,7 +552,7 @@ class Admin extends CI_Controller
 
 					'Key'    => $s3ObjectKey,
 
-					'Body'   => file_get_contents($data["full_path"]),
+					//'Body'   => file_get_contents($data["full_path"]),
 				]);
 
 			} catch (Aws\S3\Exception\S3Exception $e) {
