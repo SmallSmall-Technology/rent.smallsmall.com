@@ -436,7 +436,7 @@ class Admin extends CI_Controller
 		if (!$this->upload->do_upload('imgName')) {
 			// Handle file upload error
 			$error = 'File upload error: ' . $this->upload->display_errors();
-			break; // Stop processing further if there's an error
+			//break; // Stop processing further if there's an error
 		}
 
 		$img = $_FILES['imgName']['name'];
