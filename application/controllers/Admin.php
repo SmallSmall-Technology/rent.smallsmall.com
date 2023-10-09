@@ -417,7 +417,7 @@ class Admin extends CI_Controller
 
 
 		$bucket = 'dev-rss-uploads'; // S3 bucket name
-		$count = count($_FILES['imgName']['name']);
+		//$count = count($_FILES['imgName']['name']);
 		$val = '';
 		$error = '';
 	
@@ -426,39 +426,37 @@ class Admin extends CI_Controller
 			'region'  => 'eu-west-1'
 		]);
 	
-		for ($i = 0; $i < $count; $i++) {
-			$config['upload_path'] = './uploads/adverts/';
-			$config['allowed_types'] = 'jpg|png|jpeg';
-			$config['max_size'] = 0;
-			$config['file_name'] = $_FILES['imgName']['name'][$i];
-	
-			$this->load->library('upload', $config);
-	
-			if (!$this->upload->do_upload('imgName')) {
-				// Handle file upload error
-				$error = 'File upload error: ' . $this->upload->display_errors();
-				break; // Stop processing further if there's an error
-			}
-	
-			$img = $_FILES['imgName']['name'][$i];
-			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-			$s3ObjectKey = 'uploads/adverts/' . $img;
-	
-			try {
-				$result = $s3->putObject([
-					'Bucket' => $bucket,
-					'Key'    => $s3ObjectKey,
-					'Body'   => file_get_contents($this->upload->data()['full_path']),
-				]);
-			} catch (Aws\S3\Exception\S3Exception $e) {
-				// Handle S3 upload error
-				$error = 'S3 Upload Error: ' . $e->getMessage();
-				break; // Stop processing further if there's an error
-			}
-	
-			$img = "/uploads/adverts/$img";
-			$val .= $img . " ";
+		$config['upload_path'] = './uploads/adverts/';
+		$config['allowed_types'] = 'jpg|png|jpeg';
+		$config['max_size'] = 0;
+		$config['file_name'] = $_FILES['imgName']['name'];
+
+		$this->load->library('upload', $config);
+
+		if (!$this->upload->do_upload('imgName')) {
+			// Handle file upload error
+			$error = 'File upload error: ' . $this->upload->display_errors();
+			break; // Stop processing further if there's an error
 		}
+
+		$img = $_FILES['imgName']['name'];
+		$postimg_tmp = $_FILES['imgName']['tmp_name'];
+		$s3ObjectKey = 'uploads/adverts/' . $img;
+
+		try {
+			$result = $s3->putObject([
+				'Bucket' => $bucket,
+				'Key'    => $s3ObjectKey,
+				'Body'   => file_get_contents($this->upload->data()['full_path']),
+			]);
+		} catch (Aws\S3\Exception\S3Exception $e) {
+			// Handle S3 upload error
+			$error = 'S3 Upload Error: ' . $e->getMessage();
+			break; // Stop processing further if there's an error
+		}
+
+		$img = "/uploads/adverts/$img";
+		$val = $img . " ";
 	
 		if (empty($error)) {
 			// No errors occurred during file uploads and S3 upload
@@ -552,7 +550,7 @@ class Admin extends CI_Controller
 
 					'Key'    => $s3ObjectKey,
 
-					//'Body'   => file_get_contents($data["full_path"]),
+					'Body'   => file_get_contents($data["full_path"]),
 				]);
 
 			} catch (Aws\S3\Exception\S3Exception $e) {
