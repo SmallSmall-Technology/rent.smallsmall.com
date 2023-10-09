@@ -452,7 +452,7 @@ class Admin extends CI_Controller
 		} catch (Aws\S3\Exception\S3Exception $e) {
 			// Handle S3 upload error
 			$error = 'S3 Upload Error: ' . $e->getMessage();
-			break; // Stop processing further if there's an error
+			//break; // Stop processing further if there's an error
 		}
 
 		$img = "/uploads/adverts/$img";
