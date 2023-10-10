@@ -465,6 +465,10 @@ jQuery(document).ready(function($){
     		var statement_path = $('#statement').val();
     
     		var user_id = $('#userID').val();
+
+			console.log(statement_path);
+
+			console.log(user_id);
         
             // var id_state = $('#id-state').val(); // I do need the progressive bar again
     
@@ -473,7 +477,7 @@ jQuery(document).ready(function($){
     		// if(id_path == "" || statement_path == "" || !(id_state) || !(statement_state)){
 
 			// To revisit
-			
+
 			// if(statement_path == ""){
 
     
@@ -486,6 +490,8 @@ jQuery(document).ready(function($){
     		//  }
     
     		var details = JSON.parse(localStorage.getItem('verificationStorage'));
+
+			console.log(details);
     
     		if(details.profile.length < 1){
     
