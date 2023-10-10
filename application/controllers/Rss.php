@@ -3138,6 +3138,12 @@ class Rss extends CI_Controller
 
 	// public function uploadIdentification($folder)
 	// {
+<<<<<<< HEAD
+
+	// 	$filename = '';
+
+	// 	if (!$folder) {
+=======
 
 	// 	$filename = '';
 
@@ -3222,6 +3228,190 @@ class Rss extends CI_Controller
 
 	// 				$filename = $data["file_name"];
 
+	// 				//$output .= '<span class="imgCover" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/furnisure/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" /></span>';
+
+	// 			}
+	// 		}
+
+	// 		//echo $output;
+
+	// 		echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
+	// 	}
+	// }
+
+
+	// S3 integration for uploadIdentification - All verification details save to S3 bucket and also fetch from S3
+
+	public function uploadIdentification($folder)
+	{
+		require 'vendor/autoload.php';
+
+		// Step 1: Initialize the variables
+		$filename = '';
+
+		// Step 2: Generate folder name if not provided
+		if (!$folder) {
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+	// 		$folder = md5(date("Ymd His"));
+	// 	}
+
+<<<<<<< HEAD
+	// 	sleep(1);
+=======
+		// Step 3: Wait for 1 second (sleep)
+		sleep(1);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+		// Step 4: Create directory if it doesn't exist
+
+	// 	if (!is_dir('./uploads/verification/' . $folder)) {
+
+<<<<<<< HEAD
+	// 		// mkdir('./uploads/verification/' . $folder, 0711, TRUE);
+	// 		mkdir('./uploads/verification/' . $folder, 0777, TRUE);
+	// 	}
+
+
+	// 	if ($_FILES["files"]["name"] != '') {
+=======
+			mkdir('./uploads/verification/' . $folder, 0777, TRUE);
+		}
+
+		// Step 5: Check if files were uploaded
+		if ($_FILES["files"]["name"] != '') {
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+	// 		$output = '';
+
+<<<<<<< HEAD
+	// 		$config["upload_path"] = './uploads/verification/' . $folder;
+=======
+			// Step 6: Configure file upload settings
+			$config["upload_path"] = './uploads/verification/' . $folder;
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+	// 		$config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
+
+	// 		$config['max_size'] = '5000';
+
+	// 		$config['encrypt_name'] = TRUE;
+
+<<<<<<< HEAD
+	// 		$this->load->library('upload', $config);
+=======
+			// Step 7: Load and initialize the upload library
+			$this->load->library('upload', $config);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+	// 		$this->upload->initialize($config);
+
+<<<<<<< HEAD
+	// 		if (is_array($_FILES["files"]["name"])) {
+=======
+			// Step 8: Loop through uploaded files
+			if (is_array($_FILES["files"]["name"])) {
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+	// 			for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
+	// 				$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+
+	// 				$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+
+	// 				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+
+	// 				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+
+	// 				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+<<<<<<< HEAD
+	// 				if ($this->upload->do_upload('file')) {
+=======
+					// Step 9: Perform file upload
+					if ($this->upload->do_upload('file')) {
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+	// 					$data = $this->upload->data();
+
+	// 					$output = "success";
+
+	// 					$filename = $data["file_name"];
+
+<<<<<<< HEAD
+	// 					//$output .= '<span class="imgCover" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/furnisure/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" /></span>';
+
+	// 				}
+	// 			}
+	// 		} else {
+=======
+						// Step 10: Upload the file to AWS S3
+						$bucket = 'rss-prod-uploads'; // My bucket name
+
+						$keyname = 'uploads/verification/' . $folder . '/' . $data["file_name"]; // My Object key for the file
+
+						$s3 = new Aws\S3\S3Client([
+
+							'version' => 'latest',
+
+							'region'  => 'eu-west-1' // My region
+						]);
+
+						try {
+							// Step 11: Upload data to S3.
+							$result = $s3->putObject([
+
+								'Bucket' => $bucket,
+
+								'Key'    => $keyname,
+
+								'Body'   => file_get_contents($data["full_path"]),
+							]);
+
+							// Step 12: Display S3 Object URL
+							$objectUrl = $result['ObjectURL'];
+
+							echo "File uploaded to S3: " . $objectUrl . PHP_EOL;
+
+							// Step 13: Perform any additional actions with $objectUrl
+						} catch (Aws\S3\Exception\S3Exception $e) {
+							// Step 14: Handle S3 upload error
+
+							echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+						}
+					}
+				}
+			} else {
+				// ... (same logic as before for a single file)
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+	// 			$_FILES["file"]["name"] = $_FILES["files"]["name"];
+
+	// 			$_FILES["file"]["type"] = $_FILES["files"]["type"];
+
+	// 			$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
+
+	// 			$_FILES["file"]["error"] = $_FILES["files"]["error"];
+
+	// 			$_FILES["file"]["size"] = $_FILES["files"]["size"];
+
+<<<<<<< HEAD
+	// 			//$upload_data = $this->upload->do_upload('file');
+
+	// 			//$file_name = $upload_data['file_name'];
+=======
+				// Step 9: Perform file upload
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+	// 			if ($this->upload->do_upload('file')) {
+
+	// 				$data = $this->upload->data();
+
+	// 				$output = "success";
+
+	// 				$filename = $data["file_name"];
+
+<<<<<<< HEAD
 	// 				//$output .= '<span class="imgCover" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/furnisure/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" /></span>';
 
 	// 			}
@@ -3393,14 +3583,60 @@ public function uploadIdentification($folder)
 
 					// Step 14: Handle S3 upload error
 					echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+=======
+					// Step 10: Upload the file to AWS S3
+
+					$bucket = 'rss-prod-uploads'; // My bucket name
+
+					$keyname = 'uploads/verification/' . $folder . '/' . $data["file_name"]; // My Object key for the file
+
+					$s3 = new Aws\S3\S3Client([
+
+						'version' => 'latest',
+
+						'region'  => 'eu-west-1' // My region
+					]);
+
+					try {
+						// Step 11: Upload data to S3.
+						$result = $s3->putObject([
+							'Bucket' => $bucket,
+
+							'Key'    => $keyname,
+
+							'Body'   => file_get_contents($data["full_path"]),
+						]);
+
+						// Step 12: Display S3 Object URL
+						$objectUrl = $result['ObjectURL'];
+
+						echo "File uploaded to S3: " . $objectUrl . PHP_EOL;
+
+						// Step 13: Perform any additional actions with $objectUrl
+					} catch (Aws\S3\Exception\S3Exception $e) {
+
+						// Step 14: Handle S3 upload error
+						echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+					}
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 				}
 			}
         }
 
+<<<<<<< HEAD
         // Step 15: Output JSON response
         echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
     }
 }
+=======
+			// Step 15: Output JSON response
+			echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
+		}
+	}
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+	// End of S3 integration
+
 
 
 	public function insertDetails()
@@ -3562,31 +3798,31 @@ public function uploadIdentification($folder)
 
 			if ($order['orderType'] == "property") {
 
-					$propertyTitle = $order['property'][0]['productTitle'];
+				$propertyTitle = $order['property'][0]['productTitle'];
 
-					// Replace the placeholder in the HTML body with the username
-					
-					$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
-					
-					$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
-					
-					$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
+				// Replace the placeholder in the HTML body with the username
 
-					$data['response'] = $htmlBody;
-				
-        		// Prepare the email data
-       			 	$emailDataTeam = [
-            			"message" => [
-                			"recipients" => [
-                    			["email" => 'customerexperience@smallsmall.com'],
-					// ["email" => 'pidah.t@smallsmall.com'],
-                			],
-                		"body" => ["html" => $htmlBody],
-                		"subject" => "New Verification alert",
-                		"from_email" => "donotreply@smallsmall.com",
-                		"from_name" => "SmallSmall Alert",
-            			],
-        			];
+				$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+
+				$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+
+				$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
+
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailDataTeam = [
+					"message" => [
+						"recipients" => [
+							["email" => 'customerexperience@smallsmall.com'],
+							// ["email" => 'pidah.t@smallsmall.com'],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "New Verification alert",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "SmallSmall Alert",
+					],
+				];
 
 				$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
 
@@ -4604,7 +4840,6 @@ public function uploadIdentification($folder)
 						'headers' => $headers,
 						'json' => $emailData,
 					]);
-					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 
 					$data['response'] = $e->getMessage();
@@ -5123,6 +5358,7 @@ public function uploadIdentification($folder)
 						"recipients" => [
 							["email" => $email],
 							["email" => 'pidah.t@smallsmall.com'], // Just for testing
+							["email" => 'accounts@smallsmall.com'], // Just for testing
 						],
 						"body" => ["html" => $htmlBody],
 						"subject" => "RentSmallsmall Payment successful notification",
@@ -7919,6 +8155,7 @@ value1&metadata[meta2]=value2*/
 		}
 	}
 
+<<<<<<< HEAD
 	// public function aws_s3_integration_test()
 	// {
 	// 	require 'vendor/autoload.php';
@@ -7969,6 +8206,9 @@ value1&metadata[meta2]=value2*/
 	// 	}
 	// }
 
+=======
+	// Testing
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	public function aws_s3_integration_test()
 {
     require 'vendor/autoload.php';

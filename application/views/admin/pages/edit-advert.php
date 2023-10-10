@@ -53,7 +53,11 @@
 
                         <div class="position-relative  form-group">
                             <label for="debt-note" class="">Upload Image</label>
+<<<<<<< HEAD
                             <input type="file" name="imgName"  required/>
+=======
+                            <input type="file" name="imgName[]" multiple required/>
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
                         </div>
 
 						<div class="position-relative form-group">

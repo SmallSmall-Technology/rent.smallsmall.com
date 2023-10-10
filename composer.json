@@ -16,7 +16,8 @@
 		"firebase/php-jwt": "^6.1",
 		"pusher/pusher-push-notifications": "*",
 		"unione/unione-php": "^1.2",
-		"aws/aws-sdk-php": "^3.276"
+		"aws/aws-sdk-php": "^3.276",
+		"treblle/treblle-php": "^2.0"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

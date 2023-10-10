@@ -236,6 +236,59 @@ class Admin_model extends CI_Model {
 		return $this->db->count_all_results();
 
 	}
+
+	public function countAdverts() {
+
+		$this->db->from('cx_adverts');
+
+		return $this->db->count_all_results();
+	}
+
+	public function get_advert($id) {       
+
+		$this->db->select('*');
+
+		$this->db->from('cx_adverts');          
+
+		$this->db->where('id', $id);
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
+	public function delAdvert($bookingID){
+	    
+	    $this->db-> where('id', $bookingID);
+    	
+		if($this->db->delete('cx_adverts')){
+		    
+		   return 1; 
+		        
+		}
+
+		else{
+			
+			return 0;
+			
+		}
+		
+	}
+
+	public function fetchadverts() {       
+
+		$this->db->select('*');
+
+		$this->db->from('cx_adverts');          
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+
+	}
+
 	public function countBookings() {
 
 		$this->db->from('stayone_booking');
@@ -1317,6 +1370,7 @@ class Admin_model extends CI_Model {
 	        return 0;
 	    }
 	}
+	
 	public function editApartment($id, $propName, $propType, $stayType, $propDesc, $address, $cost, $security_deposit, $imageFolder, $featuredPic, $amenities, $bed, $bath, $toilet, $guest, $policies, $house_rules){
 	  
 	    
@@ -1856,6 +1910,38 @@ class Admin_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function searchPropty($id){
+		
+		$this->db->select("*");
+		
+		$this->db->from("property_tbl");
+		
+		$this->db->like('propertyTitle', $id);
+		
+		$query = $this->db->get();
+		
+		return $query;
+		
+	}
+
+	public function delAgreement($bookingID){
+	    
+	    $this->db-> where('id', $bookingID);
+    	
+		if($this->db->delete('sub_agreement')){
+		    
+		   return 1; 
+		        
+		}
+
+		else{
+			
+			return 0;
+			
+		}
+		
+	}
+
 	public function getRows($propID)
 	{
 		$this->db->select('*');
@@ -1980,7 +2066,7 @@ class Admin_model extends CI_Model {
 		return $query->result_array();
 		
 	}
-	public function editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $id, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period){
+	public function editBuytoletProperty($propName, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $id, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period){
 	    
 		$this->property_name = $propName;
 		$this->apartment_type = $propType;
@@ -2025,6 +2111,7 @@ class Admin_model extends CI_Model {
 		$this->start_date = $start_date;
 		$this->finish_date = $finish_date;
 		$this->maturity_date = $maturity_date;
+		$this->lockdown_fee = $lockdownFee;
 		$this->closing_date = $closing_date;
 		$this->hold_period = $hold_period;
 		$this->co_appr_1 = $co_appr[0];
@@ -2054,7 +2141,7 @@ class Admin_model extends CI_Model {
 		}
 		
 	}
-	public function insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, $status, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period){
+	public function insertBuytoletProperty($propName, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, $status, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period){
 	    
 		$digits = 12;
 		
@@ -2102,6 +2189,7 @@ class Admin_model extends CI_Model {
 		$this->floor_plan = $floorPlan;
 		$this->status = $status;
 		$this->mortgage = $mortgage;
+		$this->lockdown_fee = $lockdownFee;
 		$this->payment_plan = $payment_plan;
 		$this->payment_plan_period = $payment_plan_period;
 		$this->minimum_payment_plan = $min_pp_val;
@@ -3644,6 +3732,40 @@ class Admin_model extends CI_Model {
 		return $query->row_array();
 
 	}
+
+	public function editCxAdvert($link, $filename, $title, $id){
+	    
+	    $edits = array("link" => $link, "filename" => $filename, "title" => $title, "date" => date('Y-m-d'));
+	    
+	    $this->db->where("id", $id);
+	    
+	    return $this->db->update("cx_adverts", $edits);
+	    
+	}
+
+
+	public function insertCxAdvert($link, $filename, $title){
+
+        $data = array(
+			'title' => $title,
+            'link' => $link,
+            'filename'   => $filename,
+            'Date' => date('Y-m-d'),
+        );
+
+		if($this->db->insert('cx_adverts', $data)){
+
+			return 1;
+
+		}else{
+
+			return 0;
+
+		}	
+		
+	}
+
+
 	
 	public function insertCoOwnRequest($ref, $buyer_type, $payment_plan, $property_id, $cost, $userID, $payable, $balance, $mop, $payment_period, $unit_amount, $promo_code, $id_path, $statement_path, $firstname, $lastname, $email, $phone, $company_name, $position, $occupation, $income_range, $company_address, $admin_id, $offer_type, $share_condition = 1){ 
 	    
@@ -3818,11 +3940,13 @@ class Admin_model extends CI_Model {
 
 public function fetchSubscribers() {
 
-	$this->db->select('a.*, a.id as stp_id, a.userID as user_id, b.*');
+	$this->db->select('a.*, a.id as stp_id, a.userID as user_id, b.*, c.*');
 
 	$this->db->from('target_options as a'); 
 	
 	$this->db->join('user_tbl as b', 'b.userID = a.userID');
+
+	$this->db->join('buytolet_transactions as c', 'c.transaction_id = a.request_id');
     
     	$this->db->limit($this->_pageNumber, $this->_offset);
 

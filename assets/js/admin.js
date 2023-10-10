@@ -100,6 +100,110 @@ $(window).on('load', function(){
 			
 		}
 	});
+
+
+	$("#live_search").keyup(function(){
+
+		var input = $(this).val();
+
+		if(input != "")
+		{
+			$.ajax({
+
+				url: baseUrl + "admin/proptySearch/",
+				type: "POST",
+				data: {input:input},
+	
+				success: function (data) {
+					
+					$("#searchresult").css("display", "block");
+					$("#searchresult").html(data);
+
+				}
+	
+			});
+		}
+
+		else
+		{
+			$("#searchresult").css("display", "none");
+		}
+	});
+
+	$('.delete-agr').click(function () {
+
+		var the_ids = $(this).attr("id").replace(/booking-/, "").split("-");
+
+		var bookingID = the_ids[0];
+
+		var propertyID = the_ids[1];
+
+		$(this).html('Wait...');
+
+		var data = { "bookingID": bookingID, "propertyID": propertyID };
+
+		if (confirm("Are you sure you want to DELETE Agreement?")) {
+
+			$.ajaxSetup({ cache: false });
+
+			$.ajax({
+				url: baseUrl + "admin/deleteAgreement",
+
+				type: "POST",
+
+				async: true,
+
+				data: data,
+
+				success: function (data) {
+
+					if (data == 1) {
+
+						alert("Agreement Deleted!");
+
+						$(this).html('Delete');
+
+						location.reload(true);
+					} else {
+
+						alert("Error Deleting!!!");
+
+						$(this).html('Delete');
+
+						return false;
+					}
+
+				}
+			});
+		} else {
+
+			$(this).html('Delete');
+
+			return false;
+
+		}
+
+	});
+
+	
+	$('.checkagr').click(function () {
+
+		var the_ids = $(this).attr("id").replace(/getVal-/, "").split("-");
+
+		var id = the_ids[0];
+
+		var title = the_ids[1];
+
+		let inputId = document.getElementById("sub-propty");
+		
+		let inputTitle = document.getElementById("live_search")
+
+		inputId.value = id;
+		inputTitle.value = title;
+
+		alert('hello');
+
+	});
 	
 
 	$('.close-msg').click(function(){
@@ -3864,6 +3968,7 @@ $(document). on('click', '.close-int', function(){
 		var tenantable = $('.tenantable').val();
 		var price = $('#price').val();
 		var marketValue = $('#marketValue').val();
+		var lockdownFee = $('#lockdownFee').val();
 		var outrightDiscount = $('#outright-discount').val();
 		var asset_appreciation_1 = $('#asset-appreciation-1').val();
 		var asset_appreciation_2 = $('#asset-appreciation-2').val();
@@ -3968,7 +4073,8 @@ $(document). on('click', '.close-int', function(){
 			"floor_level" : floor_level,
 			"hold_period" : hold_period,
 			"co_appr" : co_appr,
-			"co_rent" : co_rent
+			"co_rent" : co_rent,
+			"lockdownFee" : lockdownFee
 		};
 		
 		$.ajaxFileUpload({
@@ -4023,6 +4129,7 @@ $(document). on('click', '.close-int', function(){
 		var asset_appreciation_5 = $('#asset-appreciation-5').val();
 		var price = $('#price').val();
 		var marketValue = $('#marketValue').val();
+		var lockdownFee = $('#lockdownFee').val();
 		var outrightDiscount = $('#outright-discount').val();
 		var promo_price = $('#promo_price').val();
 		var promo_category = $('.promo_category').val();
@@ -4122,7 +4229,8 @@ $(document). on('click', '.close-int', function(){
 			"hold_period" : hold_period,
 			"co_appr" : co_appr,
 			"co_rent" : co_rent,
-			"available_units" : available_units
+			"available_units" : available_units,
+			"lockdownFee" : lockdownFee
 		};
 		
 		$.ajaxFileUpload({
@@ -5142,6 +5250,7 @@ $(document). on('click', '.close-int', function(){
 	});
 
 
+<<<<<<< HEAD
 	$('.delete-agr').click(function () {
 
 		var the_ids = $(this).attr("id").replace(/booking-/, "").split("-");
@@ -5197,6 +5306,8 @@ $(document). on('click', '.close-int', function(){
 
 	});
 
+=======
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	$('.delete-advert').click(function () {
 
 		var the_ids = $(this).attr("id").replace(/booking-/, "").split("-");
@@ -6442,6 +6553,10 @@ function getsVal(id)
 	var conT = document.getElementById(id).className;
 	inputId.value = id;
 	inputTitle.value = conT;
+<<<<<<< HEAD
 
 	$("#searchresult").css("display", "none");
 }
+=======
+}
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7

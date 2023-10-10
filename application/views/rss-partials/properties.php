@@ -10,6 +10,11 @@ function shortenText($text, $maxLength)
   }
 }
 
+// Function to check if a string starts with a specific prefix
+function startsWith($string, $prefix) {
+  return substr($string, 0, strlen($prefix)) === $prefix;
+}
+
 ?>
 
 
@@ -462,9 +467,12 @@ function shortenText($text, $maxLength)
   <!-- Properties section -->
 
   <div class="properties-section" id="properties-container">
+
+    <!-- S3 Integration -->
+
     <div class="row">
 
-      <div class="col-12">
+      <!-- <div class="col-12">
         <?php
 
         $cities = array_unique(array_column($properties, 'city'));
@@ -500,7 +508,7 @@ function shortenText($text, $maxLength)
 
         ?>
 
-      </div>
+      </div> -->
 
       <div class="col-12">
         <p><?php echo $total_count ?> properties</p>
@@ -548,6 +556,7 @@ function shortenText($text, $maxLength)
                     <?php
 
                     // Include AWS SDK and create S3 client
+<<<<<<< HEAD
                       require 'vendor/autoload.php';
                       $s3 = new Aws\S3\S3Client([
                           'version' => 'latest',
@@ -559,6 +568,77 @@ function shortenText($text, $maxLength)
                   //S3 Integration
 
                   $bucket = 'dev-rss-uploads'; // Your bucket name
+=======
+                    require 'vendor/autoload.php';
+
+                    $s3 = new Aws\S3\S3Client([
+                      'version' => 'latest',
+
+                      'region' => 'eu-west-1'
+                    ]);
+
+                    $imageFolder = $value['imageFolder'];
+
+                    //   $imageFolderPath = "./uploads/properties/$imageFolder";
+
+                    //   if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
+
+                    //     $imageFiles = scandir($imageFolderPath);
+
+                    //     $activeClass = 'active';
+
+                    //     $content_size = count($imageFiles);
+
+                    //     $count = 0;
+
+                    //     foreach ($imageFiles as $file) {
+
+                    //       // if ($file === '.' || $file === '..') {
+                    //       //   continue;
+
+                    //       // }
+
+                    //       if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
+
+                    //         $imageSrc = base_url() . 'uploads/properties/' . $value['imageFolder'] . '/' . $file;
+                    //         echo '
+                    //    <div class="carousel-item ' . $activeClass . '">
+                    //      <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
+                    //    </div>
+                    //  ';
+
+                    //         $activeClass = '';
+                    //       }
+
+                    //       $count++;
+                    //     }
+                    //   } else {
+
+                    //     echo '<div class="carousel-item active">
+                    //        <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
+                    //      </div>';
+
+                    //     echo '<div class="carousel-item">
+                    //        <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
+                    //      </div>';
+                    //   }
+
+
+                    //S3 Integration
+
+                    $bucket = 'rss-prod-uploads'; // My bucket name
+
+                    $imageFolderPath = 'uploads/properties/' . $value['imageFolder'];
+
+                    try {
+                      $objects = $s3->listObjects([
+
+                        'Bucket' => $bucket,
+
+                        'Prefix' => $imageFolderPath,
+
+                      ]);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
                   $imageFolderPath = 'uploads/properties/' . $value['imageFolder'];
                   
@@ -574,6 +654,7 @@ function shortenText($text, $maxLength)
 
                       $count = 0;
 
+<<<<<<< HEAD
                     //   foreach ($objects['Contents'] as $object) {
                     //     if ($object !== '.' && $object !== '..' && $count <= ($content_size - 2)) {
                     //         $imageSrc = $s3->getObjectUrl($bucket, 'uploads/properties/' . $value['imageFolder'] . '/' . $object);
@@ -613,6 +694,39 @@ function shortenText($text, $maxLength)
                   
 
                   //End S3 Integration
+=======
+                      foreach ($objects['Contents'] as $object) {
+                        // check if an object in the S3 bucket is not a directory/folder.
+                        if (strpos($object['Key'], 'uploads/properties/' . $value['imageFolder'] . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
+                        // if (!startsWith($object['Key'], $value['imageFolder'] . '/') && $count <= (count($objects['Contents']) - 2)) {
+                        // if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+
+                          $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
+
+                          echo '
+                          <div class="carousel-item ' . $activeClass . '">
+                          <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
+                          </div>
+                          ';
+
+                          $activeClass = '';
+                        }
+                        $count++;
+                      }
+
+                    } catch (Aws\S3\Exception\S3Exception $e) {
+                      // Handle S3 error
+                      echo '<div class="carousel-item active">
+                    <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
+                    </div>';
+
+                      echo '<div class="carousel-item">
+                    <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
+                    </div>';
+                    }
+
+                    //End S3 Integration
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
                     ?>
                   </div>

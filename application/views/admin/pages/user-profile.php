@@ -366,8 +366,19 @@
                                         
                                         
                                     <div class="col-md-4">
+<<<<<<< HEAD
                                     
 									
+=======
+                                    <input type="hidden" name = "sub_id" value = "<?php echo @$ids ?>">
+
+                                    <input type="hidden" name = "sub-propty" id= "sub-propty" value = "">
+
+                                    <div class="position-relative form-group">
+                                        <input type = "text" id = "live_search" placeholder="Type a property here..." value="" style = "width:100%" />
+                                        <ul id="searchresult" style = " display: none; list-style: none; padding: 2em; border: 1px solid black; margin-top: 2em; border-radius: 10px; cursor: pointer;"></ul> 
+                                    </div>
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
                                     <!-- <div class="position-relative form-group"><label for="debt-note" class="">Property</label><select name="sub-propty" id="sub-propty" class="form-control verify-debt-txt">
                                     <?php foreach($proptys as $propty => $value){ ?>
@@ -393,6 +404,73 @@
                         </div>
             		</div>
                     <!--subscription agreement -->
+<<<<<<< HEAD
+=======
+                    
+                    
+                    <!--subscription agreement history -->
+                    <div class="row">
+            			<div class="col-md-12">
+            				<div class="main-card mb-3 card">
+            					<div class="card-header">
+            					    Subscription agreement History
+            						
+            						<div class="btn-actions-pane-right">
+            							
+            						</div>
+            				</div>
+            					
+            					
+            			    <div class="table-responsive">
+                                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            							<thead>
+            							<tr>
+            								<th width="70px" class="text-left">&nbsp;</th>
+            								<th width="300px" class="text-left">User</th>
+            								<th width="300px" class="text-left">Start Year</th>
+            								<th width="300px" class="text-left">End Year</th>
+            								<th width="300px" class="text-left">File</th>
+            								<th width="100px" class="text-left">Property</th>
+            								<th width="300px" class="text-left">Admin</th>
+            							<th width="300px" class="text-left">Date</th>
+            							</tr>
+            							</thead>
+            							
+            							<tbody>
+            							<?php
+            									foreach($user_hstry as $user_transaction => $value) { ?>	 
+               
+            							<tr> 
+            							
+            							    <td class="text-left"></td>
+            							    
+            								<td class="text-left"><?php echo $value['firstName'].' '.$value['lastName']; ?></td>
+            								
+            								<td class="text-left"><?php echo $value['start_year']; ?></td>
+            								
+            								<td class="text-left"><?php echo $value['end_year']; ?></td>
+            								
+            								<td class="text-left"><?php echo $value['filename']; ?></td>
+            								
+            								<td class="text-left"><?php echo $value['propertyTitle']; ?></td>
+            								
+            								<td class="text-left"><?php echo $value['admin']; ?></td>
+            								
+            								<td class="text-left"><?php echo $value['date']; ?></td>
+
+                                            <td class="text-left">
+                                                <button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/edit-agr/".$value['id']; ?>">Edit</a></button>
+                                                <br></br>
+                                                <button type="button" id="booking-<?php echo $value['id']; ?>-<?php echo $value['id']; ?>" class="btn btn-primary btn-sm delete-agr">Delete</button>
+                                            </td>
+            								
+            							</tr>    
+            							<?php    
+            									
+            								}?>
+            							
+            							</tbody>
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
                         <!-- Landlord Vacancy Notification -->
                         <div class="row">

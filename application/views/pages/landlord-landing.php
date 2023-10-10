@@ -292,9 +292,12 @@
             We provide an end to end solution that manages the lifecycle of
             subscribers
           </p>
-          <button class="btn ready-partner-btn my-5">
+          <!-- <button class="btn ready-partner-btn my-5">
             List your property
-          </button>
+          </button> -->
+          <a href="https://smallsmall.formaloo.me/87cw0" class="btn ready-partner-btn my-5">
+            List your property
+          </a>
         </div>
       </div>
     </div>

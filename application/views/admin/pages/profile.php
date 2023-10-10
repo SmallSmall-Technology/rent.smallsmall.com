@@ -69,12 +69,18 @@
                                     </a>
                                 </li>
 
+<<<<<<< HEAD
+=======
+                                <!-- AWS S3 Integration -->
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
                                 <li class="nav-item">
                                     <?php
 
                                     require 'vendor/autoload.php';
 
                                     // Create an S3 client
+<<<<<<< HEAD
                                     $s3 = new Aws\S3\S3Client([
                                         'version' => 'latest',
                                         'region'  => 'eu-west-1'
@@ -90,14 +96,37 @@
 
                                         $objects = $s3->listObjects([
 
+=======
+
+                                    $s3 = new Aws\S3\S3Client([
+                                        'version' => 'latest',
+                                        'region'  => 'eu-west-1'
+                                    ]);
+
+                                    $bucket = 'rss-prod-uploads'; // my bucket name
+
+                                    $folder = 'uploads/verification/' . $details['user_id'] . '/'; // Folder path in S3
+
+                                    try {
+
+                                        // List objects in the specified S3 folder
+
+                                        $objects = $s3->listObjects([
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
                                             'Bucket' => $bucket,
 
                                             'Prefix' => $folder,
 
                                         ]);
 
+<<<<<<< HEAD
                                          // Initialize the count
                                             $count = 1;
+=======
+                                        // Initialize the count
+                                        $count = 1;
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
                                         // Loop through the list of objects
 
@@ -126,15 +155,26 @@
                                             // Increment the count
                                             $count++;
                                         }
+<<<<<<< HEAD
 
 
                                     } catch (Aws\S3\Exception\S3Exception $e) {
+=======
+                                    } catch (Aws\S3\Exception\S3Exception $e) {
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
                                         // Handle S3 error
                                         echo 'S3 Error: ' . $e->getMessage() . PHP_EOL;
                                     }
                                     ?>
                                 </li>
 
+<<<<<<< HEAD
+=======
+                                <!-- End of AWS S3 Integration -->
+
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
                                 <!--<li class="nav-item">
                                     <a href="javascript:void(0);" class="nav-link">
                                         <i class="nav-link-icon lnr-picture"></i>

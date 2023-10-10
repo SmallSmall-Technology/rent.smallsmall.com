@@ -1,6 +1,7 @@
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/verification.css" />
 
+<<<<<<< HEAD
 <!-- MAIN SECTION -->
 <main class="container-fluid ">
   <div class="row">
@@ -51,6 +52,81 @@
                       </select>
                     </div>
                   </div>
+=======
+						                <option value="No">Not Renting</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-input-cont">
+                            <div class="input-holder">
+                                <label>Previous evictions?</label>
+                                <div class="select light-blue-bg">
+                                    <select class="previous_eviction" name="previous-eviction" id="previous-eviction">
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-holder"> 
+                                <label>Pets</label>                       
+                                <div class="select light-blue-bg">
+                                    <select class="pet" name="pets" id="pets">
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-input-cont">
+                            <div class="input-holder">
+                                <label>Disability/Illness</label>                     
+                                <div class="select light-blue-bg">
+                                    <select class="critical_illness" name="critical-illness" id="critical-illness">
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-holder">  
+                            </div>
+                        </div>
+                        <div class="form-input-cont">
+                            <div class="input-holder">                                
+                                <label>Landlord's Name</label>                      
+                                <input type="text" class="rss-text-f light-blue-bg landlord_full_name verify-txt-f" id="" required/>
+                            </div>
+                            <div class="input-holder"> 
+                                <label>Lanlord's Email</label>                       
+                                <input type="text" class="rss-text-f light-blue-bg landlord_email" id="" />
+                            </div>
+                        </div>
+                        <div class="form-input-cont"> 
+                            <div class="input-holder">                                
+                                <label>Landlord's Phone</label>                      
+                                <input type="text" class="rss-text-f light-blue-bg landlord_phone verify-txt-f" id="" /required>
+                            </div>
+                        </div>
+                        <div class="form-input-cont"> 
+                            <div class="input-holder">                                
+                                <label>Landlord's address</label>                      
+                                <textarea class="rss-text-area light-blue-bg landlord_address verify-txt-f" id="" required></textarea>
+                            </div>
+                            <div class="input-holder">                                
+                                <label>Reason for leaving</label>                      
+                                <textarea class="rss-text-area light-blue-bg reason_for_leaving" id=""></textarea>
+                            </div>
+                        </div>
+                        <div class="form-input-cont">
+                            <div class="input-holder">
+                                <button type="submit" class="rss-form-button verifyBut" id="verifyBut">Next</div>
+                            </div>
+                            <div class="input-holder">                        
+                                &nbsp;
+                            </div>
+                        </div>
+                    </form>
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
                 </div>
     
                

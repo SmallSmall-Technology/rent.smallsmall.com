@@ -258,6 +258,7 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
+<<<<<<< HEAD
 
 	public function add_notification()
 	{
@@ -265,6 +266,14 @@ class Admin extends CI_Controller
 		if (!file_exists(APPPATH . 'views/admin/pages/new-notification.php')) {
 			// Whoops, we don't have a page for that!
 
+=======
+	public function add_notification()
+	{
+
+		if (!file_exists(APPPATH . 'views/admin/pages/new-notification.php')) {
+			// Whoops, we don't have a page for that!
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 			show_404();
 		}
 
@@ -291,11 +300,18 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
+<<<<<<< HEAD
 	
 	public function add_advert()
 	{
 
 		if (!file_exists(APPPATH . 'views/admin/pages/new-notification.php')) {
+=======
+	public function edit_notification($id)
+	{
+
+		if (!file_exists(APPPATH . 'views/admin/pages/edit-notification.php')) {
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 			// Whoops, we don't have a page for that!
 
 			show_404();
@@ -303,6 +319,7 @@ class Admin extends CI_Controller
 
 		//check if Admin is logged in
 		if ($this->session->has_userdata('adminLoggedIn')) {
+<<<<<<< HEAD
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
@@ -601,6 +618,13 @@ class Admin extends CI_Controller
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
+=======
+
+			$data['notification'] = $this->admin_model->get_notification($id);
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['adminID'] = $this->session->userdata('adminID');
@@ -615,6 +639,7 @@ class Admin extends CI_Controller
 
 			$this->load->view('admin/templates/footer.php', $data);
 		} else {
+<<<<<<< HEAD
 
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
@@ -660,6 +685,17 @@ class Admin extends CI_Controller
 
 		if (!file_exists(APPPATH . 'views/admin/pages/add-admin.php')) {
 
+=======
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+	public function add_admin()
+	{
+
+		if (!file_exists(APPPATH . 'views/admin/pages/add-admin.php')) {
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 			// Whoops, we don't have a page for that!
 			show_404();
 		}
@@ -689,6 +725,7 @@ class Admin extends CI_Controller
 		}
 	}
 
+<<<<<<< HEAD
 
 	public function addRepairs()
 	{
@@ -698,10 +735,15 @@ class Admin extends CI_Controller
 			// Whoops, we don't have a page for that!
 			show_404();
 		}
+=======
+	public function add_news()
+	{
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 		//check if Admin is logged in
 
 		if ($this->session->has_userdata('adminLoggedIn')) {
+<<<<<<< HEAD
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
@@ -733,6 +775,11 @@ class Admin extends CI_Controller
 
 			$data['adminID'] = $this->session->userdata('adminID');
 
+=======
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['title'] = 'Post News Article :: RSS'; // Capitalize the first letter
@@ -749,11 +796,20 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin-login', 'refresh');
 		}
 	}
+<<<<<<< HEAD
 	public function view_all_news()
 	{
 
 		$config['total_rows'] = $this->admin_model->countAllNews();
 
+=======
+
+	public function view_all_news()
+	{
+
+		$config['total_rows'] = $this->admin_model->countAllNews();
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 		$data['total_count'] = $config['total_rows'];
 
 		$config['suffix'] = '';
@@ -814,6 +870,357 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
+<<<<<<< HEAD
+	public function edit_article($id)
+	{
+
+		if (!file_exists(APPPATH . 'views/admin/pages/edit-article.php')) {
+=======
+
+	public function edit_advert($id)
+	{
+		if(!file_exists(APPPATH . 'views/admin/pages/edit-advert.php')) {
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+<<<<<<< HEAD
+=======
+
+		//check if Admin is logged in
+		if($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['notification'] = $this->admin_model->get_advert($id);
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['title'] = "Edit Notification :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/edit-advert.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+	public function deleteAdvert()
+	{
+		$id = $this->input->post('bookingID');
+
+		//$propID = $this->input->post('propertyID');		
+
+		$res = $this->admin_model->delAdvert($id);
+
+		if ($res) {
+
+			echo 1;
+		} else {
+
+			echo 0;
+		}
+	}
+
+	public function prc_adverts()
+	{
+		require 'vendor/autoload.php';
+		
+		//sleep(3);
+
+		$bucket = 'rss-prod-uploads'; // bucket name
+
+		$count = count($_FILES['imgName']['name']);
+
+		$val = '';
+		$x = '';
+
+		$s3 = new Aws\S3\S3Client([
+
+			'version' => 'latest',
+
+			'region'  => 'eu-west-1'
+
+		]);
+
+		for($i=0; $i<$count; $i++)
+        {
+			$config['upload_path']          = './uploads/adverts/';
+			$config['allowed_types']        = 'jpg|png|jpeg';
+			$config['max_size']             = 0;
+			// $config['max_width']            = 1024;
+			// $config['max_height']           = 768;
+			$config['file_name'] = $_FILES['imgName']['name'][$i];
+
+			$this->load->library('upload', $config);
+
+			// if (!$this->upload->do_upload('imgName'))
+			// {
+			// 	$error = array('error' => $this->upload->display_errors());
+
+			// 	$this->load->view('agr_error', $error);
+			// }
+
+			$img = $_FILES['imgName']['name'][$i];
+
+			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
+            //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
+
+			$s3ObjectKey = 'uploads/adverts/'. $img;
+
+			$data = $this->upload->data();
+
+			$img = "/uploads/adverts/$img";
+
+			$val .= $img." ";
+
+			
+			try {
+				$result = $s3->putObject([
+
+					'Bucket' => $bucket,
+
+					'Key'    => $s3ObjectKey,
+
+					//'Body'   => file_get_contents($data["full_path"]),
+				]);
+
+			} catch (Aws\S3\Exception\S3Exception $e) {
+
+				$error = 'S3 Upload Error: ' . $e->getMessage();
+			}
+		}
+
+		
+		$filename = $val;
+		
+		$link = $this->input->post('advertTitle');
+
+		$title = $this->input->post('notificationTitle');
+
+		//$date = 
+				
+		$res = $this->admin_model->insertCxAdvert($link, $filename, $title);
+
+		if ($res) {
+
+			// Assuming you're using CodeIgniter, use the URL helper to create URLs
+		$user_profile_url = site_url('admin/add_advert/');
+
+		// Redirect to user profile with a success message
+		echo "<script>
+				alert('Upload Successful');
+				window.location.href='$user_profile_url';
+			</script>";
+		}
+	}
+
+	public function edit_adverts()
+	{
+		require 'vendor/autoload.php';
+		
+		//sleep(3);
+
+		$bucket = 'rss-prod-uploads'; // bucket name
+
+		$val = '';
+
+		$s3 = new Aws\S3\S3Client([
+
+			'version' => 'latest',
+
+			'region'  => 'eu-west-1'
+
+		]);
+
+		$count = count($_FILES['imgName']['name']);
+
+		$val = '';
+
+		for($i=0; $i<$count; $i++)
+        {
+			$config['upload_path']          = './uploads/agreement/';
+			$config['allowed_types']        = 'jpg|png|jpeg';
+			$config['max_size']             = 0;
+			// $config['max_width']            = 1024;
+			// $config['max_height']           = 768;
+			$config['file_name'] = $_FILES['imgName']['name'][$i];
+
+			$this->load->library('upload', $config);
+
+			// if (!$this->upload->do_upload('imgName'))
+			// {
+			// 	$error = array('error' => $this->upload->display_errors());
+
+			// 	$this->load->view('agr_error', $error);
+			// }
+
+			$img = $_FILES['imgName']['name'][$i];
+
+			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
+            //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
+
+			$s3ObjectKey = 'uploads/adverts/'. $img;
+			$data = $this->upload->data();
+
+			$img = "/uploads/adverts/$img";
+
+			$val .= $img." ";
+
+			try {
+				$result = $s3->putObject([
+
+					'Bucket' => $bucket,
+
+					'Key'    => $s3ObjectKey,
+
+					//'Body'   => file_get_contents($data["full_path"]),
+				]);
+
+			} catch (Aws\S3\Exception\S3Exception $e) {
+
+				$error = 'S3 Upload Error: ' . $e->getMessage();
+			}
+		}
+
+		
+		$filename = $val;
+		
+		$link = $this->input->post('link');
+
+		$title = $this->input->post('title');
+
+		$id = $this->input->post('adv_id');
+
+		//$date = 
+				
+		$res = $this->admin_model->editCxAdvert($link, $filename, $title, $id);
+
+		if ($res) {
+
+			// Assuming you're using CodeIgniter, use the URL helper to create URLs
+		$user_profile_url = site_url('admin/all-adverts/');
+
+		// Redirect to user profile with a success message
+		echo "<script>
+				alert('Upload Successful');
+				window.location.href='$user_profile_url';
+			</script>";
+		}
+	}
+
+	public function all_adverts()
+	{
+		$config['total_rows'] = $this->admin_model->countAdverts();
+
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
+
+		if ($config['total_rows'] > 0) {
+
+			$page_number = $this->uri->segment(3);
+
+			$config['base_url'] = base_url() . 'admin/all-adverts';
+
+			if (empty($page_number))
+
+				$page_number = 1;
+
+			$offset = ($page_number - 1) * $this->pagination->per_page;
+
+			$this->admin_model->setPageNumber($this->pagination->per_page);
+
+			$this->admin_model->setOffset($offset);
+
+			$this->pagination->cur_page = $page_number;
+
+			$this->pagination->initialize($config);
+
+			$data['page_links'] = $this->pagination->create_links();
+
+			$data['notifications'] = $this->admin_model->fetchadverts();
+		}
+
+		if (!file_exists(APPPATH . 'views/admin/pages/all-adverts.php')) {
+
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+		//check if Admin is logged in
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+<<<<<<< HEAD
+=======
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['title'] = "Notifications :: SmallSmall";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/all-adverts.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+
+			//$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
+
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+	public function add_advert()
+	{
+
+		if (!file_exists(APPPATH . 'views/admin/pages/new-notification.php')) {
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+
+		//check if Admin is logged in
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['title'] = "New Notification :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/new-adverts.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
 	public function edit_article($id)
 	{
 
@@ -831,6 +1238,7 @@ class Admin extends CI_Controller
 
 			$data['adminID'] = $this->session->userdata('adminID');
 
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
 			$data['article'] = $this->admin_model->fetchArticle($id);
@@ -979,6 +1387,10 @@ class Admin extends CI_Controller
 		}
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	public function rss_verfd()
 	{
 
@@ -1039,6 +1451,7 @@ class Admin extends CI_Controller
 
 			$this->load->view('admin/templates/footer.php', $data);
 		} else {
+<<<<<<< HEAD
 
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
@@ -1111,6 +1524,27 @@ class Admin extends CI_Controller
 		// echo $usrs = $this->session->userdata('userID');
 
 		// $usrs = $this->admin_model->get_username($userID);
+=======
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+	public function agr_upload()
+	{
+
+		$config['upload_path']          = './uploads/agreement/';
+		$config['allowed_types']        = 'doc|docx|pdf';
+		$config['max_size']             = 0;
+		// $config['max_width']            = 1024;
+		// $config['max_height']           = 768;
+
+		$this->load->library('upload', $config);
+
+		// $usrs = $this->session->userdata('userID');
+
+		// $usrs = $this->admin_model->get_username($usrs);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 		if (!$this->upload->do_upload('filename')) {
 			$error = array('error' => $this->upload->display_errors());
@@ -1123,8 +1557,11 @@ class Admin extends CI_Controller
 
 			$str_yr = $this->input->post('start-yr');
 
+<<<<<<< HEAD
 			// echo $usrs['email'];
 
+=======
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 			$data = array(
 				'filename' => $data['file_name'],
 				'userId'   => $id,
@@ -1146,6 +1583,7 @@ class Admin extends CI_Controller
 		}
 	}
 
+<<<<<<< HEAD
 	public function edit_agr($id)
 	{
 
@@ -1261,6 +1699,8 @@ class Admin extends CI_Controller
 		}
 	}
 
+=======
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	public function app_users()
 	{
 
@@ -1546,7 +1986,11 @@ class Admin extends CI_Controller
 			//download file 
 			force_download($file, NULL);
 
+<<<<<<< HEAD
 			//  redirect(dashboard/subscription-agreement);
+=======
+			redirect(dashboard / subscription - agreement);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 			//echo $id;
 		}
@@ -1577,7 +2021,11 @@ class Admin extends CI_Controller
 		}
 
 		//check if Admin is logged in
+<<<<<<< HEAD
 		//if ($this->session->has_userdata('adminLoggedIn')) {
+=======
+		if ($this->session->has_userdata('adminLoggedIn')) {
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
@@ -1596,6 +2044,7 @@ class Admin extends CI_Controller
 			$this->load->view('admin/templates/footer.php', $data);
 
 			$this->load->view('admin/templates/payment-modal.php', $data);
+<<<<<<< HEAD
 		// } else {
 
 		// 	redirect(base_url() . 'admin/login', 'refresh');
@@ -1617,6 +2066,29 @@ class Admin extends CI_Controller
 
 		return $this->admin_model->get_ver_prop($id);
 	}
+=======
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+	public function get_ver_property($id)
+	{
+
+		return $this->admin_model->get_ver_property($id);
+	}
+	public function get_ver_furniture($id)
+	{
+
+		return $this->admin_model->get_ver_furniture($id);
+	}
+	public function get_ver_prop($id)
+	{
+
+		return $this->admin_model->get_ver_prop($id);
+	}
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	public function app_profile($id)
 	{
 
@@ -2629,7 +3101,10 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	public function add_new_rss_property()
 	{
 
@@ -2857,7 +3332,11 @@ class Admin extends CI_Controller
 			$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
 
 			//Get Images
+<<<<<<< HEAD
 			$data['btl_images'] = file_get_contents('https://dev-buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
+=======
+			$data['btl_images'] = file_get_contents('https://buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 			$data['title'] = "Edit Property :: Buytolet";
 
@@ -3127,6 +3606,7 @@ class Admin extends CI_Controller
 		}
 
 		echo json_encode(array('status' => $status, 'msg' => $msg));
+<<<<<<< HEAD
 	}
 
 
@@ -3157,6 +3637,149 @@ class Admin extends CI_Controller
 		}
 	}
 
+=======
+	}
+
+
+	public function proptySearch(){
+	    
+	    $value =  $this->input->post("input");
+
+		$data = $this->admin_model->searchPropty($value);
+
+		foreach ($data->result() as $row) 
+        {
+            // echo "<li  id='getVal-$row->propertyID-$row->propertyTitle' class='checkagr' onclick= >$row->propertyTitle</li>";
+
+			echo "<li id = '$row->propertyID' class = '$row->propertyTitle' onClick= getsVal($row->propertyID) >$row->propertyTitle</li>";	
+		}
+	}
+
+	public function deleteAgreement(){
+		
+		$id = $this->input->post('bookingID');
+		
+		//$propID = $this->input->post('propertyID');		
+				
+		$res = $this->admin_model->delAgreement($id);
+
+		if($res){
+			
+			echo 1;
+			
+		}else{
+			
+			echo 0;
+			
+		}
+	}
+
+	public function edit_agr($id){
+		
+		$data['ids'] = $id;
+
+		$data['details'] = $this->admin_model->get_user_details($id);
+
+		$data['bookings'] = $this->admin_model->get_user_bookings($id);
+
+		$data['user_hstry'] = $this->admin_model->get_user_hstry($id);
+		
+		$data['proptys'] = $this->admin_model->get_user_propty($id);
+		
+		$data['user_transactions'] = $this->admin_model->get_user_transactions($id);
+
+		$data['debts'] = $this->admin_model->get_debts($id);
+
+		if ( ! file_exists(APPPATH.'views/admin/pages/user-profile.php')){
+
+                // Whoops, we don't have a page for that!
+
+                show_404();
+
+        }
+        
+		//check if Admin is logged in
+		//if($this->session->has_userdata('adminLoggedIn')){			
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');	
+			
+			$data['userAccess'] = $this->session->userdata('userAccess');		
+
+			$data['title'] = "User Profile :: RSS";
+
+			$this->load->view('admin/templates/header.php' , $data);
+
+			$this->load->view('admin/templates/sidebar.php' , $data);
+
+			$this->load->view('admin/pages/edit-agr.php' , $data);
+
+			$this->load->view('admin/templates/footer.php' , $data);
+
+			$this->load->view('admin/templates/payment-modal.php' , $data);	
+
+		// }else{			
+
+		// 	redirect( base_url().'admin/login','refresh');				
+
+		// }
+
+	}
+
+
+	public function edit_upload(){
+	    
+	    $config['upload_path']          = './uploads/agreement/';
+        $config['allowed_types']        = 'doc|docx|pdf';
+        $config['max_size']             = 0;
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+        
+        //$usrs = $this->session->userdata('userID');
+        
+        //$usrs = $this->admin_model->get_username($usrs);
+
+        if (!$this->upload->do_upload('filename'))
+        {
+            $error = array('error' => $this->upload->display_errors());
+
+            $this->load->view('agr_error', $error);
+        }
+        
+        else
+        {
+                $data = $this->upload->data();
+                
+                $id = $this->input->post('sub_id');
+                
+                $str_yr = $this->input->post('start-yr');
+                
+                $data = array(
+                    'filename' => $data['file_name'],
+                    'start_year' => $str_yr,
+                    'end_year' => $this->input->post('end-yr'),
+                    'property' => $this->input->post('sub-propty'),
+                    'date' => date('Y-m-d H:i:s')
+                    );
+				
+				$this->db->where('id', $id);
+                    
+                $this->db->update('sub_agreement', $data);
+                
+                //print_r($data);
+                
+                echo "<script>
+                            alert('Upload Successful');
+                            window.location.href='edit-agr/".$id."';
+                      </script>";
+        }
+	}
+
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	public function getDistance()
 	{
 
@@ -3423,7 +4046,11 @@ class Admin extends CI_Controller
 
 
 					$output .= '
+<<<<<<< HEAD
 								<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://dev-stay.smallsmall.com/uploads/apartments/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+=======
+								<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://stay.smallsmall.com/uploads/apartments/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 								<div class="remove-img img-removal" id="img-properties-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
 								<!--<span class="featTT">featured</span>--></span>';
 				} else {
@@ -4059,6 +4686,10 @@ class Admin extends CI_Controller
 
 	// }
 
+<<<<<<< HEAD
+=======
+	// AWS S3 bucket integration -- All folder uploads to S3 bucket and also fetch from S3 bucket
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 	public function uploadImages($folder)
 	{
@@ -4071,7 +4702,11 @@ class Admin extends CI_Controller
 
 		sleep(3);
 
+<<<<<<< HEAD
 		$bucket = 'dev-rss-uploads'; // bucket name
+=======
+		$bucket = 'rss-prod-uploads'; // bucket name
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 		if (!is_dir('./uploads/properties/' . $folder)) {
 
@@ -4097,6 +4732,10 @@ class Admin extends CI_Controller
 			$this->upload->initialize($config);
 
 			// Create an S3 client
+<<<<<<< HEAD
+=======
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 			$s3 = new Aws\S3\S3Client([
 
 				'version' => 'latest',
@@ -4122,6 +4761,10 @@ class Admin extends CI_Controller
 					$data = $this->upload->data();
 
 					// Upload the file to S3
+<<<<<<< HEAD
+=======
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 					$s3ObjectKey = 'uploads/properties/' . $folder . '/' . $data['file_name'];
 
 					try {
@@ -4135,10 +4778,17 @@ class Admin extends CI_Controller
 						]);
 
 						$output .= '
+<<<<<<< HEAD
                         <span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '">
                             <img src="' . $result['ObjectURL'] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
                             <div class="remove-img img-removal" id="img-properties-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
                         </span>';
+=======
+							<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '">
+								<img src="' . $result['ObjectURL'] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+								<div class="remove-img img-removal" id="img-properties-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
+							</span>';
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 					} catch (Aws\S3\Exception\S3Exception $e) {
 
 						$error = 'S3 Upload Error: ' . $e->getMessage();
@@ -4153,8 +4803,12 @@ class Admin extends CI_Controller
 		}
 	}
 
+<<<<<<< HEAD
 
 
+=======
+	// End of AWS S3 bucket integration
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 	public function uploadFurnisureImages($folder)
 	{
@@ -5372,7 +6026,11 @@ class Admin extends CI_Controller
 			mkdir('../buy.smallsmall.com/uploads/buytolet/' . $folder, 0777, TRUE);
 		}
 		//Connect to buy2let and create property Image folder
+<<<<<<< HEAD
 		//$success = file_get_contents("https://dev-buy.smallsmall.com/create-folder/".$folder);
+=======
+		//$success = file_get_contents("https://buy.smallsmall.com/create-folder/".$folder);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 		//if(!$success){
 		//Create the floor plan folder
@@ -5419,14 +6077,22 @@ class Admin extends CI_Controller
 
 					//$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
 
+<<<<<<< HEAD
 					//$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$folder);
+=======
+					//$upl_result = file_get_contents('https://buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$folder);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 					//if($upl_result){
 
 					$data = $this->upload->data();
 
 					$output .= '
+<<<<<<< HEAD
 								<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://dev-buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+=======
+								<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 								<div class="remove-btl-img img-removal" id="img-buytolet-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
 								<!--<span class="featTT">featured</span>--></span>';
 				} else {
@@ -5484,6 +6150,7 @@ class Admin extends CI_Controller
 		$hold_period = $this->input->post('hold_period');
 		$co_appr = explode(',', $this->input->post('co_appr'));
 		$co_rent = explode(',', $this->input->post('co_rent'));
+		$lockdownFee = $this->input->post('lockdownFee');
 		$status = "";
 
 
@@ -5522,12 +6189,20 @@ class Admin extends CI_Controller
 
 					$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
 
+<<<<<<< HEAD
 				$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
+=======
+				$upl_result = file_get_contents('https://buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 				unlink('./tmp/' . $data["file_name"]);
 
 				//Populate the property table
+<<<<<<< HEAD
 				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+=======
+				$property = $this->admin_model->insertBuytoletProperty($propName, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 				if ($property != 0) {
 
@@ -5598,6 +6273,7 @@ class Admin extends CI_Controller
 		$hold_period = $this->input->post('hold_period');
 		$co_appr = explode(',', $this->input->post('co_appr'));
 		$co_rent = explode(',', $this->input->post('co_rent'));
+		$lockdownFee = $this->input->post('lockdownFee');
 		$status = "";
 
 
@@ -5640,12 +6316,16 @@ class Admin extends CI_Controller
 
 					$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
 
+<<<<<<< HEAD
 					$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan");
+=======
+					$upl_result = file_get_contents('https://buy.smallsmall.com/upload-images/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan");
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 					unlink('./tmp/' . $data["file_name"]);
 
 					//Populate the property table
-					$property = $this->admin_model->editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+					$property = $this->admin_model->editBuytoletProperty($propName, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
 
 					if ($property != 0) {
 
@@ -5659,7 +6339,11 @@ class Admin extends CI_Controller
 					}
 				}
 			} else {
+<<<<<<< HEAD
 				$property = $this->admin_model->editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, 'no', $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+=======
+				$property = $this->admin_model->editBuytoletProperty($propName, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, 'no', $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 				if ($property != 0) {
 
@@ -5750,7 +6434,10 @@ class Admin extends CI_Controller
 			echo 0;
 		}
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	public function deleteBooking()
 	{
 
@@ -5768,6 +6455,7 @@ class Admin extends CI_Controller
 			echo 0;
 		}
 	}
+<<<<<<< HEAD
 
 	public function deleteAgreement()
 	{
@@ -5804,6 +6492,8 @@ class Admin extends CI_Controller
 		}
 	}
 
+=======
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	public function deleteType()
 	{
 
@@ -5842,6 +6532,7 @@ class Admin extends CI_Controller
 		}
 	}
 
+<<<<<<< HEAD
 	// public function removeImg(){
 
 	// 	$folder = $this->input->post('folder');
@@ -6274,6 +6965,37 @@ class Admin extends CI_Controller
 
 
 	public function removeStayoneImg()
+=======
+	public function removeImg()
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+	{
+
+		$folder = $this->input->post('folder');
+
+		$img_name = $this->input->post('imgName');
+
+		if ($folder && $img_name) {
+
+<<<<<<< HEAD
+			$filename = "../stay.smallsmall.com/uploads/" . $folder . "/" . $img_name;
+=======
+			$filename = "./uploads/" . $folder . "/" . $img_name;
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
+
+			if (file_exists($filename)) {
+
+				unlink($filename);
+
+				echo 1;
+			} else {
+
+				echo $filename;
+			}
+		}
+	}
+<<<<<<< HEAD
+=======
+	public function removeStayoneImg()
 	{
 
 		$folder = $this->input->post('folder');
@@ -6295,6 +7017,7 @@ class Admin extends CI_Controller
 			}
 		}
 	}
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	public function search_properties()
 	{
 
@@ -6624,7 +7347,11 @@ class Admin extends CI_Controller
 
 		if ($result) {
 
+<<<<<<< HEAD
 			file_get_contents('https://dev-buy.smallsmall.com/delete-images/' . $propFolder);
+=======
+			file_get_contents('https://buy.smallsmall.com/delete-images/' . $propFolder);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 			echo 1;
 		} else {
@@ -6786,7 +7513,11 @@ class Admin extends CI_Controller
 
 		//Create folder on remote server
 
+<<<<<<< HEAD
 		$success = file_get_contents('https://dev-buy.smallsmall.com/create-folder/' . $imageFolder);
+=======
+		$success = file_get_contents('https://buy.smallsmall.com/create-folder/' . $imageFolder);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 		if (!$success) {
 			//Create the floor plan folder
@@ -6808,7 +7539,11 @@ class Admin extends CI_Controller
 			$destinationFolder = $imageFolder;
 
 			//Initiate a copy on the remote server
+<<<<<<< HEAD
 			$result = file_get_contents('https://dev-buy.smallsmall.com/copy-images/' . $sourceFolder . '/' . $destinationFolder);
+=======
+			$result = file_get_contents('https://buy.smallsmall.com/copy-images/' . $sourceFolder . '/' . $destinationFolder);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 			if ($result) {
 
@@ -7322,7 +8057,11 @@ class Admin extends CI_Controller
 		if ($txn) {
 			//Create invoice and send
 
+<<<<<<< HEAD
 			$pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://dev-rent.smallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />dev-rent.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> ' . $bookingID . '_' . $randomNum . '<br /><b>Transaction ID:</b> ' . $ref . '<br />Invoice date: ' . date("d/m/Y") . '<br />Email: ' . $user['email'] . '<br />Phone Number: ' . $user['phone'] . '</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />' . $user['firstName'] . ' ' . $user['lastName'] . '<br />Nigeria.<br />' . $user['phone'] . '</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>' . $prop_det['propertyTitle'] . '</b><div style="font-family:helvetica;font-size:12px;color:#333333">' . $prop_det['address'] . ', ' . $prop_det['city'] . '</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $duration . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount) . '.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $sec_dep_term . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N ' . number_format($security_deposit) . '.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount) . '.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount) . '.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
+=======
+			$pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://rent.smallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />rent.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> ' . $bookingID . '_' . $randomNum . '<br /><b>Transaction ID:</b> ' . $ref . '<br />Invoice date: ' . date("d/m/Y") . '<br />Email: ' . $user['email'] . '<br />Phone Number: ' . $user['phone'] . '</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />' . $user['firstName'] . ' ' . $user['lastName'] . '<br />Nigeria.<br />' . $user['phone'] . '</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>' . $prop_det['propertyTitle'] . '</b><div style="font-family:helvetica;font-size:12px;color:#333333">' . $prop_det['address'] . ', ' . $prop_det['city'] . '</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $duration . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount) . '.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $sec_dep_term . ' Month(s)</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N ' . number_format($security_deposit) . '.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount) . '.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount) . '.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 			if (!is_dir('assets/pdf/tenant/' . $bookingID)) {
 
@@ -7719,7 +8458,10 @@ class Admin extends CI_Controller
 			echo 0;
 		}
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	public function all_notifications()
 	{
 
@@ -7788,6 +8530,7 @@ class Admin extends CI_Controller
 		}
 	}
 
+<<<<<<< HEAD
 	public function all_adverts()
 	{
 		$config['total_rows'] = $this->admin_model->countAdverts();
@@ -7869,6 +8612,22 @@ class Admin extends CI_Controller
 
 		return $pdf_content;
 	}
+=======
+	public function prep_invoice($invoiceID, $transactionID, $email, $phone, $name, $address, $apartmentName, $apartmentAddress, $duration, $cost_amount, $security_deposit, $amount_paid, $discount, $vat, $pickup_option, $pickup_cost)
+	{
+
+		$pickup = "";
+
+		if ($pickup_option == 'yes') {
+
+			$pickup = '<tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Pickup Cost</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($pickup_cost) . '.00</td></tr>';
+		}
+
+		$pdf_content = '<div style="width:90%;margin:auto;padding-top:50px;"><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="logo"><img width="150px" src="https://stay.smallsmall.com/assets/img/logo.png" /></div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>From Address</b><br />stay.smallsmall.com<br />No. 1 Akinyemi Avenue,<br />Lekki Phase 1,<br />Lekki Lagos,<br />Nigeria.<br />(+234)903 722 2669</div></td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Invoice:</b> ' . $invoiceID . '<br /><b>Transaction ID:</b> ' . $transactionID . '<br />Invoice date: ' . date('M d, Y') . '<br />Email: ' . $email . '<br />Phone Number: ' . $phone . '</div></td><td width="33.3%"></td><td width="33.3%"><div class="company-address" style="font-family:helvetica;font-size:14px;line-height:25px;"><b>Billing Address</b><br />' . $name . '<br />' . $address . '<br />Nigeria.<br />' . $phone . '</div></td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;"><tr><th style="background:#2E2E2E;width:60%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Description</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Duration</th><th style="background:#2E2E2E;width:20%;text-align:left;font-family:helvetica;font-size:14px;line-height:25px;color:#FFF;">Cost</th></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left"><b>' . $apartmentName . '</b><div style="font-family:helvetica;font-size:12px;color:#333333">' . $apartmentAddress . '</div></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">' . $duration . '</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($cost_amount) . '.00</td></tr><tr><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;"><b>Security Deposit</b></td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">1</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($security_deposit) . '.00</td></tr></table><table width="100%" cellpadding="10" style="border:1px solid #f1f3f3;display:table"><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Subtotal</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . $subtotal . '.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Discount</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;color:red">- N' . number_format($discount) . '0.00</td></tr>' . $pickup . '<tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">VAT</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($vat) . '.00</td></tr><tr><td width="80%" valign="top" style="border:1px solid #f1f3f3;font-weight:bold;font-family:helvetica;font-size:14px;text-align:right">Total</td><td valign="top" style="border:1px solid #f1f3f3;font-family:helvetica;font-size:14px;text-align:left;">N' . number_format($amount_paid) . '.00</td></tr></table><table width="100%" style="margin-bottom:30px"><tr><td width="33.3%" valign="top"><div class="invoice-details" style="font-family:helvetica;font-size:14px;line-height:25px;">Account Number: 7900982382<br />Providus Bank<br />RentSmallSmall Ltd.</div></td><td width="33.3%"></td><td width="33.3%"></td></tr></table></div>';
+
+		return $pdf_content;
+	}
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 	public function buytolet_property_requests()
 	{
 
@@ -8145,6 +8904,10 @@ class Admin extends CI_Controller
 								"message" => [
 									"recipients" => [
 										["email" => 'customerexperience@smallsmall.com'],
+<<<<<<< HEAD
+=======
+										["email" => 'accounts@smallsmall.com'],
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 									],
 									"body" => ["html" => $htmlBody],
 									"subject" => "Wallet Deduction Successful notification!",
@@ -8286,6 +9049,7 @@ class Admin extends CI_Controller
 		}
 
 		return array("result" => $result, "amount" => $new_amount);
+<<<<<<< HEAD
 	}
 	
 	public function fill_payment_table($userID, $refID, $payment_period, $finance_balance)
@@ -8605,6 +9369,326 @@ class Admin extends CI_Controller
 
 		if (!file_exists(APPPATH . 'views/admin/pages/send-shares.php')) {
 
+=======
+	}
+	public function fill_payment_table($userID, $refID, $payment_period, $finance_balance)
+	{
+
+		$year_one = 0;
+		$year_one_months = 0;
+		$year_two = 0;
+		$year_two_months = 0;
+		$year_three = 0;
+		$year_three_months = 0;
+		$year_four = 0;
+		$year_four_months = 0;
+		$year_five = 0;
+		$year_five_months = 0;
+		$year_six = 0;
+		$year_six_months = 0;
+
+		if ($payment_period == 1) {
+
+			$year_one = $finance_balance;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_one_months = $payment_period * 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_one_months; $i++) {
+
+				$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+				$payDate = $this->endCycle($payDate, 1);
+			}
+		} else if ($payment_period == 2) {
+
+			$year_two_months = $payment_period * 12;
+
+			$year_one = $finance_balance * 0.6;
+
+			$year_two = $inance_balance * 0.4;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_two_payments = $year_two / 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_two_months; $i++) {
+
+				if ($i <= 12) {
+
+					$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+					$payDate = $this->endCycle($payDate, 1);
+				} else if ($i > 12 && $i <= 24) {
+
+					for ($i = 13; $i <= $year_two_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				}
+			}
+		} else if ($payment_period == 3) {
+
+			$year_three_months = $payment_period * 12;
+
+			$year_one = $finance_balance * 0.45;
+
+			$year_two = $finance_balance * 0.35;
+
+			$year_three = $finance_balance * 0.2;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_two_payments = $year_two / 12;
+
+			$year_three_payments = $year_three / 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_three_months; $i++) {
+
+				if ($i <= 12) {
+
+					$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+					$payDate = $this->endCycle($payDate, 1);
+				} else if ($i > 12 && $i <= 24) {
+
+					for ($i = 25; $i <= $year_three_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 24 && $i <= 36) {
+
+					for ($i = 37; $i <= $year_three_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				}
+			}
+		} else if ($payment_period == 4) {
+
+			$year_four_months = $payment_period * 12;
+
+			$year_one = $finance_balance * 0.4;
+
+			$year_two = $finance_balance * 0.3;
+
+			$year_four = $finance_balance * 0.1;
+
+			$year_three = $finance_balance * 0.2;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_two_payments = $year_two / 12;
+
+			$year_three_payments = $year_three / 12;
+
+			$year_four_payments = $year_four / 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_four_months; $i++) {
+
+				if ($i <= 12) {
+
+					$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+					$payDate = $this->endCycle($payDate, 1);
+				} else if ($i > 12 && $i <= 24) {
+
+					for ($i = 25; $i <= $year_four_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 24 && $i <= 36) {
+
+					for ($i = 37; $i <= $year_four_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 37 && $i <= 48) {
+
+					for ($i = 49; $i <= $year_four_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_four_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				}
+			}
+		} else if ($payment_period == 5) {
+
+			$year_five_months = $payment_period * 12;
+
+			$year_one = $finance_balance * 0.4;
+
+			$year_two = $finance_balance * 0.25;
+
+			$year_three = $finance_balance * 0.2;
+
+			$year_four = $finance_balance * 0.1;
+
+			$year_five = $finance_balance * 0.05;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_two_payments = $year_two / 12;
+
+			$year_three_payments = $year_three / 12;
+
+			$year_four_payments = $year_four / 12;
+
+			$year_five_payments = $year_five / 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_five_months; $i++) {
+
+				if ($i <= 12) {
+
+					$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+					$payDate = $this->endCycle($payDate, 1);
+				} else if ($i > 12 && $i <= 24) {
+
+					for ($i = 25; $i <= $year_five_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 24 && $i <= 36) {
+
+					for ($i = 37; $i <= $year_five_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 37 && $i <= 48) {
+
+					for ($i = 49; $i <= $year_five_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_four_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 49 && $i <= 60) {
+
+					for ($i = 61; $i <= $year_five_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_five_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				}
+			}
+		} else if ($unit['payment_period'] == 6) {
+
+			$year_six_months = $payment_period * 12;
+
+			$year_one = $finance_balance * 0.35;
+
+			$year_two = $finance_balance * 0.25;
+
+			$year_three = $finance_balance * 0.20;
+
+			$year_four = $finance_balance * 0.1;
+
+			$year_five = $finance_balance * 0.05;
+
+			$year_six = $finance_balance * 0.05;
+
+			$year_one_payments = $year_one / 12;
+
+			$year_two_payments = $year_two / 12;
+
+			$year_three_payments = $year_three / 12;
+
+			$year_four_payments = $year_four / 12;
+
+			$year_five_payments = $year_five / 12;
+
+			$year_six_payments = $year_six / 12;
+
+			$payDate = date('Y-m-d');
+
+			for ($i = 1; $i <= $year_six_months; $i++) {
+
+				if ($i <= 12) {
+
+					$this->admin_model->insert_schedule($userID, $refID, $year_one_payments, $payDate);
+
+					$payDate = $this->endCycle($payDate, 1);
+				} else if ($i > 12 && $i <= 24) {
+
+					for ($i = 25; $i <= $year_six_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_two_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 24 && $i <= 36) {
+
+					for ($i = 37; $i <= $year_six_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_three_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 37 && $i <= 48) {
+
+					for ($i = 49; $i <= $year_six_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_four_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 49 && $i <= 60) {
+
+					for ($i = 61; $i <= $year_six_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_five_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				} else if ($i > 61 && $i <= 72) {
+
+					for ($i = 73; $i <= $year_six_months; $i++) {
+
+						$this->admin_model->insert_schedule($userID, $refID, $year_six_payments, $payDate);
+
+						$payDate = $this->endCycle($payDate, 1);
+					}
+				}
+			}
+		}
+
+		return 1;
+	}
+
+	public function share_form()
+	{
+
+		if (!file_exists(APPPATH . 'views/admin/pages/send-shares.php')) {
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 			// Whoops, we don't have a page for that!
 			show_404();
 		}
@@ -8790,6 +9874,23 @@ class Admin extends CI_Controller
 
 			$res = $this->create_user_account($details);
 		}
+<<<<<<< HEAD
+=======
+
+		if ($res) {
+
+			$result = $this->admin_model->insertCoOwnRequest($ref, $buyer_type, $payment_plan, $property_id, $payable, $user_id, $payable, 0, $mop, $payment_period, $unit_amount, $promo_code, $id_path, $beneficiary_id_path, $firstname, $lastname, $email, $phone, $company_name, $position, $occupation, $income_range, $company_address, $adminID, $offer_type);
+
+			if ($result) {
+				//Update the remaining pool units
+				$new_pool_units = $prop['available_units'] - $unit_amount;
+
+				if ($this->admin_model->update_buytolet_units($new_pool_units, $property_id)) {
+
+					$hash = ($offer_type == 'champions') ? '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d' : '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d';
+
+					// $email_response = $this->send_mmio_email($firstname, $lastname, $email, $hash);
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 		if ($res) {
 
@@ -8799,6 +9900,7 @@ class Admin extends CI_Controller
 				//Update the remaining pool units
 				$new_pool_units = $prop['available_units'] - $unit_amount;
 
+<<<<<<< HEAD
 				if ($this->admin_model->update_buytolet_units($new_pool_units, $property_id)) {
 
 					$hash = ($offer_type == 'champions') ? '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d' : '53324d32554663764b30356b563146366444466851575a6b6479396e51324e526446525a5648464c6555703351556c75546c517a5532316d637a303d';
@@ -8827,6 +9929,31 @@ class Admin extends CI_Controller
 			$message = "Could not create new user";
 		}
 
+=======
+					$response = "success";
+
+					if ($email_response) {
+
+						$email_CxTeam = $this->send_Cx_freeshares_notification($lastname, $unit_amount, $propName, $email);
+
+						$message = "Successfully sent";
+					} else {
+
+						$message = "Email send error";
+					}
+				} else {
+
+					$message = "Error updating";
+				}
+			} else {
+
+				$message = "Could not insert request";
+			}
+		} else {
+			$message = "Could not create new user";
+		}
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 		echo json_encode(array("response" => $response, "msg" => $message));
 	}
 
@@ -8963,6 +10090,169 @@ class Admin extends CI_Controller
 			$data['response'] = $e->getMessage();
 		}
 	}
+<<<<<<< HEAD
+=======
+
+
+	public function send_buytolet_freeshares_email($lastname, $unit_amount, $propName, $email)
+	{
+
+		require 'vendor/autoload.php'; // For Unione template authoload
+
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "bdf6cc3e-2c92-11ee-a048-725d8dbd0ffa"
+		];
+
+		// end Unione Template
+
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
+
+			$jsonResponse = $response->getBody()->getContents();
+
+			$responseData = json_decode($jsonResponse, true);
+
+			$htmlBody = $responseData['template']['body']['html'];
+
+			$username = $lastname;
+			$noOFShares = $unit_amount;
+			$propertyName = $propName;
+
+			// Replace the placeholder in the HTML body with the username
+
+			$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+			$htmlBody = str_replace('{{SharesAmount}}', $noOFShares, $htmlBody);
+			$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+
+
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailData = [
+				"message" => [
+					"recipients" => [
+						["email" => $email],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "You have been sent Property Shares From Buysmallsmall",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "Buysmallsmall",
+				],
+			];
+
+			// Send the email using the Unione API
+			$responseEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailData,
+			]);
+
+			$response = json_decode($responseEmail->getBody()->getContents(), true);
+
+			return $response['status'];
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+			$data['response'] = $e->getMessage();
+		}
+	}
+
+	public function send_Cx_freeshares_notification($lastname, $unit_amount, $propName, $email)
+	{
+
+		require 'vendor/autoload.php'; // For Unione template authoload
+
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "08cf2ff0-2c69-11ee-a93c-9e797bd96141"
+		];
+
+		// end Unione Template
+
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
+
+			$jsonResponse = $response->getBody()->getContents();
+
+			$responseData = json_decode($jsonResponse, true);
+
+			$htmlBody = $responseData['template']['body']['html'];
+
+			$username = $lastname;
+			$noOFShares = $unit_amount;
+			$propertyName = $propName;
+			$subscriberEmail = $email;
+			$todayDate = date('m/d/Y');
+
+			// Replace the placeholder in the HTML body with the username
+
+			$htmlBody = str_replace('{{AmountofFreeShares}}', $noOFShares, $htmlBody);
+			$htmlBody = str_replace('{{Email}}', $username, $htmlBody);
+			$htmlBody = str_replace('{{EmailAddress}}', $subscriberEmail, $htmlBody);
+			$htmlBody = str_replace('{{FreeShares}}', $noOFShares, $htmlBody);
+			$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+			$htmlBody = str_replace('{{Date}}', $todayDate, $htmlBody);
+
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailData = [
+				"message" => [
+					"recipients" => [
+						["email" => 'hello@buysmallsmall.ng'],
+						["email" => 'chisom.o@smallsmall.com'],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "Free Shares has been sent to a User From Buysmallsmall",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "Buysmallsmall",
+				],
+			];
+
+			// Send the email using the Unione API
+			$responseEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailData,
+			]);
+
+			$response = json_decode($responseEmail->getBody()->getContents(), true);
+
+			return $response['status'];
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+			$data['response'] = $e->getMessage();
+		}
+	}
+
+
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 
 	//parameter array
 	public function create_user_account($details)
@@ -9006,7 +10296,11 @@ class Admin extends CI_Controller
 
 			$data['page_links'] = $this->pagination->create_links();
 
+<<<<<<< HEAD
 			$data['subscribers'] = $this->admin_model->fetchSubscribers();
+=======
+			$data['subscriptions'] = $this->admin_model->fetchSubscribers();
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 		}
 
 		if (!file_exists(APPPATH . 'views/admin/pages/stp-subscribers.php')) {
@@ -9043,6 +10337,7 @@ class Admin extends CI_Controller
 		$str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz';
 		return substr(str_shuffle($str_result), 0, $length_of_string);
 	}
+<<<<<<< HEAD
 
 
 	// public function direct_debit_subscription ()
@@ -9123,4 +10418,6 @@ class Admin extends CI_Controller
         }
     }
 
+=======
+>>>>>>> 23c651059074162dfecc48c23bdd2794333393e7
 }
