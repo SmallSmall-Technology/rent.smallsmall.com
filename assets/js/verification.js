@@ -479,8 +479,12 @@ jQuery(document).ready(function($){
     		if(details.profile.length < 1){
     
     		   //header.
+
+			   alert("Upload required files.");
+
+			   return false;
     
-    			window.location.href = baseUrl+"rss/verification/profile-verification";
+    			// window.location.href = baseUrl+"rss/verification/profile-verification";
     
     		}
     
