@@ -545,7 +545,7 @@ class Admin extends CI_Controller
 			$img = $_FILES['imgName']['name'][$i];
 
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
+            move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
 
 			$s3ObjectKey = 'uploads/adverts/'. $img;
 
@@ -639,7 +639,7 @@ class Admin extends CI_Controller
 			$img = $_FILES['imgName']['name'][$i];
 
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
+            move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
 
 			$s3ObjectKey = 'uploads/adverts/'. $img;
 			$data = $this->upload->data();
