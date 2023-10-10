@@ -86,6 +86,43 @@
 <!--<script src="https://widget.dojah.io/widget.js"></script>-->
 
 
+
+<script>
+  // Function to handle the file upload
+  const handleFileUpload = () => {
+    // Assuming you have an input element for file upload with id 'verify-income-upload'
+    const fileInput = document.getElementById('verify-income-upload');
+    
+    // Assuming you have a button for verification with id 'verify-income-submit'
+    const verifyButton = document.getElementById('verify-income-submit');
+    
+    // Assuming you have a button for showing the "Verified" status with class 'verified-btn'
+    const verifiedButton = document.querySelector('.verified-btn');
+
+    // Add an event listener to the file input element
+    fileInput.addEventListener('change', () => {
+      // Check if a file has been selected
+      if (fileInput.files.length > 0) {
+        // Hide the "Verify income" button
+        verifyButton.style.display = 'none';
+        
+        // Show the "Verified" button
+        verifiedButton.style.display = 'block';
+      }
+    });
+  };
+  
+  // Attach the event handler when the document is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    handleFileUpload();
+  });
+</script>
+
+
+
+
+
+
 <!-- JavaScript code for configuring and implementing the widget -->
 <script>
     
