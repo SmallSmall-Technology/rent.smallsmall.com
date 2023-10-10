@@ -563,7 +563,7 @@ class Admin extends CI_Controller
 
 					'Key'    => $s3ObjectKey,
 
-					//'Body'   => file_get_contents($data["full_path"]),
+					'Body'   => file_get_contents($data["full_path"]),
 				]);
 
 			} catch (Aws\S3\Exception\S3Exception $e) {
@@ -655,7 +655,7 @@ class Admin extends CI_Controller
 
 					'Key'    => $s3ObjectKey,
 
-					//'Body'   => file_get_contents($data["full_path"]),
+					'Body'   => file_get_contents($data["full_path"]),
 				]);
 
 			} catch (Aws\S3\Exception\S3Exception $e) {
