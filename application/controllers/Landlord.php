@@ -752,7 +752,7 @@ class Landlord extends CI_Controller {
 		if ($res) {
 
 			// Assuming you're using CodeIgniter, use the URL helper to create URLs
-		$user_profile_url = site_url('landlord/repair/');
+		$user_profile_url = site_url('landlord/repair');
 
 		// Redirect to user profile with a success message
 		echo "<script>
