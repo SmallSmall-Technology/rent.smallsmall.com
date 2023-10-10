@@ -620,7 +620,7 @@ class Admin extends CI_Controller
 
 		for($i=0; $i<$count; $i++)
         {
-			$config['upload_path']          = './uploads/agreement/';
+			$config['upload_path']          = './uploads/adverts/';
 			$config['allowed_types']        = 'jpg|png|jpeg';
 			$config['max_size']             = 0;
 			// $config['max_width']            = 1024;
