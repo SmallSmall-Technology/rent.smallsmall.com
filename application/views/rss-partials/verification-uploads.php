@@ -41,9 +41,19 @@
               <!-- Show this button when verified -->
               <!-- <button class="btn verified-btn px-5 py-2 d-none">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button> -->
 
+<style>
+
+  /* Add this CSS to your stylesheet to override the d-none class */
+.show-verified {
+  display: block !important;
+}
+
+</style>
 
               <!-- File upload input for Verify income (hidden by default) -->
 <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
+
+<input type="hidden" id="userID" value="<?php echo @$userID; ?>" />
 
 <!-- File submit button (hidden by default) -->
 <input type="submit" id="verify-income-submit" hidden />
@@ -52,7 +62,9 @@
 <a href="#" class="btn verify-btn px-5 py-2" id="verify-income-button">Verify income</a>
 
 <!-- Show this button when verified -->
-<button class="btn verified-btn px-5 py-2 d-none">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
+<button class="btn verified-btn px-5 py-2 d-none" id="verified-button">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
+
+<!-- <button class="btn verified-btn px-5 py-2 d-none">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button> -->
 
               </div>
 
@@ -90,40 +102,35 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/updated-assets/js/dojah-widget.js"></script>
 
+
+<script src="<?php echo base_url().'assets/js/verification.js' ?>"></script>
+
+<script src="<?php echo base_url().'assets/js/upload-verification-file.js' ?>"></script>
+
+<script src="<?php echo base_url().'assets/js/custom-file-input.js' ?>"></script>
+
 <!--<script src="https://widget.dojah.io/widget.js"></script>-->
-
-
 
 <script>
   // Function to handle the file upload
   const handleFileUpload = () => {
-    // Get references to the necessary elements
     const fileInput = document.getElementById('verify-income-upload');
     const verifyButton = document.getElementById('verify-income-button');
-    const verifiedButton = document.querySelector('.verified-btn');
+    const verifiedButton = document.getElementById('verified-button'); // Updated to use the new ID
 
-    // Attach an event listener to the "Verify income" button
     verifyButton.addEventListener('click', (event) => {
-      event.preventDefault(); // Prevent default link behavior
-
-      // Trigger the file input click event
+      event.preventDefault();
       fileInput.click();
     });
 
-    // Add an event listener to the file input element
     fileInput.addEventListener('change', () => {
-      // Check if a file has been selected
       if (fileInput.files.length > 0) {
-        // Hide the "Verify income" button
         verifyButton.style.display = 'none';
-
-        // Show the "Verified" button
-        verifiedButton.style.display = 'block';
+        verifiedButton.classList.remove('d-none'); // Remove the d-none class
       }
     });
   };
 
-  // Attach the event handler when the document is ready
   document.addEventListener('DOMContentLoaded', () => {
     handleFileUpload();
   });
