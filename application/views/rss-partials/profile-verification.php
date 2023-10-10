@@ -50,7 +50,7 @@
                              <div class="form-group">
                                  <div class="customized-select">
                                      <!-- <input type="text" class="form-control verify-txt-f" id="email" placeholder="Email"> -->
-                                     <input type="text" class="form-control verify-txt-f" id="email" placeholder="<?php echo !empty($email) ? $email : 'Email'; ?>" readonly>
+                                     <input type="text" class="form-control verify-txt-f" id="email" placeholder="<?php echo !empty($email) ? $email : 'Email'; ?>" >
                                  </div>
                              </div>
                          </div>

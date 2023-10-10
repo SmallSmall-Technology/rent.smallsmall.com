@@ -41,6 +41,8 @@
                 <!-- File upload input for Verify income (hidden by default) -->
                 <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
 
+                <!-- <input type="file" class="input statement-inp" id="upload" hidden /> -->
+
                 <input type="hidden" id="userID" value="<?php echo @$userID; ?>" />
 
                 <input type="hidden" id="statement" value="" />

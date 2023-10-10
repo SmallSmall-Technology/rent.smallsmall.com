@@ -456,9 +456,9 @@ jQuery(document).ready(function($){
     
     	e.preventDefault();
     
-    	$('#verifyBut-right').html("Wait...");
+    	$('#verifyBut').html("Wait...");
     
-    	if($("input[name='terms-use-link']:checked") && $("input[name='tenancy-term']:checked")){
+    	// if($("input[name='terms-use-link']:checked") && $("input[name='tenancy-term']:checked")){
     
     		// var id_path = $('#idcard').val(); For input 2
     
@@ -472,16 +472,18 @@ jQuery(document).ready(function($){
     
     		// if(id_path == "" || statement_path == "" || !(id_state) || !(statement_state)){
 
-			if(statement_path == ""){
+			// To revisit
+			
+			// if(statement_path == ""){
 
     
-    		   alert("Upload required files.");
+    		//    alert("Upload required files.");
     
-    			$('#verifyBut-right').html("Submit");
+    		// 	$('#verifyBut-right').html("Submit");
     
-    			return false;			
+    		// 	return false;			
     
-    		 }
+    		//  }
     
     		var details = JSON.parse(localStorage.getItem('verificationStorage'));
     
@@ -550,13 +552,13 @@ jQuery(document).ready(function($){
     
     		});
     
-    	}else{
+    	// }else{
     
-    		alert("You need to agree to terms of use and tenancy terms");
+    	// 	alert("You need to agree to terms of use and tenancy terms");
     
-    		$('#verifyBut-right').html("Submit");
+    	// 	$('#verifyBut').html("Submit");
     
-    	}
+    	// }
     
     	//window.location.href = baseUrl+"pay/"+details;
     
