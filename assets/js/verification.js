@@ -3,7 +3,7 @@ jQuery(document).ready(function($){
 
     //Insert into local storage
     
-    var baseUrl = "https://dev-rent.smallsmall.com/";
+    var baseUrl = "https://rent.smallsmall.com/";
     
     var details = "";
     
@@ -329,8 +329,9 @@ jQuery(document).ready(function($){
     
     });
 
-	// Old verification uploads
-	// $('#uploadForm').submit(function(e){
+	// Verication - Old uploads 
+    
+    // $('#uploadForm').submit(function(e){
     
     // 	"use strict";
     
@@ -348,12 +349,11 @@ jQuery(document).ready(function($){
     
     // 		var user_id = $('#userID').val();
         
-    //         var id_state = $('#id-state').val(); 
+    //         var id_state = $('#id-state').val();
     
-    // 		var statement_state = $('#statement-state').val(); 
+    // 		var statement_state = $('#statement-state').val();
     
     // 		if(id_path == "" || statement_path == "" || !(id_state) || !(statement_state)){
-
     
     // 		   alert("Upload required files.");
     
@@ -446,9 +446,9 @@ jQuery(document).ready(function($){
     
     // });
 
-	// New Verification Uploads
-    
-    $('#uploadForm').submit(function(e){
+	// Verication
+
+	 $('#uploadForm').submit(function(e){
     
     	"use strict";
     
@@ -458,28 +458,13 @@ jQuery(document).ready(function($){
     
     	$('#verifyBut').html("Wait...");
     
-    	// if($("input[name='terms-use-link']:checked") && $("input[name='tenancy-term']:checked")){
-    
-    		// var id_path = $('#idcard').val(); For input 2
-    
+    	if($("input[name='terms-use-link']:checked") && $("input[name='tenancy-term']:checked")){
+        
     		var statement_path = $('#statement').val();
     
     		var user_id = $('#userID').val();
-
-			console.log(statement_path);
-
-			console.log(user_id);
-        
-            // var id_state = $('#id-state').val(); // I do need the progressive bar again
-    
-    		// var statement_state = $('#statement-state').val(); // For progressive bar
-    
-    		// if(id_path == "" || statement_path == "" || !(id_state) || !(statement_state)){
-
-			// To revisit
-
-			// if(statement_path == ""){
-
+                
+    		// if(statement_path ){
     
     		//    alert("Upload required files.");
     
@@ -490,8 +475,6 @@ jQuery(document).ready(function($){
     		//  }
     
     		var details = JSON.parse(localStorage.getItem('verificationStorage'));
-
-			console.log(details);
     
     		if(details.profile.length < 1){
     
@@ -553,18 +536,17 @@ jQuery(document).ready(function($){
         
         			return false; 
     				
-    
     			}
     
     		});
     
-    	// }else{
+    	}else{
     
-    	// 	alert("You need to agree to terms of use and tenancy terms");
+    		alert("You need to agree to terms of use and tenancy terms");
     
-    	// 	$('#verifyBut').html("Submit");
+    		$('#verifyBut-right').html("Submit");
     
-    	// }
+    	}
     
     	//window.location.href = baseUrl+"pay/"+details;
     
@@ -573,4 +555,6 @@ jQuery(document).ready(function($){
     	//Continue to payment page
     
     });
+
+
 });
