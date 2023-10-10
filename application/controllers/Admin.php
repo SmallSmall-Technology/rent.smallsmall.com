@@ -442,6 +442,7 @@ class Admin extends CI_Controller
 		$img = $_FILES['imgName']['name'];
 		$postimg_tmp = $_FILES['imgName']['tmp_name'];
 		$s3ObjectKey = 'uploads/adverts/' . $img;
+		
 
 		try {
 			$result = $s3->putObject([
