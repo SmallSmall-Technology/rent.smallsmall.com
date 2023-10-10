@@ -30,23 +30,30 @@
               <div>
 
               <!-- File upload input for Verify income (hidden by default) -->
-              <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
+              <!-- <input type="file" class="input statement-inp" id="verify-income-upload" hidden /> -->
 
               <!-- File submit button (hidden by default) -->
-              <input type="submit" id="verify-income-submit" hidden />
+              <!-- <input type="submit" id="verify-income-submit" hidden /> -->
 
               <!-- Show this button when not verified and make it trigger the file input -->
-              <a href="#" class="btn verify-btn px-5 py-2" onclick="document.getElementById('verify-income-upload').click(); return false;">Verify income</a>
+              <!-- <a href="#" class="btn verify-btn px-5 py-2" onclick="document.getElementById('verify-income-upload').click(); return false;">Verify income</a> -->
 
               <!-- Show this button when verified -->
-              <button class="btn verified-btn px-5 py-2 d-none">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
+              <!-- <button class="btn verified-btn px-5 py-2 d-none">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button> -->
 
-                <!-- show this when not verified -->
-                <!-- <a href="#" class="btn verify-btn px-5 py-2">Verify income</a> -->
 
-                <!-- show this when verified -->
-                <!-- <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check"
-                    style="color:#00CD2D"></i></button> -->
+              <!-- File upload input for Verify income (hidden by default) -->
+<input type="file" class="input statement-inp" id="verify-income-upload" hidden />
+
+<!-- File submit button (hidden by default) -->
+<input type="submit" id="verify-income-submit" hidden />
+
+<!-- Show this button when not verified and make it trigger the file input -->
+<a href="#" class="btn verify-btn px-5 py-2" id="verify-income-button">Verify income</a>
+
+<!-- Show this button when verified -->
+<button class="btn verified-btn px-5 py-2 d-none">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
+
               </div>
 
 
@@ -90,14 +97,18 @@
 <script>
   // Function to handle the file upload
   const handleFileUpload = () => {
-    // Assuming you have an input element for file upload with id 'verify-income-upload'
+    // Get references to the necessary elements
     const fileInput = document.getElementById('verify-income-upload');
-    
-    // Assuming you have a button for verification with id 'verify-income-submit'
-    const verifyButton = document.getElementById('verify-income-submit');
-    
-    // Assuming you have a button for showing the "Verified" status with class 'verified-btn'
+    const verifyButton = document.getElementById('verify-income-button');
     const verifiedButton = document.querySelector('.verified-btn');
+
+    // Attach an event listener to the "Verify income" button
+    verifyButton.addEventListener('click', (event) => {
+      event.preventDefault(); // Prevent default link behavior
+
+      // Trigger the file input click event
+      fileInput.click();
+    });
 
     // Add an event listener to the file input element
     fileInput.addEventListener('change', () => {
@@ -105,21 +116,18 @@
       if (fileInput.files.length > 0) {
         // Hide the "Verify income" button
         verifyButton.style.display = 'none';
-        
+
         // Show the "Verified" button
         verifiedButton.style.display = 'block';
       }
     });
   };
-  
+
   // Attach the event handler when the document is ready
   document.addEventListener('DOMContentLoaded', () => {
     handleFileUpload();
   });
 </script>
-
-
-
 
 
 
