@@ -461,6 +461,8 @@ jQuery(document).ready(function($){
     	if($("input[name='terms-use-link']:checked") && $("input[name='tenancy-term']:checked")){
         
     		var statement_path = $('#statement').val();
+
+			console.log(statement_path);
     
     		var user_id = $('#userID').val();
                 
@@ -480,11 +482,11 @@ jQuery(document).ready(function($){
     
     		   //header.
 
-			   alert("Upload required files.");
+			//    alert("Upload required files.");
 
-			   return false;
+			//    return false;
     
-    			// window.location.href = baseUrl+"rss/verification/profile-verification";
+    			window.location.href = baseUrl+"rss/verification/profile-verification";
     
     		}
     
