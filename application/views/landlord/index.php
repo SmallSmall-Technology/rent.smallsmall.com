@@ -391,7 +391,7 @@
                     {
                       if($row->repair_status == 'waiting')
                       {
-                          echo '<p class="d-flex justify-content-between "><span class="custom-font-size-14">'.$row->repair_category.'</span><span
+                          echo '<p class="d-flex justify-content-between "><span class="custom-font-size-14">'.$row->repair_type.'</span><span
                           class="custom-font-size-12 danger-color">Waiting
                           for your
                           approval</span></p>';
@@ -399,9 +399,15 @@
 
                       elseif($row->repair_status == 'Processing')
                       {
-                          echo '<p class="d-flex justify-content-between "><span class="custom-font-size-14">'.$row->repair_category.'</span><span
+                          echo '<p class="d-flex justify-content-between "><span class="custom-font-size-14">'.$row->repair_type.'</span><span
                           class="custom-font-size-12 in-progress-color">In
                           progress</span></p>';
+                      }
+
+                      elseif($row->repair_status == 'completed')
+                      {
+                          echo '<p class="d-flex justify-content-between "><span class="custom-font-size-14">'.$row->repair_type.'</span><span
+                          class="custom-font-size-12 in-progress-color">Completed</span></p>';
                       }
                       
                     }
