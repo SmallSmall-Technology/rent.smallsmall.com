@@ -407,6 +407,8 @@ class Landlord extends CI_Controller {
 
 			$data['userID'] = $this->session->userdata('userID');
 
+			$data['repairID'] = $id;
+
 			$data['sub_dats'] = $this->landlord_model->checkSub($data['userID']);
 
 			$data['repairdata'] = $this->landlord_model->checkrepairdata($id);
@@ -731,6 +733,26 @@ class Landlord extends CI_Controller {
 
 			// Assuming you're using CodeIgniter, use the URL helper to create URLs
 		$user_profile_url = site_url('admin/addRepairs/');
+
+		// Redirect to user profile with a success message
+		echo "<script>
+				alert('Upload Successful');
+				window.location.href='$user_profile_url';
+			</script>";
+		}
+	}
+
+	public function approve()
+	{		
+		$repairId = $this->input->post('repairID');
+		//$date = 
+				
+		$res = $this->landlord_model->editCxRepair($repairId);
+
+		if ($res) {
+
+			// Assuming you're using CodeIgniter, use the URL helper to create URLs
+		$user_profile_url = site_url('landlord/repair/');
 
 		// Redirect to user profile with a success message
 		echo "<script>

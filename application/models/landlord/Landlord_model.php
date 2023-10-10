@@ -287,4 +287,13 @@ class Landlord_model extends CI_Model
 		}	
 		
 	}
+
+    public function editCxRepair($repairId){
+
+        $edits = array("status" => 'Processing');
+	    
+	    $this->db->where("id", $repairId);
+	    
+	    return $this->db->update("cx_repairs", $edits);
+    }
 } 

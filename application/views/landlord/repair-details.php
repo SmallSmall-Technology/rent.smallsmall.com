@@ -43,7 +43,7 @@
     <!-- desktop menu bar -->
     <nav class="navbar navbar-expand-lg nav-bottom-color navbar-light primary-background px-4 py-0 d-lg-flex d-none">
       <a class="navbar-brand">
-        <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/rss-logo.svg" alt="logo">
+        <img class="img-fluid" src="../assets/images2/rss-logo.svg" alt="logo">
       </a>
       <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav"
         aria-expanded="false" aria-label="Toggle navigation">
@@ -67,70 +67,69 @@
           <li class="nav-item d-flex align-items-center">
             <a class="nav-link p-0" href="#" tabindex="-1" aria-disabled="true">
               <div class="menu-logo mr-2">
-                <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/dashboard-icon.svg" alt="">
+                <img class="img-fluid" src="../assets/images2/dashboard-icon.svg" alt="">
+              </div>
+            </a>
+          </li>
+          <li class="nav-item d-flex align-items-center  mr-4">
+            <div class="menu-text">
+              <a href="<?php echo base_url('landlord/index'); ?>" class=" text-dark" style="text-decoration: none;">Dashboard</a>
+            </div>
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <a class="nav-link p-0" href="<?php echo base_url('landlord/inbox'); ?>" tabindex="-1" aria-disabled="true">
+              <div class="menu-logo mr-2 position-relative">
+                <div class="notification-circle d-md-flex d-none justify-content-center align-items-center">2</div>
+                <img class="img-fluid" src="../assets/images2/inbox-icon.svg" alt="" />
+              </div>
+            </a>
+          </li>
+          <li class="nav-item d-flex align-items-center mr-4">
+            <div class="menu-text">
+              <a href="<?php echo base_url('landlord/inbox'); ?>" class=" text-dark" style="text-decoration: none;">Notification</a>
+            </div>
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <a class="nav-link p-0" href="#" tabindex="-1" aria-disabled="true">
+              <div class="menu-logo mr-2">
+                <img class="img-fluid" src="../assets/images2/myProperty-icon.svg" alt="">
               </div>
             </a>
           </li>
           <li class="nav-item d-flex align-items-center dashboard-active mr-4">
             <div class="menu-text">
-              <a href="index.html" class=" text-dark" style="text-decoration: none;">Dashboard</a>
-            </div>
-          </li>
-          <li class="nav-item d-flex align-items-center">
-            <a class="nav-link p-0" href="notification.html" tabindex="-1" aria-disabled="true">
-              <div class="menu-logo mr-2 position-relative">
-                <div class="notification-circle d-md-flex d-none justify-content-center align-items-center">2</div>
-                <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/inbox-icon.svg" alt="" />
-              </div>
-            </a>
-          </li>
-          <li class="nav-item d-flex align-items-center mr-4">
-            <div class="menu-text">
-              <a href="notification.html" class=" text-dark" style="text-decoration: none;">Notification</a>
-            </div>
-          </li>
-          <li class="nav-item d-flex align-items-center">
-            <a class="nav-link p-0" href="#" tabindex="-1" aria-disabled="true">
-              <div class="menu-logo mr-2">
-                <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/myProperty-icon.svg" alt="">
-              </div>
-            </a>
-          </li>
-          <li class="nav-item d-flex align-items-center mr-4">
-            <div class="menu-text">
-              <a href="my-property.html" class=" text-dark" style="text-decoration: none;">My property</a>
+              <a href="<?php echo base_url('landlord/property'); ?>" class=" text-dark" style="text-decoration: none;">My property</a>
             </div>
           </li>
           <li class="nav-item d-flex align-items-center">
             <a class="nav-link p-0" href="wallet.html" tabindex="-1" aria-disabled="true">
               <div class="menu-logo mr-2">
-                <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/payout-icon.svg" alt="">
+                <img class="img-fluid" src="../assets/images2/payout-icon.svg" alt="">
               </div>
             </a>
           </li>
           <li class="nav-item d-flex align-items-center mr-4">
             <div class="menu-text">
-              <a href="payout.html" class=" text-dark" style="text-decoration: none;">Payout</a>
+              <a href="<?php echo base_url('landlord/wallet'); ?>" class=" text-dark" style="text-decoration: none;">Payout</a>
             </div>
           </li>
           <li class="nav-item d-flex align-items-center">
             <a class="nav-link p-0" href="#" tabindex="-1" aria-disabled="true">
               <div class="menu-logo mr-2">
-                <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/profile-icon.svg" alt="">
+                <img class="img-fluid" src="../assets/images2/profile-icon.svg" alt="">
               </div>
             </a>
           </li>
           <li class="nav-item d-flex align-items-center mr-4">
             <div class="menu-text">
-              <a href="profile.html" class=" text-dark" style="text-decoration: none;">Profile</a>
+              <a href="<?php echo base_url('landlord/profile'); ?>" class=" text-dark" style="text-decoration: none;">Profile</a>
             </div>
           </li>
-
         </ul>
         <a href="#">
           <span class="navbar-text text-dark mr-5">
             Log out
-            <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/logout.svg" alt="">
+            <img class="img-fluid" src="../assets/images2/logout.svg" alt="">
           </span>
         </a>
 
@@ -138,14 +137,15 @@
       </div>
     </nav>
 
+
     <!-- mobile menu bar -->
     <nav class="navbar d-flex menu-navbar-bg nav-mobile d-flex d-lg-none">
       <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav"
         aria-expanded="false" aria-label="Toggle navigation">
-        <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/menu-burger.svg" alt="">
+        <img class="img-fluid" src="../assets/images2/menu-burger.svg" alt="">
       </button>
       <a href="#" style="width: 33%" class="flex-grow-1 text-center">
-        <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/rss-logo.svg" alt="logo">
+        <img class="img-fluid" src="../assets/images2/rss-logo.svg" alt="logo">
       </a>
       <div class="d-flex user-container">
         <div class="user-shorthand d-flex justify-content-center align-items-center mr-2">
@@ -156,7 +156,7 @@
       </div>
       <div class="d-md-none d-block  nav-link text-dark dropdown-toggle dropdown-toggle--custom p-0"
         data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-        <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/user-mobile2.svg" alt="">
+        <img class="img-fluid" src="../assets/images2/user-mobile2.svg" alt="">
       </div>
 
 
@@ -165,7 +165,7 @@
         <div class=" menu-desktop py-2 px-4 d-flex flex-column">
           <a href="#">
             <span class="navbar-text text-dark mr-5">
-              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/logout.svg" alt="">
+              <img class="img-fluid" src="../assets/images2/logout.svg" alt="">
               Log out
             </span>
           </a>
@@ -180,10 +180,10 @@
       </div>
 
       <div id="my-nav" class="collapse navbar-collapse mobile-menu-collapse pl-0 pt-4">
-        <div class="mb-4 pl-2 dashboard-active">
+        <div class="mb-4 pl-2">
           <p>
-            <a href="index.html" class=" text-dark" style="text-decoration: none;">
-              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/dashboard-icon.svg" alt="">
+            <a href="<?php echo base_url('landlord/index'); ?>" class=" text-dark" style="text-decoration: none;">
+              <img class="img-fluid" src="../assets/images2/dashboard-icon.svg" alt="">
               &nbsp;&nbsp; Dashboard
             </a>
           </p>
@@ -191,25 +191,25 @@
 
         <div class="mb-4 pl-2">
           <p>
-            <a href="notification.html" class=" text-dark" style="text-decoration: none;">
-              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/inbox-icon.svg" alt="">
+            <a href="<?php echo base_url('landlord/inbox'); ?>" class=" text-dark" style="text-decoration: none;">
+              <img class="img-fluid" src="../assets/images2/inbox-icon.svg" alt="">
               &nbsp;&nbsp; Notification
             </a>
           </p>
         </div>
 
-        <div class="mb-4 pl-2">
+        <div class="mb-4 pl-2 dashboard-active">
           <p>
-            <a href="booking.html" class=" text-dark" style="text-decoration: none;">
-              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/myProperty-icon.svg" alt="">
+            <a href="<?php echo base_url('landlord/property'); ?>" class=" text-dark" style="text-decoration: none;">
+              <img class="img-fluid" src="../assets/images2/myProperty-icon.svg" alt="">
               &nbsp;&nbsp; MyProperty
             </a>
         </div>
 
         <div class="mb-4 pl-2">
           <p>
-            <a href="wallet.html" class=" text-dark" style="text-decoration: none;">
-              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/payout-icon.svg" alt="">
+            <a href="<?php echo base_url('landlord/wallet'); ?>" class=" text-dark" style="text-decoration: none;">
+              <img class="img-fluid" src="../assets/images2/payout-icon.svg" alt="">
               &nbsp;&nbsp; Payout
             </a>
           </p>
@@ -217,8 +217,8 @@
 
         <div class="mb-4 pl-2">
           <p>
-            <a href="profile.html" class=" text-dark" style="text-decoration: none;">
-              <img class="img-fluid" src="<?php echo base_url(); ?>assets/images2/profile-icon.svg" alt="">
+            <a href="<?php echo base_url('landlord/profile'); ?>" class=" text-dark" style="text-decoration: none;">
+              <img class="img-fluid" src="../assets/images2/profile-icon.svg" alt="">
               &nbsp;&nbsp; Profile
             </a>
           </p>
@@ -227,32 +227,34 @@
       </div>
     </nav>
 
+
   </header>
 
   <!-- Sub menu for property section starts here -->
   <div class="container-fluid d-md-flex d-none nav-bottom-color sub-menu ">
     <div class="sub-nav d-flex flex-wrap">
-      <a class="text-decoration-none secondary-text-color mr-4 py-3  " href="my-property.html">
-        <div class="sub-menu-link  ">
+      <a class="text-decoration-none secondary-text-color mr-4 py-3  sub-menu--"
+        href="<?php echo base_url('landlord/property'); ?>">
+        <div class="sub-menu-link">
           Property
         </div>
       </a>
-      <a class="text-decoration-none secondary-text-color mr-4 py-3" href="subscriber.html">
-        <div class="sub-menu-link  ">
+      <a class="text-decoration-none secondary-text-color mr-4 py-3 " href="<?php echo base_url('landlord/subscriber'); ?>">
+        <div class="sub-menu-link">
           Subscriber
         </div>
       </a>
-      <a class="text-decoration-none secondary-text-color mr-4 py-3 sub-menu--dashboard-active" href="repair.html">
+      <a class="text-decoration-none secondary-text-color mr-4 py-3 dashboard-active" href="<?php echo base_url('landlord/repair'); ?>">
         <div class="sub-menu-link  ">
           Repair
         </div>
       </a>
-      <a class="text-decoration-none secondary-text-color mr-4 py-3" href="property-agreement.html">
+      <a class="text-decoration-none secondary-text-color mr-4 py-3" href="<?php echo base_url('landlord/agreement'); ?>">
         <div class="sub-menu-link  ">
           Property Agreement
         </div>
       </a>
-      <a class="text-decoration-none secondary-text-color mr-4 py-3" href="transactions.html">
+      <a class="text-decoration-none secondary-text-color mr-4 py-3" href="<?php echo base_url('landlord/transactions'); ?>">
         <div class="sub-menu-link  ">
           Transactions
         </div>
@@ -263,22 +265,22 @@
   <!-- Sub menu mobile view for property section starts here -->
   <div class="container-fluid d-block d-md-none nav-bottom-color sub-menu">
     <div class="sub-nav d-flex justify-content-between ">
-      <a class="text-decoration-none secondary-text-color py-3  " href="property.html">
+      <a class="text-decoration-none secondary-text-color py-3  " href="<?php echo base_url('landlord/property'); ?>">
         <div class="sub-menu-link  ">
           Property
         </div>
       </a>
-      <a class="text-decoration-none secondary-text-color py-3" href="subscriber.html">
+      <a class="text-decoration-none secondary-text-color py-3 " href="<?php echo base_url('landlord/subscriber'); ?>">
         <div class="sub-menu-link  ">
           Subscriber
         </div>
       </a>
-      <a class="text-decoration-none secondary-text-color py-3 sub-menu--dashboard-active" href="repair.html">
+      <a class="text-decoration-none secondary-text-color py-3  dashboard-active" href="<?php echo base_url('landlord/repair'); ?>">
         <div class="sub-menu-link  ">
           Repair
         </div>
       </a>
-      <div class="dropdown align-self-center py-3 ">
+      <div class="dropdown align-self-center py-3 sub-menu--">
         <a class="text-decoration-none secondary-text-color" href="#" role="button" data-toggle="dropdown"
           aria-expanded="false">
           More
@@ -286,7 +288,7 @@
         </a>
 
         <div class="dropdown-menu custom-dropdown-menu primary-background border-0 ">
-          <a class="dropdown-item secondary-text-color custom-dropdown-active" href="property-rating.html">Property
+          <a class="dropdown-item secondary-text-color custom-dropdown-active" href="<?php echo base_url('landlord/agreement'); ?>">Property
             Agreement</a>
           <a class="dropdown-item secondary-text-color" href="transactions.html">Transactions</a>
         </div>
@@ -353,6 +355,7 @@
                 <div class="col-md-12 my-4">
                   <p class="d-inline-block custom-font-size-14">Photos</p>
                 </div>
+
                 <div class="col-md-12">
                   <div class="checkin-pictures d-flex flex-wrap">
                   <?php $res = $repairdata['filename'];  $res = explode(" ", $res); $count = count($res)-1;
@@ -408,17 +411,19 @@
                   <p class="custom-font-size-14">Cost of repairs</p>
                   <p class="custom-font-size-26">RentSmallsmall, Providus Bank, 102388394</p>
                 </div>
+
+                <?php echo form_open_multipart('landlord/approve');?>
+                <input type="hidden" value = <?php echo  @$repairID;?> name= "repairID">
                 <div class="col-12 my-5">
                   <button class="btn secondary-background-btn  px-5 py-3 ">Approve</button>
                   <button class="btn success-color-bg px-4 py-3 d-none">Approved</button>
                 </div>
+                </form>
 
               </div>
             </div>
 
           </div>
-
-
 
 
         </div>
