@@ -78,7 +78,8 @@
           <div class="col-12 mt-5 text-center">
             <a href="https://dev-rent.smallsmall.com/rss/verification/employment-verification" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
             <!-- <button type="submit" class="rss-form-button verifyBut" id="verifyBut">Finish</div> -->
-            <a href="#" type="submit" class="btn verify-btn px-5 py-2 rss-form-button verifyBut" id="verifyBut">Finish</a>
+            <button type="submit" class="btn verify-btn px-5 py-2 rss-form-button verifyBut" id="verifyBut">Finish</div>
+            <!-- <a href="#" type="submit" class="btn verify-btn px-5 py-2 rss-form-button verifyBut" id="verifyBut">Finish</a> -->
           </div>
         </div>
 
