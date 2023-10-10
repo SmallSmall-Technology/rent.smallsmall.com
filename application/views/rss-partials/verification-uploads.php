@@ -43,6 +43,8 @@
 
                 <input type="hidden" id="userID" value="<?php echo @$userID; ?>" />
 
+                <input type="hidden" id="statement" value="" />
+
                 <!-- File submit button (hidden by default) -->
                 <input type="submit" id="verify-income-submit" hidden />
 
@@ -160,6 +162,7 @@
       },
       success: function(data, folder, pictures) {
         filepath = folderName + '/' + files.name.replace(/\s+/g, '_');
+          $('#statement').val(filepath);
         // You can add any actions after a successful upload here
       }
     });
