@@ -328,8 +328,127 @@ jQuery(document).ready(function($){
     	window.location.href = baseUrl+"rss/verification/verification-uploads";
     
     });
+
+	// Verication - Old uploads 
     
-    $('#uploadForm').submit(function(e){
+    // $('#uploadForm').submit(function(e){
+    
+    // 	"use strict";
+    
+    // 	//Stop page from refreshing
+    
+    // 	e.preventDefault();
+    
+    // 	$('#verifyBut-right').html("Wait...");
+    
+    // 	if($("input[name='terms-use-link']:checked") && $("input[name='tenancy-term']:checked")){
+    
+    // 		var id_path = $('#idcard').val();
+    
+    // 		var statement_path = $('#statement').val();
+    
+    // 		var user_id = $('#userID').val();
+        
+    //         var id_state = $('#id-state').val();
+    
+    // 		var statement_state = $('#statement-state').val();
+    
+    // 		if(id_path == "" || statement_path == "" || !(id_state) || !(statement_state)){
+    
+    // 		   alert("Upload required files.");
+    
+    // 			$('#verifyBut-right').html("Submit");
+    
+    // 			return false;			
+    
+    // 		 }
+    
+    // 		var details = JSON.parse(localStorage.getItem('verificationStorage'));
+    
+    // 		if(details.profile.length < 1){
+    
+    // 		   //header.
+    
+    // 			window.location.href = baseUrl+"rss/verification/profile-verification";
+    
+    // 		}
+    
+    // 		//Insert details into local storage
+    
+    // 		if(details.uploads.length > 0){
+    
+    // 			details.uploads.length = 0;
+    
+    // 		}
+    
+    // 		var uploadDetails = {"id_path": id_path, "statement_path" : statement_path, "user_id" : user_id};	
+    
+    // 		//details.orderItemCount = details.orderItemCount + 1;
+    
+    // 		details.status = "complete";
+    
+    // 		details.uploads.push(uploadDetails);
+    
+    // 		window.localStorage.setItem('verificationStorage', JSON.stringify(details));
+    
+    // 		//Get the order details and the verification details
+    
+    // 		var verification = JSON.parse(localStorage.getItem('verificationStorage'));
+    
+    // 		var order = JSON.parse(localStorage.getItem('rentalBasket'));
+    
+    
+    // 		var data = {"details" : verification, "order" : order};
+    
+    
+    // 		$.ajaxSetup ({ cache: false });
+    
+    // 		$.ajax({			
+    
+    // 			url: baseUrl+"rss/insertDetails/",
+    
+    // 			type: "POST",
+    
+    // 			data: data,
+    
+    // 			dataType : 'json',
+    
+    // 			complete: function(data) {
+    
+    //     			//Redirect to pay
+        
+    //     			window.localStorage.removeItem('verificationStorage');
+        
+    //     			window.localStorage.removeItem('rentalBasket');
+        
+    //     			window.location.href = baseUrl+"rss/verification-complete";
+        
+    //     			return false; 
+    				
+    
+    // 			}
+    
+    // 		});
+    
+    // 	}else{
+    
+    // 		alert("You need to agree to terms of use and tenancy terms");
+    
+    // 		$('#verifyBut-right').html("Submit");
+    
+    // 	}
+    
+    // 	//window.location.href = baseUrl+"pay/"+details;
+    
+    	
+    
+    // 	//Continue to payment page
+    
+    // });
+
+	// Verication
+
+	 $('#uploadForm').submit(function(e){
     
     	"use strict";
     
@@ -337,29 +456,23 @@ jQuery(document).ready(function($){
     
     	e.preventDefault();
     
-    	$('#verifyBut-right').html("Wait...");
+    	$('#verifyBut').html("Wait...");
     
     	if($("input[name='terms-use-link']:checked") && $("input[name='tenancy-term']:checked")){
-    
-    		var id_path = $('#idcard').val();
-    
+        
     		var statement_path = $('#statement').val();
     
     		var user_id = $('#userID').val();
-        
-            var id_state = $('#id-state').val();
+                
+    		// if(statement_path ){
     
-    		var statement_state = $('#statement-state').val();
+    		//    alert("Upload required files.");
     
-    		if(id_path == "" || statement_path == "" || !(id_state) || !(statement_state)){
+    		// 	$('#verifyBut-right').html("Submit");
     
-    		   alert("Upload required files.");
+    		// 	return false;			
     
-    			$('#verifyBut-right').html("Submit");
-    
-    			return false;			
-    
-    		 }
+    		//  }
     
     		var details = JSON.parse(localStorage.getItem('verificationStorage'));
     
@@ -379,7 +492,7 @@ jQuery(document).ready(function($){
     
     		}
     
-    		var uploadDetails = {"id_path": id_path, "statement_path" : statement_path, "user_id" : user_id};	
+    		var uploadDetails = {"statement_path" : statement_path, "user_id" : user_id};	
     
     		//details.orderItemCount = details.orderItemCount + 1;
     
@@ -423,7 +536,6 @@ jQuery(document).ready(function($){
         
         			return false; 
     				
-    
     			}
     
     		});
@@ -443,4 +555,6 @@ jQuery(document).ready(function($){
     	//Continue to payment page
     
     });
+
+
 });
