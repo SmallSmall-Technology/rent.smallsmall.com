@@ -65,9 +65,9 @@
                         Rent
                       </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                       <a class="nav-link pl-0 text-white" href="https://stay.smallsmall.com/">Nightly stay</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                       <a class="nav-link pl-0 text-white" href="https://buy.smallsmall.com">
                         Buy

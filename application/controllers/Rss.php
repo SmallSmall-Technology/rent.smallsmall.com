@@ -493,20 +493,59 @@ class Rss extends CI_Controller
 		}
 	}
 
+	// Verification Old - Incase of revert
+
+	// public function verification($page)
+	// {
+
+	// 	if ($this->session->has_userdata('userID')) {
+
+	// 		$data['mob_color'] = "white";
+
+	// 		$data['mob_icons'] = "blue";
+
+	// 		$data['color'] = "white";
+
+	// 		$data['logo'] = "blue";
+
+	// 		$data['image'] = "without-image";
+
+	// 		$data['userID'] = $this->session->userdata('userID');
+
+	// 		$data['fname'] = $this->session->userdata('fname');
+
+	// 		$data['lname'] = $this->session->userdata('lname');
+
+	// 		$data['email'] = $this->session->userdata('email');
+
+	// 		$data['user_type'] = $this->session->userdata('user_type');
+
+	// 		$data['interest'] = $this->session->userdata('interest');
+
+
+	// 		$data['title'] = "Profile Verification";
+
+	// 		$this->load->view('templates/rss-header', $data);
+
+	// 		$this->load->view('rss-partials/' . $page, $data);
+
+	// 		$this->load->view('templates/rss-footer', $data);
+	// 	} else {
+
+	// 		//$userdata = array('page_link' => base_url().'verification/'.$page);
+
+	// 		//$_SESSION['page_link'] = base_url().'verification/'.$page;
+
+	// 		redirect(base_url() . 'login', 'refresh');
+	// 	}
+	// }
+
+	// Verification New
+
 	public function verification($page)
 	{
 
 		if ($this->session->has_userdata('userID')) {
-
-			$data['mob_color'] = "white";
-
-			$data['mob_icons'] = "blue";
-
-			$data['color'] = "white";
-
-			$data['logo'] = "blue";
-
-			$data['image'] = "without-image";
 
 			$data['userID'] = $this->session->userdata('userID');
 
@@ -520,23 +559,28 @@ class Rss extends CI_Controller
 
 			$data['interest'] = $this->session->userdata('interest');
 
+			//Get users detail 
+
+			$user = $this->rss_model->get_user($data['userID']);
+
+			$data['phone'] = $user['phone'];
+
+			$data['gender'] = $user['gender'];
 
 			$data['title'] = "Profile Verification";
 
-			$this->load->view('templates/rss-header', $data);
+			$this->load->view('templates/rss-updated-header', $data);
 
 			$this->load->view('rss-partials/' . $page, $data);
 
-			$this->load->view('templates/rss-footer', $data);
+			$this->load->view('templates/rss-updated-footer', $data);
+
 		} else {
-
-			//$userdata = array('page_link' => base_url().'verification/'.$page);
-
-			//$_SESSION['page_link'] = base_url().'verification/'.$page;
 
 			redirect(base_url() . 'login', 'refresh');
 		}
 	}
+
 	public function signup()
 	{
 
