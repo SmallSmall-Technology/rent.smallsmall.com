@@ -116,7 +116,7 @@
 <!--<script src="https://widget.dojah.io/widget.js"></script>-->
 
 
-<script>
+<!-- <script>
   // Function to handle the file upload
   const handleFileUpload = () => {
     const fileInput = document.getElementById('verify-income-upload');
@@ -139,7 +139,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     handleFileUpload();
   });
-</script>
+</script> -->
 
 
 <script>
@@ -147,6 +147,8 @@
 
   let input = document.getElementById('verify-income-upload');
   let button = document.getElementById('verify-income-button');
+  let verifyButton = document.getElementById('verifyBut'); // Added to reference the verify button
+  let verifiedButton = document.getElementById('verified-button');
 
   button.onclick = () => {
     input.click();
@@ -173,7 +175,11 @@
       success: function(data, folder, pictures) {
         filepath = folderName + '/' + files.name.replace(/\s+/g, '_');
           $('#statement').val(filepath);
-        // You can add any actions after a successful upload here
+
+
+          // Hide the verifyButton and show the verifiedButton
+        verifyButton.style.display = 'none';
+        verifiedButton.classList.remove('d-none');
       }
     });
   });
