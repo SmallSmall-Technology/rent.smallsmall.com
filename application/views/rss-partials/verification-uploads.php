@@ -23,7 +23,7 @@
     </div>
     <div class="col-md-8 col-12 col-lg-6">
 
-      <form id="uploadForm" class="verificationForm regForm" method="POST" enctype="multipart/form-data">
+      <!-- <form id="uploadForm" class="verificationForm regForm" method="POST" enctype="multipart/form-data"> -->
 
         <div class="text-center mt-md-5">
           <h2 class="verify-title">Verify ID & Income</h2>
@@ -82,7 +82,7 @@
           </div>
         </div>
 
-      </form>
+      <!-- </form> -->
 
     </div>
   </div>
@@ -98,67 +98,6 @@
 <script src="<?php echo base_url() . 'assets/js/upload-verification-file.js' ?>"></script>
 
 <script src="<?php echo base_url() . 'assets/js/custom-file-input.js' ?>"></script>
-
-<script>
-  // Function to handle the file upload
-  const handleFileUpload = () => {
-    const fileInput = document.getElementById('verify-income-upload');
-    const verifyButton = document.getElementById('verify-income-button');
-    const verifiedButton = document.getElementById('verified-button'); // Updated to use the new ID
-
-    verifyButton.addEventListener('click', (event) => {
-      event.preventDefault();
-      fileInput.click();
-    });
-
-    fileInput.addEventListener('change', () => {
-      if (fileInput.files.length > 0) {
-        verifyButton.style.display = 'none';
-        verifiedButton.classList.remove('d-none'); // Remove the d-none class
-      }
-    });
-  };
-
-  document.addEventListener('DOMContentLoaded', () => {
-    handleFileUpload();
-  });
-</script>
-
-<script>
-  var baseUrl = "https://rent.smallsmall.com/";
-
-  let input = document.getElementById('verify-income-upload');
-  let button = document.getElementById('verify-income-button');
-
-  button.onclick = () => {
-    input.click();
-  };
-
-  input.addEventListener('change', function() {
-    "use strict";
-    var fd = new FormData();
-    var files = this.files[0];
-    var folderName = document.getElementById('userID').value;
-    var filepath = "";
-
-    fd.append('files', files);
-
-    $.ajax({
-      url: baseUrl + 'rss/uploadIdentification/' + folderName,
-      type: 'post',
-      data: fd,
-      contentType: false,
-      processData: false,
-      beforeSend: function() {
-
-      },
-      success: function(data, folder, pictures) {
-        filepath = folderName + '/' + files.name.replace(/\s+/g, '_');
-          $('#statement').val(filepath);
-      }
-    });
-  });
-</script>
 
 
 <!-- JavaScript code for configuring and implementing the widget for Dojah-->
@@ -220,6 +159,59 @@
   });
 </script>
 
+
+<script>
+    var baseUrl = "https://rent.smallsmall.com/";
+
+    // Added to reference the verify button
+    let input = document.getElementById('verify-income-upload');
+    let incomeButton = document.getElementById('verify-income-button');
+    let verifyButton = document.getElementById('verify-income-button');
+    let verifiedButton = document.getElementById('verified-button');
+
+    // console.log('input:', input);
+    // console.log('incomeButton:', incomeButton);
+    // console.log('verifyButton:', verifyButton);
+    // console.log('verifiedButton:', verifiedButton);
+
+    incomeButton.onclick = () => {
+        input.click();
+    };
+
+    input.addEventListener('change', function() {
+        "use strict";
+        var fd = new FormData();
+        var files = $(this)[0].files[0];
+        // var files = this.files[0];
+        var folderName = document.getElementById('userID').value;
+        var filepath = "";
+
+        // console.log('files:', files);
+
+        fd.append('files', files);
+
+        $.ajax({
+            url: baseUrl + 'rss/uploadIdentification/' + folderName,
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+
+            },
+            success: function(data, folder, pictures) {
+                filepath = folderName + '/' + files.name.replace(/\s+/g, '_');
+                $('#statement').val(filepath);
+
+                // console.log('filepath:', filepath);
+
+                // Hide the verifyButton and show the verifiedButton
+                verifyButton.style.display = 'none';
+                verifiedButton.classList.remove('d-none');
+            }
+        });
+    });
+</script>
 
 <!--Bootstrap js and Popper js -->
 <script src="<?php echo base_url(); ?>assets/updated-assets/js/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
