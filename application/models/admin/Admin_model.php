@@ -2216,11 +2216,29 @@ class Admin_model extends CI_Model {
 	}
 	public function release_property($id){
 	    
-	    $release = array("available_date" => '0000-00-00');
+	    $status = array("available_date" => '0000-00-00');
 	    
 	    $this->db->where('propertyID', $id);
 	    
-	    return $this->db->update("property_tbl", $release);
+	    return $this->db->update("property_tbl", $status);
+	    
+	}
+	public function release_btl_property($id){
+	    
+	    $status = array("availability" => 'Available');
+	    
+	    $this->db->where('propertyID', $id);
+	    
+	    return $this->db->update("buytolet_property", $status);
+	    
+	}
+	public function release_btl_property($id){
+	    
+	    $status = array("availability" => 'Locked');
+	    
+	    $this->db->where('propertyID', $id);
+	    
+	    return $this->db->update("buytolet_property", $status);
 	    
 	}
 	public function del_property($id){
@@ -2228,6 +2246,13 @@ class Admin_model extends CI_Model {
 		$this->db->where('propertyID', $id);
     	
 		return $this->db->delete('property_tbl');
+		
+	}
+	public function delete_btl_property($id){
+		
+		$this->db->where('propertyID', $id);
+    	
+		return $this->db->delete('buytolet_property');
 		
 	}
 	public function activate_user($id){
