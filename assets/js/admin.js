@@ -4665,7 +4665,7 @@ $(document). on('click', '.close-int', function(){
 		var details = [];
 		
 		
-		var counted = actionItem.lenght;
+		var counted = actionItem.length;
 
 		if(counted < 1){
 			
@@ -4735,7 +4735,7 @@ $(document). on('click', '.close-int', function(){
 		var info = '';
 		
 		
-		var counted = actionItem.lenght;
+		var counted = actionItem.length;
 
 		if(counted < 1){
 			
