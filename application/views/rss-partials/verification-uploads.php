@@ -195,13 +195,13 @@
     // Added to reference the verify button
     let input = document.getElementById('verify-income-upload');
     let incomeButton = document.getElementById('verify-income-button');
-    let verifyButton = document.getElementById('verifyBut');
+    let verifyButton = document.getElementById('verify-income-button');
     let verifiedButton = document.getElementById('verified-button');
 
-    console.log('input:', input);
-    console.log('incomeButton:', incomeButton);
-    console.log('verifyButton:', verifyButton);
-    console.log('verifiedButton:', verifiedButton);
+    // console.log('input:', input);
+    // console.log('incomeButton:', incomeButton);
+    // console.log('verifyButton:', verifyButton);
+    // console.log('verifiedButton:', verifiedButton);
 
     incomeButton.onclick = () => {
         input.click();
@@ -226,11 +226,14 @@
             contentType: false,
             processData: false,
             beforeSend: function() {
+
                 // You can add any actions before upload here if needed
             },
             success: function(data, folder, pictures) {
                 filepath = folderName + '/' + files.name.replace(/\s+/g, '_');
                 $('#statement').val(filepath);
+
+                // console.log('filepath:', filepath);
 
                 // Hide the verifyButton and show the verifiedButton
                 verifyButton.style.display = 'none';
