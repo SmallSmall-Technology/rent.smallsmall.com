@@ -44,14 +44,17 @@
 
                             <input type="hidden" id="statement" value="" />
 
-                            <!-- File submit button (hidden by default) -->
+                            <!-- File submit button -->
                             <input type="submit" id="verify-income-submit" hidden />
 
-                            <!-- show this when not verified -->
-                            <a href="#" class="btn verify-btn px-5 py-2">Verify income</a>
+                            <!-- Show this button when not verified and make it trigger the file input -->
+                            <!-- <a href="#" class="btn verify-btn px-5 py-2">Verify income</a> -->
+                            <a href="#" class="btn verify-btn px-5 py-2" id="verify-income-button">Verify income</a>
 
-                            <!-- show this when verified -->
-                            <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
+                            <!-- Show this button when verified -->
+                            <!-- <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button> -->
+                            <button class="btn verified-btn px-5 py-2 d-none" id="verified-button">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
+                            
                         </div>
                     </div>
                 </div>
@@ -71,7 +74,8 @@
             </div>
             <div class="row mb-5">
                 <div class="col-12 mt-5 text-center">
-                    <a class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
+                    <!-- <a class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a> -->
+                    <a href="https://dev-rent.smallsmall.com/rss/verification/employment-verification" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
                     <a href="#" class="btn verify-btn px-5 py-2">Finish</a>
                 </div>
             </div>
@@ -89,7 +93,6 @@
 <script src="<?php echo base_url() . 'assets/js/upload-verification-file.js' ?>"></script>
 
 <script src="<?php echo base_url() . 'assets/js/custom-file-input.js' ?>"></script>
-
 
 
 <!--<script src="https://widget.dojah.io/widget.js"></script>-->
@@ -183,9 +186,10 @@
 <script>
     var baseUrl = "https://dev-rent.smallsmall.com/";
 
+    // Added to reference the verify button
     let input = document.getElementById('verify-income-upload');
     let incomeButton = document.getElementById('verify-income-button');
-    let verifyButton = document.getElementById('verifyBut'); // Added to reference the verify button
+    let verifyButton = document.getElementById('verifyBut'); 
     let verifiedButton = document.getElementById('verified-button');
 
     incomeButton.onclick = () => {
