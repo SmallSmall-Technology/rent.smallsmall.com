@@ -71,7 +71,7 @@
               </div>
               <div>
                 <!-- show this when not verified -->
-                <button class="btn px-5 py-2" id="verify-id-btn">Verify ID</button>
+                <button class="btn verify-btn px-5 py-2" id="verify-id-btn">Verify ID</button>
                 <!-- show this when verified -->
                 <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
               </div>
