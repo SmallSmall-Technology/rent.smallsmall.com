@@ -23,63 +23,70 @@
             <p class="verify-number d-md-none d-block">5 of 5</p>
         </div>
         <div class="col-md-8 col-12 col-lg-6">
-            <div class="text-center mt-md-5">
-                <h2 class="verify-title">Verify ID & Income</h2>
-                <p class="verify-body">Click the buttons to verify</p>
-            </div>
-            <div class="row mt-5">
-                <div class="col-md-6 col-12 mb-4">
-                    <div class="d-flex flex-column align-items-center">
-                        <div class="verify-icon mb-4">
-                            <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/bank-icon.svg" alt="">
+
+            <form id="uploadForm" class="verificationForm regForm" method="POST" enctype="multipart/form-data">
+
+                <div class="text-center mt-md-5">
+                    <h2 class="verify-title">Verify ID & Income</h2>
+                    <p class="verify-body">Click the buttons to verify</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-6 col-12 mb-4">
+                        <div class="d-flex flex-column align-items-center">
+                            <div class="verify-icon mb-4">
+                                <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/bank-icon.svg" alt="">
+                            </div>
+                            <div>
+
+                                <!-- File upload input for Verify income (hidden by default) -->
+                                <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
+
+                                <!-- <input type="file" class="input statement-inp" id="upload" hidden /> -->
+
+                                <input type="hidden" id="userID" value="<?php echo @$userID; ?>" />
+
+                                <input type="hidden" id="statement" value="" />
+
+                                <!-- File submit button -->
+                                <input type="submit" id="verify-income-submit" hidden />
+
+                                <!-- Show this button when not verified and make it trigger the file input -->
+                                <!-- <a href="#" class="btn verify-btn px-5 py-2">Verify income</a> -->
+                                <a href="#" class="btn verify-btn px-5 py-2" id="verify-income-button">Verify income</a>
+
+                                <!-- Show this button when verified -->
+                                <!-- <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button> -->
+                                <button class="btn verified-btn px-5 py-2 d-none" id="verified-button">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
+
+                            </div>
                         </div>
-                        <div>
-
-                            <!-- File upload input for Verify income (hidden by default) -->
-                            <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
-
-                            <!-- <input type="file" class="input statement-inp" id="upload" hidden /> -->
-
-                            <input type="hidden" id="userID" value="<?php echo @$userID; ?>" />
-
-                            <input type="hidden" id="statement" value="" />
-
-                            <!-- File submit button -->
-                            <input type="submit" id="verify-income-submit" hidden />
-
-                            <!-- Show this button when not verified and make it trigger the file input -->
-                            <!-- <a href="#" class="btn verify-btn px-5 py-2">Verify income</a> -->
-                            <a href="#" class="btn verify-btn px-5 py-2" id="verify-income-button">Verify income</a>
-
-                            <!-- Show this button when verified -->
-                            <!-- <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button> -->
-                            <button class="btn verified-btn px-5 py-2 d-none" id="verified-button">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
-                            
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="d-flex flex-column align-items-center">
+                            <div class="verify-icon mb-4">
+                                <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/face-scanner.svg" alt="">
+                            </div>
+                            <div>
+                                <!-- show this when not verified -->
+                                <button class="btn verify-btn px-5 py-2" id="verify-id-btn">Verify ID</button>
+                                <!-- show this when verified -->
+                                <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-12">
-                    <div class="d-flex flex-column align-items-center">
-                        <div class="verify-icon mb-4">
-                            <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/face-scanner.svg" alt="">
-                        </div>
-                        <div>
-                            <!-- show this when not verified -->
-                            <button class="btn verify-btn px-5 py-2" id="verify-id-btn">Verify ID</button>
-                            <!-- show this when verified -->
-                            <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
-                        </div>
+                <div class="row mb-5">
+                    <div class="col-12 mt-5 text-center">
+                        <!-- <a class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a> -->
+                        <a href="https://dev-rent.smallsmall.com/rss/verification/employment-verification" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
+                        <!-- <a href="#" class="btn verify-btn px-5 py-2">Finish</a> -->
+                        <button type="submit" class="btn verify-btn px-5 py-2 rss-form-button verifyBut" id="verifyBut">Finish
                     </div>
                 </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-12 mt-5 text-center">
-                    <!-- <a class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a> -->
-                    <a href="https://dev-rent.smallsmall.com/rss/verification/employment-verification" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
-                    <a href="#" class="btn verify-btn px-5 py-2">Finish</a>
-                </div>
-            </div>
         </div>
+
+        </form>
+    </div>
     </div>
 
 
@@ -189,7 +196,7 @@
     // Added to reference the verify button
     let input = document.getElementById('verify-income-upload');
     let incomeButton = document.getElementById('verify-income-button');
-    let verifyButton = document.getElementById('verifyBut'); 
+    let verifyButton = document.getElementById('verifyBut');
     let verifiedButton = document.getElementById('verified-button');
 
     incomeButton.onclick = () => {
@@ -226,7 +233,6 @@
         });
     });
 </script>
-
 
 
 <!--Bootstrap js and Popper js -->
