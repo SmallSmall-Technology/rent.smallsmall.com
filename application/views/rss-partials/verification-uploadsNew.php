@@ -52,6 +52,7 @@
 
                 <!-- File submit button (hidden by default) -->
                 <input type="submit" id="verify-income-submit" hidden />
+                
 
                 <!-- Show this button when not verified and make it trigger the file input -->
                 <a href="#" class="btn verify-btn px-5 py-2" id="verify-income-button">Verify income</a>

@@ -7,7 +7,6 @@
     }
 </style>
 
-
 <!-- MAIN SECTION -->
 <main class="container-fluid ">
     <div class="row">
@@ -199,6 +198,11 @@
     let verifyButton = document.getElementById('verifyBut');
     let verifiedButton = document.getElementById('verified-button');
 
+    console.log('input:', input);
+    console.log('incomeButton:', incomeButton);
+    console.log('verifyButton:', verifyButton);
+    console.log('verifiedButton:', verifiedButton);
+
     incomeButton.onclick = () => {
         input.click();
     };
@@ -210,6 +214,8 @@
         // var files = this.files[0];
         var folderName = document.getElementById('userID').value;
         var filepath = "";
+
+        console.log('files:', files);
 
         fd.append('files', files);
 
