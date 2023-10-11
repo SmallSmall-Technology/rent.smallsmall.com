@@ -23,7 +23,7 @@
     </div>
     <div class="col-md-8 col-12 col-lg-6">
 
-      <form id="uploadForm" class="verificationForm regForm" method="POST" enctype="multipart/form-data">
+      <!-- <form id="uploadForm" class="verificationForm regForm" method="POST" enctype="multipart/form-data"> -->
 
         <div class="text-center mt-md-5">
           <h2 class="verify-title">Verify ID & Income</h2>
@@ -87,7 +87,7 @@
           </div>
         </div>
 
-      </form>
+      <!-- </form> -->
 
     </div>
   </div>
