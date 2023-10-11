@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-8 col-12 col-lg-6">
 
-            <form id="uploadForm" class="verificationForm regForm" method="POST" enctype="multipart/form-data">
+            <!-- <form id="uploadForm" class="verificationForm regForm" method="POST" enctype="multipart/form-data"> -->
 
                 <div class="text-center mt-md-5">
                     <h2 class="verify-title">Verify ID & Income</h2>
@@ -67,7 +67,7 @@
                             </div>
                             <div>
                                 <!-- show this when not verified -->
-                                <button class="btn px-5 py-2" id="verify-id-btn">Verify ID</button>
+                                <button class="btn verify-btn px-5 py-2" id="verify-id-btn">Verify ID</button>
                                 <!-- show this when verified -->
                                 <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
                             </div>
@@ -84,7 +84,7 @@
                 </div>
         </div>
 
-        </form>
+        <!-- </form> -->
     </div>
     </div>
 
