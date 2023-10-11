@@ -448,113 +448,76 @@ jQuery(document).ready(function($){
 
 	// Verication
 
-	 $('#uploadForm').submit(function(e){
-    
-    	"use strict";
-    
-    	//Stop page from refreshing
-    
-    	e.preventDefault();
-    
-    	$('#verifyBut').html("Wait...");
-    
-    	if($("input[name='terms-use-link']:checked") && $("input[name='tenancy-term']:checked")){
-        
-    		var statement_path = $('#statement').val();
-    
-    		var user_id = $('#userID').val();
-                
-    		// if(statement_path ){
-    
-    		//    alert("Upload required files.");
-    
-    		// 	$('#verifyBut-right').html("Submit");
-    
-    		// 	return false;			
-    
-    		//  }
-    
-    		var details = JSON.parse(localStorage.getItem('verificationStorage'));
-    
-    		if(details.profile.length < 1){
-    
-    		   //header.
-    
-    			window.location.href = baseUrl+"rss/verification/profile-verification";
-    
-    		}
-    
-    		//Insert details into local storage
-    
-    		if(details.uploads.length > 0){
-    
-    			details.uploads.length = 0;
-    
-    		}
-    
-    		var uploadDetails = {"statement_path" : statement_path, "user_id" : user_id};	
-    
-    		//details.orderItemCount = details.orderItemCount + 1;
-    
-    		details.status = "complete";
-    
-    		details.uploads.push(uploadDetails);
-    
-    		window.localStorage.setItem('verificationStorage', JSON.stringify(details));
-    
-    		//Get the order details and the verification details
-    
-    		var verification = JSON.parse(localStorage.getItem('verificationStorage'));
-    
-    		var order = JSON.parse(localStorage.getItem('rentalBasket'));
-    
-    
-    		var data = {"details" : verification, "order" : order};
-    
-    
-    		$.ajaxSetup ({ cache: false });
-    
-    		$.ajax({			
-    
-    			url: baseUrl+"rss/insertDetails/",
-    
-    			type: "POST",
-    
-    			data: data,
-    
-    			dataType : 'json',
-    
-    			complete: function(data) {
-    
-        			//Redirect to pay
-        
-        			window.localStorage.removeItem('verificationStorage');
-        
-        			window.localStorage.removeItem('rentalBasket');
-        
-        			window.location.href = baseUrl+"rss/verification-complete";
-        
-        			return false; 
-    				
-    			}
-    
-    		});
-    
-    	}else{
-    
-    		alert("You need to agree to terms of use and tenancy terms");
-    
-    		$('#verifyBut-right').html("Submit");
-    
-    	}
-    
-    	//window.location.href = baseUrl+"pay/"+details;
-    
-    	
-    
-    	//Continue to payment page
-    
-    });
+	$('#verifyBut').click(function () {
+
+		var statement_path = $('#statement').val();
+
+		var user_id = $('#userID').val();
+
+		if (statement_path === "") {
+
+			alert("Upload required files.");
+
+			return;
+
+		}
+
+		// Load verification storage
+		var details = JSON.parse(localStorage.getItem('verificationStorage'));
+
+		console.log(details);
+
+		// Additional Checks
+		if (details.profile.length < 1) {
+
+			window.location.href = baseUrl + "rss/verification/profile-verification";
+
+			return;
+		}
+
+		if (details.uploads.length > 0) {
+
+			details.uploads.length = 0;
+		}
+
+		// Store upload details
+		var uploadDetails = {
+			statement_path: statement_path,
+			user_id: user_id
+		};
+
+		details.status = "complete";
+		details.uploads.push(uploadDetails);
+
+		// Update the verification storage
+		localStorage.setItem('verificationStorage', JSON.stringify(details));
+
+		// Get order details
+		var order = JSON.parse(localStorage.getItem('rentalBasket'));
+
+		// Construct data to send
+		var data = {
+			details: details,
+			order: order
+		};
+
+		// Send the data via AJAX
+		$.ajax({
+			url: baseUrl + "rss/insertDetails/",
+			type: "POST",
+			data: data,
+			dataType: 'json',
+			success: function () {
+				// Redirect to the verification-complete page
+				localStorage.removeItem('verificationStorage');
+				localStorage.removeItem('rentalBasket');
+				window.location.href = baseUrl + "rss/verification-complete";
+			},
+			error: function (error) {
+				console.error(error);
+			}
+		});
+	});
 
 
 });
