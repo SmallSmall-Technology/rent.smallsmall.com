@@ -3846,6 +3846,7 @@ $(document). on('click', '.close-int', function(){
 		var price = $('#price').val();
 		var marketValue = $('#marketValue').val();
 		var lockdownFee = $('#lockdownFee').val();
+		var lockdownPeriod = $('#lockdownPeriod').val();
 		var outrightDiscount = $('#outright-discount').val();
 		var asset_appreciation_1 = $('#asset-appreciation-1').val();
 		var asset_appreciation_2 = $('#asset-appreciation-2').val();
@@ -3951,7 +3952,8 @@ $(document). on('click', '.close-int', function(){
 			"hold_period" : hold_period,
 			"co_appr" : co_appr,
 			"co_rent" : co_rent,
-			"lockdownFee" : lockdownFee
+			"lockdownFee" : lockdownFee,
+			"lockdownPeriod" : lockdownPeriod
 		};
 		
 		$.ajaxFileUpload({
@@ -4007,6 +4009,7 @@ $(document). on('click', '.close-int', function(){
 		var price = $('#price').val();
 		var marketValue = $('#marketValue').val();
 		var lockdownFee = $('#lockdownFee').val();
+		var lockdownPeriod = $('#lockdownPeriod').val();
 		var outrightDiscount = $('#outright-discount').val();
 		var promo_price = $('#promo_price').val();
 		var promo_category = $('.promo_category').val();
@@ -4107,7 +4110,8 @@ $(document). on('click', '.close-int', function(){
 			"co_appr" : co_appr,
 			"co_rent" : co_rent,
 			"available_units" : available_units,
-			"lockdownFee" : lockdownFee
+			"lockdownFee" : lockdownFee,
+			"lockdownPeriod" : lockdownPeriod
 		};
 		
 		$.ajaxFileUpload({
@@ -4661,7 +4665,7 @@ $(document). on('click', '.close-int', function(){
 		var details = [];
 		
 		
-		var counted = actionItem.lenght;
+		var counted = actionItem.length;
 
 		if(counted < 1){
 			
@@ -4731,7 +4735,7 @@ $(document). on('click', '.close-int', function(){
 		var info = '';
 		
 		
-		var counted = actionItem.lenght;
+		var counted = actionItem.length;
 
 		if(counted < 1){
 			

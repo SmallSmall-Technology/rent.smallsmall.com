@@ -31,7 +31,7 @@
 							<table>
 								<tr>
 									<td width="200px">
-										<select class="form-control action">
+										<select id="action" class="form-control action">
 											<option value="">Select Option</option>
 											<option value="delete">Delete</option>
 											<option value="hold">On Hold</option>
