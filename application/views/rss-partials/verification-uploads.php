@@ -206,7 +206,8 @@
     input.addEventListener('change', function() {
         "use strict";
         var fd = new FormData();
-        var files = this.files[0];
+        var files = $(this)[0].files[0];
+        // var files = this.files[0];
         var folderName = document.getElementById('userID').value;
         var filepath = "";
 
@@ -224,7 +225,6 @@
             success: function(data, folder, pictures) {
                 filepath = folderName + '/' + files.name.replace(/\s+/g, '_');
                 $('#statement').val(filepath);
-
 
                 // Hide the verifyButton and show the verifiedButton
                 verifyButton.style.display = 'none';

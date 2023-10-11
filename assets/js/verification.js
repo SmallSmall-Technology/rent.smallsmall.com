@@ -448,7 +448,7 @@ jQuery(document).ready(function($){
 
 	// Verication
 
-	 $('#uploadForm').submit(function(e){
+	$('#uploadForm').submit(function(e){
     
     	"use strict";
     
@@ -466,15 +466,15 @@ jQuery(document).ready(function($){
     
     		var user_id = $('#userID').val();
                 
-    		// if(statement_path ){
+    		if(statement_path == "" ){
     
-    		//    alert("Upload required files.");
+    		   alert("Upload required files.");
     
-    		// 	$('#verifyBut-right').html("Submit");
+    			$('#verifyBut-right').html("Submit");
     
-    		// 	return false;			
+    			return false;			
     
-    		//  }
+    		}
     
     		var details = JSON.parse(localStorage.getItem('verificationStorage'));
     
