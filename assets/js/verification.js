@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
 
 	//Insert into local storage
 
-	var baseUrl = "https://rent.smallsmall.com/";
+	var baseUrl = "https://dev-rent.smallsmall.com/";
 
 	var details = "";
 
@@ -578,6 +578,8 @@ jQuery(document).ready(function ($) {
 
 		// Load verification storage
 		var details = JSON.parse(localStorage.getItem('verificationStorage'));
+
+		console.log(details);
 
 		// Additional Checks
 		if (details.profile.length < 1) {
