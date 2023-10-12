@@ -2232,15 +2232,17 @@ class Admin_model extends CI_Model {
 	    return $this->db->update("buytolet_property", $status);
 	    
 	}
-	public function release_btl_property($id){
+
+	// public function release_btl_property($id){
 	    
-	    $status = array("availability" => 'Locked');
+	//     $status = array("availability" => 'Locked');
 	    
-	    $this->db->where('propertyID', $id);
+	//     $this->db->where('propertyID', $id);
 	    
-	    return $this->db->update("buytolet_property", $status);
+	//     return $this->db->update("buytolet_property", $status);
 	    
-	}
+	// }
+	
 	public function del_property($id){
 		
 		$this->db->where('propertyID', $id);
