@@ -13,13 +13,13 @@
     <div class="col-md-4 col-12 col-lg-3 verify-container">
       <div class="d-flex align-items-center">
         <p class="mr-md-4 mr-0 verify-me">Verify me</p>
-        <p class="verify-number d-md-block d-none">5 of 5</p>
+        <p class="verify-number d-md-block d-none">4 of 4</p>
       </div>
       <p class="verify-body">Before you can subscribe with us we need to know who you are since this will be a long
         partnership. Please
         <a href="<?php echo base_url('privacy-policy'); ?>">read</a> our policy on data sharing.
       </p>
-      <p class="verify-number d-md-none d-block">5 of 5</p>
+      <p class="verify-number d-md-none d-block">4 of 4</p>
     </div>
     <div class="col-md-8 col-12 col-lg-6">
 
@@ -100,7 +100,7 @@
 <!-- JavaScript code for configuring and implementing the widget for DOJAH -->
 
 <script>
-  
+
   const options = {
 
     // app_id: 'DJ-1F372D61F5', //Sand box
