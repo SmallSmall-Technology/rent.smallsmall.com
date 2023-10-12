@@ -401,9 +401,39 @@ if ($verification_status == 'yes') {
                             <a href="<?php echo base_url('dashboard/wallet'); ?>"><button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Pay
                                     With Wallet</button></a>
                         </div>
+                        
                         <div class="col-md-3 col-12 custom-btn mb-2">
-                            <button class="btn font-weight-light  p-3 secondary-background w-100" onclick="payWithPaystack()" type="button">Pay with Paystack</button>
+                        <form id="paymentForm">
+        
+                        <input type="hidden" class="email" id="email" value="<?php echo $dets['email']; ?>" required />			  
+
+                        <input type="hidden" class="amount" id="amount" value="<?php echo $dets['amount']; ?>" required />
+
+                        <input class="fname" type="hidden" id="fname" value="<?php echo $dets['firstName']; ?>" />
+
+                        <input class="lname" type="hidden" id="lname" value="<?php echo $dets['lastName']; ?>" />
+                        
+                        <input class="refID" type="hidden" id="refID" value="<?php echo $dets['reference_id']; ?>" />
+                        
+                        <input type="hidden" class="booking_id" id="booking_id" value="<?php echo $dets['bookingID']; ?>" required />
+                        
+                        <input type="hidden" class="rent_exp" id="rent_exp" value="<?php echo $dets['rent_expiration']; ?>" required />
+                        
+                        <input type="hidden" class="duration" id="duration" value="<?php echo $dets['duration']; ?>" required />
+                        
+                        <input type="hidden" class="payment_plan" id="payment_plan" value="<?php echo $dets['payment_plan']; ?>" required />
+                        
+                        <input type="hidden" class="propID" id="propID" value="<?php echo $dets['propertyID']; ?>" required />
+                        
+                        <!-- <button type="submit" class="green-bg pay-now-btn" onclick="payWithPaystack()"> Pay now </button> -->
+
+                            <button class="btn font-weight-light  p-3 secondary-background w-100" type="submit" onclick="payWithPaystack()" type="button">Pay with Paystack</button>
+                        
+
+                        </form>
+
                         </div>
+
                         <div class="col-md-4 col-12 custom-btn mb-2">
                             <div style="margin-top: -24px;"><b>Coming soon</b></div>
                             <button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Subscribe to
@@ -571,30 +601,7 @@ if ($verification_status == 'yes') {
     </main>
 
     <!----Paystack form ---->
-    <form id="paymentForm">
-        
-        <input type="hidden" class="email" id="email" value="<?php echo $dets['email']; ?>" required />			  
-
-        <input type="hidden" class="amount" id="amount" value="<?php echo $dets['amount']; ?>" required />
-
-        <input class="fname" type="hidden" id="fname" value="<?php echo $dets['firstName']; ?>" />
-
-        <input class="lname" type="hidden" id="lname" value="<?php echo $dets['lastName']; ?>" />
-        
-        <input class="refID" type="hidden" id="refID" value="<?php echo $dets['reference_id']; ?>" />
-        
-        <input type="hidden" class="booking_id" id="booking_id" value="<?php echo $dets['bookingID']; ?>" required />
-        
-        <input type="hidden" class="rent_exp" id="rent_exp" value="<?php echo $dets['rent_expiration']; ?>" required />
-        
-        <input type="hidden" class="duration" id="duration" value="<?php echo $dets['duration']; ?>" required />
-        
-        <input type="hidden" class="payment_plan" id="payment_plan" value="<?php echo $dets['payment_plan']; ?>" required />
-        
-        <input type="hidden" class="propID" id="propID" value="<?php echo $dets['propertyID']; ?>" required />
-        
-        <!-- <button type="submit" class="green-bg pay-now-btn" onclick="payWithPaystack()"> Pay now </button> -->
-    </form>
+    
     <!----Paystack form ---->
 
     <footer>
@@ -680,93 +687,6 @@ if ($verification_status == 'yes') {
     <script src="../assets/js/user.js"></script>
     <script>
         $(document).ready(function() {
-
-            const paymentForm = document.getElementById('paymentForm');
-        	
-        	var bID = document.getElementById('booking_id').value;
-        	
-        	var refID = document.getElementById("refID").value;
-        
-        	paymentForm.addEventListener("submit", payWithPaystack, false);
-        
-        	function payWithPaystack(e) {
-        
-        	    e.preventDefault();
-        
-        	    let handler = PaystackPop.setup({
-        
-            		key: 'pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2', // Replace with your public key
-            
-            		email: document.getElementById("email").value,
-            
-            		amount: document.getElementById("amount").value * 100,
-            
-            		ref: document.getElementById("refID").value, // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-            
-            		// label: "Optional string that replaces customer email"
-            
-            		onClose: function(){
-            
-            		},
-            
-                    callback: function(response){
-                
-                        let message = 'Payment complete! Reference: ' + response.reference;
-                        
-                        updateTransaction(bID, refID);
-                
-                    }
-                });
-        
-                handler.openIframe();
-            
-            }
-            
-            function updateTransaction(bookingID, refID){
-                //alert(bookingID+' - '+refID);
-                var baseURL = "https://test.rentsmallsmall.com/";
-                
-                var rent_exp = document.getElementById('rent_exp').value;
-                
-                var duration = document.getElementById('duration').value;
-                
-                var pplan = document.getElementById('payment_plan').value;
-                
-                var amount = document.getElementById('amount').value;
-                
-                var propID = document.getElementById('propID').value;
-                
-                var data = {"bookingID" : bookingID, "referenceID" : refID, "rent_exp" : rent_exp, "duration" : duration, "pplan" : pplan, "amount" : amount, "propertyID" : propID};
-                
-                $.ajaxSetup ({ cache: false });
-    
-        		$.ajax({
-        
-        			url : baseURL+'rss/updateTransaction/',
-        
-        			type: "POST",
-        
-        			async: true,
-        
-        			data: data,
-        
-        			success	: function (data){
-        				if(data == 1){
-        
-        					alert("Payment update Successful!");
-        
-        					window.location.href = baseURL+"user/bookings";
-        
-        				}else{
-        
-        					alert("Error updating payment.");
-        
-        				}				
-        
-        			}
-        
-        		});
-            }
 
             var limit = 10;
 
@@ -893,7 +813,92 @@ if ($verification_status == 'yes') {
     </script>
 
     <script>
+        	const paymentForm = document.getElementById('paymentForm');
         	
+        	var bID = document.getElementById('booking_id').value;
+        	
+        	var refID = document.getElementById("refID").value;
+        
+        	paymentForm.addEventListener("submit", payWithPaystack, false);
+        
+        	function payWithPaystack(e) {
+        
+        	    e.preventDefault();
+        
+        	    let handler = PaystackPop.setup({
+        
+            		key: 'pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2', // Replace with your public key
+            
+            		email: document.getElementById("email").value,
+            
+            		amount: document.getElementById("amount").value * 100,
+            
+            		ref: document.getElementById("refID").value, // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+            
+            		// label: "Optional string that replaces customer email"
+            
+            		onClose: function(){
+            
+            		},
+            
+                    callback: function(response){
+                
+                        let message = 'Payment complete! Reference: ' + response.reference;
+                        
+                        updateTransaction(bID, refID);
+                
+                    }
+                });
+        
+                handler.openIframe();
+            
+            }
+            
+            function updateTransaction(bookingID, refID){
+                //alert(bookingID+' - '+refID);
+                var baseURL = "https://test.rentsmallsmall.com/";
+                
+                var rent_exp = document.getElementById('rent_exp').value;
+                
+                var duration = document.getElementById('duration').value;
+                
+                var pplan = document.getElementById('payment_plan').value;
+                
+                var amount = document.getElementById('amount').value;
+                
+                var propID = document.getElementById('propID').value;
+                
+                var data = {"bookingID" : bookingID, "referenceID" : refID, "rent_exp" : rent_exp, "duration" : duration, "pplan" : pplan, "amount" : amount, "propertyID" : propID};
+                
+                $.ajaxSetup ({ cache: false });
+    
+        		$.ajax({
+        
+        			url : baseURL+'rss/updateTransaction/',
+        
+        			type: "POST",
+        
+        			async: true,
+        
+        			data: data,
+        
+        			success	: function (data){
+        				if(data == 1){
+        
+        					alert("Payment update Successful!");
+        
+        					window.location.href = baseURL+"user/bookings";
+        
+        				}else{
+        
+        					alert("Error updating payment.");
+        
+        				}				
+        
+        			}
+        
+        		});
+            }
         </script>
         <script>
             const amountInput = document.querySelector(".amountInput");

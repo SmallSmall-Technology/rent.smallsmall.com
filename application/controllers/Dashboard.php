@@ -189,10 +189,11 @@ class Dashboard extends CI_Controller
 
 			$this->load->view('dashboard/booking.php', $data);			
 
+			$this->load->view('templates/footer-user');
+
 		}else{			
 
 	 	    redirect( base_url()."login" ,'refresh');			
-
 		}
         
     }
