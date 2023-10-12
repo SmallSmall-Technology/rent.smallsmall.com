@@ -562,7 +562,9 @@ jQuery(document).ready(function ($) {
 
 	// });
 
-	$('#finishVerifyBut').click(function () {
+	// $('#finishVerifyBut').click(function () {
+
+	$('#finishVerifyBut').click(function (e) {
 
 		"use strict";
 
