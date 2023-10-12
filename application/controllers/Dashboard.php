@@ -178,6 +178,8 @@ class Dashboard extends CI_Controller
 			//$data['furnisure_transaction'] = $this->rss_model->checkFurnisureLastTrans($data['userID']);
 
 			$data['bookings'] = $this->rss_model->get_bookings($data['userID']);
+
+			$data['dets'] = $this->rss_model->checkRSSLastTran($data['userID']);
 			
 			$data['stayone_bookings'] = $this->rss_model->get_stayone_bookings($data['userID']);
 

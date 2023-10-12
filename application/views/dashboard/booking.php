@@ -1,14 +1,12 @@
-<?php 
+<?php
 
 $fname = $fname[0];
 
 $lname = $lname[0];
 
-if($verification_status == 'yes'){
-    $disp = '<span style="color:#DADADA"  class="btn secondary-background text-white">Verified</span>'; 
-}
-
-else{
+if ($verification_status == 'yes') {
+    $disp = '<span style="color:#DADADA"  class="btn secondary-background text-white">Verified</span>';
+} else {
     $disp = '<span style="color:#DADADA"  class="btn btn-light">Verified</span>';
 }
 ?>
@@ -68,7 +66,7 @@ else{
                         <a class="nav-link">
                             <div class="d-flex user-container">
                                 <div class="user-shorthand d-flex justify-content-center align-items-center mr-2">
-                                    <p class="m-0"><?php echo $fname.'.'.$lname ?></p>
+                                    <p class="m-0"><?php echo $fname . '.' . $lname ?></p>
                                     <div class="active-user"></div>
                                 </div>
                                 <div class="user-name">
@@ -171,7 +169,7 @@ else{
             </a>
             <div class="d-flex user-container">
                 <div class="user-shorthand d-flex justify-content-center align-items-center mr-2">
-                    <p class="m-0"><?php echo $fname.'.'.$lname ?></p>
+                    <p class="m-0"><?php echo $fname . '.' . $lname ?></p>
                     <div class="active-user"></div>
                 </div>
 
@@ -190,7 +188,7 @@ else{
                             Log out
                         </span>
                     </a>
-                    <span style="line-height: 14px;"  class="btn btn-outline">
+                    <span style="line-height: 14px;" class="btn btn-outline">
                         <small style="font-size: 10px; line-height: 14px;">Referral
                             code
                         </small><br>
@@ -341,7 +339,7 @@ else{
                 <div class="d-md-block d-none">
                     <?php echo $disp; ?>
                     <span class="btn secondary-background d-none">Verified</span>
-                    <span style="line-height: 14px;"  class="btn btn-outline-dark">
+                    <span style="line-height: 14px;" class="btn btn-outline-dark">
                         <small style="font-size: 10px; line-height: 14px;">Referral
                             code
                         </small><br>
@@ -395,20 +393,19 @@ else{
                         <div class="col-md-6 col-12 ">
                             <p class="font-weight-light custom-font-size-14">Subscription date</p>
                             <p class="d-flex align-items-center custom-font-size-26 subscription-date"><?php echo date('d M, Y', strtotime($bookings['move_in_date'])); ?> <i style="font-size: 13px;" class="mx-2 fa-solid fa-arrow-right"></i>
-                               <?php echo date('d M, Y', strtotime($bookings['rent_expiration'])); ?></p>
+                                <?php echo date('d M, Y', strtotime($bookings['rent_expiration'])); ?></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3 col-12 custom-btn mb-2">
-                            <a href = "<?php echo base_url('dashboard/wallet'); ?>"><button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Pay
-                                Subscription</button></a>
+                            <a href="<?php echo base_url('dashboard/wallet'); ?>"><button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Pay
+                                    With Wallet</button></a>
                         </div>
                         <div class="col-md-3 col-12 custom-btn mb-2">
-                            <button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Cancel
-                                Subscription</button>
+                            <button class="btn font-weight-light  p-3 secondary-background w-100" onclick="payWithPaystack()" type="button">Pay with Paystack</button>
                         </div>
                         <div class="col-md-4 col-12 custom-btn mb-2">
-                            <div style = "margin-top: -24px;"><b>Coming soon</b></div>
+                            <div style="margin-top: -24px;"><b>Coming soon</b></div>
                             <button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Subscribe to
                                 wallet
                                 direct
@@ -516,25 +513,25 @@ else{
                                 <th scope="col">Subscription date</th>
                             </tr>
                         </thead>
-                        
-                            <tbody id="subscription-data">
-                                    
-                            </tbody>
-                        </table>
-                        
-                        <div style="text-align:center;width:100%;font-size:14px;color:#138E3D" id="subscription-data-loading"></div>
-                        
-                        <div class="text-right" id="load-rss-subscription">
-                            <a href="#" class="btn secondary-background">Load more</a>
-                        </div>
 
-                        <!--<button id="load-rss-subscription" style="background-color: #007DC1; text-align:center;">Load more</button>-->
+                        <tbody id="subscription-data">
 
-                        <!-- <div class="load-more-bar" id="load-rss-subscription">
+                        </tbody>
+                    </table>
+
+                    <div style="text-align:center;width:100%;font-size:14px;color:#138E3D" id="subscription-data-loading"></div>
+
+                    <div class="text-right" id="load-rss-subscription">
+                        <a href="#" class="btn secondary-background">Load more</a>
+                    </div>
+
+                    <!--<button id="load-rss-subscription" style="background-color: #007DC1; text-align:center;">Load more</button>-->
+
+                    <!-- <div class="load-more-bar" id="load-rss-subscription">
                             <div class="load-more-img"></div>
                         </div> -->
-                        
-                        <!-- <tr>
+
+                    <!-- <tr>
                             <td>2 bed, castle condo</td>
                             <td>Ikoyi</td>
                             <td>Monthly</td>
@@ -556,22 +553,49 @@ else{
                         </tr> -->
                     </table>
 
-                <!--    <div class="pagination-section my-5">-->
-                <!--        <div class="row">-->
-                <!--            <div class="col-12">-->
-                <!--            <nav aria-label="Page navigation example" class="d-flex d-md-block justify-content-center">-->
-                <!--                <ul class="pagination">-->
-                <!--                    <?php echo $this->pagination->create_links(); ?>-->
-                <!--                </ul>-->
-                <!--            </nav>-->
-                <!--        </div>-->
-                <!--</div>-->
+                    <!--    <div class="pagination-section my-5">-->
+                    <!--        <div class="row">-->
+                    <!--            <div class="col-12">-->
+                    <!--            <nav aria-label="Page navigation example" class="d-flex d-md-block justify-content-center">-->
+                    <!--                <ul class="pagination">-->
+                    <!--                    <?php echo $this->pagination->create_links(); ?>-->
+                    <!--                </ul>-->
+                    <!--            </nav>-->
+                    <!--        </div>-->
+                    <!--</div>-->
+
+                </div>
 
             </div>
 
-        </div>
-
     </main>
+
+    <!----Paystack form ---->
+    <form id="paymentForm">
+        
+        <input type="hidden" class="email" id="email" value="<?php echo $dets['email']; ?>" required />			  
+
+        <input type="hidden" class="amount" id="amount" value="<?php echo $dets['amount']; ?>" required />
+
+        <input class="fname" type="hidden" id="fname" value="<?php echo $dets['firstName']; ?>" />
+
+        <input class="lname" type="hidden" id="lname" value="<?php echo $dets['lastName']; ?>" />
+        
+        <input class="refID" type="hidden" id="refID" value="<?php echo $dets['reference_id']; ?>" />
+        
+        <input type="hidden" class="booking_id" id="booking_id" value="<?php echo $dets['bookingID']; ?>" required />
+        
+        <input type="hidden" class="rent_exp" id="rent_exp" value="<?php echo $dets['rent_expiration']; ?>" required />
+        
+        <input type="hidden" class="duration" id="duration" value="<?php echo $dets['duration']; ?>" required />
+        
+        <input type="hidden" class="payment_plan" id="payment_plan" value="<?php echo $dets['payment_plan']; ?>" required />
+        
+        <input type="hidden" class="propID" id="propID" value="<?php echo $dets['propertyID']; ?>" required />
+        
+        <!-- <button type="submit" class="green-bg pay-now-btn" onclick="payWithPaystack()"> Pay now </button> -->
+    </form>
+    <!----Paystack form ---->
 
     <footer>
         <div class="container">
@@ -587,56 +611,57 @@ else{
     </footer>
 
 
-<style>
+    <style>
+        .pagination {
+            width: 100%;
+            display: inline-block;
+            margin: 15px 0;
+            text-align: center;
+        }
 
-    .pagination {
-        width: 100%;
-        display: inline-block;
-        margin: 15px 0;
-        text-align: center;
-    }
+        .pagination span {
+            font-family: sans-serif;
+            float: left;
+            position: relative;
+            display: block;
+            padding: 0.5rem 0.75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #007bff;
+            /*background-color: #007bff; */
+            /* Updated background color */
+            border: 1px solid #dee2e6;
+        }
 
-    .pagination span {
-        font-family: sans-serif;
-        float: left;
-        position: relative;
-        display: block;
-        padding: 0.5rem 0.75rem;
-        margin-left: -1px;
-        line-height: 1.25;
-        color: #007bff;
-        /*background-color: #007bff; */
-        /* Updated background color */
-        border: 1px solid #dee2e6;
-    }
+        .pagination span:not(:has(a)) {
+            background-color: #007bff;
+            /* Background color for spans without an 'a' link */
+            color: #fff;
+            /* Text color for spans without an 'a' link */
+        }
 
-    .pagination span:not(:has(a)) {
-        background-color: #007bff; /* Background color for spans without an 'a' link */
-        color: #fff; /* Text color for spans without an 'a' link */
-    }
+        .pagination span a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            font-family: sans-serif;
+            text-decoration: none;
+            color: #007bff;
+            /* Added color for links */
+        }
 
-    .pagination span a {
-        display: block;
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
-        font-family: sans-serif;
-        text-decoration: none;
-        color: #007bff; /* Added color for links */
-    }
-
-    .pagination span a:hover {
-        /*color: #fff;*/
-        background-color: #007bff;
-        /*border-color: #007bff;*/
-        z-index: 2;
-        color: #0056b3;
-        text-decoration: none;
-        background-color: #e9ecef;
-        border-color: #dee2e6;
-    }
-
-</style>
+        .pagination span a:hover {
+            /*color: #fff;*/
+            background-color: #007bff;
+            /*border-color: #007bff;*/
+            z-index: 2;
+            color: #0056b3;
+            text-decoration: none;
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+        }
+    </style>
 
 
 
@@ -654,85 +679,87 @@ else{
     <script src="../assets/js/booking-switch.js"></script>
     <script src="../assets/js/user.js"></script>
     <script>
-        $(document).ready(function(){
-        
+        $(document).ready(function() {
+
             var limit = 10;
-            
+
             var start = 0;
-            
+
             var action = 'inactive';
-        
-            function lazzy_loader(limit){
-                
+
+            function lazzy_loader(limit) {
+
                 var output = '';
-              
-                for(var count=0; count<limit; count++){
-                  
+
+                for (var count = 0; count < limit; count++) {
+
                     output += '<div class="post-data">';
                     output += '<p><span class="content-placeholder" style="width:100%; height: 30px;">&nbsp;</span></p>';
-                    output += '</div>';                    
+                    output += '</div>';
                 }
-                
+
                 $('#subscription-data-loading').html(output);
-                
+
             }
-        
+
             lazzy_loader(limit);
-        
-            function load_data(limit, start)
-            {
+
+            function load_data(limit, start) {
                 $.ajax({
-                    
-                    url:"<?php echo base_url(); ?>rss/fetchBookings",
-                    
-                    method:"POST",
-                    
-                    data:{limit:limit, start:start},
-                    
+
+                    url: "<?php echo base_url(); ?>rss/fetchBookings",
+
+                    method: "POST",
+
+                    data: {
+                        limit: limit,
+                        start: start
+                    },
+
                     cache: false,
-                    
-                    success:function(data){
-                        
-                        if(data == ''){
-                            
+
+                    success: function(data) {
+
+                        if (data == '') {
+
                             $('#subscription-data-loading').html('No more result found');
                             action = 'active';
-                            
-                        }else{
-                            
+
+                        } else {
+
                             $('#subscription-data').append(data);
-                            
+
                             $('#subscription-data-loading').html("");
-                            
+
                             action = 'inactive';
                         }
                     }
                 })
             }
-            
-            if(action == 'inactive'){
-                
+
+            if (action == 'inactive') {
+
                 action = 'active';
-                
+
                 load_data(limit, start);
             }
-            
-            $('#load-rss-subscription').click(function(){
-                
+
+            $('#load-rss-subscription').click(function() {
+
                 lazzy_loader(limit);
-                
+
                 action = 'active';
-                
+
                 start = start + limit;
-                
-                setTimeout(function(){
-                    
+
+                setTimeout(function() {
+
                     load_data(limit, start);
-                    
+
                 }, 1000);
-                
+
             });
-            
+
         });
     </script>
 
@@ -778,6 +805,139 @@ else{
         });
     </script>
 
+    <script>
+        	const paymentForm = document.getElementById('paymentForm');
+        	
+        	var bID = document.getElementById('booking_id').value;
+        	
+        	var refID = document.getElementById("refID").value;
+        
+        	paymentForm.addEventListener("submit", payWithPaystack, false);
+        
+        	function payWithPaystack(e) {
+        
+        	    e.preventDefault();
+        
+        	    let handler = PaystackPop.setup({
+        
+            		key: 'pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2', // Replace with your public key
+            
+            		email: document.getElementById("email").value,
+            
+            		amount: document.getElementById("amount").value * 100,
+            
+            		ref: document.getElementById("refID").value, // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+            
+            		// label: "Optional string that replaces customer email"
+            
+            		onClose: function(){
+            
+            		},
+            
+                    callback: function(response){
+                
+                        let message = 'Payment complete! Reference: ' + response.reference;
+                        
+                        updateTransaction(bID, refID);
+                
+                    }
+                });
+        
+                handler.openIframe();
+            
+            }
+            
+            function updateTransaction(bookingID, refID){
+                //alert(bookingID+' - '+refID);
+                var baseURL = "https://test.rentsmallsmall.com/";
+                
+                var rent_exp = document.getElementById('rent_exp').value;
+                
+                var duration = document.getElementById('duration').value;
+                
+                var pplan = document.getElementById('payment_plan').value;
+                
+                var amount = document.getElementById('amount').value;
+                
+                var propID = document.getElementById('propID').value;
+                
+                var data = {"bookingID" : bookingID, "referenceID" : refID, "rent_exp" : rent_exp, "duration" : duration, "pplan" : pplan, "amount" : amount, "propertyID" : propID};
+                
+                $.ajaxSetup ({ cache: false });
+    
+        		$.ajax({
+        
+        			url : baseURL+'rss/updateTransaction/',
+        
+        			type: "POST",
+        
+        			async: true,
+        
+        			data: data,
+        
+        			success	: function (data){
+        				if(data == 1){
+        
+        					alert("Payment update Successful!");
+        
+        					window.location.href = baseURL+"user/bookings";
+        
+        				}else{
+        
+        					alert("Error updating payment.");
+        
+        				}				
+        
+        			}
+        
+        		});
+            }
+        </script>
+        <script>
+            const amountInput = document.querySelector(".amountInput");
+            const payButton = document.querySelector(".payButton");
+            const emailInput = document.querySelector(".emailInput");
+            const descriptionInput = document.querySelector(".descriptionInput");
+            const publicKeyInput = document.querySelector(".publicKeyInput");
+            const currencyInput = document.querySelector(".currencyInput");
+            const refInput = document.querySelector(".refNum");
+            const bookingInput = document.querySelector(".bookingNum");
+        
+            payButton.addEventListener("click", () => {
+                const amount = amountInput.value;
+                const email = emailInput.value;
+                const publicKey = publicKeyInput.value;
+                const description = descriptionInput.value;
+                const currency = currencyInput.value;
+                const refID = refInput.value;
+                const bookingID = bookingInput.value;
+            
+                window.payWithBasqet({
+                    amount,
+                    email,
+                    ...(description && { description }),
+                    currency: currency,
+                    public_key: publicKey,
+                    meta: {
+                        transaction_reference: "REF56768798"
+                    },
+                    onSuccess: (ref) => {
+                        alert(`Transaction successful: ${ref}`);
+                    },
+                    onError: (error) => {
+                        alert(`Transaction failed ${error}`);
+                    },
+                    onClose: () => {
+                        alert("Checkout closed");
+                    },
+                    onAbandoned: () => {
+                        alert("Checkout Abandoned");
+                    }
+                });
+            });
+        </script>
+        <script src="https://js.paystack.co/v1/inline.js"></script> 
+        <script src="https://checkout.basqet.com/static/prod/basqet.js"></script> 
 
 </body>
 

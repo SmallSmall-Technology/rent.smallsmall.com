@@ -982,6 +982,7 @@ class Rss_model extends CI_Model {
 	    return $query->row_array();
 	    
 	}
+
 	public function get_renewal_det($trans_id){
 	    
 	    $this->db->select('a.id, a.verification_id, a.transaction_id, a.reference_id, a.amount, a.payment_type, a.status, b.bookingID, b.payment_plan, b.duration, b.propertyID, b.userID, b.next_rental as rent_expiration, c.firstName, c.lastName, c.email, c.phone, d.propertyTitle, d.price');
@@ -2517,7 +2518,36 @@ class Rss_model extends CI_Model {
 		$query = $this->db->get();
 		
 		return $query->row_array();
+
+	}
+
+	public function checkRSSLastTran($id){
 		
+		$this->db->select('a.*, a.type as transaction_type, b.*, c.*, d.type, e.email, e.firstName, e.lastName');
+		
+		$this->db->from('transaction_tbl as a');
+		
+		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID', 'LEFT OUTER');
+		
+		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
+		
+		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
+
+		$this->db->join('user_tbl as e', 'e.userID = a.userID');
+		
+		$this->db->where('a.userID', $id);
+		
+		$this->db->where('a.type', 'rss');
+		
+		$this->db->where('a.status', 'approved');
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
 	}
 	
 	public function checkLastApprovedSubscriptionPayment($id){
