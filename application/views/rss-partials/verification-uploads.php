@@ -79,7 +79,7 @@
                         <!-- <a class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a> -->
                         <a href="https://dev-rent.smallsmall.com/rss/verification/employment-verification" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
                         <!-- <a href="#" class="btn verify-btn px-5 py-2">Finish</a> -->
-                        <button type="submit" class="btn verify-btn px-5 py-2 rss-form-button verifyBut" id="verifyBut">Finish</button>
+                        <button type="submit" class="btn verify-btn px-5 py-2" id="finishVerifyBut">Finish</button>
                     </div>
                 </div>
         </div>
@@ -230,14 +230,18 @@
                 // You can add any actions before upload here if needed
             },
             success: function(data, folder, pictures) {
+              
                 filepath = folderName + '/' + files.name.replace(/\s+/g, '_');
+
                 $('#statement').val(filepath);
 
-                // console.log('filepath:', filepath);
+                console.log('filepath:', filepath);
 
                 // Hide the verifyButton and show the verifiedButton
                 verifyButton.style.display = 'none';
+
                 verifiedButton.classList.remove('d-none');
+
             }
         });
     });

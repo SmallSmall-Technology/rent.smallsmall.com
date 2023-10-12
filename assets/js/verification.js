@@ -562,7 +562,13 @@ jQuery(document).ready(function ($) {
 
 	// });
 
-	$('#verifyBut').click(function () {
+	$('#finishVerifyBut').click(function () {
+
+		"use strict";
+
+		e.preventDefault();
+
+		$('#finishVerifyBut').html("Wait...");
 
 		var statement_path = $('#statement').val();
 
@@ -571,6 +577,8 @@ jQuery(document).ready(function ($) {
 		if (statement_path === "") {
 
 			alert("Upload required files.");
+
+			$('#finishVerifyBut').html("Submit");
 
 			return;
 
@@ -596,11 +604,14 @@ jQuery(document).ready(function ($) {
 
 		// Store upload details
 		var uploadDetails = {
+
 			statement_path: statement_path,
+
 			user_id: user_id
 		};
 
 		details.status = "complete";
+
 		details.uploads.push(uploadDetails);
 
 		// Update the verification storage
@@ -611,24 +622,41 @@ jQuery(document).ready(function ($) {
 
 		// Construct data to send
 		var data = {
+
 			details: details,
+
 			order: order
 		};
+
+		$.ajaxSetup ({ cache: false });
 
 		// Send the data via AJAX
 		$.ajax({
 			url: baseUrl + "rss/insertDetails/",
+
 			type: "POST",
+
 			data: data,
+
 			dataType: 'json',
-			success: function () {
+
+			complete: function (data) {
+
 				// Redirect to the verification-complete page
+				
 				localStorage.removeItem('verificationStorage');
+
 				localStorage.removeItem('rentalBasket');
+
 				window.location.href = baseUrl + "rss/verification-complete";
+
+				return false; 
 			},
+
 			error: function (error) {
+
 				console.error(error);
+
 			}
 		});
 	});
