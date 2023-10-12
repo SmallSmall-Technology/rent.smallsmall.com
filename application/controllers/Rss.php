@@ -574,7 +574,6 @@ class Rss extends CI_Controller
 			$this->load->view('rss-partials/' . $page, $data);
 
 			$this->load->view('templates/rss-updated-footer', $data);
-
 		} else {
 
 			redirect(base_url() . 'login', 'refresh');
@@ -4174,15 +4173,15 @@ class Rss extends CI_Controller
 
 		if ($this->session->has_userdata('userID')) {
 
-			$data['mob_color'] = "white";
+			// $data['mob_color'] = "white";
 
-			$data['mob_icons'] = "blue";
+			// $data['mob_icons'] = "blue";
 
-			$data['color'] = "white";
+			// $data['color'] = "white";
 
-			$data['logo'] = "blue";
+			// $data['logo'] = "blue";
 
-			$data['image'] = "without-image";
+			// $data['image'] = "without-image";
 
 			$data['userID'] = $this->session->userdata('userID');
 
@@ -4202,12 +4201,15 @@ class Rss extends CI_Controller
 
 			$data['reason'] = 'Thank you for taking your time to fill our verification forms, you are one step closer to making your home dream a reality.<br /> <br />Your details will be reviewed in 48 hours and a response will be sent to your registered email.';
 
-			$this->load->view('templates/rss-header', $data);
+			$this->load->view('templates/rss-updated-header', $data);
 
 			$this->load->view('pages/confirmation-result', $data);
 
-			$this->load->view('templates/rss-footer');
+			$this->load->view('templates/rss-updated-footer', $data);
+
+			$this->load->view('templates/rss-updated-js-files');
 		} else {
+
 			redirect(base_url(), 'refresh');
 		}
 	}
