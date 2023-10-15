@@ -7490,6 +7490,8 @@ value1&metadata[meta2]=value2*/
 
 			$data['verification_status'] = $this->session->userdata('verified');
 
+			$data['dets'] = $this->rss_model->checkRSSLastTran($data['userID']);
+
 			// 			$data['bookings'] = $this->rss_model->get_bookings($data['userID']);
 			$data['bookings'] = $this->rss_model->get_payment_details($data['bookingReferenceID']);
 
