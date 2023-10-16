@@ -2509,7 +2509,7 @@ class Rss_model extends CI_Model {
 		
 		$this->db->where('a.type', 'rss');
 		
-		// $this->db->where('a.status', 'approved');
+		$this->db->where('a.status', 'approved');
 		
 		$this->db->order_by('a.id', 'DESC');
 		
@@ -2539,7 +2539,7 @@ class Rss_model extends CI_Model {
 		
 		$this->db->where('a.type', 'rss');
 		
-		$this->db->where('a.status', 'approved');
+		//$this->db->where('a.status', 'approved');
 		
 		$this->db->order_by('a.id', 'DESC');
 		
