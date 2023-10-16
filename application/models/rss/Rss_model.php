@@ -2509,7 +2509,7 @@ class Rss_model extends CI_Model {
 		
 		$this->db->where('a.type', 'rss');
 		
-		$this->db->where('a.status', 'approved');
+		// $this->db->where('a.status', 'approved');
 		
 		$this->db->order_by('a.id', 'DESC');
 		
@@ -4017,6 +4017,59 @@ class Rss_model extends CI_Model {
 		$query = $this->db->get();
 		
 		return $query->row_array();
+	}
+
+	public function get_booking($id){
+		
+		$this->db->select('a.*, a.status as transaction_status, b.*, c.*, d.*, e.name as state_name'); 
+		
+		$this->db->from('transaction_tbl as a');
+	    
+	    $this->db->where('a.userID', $id);
+	    
+	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
+	    
+	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
+	    
+	    $this->db->join('user_tbl as d', 'd.userID = b.userID', 'LEFT OUTER');
+	    
+	    $this->db->join('states as e', 'e.id = c.state', 'LEFT OUTER');
+		
+		$this->db->order_by('a.id', 'DESC');
+
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	} 
+
+
+	public function get_transCount($id){
+		
+		$this->db->select('a.*, a.status as transaction_status, b.*, c.*, d.*, e.name as state_name'); 
+		
+		$this->db->from('transaction_tbl as a');
+	    
+	    $this->db->where('a.userID', $id);
+
+		$this->db->where('a.status', 'approved');
+	    
+	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
+	    
+	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
+	    
+	    $this->db->join('user_tbl as d', 'd.userID = b.userID', 'LEFT OUTER');
+	    
+	    $this->db->join('states as e', 'e.id = c.state', 'LEFT OUTER');
+		
+		$this->db->order_by('a.id', 'DESC');
+
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->num_rows();
 	}
 	
 	public function get_stayone_bookings($id){

@@ -179,7 +179,11 @@ class Dashboard extends CI_Controller
 
 			$data['bookings'] = $this->rss_model->get_bookings($data['userID']);
 
+			//$data['Params'] = $this->rss_model->get_booking($data['userID']);
+
 			$data['dets'] = $this->rss_model->checkRSSLastTran($data['userID']);
+
+			//$data['transactionCount'] = $this->rss_model->get_transCount($data['userID']);
 			
 			$data['stayone_bookings'] = $this->rss_model->get_stayone_bookings($data['userID']);
 

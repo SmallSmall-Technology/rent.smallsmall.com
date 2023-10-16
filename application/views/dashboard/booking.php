@@ -380,7 +380,7 @@ if ($verification_status == 'yes') {
                     <div class="row my-5">
                         <div class="col-md-2 col-6 ">
                             <p class="font-weight-light custom-font-size-14">Subscription fee</p>
-                            <p class="custom-font-size-26">&#8358;<?php echo number_format($bookings['price'] + $bookings['serviceCharge']); ?></p>
+                            <p class="custom-font-size-26">&#8358;<?php if(@$transactionCount > 0){ echo number_format($bookings['price'] + $bookings['serviceCharge']); }  ?></p>
                         </div>
                         <div class="col-md-2 col-6 ">
                             <p class="font-weight-light">Service charge</p>

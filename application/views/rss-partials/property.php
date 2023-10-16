@@ -12,7 +12,7 @@ $propertyPrice = $property['price'];
 
 // get the eviction deposit value
 
-if (empty($propertyPrice) || is_null($propertyPrice)) {
+if(empty($propertyPrice) || is_null($propertyPrice)) {
 
   $evictionDeposit = 0; // set default
 
@@ -38,7 +38,7 @@ $srlz = $property['intervals'];
 $srlz = unserialize($srlz);
 $yrnt = $property['price'] * 12;
 
-if ($srlz[0] == 'Upfront') {
+if($srlz[0] == 'Upfront') {
   $mnth = 'Upfront';
   $vmnth = 'Upfront';
 

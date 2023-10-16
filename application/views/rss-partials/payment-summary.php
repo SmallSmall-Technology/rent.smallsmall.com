@@ -110,8 +110,8 @@
             <!-- <button class="btn w-100 primary-background py-3 font-weight-bold" type="button" data-toggle="modal"
               data-target="<?php echo (@!$account_details || $verification_status != 'yes') ? '#emptyWallet' : '#nonEmptyWallet'; ?>">Pay with Wallet</button> -->
 
-              <div class="d-flex justify-content-center my-2">
-              <p class=" m-0">or</p>
+              <!-- <div class="d-flex justify-content-center my-2">
+              <p class=" m-0">or</p> -->
             </div>
 
                       <form id="paymentForm">
