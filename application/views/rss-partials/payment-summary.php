@@ -1,4 +1,11 @@
+<?php 
 
+  $edits = array("amount" => @$bookings['total']);
+        
+  $this->db->where("transaction_id", $dets['bookingID']);
+
+  $this->db->update("transaction_tbl", $edits);
+?>
 
  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/paymentSummary.css" />
  
