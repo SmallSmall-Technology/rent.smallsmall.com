@@ -407,7 +407,7 @@ if ($verification_status == 'yes') {
         
                         <input type="hidden" class="email" id="email" value="<?php echo $dets['email']; ?>" required />			  
 
-                        <input type="hidden" class="amount" id="amount" value="<?php echo $dets['amount']; ?>" required />
+                        <input type="hidden" class="amount" id="amount" value="<?php if(@$UserPayment < 1){ echo $dets['amount']; } else {echo ($bookings['price'] + $bookings['serviceCharge']); } ?>" required />
 
                         <input class="fname" type="hidden" id="fname" value="<?php echo $dets['firstName']; ?>" />
 

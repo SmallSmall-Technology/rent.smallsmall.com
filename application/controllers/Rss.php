@@ -7492,7 +7492,7 @@ value1&metadata[meta2]=value2*/
 
 			$data['dets'] = $this->rss_model->checkRSSLastTran($data['userID']);
 
-			// 			$data['bookings'] = $this->rss_model->get_bookings($data['userID']);
+			//$data['bookings'] = $this->rss_model->get_bookings($data['userID']);
 			$data['bookings'] = $this->rss_model->get_payment_details($data['bookingReferenceID']);
 
 			$data['profile_title'] = "Payment Summary";
@@ -7503,7 +7503,7 @@ value1&metadata[meta2]=value2*/
 
 			$this->load->view('rss-partials/payment-summary', $data);
 
-			// 			$this->load->view('templates/rss-updated-js-files');
+			//$this->load->view('templates/rss-updated-js-files');
 
 			$this->load->view('templates/rss-updated-footer');
 		} else {
