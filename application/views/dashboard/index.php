@@ -322,7 +322,7 @@ else{
                     <div class="card-body d-flex flex-column justify-content-between">
                         <div>
                             <p class="card-text">Next Upcoming Payment</p>
-                        <h3 class="card-title">&#8358;<?php echo number_format(@$rss_transaction['amount']); ?></h3>
+                        <h3 class="card-title">&#8358;<?php if(@$UserPayment < 1){ echo $dets['amount']; } else {echo ($bookings['price'] + $bookings['serviceCharge']); } ?></h3>
                         <h3 class="card-title" style = "font-size: 14px;"><?php $time = @$rss_transaction['transaction_date']; echo date('Y-m-d', strtotime($time. ' + 1 months')); ?></h3>
                         </div>
 

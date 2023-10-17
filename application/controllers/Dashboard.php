@@ -71,6 +71,12 @@ class Dashboard extends CI_Controller
 			$data['debt'] = $this->rss_model->get_debt($data['userID']);
 			
 			$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']); 
+
+			$data['dets'] = $this->rss_model->checkRSSLastTran($data['userID']);
+
+			$data['lastproptyID'] = $data['dets']['proptyID'];
+
+			$data['UserPayment'] = $this->rss_model->checkUserPayment($data['userID'], $data['lastproptyID']);
 			
 			$data['bss_request_count'] = $this->buytolet_model->count_user_requests($data['userID']);
 			
@@ -188,7 +194,7 @@ class Dashboard extends CI_Controller
 			//$data['transactionCount'] = $this->rss_model->get_transCount($data['userID']);
 			
 			$data['stayone_bookings'] = $this->rss_model->get_stayone_bookings($data['userID']);
-
+			
 			$data['profile_title'] = "Bookings";
 
 			$data['title'] = "Profile SmallSmall";
