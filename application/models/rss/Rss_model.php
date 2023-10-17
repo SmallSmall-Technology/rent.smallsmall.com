@@ -3068,6 +3068,7 @@ class Rss_model extends CI_Model {
         
         return $this->db->insert('transaction_tbl', array('verification_id' => $verificationID, 'transaction_id' => $bID, 'userID' => $userID, 'reference_id' => $refID, 'type' => 'rss', 'amount' => $amount, 'status' => 'approved', 'payment_type' => 'paystack', 'transaction_date' => date('Y-m-d')));
     }
+
     public function transUpdate($bID, $refID, $amount){
         
         $update = array("status" => "approved", "transaction_date" => date("Y-m-d"), "amount" => $amount);
@@ -3078,6 +3079,7 @@ class Rss_model extends CI_Model {
         
         return $this->db->update("transaction_tbl", $update);
     }
+	
     public function insert_wallet_transaction($refID, $amount, $txn_type, $userID){
         
         $this->txn_id = $refID;
