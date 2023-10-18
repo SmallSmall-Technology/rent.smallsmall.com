@@ -331,7 +331,9 @@
             
             function updateTransaction(bookingID, refID){
                 //alert(bookingID+' - '+refID);
-                var baseURL = "https://test.rentsmallsmall.com/";
+                //var baseURL = "https://rent.smallsmall.com/";
+
+                var baseURL = "<?php echo base_url(); ?>";
                 
                 var rent_exp = document.getElementById('rent_exp').value;
                 
