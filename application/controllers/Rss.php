@@ -5892,35 +5892,34 @@ public function uploadIdentification($folder)
 			
 			//$this->request_date = date('Y-m-d H:i:s');
 
-			if($this->db->insert('bookings', $this))
-			{
-				$transdet = $this->rss_model->getTransDet($userID);
+			$this->db->insert('bookings', $this)
+			
+			$transdet = $this->rss_model->getTransDet($userID);
 
-				$this->verification_id = $transdet['verification_id'];
+			$this->verification_id = $transdet['verification_id'];
 
-				$this->transaction_id = $bkId;
+			$this->transaction_id = $bkId;
 
-				$this->reference_id = $refrID;
+			$this->reference_id = $refrID;
 
-				$this->userID = $transdet['userID'];
+			$this->userID = $transdet['userID'];
 
-				$this->amount = $transdet['amount'];
+			$this->amount = $transdet['amount'];
 
-				$this->status = 'pending';
+			$this->status = 'pending';
 
-				$this->type = $transdet['type'];
+			$this->type = $transdet['type'];
 
-				$this->payment_type = $transdet['payment_type'];
+			$this->payment_type = $transdet['payment_type'];
 
-				$this->invoice = $transdet['invoice'];
+			$this->invoice = $transdet['invoice'];
 
-				$this->approved_by = $transdet['approved_by'];
+			$this->approved_by = $transdet['approved_by'];
 
-				$this->transaction_date = $transdet['transaction_date'];
+			$this->transaction_date = $transdet['transaction_date'];
 
-				$this->db->insert('transaction_tbl', $this);
-			}
-
+			$this->db->insert('transaction_tbl', $this);
+		
 			echo 1;
 		} else {
 

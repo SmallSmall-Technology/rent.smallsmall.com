@@ -147,7 +147,7 @@
                         
                         <!-- <button type="submit" class="green-bg pay-now-btn" onclick="payWithPaystack()"> Pay now </button> -->
                         
-                        <button type="submit" onclick="pay()">Test</button>
+                        <button onclick="pay()">Test</button>
 
                         <!-- <button
                         <!-- type="submit"  onclick="payWithPaystack()" style="border: 1px solid black; padding: 1em; width: 100%; border-radius: 5px; background: none;">Pay with -->
@@ -296,40 +296,40 @@
         	
         	var refID = document.getElementById("refID").value;
         
-        	paymentForm.addEventListener("submit", payWithPaystack, false);
+        	// paymentForm.addEventListener("submit", payWithPaystack, false);
         
-        	function payWithPaystack(e) {
+        	// function payWithPaystack(e) {
         
-        	    e.preventDefault();
+        	//     e.preventDefault();
         
-        	    let handler = PaystackPop.setup({
+        	//     let handler = PaystackPop.setup({
         
-            		key: 'pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2', // Replace with your public key
+          //   		key: 'pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2', // Replace with your public key
             
-            		email: document.getElementById("email").value,
+          //   		email: document.getElementById("email").value,
             
-            		amount: document.getElementById("amount").value * 100,
+          //   		amount: document.getElementById("amount").value * 100,
             
-            		ref: document.getElementById("refID").value, // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+          //   		ref: document.getElementById("refID").value, // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
             
-            		// label: "Optional string that replaces customer email"
+          //   		// label: "Optional string that replaces customer email"
             
-            		onClose: function(){
+          //   		onClose: function(){
             
-            		},
+          //   		},
             
-                    callback: function(response){
+          //           callback: function(response){
                 
-                        let message = 'Payment complete! Reference: ' + response.reference;
+          //               let message = 'Payment complete! Reference: ' + response.reference;
                         
-                        updateTransaction(bID, refID);
+          //               updateTransaction(bID, refID);
                 
-                    }
-                });
+          //           }
+          //       });
         
-                handler.openIframe();
+          //       handler.openIframe();
             
-            }
+          //   }
 
             function pay()
             {
