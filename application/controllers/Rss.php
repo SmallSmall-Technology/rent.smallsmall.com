@@ -5846,6 +5846,34 @@ public function uploadIdentification($folder)
 
 			$bkId = $this->random_strings(5);
 
+			$transdet = $this->rss_model->getTransDet($userID);
+
+			$this->verification_id = $transdet['verification_id'];
+
+			$this->transaction_id = $bkId;
+
+			$this->reference_id = $refrID;
+
+			$this->userID = $transdet['userID'];
+
+			$this->amount = $transdet['amount'];
+
+			$this->status = 'pending';
+
+			$this->type = $transdet['type'];
+
+			$this->payment_type = $transdet['payment_type'];
+
+			$this->invoice = $transdet['invoice'];
+
+			$this->approved_by = $transdet['approved_by'];
+
+			$this->transaction_date = $transdet['transaction_date'];
+
+			$this->db->insert('transaction_tbl', $this);
+
+			print_r($this);
+
 			$bkdets = $this->rss_model->getBookingDet($userID);
 
 			$this->verification_id = $bkdets['verification_id'];
@@ -5894,32 +5922,6 @@ public function uploadIdentification($folder)
 
 			$this->db->insert('bookings', $this);
 			
-			$transdet = $this->rss_model->getTransDet($userID);
-
-			$this->verification_id = $transdet['verification_id'];
-
-			$this->transaction_id = $bkId;
-
-			$this->reference_id = $refrID;
-
-			$this->userID = $transdet['userID'];
-
-			$this->amount = $transdet['amount'];
-
-			$this->status = 'pending';
-
-			$this->type = $transdet['type'];
-
-			$this->payment_type = $transdet['payment_type'];
-
-			$this->invoice = $transdet['invoice'];
-
-			$this->approved_by = $transdet['approved_by'];
-
-			$this->transaction_date = $transdet['transaction_date'];
-
-			$this->db->insert('transaction_tbl', $this);
-		
 			echo 1;
 		} else {
 
