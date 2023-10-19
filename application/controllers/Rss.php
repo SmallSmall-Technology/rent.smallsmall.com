@@ -5892,7 +5892,7 @@ public function uploadIdentification($folder)
 			
 			//$this->request_date = date('Y-m-d H:i:s');
 
-			$this->db->insert('bookings', $this)
+			$this->db->insert('bookings', $this);
 			
 			$transdet = $this->rss_model->getTransDet($userID);
 
