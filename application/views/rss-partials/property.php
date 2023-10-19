@@ -1427,8 +1427,7 @@ function shortenText($text, $maxLength)
                 <?php } ?>
 
               </div>
-
-
+              
             </form>
           </div>
         </div>

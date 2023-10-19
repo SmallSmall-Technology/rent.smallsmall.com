@@ -76,6 +76,8 @@ class Dashboard extends CI_Controller
 
 			$data['lastproptyID'] = $data['dets']['proptyID'];
 
+			$data['bookings'] = $this->rss_model->get_bookings($data['userID']);
+
 			$data['UserPayment'] = $this->rss_model->checkUserPayment($data['userID'], $data['lastproptyID']);
 			
 			$data['bss_request_count'] = $this->buytolet_model->count_user_requests($data['userID']);

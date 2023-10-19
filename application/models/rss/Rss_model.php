@@ -1108,6 +1108,22 @@ class Rss_model extends CI_Model {
 		
 	}
 
+	public function bookingPaymentUpdate($userID, $bkId, $refrId){
+		
+		$bookings = $this->rss_model->getUser($userID);
+
+		$this->userID = $userID;
+		
+		$this->reset_code = $reset_code;
+		
+		$this->request_date = date('Y-m-d H:i:s');
+		
+		$this->expiry_date = date('Y-m-d H:i:s', strtotime("+2 days"));
+		
+		return $this->db->insert('pwd_reset', $this);
+		
+	}
+
 	public function fetchProperty($id){
 
 		$this->db->select('a.propertyID, a.propertyTitle, a.propertyType, a.propertyDescription, a.rentalCondition, a.address, a.city, a.state, a.zip, a.price, a.serviceCharge, a.serviceChargeTerm, a.securityDeposit, a.securityDepositTerm, a.paymentPlan, a.intervals, a.frequency, a.imageFolder, a.featuredImg, a.amenities, a.bed, a.bath, a.toilet, a.poster, a.furnishing, a.status, a.available_date, a.views, a.dateOfEntry, b.name, b.category, b.distance, c.name, d.id, d.type, d.slug as type_slug, e.manager');
@@ -2523,7 +2539,7 @@ class Rss_model extends CI_Model {
 
 	public function checkRSSLastTran($id){
 		
-		$this->db->select('a.*, a.type as transaction_type, b.*, b.propertyID as proptyID, c.*, d.type, e.email, e.firstName, e.lastName');
+		$this->db->select('a.*, a.type as transaction_type, a.userID as usersID, b.*, b.propertyID as proptyID, c.*, d.type, e.email, e.firstName, e.lastName');
 		
 		$this->db->from('transaction_tbl as a');
 		
@@ -2540,6 +2556,40 @@ class Rss_model extends CI_Model {
 		$this->db->where('a.type', 'rss');
 		
 		//$this->db->where('a.status', 'approved');
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	}
+	
+	public function getBookingDet($userid){
+		
+		$this->db->select('a.*');
+		
+		$this->db->from('bookings as a');
+			
+		$this->db->where('a.userID', $userid);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	}
+
+	public function getTransDet($userid){
+		
+		$this->db->select('a.*');
+		
+		$this->db->from('transaction_tbl as a');
+			
+		$this->db->where('a.userID', $userid);
 		
 		$this->db->order_by('a.id', 'DESC');
 		

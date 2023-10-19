@@ -414,6 +414,8 @@ if ($verification_status == 'yes') {
                         <input class="lname" type="hidden" id="lname" value="<?php echo $dets['lastName']; ?>" />
                         
                         <input class="refID" type="hidden" id="refID" value="<?php echo $dets['reference_id']; ?>" />
+
+                        <input class="userID" type="hidden" id="userID" value="<?php echo $dets['usersID']; ?>" />
                         
                         <input type="hidden" class="booking_id" id="booking_id" value="<?php echo $dets['bookingID']; ?>" required />
                         
@@ -869,8 +871,10 @@ if ($verification_status == 'yes') {
                 var amount = document.getElementById('amount').value;
                 
                 var propID = document.getElementById('propID').value;
+
+                var userID = document.getElementById('userID').value;
                 
-                var data = {"bookingID" : bookingID, "referenceID" : refID, "rent_exp" : rent_exp, "duration" : duration, "pplan" : pplan, "amount" : amount, "propertyID" : propID};
+                var data = {"bookingID" : bookingID, "referenceID" : refID, "rent_exp" : rent_exp, "duration" : duration, "pplan" : pplan, "amount" : amount, "userID" : userID, "propertyID" : propID};
                 
                 $.ajaxSetup ({ cache: false });
     
@@ -889,7 +893,7 @@ if ($verification_status == 'yes') {
         
         					alert("Payment update Successful!");
         
-        					window.location.href = baseURL+"user/bookings";
+        					window.location.href = baseURL+"dashboard/booking";
         
         				}else{
         
