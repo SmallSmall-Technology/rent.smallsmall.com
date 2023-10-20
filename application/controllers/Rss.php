@@ -3780,7 +3780,6 @@ public function uploadIdentification($folder)
 
 	public function insertOrderDetails()
 	{
-
 		$order = $this->input->post('order');
 
 		$userID = $this->session->userdata('userID');
@@ -5842,86 +5841,18 @@ public function uploadIdentification($folder)
 			//Update booking table
 			$this->rss_model->bookingUpdate($bID, $rent_exp, $duration, $pplan, $propertyID);
 
+			$transdet = $this->rss_model->getTransDet($userID);
+
 			$refrID = 'rss_' . md5(rand(1000000, 9999999999));
 
 			$bkId = $this->random_strings(5);
 
-			$transdet = $this->rss_model->getTransDet($userID);
-
-			$this->verification_id = $transdet['verification_id'];
-
-			$this->transaction_id = $bkId;
-
-			$this->reference_id = $refrID;
-
-			$this->userID = $transdet['userID'];
-
-			$this->amount = $transdet['amount'];
-
-			$this->status = 'pending';
-
-			$this->type = $transdet['type'];
-
-			$this->payment_type = $transdet['payment_type'];
-
-			$this->invoice = $transdet['invoice'];
-
-			$this->approved_by = $transdet['approved_by'];
-
-			$this->transaction_date = $transdet['transaction_date'];
-
-			$this->db->insert('transaction_tbl', $this);
-
-			print_r($this);
+			$this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $refrID, $transdet['userID'], $transdet['amount'], $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $transdet['transaction_date']);
 
 			$bkdets = $this->rss_model->getBookingDet($userID);
 
-			$this->verification_id = $bkdets['verification_id'];
-		
-			$this->reference_id = $refrID;
+			$this->rss_model->insBookingUpdate($bkdets['verification_id'], $refrID, $bkId, $bkdets['propertyID'], $bkdets['userID'], $bkdets['booked_as'], $bkdets['payment_plan'], $bkdets['duration'], $bkdets['move_in_date'], $bkdets['move_out_date'], $bkdets['move_out_reason'], $bkdets['rent_expiration'], $bkdets['next_rental'], $bkdets['booked_on'], $bkdets['updated_at'], $bkdets['rent_status'], $bkdets['eviction_deposit'], $bkdets['subscription_fees'], $bkdets['service_charge_deposit'], $bkdets['security_deposit_fund'], $bkdets['total']);
 
-			$this->bookingID = $bkId;
-
-			$this->propertyID = $bkdets['propertyID'];
-
-			$this->userID = $bkdets['userID'];
-
-			$this->booked_as = $bkdets['booked_as'];
-
-			$this->payment_plan = $bkdets['payment_plan'];
-
-			$this->duration = $bkdets['duration'];
-
-			$this->move_in_date = $bkdets['move_in_date'];
-
-			$this->move_out_date = $bkdets['move_out_date'];
-
-			$this->move_out_reason = $bkdets['move_out_reason'];
-
-			$this->rent_expiration = $bkdets['rent_expiration'];
-
-			$this->next_rental = $bkdets['next_rental'];
-
-			$this->booked_on = $bkdets['booked_on'];
-
-			$this->updated_at = $bkdets['updated_at'];
-
-			$this->rent_status = $bkdets['rent_status'];
-
-			$this->eviction_deposit = $bkdets['eviction_deposit'];
-
-			$this->subscription_fees = $bkdets['subscription_fees'];
-
-			$this->service_charge_deposit = $bkdets['service_charge_deposit'];
-
-			$this->security_deposit_fund = $bkdets['security_deposit_fund'];
-
-			$this->total = $bkdets['total'];			
-			
-			//$this->request_date = date('Y-m-d H:i:s');
-
-			$this->db->insert('bookings', $this);
-			
 			echo 1;
 		} else {
 

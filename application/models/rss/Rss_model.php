@@ -1668,7 +1668,7 @@ class Rss_model extends CI_Model {
     );
 
 
-        if ($this->db->insert('bookings', $bookingData)) {
+        if($this->db->insert('bookings', $bookingData)) {
 
 			$this->db->insert('transaction_tbl', array('verification_id' => $verificationID, 'type' => 'rss', 'transaction_id' => $id, 'reference_id' => $ref, 'userID' => $user_id, 'amount' => $total_cost, 'status' => 'pending', 'payment_type' => $payment_type, 'transaction_date' => date('Y-m-d')));
 			
@@ -2598,6 +2598,83 @@ class Rss_model extends CI_Model {
 		$query = $this->db->get();
 		
 		return $query->row_array();
+	}
+
+	public function insTransUpdate($verification_id, $bkId, $refrID, $userID, $amount, $type, $payment_type, $invoice, $approved_by, $transaction_date){
+		
+		$this->verification_id = $verification_id;
+
+			$this->transaction_id = $bkId;
+
+			$this->reference_id = $refrID;
+
+			$this->userID = $userID;
+
+			$this->amount = $amount;
+
+			$this->status = 'pending';
+
+			$this->type = $type;
+
+			$this->payment_type = $payment_type;
+
+			$this->invoice = $invoice;
+
+			$this->approved_by = $approved_by;
+
+			$this->transaction_date = $transaction_date;
+
+			$this->db->insert('transaction_tbl', $this);
+	}
+
+
+	public function insBookingUpdate($verification_id, $refrID, $bkId, $propertyID, $userID, $booked_as, $payment_plan, $duration, $move_in_date, $move_out_date, $move_out_reason, $rent_expiration, $next_rental, $booked_on, $updated_at, $rent_status, $eviction_deposit, $subscription_fees, $service_charge_deposit, $security_deposit_fund, $total){
+		
+		$this->verification_id = $verification_id;
+		
+			$this->reference_id = $refrID;
+
+			$this->bookingID = $bkId;
+
+			$this->propertyID = $propertyID;
+
+			$this->userID = $userID;
+
+			$this->booked_as = $booked_as;
+
+			$this->payment_plan = $payment_plan;
+
+			$this->duration = $duration;
+
+			$this->move_in_date = $move_in_date;
+
+			$this->move_out_date = $move_out_date;
+
+			$this->move_out_reason = $move_out_reason;
+
+			$this->rent_expiration = $rent_expiration;
+
+			$this->next_rental = $next_rental;
+
+			$this->booked_on = $booked_on;
+
+			$this->updated_at = $updated_at;
+
+			$this->rent_status = $rent_status;
+
+			$this->eviction_deposit = $eviction_deposit;
+
+			$this->subscription_fees = $subscription_fees;
+
+			$this->service_charge_deposit = $service_charge_deposit;
+
+			$this->security_deposit_fund = $security_deposit_fund;
+
+			$this->total = $total;			
+			
+			//$this->request_date = date('Y-m-d H:i:s');
+
+			$this->db->insert('bookings', $this);
 	}
 
 

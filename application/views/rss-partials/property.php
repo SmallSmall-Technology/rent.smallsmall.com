@@ -78,14 +78,14 @@ if($srlz[0] == 'Upfront') {
   elseif ($property['securityDepositTerm'] == 3)
   {
     if ($yrnt <= 2000000) {
-      $sec_dep = 0.25 * $yrnt;
+      $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
 
       $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
 
       $total = number_format($total);
     } else {
-      $sec_dep = 0.3 * $yrnt;
+      $sec_dep = 0.25 * $yrnt;
       $evc_dep = $sec_dep;
 
       $total =  ($property['price'] * 12) + $evc_dep + $serviceCharge;
@@ -152,14 +152,14 @@ elseif($srlz[0] == 'Monthly')
   elseif ($property['securityDepositTerm'] == 3)
   {
     if ($yrnt <= 2000000) {
-      $sec_dep = 0.25 * $yrnt;
+      $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
 
       $total =  ($property['price'] * 1) + $evc_dep + $serviceCharge;
 
       $total = number_format($total);
     } else {
-      $sec_dep = 0.3 * $yrnt;
+      $sec_dep = 0.25 * $yrnt;
       $evc_dep = $sec_dep;
 
       $total =  ($property['price'] * 1) + $evc_dep + $serviceCharge;
@@ -225,14 +225,14 @@ elseif($srlz[0] == 'Quarterly')
   elseif ($property['securityDepositTerm'] == 3)
   {
     if ($yrnt <= 2000000) {
-      $sec_dep = 0.25 * $yrnt;
+      $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
 
       $total =  ($property['price'] * 3) + $evc_dep + $serviceCharge;
 
       $total = number_format($total);
     } else {
-      $sec_dep = 0.3 * $yrnt;
+      $sec_dep = 0.25 * $yrnt;
       $evc_dep = $sec_dep;
 
       $total =  ($property['price'] * 3) + $evc_dep + $serviceCharge;
@@ -297,14 +297,14 @@ elseif($srlz[0] == 'Bi-annually')
   elseif ($property['securityDepositTerm'] == 3)
   {
     if ($yrnt <= 2000000) {
-      $sec_dep = 0.25 * $yrnt;
+      $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
 
       $total =  ($property['price'] * 6) + $evc_dep + $serviceCharge;
 
       $total = number_format($total);
     } else {
-      $sec_dep = 0.3 * $yrnt;
+      $sec_dep = 0.25 * $yrnt;
       $evc_dep = $sec_dep;
 
       $total =  ($property['price'] * 6) + $evc_dep + $serviceCharge;
@@ -1427,7 +1427,7 @@ function shortenText($text, $maxLength)
                 <?php } ?>
 
               </div>
-              
+
             </form>
           </div>
         </div>
