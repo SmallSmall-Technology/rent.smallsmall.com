@@ -74,7 +74,7 @@
 							?>	
 
 							<tr>
-								<td class="text-left"><input type="checkbox" class="props-checkbox" id="<?php echo $value['propertyID'] ?>" /></td>
+								<td class="text-left"><input type="checkbox" class="props-checkbox action-item" id="<?php echo $value['propertyID'] ?>" /></td>
 								<td class="text-left">
 								    <div class="widget-heading">
 								        <?php echo $value['property_name']; ?>
