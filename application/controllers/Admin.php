@@ -4803,13 +4803,13 @@ class Admin extends CI_Controller
 
 				if ($action == 'delete') {
 
-					$res = $this->admin_model->delete_btl_property($details[$i]['id']);
+					$res = $this->admin_model->delete_btl_property($details[$i]['propertyID']);
 				} else if ($action == 'release') {
 
-					$res = $this->admin_model->release_btl_property($details[$i]['id']);
+					$res = $this->admin_model->release_btl_property($details[$i]['propertyID']);
 				} else if ($action == 'deactivate') {
 
-					$res = $this->admin_model->hold_btl_property($details[$i]['id']);
+					$res = $this->admin_model->hold_btl_property($details[$i]['propertyID']);
 				} 
 			}
 		}

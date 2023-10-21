@@ -4687,12 +4687,9 @@ $(document). on('click', '.close-int', function(){
 					
 				}else{
 
-					var info = actionItem[i].id.split("-");
+					var info = actionItem[i].id;
 					
-					details.push({"name": info[0], "email": info[1], "id": info[2]});
-
-
-
+					details.push({"propertyID": info[0]});
 				}
 			}
 		}
