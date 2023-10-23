@@ -325,6 +325,8 @@ if ($verification_status == 'yes') {
         </div>
     </div>
 
+    <!-- success modal for payment starts here-->
+
     <!-- Main body content starts here -->
     <main class="container">
         <div class="row mt-5">

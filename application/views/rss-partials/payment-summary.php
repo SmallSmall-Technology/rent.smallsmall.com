@@ -270,6 +270,32 @@
       </div>
     </div>
 
+
+    <!-- Modal Schedule success -->
+    <button type="button" id = "modalSuccess" class="btn btn-danger d-none" data-toggle="modal" data-target="#success" >Test success</button>
+    <div class="modal fade schedule-visit-modal" id="success" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="close-modal-custom">
+                <i class="fa-solid fa-circle-xmark fa-2x close-modal" data-dismiss="modal"></i>
+            </div>
+
+            <div class="modal-body p-5 text-center">
+                <div>
+                <img class="img-fluid" src="../assets/images/success.svg" alt="successful">
+                </div>
+                <h5 class="text-center font-weight-bold my-4">Hurray!!!</h5>
+                <h6>Payment successfully!!</h6>
+                
+            </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- success modal for payment ends here-->
+
+
   </main>
   
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -289,14 +315,20 @@
     crossorigin="anonymous"></script>
 
     <script>
+
+
         	const paymentForm = document.getElementById('paymentForm');
         	
         	var bID = document.getElementById('booking_id').value;
         	
         	var refID = document.getElementById("refID").value;
+
+          var link = document.getElementById('modalSuccess');
         
         	paymentForm.addEventListener("submit", payWithPaystack, false);
         
+          link.click();
+
         	function payWithPaystack(e) {
         
         	    e.preventDefault();
@@ -334,6 +366,8 @@
                 //alert(bookingID+' - '+refID);
                 //var baseURL = "https://rent.smallsmall.com/";
 
+                var link = document.getElementById('my-link');
+                
                 var baseURL = "<?php echo base_url(); ?>";
                 
                 var rent_exp = document.getElementById('rent_exp').value;
@@ -366,6 +400,7 @@
         				if(data == 1){
         
         					alert("Payment update Successful!");
+
         
         					window.location.href = baseURL+"dashboard/booking";
         
