@@ -5818,7 +5818,6 @@ public function uploadIdentification($folder)
 
 	public function updateTransaction()
 	{
-
 		$bID = $this->input->post("bookingID");
 
 		$refID = $this->input->post("referenceID");
@@ -5837,12 +5836,166 @@ public function uploadIdentification($folder)
 
 		$bkId = $this->random_strings(5);
 
-
 		if ($this->rss_model->transUpdate($bID, $refID, $amount)) {
+			
+			//send Emails out
 
-			//Update booking table
+			require 'vendor/autoload.php'; // For Unione template authoload
+
+			
+			// Unione Template
+
+			$headers = array(
+				'Content-Type' => 'application/json',
+				'Accept' => 'application/json',
+				'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+			);
+
+			$client = new \GuzzleHttp\Client([
+				'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+			]);
+
+			$requestBody = [
+				"id" => "9ef539f8-7196-11ee-a21c-ca1fa0567d54"
+			];
+
+			$requestCxBody = [
+				"id" => "a8de7f86-7198-11ee-9b86-1ef0731c1c1d"
+			];
+
+			
+			$user = $this->rss_model->checkRSSLastTran($userID);
+
+			$transDate = date("Y-m-d H:i:s", strtotime($user['transaction_date']));
+
+			$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+			$data['propName'] = $user['propertyTitle'];
+
+			$data['Amount'] = $user['transAmount'];
+
+			$data['Plan'] = $user['payment_plan'];
+
+			$data['transDate'] = $transDate;
+
+			$data['transID'] = $user['transaction_id'];
+
+			//Unione Template
+
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestBody,
+				));
+
+				$jsonResponse = $response->getBody()->getContents();
+
+				$responseData = json_decode($jsonResponse, true);
+
+				$htmlBody = $responseData['template']['body']['html'];
+
+				$username = $data['name'];
+				$propertyName = $data['propName'];
+				$amount = $data['Amount'];
+				$plan = $data['Plan'];
+				$transDate = $data['transDate'];
+				$transID = $data['transID'];
+
+				//Replace the placeholder in the HTML body with the username
+
+				$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+				$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+				$htmlBody = str_replace('{{AmountPaid}}', $amount, $htmlBody);
+				$htmlBody = str_replace('{{PaymentPlan}}', $plan, $htmlBody);
+				$htmlBody = str_replace('{{Date}}', $transDate, $htmlBody);
+				$htmlBody = str_replace('{{TransactionID}}', $transID, $htmlBody);
+
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailData = [
+					"message" => [
+						"recipients" => [
+							["email" => $user['userEmail']],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "Property Booking Details",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "Small Small Inspection",
+					],
+				];
+
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailData,
+				]);
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
+			}
+
+			if ($responseEmail) {
+
+				try {
+					$response = $client->request('POST', 'template/get.json', array(
+						'headers' => $headers,
+						'json' => $requestCxBody,
+					));
+
+					$jsonResponse = $response->getBody()->getContents();
+
+					$responseData = json_decode($jsonResponse, true);
+
+					$htmlBody = $responseData['template']['body']['html'];
+
+					// $username = $data['name'];
+					// $propertyName = $data['propName'];
+					// $amount = $data['Amount'];
+					// $plan = $data['Plan'];
+					// $transDate = $data['transDate'];
+					// $transID = $data['transID'];
+
+
+					// Replace the placeholder in the HTML body with the username
+
+					$htmlBody = str_replace('{{CustomerName}}', $username, $htmlBody);
+					$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+					$htmlBody = str_replace('{{AmountPaid}}', $amount, $htmlBody);
+					$htmlBody = str_replace('{{PaymentPlan}}', $plan, $htmlBody);
+					$htmlBody = str_replace('{{Date}}', $transDate, $htmlBody);
+					$htmlBody = str_replace('{{TransactionID}}', $transID, $htmlBody);
+			
+					$data['response'] = $htmlBody;
+
+					// Prepare the email data
+					$emailCxData = [
+						"message" => [
+							"recipients" => [
+								["email" => 'customerexperience@smallsmall.com'],
+								["email" => 'accounts@smallsmall.com'],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Property Booking Details!",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "Small Small Inspection",
+						],
+					];
+
+					// Send the email using the Unione API
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailCxData,
+					]);
+				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+					$data['response'] = $e->getMessage();
+				}
+
+			}
+
+			//Update Booking	
 			$this->rss_model->bookingUpdate($bID, $rent_exp, $duration, $pplan, $propertyID, $bkId);
 
+			//Update transaction table
 			$transdet = $this->rss_model->getTransDet($userID);
 
 			$bkdets = $this->rss_model->getBookingDet($userID);

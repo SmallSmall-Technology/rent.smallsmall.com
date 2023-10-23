@@ -2539,7 +2539,7 @@ class Rss_model extends CI_Model {
 
 	public function checkRSSLastTran($id){
 		
-		$this->db->select('a.*, a.type as transaction_type, a.userID as usersID, b.*, b.propertyID as proptyID, c.*, d.type, e.email, e.firstName, e.lastName');
+		$this->db->select('a.*, a.amount as transAmount, a.type as transaction_type, a.userID as usersID, b.*, b.propertyID as proptyID, c.*, d.type, e.email, e.firstName, e.lastName, e.email as userEmail');
 		
 		$this->db->from('transaction_tbl as a');
 		

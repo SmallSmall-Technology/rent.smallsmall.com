@@ -283,10 +283,12 @@
 
             <div class="modal-body p-5 text-center">
                 <div>
-                <img class="img-fluid" src="../assets/images/success.svg" alt="successful">
+                <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/success.svg" alt="successful">
                 </div>
                 <h5 class="text-center font-weight-bold my-4">Hurray!!!</h5>
                 <h6>Payment successfully!!</h6>
+
+                <a href = "<?php echo base_url('dashboard/booking'); ?>">OK</a>
                 
             </div>
 
@@ -322,12 +324,8 @@
         	var bID = document.getElementById('booking_id').value;
         	
         	var refID = document.getElementById("refID").value;
-
-          var link = document.getElementById('modalSuccess');
         
         	paymentForm.addEventListener("submit", payWithPaystack, false);
-        
-          link.click();
 
         	function payWithPaystack(e) {
         
@@ -366,7 +364,7 @@
                 //alert(bookingID+' - '+refID);
                 //var baseURL = "https://rent.smallsmall.com/";
 
-                var link = document.getElementById('my-link');
+                var link = document.getElementById('modalSuccess');
                 
                 var baseURL = "<?php echo base_url(); ?>";
                 
@@ -398,11 +396,9 @@
         
         			success	: function (data){
         				if(data == 1){
-        
-        					alert("Payment update Successful!");
-
-        
-        					window.location.href = baseURL+"dashboard/booking";
+        					// alert("Payment update Successful!");
+                  link.click();
+        					//window.location.href = baseURL+"dashboard/booking";
         
         				}else{
         
