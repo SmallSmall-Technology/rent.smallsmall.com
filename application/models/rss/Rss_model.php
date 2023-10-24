@@ -2604,27 +2604,27 @@ class Rss_model extends CI_Model {
 		
 		$this->verification_id = $verification_id;
 
-			$this->transaction_id = $bkId;
+		$this->transaction_id = $bkId;
 
-			$this->reference_id = $refrID;
+		$this->reference_id = $refrID;
 
-			$this->userID = $userID;
+		$this->userID = $userID;
 
-			$this->amount = $amount;
+		$this->amount = $amount;
 
-			$this->status = 'pending';
+		$this->status = 'pending';
 
-			$this->type = $type;
+		$this->type = $type;
 
-			$this->payment_type = $payment_type;
+		$this->payment_type = $payment_type;
 
-			$this->invoice = $invoice;
+		$this->invoice = $invoice;
 
-			$this->approved_by = $approved_by;
+		$this->approved_by = $approved_by;
 
-			$this->transaction_date = $transaction_date;
+		$this->transaction_date = $transaction_date;
 
-			$this->db->insert('transaction_tbl', $this);
+		$this->db->insert('transaction_tbl', $this);
 	}
 
 
