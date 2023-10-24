@@ -2614,7 +2614,7 @@ class Rss_model extends CI_Model {
 
 		$this->status = 'pending';
 
-		$this->type = $type;
+		$this->type = 'rss';
 
 		$this->payment_type = $payment_type;
 
