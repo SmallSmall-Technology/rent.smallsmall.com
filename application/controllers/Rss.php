@@ -6018,7 +6018,7 @@ public function uploadIdentification($folder)
 
 			$this->type = 'rss';
 
-			$this->payment_type = $transdet['payment_type']
+			$this->payment_type = $transdet['payment_type'];
 
 			$this->invoice = $transdet['invoice'];
 
