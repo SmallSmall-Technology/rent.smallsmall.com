@@ -333,6 +333,7 @@
           {
             updateTransaction(bID, refID);
              link.click();
+             window.location.href = baseURL+"dashboard/booking";
           }
 
         	// function payWithPaystack(e) {
