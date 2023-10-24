@@ -407,10 +407,10 @@
         
         			success	: function (data){
         				if(data == 1){
-        					// alert("Payment update Successful!");
+        					window.location.href = baseURL+"dashboard/booking";
         
         				}else{                 
-        					alert("Error updating payment.");      
+        					window.location.href = baseURL+"dashboard/booking";      
         				}				
         
         			}
