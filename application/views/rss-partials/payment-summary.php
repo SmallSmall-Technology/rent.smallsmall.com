@@ -331,8 +331,8 @@
 
           function pay() 
           {
+            link.click();
             updateTransaction(bID, refID);
-             link.click();
              window.location.href = baseURL+"dashboard/booking";
           }
 
