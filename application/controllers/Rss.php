@@ -5996,23 +5996,44 @@ public function uploadIdentification($folder)
 			$this->rss_model->bookingUpdate($bID, $rent_exp, $duration, $pplan, $propertyID, $bkId);
 
 			//Update transaction table
-			$transdet = $this->rss_model->getTransDet($userID);
-
 			$amount = $this->input->post("amount");
 
 			//$bkdets = $this->rss_model->getBookingDet($userID);
 
 			$refrID = 'rss_' . md5(rand(1000000, 9999999999));
 
-			$trans = $this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $refrID, $transdet['userID'], $amount, $transdet['amount'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $transdet['transaction_date']);
+			$transdet = $this->rss_model->getTransDet($userID);
+
+			$this->verification_id = $transdet['verification_id'];
+
+			$this->transaction_id = $bkId;
+
+			$this->reference_id = $refrID;
+
+			$this->userID = $transdet['userID'];
+
+			$this->amount = $amount;
+
+			$this->status = 'pending';
+
+			$this->type = 'rss';
+
+			$this->payment_type = $transdet['payment_type']
+
+			$this->invoice = $transdet['invoice'];
+
+			$this->approved_by = $transdet['approved_by'];
+
+			$this->transaction_date = $transdet['transaction_date'];
+
+			$this->db->insert('transaction_tbl', $this);
+
+			echo 1;
+
+			// $trans = $this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $refrID, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $transdet['transaction_date']);
 
 			// $bookings = $this->rss_model->insBookingUpdate($bkdets['verification_id'], $refrID, $bkId, $bkdets['propertyID'], $bkdets['userID'], $bkdets['booked_as'], $bkdets['payment_plan'], $bkdets['duration'], $bkdets['move_in_date'], $bkdets['move_out_date'], $bkdets['move_out_reason'], $bkdets['rent_expiration'], $bkdets['next_rental'], $bkdets['booked_on'], $bkdets['updated_at'], $bkdets['rent_status'], $bkdets['eviction_deposit'], $bkdets['subscription_fees'], $bkdets['service_charge_deposit'], $bkdets['security_deposit_fund'], $bkdets['total']);
-
-			if($trans)
-			{
-				echo 1;
-			}
-			
+						
 		} else {
 
 			echo 0;
