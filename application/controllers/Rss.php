@@ -6006,7 +6006,7 @@ public function uploadIdentification($folder)
 
 			// $trans = $this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $refrID, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $transdet['transaction_date']);
 
-			$trans = $this->rss_model->insTransUpdate($transdet['verification_id'], $transdet['amount'], $transdet['amount'], $amount, $transdet['type'], $transdet['payment_type'], $amount, $transdet['approved_by'], $transdet['transaction_date']);
+			$trans = $this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $refrID, $transdet['userID'], $amount, $transdet['amount'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $transdet['transaction_date']);
 
 			// $bookings = $this->rss_model->insBookingUpdate($bkdets['verification_id'], $refrID, $bkId, $bkdets['propertyID'], $bkdets['userID'], $bkdets['booked_as'], $bkdets['payment_plan'], $bkdets['duration'], $bkdets['move_in_date'], $bkdets['move_out_date'], $bkdets['move_out_reason'], $bkdets['rent_expiration'], $bkdets['next_rental'], $bkdets['booked_on'], $bkdets['updated_at'], $bkdets['rent_status'], $bkdets['eviction_deposit'], $bkdets['subscription_fees'], $bkdets['service_charge_deposit'], $bkdets['security_deposit_fund'], $bkdets['total']);
 
