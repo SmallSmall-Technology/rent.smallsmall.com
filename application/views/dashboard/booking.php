@@ -604,6 +604,32 @@ if ($verification_status == 'yes') {
 
     </main>
 
+    <!-- Modal Schedule success -->
+    <button type="button" id = "modalSuccess" class="btn btn-danger d-none" data-toggle="modal" data-target="#success" >Test success</button>
+    <div class="modal fade schedule-visit-modal" id="success" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="close-modal-custom">
+                <i class="fa-solid fa-circle-xmark fa-2x close-modal" data-dismiss="modal"></i>
+            </div>
+
+            <div class="modal-body p-5 text-center">
+                <div>
+                <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/success.svg" alt="successful">
+                </div>
+                <h5 class="text-center font-weight-bold my-4">Hurray!!!</h5>
+                <h6>Payment successfully!!</h6>
+
+                <a href = "<?php echo base_url('dashboard/booking'); ?>">OK</a>
+                
+            </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- success modal for payment ends here-->
+
     <!----Paystack form ---->
     
     <!----Paystack form ---->
@@ -862,6 +888,8 @@ if ($verification_status == 'yes') {
                 //alert(bookingID+' - '+refID);
                 //var baseURL = "https://rent.smallsmall.com/";
 
+                var link = document.getElementById('modalSuccess');
+
                 var baseURL = "<?php echo base_url(); ?>";
                 
                 var rent_exp = document.getElementById('rent_exp').value;
@@ -893,9 +921,9 @@ if ($verification_status == 'yes') {
         			success	: function (data){
         				if(data == 1){
         
-        					alert("Payment update Successful!");
-        
-        					window.location.href = baseURL+"dashboard/booking";
+        					// alert("Payment update Successful!");
+                            link.click();
+        					//window.location.href = baseURL+"dashboard/booking";
         
         				}else{
         
