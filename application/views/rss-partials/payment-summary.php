@@ -332,7 +332,7 @@
           function pay() 
           {
             updateTransaction(bID, refID);
-            //  link.click();
+             link.click();
           }
 
         	// function payWithPaystack(e) {
@@ -375,8 +375,6 @@
             function updateTransaction(bookingID, refID){
                 //alert(bookingID+' - '+refID);
                 //var baseURL = "https://rent.smallsmall.com/";
-
-                var link = document.getElementById('modalSuccess');
                 
                 var baseURL = "<?php echo base_url(); ?>";
                 
@@ -410,10 +408,8 @@
         				if(data == 1){
         					// alert("Payment update Successful!");
         
-                  link.click();
         				}else{                 
-        					//alert("Error updating payment.");
-                  link.click();      
+        					alert("Error updating payment.");      
         				}				
         
         			}
