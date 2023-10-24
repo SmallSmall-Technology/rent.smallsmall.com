@@ -332,49 +332,51 @@
           function pay() 
           {
             updateTransaction(bID, refID);
-            link.click();
+            //  link.click();
           }
 
-        	function payWithPaystack(e) {
+        	// function payWithPaystack(e) {
         
-            var link = document.getElementById('modalSuccess');
+          //   var link = document.getElementById('modalSuccess');
 
-        	    e.preventDefault();
+        	//     e.preventDefault();
         
-        	    let handler = PaystackPop.setup({
+        	//     let handler = PaystackPop.setup({
         
-            		key: 'pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2', // Replace with your public key
+          //   		key: 'pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2', // Replace with your public key
             
-            		email: document.getElementById("email").value,
+          //   		email: document.getElementById("email").value,
             
-            		amount: document.getElementById("amount").value * 100,
+          //   		amount: document.getElementById("amount").value * 100,
             
-            		ref: document.getElementById("refID").value, // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+          //   		ref: document.getElementById("refID").value, // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
             
-            		// label: "Optional string that replaces customer email"
+          //   		// label: "Optional string that replaces customer email"
             
-            		onClose: function(){
+          //   		onClose: function(){
             
-            		},
+          //   		},
             
-                    callback: function(response){
+          //           callback: function(response){
                 
-                        let message = 'Payment complete! Reference: ' + response.reference;
+          //               let message = 'Payment complete! Reference: ' + response.reference;
                         
-                        updateTransaction(bID, refID);
+          //               updateTransaction(bID, refID);
 
-                        link.click();
+          //               link.click();
 
-                    }
-                });
+          //           }
+          //       });
         
-                handler.openIframe();
+          //       handler.openIframe();
             
-            }
+          //   }
             
             function updateTransaction(bookingID, refID){
                 //alert(bookingID+' - '+refID);
                 //var baseURL = "https://rent.smallsmall.com/";
+
+                var link = document.getElementById('modalSuccess');
                 
                 var baseURL = "<?php echo base_url(); ?>";
                 
@@ -408,8 +410,10 @@
         				if(data == 1){
         					// alert("Payment update Successful!");
         
+                  link.click();
         				}else{                 
-        					alert("Error updating payment.");      
+        					//alert("Error updating payment.");
+                  link.click();      
         				}				
         
         			}
