@@ -321,6 +321,8 @@
         	const paymentForm = document.getElementById('paymentForm');
         	
         	var bID = document.getElementById('booking_id').value;
+
+          var link = document.getElementById('modalSuccess');
         	
         	var refID = document.getElementById("refID").value;
         
