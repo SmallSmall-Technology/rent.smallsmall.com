@@ -5998,7 +5998,7 @@ public function uploadIdentification($folder)
 			//Update transaction table
 			$amount = $this->input->post("amount");
 
-			//$bkdets = $this->rss_model->getBookingDet($userID);
+			$bkdets = $this->rss_model->getBookingDet($userID);
 
 			$refrID = 'rss_' . md5(rand(1000000, 9999999999));
 
@@ -6012,7 +6012,7 @@ public function uploadIdentification($folder)
 
 			$this->userID = $transdet['userID'];
 
-			$this->amount = $amount;
+			$this->amount = $transdet['amount'];
 
 			$this->status = 'pending';
 
@@ -6028,11 +6028,12 @@ public function uploadIdentification($folder)
 
 			$this->db->insert('transaction_tbl', $this);
 
-			echo 1;
-
+			
 			// $trans = $this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $refrID, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $transdet['transaction_date']);
 
 			// $bookings = $this->rss_model->insBookingUpdate($bkdets['verification_id'], $refrID, $bkId, $bkdets['propertyID'], $bkdets['userID'], $bkdets['booked_as'], $bkdets['payment_plan'], $bkdets['duration'], $bkdets['move_in_date'], $bkdets['move_out_date'], $bkdets['move_out_reason'], $bkdets['rent_expiration'], $bkdets['next_rental'], $bkdets['booked_on'], $bkdets['updated_at'], $bkdets['rent_status'], $bkdets['eviction_deposit'], $bkdets['subscription_fees'], $bkdets['service_charge_deposit'], $bkdets['security_deposit_fund'], $bkdets['total']);
+
+			echo 1;
 						
 		} else {
 

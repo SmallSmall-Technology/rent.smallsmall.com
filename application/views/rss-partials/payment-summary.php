@@ -298,8 +298,6 @@
         </div>
     </div>
     <!-- success modal for payment ends here-->
-
-
   </main>
   
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -332,10 +330,13 @@
           function pay() 
           {
             updateTransaction(bID, refID);
+            link.click();
           }
 
         	function payWithPaystack(e) {
         
+            var link = document.getElementById('modalSuccess');
+
         	    e.preventDefault();
         
         	    let handler = PaystackPop.setup({
@@ -359,7 +360,9 @@
                         let message = 'Payment complete! Reference: ' + response.reference;
                         
                         updateTransaction(bID, refID);
-                
+
+                        link.click();
+
                     }
                 });
         
@@ -370,8 +373,6 @@
             function updateTransaction(bookingID, refID){
                 //alert(bookingID+' - '+refID);
                 //var baseURL = "https://rent.smallsmall.com/";
-
-                var link = document.getElementById('modalSuccess');
                 
                 var baseURL = "<?php echo base_url(); ?>";
                 
@@ -404,13 +405,9 @@
         			success	: function (data){
         				if(data == 1){
         					// alert("Payment update Successful!");
-                  link.click();
-        					//window.location.href = baseURL+"dashboard/booking";
         
-        				}else{
-        
-        					alert("Error updating payment.");
-        
+        				}else{                 
+        					alert("Error updating payment.");      
         				}				
         
         			}
