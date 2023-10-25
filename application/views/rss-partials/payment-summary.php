@@ -331,9 +331,10 @@
 
           function pay() 
           {
+            alert('Upload Successful');
+            window.location.href= baseURL+"dashboard/booking";
             link.click();
              updateTransaction(bID, refID);
-             //window.location.href = baseURL+"dashboard/booking";
           }
 
         	// function payWithPaystack(e) {
