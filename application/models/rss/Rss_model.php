@@ -3205,6 +3205,7 @@ class Rss_model extends CI_Model {
         
         return $this->db->update("transaction_tbl", $update);
     }
+
     public function insert_wallet_transaction($refID, $amount, $txn_type, $userID){
         
         $this->txn_id = $refID;
@@ -3217,6 +3218,19 @@ class Rss_model extends CI_Model {
         
         return $this->db->insert("wallet_transactions", $this);
     }
+
+	public function newBookingUpdate($bkId, $transID, $userID){
+
+        $update = array("bookingID" => $transID);
+        
+        $this->db->where("bookingID", $bkId);
+
+		$this->db->where("userID", $userID);
+        
+        return $this->db->update("bookings", $update);
+    }
+
+
     public function bookingUpdate($bookingID, $rent_exp, $duration, $paymentPlan, $propertyID){
         
         $nMonths = 0;
