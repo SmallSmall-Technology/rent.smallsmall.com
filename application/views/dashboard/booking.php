@@ -22,8 +22,6 @@ $bkId = $newBkID['bookingID'];
 
 $this->rss_model->newBookingUpdate($bkId, $transID, $userID);
 
-$bookings = $this->rss_model->get_bookings($userID);
-
 ?>
 
 <!DOCTYPE html>
