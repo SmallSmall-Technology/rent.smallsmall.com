@@ -2600,6 +2600,21 @@ class Rss_model extends CI_Model {
 		return $query->row_array();
 	}
 
+	public function selktBookingDet($userID, $transID){
+		
+		$this->db->select('a.*');
+		
+		$this->db->from('bookings as a');
+			
+		$this->db->where('a.userID', $userid);
+
+		$this->db->where('a.bookingID', $transID);
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+
 	public function insTransUpdate($verification_id, $bkId, $refrID, $userID, $amount, $type, $payment_type, $invoice, $approved_by, $transaction_date){
 		
 		$this->verification_id = $verification_id;
