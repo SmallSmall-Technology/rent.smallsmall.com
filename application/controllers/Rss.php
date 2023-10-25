@@ -5993,7 +5993,7 @@ public function uploadIdentification($folder)
 			// }
 
 			//Update Booking	
-			// $this->rss_model->bookingUpdate($bID, $rent_exp, $duration, $pplan, $propertyID, $bkId);
+			$this->rss_model->bookingUpdate($bID, $rent_exp, $duration, $pplan, $propertyID);
 
 			// //set bookingID session
 			// $userdata = array('bookingReferenceID' => $bkId);

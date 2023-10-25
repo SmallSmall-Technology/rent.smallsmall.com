@@ -3217,7 +3217,7 @@ class Rss_model extends CI_Model {
         
         return $this->db->insert("wallet_transactions", $this);
     }
-    public function bookingUpdate($bookingID, $rent_exp, $duration, $paymentPlan, $propertyID, $bkId){
+    public function bookingUpdate($bookingID, $rent_exp, $duration, $paymentPlan, $propertyID){
         
         $nMonths = 0;
 		
@@ -3258,7 +3258,7 @@ class Rss_model extends CI_Model {
 		
 		$expiry = $this->endCycle($startdate, $nMonths);
         
-        $update = array("booked_on" => date("Y-m-d"), "updated_at" => date("Y-m-d H:i:s"), "next_rental" => $expiry, "bookingID" => $bkId, "rent_status" => "Occupied");
+        $update = array("booked_on" => date("Y-m-d"), "updated_at" => date("Y-m-d H:i:s"), "next_rental" => $expiry, "rent_status" => "Occupied");
         
         $this->db->where("bookingID", $bookingID);
         
