@@ -409,9 +409,9 @@
         			success	: function (data){
         				if(data == 1){
         					alert('Your Payment Was Successful');
-        
+                  window.location.href = baseURL+"dashboard/booking";
         				}else{                 
-        					alert('Your Payment Was Successful');      
+        					alert('Your Payment Was not Successful');      
         				}				
         
         			}
