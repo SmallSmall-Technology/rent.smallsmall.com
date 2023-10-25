@@ -26,7 +26,7 @@ $refrID = 'rss_' . md5(rand(1000000, 9999999999));
 
 $chkBk = $this->rss_model->selktBookingDet($userID, $transID);
 
-if($chkBK->num_rows() > == 0)
+if($chkBK->num_rows() == 0)
 {
     $this->rss_model->insBookingUpdate($bkdets['verification_id'], $refrID, $transID, $bkdets['propertyID'], $bkdets['userID'], $bkdets['booked_as'], $bkdets['payment_plan'], $bkdets['duration'], $bkdets['move_in_date'], $bkdets['move_out_date'], $bkdets['move_out_reason'], $bkdets['rent_expiration'], $bkdets['next_rental'], $bkdets['booked_on'], $bkdets['updated_at'], $bkdets['rent_status'], $bkdets['eviction_deposit'], $bkdets['subscription_fees'], $bkdets['service_charge_deposit'], $bkdets['security_deposit_fund'], $bkdets['total']);
 }
