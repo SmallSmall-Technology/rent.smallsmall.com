@@ -2606,7 +2606,7 @@ class Rss_model extends CI_Model {
 		
 		$this->db->from('bookings as a');
 			
-		$this->db->where('a.userID', $userid);
+		$this->db->where('a.userID', $userID);
 
 		$this->db->where('a.bookingID', $transID);
 		
