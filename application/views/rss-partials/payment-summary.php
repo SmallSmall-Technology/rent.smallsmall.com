@@ -332,8 +332,8 @@
           function pay() 
           {
             link.click();
-            updateTransaction(bID, refID);
-             window.location.href = baseURL+"dashboard/booking";
+             updateTransaction(bID, refID);
+             //window.location.href = baseURL+"dashboard/booking";
           }
 
         	// function payWithPaystack(e) {
@@ -407,10 +407,10 @@
         
         			success	: function (data){
         				if(data == 1){
-        					window.location.href = baseURL+"dashboard/booking";
+        					//window.location.href = baseURL+"dashboard/booking";
         
         				}else{                 
-        					window.location.href = baseURL+"dashboard/booking";      
+        					//window.location.href = baseURL+"dashboard/booking";      
         				}				
         
         			}

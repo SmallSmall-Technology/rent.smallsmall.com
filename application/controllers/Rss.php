@@ -5995,6 +5995,11 @@ public function uploadIdentification($folder)
 			//Update Booking	
 			$this->rss_model->bookingUpdate($bID, $rent_exp, $duration, $pplan, $propertyID, $bkId);
 
+			//set bookingID session
+			$userdata = array('bookingReferenceID' => $bkId);
+
+			$this->session->set_userdata($userdata);
+
 			//Update transaction table
 			$amount = $this->input->post("amount");
 
