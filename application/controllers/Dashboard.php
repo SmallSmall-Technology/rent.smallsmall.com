@@ -155,19 +155,7 @@ class Dashboard extends CI_Controller
     {
         if($this->session->has_userdata('userID')){			
 
-			$data['userID'] = $this->session->userdata('userID');
-			
-			$userID = $this->session->userdata('userID');
-
-			$newtransID = $this->rss_model->getTransDet($userID);
-
-			$transID = $newtransID['transaction_id'];
-
-			$newBkID = $this->rss_model->getBookingDet($userID);
-
-			$bkId = $newBkID['bookingID'];
-
-			$this->rss_model->newBookingUpdate($bkId, $transID, $userID);
+			$data['userID'] = $this->session->userdata('userID');			
 
 			$data['fname'] = $this->session->userdata('fname');			
 
@@ -197,7 +185,7 @@ class Dashboard extends CI_Controller
 			
 			//$data['furnisure_transaction'] = $this->rss_model->checkFurnisureLastTrans($data['userID']);
 
-			$data['bookings'] = $this->rss_model->get_bookings($data['userID']);
+			//$data['bookings'] = $this->rss_model->get_bookings($data['userID']);
 
 			$data['dets'] = $this->rss_model->checkRSSLastTran($data['userID']);
 

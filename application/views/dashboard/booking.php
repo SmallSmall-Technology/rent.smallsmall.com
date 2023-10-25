@@ -10,6 +10,20 @@ if ($verification_status == 'yes') {
     $disp = '<span style="color:#DADADA"  class="btn btn-light">Verified</span>';
 }
 
+$userID = $this->session->userdata('userID');
+
+$newtransID = $this->rss_model->getTransDet($userID);
+
+$transID = $newtransID['transaction_id'];
+
+$newBkID = $this->rss_model->getBookingDet($userID);
+
+$bkId = $newBkID['bookingID'];
+
+$this->rss_model->newBookingUpdate($bkId, $transID, $userID);
+
+$bookings = $this->rss_model->get_bookings($userID);
+
 ?>
 
 <!DOCTYPE html>
