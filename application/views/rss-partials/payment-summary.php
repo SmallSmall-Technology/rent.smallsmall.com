@@ -331,10 +331,10 @@
 
           function pay() 
           {
-            alert('Upload Successful');
-            window.location.href= baseURL+"dashboard/booking";
+            //window.location.href= baseURL+"dashboard/booking";
             link.click();
-             updateTransaction(bID, refID);
+            updateTransaction(bID, refID);
+            alert('Your Payment Was Successful');
           }
 
         	// function payWithPaystack(e) {
@@ -408,10 +408,10 @@
         
         			success	: function (data){
         				if(data == 1){
-        					//window.location.href = baseURL+"dashboard/booking";
+        					alert('Your Payment Was Successful');
         
         				}else{                 
-        					//window.location.href = baseURL+"dashboard/booking";      
+        					alert('Your Payment Was Successful');      
         				}				
         
         			}
