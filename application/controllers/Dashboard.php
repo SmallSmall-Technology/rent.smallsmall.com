@@ -155,7 +155,19 @@ class Dashboard extends CI_Controller
     {
         if($this->session->has_userdata('userID')){			
 
-			$data['userID'] = $this->session->userdata('userID');			
+			$data['userID'] = $this->session->userdata('userID');
+			
+			$userID = $this->session->userdata('userID');
+
+			$newtransID = $this->rss_model->getTransDet($userID);
+
+			$transID = $newtransID['transaction_id'];
+
+			$newBkID = $this->rss_model->getBookingDet($userID);
+
+			$bkId = $newBkID['bookingID'];
+
+			$this->rss_model->newBookingUpdate($bkId, $transID, $userID);
 
 			$data['fname'] = $this->session->userdata('fname');			
 
