@@ -334,7 +334,7 @@
             //window.location.href= baseURL+"dashboard/booking";
             link.click();
             updateTransaction(bID, refID);
-            alert('Your Payment Was Successful');
+            //alert('Your Payment Was Successful');
           }
 
         	// function payWithPaystack(e) {
