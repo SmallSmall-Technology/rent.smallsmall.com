@@ -5993,12 +5993,12 @@ public function uploadIdentification($folder)
 			// }
 
 			//Update Booking	
-			$this->rss_model->bookingUpdate($bID, $rent_exp, $duration, $pplan, $propertyID, $bkId);
+			// $this->rss_model->bookingUpdate($bID, $rent_exp, $duration, $pplan, $propertyID, $bkId);
 
-			//set bookingID session
-			$userdata = array('bookingReferenceID' => $bkId);
+			// //set bookingID session
+			// $userdata = array('bookingReferenceID' => $bkId);
 
-			$this->session->set_userdata($userdata);
+			// $this->session->set_userdata($userdata);
 
 			//Update transaction table
 			$amount = $this->input->post("amount");
@@ -7665,7 +7665,6 @@ value1&metadata[meta2]=value2*/
 
 	public function payment_summary()
 	{
-
 		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
