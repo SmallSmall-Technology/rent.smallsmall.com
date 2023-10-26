@@ -166,7 +166,14 @@
 								        <option value="Diesel">Diesel</option>
 								        <option value="PHCN">PHCN</option>
 								        <option value="Late Fee">Late Fee</option>
+										<!-- // Adding Others, and get the admin purpose for reduction -->
+
+										<option value="Others">Others</option> <!-- Add "Others" option -->
+
 								    </select>
+									<!-- Added Input Field To Get Custome Purpose for Reduction by Admin -->
+
+									<input type="text" id="other-purpose-<?php echo $value['userID']; ?>" name="other-purpose" class="form-control other-purpose" style="display: none;" placeholder="Enter Custom Purpose">
 								</td>
 
 								<td class="text-left">&nbsp;</td>
@@ -213,3 +220,23 @@
 		</div>
 
 	</div>
+
+	<!-- // Script to handle the other option switch -->
+	
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Detect changes in the dropdown selection
+        $(".deduction-purpose").on("change", function () {
+            var selectedValue = $(this).val();
+            if (selectedValue === "Others") {
+                // Show the "Others" input field
+                $(this).closest("tr").find(".other-purpose").show();
+            } else {
+                // Hide the "Others" input field
+                $(this).closest("tr").find(".other-purpose").hide();
+            }
+        });
+    });
+</script>
