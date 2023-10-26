@@ -876,6 +876,8 @@ if($chkBk->num_rows() == 0)
         
         	function payWithPaystack(e) {
         
+                var link = document.getElementById('modalSuccess');
+
         	    e.preventDefault();
         
         	    let handler = PaystackPop.setup({
@@ -898,6 +900,7 @@ if($chkBk->num_rows() == 0)
                 
                         let message = 'Payment complete! Reference: ' + response.reference;
                         
+                        link.click();
                         updateTransaction(bID, refID);
                 
                     }
@@ -910,9 +913,7 @@ if($chkBk->num_rows() == 0)
             function updateTransaction(bookingID, refID){
                 //alert(bookingID+' - '+refID);
                 //var baseURL = "https://rent.smallsmall.com/";
-
-                var link = document.getElementById('modalSuccess');
-
+                
                 var baseURL = "<?php echo base_url(); ?>";
                 
                 var rent_exp = document.getElementById('rent_exp').value;
@@ -943,15 +944,10 @@ if($chkBk->num_rows() == 0)
         
         			success	: function (data){
         				if(data == 1){
-        
-        					// alert("Payment update Successful!");
-                            link.click();
-        					//window.location.href = baseURL+"dashboard/booking";
-        
-        				}else{
-        
-        					alert("Error updating payment.");
-        
+        					alert('Your Payment Was Successful');
+                            window.location.href = baseURL+"dashboard/index";
+        				}else{                 
+        					alert('Your Payment Was not Successful');      
         				}				
         
         			}
