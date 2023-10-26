@@ -222,8 +222,8 @@
 	</div>
 
 	<!-- // Script to handle the other option switch -->
-	
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -239,4 +239,36 @@
             }
         });
     });
+</script> -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Detect changes in the dropdown selection
+        $(".deduction-purpose").on("change", function () {
+            var selectedValue = $(this).val();
+            if (selectedValue === "Others") {
+                // Show the "Others" input field
+                $(this).closest("tr").find(".other-purpose").show();
+            } else {
+                // Hide the "Others" input field
+                $(this).closest("tr").find(".other-purpose").hide();
+            }
+        });
+
+        // Detect changes in the "Others" input field
+        $(".other-purpose").on("input", function () {
+            // Get the entered custom purpose
+            var customPurpose = $(this).val();
+
+            // Update the selected option's value
+            var selectElement = $(this).closest("tr").find(".deduction-purpose");
+            selectElement.find("option:selected").val(customPurpose);
+
+            // If you want to set the text of the selected option as well, use this line:
+            // selectElement.find("option:selected").text(customPurpose);
+        });
+    });
 </script>
+
