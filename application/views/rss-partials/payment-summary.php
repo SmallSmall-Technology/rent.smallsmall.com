@@ -131,7 +131,7 @@
 
                         <input class="lname" type="hidden" id="lname" value="<?php echo $dets['lastName']; ?>" />
                         
-                        <input class="refID" type="hidden" id="refID" value="<?php echo $dets['reference_id']; ?>" />
+                        <input class="refID" type="hidden" id="refID" value="<?php echo $dets['refID']; ?>" />
 
                         <input class="userID" type="hidden" id="userID" value="<?php echo $dets['usersID']; ?>" />
                         

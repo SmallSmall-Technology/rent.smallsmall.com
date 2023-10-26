@@ -5878,7 +5878,9 @@ public function uploadIdentification($folder)
 
 			$data['transDate'] = date('d F Y', strtotime($transDate));
 
-			$data['transID'] = $user['transaction_id'];
+			$data['bookingID'] = $user['transaction_id'];
+
+			$data['transID'] = $user['refID'];
 
 			//Unione Template
 
@@ -5899,6 +5901,7 @@ public function uploadIdentification($folder)
 				$amount = number_format($data['Amount']);
 				$plan = $data['Plan'];
 				$transDate = $data['transDate'];
+				$bookingID = $data['bookingID'];
 				$transID = $data['transID'];
 
 				//Replace the placeholder in the HTML body with the username
@@ -5909,6 +5912,7 @@ public function uploadIdentification($folder)
 				$htmlBody = str_replace('{{PaymentPlan}}', $plan, $htmlBody);
 				$htmlBody = str_replace('{{Date}}', $transDate, $htmlBody);
 				$htmlBody = str_replace('{{TransactionID}}', $transID, $htmlBody);
+				$htmlBody = str_replace('{{BookingID}}', $bookingID, $htmlBody);
 
 				$data['response'] = $htmlBody;
 
@@ -5964,6 +5968,7 @@ public function uploadIdentification($folder)
 					$htmlBody = str_replace('{{PaymentPlan}}', $plan, $htmlBody);
 					$htmlBody = str_replace('{{Date}}', $transDate, $htmlBody);
 					$htmlBody = str_replace('{{TransactionID}}', $transID, $htmlBody);
+					$htmlBody = str_replace('{{BookingID}}', $bookingID, $htmlBody);
 			
 					$data['response'] = $htmlBody;
 
