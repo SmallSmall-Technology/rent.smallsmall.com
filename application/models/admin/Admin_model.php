@@ -2561,10 +2561,12 @@ class Admin_model extends CI_Model {
 		$this->db->where('a.verification_id', $id);
 		
 		$this->db->join('user_tbl as b', 'b.userID = a.user_id'); 
+
+		$this->db->join('valid_ids as c', 'c.verification_id = a.verification_id', 'LEFT OUTER'); // Used this so that it't will return data, even if the path is empty here
 		
-		$this->db->join('valid_ids as c', 'c.verification_id = a.verification_id'); 
+		// $this->db->join('valid_ids as c', 'c.verification_id = a.verification_id'); 
 		
-		$this->db->join('bank_statements as d', 'd.verification_id = a.verification_id'); 
+		$this->db->join('bank_statements as d', 'd.verification_id = a.verification_id', 'LEFT OUTER'); // Apply same here. Make its left join
 		
 		$this->db->join('bookings as e', 'e.verification_id = a.verification_id', 'LEFT OUTER');
 		

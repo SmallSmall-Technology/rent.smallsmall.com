@@ -18,7 +18,7 @@
       <div class="col-12 text-center">
         <p class="terms-title">Privacy policy</p>
         <p class="terms-date">Effective Date: October 2023</p>
-        <p class="terms-date">Last updated on November, 2021</p>
+        <p class="terms-date">Last updated on October, 2023</p>
       </div>
     </div>
 
@@ -61,7 +61,7 @@
           At SMALL SMALL Technology Ltd. (hereinafter referred to as “we”, “us”,
           “SMALLSMALL” or “OUR”) is committed to safeguarding the privacy of our customers,
           employees, and all third parties (hereinafter referred to as “You”, “Your” or “User”) of its
-          Website (“Site”) located at https://www.SMALLSMALL.com. This Data Privacy Policy outlines
+          Website (“Site”) located at <a href="https://www.smallsmall.com.">https://www.SMALLSMALL.com.</a> This Data Privacy Policy outlines
           how, why and what data is collected, processed, and shared. We ensure that all data collection
           and processing activities are carried out in accordance with relevant data protection laws and
           regulations, including the General Data Protection Regulation (GDPR).
@@ -108,7 +108,7 @@
             mentioned.
 
           </p>
-         
+
           <div>
             <a href="#top" class="primary-text-color-alt">Back to top</a>
           </div>
@@ -179,7 +179,7 @@
           <p>
             We may disclose or transfer Your Personal Information of Yours within or outside your
             jurisdiction to:
-            
+
           </p>
 
           <p>

@@ -998,6 +998,8 @@ class App extends CI_Controller
 							"message" => [
 								"recipients" => [
 									["email" => 'customerexperience@smallsmall.com'],
+
+									["email" => 'wasiu.i@smallsmall.com'],
 								],
 								"body" => ["html" => $htmlBody],
 								"subject" => "New Inspection Request!",
@@ -1318,6 +1320,10 @@ class App extends CI_Controller
 										["email" => 'verification@smallsmall.com'],
 
 										["email" => 'pidah.t@smallsmall.com'],
+
+										["email" => 'wasiu.i@smallsmall.com'],
+
+										["email" => 'customerexperience@smallsmall.com'],
 
 									],
 									"body" => ["html" => $htmlBody],
