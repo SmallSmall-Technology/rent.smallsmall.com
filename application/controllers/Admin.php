@@ -6458,7 +6458,10 @@ class Admin extends CI_Controller
 					$emailDataCx = [
 						"message" => [
 							"recipients" => [
+								
 								["email" => 'customerexperience@smallsmall.com'],
+
+								["email" => 'wasiu.i@smallsmall.com'],
 							],
 							"body" => ["html" => $htmlBody],
 							"subject" => "Verification Successful!",
