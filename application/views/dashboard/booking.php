@@ -10,26 +10,6 @@ if ($verification_status == 'yes') {
     $disp = '<span style="color:#DADADA"  class="btn btn-light">Verified</span>';
 }
 
-$userID = $this->session->userdata('userID');
-
-$newtransID = $this->rss_model->getTransDet($userID);
-
-$transID = $newtransID['transaction_id'];
-
-$newBkID = $this->rss_model->getBookingDet($userID);
-
-$bkId = $newBkID['bookingID'];
-
-$bkdets = $this->rss_model->getBookingDet($userID);
-
-$refrID = 'rss_' . md5(rand(1000000, 9999999999));
-
-$chkBk = $this->rss_model->selktBookingDet($userID, $transID);
-
-if($chkBk->num_rows() == 0)
-{
-    $this->rss_model->insBookingUpdate($bkdets['verification_id'], $refrID, $transID, $bkdets['propertyID'], $bkdets['userID'], $bkdets['booked_as'], $bkdets['payment_plan'], $bkdets['duration'], $bkdets['move_in_date'], $bkdets['move_out_date'], $bkdets['move_out_reason'], $bkdets['rent_expiration'], $bkdets['next_rental'], $bkdets['booked_on'], $bkdets['updated_at'], $bkdets['rent_status'], $bkdets['eviction_deposit'], $bkdets['subscription_fees'], $bkdets['service_charge_deposit'], $bkdets['security_deposit_fund'], $bkdets['total']);
-}
 
 //$this->rss_model->newBookingUpdate($bkId, $transID, $userID);
 ?>
@@ -945,7 +925,7 @@ if($chkBk->num_rows() == 0)
         			success	: function (data){
         				if(data == 1){
         					alert('Your Payment Was Successful');
-                            window.location.href = baseURL+"dashboard/index";
+                            window.location.href = baseURL+"dashboard/paymentSummary";
         				}else{                 
         					alert('Your Payment Was not Successful');      
         				}				

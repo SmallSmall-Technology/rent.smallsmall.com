@@ -2508,6 +2508,37 @@ class Rss_model extends CI_Model {
 		}			
 
 	}
+
+
+	public function selktPaymentDet($id){
+		
+		$this->db->select('a.*, a.id, a.verification_id, a.transaction_id, a.reference_id as refID, a.transaction_date as transDate, a.userID, a.amount as totalAmount, a.status, a.type as transaction_type, a.transaction_date, a.payment_type, b.*, b.bookingID, b.propertyID, b.payment_plan, b.duration, b.move_in_date, b.next_rental, b.rent_expiration, b.booked_on, b.rent_status, c.*, c.propertyTitle, c.price, d.type, e.*, e.email as userEmail');
+		
+		$this->db->from('transaction_tbl as a');
+		
+		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID', 'LEFT OUTER');
+		
+		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
+		
+		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
+
+		$this->db->join('user_tbl as e', 'e.userID = a.userID');
+		
+		$this->db->where('a.userID', $id);
+		
+		$this->db->where('a.type', 'rss');
+		
+		$this->db->where('a.status', 'approved');
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	}
+
 	
 	public function checkRSSLastTrans($id){
 		
@@ -2520,6 +2551,8 @@ class Rss_model extends CI_Model {
 		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
 		
 		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
+
+		$this->db->join('user_tbl as e', 'e.userID = a.userID');
 		
 		$this->db->where('a.userID', $id);
 		
