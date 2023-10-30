@@ -85,7 +85,7 @@ $data = $this->rss_model->selktPaymentDet($userID);
     <div class="container mt-5 payment-summary-container">
       <div class="row">
         <div class="col-12 d-flex">
-          <img class="img-fluid" src="../assets/images/logo2.svg" alt="rentsmallsmall-logo">
+          <img class="img-fluid" src="<?php echo base_url(); ?>assets/images/logo2.svg" alt="rentsmallsmall-logo">
         </div>
 
         <div class="col-12 text-center mt-4 ">
@@ -152,17 +152,17 @@ $data = $this->rss_model->selktPaymentDet($userID);
             <div class="divider my-3"></div>
             <div class="d-flex justify-content-between">
               <p><?php echo $data['propertyTitle']; ?><br>Payment plan: <?php echo $data['payment_plan']; ?></p>
-              <p> &#8358;<?php echo $data['subscription_fees']; ?></p>
+              <p> &#8358;<?php echo number_format($data['subscription_fees']); ?></p>
             </div>
             <div class="divider my-3"></div>
             <div class="d-flex justify-content-between">
               <p>Security deposit fund</p>
-              <p> &#8358;<?php echo $data['security_deposit_fund']; ?></p>
+              <p> &#8358;<?php echo number_format($data['security_deposit_fund']); ?></p>
             </div>
             <div class="divider my-3"></div>
             <div class="d-flex justify-content-between">
               <p>Service charge</p>
-              <p> &#8358;<?php echo $data['service_charge_deposit']; ?></p>
+              <p> &#8358;<?php echo number_format($data['service_charge_deposit']); ?></p>
             </div>
             <div class="divider my-3"></div>
 
@@ -170,7 +170,7 @@ $data = $this->rss_model->selktPaymentDet($userID);
               <div class="total-description">
                 <p class="mb-0 text-center"><span class="mr-2"
                     style="font-size: 20px; font-weight: 700;">Total</span><span
-                    class="total-text">&#8358;<?php echo $data['totalAmount'];?></span></p>
+                    class="total-text">&#8358;<?php echo number_format($data['totalAmount']);?></span></p>
               </div>
             </div>
           </div>
