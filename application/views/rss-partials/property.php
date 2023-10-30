@@ -1217,7 +1217,7 @@ function shortenText($text, $maxLength)
 
   <input type="hidden" class="prop-monthly-price" id="monthly-price" value="<?php echo $property['price']; ?>" />
 
-  <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo ($sec_dep + $evictionDeposit); ?>" />
+  <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo ($sec_dep); ?>" />
 
   <input type="hidden" class="serv-charge" id="serv-charge" value="<?php echo ($property['serviceCharge'] * $property['serviceChargeTerm']); ?>" />
 
@@ -1294,6 +1294,7 @@ function shortenText($text, $maxLength)
                 }
 
                 ?>
+
                 <?php
                 //Set fields to disabled if user is not signed in
 

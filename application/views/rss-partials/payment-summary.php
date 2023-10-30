@@ -290,7 +290,7 @@
                 <h5 class="text-center font-weight-bold my-4">Hurray!!!</h5>
                 <h6>Payment successfully!!</h6>
 
-                <a href = "<?php echo base_url('dashboard/booking'); ?>">OK</a>
+                <a href = "<?php echo base_url('dashboard/paymentSummary'); ?>">OK</a>
                 
             </div>
 
