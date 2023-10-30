@@ -888,7 +888,7 @@ function shortenText($text, $maxLength)
                             <!--Hidden input fields so as to get all the changes -->
                             <input type="hidden" class="subscription-fees" name="subscription-fees" value="<?php echo str_replace(',', '', $prc); ?>">
                             <input type="hidden" class="service-charge-deposit" name="service-charge-deposit" value="<?php echo ($property['serviceChargeTerm'] != '') ? $property['serviceCharge'] * $property['serviceChargeTerm'] : $property['serviceCharge']; ?>">
-                            <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $sec_dep + $evictionDeposit; ?>">
+                            <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $sec_dep; ?>">
                             <input type="hidden" class="total" name="total" value="<?php echo str_replace(',', '', $total) ?>">
 
 
@@ -1217,7 +1217,7 @@ function shortenText($text, $maxLength)
 
   <input type="hidden" class="prop-monthly-price" id="monthly-price" value="<?php echo $property['price']; ?>" />
 
-  <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo ($sec_dep); ?>" />
+  <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo $sec_dep; ?>" />
 
   <input type="hidden" class="serv-charge" id="serv-charge" value="<?php echo ($property['serviceCharge'] * $property['serviceChargeTerm']); ?>" />
 
@@ -1384,7 +1384,7 @@ function shortenText($text, $maxLength)
                   <!--Hidden input fields so as to get all the changes -->
                   <input type="hidden" class="subscription-fees" name="subscription-fees" value="<?php echo str_replace(',', '', $prc); ?>">
                   <input type="hidden" class="service-charge-deposit" name="service-charge-deposit" value="<?php echo ($property['serviceChargeTerm'] != '') ? $property['serviceCharge'] * $property['serviceChargeTerm'] : $property['serviceCharge']; ?>">
-                  <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $sec_dep + $evictionDeposit; ?>">
+                  <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $sec_dep; ?>">
                   <input type="hidden" class="total" name="total" value="<?php echo str_replace(',', '', $total) ?>">
 
 
