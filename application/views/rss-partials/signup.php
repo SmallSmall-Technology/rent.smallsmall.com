@@ -149,6 +149,11 @@
 </main>
 
 
+<!-- Tracking code for rss - Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
+<!-- End of HubSpot Embed Code -->
+
+
 <script>
     // Added To track Users signup using Mixpanel Platform 
         
@@ -174,9 +179,9 @@
     // });
 
     // Track the signup event
-    <!--mixpanel.track("Signed Up", {-->
-    <!--    "Signup Type": "Referral"-->
-    <!--});-->
+    // <!--mixpanel.track("Signed Up", {-->
+    // <!--    "Signup Type": "Referral"-->
+    // <!--});-->
 </script>
 
 
