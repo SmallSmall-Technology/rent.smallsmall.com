@@ -406,13 +406,9 @@
                   data: data,
             
                   success	: function (data){
-                    if(data == 1){
-                      //alert('Your Payment Was Successful');
-                      //window.location.href = baseURL+"dashboard/paymentSummary";
-                    }else{                 
-                      //alert('Your Payment Was not Successful');      
-                    }				
-            
+                    
+                    alert(data);
+                    
                   }
             
                 });
