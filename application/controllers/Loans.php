@@ -1214,7 +1214,7 @@ class Loans extends CI_Controller {
     }
     
     public function lenco_transactions(){
-
+		
            
         // only a post with lenco signature header gets our attention
         if((strtoupper($_SERVER['REQUEST_METHOD']) != 'POST' ) || !array_key_exists('HTTP_X_LENCO_SIGNATURE', $_SERVER) )

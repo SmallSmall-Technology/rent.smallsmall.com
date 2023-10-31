@@ -6066,43 +6066,73 @@ public function uploadIdentification($folder)
 
 		$bkId = $this->random_strings(5);
 
+		$newtransID = $this->rss_model->getTransDet($userID);
 
-		//create Plan on paystack
+		$transID = $newtransID['reference_id']; 
 
+		
 		$curl = curl_init();
-
+  
 		curl_setopt_array($curl, array(
-		CURLOPT_URL => "https://api.paystack.co/plan",
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => "",
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => "POST",
-		CURLOPT_POSTFIELDS => array(
-			"name" => "Monthly Retainer",
-			"interval" => "monthly",
-			"amount" => 500000
-		),
-		CURLOPT_HTTPHEADER => array(
-			"Authorization: Bearer SECRET_KEY",
-			"Cache-Control: no-cache"
-		),
-		)
-		);
-
+			CURLOPT_URL => "https://api.paystack.co/transaction/verify/$transID",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "GET",
+			CURLOPT_HTTPHEADER => array(
+			"Authorization: pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2",
+			"Cache-Control: no-cache",
+			),
+		));
+		
 		$response = curl_exec($curl);
 		$err = curl_error($curl);
 
 		curl_close($curl);
-
+		
 		if ($err) {
 			echo "cURL Error #:" . $err;
-		} 
-		else {
+		} else {
 			echo $response;
-
 		}
+
+		//create Plan on paystack
+
+		// $curl = curl_init();
+
+		// curl_setopt_array($curl, array(
+		// CURLOPT_URL => "https://api.paystack.co/plan",
+		// CURLOPT_RETURNTRANSFER => true,
+		// CURLOPT_ENCODING => "",
+		// CURLOPT_MAXREDIRS => 10,
+		// CURLOPT_TIMEOUT => 30,
+		// CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		// CURLOPT_CUSTOMREQUEST => "POST",
+		// CURLOPT_POSTFIELDS => array(
+		// 	"name" => "Monthly Retainer",
+		// 	"interval" => "monthly",
+		// 	"amount" => 500000
+		// ),
+		// CURLOPT_HTTPHEADER => array(
+		// 	"Authorization: Bearer SECRET_KEY",
+		// 	"Cache-Control: no-cache"
+		// ),
+		// )
+		// );
+
+		// $response = curl_exec($curl);
+		// $err = curl_error($curl);
+
+		// curl_close($curl);
+
+		// if ($err) {
+		// 	echo "cURL Error #:" . $err;
+		// } 
+		// else {
+		// 	echo $response;
+		// }
 
 		//if ($this->rss_model->transUpdate($bID, $refID, $amount)) {
 			
