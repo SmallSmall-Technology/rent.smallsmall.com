@@ -6101,7 +6101,7 @@ public function uploadIdentification($folder)
 		} 
 		else {
 			echo $response;
-			die();
+
 		}
 
 		//if ($this->rss_model->transUpdate($bID, $refID, $amount)) {
