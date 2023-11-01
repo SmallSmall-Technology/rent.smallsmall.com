@@ -6082,7 +6082,7 @@ public function uploadIdentification($folder)
 			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 			CURLOPT_CUSTOMREQUEST => "GET",
 			CURLOPT_HTTPHEADER => array(
-			"Authorization: pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2",
+			"Authorization: Bearer pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2",
 			"Cache-Control: no-cache",
 			),
 		));
