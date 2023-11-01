@@ -2523,6 +2523,8 @@ class Rss extends CI_Controller
 
 			$registration = $this->rss_model->register($fname, $lname, $email, $password, $phone, $income, $confirmationCode, $referral, $user_type, $interest, $referred_by, $rc, $age, $gender, $user_agent['userAgent']);
 
+			$sendUsersRecordToSelzy = $this->insertToSelzyDashboard($fname, $lname, $email, $phone);
+
 			if ($registration) {
 
 				$data['confirmationLink'] = base_url() . 'confirm/' . $confirmationCode;
@@ -2583,6 +2585,47 @@ class Rss extends CI_Controller
 				}
 			}
 		}
+	}
+
+	public function insertToSelzyDashboard($fname, $lname, $email, $phone){
+
+		// Construct the API URL with the required parameters with selzy
+
+		$method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
+
+		$curl = curl_init(); // Initialize a cURL session
+
+		// Set cURL options
+
+		curl_setopt_array($curl, array(
+
+			CURLOPT_URL => $method, // URL to send the request to
+
+			CURLOPT_CUSTOMREQUEST => "POST", // Using POST request method
+
+			CURLOPT_RETURNTRANSFER => true, // Return the response as a string for me 
+
+			CURLOPT_HTTPHEADER => [
+
+				"content-type: application/json" // Set the request header to specify JSON data as requested
+
+			],
+
+		));
+
+		// return curl_exec($curl);
+		$result = curl_exec($curl); // Execute the cURL request and capture the response
+
+		if (curl_errno($curl)) { // Check for cURL errors
+			echo 'cURL Error: ' . curl_error($curl);
+		}
+	
+		// Close the cURL session
+		curl_close($curl);
+	
+		// Return the API response
+		return $result;
+
 	}
 
 	public function resend_verification()
