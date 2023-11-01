@@ -6074,7 +6074,7 @@ public function uploadIdentification($folder)
 		$curl = curl_init();
   
 		curl_setopt_array($curl, array(
-			CURLOPT_URL => "https://api.paystack.co/transaction/verify/$transID",
+			CURLOPT_URL => "https://api.paystack.co/transaction/verify/rss_d9ac0278f46f4ffed5e80a93fd55b48e",
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => "",
 			CURLOPT_MAXREDIRS => 10,
