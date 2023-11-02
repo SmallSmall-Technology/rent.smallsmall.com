@@ -6095,6 +6095,7 @@ public function uploadIdentification($folder)
 		if ($err) {
 			echo "cURL Error #:" . $err;
 		} else {
+			$response = json_decode($response, true);
 			echo $response['data']['authorization']['authorization_code'];
 		}
 
