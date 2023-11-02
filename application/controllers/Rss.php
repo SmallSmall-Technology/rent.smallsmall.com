@@ -6070,34 +6070,68 @@ public function uploadIdentification($folder)
 
 		$transID = $newtransID['reference_id']; 
 
-		
+
 		$curl = curl_init();
-  
+
 		curl_setopt_array($curl, array(
-			CURLOPT_URL => "https://api.paystack.co/transaction/verify/rss_d9ac0278f46f4ffed5e80a93fd55b48e",
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => "",
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 30,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => "GET",
-			CURLOPT_HTTPHEADER => array(
+		CURLOPT_URL => "https://api.paystack.co/plan",
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS => array(
+			"name" => "Monthly Retainer",
+			"interval" => "hourly",
+			"amount" => 100
+		),
+		CURLOPT_HTTPHEADER => array(
 			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
-			"Cache-Control: no-cache",
-			),
-		));
-		
+			"Cache-Control: no-cache"
+		),
+		)
+		);
+
 		$response = curl_exec($curl);
 		$err = curl_error($curl);
 
 		curl_close($curl);
-		
+
 		if ($err) {
-			echo "cURL Error #:" . $err;
+		echo "cURL Error #:" . $err;
 		} else {
-			$response = json_decode($response, true);
-			echo $response['data']['authorization']['authorization_code'];
+		echo $response;
 		}
+
+		
+		// $curl = curl_init();
+  
+		// curl_setopt_array($curl, array(
+		// 	CURLOPT_URL => "https://api.paystack.co/transaction/verify/rss_d9ac0278f46f4ffed5e80a93fd55b48e",
+		// 	CURLOPT_RETURNTRANSFER => true,
+		// 	CURLOPT_ENCODING => "",
+		// 	CURLOPT_MAXREDIRS => 10,
+		// 	CURLOPT_TIMEOUT => 30,
+		// 	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		// 	CURLOPT_CUSTOMREQUEST => "GET",
+		// 	CURLOPT_HTTPHEADER => array(
+		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+		// 	"Cache-Control: no-cache",
+		// 	),
+		// ));
+		
+		// $response = curl_exec($curl);
+		// $err = curl_error($curl);
+
+		// curl_close($curl);
+		
+		// if ($err) {
+		// 	echo "cURL Error #:" . $err;
+		// } else {
+		// 	$response = json_decode($response, true);
+		// 	echo $response['data']['authorization']['authorization_code'];
+		// }
 
 		//create Plan on paystack
 
