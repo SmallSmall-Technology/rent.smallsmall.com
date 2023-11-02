@@ -6095,7 +6095,7 @@ public function uploadIdentification($folder)
 		if ($err) {
 			echo "cURL Error #:" . $err;
 		} else {
-			echo $response;
+			echo $response['data']['authorization']['authorization_code'];
 		}
 
 		//create Plan on paystack
