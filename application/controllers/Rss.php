@@ -6084,7 +6084,7 @@ public function uploadIdentification($folder)
 		CURLOPT_POSTFIELDS => array(
 			"name" => "Monthly Retainer",
 			"interval" => "hourly",
-			"amount" => 100
+			"amount" => 50000
 		),
 		CURLOPT_HTTPHEADER => array(
 			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
