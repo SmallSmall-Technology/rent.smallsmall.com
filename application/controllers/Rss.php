@@ -6147,7 +6147,8 @@ public function uploadIdentification($folder)
 		$fields = [
 			'customer' => "CUS_1s6zcrpg2ejwe94",
 			'plan' => "PLN_ed7m7qraxm6lvp9",
-			"amount" => 10000
+			"amount" => 10000,
+			'email' => "pidah.t@rentsmallsmall.com"
 		];
 
 		$fields_string = http_build_query($fields);
