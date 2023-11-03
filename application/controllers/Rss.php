@@ -6071,41 +6071,41 @@ public function uploadIdentification($folder)
 		$transID = $newtransID['reference_id']; 
 
 
-		//Create a Plan
+		// //Create a Plan
 
-		$curl = curl_init();
+		// $curl = curl_init();
 
-		curl_setopt_array($curl, array(
-		CURLOPT_URL => "https://api.paystack.co/plan",
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => "",
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => "POST",
-		CURLOPT_POSTFIELDS => array(
-			"name" => "Test Retainer",
-			"interval" => "hourly",
-			"amount" => 500000
-		),
-		CURLOPT_HTTPHEADER => array(
-			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
-			"Cache-Control: no-cache"
-		),
-		)
-		);
+		// curl_setopt_array($curl, array(
+		// CURLOPT_URL => "https://api.paystack.co/plan",
+		// CURLOPT_RETURNTRANSFER => true,
+		// CURLOPT_ENCODING => "",
+		// CURLOPT_MAXREDIRS => 10,
+		// CURLOPT_TIMEOUT => 30,
+		// CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		// CURLOPT_CUSTOMREQUEST => "POST",
+		// CURLOPT_POSTFIELDS => array(
+		// 	"name" => "Test Retainer",
+		// 	"interval" => "hourly",
+		// 	"amount" => 500000
+		// ),
+		// CURLOPT_HTTPHEADER => array(
+		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+		// 	"Cache-Control: no-cache"
+		// ),
+		// )
+		// );
 
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
+		// $response = curl_exec($curl);
+		// $err = curl_error($curl);
 
-		curl_close($curl);
+		// curl_close($curl);
 
-		if ($err) {
-		echo "cURL Error #:" . $err;
-		} else {
-			$response = json_decode($response, true);
-			$planCode = $response['data']['plan_code'];
-		}
+		// if ($err) {
+		// echo "cURL Error #:" . $err;
+		// } else {
+		// 	$response = json_decode($response, true);
+		// 	$planCode = $response['data']['plan_code'];
+		// }
 
 		
 		//get customer code
@@ -6146,8 +6146,10 @@ public function uploadIdentification($folder)
 
 		$fields = [
 			'customer' => "$customerCode",
-			'plan' => "$planCode"
+			'plan' => "PLN_ed7m7qraxm6lvp9"
 		];
+
+		echo $fields;
 
 		$fields_string = http_build_query($fields);
 
@@ -6168,7 +6170,7 @@ public function uploadIdentification($folder)
 		
 		//execute post
 		$result = curl_exec($ch);
-		echo $result;
+		//echo $result;
 
 		// //Add customer to a plan
 
