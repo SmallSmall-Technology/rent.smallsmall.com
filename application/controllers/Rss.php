@@ -6091,7 +6091,7 @@ public function uploadIdentification($folder)
 		curl_setopt($ch,CURLOPT_POST, true);
 		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			"Authorization: sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
 			"Cache-Control: no-cache",
 		));
 		
