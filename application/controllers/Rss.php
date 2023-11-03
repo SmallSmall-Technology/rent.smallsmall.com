@@ -6136,43 +6136,43 @@ public function uploadIdentification($folder)
 			$response = json_decode($response, true);
 			$authCode = $response['data']['authorization']['authorization_code'];
 			$customerCode = $response['data']['customer']['customer_code'];
-			//echo 
+			echo $customerCode;
 		}
 
 
-		//add customer to a plan
+		// //add customer to a plan
 
-		$url = "https://api.paystack.co/transaction/initialize";
+		// $url = "https://api.paystack.co/transaction/initialize";
 
-		$fields = [
-			'customer' => "$customerCode",
-			'plan' => "PLN_ed7m7qraxm6lvp9"
-		];
+		// $fields = [
+		// 	'customer' => "$customerCode",
+		// 	'plan' => "PLN_ed7m7qraxm6lvp9"
+		// ];
 
-		$fields = json_decode($fields, true);
+		// $fields = json_decode($fields, true);
 
-		echo $fields;
+		// echo $fields;
 
-		$fields_string = http_build_query($fields);
+		// $fields_string = http_build_query($fields);
 
-		//open connection
-		$ch = curl_init();
+		// //open connection
+		// $ch = curl_init();
 		
-		//set the url, number of POST vars, POST data
-		curl_setopt($ch,CURLOPT_URL, $url);
-		curl_setopt($ch,CURLOPT_POST, true);
-		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
-			"Cache-Control: no-cache",
-		));
+		// //set the url, number of POST vars, POST data
+		// curl_setopt($ch,CURLOPT_URL, $url);
+		// curl_setopt($ch,CURLOPT_POST, true);
+		// curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		// curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+		// 	"Cache-Control: no-cache",
+		// ));
 		
-		//So that curl_exec returns the contents of the cURL; rather than echoing it
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+		// //So that curl_exec returns the contents of the cURL; rather than echoing it
+		// curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
 		
-		//execute post
-		$result = curl_exec($ch);
-		//echo $result;
+		// //execute post
+		// $result = curl_exec($ch);
+		// //echo $result;
 
 		// //Add customer to a plan
 
