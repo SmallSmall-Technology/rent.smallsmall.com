@@ -6149,10 +6149,6 @@ public function uploadIdentification($folder)
 			'plan' => "PLN_ed7m7qraxm6lvp9"
 		];
 
-		$fields = json_decode($fields, true);
-
-		echo $fields;
-
 		$fields_string = http_build_query($fields);
 
 		//open connection
