@@ -6071,40 +6071,7 @@ public function uploadIdentification($folder)
 		$transID = $newtransID['reference_id']; 
 
 
-		//Add customer to a plan
-
-		$url = "https://api.paystack.co/transaction/initialize";
-
-		$fields = [
-			'email' => "pidah.t@rentsmallsmall.com",
-			'amount' => "10000",
-			'plan' => "PLN_ed7m7qraxm6lvp9"
-		];
-
-		$fields_string = http_build_query($fields);
-
-		//open connection
-		$ch = curl_init();
-		
-		//set the url, number of POST vars, POST data
-		curl_setopt($ch,CURLOPT_URL, $url);
-		curl_setopt($ch,CURLOPT_POST, true);
-		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
-			"Cache-Control: no-cache",
-		));
-		
-		//So that curl_exec returns the contents of the cURL; rather than echoing it
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-		
-		//execute post
-		$result = curl_exec($ch);
-		echo $result;
-
-
-
-		//Create a Plan
+		// //Create a Plan
 
 		// $curl = curl_init();
 
@@ -6140,33 +6107,100 @@ public function uploadIdentification($folder)
 		// }
 
 		
-		// $curl = curl_init();
+		//get customer code
+		$curl = curl_init();
   
-		// curl_setopt_array($curl, array(
-		// 	CURLOPT_URL => "https://api.paystack.co/transaction/verify/rss_d9ac0278f46f4ffed5e80a93fd55b48e",
-		// 	CURLOPT_RETURNTRANSFER => true,
-		// 	CURLOPT_ENCODING => "",
-		// 	CURLOPT_MAXREDIRS => 10,
-		// 	CURLOPT_TIMEOUT => 30,
-		// 	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		// 	CURLOPT_CUSTOMREQUEST => "GET",
-		// 	CURLOPT_HTTPHEADER => array(
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => "https://api.paystack.co/transaction/verify/rss_d9ac0278f46f4ffed5e80a93fd55b48e",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "GET",
+			CURLOPT_HTTPHEADER => array(
+			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Cache-Control: no-cache",
+			),
+		));
+		
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+		
+		if ($err) {
+			echo "cURL Error #:" . $err;
+		} else {
+			$response = json_decode($response, true);
+			$authCode = $response['data']['authorization']['authorization_code'];
+			$customerCode = $response['data']['customer']['customer_code'];
+			//echo 
+		}
+
+
+		//add customer to a plan
+
+		$url = "https://api.paystack.co/transaction/initialize";
+
+		$fields = [
+			'customer' => "$customerCode",
+			'plan' => "PLN_ed7m7qraxm6lvp9"
+		];
+
+		$fields_string = http_build_query($fields);
+
+		//open connection
+		$ch = curl_init();
+		
+		//set the url, number of POST vars, POST data
+		curl_setopt($ch,CURLOPT_URL, $url);
+		curl_setopt($ch,CURLOPT_POST, true);
+		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Cache-Control: no-cache",
+		));
+		
+		//So that curl_exec returns the contents of the cURL; rather than echoing it
+		curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+		
+		//execute post
+		$result = curl_exec($ch);
+		echo $result;
+
+		// //Add customer to a plan
+
+		// $url = "https://api.paystack.co/transaction/initialize";
+
+		// $fields = [
+		// 	'email' => "pidah.t@rentsmallsmall.com",
+		// 	'amount' => "10000",
+		// 	'plan' => "PLN_ed7m7qraxm6lvp9"
+		// ];
+
+		// $fields_string = http_build_query($fields);
+
+		// //open connection
+		// $ch = curl_init();
+		
+		// //set the url, number of POST vars, POST data
+		// curl_setopt($ch,CURLOPT_URL, $url);
+		// curl_setopt($ch,CURLOPT_POST, true);
+		// curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		// curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
 		// 	"Cache-Control: no-cache",
-		// 	),
 		// ));
 		
-		// $response = curl_exec($curl);
-		// $err = curl_error($curl);
-
-		// curl_close($curl);
+		// //So that curl_exec returns the contents of the cURL; rather than echoing it
+		// curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
 		
-		// if ($err) {
-		// 	echo "cURL Error #:" . $err;
-		// } else {
-		// 	$response = json_decode($response, true);
-		// 	echo $response['data']['authorization']['authorization_code'];
-		// }
+		// //execute post
+		// $result = curl_exec($ch);
+		// echo $result;
+
+		
 
 		//create Plan on paystack
 
