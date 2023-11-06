@@ -6071,7 +6071,29 @@ public function uploadIdentification($folder)
 		$transID = $newtransID['reference_id']; 
 
 
-		// //Create a Plan
+		if ((strtoupper($_SERVER['REQUEST_METHOD']) != 'POST' ) || !array_key_exists('HTTP_X_PAYSTACK_SIGNATURE', $_SERVER) ) 
+      	exit();
+
+		// Retrieve the request's body
+		$input = @file_get_contents("php://input");
+		define('PAYSTACK_SECRET_KEY','sk_live_31982685562b561bd7d18d92333cc09ec78952f7');
+
+		// validate event do all at once to avoid timing attack
+		if($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, PAYSTACK_SECRET_KEY))
+		exit();
+
+		http_response_code(200);
+
+		// parse event (which is json string) as object
+		// Do something - that will not take long - with $event
+		$event = json_decode($input);
+
+		echo $event;
+
+		exit();
+
+
+		//Create a Plan
 
 		// $curl = curl_init();
 
@@ -6140,37 +6162,37 @@ public function uploadIdentification($folder)
 		// }
 
 
-		//add customer to a plan
+		// //add customer to a plan
 
-		$url = "https://api.paystack.co/transaction/initialize";
+		// $url = "https://api.paystack.co/transaction/initialize";
 
-		$fields = [
-			'customer' => "CUS_1s6zcrpg2ejwe94",
-			'plan' => "PLN_ed7m7qraxm6lvp9",
-			"amount" => 10000,
-			'email' => "pidah.t@rentsmallsmall.com"
-		];
+		// $fields = [
+		// 	'customer' => "CUS_1s6zcrpg2ejwe94",
+		// 	'plan' => "PLN_ed7m7qraxm6lvp9",
+		// 	"amount" => 10000,
+		// 	'email' => "pidah.t@rentsmallsmall.com"
+		// ];
 
-		$fields_string = http_build_query($fields);
+		// $fields_string = http_build_query($fields);
 
-		//open connection
-		$ch = curl_init();
+		// //open connection
+		// $ch = curl_init();
 		
-		//set the url, number of POST vars, POST data
-		curl_setopt($ch,CURLOPT_URL, $url);
-		curl_setopt($ch,CURLOPT_POST, true);
-		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
-			"Cache-Control: no-cache",
-		));
+		// //set the url, number of POST vars, POST data
+		// curl_setopt($ch,CURLOPT_URL, $url);
+		// curl_setopt($ch,CURLOPT_POST, true);
+		// curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		// curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+		// 	"Cache-Control: no-cache",
+		// ));
 		
-		//So that curl_exec returns the contents of the cURL; rather than echoing it
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+		// //So that curl_exec returns the contents of the cURL; rather than echoing it
+		// curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
 		
-		//execute post
-		$result = curl_exec($ch);
-		echo $result;
+		// //execute post
+		// $result = curl_exec($ch);
+		// echo $result;
 
 		// //Add customer to a plan
 
