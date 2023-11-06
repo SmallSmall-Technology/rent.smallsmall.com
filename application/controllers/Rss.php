@@ -6086,13 +6086,13 @@ public function uploadIdentification($folder)
 
 		// parse event (which is json string) as object
 		// Do something - that will not take long - with $event
-		$event = json_decode($input);
+		$event = json_decode($input, true);
 
 		echo $event;
 
-		exit();
+		//exit();
 
-
+		
 		//Create a Plan
 
 		// $curl = curl_init();
