@@ -6074,11 +6074,11 @@ public function uploadIdentification($folder)
 		if ((strtoupper($_SERVER['REQUEST_METHOD']) != 'POST' ) || !array_key_exists('HTTP_X_PAYSTACK_SIGNATURE', $_SERVER) ) 
       	exit();
 
-		// Retrieve the request's body
+		//Retrieve the request's body
 		$input = @file_get_contents("php://input");
 		define('PAYSTACK_SECRET_KEY','sk_live_31982685562b561bd7d18d92333cc09ec78952f7');
 
-		// validate event do all at once to avoid timing attack
+		//validate event do all at once to avoid timing attack
 		if($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, PAYSTACK_SECRET_KEY))
 		exit();
 
@@ -6092,7 +6092,7 @@ public function uploadIdentification($folder)
 
 		//exit();
 
-		
+
 		//Create a Plan
 
 		// $curl = curl_init();
