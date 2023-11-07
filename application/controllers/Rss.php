@@ -6070,64 +6070,101 @@ public function uploadIdentification($folder)
 
 		$transID = $newtransID['reference_id']; 
 
+		$bkdets = $this->rss_model->checkRSSLastTran($userID);
 
-		if ((strtoupper($_SERVER['REQUEST_METHOD']) != 'POST' ) || !array_key_exists('HTTP_X_PAYSTACK_SIGNATURE', $_SERVER) ) 
-      	exit();
+		$srlz = $bkdets['userIntervals'];
+		$srlz = unserialize($srlz);
 
-		//Retrieve the request's body
-		$input = @file_get_contents("php://input");
-		define('PAYSTACK_SECRET_KEY','sk_live_31982685562b561bd7d18d92333cc09ec78952f7');
+		if($srlz[0] == 'Upfront') 
+		{
+			$plan = 'annually';
+		}
 
-		//validate event do all at once to avoid timing attack
-		if($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, PAYSTACK_SECRET_KEY))
-		exit();
+		elseif($srlz[0] == 'Monthly')
+		{
+			$plan = 'monthly';
+		}
 
-		http_response_code(200);
+		elseif($srlz[0] == 'Quarterly')
+		{
+			$plan = 'quarterly';
+		}
 
-		// parse event (which is json string) as object
-		// Do something - that will not take long - with $event
-		$event = json_decode($input, true);
+		elseif($srlz[0] == 'Bi-annually')
+		{
+			$plan = 'biannually';
+		}
 
-		echo $event;
-
-		//exit();
-
-
+		$amount = ($bkdets['subscription_fees'] + $bkdets['service_charge_deposit']);
+		$pbookingID = $bkdets['bookingID'];
 		//Create a Plan
 
-		// $curl = curl_init();
+		$curl = curl_init();
 
-		// curl_setopt_array($curl, array(
-		// CURLOPT_URL => "https://api.paystack.co/plan",
-		// CURLOPT_RETURNTRANSFER => true,
-		// CURLOPT_ENCODING => "",
-		// CURLOPT_MAXREDIRS => 10,
-		// CURLOPT_TIMEOUT => 30,
-		// CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		// CURLOPT_CUSTOMREQUEST => "POST",
-		// CURLOPT_POSTFIELDS => array(
-		// 	"name" => "Test Retainer",
-		// 	"interval" => "hourly",
-		// 	"amount" => 500000
-		// ),
-		// CURLOPT_HTTPHEADER => array(
+		curl_setopt_array($curl, array(
+		CURLOPT_URL => "https://api.paystack.co/plan",
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS => array(
+			"name" => "Plan for booking $pbookingID",
+			"interval" => "$plan",
+			"amount" => $amount
+		),
+		CURLOPT_HTTPHEADER => array(
+			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Cache-Control: no-cache"
+		),
+		)
+		);
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+		echo "cURL Error #:" . $err;
+		} else {
+			$response = json_decode($response, true);
+			$planCode = $response['data']['plan_code'];
+			echo $planCode;
+		}
+
+
+		// //add customer to a plan
+
+		// $url = "https://api.paystack.co/transaction/initialize";
+
+		// $fields = [
+		// 	'email' => "customer@email.com",
+		// 	'amount' => "500000",
+		// 	'plan' => "PLN_xxxxxxxxxx"
+		// ];
+
+		// $fields_string = http_build_query($fields);
+
+		// //open connection
+		// $ch = curl_init();
+		
+		// //set the url, number of POST vars, POST data
+		// curl_setopt($ch,CURLOPT_URL, $url);
+		// curl_setopt($ch,CURLOPT_POST, true);
+		// curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		// curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
-		// 	"Cache-Control: no-cache"
-		// ),
-		// )
-		// );
-
-		// $response = curl_exec($curl);
-		// $err = curl_error($curl);
-
-		// curl_close($curl);
-
-		// if ($err) {
-		// echo "cURL Error #:" . $err;
-		// } else {
-		// 	$response = json_decode($response, true);
-		// 	$planCode = $response['data']['plan_code'];
-		// }
+		// 	"Cache-Control: no-cache",
+		// ));
+		
+		// //So that curl_exec returns the contents of the cURL; rather than echoing it
+		// curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+		
+		// //execute post
+		// $result = curl_exec($ch);
+		// echo $result;
 
 		
 		// //get customer code
@@ -6162,107 +6199,9 @@ public function uploadIdentification($folder)
 		// }
 
 
-		// //add customer to a plan
-
-		// $url = "https://api.paystack.co/transaction/initialize";
-
-		// $fields = [
-		// 	'customer' => "CUS_1s6zcrpg2ejwe94",
-		// 	'plan' => "PLN_ed7m7qraxm6lvp9",
-		// 	"amount" => 10000,
-		// 	'email' => "pidah.t@rentsmallsmall.com"
-		// ];
-
-		// $fields_string = http_build_query($fields);
-
-		// //open connection
-		// $ch = curl_init();
-		
-		// //set the url, number of POST vars, POST data
-		// curl_setopt($ch,CURLOPT_URL, $url);
-		// curl_setopt($ch,CURLOPT_POST, true);
-		// curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-		// curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
-		// 	"Cache-Control: no-cache",
-		// ));
-		
-		// //So that curl_exec returns the contents of the cURL; rather than echoing it
-		// curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-		
-		// //execute post
-		// $result = curl_exec($ch);
-		// echo $result;
-
-		// //Add customer to a plan
-
-		// $url = "https://api.paystack.co/transaction/initialize";
-
-		// $fields = [
-		// 	'email' => "pidah.t@rentsmallsmall.com",
-		// 	'amount' => "10000",
-		// 	'plan' => "PLN_ed7m7qraxm6lvp9"
-		// ];
-
-		// $fields_string = http_build_query($fields);
-
-		// //open connection
-		// $ch = curl_init();
-		
-		// //set the url, number of POST vars, POST data
-		// curl_setopt($ch,CURLOPT_URL, $url);
-		// curl_setopt($ch,CURLOPT_POST, true);
-		// curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-		// curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
-		// 	"Cache-Control: no-cache",
-		// ));
-		
-		// //So that curl_exec returns the contents of the cURL; rather than echoing it
-		// curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-		
-		// //execute post
-		// $result = curl_exec($ch);
-		// echo $result;
-
 		
 
-		//create Plan on paystack
-
-		// $curl = curl_init();
-
-		// curl_setopt_array($curl, array(
-		// CURLOPT_URL => "https://api.paystack.co/plan",
-		// CURLOPT_RETURNTRANSFER => true,
-		// CURLOPT_ENCODING => "",
-		// CURLOPT_MAXREDIRS => 10,
-		// CURLOPT_TIMEOUT => 30,
-		// CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		// CURLOPT_CUSTOMREQUEST => "POST",
-		// CURLOPT_POSTFIELDS => array(
-		// 	"name" => "Monthly Retainer",
-		// 	"interval" => "monthly",
-		// 	"amount" => 500000
-		// ),
-		// CURLOPT_HTTPHEADER => array(
-		// 	"Authorization: Bearer SECRET_KEY",
-		// 	"Cache-Control: no-cache"
-		// ),
-		// )
-		// );
-
-		// $response = curl_exec($curl);
-		// $err = curl_error($curl);
-
-		// curl_close($curl);
-
-		// if ($err) {
-		// 	echo "cURL Error #:" . $err;
-		// } 
-		// else {
-		// 	echo $response;
-		// }
-
+		
 		//if ($this->rss_model->transUpdate($bID, $refID, $amount)) {
 			
 			//send Emails out

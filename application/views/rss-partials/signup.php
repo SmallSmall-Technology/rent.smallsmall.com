@@ -1,5 +1,3 @@
-
-
 <main class="m-auto p-md-0 p-3">
     <div class="signup-section">
         <div class="mt-4">
