@@ -6095,7 +6095,7 @@ public function uploadIdentification($folder)
 			$plan = 'biannually';
 		}
 
-		$amount = ($bkdets['subscription_fees'] + $bkdets['service_charge_deposit']);
+		$amount = ($bkdets['subscription_fees'] + $bkdets['service_charge_deposit']) * 100;
 		$pbookingID = $bkdets['bookingID'];
 		//Create a Plan
 
@@ -6131,40 +6131,41 @@ public function uploadIdentification($folder)
 		} else {
 			$response = json_decode($response, true);
 			$planCode = $response['data']['plan_code'];
-			echo $planCode;
 		}
 
 
-		// //add customer to a plan
+		//add customer to a plan
 
-		// $url = "https://api.paystack.co/transaction/initialize";
+		$email = $bkdets['userEmail'];
 
-		// $fields = [
-		// 	'email' => "customer@email.com",
-		// 	'amount' => "500000",
-		// 	'plan' => "PLN_xxxxxxxxxx"
-		// ];
+		$url = "https://api.paystack.co/transaction/initialize";
 
-		// $fields_string = http_build_query($fields);
+		$fields = [
+			'email' => "$email",
+			'amount' => "$amount",
+			'plan' => "$planCode"
+		];
 
-		// //open connection
-		// $ch = curl_init();
+		$fields_string = http_build_query($fields);
+
+		//open connection
+		$ch = curl_init();
 		
-		// //set the url, number of POST vars, POST data
-		// curl_setopt($ch,CURLOPT_URL, $url);
-		// curl_setopt($ch,CURLOPT_POST, true);
-		// curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-		// curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
-		// 	"Cache-Control: no-cache",
-		// ));
+		//set the url, number of POST vars, POST data
+		curl_setopt($ch,CURLOPT_URL, $url);
+		curl_setopt($ch,CURLOPT_POST, true);
+		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Cache-Control: no-cache",
+		));
 		
-		// //So that curl_exec returns the contents of the cURL; rather than echoing it
-		// curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+		//So that curl_exec returns the contents of the cURL; rather than echoing it
+		curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
 		
-		// //execute post
-		// $result = curl_exec($ch);
-		// echo $result;
+		//execute post
+		$result = curl_exec($ch);
+		echo $result;
 
 		
 		// //get customer code
