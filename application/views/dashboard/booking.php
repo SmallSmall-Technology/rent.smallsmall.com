@@ -873,7 +873,7 @@ if ($verification_status == 'yes') {
             
                   success	: function (data){
                     
-                    alert(data);
+                    window.location.href= data
                   }
             
                 });

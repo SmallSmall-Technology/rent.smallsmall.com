@@ -6182,9 +6182,7 @@ public function uploadIdentification($folder)
 		//$user_profile_url = "$authUrl";
 
 		
-		echo "<script>
-    		window.location = '$authUrl';
-		</script>";
+		echo $authUrl;
 		
 		// // Redirect to user profile with a success message
 		// echo "<script>
