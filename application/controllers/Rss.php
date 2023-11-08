@@ -6179,7 +6179,7 @@ public function uploadIdentification($folder)
 		$this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $reference, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $date);
 
 
-		$user_profile_url = '<?php echo $authUrl; ?>';
+		$user_profile_url = "$authUrl";
 
 		// Redirect to user profile with a success message
 		echo "<script>
