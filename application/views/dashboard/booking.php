@@ -443,7 +443,7 @@ if ($verification_status == 'yes') {
 
                         <div class="col-md-4 col-12 custom-btn mb-2">
                             <div style="margin-top: -24px;"><b>Coming soon</b></div>
-                            <button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Subscribe to
+                            <button class="btn font-weight-light  p-3 secondary-background w-100" type="submit" onclick="pay()">Subscribe to
                                 wallet
                                 direct
                                 debit</button>
@@ -846,6 +846,39 @@ if ($verification_status == 'yes') {
     </script>
 
     <script>
+            function pay() 
+            {
+                recurringTransaction(bID, refID);
+            }
+
+            function recurringTransaction(){
+                
+                var baseURL = "<?php echo base_url(); ?>";
+            
+                var userID = <?php echo  $this->session->userdata('userID'); ?>
+                
+                var data = {"userID" : userID};
+                
+                $.ajaxSetup ({ cache: false });
+    
+                $.ajax({
+            
+                  url : baseURL+'rss/recurringTransaction/',
+            
+                  type: "POST",
+            
+                  async: true,
+            
+                  data: data,
+            
+                  success	: function (data){
+                    
+                    alert(data);
+                  }
+            
+                });
+            }
+
         	const paymentForm = document.getElementById('paymentForm');
         	
         	var bID = document.getElementById('booking_id').value;

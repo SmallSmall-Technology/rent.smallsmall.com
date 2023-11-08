@@ -6048,27 +6048,27 @@ public function uploadIdentification($folder)
 
 	public function recurringTransaction()
 	{
-		$bID = $this->input->post("bookingID");
+		// $bID = $this->input->post("bookingID");
 
-		$refID = $this->input->post("referenceID");
+		// $refID = $this->input->post("referenceID");
 
-		$rent_exp = $this->input->post("rent_exp");
+		// $rent_exp = $this->input->post("rent_exp");
 
-		$duration = $this->input->post("duration");
+		// $duration = $this->input->post("duration");
 
-		$amount = $this->input->post("amount");
+		// $amount = $this->input->post("amount");
 
-		$pplan = $this->input->post("pplan");
+		// $pplan = $this->input->post("pplan");
 
-		$propertyID = $this->input->post("propertyID");
+		// $propertyID = $this->input->post("propertyID");
+
+		// $bkId = $this->random_strings(5);
+
+		// $newtransID = $this->rss_model->getTransDet($userID);
+
+		// $transID = $newtransID['reference_id']; 
 
 		$userID = $this->input->post("userID");
-
-		$bkId = $this->random_strings(5);
-
-		$newtransID = $this->rss_model->getTransDet($userID);
-
-		$transID = $newtransID['reference_id']; 
 
 		$bkdets = $this->rss_model->checkRSSLastTran($userID);
 
@@ -6165,7 +6165,27 @@ public function uploadIdentification($folder)
 		
 		//execute post
 		$result = curl_exec($ch);
-		echo $result;
+
+		$response = json_decode($result, true);
+		$authUrl = $response['data']['authorization_url'];
+		$reference = $response['data']['reference'];
+		$date = date("Y-m-d");
+
+
+		$transdet = $this->rss_model->getTransDet($userID);
+
+		$bkId = $this->random_strings(5);
+
+		$this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $reference, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $date);
+
+
+		$user_profile_url = '<?php echo $authUrl; ?>';
+
+		// Redirect to user profile with a success message
+		echo "<script>
+				alert('Upload Successful');
+				window.location.href='$user_profile_url';
+			</script>";
 
 		
 		// //get customer code
@@ -6198,9 +6218,6 @@ public function uploadIdentification($folder)
 		// 	$customerCode = $response['data']['customer']['customer_code'];
 		// 	echo $customerCode;
 		// }
-
-
-		
 
 		
 		//if ($this->rss_model->transUpdate($bID, $refID, $amount)) {

@@ -333,7 +333,7 @@
           {
             //window.location.href= baseURL+"dashboard/booking";
             link.click();
-            recurringTransaction(bID, refID);
+            recurringTransaction();
             //updateTransaction(bID, refID);
             //alert('Your Payment Was Successful');
           }
@@ -373,25 +373,25 @@
             
           //   }
 
-              function recurringTransaction(bookingID, refID){
+              function recurringTransaction(){
                 //alert(bookingID+' - '+refID);
                 //var baseURL = "https://rent.smallsmall.com/";
                 
                 var baseURL = "<?php echo base_url(); ?>";
                 
-                var rent_exp = document.getElementById('rent_exp').value;
+                // var rent_exp = document.getElementById('rent_exp').value;
                 
-                var duration = document.getElementById('duration').value;
+                // var duration = document.getElementById('duration').value;
                 
-                var pplan = document.getElementById('payment_plan').value;
+                // var pplan = document.getElementById('payment_plan').value;
                 
-                var amount = document.getElementById('amount').value;
+                // var amount = document.getElementById('amount').value;
                 
-                var propID = document.getElementById('propID').value;
+                // var propID = document.getElementById('propID').value;
 
-                var userID = document.getElementById('userID').value;
+                var userID = <?php echo  $this->session->userdata('userID'); ?>
                 
-                var data = {"bookingID" : bookingID, "referenceID" : refID, "rent_exp" : rent_exp, "duration" : duration, "pplan" : pplan, "amount" : amount, "userID" : userID, "propertyID" : propID};
+                var data = {"userID" : userID};
                 
                 $.ajaxSetup ({ cache: false });
     
@@ -408,8 +408,6 @@
                   success	: function (data){
                     
                     alert(data);
-
-                    alert('yes');
                   }
             
                 });
