@@ -6181,10 +6181,16 @@ public function uploadIdentification($folder)
 
 		$user_profile_url = "$authUrl";
 
-		// Redirect to user profile with a success message
-		echo "<script>
-				window.location.href='$user_profile_url';
-			</script>";
+
+		$this->load->helper('url');
+
+		// Redirect the user's browser to the desired URL
+		redirect('$user_profile_url');
+
+		// // Redirect to user profile with a success message
+		// echo "<script>
+		// 		window.location.href='$user_profile_url';
+		// 	</script>";
 
 		
 		// //get customer code
