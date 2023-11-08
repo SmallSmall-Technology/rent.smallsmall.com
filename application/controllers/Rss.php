@@ -6183,7 +6183,6 @@ public function uploadIdentification($folder)
 
 		// Redirect to user profile with a success message
 		echo "<script>
-				alert('Upload Successful');
 				window.location.href='$user_profile_url';
 			</script>";
 

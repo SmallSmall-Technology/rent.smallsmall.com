@@ -855,7 +855,7 @@ if ($verification_status == 'yes') {
                 
                 var baseURL = "<?php echo base_url(); ?>";
             
-                var userID = <?php echo  $this->session->userdata('userID'); ?>
+                var userID = document.getElementById('userID').value;
                 
                 var data = {"userID" : userID};
                 
