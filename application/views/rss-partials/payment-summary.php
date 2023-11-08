@@ -333,8 +333,8 @@
           {
             //window.location.href= baseURL+"dashboard/booking";
             link.click();
-            recurringTransaction();
-            //updateTransaction(bID, refID);
+            //recurringTransaction();
+            updateTransaction(bID, refID);
             //alert('Your Payment Was Successful');
           }
 
