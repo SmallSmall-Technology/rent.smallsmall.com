@@ -2576,7 +2576,7 @@ class Rss_model extends CI_Model {
 		
 		$this->db->from('transaction_tbl as a');
 		
-		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID', 'LEFT OUTER');
+		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID');
 		
 		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
 		

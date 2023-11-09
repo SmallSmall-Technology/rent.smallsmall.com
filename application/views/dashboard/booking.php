@@ -12,7 +12,7 @@ if ($verification_status == 'yes') {
 
 $userID = $this->session->userdata('userID');
 
-$bookings = $this->rss_model->get_bookings($userID);
+//$bookings = $this->rss_model->get_bookings($userID);
 
 //$this->rss_model->newBookingUpdate($bkId, $transID, $userID);
 ?>
