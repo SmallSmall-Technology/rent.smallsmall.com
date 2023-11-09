@@ -10,6 +10,7 @@ if ($verification_status == 'yes') {
     $disp = '<span style="color:#DADADA"  class="btn btn-light">Verified</span>';
 }
 
+$bookings = $this->rss_model->get_bookings($data['userID']);
 
 //$this->rss_model->newBookingUpdate($bkId, $transID, $userID);
 ?>
@@ -263,7 +264,7 @@ if ($verification_status == 'yes') {
     <div class="container-fluid d-md-flex d-none nav-bottom-color sub-menu ">
         <div class="sub-nav d-flex flex-wrap">
             <a class="text-decoration-none secondary-text-color mr-4 py-3  sub-menu--dashboard-active" href="<?php echo base_url('dashboard/booking'); ?>">
-                <div class="sub-menu-link  ">
+                <div class="sub-menu-link">
                     My Bookings
                 </div>
             </a>

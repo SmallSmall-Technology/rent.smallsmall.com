@@ -6176,6 +6176,8 @@ public function uploadIdentification($folder)
 
 		$bkId = $this->random_strings(5);
 
+		$amount = ($amount / 100);
+
 		$this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $reference, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $date);
 
 

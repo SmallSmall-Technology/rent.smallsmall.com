@@ -74,7 +74,7 @@ $data = $this->rss_model->selktPaymentDet($userID);
               fill="white" />
           </svg>
         </span>
-        <span><a href="<?php echo base_url('dashboard/paymentSummary'); ?>">Back to my Dashboard</a></span>
+        <span><a href="<?php echo base_url('dashboard/booking'); ?>">Back to my Dashboard</a></span>
     </div>
   </section>
 
