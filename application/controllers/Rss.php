@@ -6182,7 +6182,9 @@ public function uploadIdentification($folder)
 
 		$refrID = 'rss_' . md5(rand(1000000, 9999999999));
 
-		$this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $refrID, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $date);
+		$nbkId = $this->random_strings(5);
+
+		$this->rss_model->insTransUpdate($transdet['verification_id'], $nbkId, $refrID, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $date);
 
 		//$user_profile_url = "$authUrl";
 

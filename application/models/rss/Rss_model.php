@@ -4223,7 +4223,7 @@ class Rss_model extends CI_Model {
 	    
 	    $this->db->where('a.userID', $id);
 	    
-	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
+	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id');
 	    
 	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
 	    
