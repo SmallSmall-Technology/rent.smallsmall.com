@@ -10,7 +10,9 @@ if ($verification_status == 'yes') {
     $disp = '<span style="color:#DADADA"  class="btn btn-light">Verified</span>';
 }
 
-$bookings = $this->rss_model->get_bookings($data['userID']);
+$userID = $this->session->userdata('userID');
+
+$bookings = $this->rss_model->get_bookings($userID);
 
 //$this->rss_model->newBookingUpdate($bkId, $transID, $userID);
 ?>
