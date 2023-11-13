@@ -1006,6 +1006,7 @@ class Rss_model extends CI_Model {
 
 		return $query->row_array();
 	}
+	
 	public function get_payment_details($id){
 	    
 	    $this->db->select('a.*, b.*, c.*, d.*');
@@ -2503,6 +2504,35 @@ class Rss_model extends CI_Model {
 		return $query->row_array();
 		
 	}
+
+	public function checkRSSLastTran($id){
+		
+		$this->db->select('a.*, a.reference_id as refID, a.amount as transAmount, a.type as transaction_type, a.userID as usersID, b.*, b.propertyID as proptyID, c.*, c.intervals as userIntervals, d.type, e.email, e.firstName, e.lastName, e.email as userEmail');
+		
+		$this->db->from('transaction_tbl as a');
+		
+		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID');
+		
+		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
+		
+		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
+
+		$this->db->join('user_tbl as e', 'e.userID = a.userID');
+		
+		$this->db->where('a.userID', $id);
+		
+		$this->db->where('a.type', 'rss');
+		
+		//$this->db->where('a.status', 'approved');
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	}
 	
 	public function checkLastApprovedSubscriptionPayment($id){
 		
@@ -3060,12 +3090,198 @@ class Rss_model extends CI_Model {
         
         return $this->db->update("bookings", $update);
     }
+
+	public function selktPaymentDet($id){
+		
+		$this->db->select('a.*, a.id, a.verification_id, a.transaction_id, a.reference_id as refID, a.transaction_date as transDate, a.userID, a.amount as totalAmount, a.status, a.type as transaction_type, a.transaction_date, a.payment_type, b.*, b.bookingID, b.propertyID, b.payment_plan, b.duration, b.move_in_date, b.next_rental, b.rent_expiration, b.booked_on, b.rent_status, c.*, c.propertyTitle, c.price, d.type, e.*, e.email as userEmail');
+		
+		$this->db->from('transaction_tbl as a');
+		
+		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID', 'LEFT OUTER');
+		
+		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
+		
+		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
+
+		$this->db->join('user_tbl as e', 'e.userID = a.userID');
+		
+		$this->db->where('a.userID', $id);
+		
+		$this->db->where('a.type', 'rss');
+		
+		$this->db->where('a.status', 'approved');
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	}
+
+	public function selktBookingDet($userID, $transID){
+		
+		$this->db->select('a.*');
+		
+		$this->db->from('bookings as a');
+			
+		$this->db->where('a.userID', $userID);
+
+		$this->db->where('a.bookingID', $transID);
+		
+		$query = $this->db->get();
+		
+		return $query;
+	}
+
+	public function getBookingDet($userid){
+		
+		$this->db->select('a.*');
+		
+		$this->db->from('bookings as a');
+			
+		$this->db->where('a.userID', $userid);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	}
+
+	public function getTransDet($userid){
+		
+		$this->db->select('a.*');
+		
+		$this->db->from('transaction_tbl as a');
+			
+		$this->db->where('a.userID', $userid);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->row_array();
+	}
+
+	public function insTransUpdate($verification_id, $bkId, $refrID, $userID, $amount, $type, $payment_type, $invoice, $approved_by, $transaction_date){
+		
+		$this->verification_id = $verification_id;
+
+		$this->transaction_id = $bkId;
+
+		$this->reference_id = $refrID;
+
+		$this->userID = $userID;
+
+		$this->amount = $amount;
+
+		$this->status = 'pending';
+
+		$this->type = 'rss';
+
+		$this->payment_type = $payment_type;
+
+		$this->invoice = $invoice;
+
+		$this->approved_by = $approved_by;
+
+		$this->transaction_date = $transaction_date;
+
+		$this->db->insert('transaction_tbl', $this);
+	}
+
+
+	public function insBookingUpdate($verification_id, $refrID, $bkId, $propertyID, $userID, $booked_as, $payment_plan, $duration, $move_in_date, $move_out_date, $move_out_reason, $rent_expiration, $next_rental, $booked_on, $updated_at, $rent_status, $eviction_deposit, $subscription_fees, $service_charge_deposit, $security_deposit_fund, $total){
+		
+		$this->verification_id = $verification_id;
+		
+			$this->reference_id = $refrID;
+
+			$this->bookingID = $bkId;
+
+			$this->propertyID = $propertyID;
+
+			$this->userID = $userID;
+
+			$this->booked_as = $booked_as;
+
+			$this->payment_plan = $payment_plan;
+
+			$this->duration = $duration;
+
+			$this->move_in_date = $move_in_date;
+
+			$this->move_out_date = $move_out_date;
+
+			$this->move_out_reason = $move_out_reason;
+
+			$this->rent_expiration = $rent_expiration;
+
+			$this->next_rental = $next_rental;
+
+			$this->booked_on = $booked_on;
+
+			$this->updated_at = $updated_at;
+
+			$this->rent_status = $rent_status;
+
+			$this->eviction_deposit = $eviction_deposit;
+
+			$this->subscription_fees = $subscription_fees;
+
+			$this->service_charge_deposit = $service_charge_deposit;
+
+			$this->security_deposit_fund = $security_deposit_fund;
+
+			$this->total = $total;			
+			
+			//$this->request_date = date('Y-m-d H:i:s');
+
+			$this->db->insert('bookings', $this);
+	}
+
+	public function checkUserPayment($userid, $proptyID){
+		
+		$this->db->select('a.*, a.type as transaction_type, b.*, b.propertyID as proptyID, c.*, d.type, e.email, e.firstName, e.lastName');
+		
+		$this->db->from('transaction_tbl as a');
+		
+		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID', 'LEFT OUTER');
+		
+		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
+		
+		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
+
+		$this->db->join('user_tbl as e', 'e.userID = a.userID');
+		
+		$this->db->where('a.userID', $userid);
+
+		$this->db->where('b.propertyID', $proptyID);
+		
+		$this->db->where('a.type', 'rss');
+		
+		$this->db->where('a.status', 'approved');
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		return $query->num_rows(); 
+	}
     
     public function paymentUpdate($bookingID, $expiry, $refID, $propertyID){
         
         $transUpd = array("status", "approved");
         
-        $this->db-where("transaction_id", $bookingID);
+        $this->db->where("transaction_id", $bookingID);
         
         $this->db->update('transaction_tbl', $transUpd);
         
