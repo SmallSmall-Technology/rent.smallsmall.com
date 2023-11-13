@@ -5732,9 +5732,400 @@ class Rss extends CI_Controller
 	}
 
 
+	public function recurringTransaction()
+	{
+		// $bID = $this->input->post("bookingID");
+
+		// $refID = $this->input->post("referenceID");
+
+		// $rent_exp = $this->input->post("rent_exp");
+
+		// $duration = $this->input->post("duration");
+
+		// $amount = $this->input->post("amount");
+
+		// $pplan = $this->input->post("pplan");
+
+		// $propertyID = $this->input->post("propertyID");
+
+		// $bkId = $this->random_strings(5);
+
+		// $newtransID = $this->rss_model->getTransDet($userID);
+
+		// $transID = $newtransID['reference_id']; 
+
+		$userID = $this->input->post("userID");
+
+		$bkdets = $this->rss_model->checkRSSLastTran($userID);
+
+		$srlz = $bkdets['userIntervals'];
+		$srlz = unserialize($srlz);
+
+		if($srlz[0] == 'Upfront') 
+		{
+			$plan = 'annually';
+		}
+
+		elseif($srlz[0] == 'Monthly')
+		{
+			$plan = 'monthly';
+		}
+
+		elseif($srlz[0] == 'Quarterly')
+		{
+			$plan = 'quarterly';
+		}
+
+		elseif($srlz[0] == 'Bi-annually')
+		{
+			$plan = 'biannually';
+		}
+
+		$amount = ($bkdets['subscription_fees'] + $bkdets['service_charge_deposit']) * 100;
+		$pbookingID = $bkdets['bookingID'];
+		//Create a Plan
+
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		CURLOPT_URL => "https://api.paystack.co/plan",
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS => array(
+			"name" => "Plan for booking $pbookingID",
+			"interval" => "$plan",
+			"amount" => $amount
+		),
+		CURLOPT_HTTPHEADER => array(
+			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Cache-Control: no-cache"
+		),
+		)
+		);
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+		echo "cURL Error #:" . $err;
+		} else {
+			$response = json_decode($response, true);
+			$planCode = $response['data']['plan_code'];
+		}
+
+
+		//add customer to a plan
+
+		$email = $bkdets['userEmail'];
+
+		$url = "https://api.paystack.co/transaction/initialize";
+
+		$fields = [
+			'email' => "$email",
+			'amount' => "$amount",
+			'plan' => "$planCode"
+		];
+
+		$fields_string = http_build_query($fields);
+
+		//open connection
+		$ch = curl_init();
+		
+		//set the url, number of POST vars, POST data
+		curl_setopt($ch,CURLOPT_URL, $url);
+		curl_setopt($ch,CURLOPT_POST, true);
+		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Cache-Control: no-cache",
+		));
+		
+		//So that curl_exec returns the contents of the cURL; rather than echoing it
+		curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+		
+		//execute post
+		$result = curl_exec($ch);
+
+		$response = json_decode($result, true);
+		$authUrl = $response['data']['authorization_url'];
+		$reference = $response['data']['reference'];
+		$date = date("Y-m-d");
+
+
+		$transdet = $this->rss_model->getTransDet($userID);
+
+		$bkId = $this->random_strings(5);
+
+		$amount = ($amount / 100);
+
+		$this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $reference, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $date);
+
+		$refrID = 'rss_' . md5(rand(1000000, 9999999999));
+
+		$nbkId = $this->random_strings(5);
+
+		$this->rss_model->insTransUpdate($transdet['verification_id'], $nbkId, $refrID, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $date);
+
+		//$user_profile_url = "$authUrl";
+
+		
+		echo $authUrl;
+		
+		// // Redirect to user profile with a success message
+		// echo "<script>
+		// 		window.location.href='$user_profile_url';
+		// 	</script>";
+
+		
+		// //get customer code
+		// $curl = curl_init();
+  
+		// curl_setopt_array($curl, array(
+		// 	CURLOPT_URL => "https://api.paystack.co/transaction/verify/rss_d9ac0278f46f4ffed5e80a93fd55b48e",
+		// 	CURLOPT_RETURNTRANSFER => true,
+		// 	CURLOPT_ENCODING => "",
+		// 	CURLOPT_MAXREDIRS => 10,
+		// 	CURLOPT_TIMEOUT => 30,
+		// 	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		// 	CURLOPT_CUSTOMREQUEST => "GET",
+		// 	CURLOPT_HTTPHEADER => array(
+		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+		// 	"Cache-Control: no-cache",
+		// 	),
+		// ));
+		
+		// $response = curl_exec($curl);
+		// $err = curl_error($curl);
+
+		// curl_close($curl);
+		
+		// if ($err) {
+		// 	echo "cURL Error #:" . $err;
+		// } else {
+		// 	$response = json_decode($response, true);
+		// 	$authCode = $response['data']['authorization']['authorization_code'];
+		// 	$customerCode = $response['data']['customer']['customer_code'];
+		// 	echo $customerCode;
+		// }
+
+		
+		//if ($this->rss_model->transUpdate($bID, $refID, $amount)) {
+			
+			//send Emails out
+
+			// require 'vendor/autoload.php'; // For Unione template authoload
+
+			
+			// // Unione Template
+
+			// $headers = array(
+			// 	'Content-Type' => 'application/json',
+			// 	'Accept' => 'application/json',
+			// 	'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+			// );
+
+			// $client = new \GuzzleHttp\Client([
+			// 	'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+			// ]);
+
+			// $requestBody = [
+			// 	"id" => "9ef539f8-7196-11ee-a21c-ca1fa0567d54"
+			// ];
+
+			// $requestCxBody = [
+			// 	"id" => "a8de7f86-7198-11ee-9b86-1ef0731c1c1d"
+			// ];
+
+			
+			// $user = $this->rss_model->checkRSSLastTran($userID);
+
+			// $transDate = date("Y-m-d H:i:s", strtotime($user['transaction_date']));
+
+			// $data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+			// $data['propName'] = $user['propertyTitle'];
+
+			// $data['Amount'] = $user['transAmount'];
+
+			// $data['Plan'] = $user['payment_plan'];
+
+			// $data['transDate'] = date('d F Y', strtotime($transDate));
+
+			// $data['bookingID'] = $user['transaction_id'];
+
+			// $data['transID'] = $user['refID'];
+
+			// //Unione Template
+
+			// try {
+			// 	$response = $client->request('POST', 'template/get.json', array(
+			// 		'headers' => $headers,
+			// 		'json' => $requestBody,
+			// 	));
+
+			// 	$jsonResponse = $response->getBody()->getContents();
+
+			// 	$responseData = json_decode($jsonResponse, true);
+
+			// 	$htmlBody = $responseData['template']['body']['html'];
+
+			// 	$username = $data['name'];
+			// 	$propertyName = $data['propName'];
+			// 	$amount = number_format($data['Amount']);
+			// 	$plan = $data['Plan'];
+			// 	$transDate = $data['transDate'];
+			// 	$bookingID = $data['bookingID'];
+			// 	$transID = $data['transID'];
+
+			// 	//Replace the placeholder in the HTML body with the username
+
+			// 	$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+			// 	$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+			// 	$htmlBody = str_replace('{{AmountPaid}}', $amount, $htmlBody);
+			// 	$htmlBody = str_replace('{{PaymentPlan}}', $plan, $htmlBody);
+			// 	$htmlBody = str_replace('{{Date}}', $transDate, $htmlBody);
+			// 	$htmlBody = str_replace('{{TransactionID}}', $transID, $htmlBody);
+			// 	$htmlBody = str_replace('{{BookingID}}', $bookingID, $htmlBody);
+
+			// 	$data['response'] = $htmlBody;
+
+			// 	// Prepare the email data
+			// 	$emailData = [
+			// 		"message" => [
+			// 			"recipients" => [
+			// 				["email" => $user['userEmail']],
+			// 			],
+			// 			"body" => ["html" => $htmlBody],
+			// 			"subject" => "Property Booking Details",
+			// 			"from_email" => "donotreply@smallsmall.com",
+			// 			"from_name" => "Small Small Inspection",
+			// 		],
+			// 	];
+
+			// 	// Send the email using the Unione API
+			// 	$responseEmail = $client->request('POST', 'email/send.json', [
+			// 		'headers' => $headers,
+			// 		'json' => $emailData,
+			// 	]);
+			// } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+			// 	$data['response'] = $e->getMessage();
+			// }
+
+			// if ($responseEmail) {
+
+			// 	try {
+			// 		$response = $client->request('POST', 'template/get.json', array(
+			// 			'headers' => $headers,
+			// 			'json' => $requestCxBody,
+			// 		));
+
+			// 		$jsonResponse = $response->getBody()->getContents();
+
+			// 		$responseData = json_decode($jsonResponse, true);
+
+			// 		$htmlBody = $responseData['template']['body']['html'];
+
+			// 		// $username = $data['name'];
+			// 		// $propertyName = $data['propName'];
+			// 		// $amount = $data['Amount'];
+			// 		// $plan = $data['Plan'];
+			// 		// $transDate = $data['transDate'];
+			// 		// $transID = $data['transID'];
+
+
+			// 		// Replace the placeholder in the HTML body with the username
+
+			// 		$htmlBody = str_replace('{{CustomerName}}', $username, $htmlBody);
+			// 		$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+			// 		$htmlBody = str_replace('{{AmountPaid}}', $amount, $htmlBody);
+			// 		$htmlBody = str_replace('{{PaymentPlan}}', $plan, $htmlBody);
+			// 		$htmlBody = str_replace('{{Date}}', $transDate, $htmlBody);
+			// 		$htmlBody = str_replace('{{TransactionID}}', $transID, $htmlBody);
+			// 		$htmlBody = str_replace('{{BookingID}}', $bookingID, $htmlBody);
+			
+			// 		$data['response'] = $htmlBody;
+
+			// 		// Prepare the email data
+			// 		$emailCxData = [
+			// 			"message" => [
+			// 				"recipients" => [
+			// 					["email" => 'customerexperience@smallsmall.com'],
+			// 					["email" => 'accounts@smallsmall.com'],
+			// 				],
+			// 				"body" => ["html" => $htmlBody],
+			// 				"subject" => "Property Booking Details!",
+			// 				"from_email" => "donotreply@smallsmall.com",
+			// 				"from_name" => "Small Small Inspection",
+			// 			],
+			// 		];
+
+			// 		// Send the email using the Unione API
+			// 		$responseEmail = $client->request('POST', 'email/send.json', [
+			// 			'headers' => $headers,
+			// 			'json' => $emailCxData,
+			// 		]);
+			// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+			// 		$data['response'] = $e->getMessage();
+			// 	}
+
+			// }
+
+			// //Update Booking	
+			// $this->rss_model->bookingUpdate($bID, $rent_exp, $duration, $pplan, $propertyID);
+
+			// //Update transaction table
+			// $amount = $this->input->post("amount");
+
+			// $bkdets = $this->rss_model->getBookingDet($userID);
+
+			// $refrID = 'rss_' . md5(rand(1000000, 9999999999));
+
+			// $transdet = $this->rss_model->getTransDet($userID);
+
+			// $this->verification_id = $transdet['verification_id'];
+
+			// $this->transaction_id = $bkId;
+
+			// $this->reference_id = $refrID;
+
+			// $this->userID = $transdet['userID'];
+
+			// $this->amount = $transdet['amount'];
+
+			// $this->status = 'pending';
+
+			// $this->type = 'rss';
+
+			// $this->payment_type = $transdet['payment_type'];
+
+			// $this->invoice = $transdet['invoice'];
+
+			// $this->approved_by = $transdet['approved_by'];
+
+			// $this->transaction_date = $transdet['transaction_date'];
+
+			// $this->db->insert('transaction_tbl', $this);
+
+			// echo 1;
+			
+			// $trans = $this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $refrID, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $transdet['transaction_date']);
+
+			//  $bookings = $this->rss_model->insBookingUpdate($bkdets['verification_id'], $refrID, $bkId, $bkdets['propertyID'], $bkdets['userID'], $bkdets['booked_as'], $bkdets['payment_plan'], $bkdets['duration'], $bkdets['move_in_date'], $bkdets['move_out_date'], $bkdets['move_out_reason'], $bkdets['rent_expiration'], $bkdets['next_rental'], $bkdets['booked_on'], $bkdets['updated_at'], $bkdets['rent_status'], $bkdets['eviction_deposit'], $bkdets['subscription_fees'], $bkdets['service_charge_deposit'], $bkdets['security_deposit_fund'], $bkdets['total']);
+						
+		// } else {
+
+		// 	echo 0;
+		//}
+	}
+
 	public function updateTransaction()
 	{
-
 		$bID = $this->input->post("bookingID");
 
 		$refID = $this->input->post("referenceID");
@@ -5749,13 +6140,213 @@ class Rss extends CI_Controller
 
 		$propertyID = $this->input->post("propertyID");
 
+		$userID = $this->input->post("userID");
+
+		$bkId = $this->random_strings(5);
 
 		if ($this->rss_model->transUpdate($bID, $refID, $amount)) {
+			
+			//send Emails out
 
-			//Update booking table
+			require 'vendor/autoload.php'; // For Unione template authoload
+
+			
+			// Unione Template
+
+			$headers = array(
+				'Content-Type' => 'application/json',
+				'Accept' => 'application/json',
+				'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+			);
+
+			$client = new \GuzzleHttp\Client([
+				'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+			]);
+
+			$requestBody = [
+				"id" => "9ef539f8-7196-11ee-a21c-ca1fa0567d54"
+			];
+
+			$requestCxBody = [
+				"id" => "a8de7f86-7198-11ee-9b86-1ef0731c1c1d"
+			];
+
+			
+			$user = $this->rss_model->checkRSSLastTran($userID);
+
+			$transDate = date("Y-m-d H:i:s", strtotime($user['transaction_date']));
+
+			$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+			$data['propName'] = $user['propertyTitle'];
+
+			$data['Amount'] = $user['transAmount'];
+
+			$data['Plan'] = $user['payment_plan'];
+
+			$data['transDate'] = date('d F Y', strtotime($transDate));
+
+			$data['bookingID'] = $user['transaction_id'];
+
+			$data['transID'] = $user['refID'];
+
+			//Unione Template
+
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestBody,
+				));
+
+				$jsonResponse = $response->getBody()->getContents();
+
+				$responseData = json_decode($jsonResponse, true);
+
+				$htmlBody = $responseData['template']['body']['html'];
+
+				$username = $data['name'];
+				$propertyName = $data['propName'];
+				$amount = number_format($data['Amount']);
+				$plan = $data['Plan'];
+				$transDate = $data['transDate'];
+				$bookingID = $data['bookingID'];
+				$transID = $data['transID'];
+
+				//Replace the placeholder in the HTML body with the username
+
+				$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+				$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+				$htmlBody = str_replace('{{AmountPaid}}', $amount, $htmlBody);
+				$htmlBody = str_replace('{{PaymentPlan}}', $plan, $htmlBody);
+				$htmlBody = str_replace('{{Date}}', $transDate, $htmlBody);
+				$htmlBody = str_replace('{{TransactionID}}', $transID, $htmlBody);
+				$htmlBody = str_replace('{{BookingID}}', $bookingID, $htmlBody);
+
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailData = [
+					"message" => [
+						"recipients" => [
+							["email" => $user['userEmail']],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "Property Booking Details",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "Small Small Inspection",
+					],
+				];
+
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailData,
+				]);
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
+			}
+
+			if ($responseEmail) {
+
+				try {
+					$response = $client->request('POST', 'template/get.json', array(
+						'headers' => $headers,
+						'json' => $requestCxBody,
+					));
+
+					$jsonResponse = $response->getBody()->getContents();
+
+					$responseData = json_decode($jsonResponse, true);
+
+					$htmlBody = $responseData['template']['body']['html'];
+
+					// $username = $data['name'];
+					// $propertyName = $data['propName'];
+					// $amount = $data['Amount'];
+					// $plan = $data['Plan'];
+					// $transDate = $data['transDate'];
+					// $transID = $data['transID'];
+
+
+					// Replace the placeholder in the HTML body with the username
+
+					$htmlBody = str_replace('{{CustomerName}}', $username, $htmlBody);
+					$htmlBody = str_replace('{{PropertyName}}', $propertyName, $htmlBody);
+					$htmlBody = str_replace('{{AmountPaid}}', $amount, $htmlBody);
+					$htmlBody = str_replace('{{PaymentPlan}}', $plan, $htmlBody);
+					$htmlBody = str_replace('{{Date}}', $transDate, $htmlBody);
+					$htmlBody = str_replace('{{TransactionID}}', $transID, $htmlBody);
+					$htmlBody = str_replace('{{BookingID}}', $bookingID, $htmlBody);
+			
+					$data['response'] = $htmlBody;
+
+					// Prepare the email data
+					$emailCxData = [
+						"message" => [
+							"recipients" => [
+								["email" => 'customerexperience@smallsmall.com'],
+								["email" => 'accounts@smallsmall.com'],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "Property Booking Details!",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "Small Small Inspection",
+						],
+					];
+
+					// Send the email using the Unione API
+					$responseEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailCxData,
+					]);
+				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+					$data['response'] = $e->getMessage();
+				}
+
+			}
+
+			//Update Booking	
 			$this->rss_model->bookingUpdate($bID, $rent_exp, $duration, $pplan, $propertyID);
 
+			//Update transaction table
+			$amount = $this->input->post("amount");
+
+			$bkdets = $this->rss_model->getBookingDet($userID);
+
+			$refrID = 'rss_' . md5(rand(1000000, 9999999999));
+
+			$transdet = $this->rss_model->getTransDet($userID);
+
+			$this->verification_id = $transdet['verification_id'];
+
+			$this->transaction_id = $bkId;
+
+			$this->reference_id = $refrID;
+
+			$this->userID = $transdet['userID'];
+
+			$this->amount = $transdet['amount'];
+
+			$this->status = 'pending';
+
+			$this->type = 'rss';
+
+			$this->payment_type = $transdet['payment_type'];
+
+			$this->invoice = $transdet['invoice'];
+
+			$this->approved_by = $transdet['approved_by'];
+
+			$this->transaction_date = $transdet['transaction_date'];
+
+			$this->db->insert('transaction_tbl', $this);
+
 			echo 1;
+			
+			// $trans = $this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $refrID, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $transdet['transaction_date']);
+
+			//  $bookings = $this->rss_model->insBookingUpdate($bkdets['verification_id'], $refrID, $bkId, $bkdets['propertyID'], $bkdets['userID'], $bkdets['booked_as'], $bkdets['payment_plan'], $bkdets['duration'], $bkdets['move_in_date'], $bkdets['move_out_date'], $bkdets['move_out_reason'], $bkdets['rent_expiration'], $bkdets['next_rental'], $bkdets['booked_on'], $bkdets['updated_at'], $bkdets['rent_status'], $bkdets['eviction_deposit'], $bkdets['subscription_fees'], $bkdets['service_charge_deposit'], $bkdets['security_deposit_fund'], $bkdets['total']);
+						
 		} else {
 
 			echo 0;
@@ -7404,6 +7995,8 @@ value1&metadata[meta2]=value2*/
 			$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
 			$data['verification_status'] = $this->session->userdata('verified');
+
+			$data['dets'] = $this->rss_model->checkRSSLastTran($data['userID']);
 
 			// 			$data['bookings'] = $this->rss_model->get_bookings($data['userID']);
 			$data['bookings'] = $this->rss_model->get_payment_details($data['bookingReferenceID']);
