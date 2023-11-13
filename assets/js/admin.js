@@ -4689,7 +4689,7 @@ $(document). on('click', '.close-int', function(){
 
 					var info = actionItem[i].id;
 					
-					details.push({"propertyID": info[0]});
+					details.push({"propertyID": info});
 				}
 			}
 		}
