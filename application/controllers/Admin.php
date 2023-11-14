@@ -4810,6 +4810,9 @@ class Admin extends CI_Controller
 				} else if ($action == 'deactivate') {
 
 					$res = $this->admin_model->hold_btl_property($details[$i]['propertyID']);
+				} else if ($action == 'lock') {
+
+					$res = $this->admin_model->lock_btl_property($details[$i]['propertyID']);
 				} 
 			}
 		}
