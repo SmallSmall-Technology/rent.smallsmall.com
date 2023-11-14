@@ -103,6 +103,13 @@
                         Privacy Policy
                       </a>
                     </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link pl-0 text-white" href="<?php echo base_url('privacy-policy'); ?>">
+                        GDPR
+                      </a>
+                    </li>
+
                     <li class="nav-item">
                       <a class="nav-link pl-0 text-white" href="<?php echo base_url('subscription-terms'); ?>">
                         Subscription Terms
