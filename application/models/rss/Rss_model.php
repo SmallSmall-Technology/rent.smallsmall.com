@@ -4165,6 +4165,7 @@ class Rss_model extends CI_Model {
 	    return $query->row();
 	    
 	}
+	
 	public function get_bookings($id){
 		
 		$this->db->select('a.*, a.status as transaction_status, b.*, c.*, d.*, e.name as state_name'); 
@@ -4173,7 +4174,7 @@ class Rss_model extends CI_Model {
 	    
 	    $this->db->where('a.userID', $id);
 	    
-	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
+	    $this->db->join('bookings as b', 'b.bookingID = a.transaction_id');
 	    
 	    $this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
 	    
