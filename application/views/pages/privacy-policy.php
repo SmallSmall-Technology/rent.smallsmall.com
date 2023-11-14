@@ -65,7 +65,7 @@
           “us”, “SMALL SMALL TECHNOLOGY” or “OUR”) is committed to
           safeguarding the privacy of our customers, employees, and all third parties
           (hereinafter referred to as “You”, “Your” or “User”) of its Website (“Site”) located
-          at <a href="https://www.SMALLSMALL.com.">https://www.SMALLSMALL.com.</a> This Data Privacy Policy outlines how, why
+          at <a href="https://www.SMALLSMALL.com.">https://www.SMALLSMALL.com.</a> and mobile application located at <a href="https://play.google.com/store/apps/details?id=com.smallsmall.mobile&pli=1">google play store</a> and <a href="https://apps.apple.com/us/app/smallsmall/id1643608622">apple play store.</a> This Data Privacy Policy outlines how, why
           and what data is collected, processed, and shared. We ensure that all data collection
           and processing activities are carried out in accordance with relevant data protection
           laws and regulations, including the General Data Protection Regulation
