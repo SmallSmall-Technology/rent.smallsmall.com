@@ -1,0 +1,105 @@
+.body-container {
+    background: #f1f1f1;
+    padding-top: 2em;
+    /* padding-bottom: 2em */
+  }
+  
+  .payment-summary-container {
+    border-radius: 15px;
+    background: #fff;
+    padding: 2.5em 5em;
+  }
+  
+  .payment-description {
+    border: 2px solid #ebebeb;
+    border-radius: 20px;
+  }
+  
+  .payment-amounts {
+    background: #f9f9f9;
+    border-radius: 20px;
+  }
+  
+  .paid {
+    color: #779500;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  
+  .payment-successful-text {
+    color: #414042;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .payment-heading {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .payment-text {
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .payment-box p {
+    margin-bottom: 0px;
+  }
+  
+  .payment-description {
+    border-radius: 15px;
+    border: 2px solid #dee2e6;
+    background: #f7f7f7;
+    padding: 1.5em 2em;
+  }
+  
+  .total-description {
+    border-radius: 10px;
+    background: #fff;
+    padding: 1.5em 2em;
+  }
+  .total-text {
+    color: #007dc1;
+    font-size: 30px;
+    font-weight: 600;
+  }
+  .btn-dashboard {
+    border-radius: 5px;
+    background: #007dc1;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-weight: 700;
+  }
+  .btn-dashboard:hover {
+    color: #eaebee;
+    background: #1ea2e9;
+    text-decoration: none;
+  }
+  
+  /*****MEDIA QUERY****/
+  
+  /* Small devices (landscape phones, 576px and up) */
+  @media screen and (max-width: 480px) {
+    /* .wallet-mobile.show {
+      display: block !important;
+    }
+  
+    .modal-backdrop {
+      display: block !important;
+    } */
+  }
+  
+  /* Small devices (landscape phones, 576px and up) */
+  @media screen and (min-width: 576px) {
+  }
+  
+  /* Medium devices (tablets, 768px and up)*/
+  @media screen and (min-width: 768px) {
+  }
+  
+  /* Large devices (desktops, 992px and up)*/
+  @media screen and (992px <=width <=1024px) {
+  }
+  
+  /* Extra large devices (large desktops, 1200px and up)*/
+  @media screen and (min-width: 1200px) {
+  }
