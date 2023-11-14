@@ -2223,35 +2223,7 @@ class Admin_model extends CI_Model {
 	    return $this->db->update("property_tbl", $status);
 	    
 	}
-	public function release_btl_property($id){
-	    
-	    $status = array("availability" => 'Available');
-	    
-	    $this->db->where('propertyID', $id);
-	    
-	    return $this->db->update("buytolet_property", $status);
-	    
-	}
-
-	public function lock_btl_property($id){
-	    
-	    $status = array("availability" => 'Locked');
-	    
-	    $this->db->where('propertyID', $id);
-	    
-	    return $this->db->update("buytolet_property", $status);
-	    
-	}
-
-	// public function release_btl_property($id){
-	    
-	//     $status = array("availability" => 'Locked');
-	    
-	//     $this->db->where('propertyID', $id);
-	    
-	//     return $this->db->update("buytolet_property", $status);
-	    
-	// }
+	
 	
 	public function del_property($id){
 		
@@ -2260,12 +2232,29 @@ class Admin_model extends CI_Model {
 		return $this->db->delete('property_tbl');
 		
 	}
-	public function delete_btl_property($id){
-		
-		$this->db->where('propertyID', $id);
+	
+	public function update_btl_property($action, $propertyID){
+
+		$result = 0;
+
+		if($action == 'delete') {
+
+			$this->db->where('propertyID', $propertyID);
     	
-		return $this->db->delete('buytolet_property');
-		
+			$result = $this->db->delete('buytolet_property');
+
+		} else {
+
+			$status = array("availability" => $action);
+	    
+	    	$this->db->where('propertyID', $propertyID);
+	    
+	    	$result = $this->db->update("buytolet_property", $status);
+
+		}
+
+		return $result;
+
 	}
 	public function activate_user($id){
 		

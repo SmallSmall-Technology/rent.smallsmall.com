@@ -4795,6 +4795,8 @@ class Admin extends CI_Controller
 
 		$details = $this->input->post('details');
 
+		$action_details = '';
+
 		if (is_array($details)) {
 
 			$det_len = count($details);
@@ -4803,20 +4805,29 @@ class Admin extends CI_Controller
 
 				if ($action == 'delete') {
 
-					$res = $this->admin_model->delete_btl_property($details[$i]['propertyID']);
+					$action_details = 'delete';
+
 				} else if ($action == 'release') {
 
-					$res = $this->admin_model->release_btl_property($details[$i]['propertyID']);
-				} else if ($action == 'deactivate') {
+					$action_details = 'Available';
 
-					$res = $this->admin_model->hold_btl_property($details[$i]['propertyID']);
 				} else if ($action == 'lock') {
 
-					$res = $this->admin_model->lock_btl_property($details[$i]['propertyID']);
-				} 
+					$action_details = 'Locked';
+
+				} else if ($action == 'hold') {
+
+					$action_details = 'Hold';
+				}
+
+				$res = $this->admin_model->update_btl_property($action_details, $details[$i]['propertyID']);
+
 			}
+			
 		}
+
 		echo 1;
+
 	}
 
 	public function changePropStatus()
