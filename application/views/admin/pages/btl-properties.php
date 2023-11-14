@@ -35,7 +35,7 @@
 											<option value="">Select Option</option>
 											<option value="delete">Delete</option>
 											<option value="hold">On Hold</option>
-											<option value="locked">Lock</option>
+											<option value="lock">Lock</option>
 											<option value="release">Release Property</option>
 										</select>
 									</td>
