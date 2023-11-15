@@ -3196,6 +3196,33 @@ class Rss_model extends CI_Model {
 		$this->db->insert('transaction_tbl', $this);
 	}
 
+	public function insTransUpdates($verification_id, $bkId, $refrID, $userID, $amount, $type, $payment_type, $invoice, $approved_by, $transaction_date){
+		
+		$this->verification_id = $verification_id;
+
+		$this->transaction_id = $bkId;
+
+		$this->reference_id = $refrID;
+
+		$this->userID = $userID;
+
+		$this->amount = $amount;
+
+		$this->status = 'approved';
+
+		$this->type = 'rss';
+
+		$this->payment_type = $payment_type;
+
+		$this->invoice = $invoice;
+
+		$this->approved_by = $approved_by;
+
+		$this->transaction_date = $transaction_date;
+
+		$this->db->insert('transaction_tbl', $this);
+	}
+
 
 	public function insBookingUpdate($verification_id, $refrID, $bkId, $propertyID, $userID, $booked_as, $payment_plan, $duration, $move_in_date, $move_out_date, $move_out_reason, $rent_expiration, $next_rental, $booked_on, $updated_at, $rent_status, $eviction_deposit, $subscription_fees, $service_charge_deposit, $security_deposit_fund, $total){
 		
