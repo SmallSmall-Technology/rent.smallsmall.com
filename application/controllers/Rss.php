@@ -5872,7 +5872,7 @@ class Rss extends CI_Controller
 
 		$amount = ($amount / 100);
 
-		$this->rss_model->insTransUpdates($transdet['verification_id'], $bkId, $reference, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $date);
+		$this->rss_model->insTransUpdates($transdet['verification_id'], $bkId, $reference, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $date, $planCode);
 
 		$refrID = 'rss_' . md5(rand(1000000, 9999999999));
 
