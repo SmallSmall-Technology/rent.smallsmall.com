@@ -46,42 +46,50 @@
                                         <table class="mb-0 table">
                                             <!--<thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
-                                            </tr>
-                                            </thead>-->
-                                            <tbody>
-                                            <tr>
                                                 <th width="200px" scope="row">First Name</th>
-                                                <td><?php echo $details['firstname']; ?></td>
+                                                <td><?php echo $details['firstName']; ?></td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Last Name</th>
-                                                <td><?php echo $details['lastname']; ?></td>
+                                                <td><?php echo $details['lastName']; ?></td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <th scope="row">Phone</th>
                                                 <td><?php echo $details['phone']; ?></td>
-                                            </tr>
+                                            </tr> -->
                                             <tr>
                                                 <th scope="row">Email</th>
-                                                <td> <?php echo $details['email']; ?></td>
+                                                <td> <?php echo $details['userEmail']; ?></td>
                                             </tr>
                                             <tr>
-                                                <th scope="row">Address</th>
-                                                <td><?php echo $details['address']; ?></td>
+                                                <th scope="row">BookingID</th>
+                                                <td><?php echo $details['transaction_id']; ?></td>
                                             </tr>												
                                             <tr>
-                                                <th scope="row">Comment</th>
-                                                <td><?php echo $details['comment']; ?></td>
+                                                <th scope="row">Amount</th>
+                                                <td><?php echo $details['transAmount']; ?></td>
                                             </tr>
                                             
                                             <tr>
-                                                <th scope="row">Identification</th>
-                                                <td><a rel="nofollow" target="_blank" href="https://stay.smallsmall.com/uploads/identification/<?php echo $details['userID'].'/'.$details['identification']; ?>">Download</a></td>
+                                                <th scope="row">Property Name</th>
+                                                <td><?php echo $details['propertyTitle']; ?></td>
                                             </tr>
+
+                                            <tr>
+                                                <th scope="row">Booked Date</th>
+                                                <td><?php echo $details['booked_on']; ?></td>
+                                            </tr>
+
+                                            <tr>
+                                                <th scope="row">Transaction ID</th>
+                                                <td><?php echo $details['transaction_id']; ?></td>
+                                            </tr>
+
+                                            <tr>
+                                                <th scope="row">Recurring(Yes/ No) </th>
+                                                <td><?php if($details['planCode'] != ''){ echo 'yes'; } else{ echo 'no';}?></td>
+                                            </tr>
+
                                             </tbody>
                                         </table>
                                     </div>

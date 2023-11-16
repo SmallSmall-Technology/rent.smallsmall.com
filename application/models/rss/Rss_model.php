@@ -3196,7 +3196,7 @@ class Rss_model extends CI_Model {
 		$this->db->insert('transaction_tbl', $this);
 	}
 
-	public function insTransUpdates($verification_id, $bkId, $refrID, $userID, $amount, $type, $payment_type, $invoice, $approved_by, $transaction_date){
+	public function insTransUpdates($verification_id, $bkId, $refrID, $userID, $amount, $type, $payment_type, $invoice, $approved_by, $transaction_date, $planCode){
 		
 		$this->verification_id = $verification_id;
 
@@ -3219,6 +3219,8 @@ class Rss_model extends CI_Model {
 		$this->approved_by = $approved_by;
 
 		$this->transaction_date = $transaction_date;
+
+		$this->planCode = $planCode;
 
 		$this->db->insert('transaction_tbl', $this);
 	}
