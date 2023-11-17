@@ -1754,11 +1754,9 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
+	
 	public function bookings()
 	{
-
-
-
 		$config['total_rows'] = $this->admin_model->countPropBookings();
 
 		$data['total_count'] = $config['total_rows'];
@@ -1766,7 +1764,6 @@ class Admin extends CI_Controller
 		$config['suffix'] = '';
 
 		if ($config['total_rows'] > 0) {
-
 
 			$page_number = $this->uri->segment(3);
 
@@ -1800,8 +1797,6 @@ class Admin extends CI_Controller
 		//check if Admin is logged in
 
 		if ($this->session->has_userdata('adminLoggedIn')) {
-
-
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 

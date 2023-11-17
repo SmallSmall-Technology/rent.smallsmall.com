@@ -328,19 +328,17 @@ elseif($srlz[0] == 'Bi-annually')
 
 function shortenText($text, $maxLength)
 {
-
   if (strlen($text) > $maxLength) {
 
     $shortenedText = substr($text, 0, $maxLength) . '...';
 
     return $shortenedText;
   } else {
-
     return $text;
   }
 }
 
- // Function to check if a string starts with a specific prefix
+ //Function to check if a string starts with a specific prefix
  function startsWith($string, $prefix) {
   return substr($string, 0, strlen($prefix)) === $prefix;
 }

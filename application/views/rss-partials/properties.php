@@ -517,12 +517,14 @@ function shortenText($text, $maxLength)
 
               <a style="text-decoration:none" href="<?php echo base_url(); ?>property/<?php echo $value['propertyID']; ?>">
 
-                <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel">
+              <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top" data-ride="carousel">
+
+                <!-- <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel"> -->
 
                   <?php
                   $CI = &get_instance();
 
-                  if (date('Y-m-d') <= $value['available_date']) {
+                  if(date('Y-m-d') <= $value['available_date']) {
 
                     echo '<div class="availablility unavailable d-flex">';
 
@@ -543,7 +545,8 @@ function shortenText($text, $maxLength)
                   }
                   ?>
 
-                  <div class="carousel-inner listing-image">
+                  <!-- <div class="carousel-inner listing-image"> -->
+                  <div class="carousel-inner">
 
                     <?php
 
@@ -620,7 +623,6 @@ function shortenText($text, $maxLength)
                   <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls-<?php echo $value['propertyID']; ?>" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
-
                   </button>
 
                   <button class="carousel-control-next" type="button" data-target="#carouselExampleControls-<?php echo $value['propertyID']; ?>" data-slide="next">
@@ -630,7 +632,7 @@ function shortenText($text, $maxLength)
 
                 </div>
                 <div class="card-body">
-                  <p class="card-text">
+                  <p class="card-text" style="font-size: 14px; font-weight: 600;">
                     &#8358;<?php echo ($value['price'] > 999999) ? ($value['price'] / 1000000) . 'M' : number_format($value['price']); ?>/month&nbsp;&nbsp;
                     <small style="
                  text-decoration: line-through;
@@ -645,11 +647,24 @@ function shortenText($text, $maxLength)
                   <p class="card-text"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p>
 
                   <div class="card-text d-flex justify-content-between">
-                    <p class="card-text">
+                    <!-- <p class="card-text"> -->
+                    <p>
                       &bull;<?php echo $value['bed']; ?> Bed
                       &bull;<?php echo $value['bath']; ?> Bath
                       <!--&bull;<?php echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
-                      &bull;<?php echo ($value['city']); ?>
+                      &bull;<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"
+                    fill="none">
+                    <g clip-path="url(#clip0_7160_3254)">
+                      <path
+                        d="M7.5 2.5C7.5 1.12125 6.37875 0 5 0C3.62125 0 2.5 1.12125 2.5 2.5C2.5 3.73667 3.4025 4.76625 4.58333 4.965V9.58333C4.58333 9.81333 4.77 10 5 10C5.23 10 5.41667 9.81333 5.41667 9.58333V4.965C6.5975 4.76625 7.5 3.73667 7.5 2.5Z"
+                        fill="#414042" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_7160_3254">
+                        <rect width="10" height="10" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg><?php echo ($value['city']); ?>
                     </p>
 
                     <!--    <a href="#" class="text-decoration-none">-->

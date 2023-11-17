@@ -1924,26 +1924,57 @@ class Admin_model extends CI_Model {
 		return $query->result_array();
 		
 	}
+
+	// public function fetchBookingDetails($id){
+	    
+	//     $this->db->select('a.*, b.*, c.*, d.amount');
+	    
+	//     $this->db->from('stayone_booking as a');
+	    
+	//     $this->db->where('a.bookingID', $id);
+	    
+	//     $this->db->join('stayone_apartments as b', 'b.apartmentID = a.aptID');
+	    
+	//     $this->db->join('apt_type_tbl as c', 'c.id = b.apartmentType');
+	    
+	//     $this->db->join('stayone_transactions as d', 'd.booking_id = a.bookingID');
+
+	// 	$this->db->limit($this->_pageNumber, $this->_offset);
+		
+	// 	$query = $this->db->get();
+
+	// 	return $query->row_array();
+	// }
+
 	public function fetchBookingDetails($id){
 	    
-	    $this->db->select('a.*, b.*, c.*, d.amount');
-	    
-	    $this->db->from('stayone_booking as a');
-	    
-	    $this->db->where('a.bookingID', $id);
-	    
-	    $this->db->join('stayone_apartments as b', 'b.apartmentID = a.aptID');
-	    
-	    $this->db->join('apt_type_tbl as c', 'c.id = b.apartmentType');
-	    
-	    $this->db->join('stayone_transactions as d', 'd.booking_id = a.bookingID');
+	    $this->db->select('a.*, a.reference_id as refID, a.amount as transAmount, a.type as transaction_type, a.userID as usersID, b.*, b.propertyID as proptyID, c.*, c.intervals as userIntervals, d.type, e.email, e.firstName, e.lastName, e.email as userEmail');
+		
+		$this->db->from('transaction_tbl as a');
+		
+		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID');
+		
+		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
+		
+		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
 
-		$this->db->limit($this->_pageNumber, $this->_offset);
+		$this->db->join('user_tbl as e', 'e.userID = a.userID');
+		
+		//$this->db->where('a.userID', $id);
+		
+		$this->db->where('a.type', 'rss');
+		
+		$this->db->where('a.transaction_id', $id);
+		
+		$this->db->order_by('a.id', 'DESC');
+		
+		$this->db->limit(1);
 		
 		$query = $this->db->get();
-
+		
 		return $query->row_array();
 	}
+
 	public function fetchTransactions($type){   
 		
 		$this->db->select('a.id, a.reference_id, a.verification_id, a.transaction_id, a.amount, a.userID, a.status, a.type, a.payment_type, a.transaction_date, c.firstName, c.lastName');
