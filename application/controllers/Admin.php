@@ -5501,6 +5501,119 @@ class Admin extends CI_Controller
 			echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));
 		}
 	}
+	// public function uploadBuytoletProperty()
+	// {
+	// 	//Get data from AJAX
+	// 	$propName = $this->input->post('propTitle');
+	// 	$propType = $this->input->post('propType');
+	// 	$propDesc = htmlentities($this->input->post('propDesc', ENT_QUOTES));
+	// 	$locationInfo = htmlentities($this->input->post('locationInfo', ENT_QUOTES));
+	// 	$address = $this->input->post('propAddress');
+	// 	$city = $this->input->post('city');
+	// 	$state = $this->input->post('state');
+	// 	$country = $this->input->post('country');
+	// 	$tenantable = $this->input->post('tenantable');
+	// 	$asset_appreciation_1 = $this->input->post('asset_appreciation_1');
+	// 	$asset_appreciation_2 = $this->input->post('asset_appreciation_2');
+	// 	$asset_appreciation_3 = $this->input->post('asset_appreciation_3');
+	// 	$asset_appreciation_4 = $this->input->post('asset_appreciation_4');
+	// 	$asset_appreciation_5 = $this->input->post('asset_appreciation_5');
+	// 	$price = $this->input->post('price');
+	// 	$marketValue = $this->input->post("marketValue");
+	// 	$outrightDiscount = $this->input->post("outrightDiscount");
+	// 	$promo_price = $this->input->post('promo_price');
+	// 	$promo_category = $this->input->post('promo_category');
+	// 	$expected_rent = $this->input->post('expected_rent');
+	// 	$bed = $this->input->post('bed');
+	// 	$bath = $this->input->post('bath');
+	// 	$toilet = $this->input->post('toilet');
+	// 	$hpi = $this->input->post('hpi');
+	// 	$payment_plan = $this->input->post('payment_plan');
+	// 	$payment_plan_period = $this->input->post('payment_plan_period');
+	// 	$min_pp_val = $this->input->post('min_pp_val');
+	// 	$mortgage = $this->input->post('mortgage');
+	// 	$propertySize = $this->input->post('propertySize');
+	// 	$investmentType = $this->input->post('investmentType');
+	// 	$imageFolder = $this->input->post('imageFolder');
+	// 	$featuredPic = $this->input->post('featuredPic');
+	// 	$pool_buy = $this->input->post('pool_buy');
+	// 	$pooling_units = $this->input->post('pooling_units');
+	// 	$floor_level = $this->input->post('floor_level');
+	// 	$construction_lvl = $this->input->post('construction_lvl');
+	// 	$start_date = date('Y-m-d', strtotime($this->input->post('start_date')));
+	// 	$finish_date = date('Y-m-d', strtotime($this->input->post('finish_date')));
+	// 	$maturity_date = date('Y-m-d', strtotime($this->input->post('maturity_date')));
+	// 	$closing_date = date('Y-m-d', strtotime($this->input->post('closing_date')));
+	// 	$hold_period = $this->input->post('hold_period');
+	// 	$co_appr = explode(',', $this->input->post('co_appr'));
+	// 	$co_rent = explode(',', $this->input->post('co_rent'));
+	// 	$status = "";
+
+
+	// 	if ($this->session->has_userdata('adminLoggedIn')) {
+
+	// 		$userID = $this->session->userdata('adminID');
+	// 		$file_element_name = 'plan-image';
+
+	// 		//Check if upload folder exists
+	// 		if (!is_dir('./tmp/')) {
+
+	// 			mkdir('./tmp/', 0777, TRUE);
+	// 		}
+
+
+	// 		$config['upload_path'] = './tmp/';
+
+	// 		$config['allowed_types'] = 'jpg|png|jpeg';
+
+	// 		$config['max_size'] = 1024 * 10;
+
+	// 		$config['encrypt_name'] = TRUE;
+
+	// 		$this->load->library('upload', $config);
+
+	// 		if (!$this->upload->do_upload($file_element_name)) {
+
+	// 			$status = 'error';
+
+	// 			$msg = $this->upload->display_errors('', '');
+	// 		} else {
+
+	// 			$data = $this->upload->data();
+
+	// 			$folder =
+
+	// 				$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
+
+	// 			$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
+
+	// 			unlink('./tmp/' . $data["file_name"]);
+
+	// 			//Populate the property table
+	// 			$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+
+	// 			if ($property != 0) {
+
+	// 				$status = "success";
+
+	// 				$msg = "Property successfully uploaded";
+	// 			} else {
+	// 				$status = "error";
+
+	// 				$msg = "Could not upload property";
+	// 			}
+	// 		}
+	// 	} else {
+
+	// 		redirect(base_url() . "admin/dashboard", 'refresh');
+	// 	}
+
+	// 	@unlink($_FILES[$file_element_name]);
+
+
+	// 	echo json_encode(array('status' => $status, 'msg' => $msg));
+	// }
+
 	public function uploadBuytoletProperty()
 	{
 		//Get data from AJAX
@@ -5555,64 +5668,77 @@ class Admin extends CI_Controller
 			$userID = $this->session->userdata('adminID');
 			$file_element_name = 'plan-image';
 
-			//Check if upload folder exists
-			if (!is_dir('./tmp/')) {
+			require 'vendor/autoload.php';
 
-				mkdir('./tmp/', 0777, TRUE);
-			}
+			// Configuring AWS S3 client
+			$s3 = new S3Client([
+				'version' => 'latest',
+				'region' => 'eu-west-1'
+			]);
+	
 
+			try {
+				// Checking if the S3 bucket exists; if not, you might want to handle it accordingly
 
-			$config['upload_path'] = './tmp/';
+				$bucket = 'dev-rss-uploads'; // S3 bucket name
+	
+				// Configuring S3 upload parameters
+				$uploadParams = [
 
-			$config['allowed_types'] = 'jpg|png|jpeg';
+					'Bucket' => $bucket . '/uploads/tmp/', // Using the specified S3 bucket and folder path
 
-			$config['max_size'] = 1024 * 10;
+					'Key' => basename($_FILES[$file_element_name]['name']),
 
-			$config['encrypt_name'] = TRUE;
+					'Body' => fopen($_FILES[$file_element_name]['tmp_name'], 'rb'),
 
-			$this->load->library('upload', $config);
+				];
 
-			if (!$this->upload->do_upload($file_element_name)) {
+					// Uploading file to S3
+				$result = $s3->putObject($uploadParams);
+	
+				// Get the uploaded file URL from AWS S3
+				$uploadedFileUrl = $result['ObjectURL'];
 
-				$status = 'error';
+				// Extracting the file name from the URL
+				$pathParts = pathinfo($uploadedFileUrl);
 
-				$msg = $this->upload->display_errors('', '');
-			} else {
+				$fileName = $pathParts['basename']; // Contains the uploaded file name
+		
+				// Example: Inserting property details into the database using admin_model method
 
-				$data = $this->upload->data();
-
-				$folder =
-
-					$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
-
-				$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
-
-				unlink('./tmp/' . $data["file_name"]);
-
-				//Populate the property table
-				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
-
+				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $fileName, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+				
+				// Handling success or failure of property insertion
 				if ($property != 0) {
 
 					$status = "success";
 
 					$msg = "Property successfully uploaded";
+
 				} else {
+
 					$status = "error";
 
 					$msg = "Could not upload property";
 				}
+	
+			} catch (Aws\S3\Exception\S3Exception $e) {
+				// Handling exceptions if any issue occurs during S3 interaction
+				$status = 'error';
+				$msg = $e->getMessage();
 			}
 		} else {
-
+			// Redirecting if the user is not logged in as an admin
 			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
-
+	
+		// Deleting temporary uploaded files
 		@unlink($_FILES[$file_element_name]);
-
-
+	
+		// Sending JSON response containing the status and message
 		echo json_encode(array('status' => $status, 'msg' => $msg));
 	}
+
 
 	public function editBuytoletProperty()
 	{
