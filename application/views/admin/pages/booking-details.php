@@ -90,7 +90,7 @@
 
                                             <tr>
                                                 <th scope="row">Transaction ID</th>
-                                                <td><?php echo $details['transaction_id']; ?></td>
+                                                <td><?php echo $details['refID']; ?></td>
                                             </tr>
 
                                             <tr>
@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                             </div>
-							<div class="col-lg-6">
+							<!-- <div class="col-lg-6">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body"><h5 class="card-title">Booking Details</h5>
                                         <table class="mb-0 table">
@@ -145,7 +145,7 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             
                             
                         </div>
