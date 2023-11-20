@@ -5601,6 +5601,8 @@ class Admin extends CI_Controller
 			$userID = $this->session->userdata('adminID');
 			$file_element_name = 'plan-image';
 
+			require 'vendor/autoload.php';
+
 			// Configuring AWS S3 client
 			$s3 = new S3Client([
 				'version' => 'latest',
