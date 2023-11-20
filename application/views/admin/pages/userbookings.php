@@ -1,4 +1,4 @@
- <div class="app-main__outer">
+<div class="app-main__outer">
 	<div class="app-main__inner">
 		<div class="app-page-title">
 			<div class="page-title-wrapper">
@@ -96,11 +96,11 @@
 										<?php //if($value['status'] == 'Pending' || $value['status'] == 'pending'){ ?>
 											<!---<button type="button" id="approve-<?php //echo $value['reference_id']."-".$value['propertyID']; ?>" class="btn btn-primary btn-sm approve-payment">Approve</button>---> 
 										<?php //} ?> 
-										<!-- <button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/booking/".$value['bookingID']; ?>">Details</a></button>
-										<button type="button" id="booking-<?php echo $value['bookingID']; ?>-<?php echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button> -->
-
-										<button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/userbooking/".$value['buserId']; ?>">Details</a></button>
+										<button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/booking/".$value['bookingID']; ?>">Details</a></button>
 										<button type="button" id="booking-<?php echo $value['bookingID']; ?>-<?php echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button>
+
+										<!-- <button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/userbooking/".$value['buserId']; ?>">Details</a></button>
+										<button type="button" id="booking-<?php echo $value['bookingID']; ?>-<?php echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button> -->
 									</div>
 								</td>
 							</tr> 

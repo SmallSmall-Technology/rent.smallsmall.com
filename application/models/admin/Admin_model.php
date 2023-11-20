@@ -1901,11 +1901,39 @@ class Admin_model extends CI_Model {
 	
 	public function fetchBookings(){   
 		
-		$this->db->select('a.id, a.verification_id, a.bookingID, a.propertyID, a.userID, a.booked_as, a.payment_plan, a.duration, a.move_in_date, a.next_rental, a.rent_expiration, a.booked_on, b.verification_id, b.transaction_id, b.amount, b.status, b.payment_type, b.type, b.transaction_date, b.reference_id, c.firstName, c.lastName, d.propertyID, d.propertyTitle, d.propertyType');
+		$this->db->select('a.id, a.verification_id, a.bookingID, a.propertyID, a.userID, a.booked_as, a.payment_plan, a.duration, a.move_in_date, a.next_rental, a.rent_expiration, a.booked_on, b.verification_id, b.transaction_id, b.amount, b.status, b.payment_type, b.type, b.transaction_date, b.reference_id, c.firstName, c.lastName, c.userID as buserId, d.propertyID, d.propertyTitle, d.propertyType');
 
 		$this->db->from('bookings as a');
 		
 		$this->db->where('b.type', 'rss');
+		
+		$this->db->join('transaction_tbl as b', 'b.verification_id = a.verification_id');
+		
+		$this->db->join('user_tbl as c', 'a.userID = c.userID');
+		
+		$this->db->join('property_tbl as d', 'd.propertyID = a.propertyID');
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+		
+		$this->db->group_by('a.bookingID');
+		
+		$this->db->order_by('a.id', 'DESC');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+		
+	}
+
+	public function fetchBooking($id){   
+		
+		$this->db->select('a.id, a.verification_id, a.bookingID, a.propertyID, a.userID, a.booked_as, a.payment_plan, a.duration, a.move_in_date, a.next_rental, a.rent_expiration, a.booked_on, b.verification_id, b.transaction_id, b.amount, b.status, b.payment_type, b.type, b.transaction_date, b.reference_id, c.firstName, c.lastName, c.userID as buserId, d.propertyID, d.propertyTitle, d.propertyType');
+
+		$this->db->from('bookings as a');
+		
+		$this->db->where('b.type', 'rss');
+
+		$this->db->where('c.userID', $id);
 		
 		$this->db->join('transaction_tbl as b', 'b.verification_id = a.verification_id');
 		
