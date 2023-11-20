@@ -5599,13 +5599,16 @@ class Admin extends CI_Controller
 		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$userID = $this->session->userdata('adminID');
+
 			$file_element_name = 'plan-image';
 
 			require 'vendor/autoload.php';
 
 			// Configuring AWS S3 client
-			$s3 = new S3Client([
+			$s3 = new Aws\S3\S3Client([
+
 				'version' => 'latest',
+
 				'region' => 'eu-west-1'
 			]);
 	
@@ -5656,13 +5659,21 @@ class Admin extends CI_Controller
 				}
 	
 			} catch (Aws\S3\Exception\S3Exception $e) {
+
 				// Handling exceptions if any issue occurs during S3 interaction
+
 				$status = 'error';
+
 				$msg = $e->getMessage();
+
 			}
+
 		} else {
+
 			// Redirecting if the user is not logged in as an admin
+
 			redirect(base_url() . "admin/dashboard", 'refresh');
+
 		}
 	
 		// Deleting temporary uploaded files
