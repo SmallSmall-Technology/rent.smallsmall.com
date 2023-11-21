@@ -5581,7 +5581,7 @@ class Admin extends CI_Controller
 
 	// 			$data = $this->upload->data();
 
-	// 			$folder =
+	// 			// $folder =
 
 	// 				$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
 
@@ -5665,10 +5665,6 @@ class Admin extends CI_Controller
 
 		if ($this->session->has_userdata('adminLoggedIn')) {
 
-			$userID = $this->session->userdata('adminID');
-
-			$file_element_name = 'plan-image';
-
 			require 'vendor/autoload.php';
 
 			// Configuring AWS S3 client
@@ -5678,6 +5674,10 @@ class Admin extends CI_Controller
 
 				'region' => 'eu-west-1'
 			]);
+
+			$userID = $this->session->userdata('adminID');
+
+			$file_element_name = 'plan-image';
 
 			try {
 				// Temporary upload path for the file
@@ -5691,7 +5691,7 @@ class Admin extends CI_Controller
 				}
 			
 				// Configuration for file upload
-				$config['upload_path'] = $tempUploadPath;
+				$config['upload_path'] = './tmp/';
 
 				$config['allowed_types'] = 'jpg|png|jpeg';
 
@@ -5705,6 +5705,7 @@ class Admin extends CI_Controller
 			
 				// Perform file upload
 				if (!$this->upload->do_upload($file_element_name)) {
+
 					// Handle upload error
 					$status = 'error';
 
