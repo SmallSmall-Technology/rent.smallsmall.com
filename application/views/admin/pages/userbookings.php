@@ -63,19 +63,6 @@
 										
 
 										$title = $CI->shorten_title($value['propertyTitle']);
-
-										$data = [];
-
-										$name = $value['firstName'].'-'.$value['lastName'];
-
-										if (in_array($name, $data))
-										{
-										    
-										}
-
-										else
-										{
-											array_push($data, $name);
 						
 							?>	 
    
@@ -107,7 +94,6 @@
 							<?php    
 									}
 								}
-							}
 
 							?>
 							

@@ -50,10 +50,11 @@
 								$stat = '';
 								$CI =& get_instance();
 								if (isset($bookings) && !empty($bookings)) {
+									
+									$data = [];
+
 									foreach($bookings as $booking => $value) {
 										
-										$data = [];
-
 										$name = $value['firstName'].'-'.$value['lastName'];
 
 										if (in_array($name, $data))
@@ -68,7 +69,7 @@
 												$stat = 'badge-success';
 											}elseif($value['booking_status'] == 'Pending' || $value['booking_status'] == 'pending'){
 												$stat = 'badge-info';
-											}elseif($value['booking_status'] == 'Declined' || $value['booking_status'] == 'declined'){
+											}elseif($value['booking_status'] == 'Declined' || $value ['booking_status'] == 'declined'){
 												$stat = 'badge-warning';
 											}
 											
