@@ -52,17 +52,6 @@
 								if (isset($bookings) && !empty($bookings)) {
 									foreach($bookings as $booking => $value) {
 										
-										if($value['booking_status'] == 'Approved' || $value['booking_status'] == 'approved'){
-											$stat = 'badge-success';
-										}elseif($value['booking_status'] == 'Pending' || $value['booking_status'] == 'pending'){
-											$stat = 'badge-info';
-										}elseif($value['booking_status'] == 'Declined' || $value['booking_status'] == 'declined'){
-											$stat = 'badge-warning';
-										}
-										
-
-										$title = $CI->shorten_title($value['propertyTitle']);
-
 										$data = [];
 
 										$name = $value['firstName'].'-'.$value['lastName'];
@@ -74,7 +63,18 @@
 
 										else
 										{
+
+											if($value['booking_status'] == 'Approved' || $value['booking_status'] == 'approved'){
+												$stat = 'badge-success';
+											}elseif($value['booking_status'] == 'Pending' || $value['booking_status'] == 'pending'){
+												$stat = 'badge-info';
+											}elseif($value['booking_status'] == 'Declined' || $value['booking_status'] == 'declined'){
+												$stat = 'badge-warning';
+											}
 											
+
+											$title = $CI->shorten_title($value['propertyTitle']);
+
 							?>	 
    
 							<tr>
