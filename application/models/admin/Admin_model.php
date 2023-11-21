@@ -1929,7 +1929,7 @@ class Admin_model extends CI_Model {
 		
 		$this->db->distinct();
 		
-		$this->db->select('a.userID, c.*');
+		$this->db->select('a.userID, c.*, d.propertyID, d.propertyTitle, d.propertyType');
 
 		$this->db->from('bookings as a');
 		
