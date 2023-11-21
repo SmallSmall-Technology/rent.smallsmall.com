@@ -60,7 +60,6 @@
 											$stat = 'badge-warning';
 										}
 										
-										
 
 										$title = $CI->shorten_title($value['propertyTitle']);
 
@@ -76,7 +75,8 @@
 										else
 										{
 											array_push($data, $name);
-						
+
+											print_r($data);
 							?>	 
    
 							<tr>
