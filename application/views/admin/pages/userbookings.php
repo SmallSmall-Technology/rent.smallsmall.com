@@ -100,9 +100,9 @@
 							</tbody>
 						</table>
 					</div>
-					<div class="d-block text-center card-footer">
+					<!-- <div class="d-block text-center card-footer">
 						<div class="paginated"><?php echo $this->pagination->create_links(); ?></div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
