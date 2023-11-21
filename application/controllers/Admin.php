@@ -5681,59 +5681,74 @@ class Admin extends CI_Controller
 	
 
 			try {
-				// Checking if the S3 bucket exists; if not, you might want to handle it accordingly
+				// Temporary upload path for the file
+				$tempUploadPath = './tmp/';
+			
+				// Check if upload folder exists, if not, create it
+				if (!is_dir($tempUploadPath)) {
 
-				$bucket = 'dev-rss-uploads'; // S3 bucket name
-	
-				// Configuring S3 upload parameters
-				$uploadParams = [
+					mkdir($tempUploadPath, 0777, true);
 
-					'Bucket' => $bucket . '/uploads/tmp/', // Using the specified S3 bucket and folder path
+				}
+			
+				// Configuration for file upload
+				$config['upload_path'] = $tempUploadPath;
 
-					'Key' => basename($_FILES[$file_element_name]['name']),
+				$config['allowed_types'] = 'jpg|png|jpeg';
 
-					'Body' => fopen($_FILES[$file_element_name]['tmp_name'], 'rb'),
+				$config['max_size'] = 1024 * 10; // 10 MB
 
-				];
+				$config['encrypt_name'] = true;
+			
+				$this->load->library('upload', $config);
+			
+				// Perform file upload
+				if (!$this->upload->do_upload($file_element_name)) {
+					// Handle upload error
+					$status = 'error';
 
-					// Uploading file to S3
-				$result = $s3->putObject($uploadParams);
-	
-				// Get the uploaded file URL from AWS S3
-				$uploadedFileUrl = $result['ObjectURL'];
-
-				// Extracting the file name from the URL
-				$pathParts = pathinfo($uploadedFileUrl);
-
-				$fileName = $pathParts['basename']; // Contains the uploaded file name
-		
-				// Example: Inserting property details into the database using admin_model method
-
-				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $fileName, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
-				
-				// Handling success or failure of property insertion
-				if ($property != 0) {
-
-					$status = "success";
-
-					$msg = "Property successfully uploaded";
+					$msg = $this->upload->display_errors('', '');
 
 				} else {
+					// File uploaded successfully
+					$uploadedData = $this->upload->data();
 
-					$status = "error";
-
-					$msg = "Could not upload property";
+					$uploadedFilePath = $tempUploadPath . $uploadedData['file_name'];
+			
+					// Uploading file to S3
+					$uploadParams = [
+						'Bucket' => $bucket . '/uploads/tmp/',
+						'Key' => basename($uploadedFilePath),
+						'Body' => fopen($uploadedFilePath, 'rb'),
+					];
+			
+					$result = $s3->putObject($uploadParams);
+			
+					// Get the uploaded file URL from AWS S3
+					$uploadedFileUrl = $result['ObjectURL'];
+			
+					// Extracting the file name from the URL
+					$pathParts = pathinfo($uploadedFileUrl);
+					
+					$fileName = $pathParts['basename'];
+			
+					// Example: Inserting property details into the database using admin_model method
+					$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+			
+					if ($property != 0) {
+						$status = "success";
+						$msg = "Property successfully uploaded";
+					} else {
+						$status = "error";
+						$msg = "Could not upload property";
+					}
 				}
-	
 			} catch (Aws\S3\Exception\S3Exception $e) {
-
 				// Handling exceptions if any issue occurs during S3 interaction
-
 				$status = 'error';
-
 				$msg = $e->getMessage();
-
 			}
+			
 
 		} else {
 
