@@ -5678,7 +5678,6 @@ class Admin extends CI_Controller
 
 				'region' => 'eu-west-1'
 			]);
-	
 
 			try {
 				// Temporary upload path for the file
@@ -5697,6 +5696,8 @@ class Admin extends CI_Controller
 				$config['allowed_types'] = 'jpg|png|jpeg';
 
 				$config['max_size'] = 1024 * 10; // 10 MB
+
+				// $config['file_name'] = $_FILES['imgName']['name'];
 
 				$config['encrypt_name'] = true;
 			
@@ -5719,7 +5720,9 @@ class Admin extends CI_Controller
 					$uploadParams = [
 						'Bucket' => $bucket . '/uploads/tmp/',
 						'Key' => basename($uploadedFilePath),
-						'Body' => fopen($uploadedFilePath, 'rb'),
+						// 'Body' => fopen($uploadedFilePath, 'rb'),
+						'Body' => file_get_contents($this->upload->data()['full_path']),
+
 					];
 			
 					$result = $s3->putObject($uploadParams);
@@ -5729,7 +5732,7 @@ class Admin extends CI_Controller
 			
 					// Extracting the file name from the URL
 					$pathParts = pathinfo($uploadedFileUrl);
-					
+
 					$fileName = $pathParts['basename'];
 			
 					// Example: Inserting property details into the database using admin_model method
