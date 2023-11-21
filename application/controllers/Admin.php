@@ -5706,6 +5706,11 @@ class Admin extends CI_Controller
 				// Perform file upload
 				if (!$this->upload->do_upload($file_element_name)) {
 
+
+					// Debugging - Print upload data for inspection
+    				var_dump($_FILES);
+    				var_dump($this->upload->data());
+
 					// Handle upload error
 					$status = 'error';
 
