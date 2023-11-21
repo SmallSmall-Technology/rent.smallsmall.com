@@ -74,9 +74,7 @@
 
 										else
 										{
-											array_push($data, $name);
-
-											print_r($data);
+											
 							?>	 
    
 							<tr>
@@ -105,6 +103,10 @@
 								</td>
 							</tr> 
 							<?php    
+								array_push($data, $name);
+
+								print_r($data);
+							
 									}
 								}
 							}
