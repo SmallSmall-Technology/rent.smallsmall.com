@@ -5420,6 +5420,90 @@ class Admin extends CI_Controller
 		}
 	}
 
+	// public function uploadBuytoletImages($folder)
+	// {
+
+	// 	if (!$folder) {
+
+	// 		$folder = md5(date("Ymd His"));
+	// 	}
+
+	// 	//sleep(3);
+
+	// 	if (!is_dir('../buy.smallsmall.com/uploads/buytolet/' . $folder)) {
+
+	// 		mkdir('../buy.smallsmall.com/uploads/buytolet/' . $folder, 0777, TRUE);
+	// 	}
+	// 	//Connect to buy2let and create property Image folder
+	// 	//$success = file_get_contents("https://dev-buy.smallsmall.com/create-folder/".$folder);
+
+	// 	//if(!$success){
+	// 	//Create the floor plan folder
+	// 	//file_get_contents("https://www.buy2let.ng/create-folder/".$folder."/floor-plan");
+	// 	//$error = "Could not create remote folder";
+
+	// 	//}		
+
+	// 	if ($_FILES["files"]["name"] != '') {
+
+	// 		$output = '';
+
+	// 		$error = 0;
+
+	// 		$config["upload_path"] = '../buy.smallsmall.com/uploads/buytolet/' . $folder;
+
+	// 		$config["allowed_types"] = 'jpg|jpeg|png';
+
+	// 		$config['encrypt_name'] = TRUE;
+
+	// 		$config['max_size'] = 10 * 1024;
+
+	// 		$this->load->library('upload', $config);
+
+	// 		$this->upload->initialize($config);
+
+	// 		for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
+	// 			$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+
+	// 			$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+
+	// 			$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+
+	// 			$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+
+	// 			$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+	// 			//$this->upload->do_upload('file');
+
+	// 			//$data = $this->upload->data();
+
+	// 			if ($this->upload->do_upload('file')) {
+
+	// 				//$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
+
+	// 				//$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$folder);
+
+	// 				//if($upl_result){
+
+	// 				$data = $this->upload->data();
+
+	// 				$output .= '
+	// 							<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://dev-buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+	// 							<div class="remove-btl-img img-removal" id="img-buytolet-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
+	// 							<!--<span class="featTT">featured</span>--></span>';
+	// 			} else {
+
+	// 				$error = $this->upload->display_errors('', '');
+	// 			}
+	// 		}
+
+	// 		echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));
+	// 	}
+	// }
+
+
+
 	public function uploadBuytoletImages($folder)
 	{
 
@@ -5449,6 +5533,16 @@ class Admin extends CI_Controller
 			$output = '';
 
 			$error = 0;
+
+			require 'vendor/autoload.php'; // Include the AWS SDK
+
+        	$s3 = new Aws\S3\S3Client([
+
+            'version' => 'latest',
+
+            'region' => 'eu-west-1',
+
+        	]);
 
 			$config["upload_path"] = '../buy.smallsmall.com/uploads/buytolet/' . $folder;
 
@@ -5488,10 +5582,40 @@ class Admin extends CI_Controller
 
 					$data = $this->upload->data();
 
-					$output .= '
-								<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://dev-buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
-								<div class="remove-btl-img img-removal" id="img-buytolet-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
-								<!--<span class="featTT">featured</span>--></span>';
+					//
+
+					// Uploading file to S3
+
+					$uploadParams = [
+
+						'Bucket' => 'dev-bss-uploads',
+
+						'Key' => 'uploads/buytolet/' . $folder . '/' . $data["file_name"],
+
+						'Body' => fopen('../buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"], 'rb'),
+
+					];
+
+					// Put into s3
+
+					$s3->putObject($uploadParams);
+
+					//
+
+
+					// $output .= '
+					// 			<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://dev-buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+					// 			<div class="remove-btl-img img-removal" id="img-buytolet-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
+					// 			<!--<span class="featTT">featured</span>--></span>';
+
+					//Out from s3
+
+					$output .= '<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '">
+                            <img src="https://s3-eu-west-1.amazonaws.com/dev-bss-uploads/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+                            <div class="remove-btl-img img-removal" id="img-buytolet-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
+                            <!--<span class="featTT">featured</span>--></span>';
+
+
 				} else {
 
 					$error = $this->upload->display_errors('', '');
@@ -5501,6 +5625,12 @@ class Admin extends CI_Controller
 			echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));
 		}
 	}
+
+
+
+
+
+
 	// public function uploadBuytoletProperty()
 	// {
 	// 	//Get data from AJAX
@@ -5673,6 +5803,7 @@ class Admin extends CI_Controller
 				'version' => 'latest',
 
 				'region' => 'eu-west-1'
+
 			]);
 
 			$userID = $this->session->userdata('adminID');
@@ -5680,6 +5811,7 @@ class Admin extends CI_Controller
 			$file_element_name = 'plan-image';
 
 			try {
+
 				// Temporary upload path for the file
 				$tempUploadPath = './tmp/';
 			
@@ -5702,6 +5834,8 @@ class Admin extends CI_Controller
 				$config['encrypt_name'] = true;
 			
 				$this->load->library('upload', $config);
+
+				$this->upload->initialize($config);
 			
 				// Perform file upload
 				if (!$this->upload->do_upload($file_element_name)) {
@@ -5709,6 +5843,7 @@ class Admin extends CI_Controller
 
 					// Debugging - Print upload data for inspection
     				var_dump($_FILES);
+
     				var_dump($this->upload->data());
 
 					// Handle upload error
@@ -5745,16 +5880,25 @@ class Admin extends CI_Controller
 					$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
 			
 					if ($property != 0) {
+
 						$status = "success";
+
 						$msg = "Property successfully uploaded";
+
 					} else {
+
 						$status = "error";
+
 						$msg = "Could not upload property";
+
 					}
 				}
 			} catch (Aws\S3\Exception\S3Exception $e) {
+
 				// Handling exceptions if any issue occurs during S3 interaction
+
 				$status = 'error';
+
 				$msg = $e->getMessage();
 			}
 			
@@ -5862,7 +6006,7 @@ class Admin extends CI_Controller
 					$data = $this->upload->data();
 
 
-					$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
+					$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);dev-buy.smallsmall.com/uploads/buytolet/
 
 					$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan");
 
