@@ -8193,23 +8193,18 @@ class Admin extends CI_Controller
 			$user_email == 'old_user';
 		} else {
 			//Generate new ID
-			$user_id = $this->generate_user_id(12);
 
-			$firstname = $this->input->post('firstname');
+			$details['id'] =  $this->generate_user_id(12);
 
-			$lastname = $this->input->post('lastname');
+			$details['fname'] = $this->input->post('firstname');
 
-			$phone = $this->input->post('phone');
-
-			$details['userID'] =  $user_id;
-
-			$details['fname'] = $firstname;
-
-			$details['lname'] = $lastname;
+			$details['lname'] = $this->input->post('lastname');
 
 			$details['email'] = $email;
 
-			$details['phone'] = $phone;
+			$details['phone'] = $this->input->post('phone');
+
+			$details['refCode'] = $ref;
 
 			$res = $this->create_user_account($details);
 		}
