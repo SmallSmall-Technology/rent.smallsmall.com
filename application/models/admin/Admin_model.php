@@ -1927,7 +1927,7 @@ class Admin_model extends CI_Model {
 
 	public function fetchBookings(){   
 		
-		$this->db->select('DISTINCT(a.userID), c.*, d.propertyID, d.propertyTitle, d.propertyType');
+		$this->db->select('DISTINCT(a.userID), c.*');
 
 		$this->db->from('bookings as a');
 		
@@ -1937,7 +1937,7 @@ class Admin_model extends CI_Model {
 		
 		$this->db->join('user_tbl as c', 'a.userID = c.userID');
 		
-		$this->db->join('property_tbl as d', 'd.propertyID = a.propertyID');
+		//$this->db->join('property_tbl as d', 'd.propertyID = a.propertyID');
 
 		$this->db->limit($this->_pageNumber, $this->_offset);
 		

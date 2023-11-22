@@ -41,8 +41,8 @@
 								<!-- <th class="text-left">Tranx Date</th>
 								<th class="text-left">Move in</th>
 								<th class="text-left">Move out</th>
-								<th class="text-left">Status</th>
-								<th class="text-left">Actions</th> -->
+								<th class="text-left">Status</th> -->
+								<th class="text-left">Actions</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -79,7 +79,7 @@
 							?>	 
    
 							<tr>
-								<td class="text-left"><input type="checkbox" class="props-checkbox" id="<?php echo $value['propertyID'] ?>" /></td>
+								<!-- <td class="text-left"><input type="checkbox" class="props-checkbox" id="<?php // echo $value['propertyID'] ?>" /></td> -->
 								<td class="text-left">
 								    <?php echo substr($value['firstName'], 0, 1).' '.$value['lastName'] ?>
 								    <span style="display:block;font-size:12px;color:#e3e3e3"><?php echo "<a href='".base_url()."property/".$value['propertyID']."' />".$title."</a>" ?></span>
@@ -90,7 +90,7 @@
 								<!-- <td class="text-left"><?php //echo date("d M Y", strtotime($value['move_in_date'])) ?></td>
 								<td class="text-left"><?php //echo date("d M Y", strtotime(@$value['next_rental'])) ?></td>
 								<td class="text-left"><div class="mb-2 mr-2 badge <?php //echo $stat; ?>"><?php //echo $value['status'] ?></div></td> -->
-								<!-- <td class="text-left">
+								<td class="text-left">
 									<div class="action-container">
 										<?php //if($value['status'] == 'Pending' || $value['status'] == 'pending'){ ?>
 											<!---<button type="button" id="approve-<?php //echo $value['reference_id']."-".$value['propertyID']; ?>" class="btn btn-primary btn-sm approve-payment">Approve</button>---> 
@@ -98,10 +98,11 @@
 										<!-- <button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php //echo base_url()."admin/booking/".$value['bookingID']; ?>">Details</a></button>
 										<button type="button" id="booking-<?php //echo $value['bookingID']; ?>-<?php //echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button> -->
 
-										<!-- <button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php //echo base_url()."admin/userbooking/".$value['buserId']; ?>">Details</a></button>
-										<button type="button" id="booking-<?php //echo $value['bookingID']; ?>-<?php //echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button>
-									</div> -->
-								<!-- </td> --> -->
+									 	<button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php //echo base_url()."admin/userbooking/".$value['buserId']; ?>">Details</a></button>
+
+										<!-- <button type="button" id="booking-<?php //echo $value['bookingID']; ?>-<?php //echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button> -->
+									</div> 
+								</td>
 							</tr> 
 							<?php    
 									}
