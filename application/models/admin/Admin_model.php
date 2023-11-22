@@ -1927,7 +1927,7 @@ class Admin_model extends CI_Model {
 
 	public function fetchBookings(){   
 		
-		$this->db->select('distinct a.userID, c.*');
+		$this->db->select('DISTINCT(a.userID), c.*, d.propertyID, d.propertyTitle, d.propertyType');
 
 		$this->db->from('bookings as a');
 		
