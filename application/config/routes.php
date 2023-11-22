@@ -384,6 +384,8 @@ $route['admin/btl-requests'] = 'admin/buytolet_property_requests';
 
 $route['admin/bookings'] = 'admin/bookings';
 
+$route['admin/userbooking/(:any)'] = 'admin/userbooking/$1';
+
 $route['admin/btl-user/(:any)'] = 'admin/btl_user/$1';
 
 $route['admin/btl-inspections/(:any)'] = 'admin/btl_inspection_requests/$1';

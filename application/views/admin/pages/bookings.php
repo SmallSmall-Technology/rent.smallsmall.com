@@ -82,7 +82,7 @@
 								<!-- <td class="text-left"><input type="checkbox" class="props-checkbox" id="<?php // echo $value['propertyID'] ?>" /></td> -->
 								<td class="text-left">
 								    <?php echo substr($value['firstName'], 0, 1).' '.$value['lastName'] ?>
-								    <span style="display:block;font-size:12px;color:#e3e3e3"><?php echo "<a href='".base_url()."property/".$value['propertyID']."' />".$title."</a>" ?></span>
+								    <span style="display:block;font-size:12px;color:#e3e3e3"><?php echo "<a href='".base_url()."admin/userbooking/".$value['buserId']."' />".$title."</a>" ?></span>
 								</td>
 								<!-- <td class="text-left"><?php //echo date("d M Y", strtotime($value['transaction_date'])) ?> -->
 								    <!---<div class="widget-subheading"><?php //echo ucfirst($value['payment_type']); ?></div>--->
@@ -98,7 +98,7 @@
 										<!-- <button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php //echo base_url()."admin/booking/".$value['bookingID']; ?>">Details</a></button>
 										<button type="button" id="booking-<?php //echo $value['bookingID']; ?>-<?php //echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button> -->
 
-									 	<button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php //echo base_url()."admin/userbooking/".$value['buserId']; ?>">Details</a></button>
+									 	<button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/userbooking/".$value['buserId']; ?>">Details</a></button>
 
 										<!-- <button type="button" id="booking-<?php //echo $value['bookingID']; ?>-<?php //echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button> -->
 									</div> 
