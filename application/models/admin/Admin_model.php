@@ -1941,14 +1941,13 @@ class Admin_model extends CI_Model {
 
 		$this->db->limit($this->_pageNumber, $this->_offset);
 		
-		$this->db->group_by('a.bookingID');
+		//$this->db->group_by('a.bookingID');
 		
 		$this->db->order_by('a.id', 'DESC');
 
 		$query = $this->db->get();
 
 		return $query->result_array();
-		
 	}
 
 	public function fetchBooking($id){   
