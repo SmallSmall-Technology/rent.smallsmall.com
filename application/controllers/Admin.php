@@ -5808,7 +5808,7 @@ class Admin extends CI_Controller
 
 			$userID = $this->session->userdata('adminID');
 
-			$file_element_name = 'plan-image';
+			// $file_element_name = 'plan-image';
 
 			try {
 
@@ -5838,13 +5838,14 @@ class Admin extends CI_Controller
 				$this->upload->initialize($config);
 			
 				// Perform file upload
-				if (!$this->upload->do_upload($file_element_name)) {
-
+				// if (!$this->upload->do_upload($file_element_name)) {
+					if (!$this->upload->do_upload($file)) {
 
 					// Debugging - Print upload data for inspection
-    				var_dump($_FILES);
+					
+    				// var_dump($_FILES);
 
-    				var_dump($this->upload->data());
+    				// var_dump($this->upload->data());
 
 					// Handle upload error
 					$status = 'error';
