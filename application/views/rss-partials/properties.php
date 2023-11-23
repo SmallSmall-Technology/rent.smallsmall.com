@@ -19,6 +19,9 @@ function shortenText($text, $maxLength)
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/range-slide/css/rSlider.min.css">
 
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script src="<?php echo base_url(); ?>assets/range-slide/js/rSlider.min.js" type="application/javascript"></script>
@@ -513,13 +516,14 @@ function shortenText($text, $maxLength)
 
           <div class="col-lg-4 col-md-6 col-12 my-4">
 
-            <div class="card" id="properties-container">
+            <div class="card card-custom" > 
+              <!-- id="properties-container" -->
 
               <a style="text-decoration:none" href="<?php echo base_url(); ?>property/<?php echo $value['propertyID']; ?>">
 
               <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top" data-ride="carousel">
 
-                <!-- <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel"> -->
+                  <!-- <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel"> -->
 
                   <?php
                   $CI = &get_instance();
@@ -528,7 +532,7 @@ function shortenText($text, $maxLength)
 
                     echo '<div class="availablility unavailable d-flex">';
 
-                    echo '<img src="' . base_url() . 'assets/updated-assets/images/time-delete.svg" alt="">';
+                    echo '<img src="' . base_url() . 'assets/updated-assets/images/time-delete.svg"  alt="">';
 
                     echo '<span class="ml-2">Rented until: ' . date("M Y", strtotime($value['available_date'])) . '</span>';
 
@@ -644,15 +648,15 @@ function shortenText($text, $maxLength)
                     </small>
 
                   </p>
-                  <p class="card-text"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p>
+                  <p class="card-text" style="font-size: 12px; font-weight: 400;"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p>
 
                   <div class="card-text d-flex justify-content-between">
-                    <!-- <p class="card-text"> -->
-                    <p>
-                      &bull;<?php echo $value['bed']; ?> Bed
-                      &bull;<?php echo $value['bath']; ?> Bath
-                      <!--&bull;<?php echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
-                      &bull;<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"
+                    <!--<p class="card-text"> -->
+                    <p style = "color: black;">
+                      <?php echo $value['bed']; ?> Bed
+                      <?php echo $value['bath']; ?> Bath
+                      <!--&bull;<?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
+                      <!-- &bull;--> <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" 
                     fill="none">
                     <g clip-path="url(#clip0_7160_3254)">
                       <path
