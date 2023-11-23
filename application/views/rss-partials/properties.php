@@ -532,7 +532,7 @@ function shortenText($text, $maxLength)
 
                     echo '<div class="availablility unavailable d-flex">';
 
-                    echo '<img src="' . base_url() . 'assets/updated-assets/images/time-delete.svg" alt="">';
+                    echo '<img src="' . base_url() . 'assets/updated-assets/images/time-delete.svg"  alt="">';
 
                     echo '<span class="ml-2">Rented until: ' . date("M Y", strtotime($value['available_date'])) . '</span>';
 
@@ -651,8 +651,8 @@ function shortenText($text, $maxLength)
                   <p class="card-text" style="font-size: 12px; font-weight: 400;"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p>
 
                   <div class="card-text d-flex justify-content-between">
-                    <!-- <p class="card-text"> -->
-                    <p>
+                    <!--<p class="card-text"> -->
+                    <p style = "color: black;">
                       <?php echo $value['bed']; ?> Bed
                       <?php echo $value['bath']; ?> Bath
                       <!--&bull;<?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
