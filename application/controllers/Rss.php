@@ -6348,7 +6348,7 @@ public function uploadIdentification($folder)
 
 				// Replace the placeholder in the HTML body with the username
 
-				$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+				$htmlBody = str_replace('{{SubscriberName}}', $username, $htmlBody);
 				$htmlBody = str_replace('{{PlanID}}', $plancode, $htmlBody);
 				$htmlBody = str_replace('{{RecurringAmount}}', $amount, $htmlBody);
 				$htmlBody = str_replace('{{Plan}}', $plan, $htmlBody);
