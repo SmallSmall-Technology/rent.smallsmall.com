@@ -5678,7 +5678,8 @@ class Admin extends CI_Controller
 		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$userID = $this->session->userdata('adminID');
-			$file_element_name = 'plan-image';
+
+			// $file_element_name = 'plan-image';
 
 			//Check if upload folder exists
 			if (!is_dir('./tmp/')) {
@@ -5696,11 +5697,28 @@ class Admin extends CI_Controller
 
 			$this->load->library('upload', $config);
 
-			if (!$this->upload->do_upload($file_element_name)) {
+			//
+
+			// for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
+				$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+
+				$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+
+				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+
+				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+
+				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+			//
+
+			if (!$this->upload->do_upload('file')) {
 
 				$status = 'error';
 
 				$msg = $this->upload->display_errors('', '');
+
 			} else {
 
 				$data = $this->upload->data();
