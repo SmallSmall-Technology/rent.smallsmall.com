@@ -5847,12 +5847,20 @@ class Admin extends CI_Controller
             } else {
 
                 $data = $this->upload->data();
-				
+
                 $uploaded_file_names[] = $data['file_name'];
+
+				var_dump($_FILES);
+
+    			var_dump($this->upload->data());
+
+				var_dump($data['file_name']);
             }
         }
 
         if ($is_uploaded) {
+
+			var_dump($data['file_name']);
 
 			//Populate the property table
 				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $uploaded_file_names, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
