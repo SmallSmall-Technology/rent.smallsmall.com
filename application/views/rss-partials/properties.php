@@ -636,7 +636,7 @@ function shortenText($text, $maxLength)
 
                 </div>
                 <div class="card-body">
-                  <p class="card-text" style="font-size: 14px; font-weight: 600;">
+                  <p class="card-text" style="font-size: 14px; font-weight: 600; color: black;">
                     &#8358;<?php echo ($value['price'] > 999999) ? ($value['price'] / 1000000) . 'M' : number_format($value['price']); ?>/month&nbsp;&nbsp;
                     <small style="
                  text-decoration: line-through;
@@ -648,7 +648,7 @@ function shortenText($text, $maxLength)
                     </small>
 
                   </p>
-                  <p class="card-text" style="font-size: 12px; font-weight: 400;"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p>
+                  <p class="card-text" style="font-size: 12px; font-weight: 400; color: black;"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p>
 
                   <div class="card-text d-flex justify-content-between">
                     <!--<p class="card-text"> -->
