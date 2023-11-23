@@ -75,7 +75,7 @@
                                             </tr>												
                                             <tr>
                                                 <th scope="row">Amount</th>
-                                                <td><?php echo $details['transAmount']; ?></td>
+                                                <td><?php echo number_format($details['transAmount']); ?></td>
                                             </tr>
                                             
                                             <tr>

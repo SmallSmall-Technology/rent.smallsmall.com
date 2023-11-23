@@ -36,7 +36,7 @@
 						<table class="align-middle mb-0 table table-borderless table-striped table-hover">
 							<thead>
 							<tr>
-								<th class="text-left">&nbsp;</th>
+								<!-- <th class="text-left">&nbsp;</th> -->
 								<th class="text-left">Booked By</th>
 								<!-- <th class="text-left">Tranx Date</th>
 								<th class="text-left">Move in</th>
