@@ -598,7 +598,7 @@ function shortenText($text, $maxLength)
                       if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
                           $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
                           echo '
-                              <div class="carousel-item ' . $activeClass . '">
+                              <div class="carousel-item active">
                                   <img src="' . $imageSrc . '" alt="RSS property image" width = "100%" height = "200px" class="d-block w-100"/>
                               </div>
                           ';
