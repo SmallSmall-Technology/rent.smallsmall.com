@@ -648,7 +648,7 @@ function shortenText($text, $maxLength)
                     </small>
 
                   </p>
-                  <p class="card-text" style="font-size: 12px; font-weight: 400; color: black;"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p><br></br>
+                  <p class="card-text" style="font-size: 12px; font-weight: 400; color: black;"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p><br>
 
                   <div class="card-text d-flex justify-content-between">
                     <!--<p class="card-text"> -->
