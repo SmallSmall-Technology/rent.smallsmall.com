@@ -599,7 +599,7 @@ function shortenText($text, $maxLength)
                           $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
                           echo '
                               <div class="carousel-item ' . $activeClass . '">
-                                  <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
+                                  <img src="' . $imageSrc . '" alt="RSS property image" width = "100%" height = "200px" class="d-block w-100"/>
                               </div>
                           ';
                           $activeClass = '';
