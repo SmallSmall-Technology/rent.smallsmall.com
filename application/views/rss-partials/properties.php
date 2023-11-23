@@ -513,13 +513,14 @@ function shortenText($text, $maxLength)
 
           <div class="col-lg-4 col-md-6 col-12 my-4">
 
-            <div class="card" id="properties-container">
+            <div class="card card-custom" > 
+              <!-- id="properties-container" -->
 
               <a style="text-decoration:none" href="<?php echo base_url(); ?>property/<?php echo $value['propertyID']; ?>">
 
               <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top" data-ride="carousel">
 
-                <!-- <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel"> -->
+                  <!-- <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel"> -->
 
                   <?php
                   $CI = &get_instance();
@@ -644,15 +645,15 @@ function shortenText($text, $maxLength)
                     </small>
 
                   </p>
-                  <p class="card-text"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p>
+                  <p class="card-text" style="font-size: 12px; font-weight: 400;"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p>
 
                   <div class="card-text d-flex justify-content-between">
                     <!-- <p class="card-text"> -->
                     <p>
-                      &bull;<?php echo $value['bed']; ?> Bed
-                      &bull;<?php echo $value['bath']; ?> Bath
-                      <!--&bull;<?php echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
-                      &bull;<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"
+                      <?php echo $value['bed']; ?> Bed
+                      <?php echo $value['bath']; ?> Bath
+                      <!--&bull;<?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
+                      <!-- &bull;--> <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" 
                     fill="none">
                     <g clip-path="url(#clip0_7160_3254)">
                       <path
