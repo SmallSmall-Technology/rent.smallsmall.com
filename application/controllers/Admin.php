@@ -5838,29 +5838,17 @@ class Admin extends CI_Controller
 
         $is_uploaded = true;
 
-        foreach ($_FILES["userfile"]["name"] as $key => $value) {
-            $_FILES["file"]["name"] = $_FILES["userfile"]["name"][$key];
-            $_FILES["file"]["type"] = $_FILES["userfile"]["type"][$key];
-            $_FILES["file"]["tmp_name"] = $_FILES["userfile"]["tmp_name"][$key];
-            $_FILES["file"]["error"] = $_FILES["userfile"]["error"][$key];
-            $_FILES["file"]["size"] = $_FILES["userfile"]["size"][$key];
+		if (!empty($_FILES['plan-image']['name'])) {
 
-            if (!$this->upload->do_upload('file')) {
-
-				// $status = 'error';
-
-				// $msg = $this->upload->display_errors('', '');
+            if (!$this->upload->do_upload('plan-image')) {
 
                 $is_uploaded = false;
-
-                break;
 
             } else {
 
                 $data = $this->upload->data();
-
+				
                 $uploaded_file_names[] = $data['file_name'];
-
             }
         }
 
