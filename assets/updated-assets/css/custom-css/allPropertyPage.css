@@ -80,8 +80,7 @@
   top: 7em;
 }
 
-.expect-section {
-}
+.expect-section {}
 
 .expect-section h1 {
   font-weight: 700;
@@ -89,9 +88,6 @@
 
 .card-custom {
   border: none;
-  -webkit-box-shadow: -6px 1px 46px -26px rgba(66, 68, 90, 1);
-  -moz-box-shadow: -6px 1px 46px -26px rgba(66, 68, 90, 1);
-  box-shadow: -6px 1px 46px -26px rgba(66, 68, 90, 1);
 }
 
 .availablility {
@@ -108,12 +104,13 @@
 }
 
 .available {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 
 .unavailable {
-  background: #ffffff;
+  background: #FFFFFF;
 }
+
 
 .filter-section-dropdown {
   min-width: 20em;
@@ -162,8 +159,9 @@
   padding: 0 60px;
 }
 
+
 .filter-btn {
-  border: 1.5px solid #e6ebf1;
+  border: 1.5px solid #E6EBF1;
   border-radius: 10px;
   min-height: 56px;
   padding-left: 17px;
@@ -171,10 +169,113 @@
 }
 
 .show-result-btn {
-  background: #007dc1;
+  background: #007DC1;
   border-radius: 10px;
   color: #ffffff;
 }
+
+/*Additional Css style*/
+
+.pagination {
+    width: 100%;
+    display: inline-block;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.pagination span {
+    font-family: sans-serif;
+    float: left;
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #007bff;
+    /*background-color: #007bff; */
+    /* Updated background color */
+    border: 1px solid #dee2e6;
+}
+
+.pagination span:not(:has(a)) {
+    background-color: #007bff; /* Background color for spans without an 'a' link */
+    color: #fff; /* Text color for spans without an 'a' link */
+}
+
+.pagination span a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    font-family: sans-serif;
+    text-decoration: none;
+    color: #007bff; /* Added color for links */
+}
+
+.pagination span a:hover {
+    /*color: #fff;*/
+    background-color: #007bff;
+    /*border-color: #007bff;*/
+    z-index: 2;
+    color: #0056b3;
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+
+       .card-body p.card-text {
+  color: #212529;
+}
+
+.card-text:last-child {
+  margin-bottom: 1rem;
+}
+
+
+/*.listing-image img{*/
+
+/*    width:100%;*/
+/*    object-fit:cover;*/
+/*    height:200px;*/
+/*    object-fit:cover;*/
+/*    flex-shrink: 0;*/
+/*    position: relative;*/
+/*    transition-property: transform;*/
+/*    border-radius:10px;*/
+/*}*/
+
+.listing-image{
+    /*width:100%;*/
+    /*height:200px;*/
+    /*overflow:hidden;*/
+    /*border-radius:5px 5px 0 0;*/
+    /*position:relative;*/
+    
+    width:100%;
+    object-fit:cover;
+    height:200px;
+    object-fit:cover;
+    flex-shrink: 0;
+    position: relative;
+    transition-property: transform;
+    border-radius:10px;
+}
+
+
+  /* Custom tooltip styles */
+  .tooltip {
+    /*background-color: #00CD2D;*/
+    color: #fff;
+    font-size: 12px;
+  }
+
+  
+  .dropdown-menu {
+    font-size: 1.2rem;
+}
+  
+  /*End of additional css*/
 
 /*****MEDIA QUERY****/
 
@@ -186,12 +287,10 @@
 }
 
 /* Small devices (landscape phones, 576px and up) */
-@media screen and (min-width: 576px) {
-}
+@media screen and (min-width: 576px) {}
 
 /* Medium devices (tablets, 768px and up)*/
-@media screen and (min-width: 768px) {
-}
+@media screen and (min-width: 768px) {}
 
 /* Large devices (desktops, 992px and up)*/
 @media screen and (992px <=width <=1024px) {
@@ -201,5 +300,138 @@
 }
 
 /* Extra large devices (large desktops, 1200px and up)*/
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1200px) {}
+
+
+
+/*Range Slider*/
+
+.rs-container * {
+    box-sizing: border-box;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.rs-container {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 45px;
+    position: relative;
+}
+.rs-container .rs-bg,
+.rs-container .rs-selected {
+    background-color: #eee;
+    border: 1px solid #ededed;
+    height: 10px;
+    left: 0;
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    border-radius: 3px;
+}
+.rs-container .rs-selected {
+    background-color: #007DC1;
+    border: 1px solid #007DC1;
+    transition: all 0.2s linear;
+    width: 0;
+}
+.rs-container.disabled .rs-selected {
+    background-color: #ccc;
+    border-color: #bbb;
+}
+.rs-container .rs-pointer {
+    background-color: #fff;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 20px;
+    left: -10px;
+    position: absolute;
+    top: 0;
+    transition: all 0.2s linear;
+    width: 30px;
+    box-shadow: inset 0 0 1px #fff, inset 0 1px 6px #ebebeb, 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
+.rs-container.disabled .rs-pointer {
+    border-color: #ccc;
+    cursor: default;
+}
+.rs-container .rs-pointer::after,
+.rs-container .rs-pointer::before {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 9px;
+    background-color: #ddd;
+    left: 12px;
+    top: 5px;
+}
+.rs-container .rs-pointer::after {
+    left: auto;
+    right: 12px;
+}
+.rs-container.sliding .rs-pointer,
+.rs-container.sliding .rs-selected {
+    transition: none;
+}
+.rs-container .rs-scale {
+    left: 0;
+    position: absolute;
+    top: 5px;
+    white-space: nowrap;
+}
+.rs-container .rs-scale span {
+    float: left;
+    position: relative;
+}
+.rs-container .rs-scale span::before {
+    background-color: #ededed;
+    content: "";
+    height: 8px;
+    left: 0;
+    position: absolute;
+    top: 10px;
+    width: 1px;
+}
+.rs-container.rs-noscale span::before {
+    display: none;
+}
+.rs-container.rs-noscale span:first-child::before,
+.rs-container.rs-noscale span:last-child::before {
+    display: block;
+}
+.rs-container .rs-scale span:last-child {
+    margin-left: -1px;
+    width: 0;
+}
+.rs-container .rs-scale span ins {
+    color: #333;
+    display: none;
+    font-size: 12px;
+    margin-top: 20px;
+    text-decoration: none;
+}
+.rs-container.disabled .rs-scale span ins {
+    color: #999;
+}
+.rs-tooltip {
+    color: #333;
+    width: auto;
+    min-width: 60px;
+    height: 30px;
+    background: #fff;
+    border: 1px solid #00969b;
+    border-radius: 3px;
+    position: absolute;
+    transform: translate(-50%, -35px);
+    left: 13px;
+    text-align: center;
+    font-size: 13px;
+    padding: 6px 10px 0;
+}
+.rs-container.disabled .rs-tooltip {
+    border-color: #ccc;
+    color: #999;
 }

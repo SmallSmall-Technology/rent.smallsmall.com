@@ -521,7 +521,7 @@ function shortenText($text, $maxLength)
 
               <a style="text-decoration:none" href="<?php echo base_url(); ?>property/<?php echo $value['propertyID']; ?>">
 
-              <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top" data-ride="carousel">
+              <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image"  data-ride="carousel">
 
                   <!-- <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel"> -->
 
@@ -550,7 +550,7 @@ function shortenText($text, $maxLength)
                   ?>
 
                   <!-- <div class="carousel-inner listing-image"> -->
-                  <div class="carousel-inner">
+                  <div class="carousel-inner listing-image">
 
                     <?php
 
