@@ -5682,57 +5682,57 @@ class Admin extends CI_Controller
 			// $file_element_name = 'plan-image';
 
 			//Check if upload folder exists
-			if (!is_dir('./tmp/')) {
+			// if (!is_dir('./tmp/')) {
 
-				mkdir('./tmp/', 0777, TRUE);
-			}
+			// 	mkdir('./tmp/', 0777, TRUE);
+			// }
 
-			$config['upload_path'] = './tmp/';
+			// $config['upload_path'] = './tmp/';
 
-			$config['allowed_types'] = 'jpg|png|jpeg';
+			// $config['allowed_types'] = 'jpg|png|jpeg';
 
-			$config['max_size'] = 1024 * 10;
+			// $config['max_size'] = 1024 * 10;
 
-			$config['encrypt_name'] = TRUE;
+			// $config['encrypt_name'] = TRUE;
 
-			$this->load->library('upload', $config);
+			// $this->load->library('upload', $config);
 
 			//
 
 			// for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
 
-				$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+				// $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
 
-				$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+				// $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
 
-				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+				// $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
 
-				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+				// $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
 
-				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+				// $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
 
 			//
 
-			if (!$this->upload->do_upload('file')) {
+			// if (!$this->upload->do_upload('file')) {
 
-				$status = 'error';
+			// 	$status = 'error';
 
-				$msg = $this->upload->display_errors('', '');
+			// 	$msg = $this->upload->display_errors('', '');
 
-			} else {
+			// } else {
 
-				$data = $this->upload->data();
+				// $data = $this->upload->data();
 
 				// $folder =
 
-				$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
+				// $site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
 
-				$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
+				// $upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
 
-				unlink('./tmp/' . $data["file_name"]);
+				// unlink('./tmp/' . $data["file_name"]);
 
 				//Populate the property table
-				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
 
 				if ($property != 0) {
 
@@ -5744,13 +5744,13 @@ class Admin extends CI_Controller
 
 					$msg = "Could not upload property";
 				}
-			}
+			// }
 		} else {
 
 			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
 
-		@unlink($_FILES[$file_element_name]);
+		// @unlink($_FILES[$file_element_name]);
 
 
 		echo json_encode(array('status' => $status, 'msg' => $msg));
