@@ -5760,10 +5760,9 @@ class Admin extends CI_Controller
 
 	//Test
 
-
-	public function uploadBuytoletProperty()
+public function uploadBuytoletProperty()
 {
-   //Get data from AJAX
+    //Get data from AJAX
 		$propName = $this->input->post('propTitle');
 		$propType = $this->input->post('propType');
 		$propDesc = htmlentities($this->input->post('propDesc', ENT_QUOTES));
@@ -5809,63 +5808,71 @@ class Admin extends CI_Controller
 		$co_rent = explode(',', $this->input->post('co_rent'));
 		$status = "";
 
-    	if ($this->session->has_userdata('adminLoggedIn')) {
+
+    // Checking if the admin is logged in
+    if ($this->session->has_userdata('adminLoggedIn')) {
 
         $userID = $this->session->userdata('adminID');
 
-		//Check if upload folder exists
-			if (!is_dir('./tmp/')) {
+        // Checking if the upload folder exists, if not, creating it
+        if (!is_dir('./tmp/')) {
 
-				mkdir('./tmp/', 0777, TRUE);
-			}
+            mkdir('./tmp/', 0777, TRUE);
+        }
 
-        // Initialize upload configurations
-
-        // $folder = 'your_folder_name'; // Set your desired folder name
-        // $config['upload_path'] = '../buy.smallsmall.com/uploads/buytolet/' . $folder;
-        // Process file uploads
         $uploaded_file_names = array();
 
         $is_uploaded = true;
 
-		if (!empty($_FILES['userfile']['name'])) {
-			
-            $config['upload_path'] = './tmp/';
-            $config['allowed_types'] = 'jpg|jpeg|png';
-            $config['encrypt_name'] = TRUE;
-            $config['max_size'] = 10 * 1024; // 10 MB
+        // Checking if files are being uploaded
+        if ($_FILES["files"]["name"] != '') {
 
-            $this->load->library('upload', $config);
+            $error = 0;
 
-            foreach ($_FILES['userfile']['name'] as $key => $image_name) {
-                $_FILES['userfile']['name'] = $_FILES['userfile']['name'][$key];
-                $_FILES['userfile']['type'] = $_FILES['userfile']['type'][$key];
-                $_FILES['userfile']['tmp_name'] = $_FILES['userfile']['tmp_name'][$key];
-                $_FILES['userfile']['error'] = $_FILES['userfile']['error'][$key];
-                $_FILES['userfile']['size'] = $_FILES['userfile']['size'][$key];
+            $config["upload_path"] = './tmp/';
 
-                if ($this->upload->do_upload('userfile')) {
+			$config["allowed_types"] = 'jpg|jpeg|png';
+
+			$config['encrypt_name'] = TRUE;
+
+			$config['max_size'] = 10 * 1024;
+
+			$this->load->library('upload', $config);
+
+			$this->upload->initialize($config);
+
+            // Looping through uploaded files
+            for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
+                $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+
+				$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+
+				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+
+				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+
+				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+                if ($this->upload->do_upload('file')) {
 
                     $data = $this->upload->data();
 
-                    $uploaded_file_names[] = $data['file_name'];
-
                 } else {
 
-                    $is_uploaded = false;
-
-                    break;
+                    $error = $this->upload->display_errors('', '');
 
                 }
             }
         }
-		
+        
+        // Handling upload status
         if ($is_uploaded) {
 
-			var_dump($uploaded_file_names);
+            var_dump($data);
 
-			//Populate the property table
-				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $uploaded_file_names, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+            // Inserting data into the property table
+			$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $data["file_name"], $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
 
             if ($property != 0) {
 
@@ -5878,7 +5885,6 @@ class Admin extends CI_Controller
                 $status = "error";
 
                 $msg = "Could not upload property";
-
             }
         } else {
 
@@ -5887,15 +5893,17 @@ class Admin extends CI_Controller
             $msg = $this->upload->display_errors('', '');
 
         }
-		
+
     } else {
 
+        // Redirecting if admin is not logged in
         redirect(base_url() . "admin/dashboard", 'refresh');
 
     }
 
     echo json_encode(array('status' => $status, 'msg' => $msg));
 }
+
 
 
 	//
