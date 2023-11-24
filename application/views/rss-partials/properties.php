@@ -551,7 +551,7 @@ function shortenText($text, $maxLength)
                   ?>
 
                   <!-- <div class="carousel-inner listing-image"> -->
-                  <div class="carousel-inner listing-image">
+                  <div class="carousel-inner" style = "border-top-left-radius: 10px; border-top-right-radius: 10px">
 
                     <?php
 
