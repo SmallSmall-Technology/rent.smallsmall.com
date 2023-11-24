@@ -3847,6 +3847,7 @@ $(document). on('click', '.close-int', function(){
 		});	
 		
 	});
+
 	$('#newBuytoletForm').submit(function(e){
 			
 		e.preventDefault();
@@ -3926,32 +3927,24 @@ $(document). on('click', '.close-int', function(){
 		}
 
 
-
 		//
 
-		// Capture file names when files are selected
+		// File data handling
+		var fd = new FormData(); // Creating FormData object
+
+		var files = $('.multipleUplFiles')[0].files;
+
+		var folderName = $('#foldername').val();
 		
-		$('#multipleUplFiles').change(function(e) {
-			var uploadedFiles = e.target.files;
+		if (!folderName) {
+
+			folderName = 0;
+		}
 	
-			// Create an array to store file names
-			var fileNames = [];
-	
-			// Loop through each selected file and get its name
-			for (var i = 0; i < uploadedFiles.length; i++) {
-				var fileName = uploadedFiles[i].name;
-				fileNames.push(fileName); // Add file name to the array
-			}
-	
-			// Update the 'featuredPic' input value with the first file name (if available)
-			if (fileNames.length > 0) {
-				$('#featuredPic').val(fileNames[0]);
-			}
-	
-			// Optionally display file names or perform other operations
-			console.log('Uploaded file names:', fileNames);
-		});
-	
+		for (let i = 0; i < files.length; i++) {
+
+			fd.append('files[]', files[i]);
+		}
 
 		//
 		var data = {
@@ -3998,7 +3991,8 @@ $(document). on('click', '.close-int', function(){
 			"floor_level" : floor_level,
 			"hold_period" : hold_period,
 			"co_appr" : co_appr,
-			"co_rent" : co_rent
+			"co_rent" : co_rent,
+			"fd": fd // file data here
 		};
 		
 		$.ajaxFileUpload({
