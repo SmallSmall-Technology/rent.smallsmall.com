@@ -5814,65 +5814,44 @@ public function uploadBuytoletProperty()
 
         $userID = $this->session->userdata('adminID');
 
-        // Checking if the upload folder exists, if not, creating it
-        if (!is_dir('./tmp/')) {
+		require 'vendor/autoload.php'; // Include the AWS SDK
 
-            mkdir('./tmp/', 0777, TRUE);
-        }
+        	$s3 = new Aws\S3\S3Client([
 
-        $uploaded_file_names = array();
+            'version' => 'latest',
 
-        $is_uploaded = true;
+            'region' => 'eu-west-1',
 
-        // Checking if files are being uploaded
-        if ($_FILES["userfile"]["name"] != '') {
+        	]);
 
-            $error = 0;
+		$bucketName = 'dev-bss-uploads';
 
-            $config["upload_path"] = './tmp/';
+    	$folderPath = 'uploads/buytolet/' . $imageFolder;
 
-			$config["allowed_types"] = 'jpg|jpeg|png';
+		try {
+			// List objects in the specified S3 folder
+			$objects = $s3->listObjectsV2([
 
-			$config['encrypt_name'] = TRUE;
+				'Bucket' => $bucketName,
 
-			$config['max_size'] = 10 * 1024;
+				'Prefix' => $folderPath,
 
-			$this->load->library('upload', $config);
+			]);
+	
+			if (count($objects['Contents']) > 0) {
 
-			$this->upload->initialize($config);
+				// Retrieve the first image name from the list of objects
+				$firstImageName = $objects['Contents'][0]['Key'];
 
-            // Looping through uploaded files
-            for ($count = 0; $count < count($_FILES["userfile"]["name"]); $count++) {
+				// You may want to extract the actual image file name from the path
+				// Example: if the key is 'uploads/buytolet/imageFolder/imagename.jpg',
+				// you can extract 'imagename.jpg' from it
 
-                $_FILES["file"]["name"] = $_FILES["userfile"]["name"][$count];
+				$imageName = basename($firstImageName);
 
-				$_FILES["file"]["type"] = $_FILES["userfile"]["type"][$count];
+				$propertyImagedir = $imageFolder . $imageName;
 
-				$_FILES["file"]["tmp_name"] = $_FILES["userfile"]["tmp_name"][$count];
-
-				$_FILES["file"]["error"] = $_FILES["userfile"]["error"][$count];
-
-				$_FILES["file"]["size"] = $_FILES["userfile"]["size"][$count];
-
-                if ($this->upload->do_upload('file')) {
-
-                    $data = $this->upload->data();
-
-                } else {
-
-                    $error = $this->upload->display_errors('', '');
-
-                }
-            }
-        }
-        
-        // Handling upload status
-        if ($is_uploaded) {
-
-            var_dump($data);
-
-            // Inserting data into the property table
-			$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $data["file_name"], $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $propertyImagedir, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
 
             if ($property != 0) {
 
@@ -5886,17 +5865,101 @@ public function uploadBuytoletProperty()
 
                 $msg = "Could not upload property";
             }
-        } else {
+	
+			} else {
 
-            $status = "error";
+				$status = "error";
 
             $msg = $this->upload->display_errors('', '');
 
-        }
+				// No objects found in the specified folder
+
+			}
+
+		} catch (Exception $e) {
+
+			// Handle any exceptions that occurred during the API call
+
+			$status = "error";
+
+            $msg = "Error: " . $e->getMessage();
+
+		}
+
+        // Checking if files are being uploaded
+        // if ($_FILES["userfile"]["name"] != '') {
+
+        //     $error = 0;
+
+        //     $config["upload_path"] = './tmp/';
+
+		// 	$config["allowed_types"] = 'jpg|jpeg|png';
+
+		// 	$config['encrypt_name'] = TRUE;
+
+		// 	$config['max_size'] = 10 * 1024;
+
+		// 	$this->load->library('upload', $config);
+
+		// 	$this->upload->initialize($config);
+
+        //     // Looping through uploaded files
+        //     for ($count = 0; $count < count($_FILES["userfile"]["name"]); $count++) {
+
+        //         $_FILES["file"]["name"] = $_FILES["userfile"]["name"][$count];
+
+		// 		$_FILES["file"]["type"] = $_FILES["userfile"]["type"][$count];
+
+		// 		$_FILES["file"]["tmp_name"] = $_FILES["userfile"]["tmp_name"][$count];
+
+		// 		$_FILES["file"]["error"] = $_FILES["userfile"]["error"][$count];
+
+		// 		$_FILES["file"]["size"] = $_FILES["userfile"]["size"][$count];
+
+        //         if ($this->upload->do_upload('file')) {
+
+        //             $data = $this->upload->data();
+
+        //         } else {
+
+        //             $error = $this->upload->display_errors('', '');
+
+        //         }
+        //     }
+        // }
+        
+        // Handling upload status
+        // if ($is_uploaded) {
+
+        //     // var_dump($data);
+
+        //     // Inserting data into the property table
+		// 	$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $data["file_name"], $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+
+        //     if ($property != 0) {
+
+        //         $status = "success";
+
+        //         $msg = "Property successfully uploaded";
+
+        //     } else {
+
+        //         $status = "error";
+
+        //         $msg = "Could not upload property";
+        //     }
+        // } else {
+
+        //     $status = "error";
+
+        //     $msg = $this->upload->display_errors('', '');
+
+        // }
 
     } else {
 
         // Redirecting if admin is not logged in
+		
         redirect(base_url() . "admin/dashboard", 'refresh');
 
     }
