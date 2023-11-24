@@ -5823,44 +5823,46 @@ class Admin extends CI_Controller
 
         // $folder = 'your_folder_name'; // Set your desired folder name
         // $config['upload_path'] = '../buy.smallsmall.com/uploads/buytolet/' . $folder;
-		$config['upload_path'] = './tmp/';
-
-        $config['allowed_types'] = 'jpg|jpeg|png';
-
-        $config['encrypt_name'] = TRUE;
-
-        $config['max_size'] = 10 * 1024; // 10 MB
-
-        $this->load->library('upload', $config);
-
         // Process file uploads
         $uploaded_file_names = array();
 
         $is_uploaded = true;
 
-		if (!empty($_FILES['plan-image']['name'])) {
+		if (!empty($_FILES['userfile']['name'])) {
+			
+            $config['upload_path'] = './tmp/';
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            $config['encrypt_name'] = TRUE;
+            $config['max_size'] = 10 * 1024; // 10 MB
 
-            if (!$this->upload->do_upload('plan-image')) {
+            $this->load->library('upload', $config);
 
-                $is_uploaded = false;
+            foreach ($_FILES['userfile']['name'] as $key => $image_name) {
+                $_FILES['userfile']['name'] = $_FILES['userfile']['name'][$key];
+                $_FILES['userfile']['type'] = $_FILES['userfile']['type'][$key];
+                $_FILES['userfile']['tmp_name'] = $_FILES['userfile']['tmp_name'][$key];
+                $_FILES['userfile']['error'] = $_FILES['userfile']['error'][$key];
+                $_FILES['userfile']['size'] = $_FILES['userfile']['size'][$key];
 
-            } else {
+                if ($this->upload->do_upload('userfile')) {
 
-                $data = $this->upload->data();
+                    $data = $this->upload->data();
 
-                $uploaded_file_names[] = $data['file_name'];
+                    $uploaded_file_names[] = $data['file_name'];
 
-				var_dump($_FILES);
+                } else {
 
-    			var_dump($this->upload->data());
+                    $is_uploaded = false;
 
-				var_dump($data['file_name']);
+                    break;
+
+                }
             }
         }
-
+		
         if ($is_uploaded) {
 
-			var_dump($data['file_name']);
+			var_dump($uploaded_file_names);
 
 			//Populate the property table
 				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $uploaded_file_names, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);

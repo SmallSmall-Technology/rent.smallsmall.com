@@ -3924,6 +3924,36 @@ $(document). on('click', '.close-int', function(){
   			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 			return false;
 		}
+
+
+
+		//
+
+		// Capture file names when files are selected
+		
+		$('#multipleUplFiles').change(function(e) {
+			var uploadedFiles = e.target.files;
+	
+			// Create an array to store file names
+			var fileNames = [];
+	
+			// Loop through each selected file and get its name
+			for (var i = 0; i < uploadedFiles.length; i++) {
+				var fileName = uploadedFiles[i].name;
+				fileNames.push(fileName); // Add file name to the array
+			}
+	
+			// Update the 'featuredPic' input value with the first file name (if available)
+			if (fileNames.length > 0) {
+				$('#featuredPic').val(fileNames[0]);
+			}
+	
+			// Optionally display file names or perform other operations
+			console.log('Uploaded file names:', fileNames);
+		});
+	
+
+		//
 		var data = {
 			"propTitle" : propName,
 			"propType"  : propType,
