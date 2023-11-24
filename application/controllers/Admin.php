@@ -5825,7 +5825,7 @@ public function uploadBuytoletProperty()
         $is_uploaded = true;
 
         // Checking if files are being uploaded
-        if ($_FILES["files"]["name"] != '') {
+        if ($_FILES["userfile"]["name"] != '') {
 
             $error = 0;
 
@@ -5842,17 +5842,17 @@ public function uploadBuytoletProperty()
 			$this->upload->initialize($config);
 
             // Looping through uploaded files
-            for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+            for ($count = 0; $count < count($_FILES["userfile"]["name"]); $count++) {
 
-                $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+                $_FILES["file"]["name"] = $_FILES["userfile"]["name"][$count];
 
-				$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+				$_FILES["file"]["type"] = $_FILES["userfile"]["type"][$count];
 
-				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+				$_FILES["file"]["tmp_name"] = $_FILES["userfile"]["tmp_name"][$count];
 
-				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+				$_FILES["file"]["error"] = $_FILES["userfile"]["error"][$count];
 
-				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+				$_FILES["file"]["size"] = $_FILES["userfile"]["size"][$count];
 
                 if ($this->upload->do_upload('file')) {
 
