@@ -15,7 +15,7 @@ function shortenText($text, $maxLength)
 
 <!-- MAIN SECTION -->
 
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allPropertyPage.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allproperty.css" />
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/range-slide/css/rSlider.min.css">
 
@@ -521,7 +521,7 @@ function shortenText($text, $maxLength)
 
               <a style="text-decoration:none" href="<?php echo base_url(); ?>property/<?php echo $value['propertyID']; ?>">
 
-              <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image"  data-ride="carousel">
+              <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top"  data-ride="carousel">
 
                   <!-- <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel"> -->
 

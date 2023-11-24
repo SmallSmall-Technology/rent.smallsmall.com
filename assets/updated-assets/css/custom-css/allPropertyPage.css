@@ -86,9 +86,9 @@
   font-weight: 700;
 }
 
-.card-custom {
+/* .card-custom {
   border: none;
-}
+} */
 
 .availablility {
   position: absolute;
@@ -224,9 +224,9 @@
 }
 
 
-       .card-body p.card-text {
+       /* .card-body p.card-text {
   color: #212529;
-}
+} */
 
 .card-text:last-child {
   margin-bottom: 1rem;
