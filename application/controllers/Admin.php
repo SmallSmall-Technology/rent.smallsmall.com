@@ -5711,25 +5711,25 @@ class Admin extends CI_Controller
 
 	// 			// $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
 
-	// 		//
+			//
 
-	// 		// if (!$this->upload->do_upload('file')) {
+			// if (!$this->upload->do_upload('file')) {
 
-	// 		// 	$status = 'error';
+			// 	$status = 'error';
 
-	// 		// 	$msg = $this->upload->display_errors('', '');
+			// 	$msg = $this->upload->display_errors('', '');
 
-	// 		// } else {
+			// } else {
 
-	// 			// $data = $this->upload->data();
+				// $data = $this->upload->data();
 
-	// 			// $folder =
+				// $folder =
 
-	// 			// $site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
+				// $site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
 
-	// 			// $upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
+				// $upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
 
-	// 			// unlink('./tmp/' . $data["file_name"]);
+				// unlink('./tmp/' . $data["file_name"]);
 
 	// 			//Populate the property table
 	// 			$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $data["file_name"], $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
@@ -5849,7 +5849,11 @@ public function uploadBuytoletProperty()
 
 				$imageName = basename($firstImageName);
 
-				$propertyImagedir = $imageFolder . '/' . $imageName;
+				// $propertyImagedir = $imageFolder . '/' . $imageName;
+
+				// removing the slash that occurs at end
+				$propertyImagedir = rtrim($imageFolder, '/') . '/' . rtrim($imageName, '/');
+
 
 				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $propertyImagedir, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
 
