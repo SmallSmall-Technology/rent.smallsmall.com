@@ -14,13 +14,14 @@ function shortenText($text, $maxLength)
 
 
 <!-- MAIN SECTION -->
-
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allproperty.css" />
-
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/range-slide/css/rSlider.min.css">
-
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-css/bootstrap.min.css"
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allproperty.css" />
+
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allPropertyPage.css" />
+
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/range-slide/css/rSlider.min.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
