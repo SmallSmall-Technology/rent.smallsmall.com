@@ -5849,7 +5849,7 @@ public function uploadBuytoletProperty()
 
 				$imageName = basename($firstImageName);
 
-				$propertyImagedir = $imageFolder . $imageName;
+				$propertyImagedir = $imageFolder . '/' . $imageName;
 
 				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $propertyImagedir, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
 
@@ -5959,7 +5959,7 @@ public function uploadBuytoletProperty()
     } else {
 
         // Redirecting if admin is not logged in
-		
+
         redirect(base_url() . "admin/dashboard", 'refresh');
 
     }
