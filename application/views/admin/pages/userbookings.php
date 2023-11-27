@@ -36,12 +36,12 @@
 						<table class="align-middle mb-0 table table-borderless table-striped table-hover">
 							<thead>
 							<tr>
-								<!-- <th class="text-left">&nbsp;</th> -->
+								<th class="text-left">&nbsp;</th>
 								<th class="text-left">Booked By</th>
-								<!-- <th class="text-left">Tranx Date</th>
+								<th class="text-left">Tranx Date</th>
 								<th class="text-left">Move in</th>
 								<th class="text-left">Move out</th>
-								<th class="text-left">Status</th> -->
+								<th class="text-left">Status</th>
 								<th class="text-left">Actions</th>
 							</tr>
 							</thead>
@@ -50,73 +50,59 @@
 								$stat = '';
 								$CI =& get_instance();
 								if (isset($bookings) && !empty($bookings)) {
-									
-									//$data = [];
-
 									foreach($bookings as $booking => $value) {
 										
-										// $name = $value['firstName'].'-'.$value['lastName'];
-
-										// if (in_array($name, $data))
-										// {
-										    
-										// }
-
-										// else
-										// {
-
 										if($value['booking_status'] == 'Approved' || $value['booking_status'] == 'approved'){
 											$stat = 'badge-success';
 										}elseif($value['booking_status'] == 'Pending' || $value['booking_status'] == 'pending'){
 											$stat = 'badge-info';
-										}elseif($value['booking_status'] == 'Declined' || $value ['booking_status'] == 'declined'){
+										}elseif($value['booking_status'] == 'Declined' || $value['booking_status'] == 'declined'){
 											$stat = 'badge-warning';
 										}
 										
+										
 
 										$title = $CI->shorten_title($value['propertyTitle']);
-
+						
 							?>	 
    
 							<tr>
-								<!-- <td class="text-left"><input type="checkbox" class="props-checkbox" id="<?php // echo $value['propertyID'] ?>" /></td> -->
+								<td class="text-left"><input type="checkbox" class="props-checkbox" id="<?php echo $value['propertyID'] ?>" /></td>
 								<td class="text-left">
 								    <?php echo substr($value['firstName'], 0, 1).' '.$value['lastName'] ?>
-								    <span style="display:block;font-size:12px;color:#e3e3e3"><?php echo "<a href='".base_url()."admin/userbooking/".$value['userID']."' />".$title."</a>" ?></span>
+								    <span style="display:block;font-size:12px;color:#e3e3e3"><?php echo "<a href='".base_url()."property/".$value['propertyID']."' />".$title."</a>" ?></span>
 								</td>
-								<!-- <td class="text-left"><?php //echo date("d M Y", strtotime($value['transaction_date'])) ?> -->
+								<td class="text-left"><?php echo date("d M Y", strtotime($value['transaction_date'])) ?>
 								    <!---<div class="widget-subheading"><?php //echo ucfirst($value['payment_type']); ?></div>--->
 								</td>
-								<!-- <td class="text-left"><?php //echo date("d M Y", strtotime($value['move_in_date'])) ?></td>
-								<td class="text-left"><?php //echo date("d M Y", strtotime(@$value['next_rental'])) ?></td>
-								<td class="text-left"><div class="mb-2 mr-2 badge <?php //echo $stat; ?>"><?php //echo $value['status'] ?></div></td> -->
+								<td class="text-left"><?php echo date("d M Y", strtotime($value['move_in_date'])) ?></td>
+								<td class="text-left"><?php echo date("d M Y", strtotime(@$value['next_rental'])) ?></td>
+								<td class="text-left"><div class="mb-2 mr-2 badge <?php echo $stat; ?>"><?php echo $value['status'] ?></div></td>
 								<td class="text-left">
 									<div class="action-container">
 										<?php //if($value['status'] == 'Pending' || $value['status'] == 'pending'){ ?>
 											<!---<button type="button" id="approve-<?php //echo $value['reference_id']."-".$value['propertyID']; ?>" class="btn btn-primary btn-sm approve-payment">Approve</button>---> 
 										<?php //} ?> 
-										<!-- <button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php //echo base_url()."admin/booking/".$value['bookingID']; ?>">Details</a></button>
-										<button type="button" id="booking-<?php //echo $value['bookingID']; ?>-<?php //echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button> -->
+										<button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/booking/".$value['bookingID']; ?>">Details</a></button>
+										<button type="button" id="booking-<?php echo $value['bookingID']; ?>-<?php echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button>
 
-									 	<button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/userbooking/".$value['userID']; ?>">Details</a></button>
-
-										<!-- <button type="button" id="booking-<?php //echo $value['bookingID']; ?>-<?php //echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button> -->
-									</div> 
+										<!-- <button type="button" class="btn btn-primary btn-sm article-detail"><a style="color:white;" href="<?php echo base_url()."admin/userbooking/".$value['buserId']; ?>">Details</a></button>
+										<button type="button" id="booking-<?php echo $value['bookingID']; ?>-<?php echo $value['propertyID']; ?>" class="btn btn-primary btn-sm delete-booking">Delete</button> -->
+									</div>
 								</td>
 							</tr> 
 							<?php    
 									}
 								}
-							//}
 
 							?>
 							
 							</tbody>
 						</table>
 					</div>
-					<div class="d-block text-center card-footer">
+					<!-- <div class="d-block text-center card-footer">
 						<div class="paginated"><?php echo $this->pagination->create_links(); ?></div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
