@@ -20,6 +20,11 @@ function startsWith($string, $prefix) {
 
 <!-- MAIN SECTION -->
 
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allproperty.css" />
+
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allPropertyPage.css" />
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/range-slide/css/rSlider.min.css">
@@ -467,12 +472,9 @@ function startsWith($string, $prefix) {
   <!-- Properties section -->
 
   <div class="properties-section" id="properties-container">
-
-    <!-- S3 Integration -->
-
     <div class="row">
 
-      <!-- <div class="col-12">
+      <div class="col-12">
         <?php
 
         $cities = array_unique(array_column($properties, 'city'));
@@ -508,7 +510,7 @@ function startsWith($string, $prefix) {
 
         ?>
 
-      </div> -->
+      </div>
 
       <div class="col-12">
         <p><?php echo $total_count ?> properties</p>
@@ -521,20 +523,23 @@ function startsWith($string, $prefix) {
 
           <div class="col-lg-4 col-md-6 col-12 my-4">
 
-            <div class="card" id="properties-container">
+            <div class="card card-custom" > 
+              <!-- id="properties-container" -->
 
               <a style="text-decoration:none" href="<?php echo base_url(); ?>property/<?php echo $value['propertyID']; ?>">
 
-                <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel">
+              <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top"  data-ride="carousel">
+
+                  <!-- <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel"> -->
 
                   <?php
                   $CI = &get_instance();
 
-                  if (date('Y-m-d') <= $value['available_date']) {
+                  if(date('Y-m-d') <= $value['available_date']) {
 
                     echo '<div class="availablility unavailable d-flex">';
 
-                    echo '<img src="' . base_url() . 'assets/updated-assets/images/time-delete.svg" alt="">';
+                    echo '<img src="' . base_url() . 'assets/updated-assets/images/time-delete.svg"  alt="">';
 
                     echo '<span class="ml-2">Rented until: ' . date("M Y", strtotime($value['available_date'])) . '</span>';
 
@@ -551,118 +556,77 @@ function startsWith($string, $prefix) {
                   }
                   ?>
 
-                  <div class="carousel-inner listing-image">
+                  <!-- <div class="carousel-inner listing-image"> -->
+                  <div class="carousel-inner" style = "border-top-left-radius: 10px; border-top-right-radius: 10px">
 
                     <?php
 
                     // Include AWS SDK and create S3 client
-                    require 'vendor/autoload.php';
-
-                    $s3 = new Aws\S3\S3Client([
-                      'version' => 'latest',
-
-                      'region' => 'eu-west-1'
-                    ]);
+                      require 'vendor/autoload.php';
+                      $s3 = new Aws\S3\S3Client([
+                          'version' => 'latest',
+                          'region' => 'eu-west-1'
+                      ]);
 
                     $imageFolder = $value['imageFolder'];
 
-                    //   $imageFolderPath = "./uploads/properties/$imageFolder";
+                  //S3 Integration
 
-                    //   if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
+                  $bucket = 'dev-rss-uploads'; // Your bucket name
 
-                    //     $imageFiles = scandir($imageFolderPath);
-
-                    //     $activeClass = 'active';
-
-                    //     $content_size = count($imageFiles);
-
-                    //     $count = 0;
-
-                    //     foreach ($imageFiles as $file) {
-
-                    //       // if ($file === '.' || $file === '..') {
-                    //       //   continue;
-
-                    //       // }
-
-                    //       if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
-
-                    //         $imageSrc = base_url() . 'uploads/properties/' . $value['imageFolder'] . '/' . $file;
-                    //         echo '
-                    //    <div class="carousel-item ' . $activeClass . '">
-                    //      <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
-                    //    </div>
-                    //  ';
-
-                    //         $activeClass = '';
-                    //       }
-
-                    //       $count++;
-                    //     }
-                    //   } else {
-
-                    //     echo '<div class="carousel-item active">
-                    //        <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
-                    //      </div>';
-
-                    //     echo '<div class="carousel-item">
-                    //        <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
-                    //      </div>';
-                    //   }
-
-
-                    //S3 Integration
-
-                    $bucket = 'rss-prod-uploads'; // My bucket name
-
-                    $imageFolderPath = 'uploads/properties/' . $value['imageFolder'];
-
-                    try {
+                  $imageFolderPath = 'uploads/properties/' . $value['imageFolder'];
+                  
+                  try {
                       $objects = $s3->listObjects([
-
-                        'Bucket' => $bucket,
-
-                        'Prefix' => $imageFolderPath,
-
+                          'Bucket' => $bucket,
+                          'Prefix' => $imageFolderPath,
                       ]);
-
+                  
                       $activeClass = 'active';
 
                       $content_size = count($objects['Contents']);
 
                       $count = 0;
 
-                      foreach ($objects['Contents'] as $object) {
-                        // check if an object in the S3 bucket is not a directory/folder.
-                        if (strpos($object['Key'], 'uploads/properties/' . $value['imageFolder'] . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
-                        // if (!startsWith($object['Key'], $value['imageFolder'] . '/') && $count <= (count($objects['Contents']) - 2)) {
-                        // if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+                    //   foreach ($objects['Contents'] as $object) {
+                    //     if ($object !== '.' && $object !== '..' && $count <= ($content_size - 2)) {
+                    //         $imageSrc = $s3->getObjectUrl($bucket, 'uploads/properties/' . $value['imageFolder'] . '/' . $object);
+                    //         echo '
+                    //             <div class="carousel-item ' . $activeClass . '">
+                    //                 <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
+                    //             </div>
+                    //         ';
+                    //         $activeClass = '';
+                    //     }
+                    //     $count++;
+                    // }
 
+                    foreach ($objects['Contents'] as $object) {
+                      if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
                           $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
-
                           echo '
-                          <div class="carousel-item ' . $activeClass . '">
-                          <img src="' . $imageSrc . '" alt="RSS property image" class="d-block w-100"/>
-                          </div>
+                              <div class="carousel-item ' . $activeClass . '">
+                                  <img src="' . $imageSrc . '" alt="RSS property image" width = "100%" height = "200px" class="d-block w-100"/>
+                              </div>
                           ';
-
                           $activeClass = '';
-                        }
-                        $count++;
                       }
-
-                    } catch (Aws\S3\Exception\S3Exception $e) {
+                      $count++;
+                  }
+                    
+                  } catch (Aws\S3\Exception\S3Exception $e) {
                       // Handle S3 error
                       echo '<div class="carousel-item active">
-                    <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
-                    </div>';
-
+                          <img src="/assets/updated-assets/images/prop1.png" class="d-block w-100" alt="No images available for this property."/>
+                      </div>';
+                  
                       echo '<div class="carousel-item">
-                    <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
-                    </div>';
-                    }
+                          <img src="/assets/updated-assets/images/prop2.png" class="d-block w-100" alt="No images available for this property."/>
+                      </div>';
+                  }
+                  
 
-                    //End S3 Integration
+                  //End S3 Integration
 
                     ?>
                   </div>
@@ -670,7 +634,6 @@ function startsWith($string, $prefix) {
                   <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls-<?php echo $value['propertyID']; ?>" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
-
                   </button>
 
                   <button class="carousel-control-next" type="button" data-target="#carouselExampleControls-<?php echo $value['propertyID']; ?>" data-slide="next">
@@ -680,7 +643,7 @@ function startsWith($string, $prefix) {
 
                 </div>
                 <div class="card-body">
-                  <p class="card-text">
+                  <p class="card-text" style="font-size: 14px; font-weight: 600; color: black;">
                     &#8358;<?php echo ($value['price'] > 999999) ? ($value['price'] / 1000000) . 'M' : number_format($value['price']); ?>/month&nbsp;&nbsp;
                     <small style="
                  text-decoration: line-through;
@@ -692,14 +655,27 @@ function startsWith($string, $prefix) {
                     </small>
 
                   </p>
-                  <p class="card-text"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p>
+                  <p class="card-text" style="font-size: 12px; font-weight: 400; color: black;"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p><br>
 
                   <div class="card-text d-flex justify-content-between">
-                    <p class="card-text">
-                      &bull;<?php echo $value['bed']; ?> Bed
-                      &bull;<?php echo $value['bath']; ?> Bath
-                      <!--&bull;<?php echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
-                      &bull;<?php echo ($value['city']); ?>
+                    <!--<p class="card-text"> -->
+                    <p style = "color: black;">
+                      <?php echo $value['bed']; ?> Bed
+                      <?php echo $value['bath']; ?> Bath
+                      <!--&bull;<?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
+                      <!-- &bull;--> <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" 
+                    fill="none">
+                    <g clip-path="url(#clip0_7160_3254)">
+                      <path
+                        d="M7.5 2.5C7.5 1.12125 6.37875 0 5 0C3.62125 0 2.5 1.12125 2.5 2.5C2.5 3.73667 3.4025 4.76625 4.58333 4.965V9.58333C4.58333 9.81333 4.77 10 5 10C5.23 10 5.41667 9.81333 5.41667 9.58333V4.965C6.5975 4.76625 7.5 3.73667 7.5 2.5Z"
+                        fill="#414042" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_7160_3254">
+                        <rect width="10" height="10" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg><?php echo ($value['city']); ?>
                     </p>
 
                     <!--    <a href="#" class="text-decoration-none">-->
@@ -723,7 +699,7 @@ function startsWith($string, $prefix) {
 
 
           </div>
-
+          
         <?php } ?>
 
         <!--Pagination -->

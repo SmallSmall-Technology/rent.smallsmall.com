@@ -109,6 +109,8 @@ $route['admin/all-bookings/(:any)'] = 'admin/all_bookings/$1';
 
 $route['admin/all-bookings'] = 'admin/all_bookings';
 
+$route['admin/userbooking/(:any)'] = 'admin/userbooking/$1';
+
 $route['admin/all-apartments/(:any)'] = 'admin/all_apartments/$1';
 
 $route['admin/all-apartments'] = 'admin/all_apartments';
