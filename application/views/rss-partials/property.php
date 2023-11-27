@@ -1,5 +1,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-css/bootstrap.min.css"
+  integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allproperty.css" />
+
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/singleProperty.css" />
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allPropertyPage.css" />
@@ -658,7 +663,6 @@ function shortenText($text, $maxLength)
 
                               <input type="text" onclick="(this.type='date')" class="form-control mob-inspection-date" id="insDateMob" placeholder="Inspection date" name="" required />
                               <span class="field-icns"><i class="bx bx-calendar"></i></span>
-
 
                             </div>
 
@@ -1462,9 +1466,9 @@ function shortenText($text, $maxLength)
           foreach ($matchingProperties as $property => $value) {
       ?>
             <div class="col-lg-4 col-md-6 col-12 my-4">
-              <div class="card" id="properties-container">
+              <div class="card card-custom" id="properties-container">
                 <a style="text-decoration:none" href="<?php echo base_url(); ?>property/<?php echo $value['propertyID']; ?>">
-                  <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel">
+                  <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top" data-ride="carousel">
                     <?php
                     $CI = &get_instance();
 
@@ -1481,7 +1485,7 @@ function shortenText($text, $maxLength)
                     }
                     ?>
 
-                    <div class="carousel-inner listing-image">
+                    <div class="carousel-inner" style = "border-top-left-radius: 10px; border-top-right-radius: 10px">
                       <?php
                       $imageFolder = $value['imageFolder'];
 
@@ -1503,7 +1507,7 @@ function shortenText($text, $maxLength)
                             $imageSrc = $object['Key'];
                             echo '
                                                         <div class="carousel-item ' . $activeClass . '">
-                                                            <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image" class="d-block w-100"/>
+                                                            <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image" width = "100%" height = "200px" class="d-block w-100"/>
                                                         </div>
                                                     ';
                             $activeClass = '';
@@ -1548,8 +1552,20 @@ function shortenText($text, $maxLength)
                       <p class="card-text">
                         &bull;<?php echo $value['bed']; ?> Bed
                         &bull;<?php echo $value['bath']; ?> Bath
-                        <!--&bull;<?php echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
-                        &bull;<?php echo ($value['city']); ?>
+                        <?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
+                      <!-- &bull;--> <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" 
+                    fill="none">
+                    <g clip-path="url(#clip0_7160_3254)">
+                      <path
+                        d="M7.5 2.5C7.5 1.12125 6.37875 0 5 0C3.62125 0 2.5 1.12125 2.5 2.5C2.5 3.73667 3.4025 4.76625 4.58333 4.965V9.58333C4.58333 9.81333 4.77 10 5 10C5.23 10 5.41667 9.81333 5.41667 9.58333V4.965C6.5975 4.76625 7.5 3.73667 7.5 2.5Z"
+                        fill="#414042" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_7160_3254">
+                        <rect width="10" height="10" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg><?php echo ($value['city']); ?>
                       </p>
                     </div>
                   </div>
