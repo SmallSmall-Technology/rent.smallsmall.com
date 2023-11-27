@@ -8200,7 +8200,6 @@ value1&metadata[meta2]=value2*/
 
 	public function single_property($id)
 	{
-
 		$data['property'] = $this->rss_model->fetchProperty($id);
 
 		$data['properties'] = $this->rss_model->fetchProperties();
