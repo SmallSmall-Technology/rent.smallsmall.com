@@ -225,8 +225,8 @@ class Admin_model extends CI_Model {
 		$this->db->from('stayone_booking');
 
 		return $this->db->count_all_results();
-
 	}
+
 	public function countAppRequests() {
 
 		$this->db2->from('residential_inspections');
