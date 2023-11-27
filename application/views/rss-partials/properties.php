@@ -572,7 +572,7 @@ function startsWith($string, $prefix) {
 
                   //S3 Integration
 
-                  $bucket = 'dev-rss-uploads'; // Your bucket name
+                  $bucket = 'rss-prod-uploads'; // Your bucket name
 
                   $imageFolderPath = 'uploads/properties/' . $value['imageFolder'];
                   
