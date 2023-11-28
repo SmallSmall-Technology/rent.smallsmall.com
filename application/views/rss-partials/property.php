@@ -1552,7 +1552,7 @@ function shortenText($text, $maxLength)
                       <p class="card-text">
                         &bull;<?php echo $value['bed']; ?> Bed
                         &bull;<?php echo $value['bath']; ?> Bath
-                        <?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
+                        <?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>
                       <!-- &bull;--> <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" 
                     fill="none">
                     <g clip-path="url(#clip0_7160_3254)">
