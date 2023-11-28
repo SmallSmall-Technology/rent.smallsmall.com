@@ -37,12 +37,12 @@
 							<thead>
 							<tr>
 								<!-- <th class="text-left">&nbsp;</th> -->
-								<th class="text-left">Booked By</th>
+								<th class="text-left">Subscriber Name</th>
 								<!-- <th class="text-left">Tranx Date</th>
 								<th class="text-left">Move in</th>
 								<th class="text-left">Move out</th>
 								<th class="text-left">Status</th> -->
-								<th class="text-left">Actions</th>
+								<th class="text-left">Booking details</th>
 							</tr>
 							</thead>
 							<tbody>
