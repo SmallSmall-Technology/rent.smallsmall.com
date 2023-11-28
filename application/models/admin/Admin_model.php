@@ -1925,13 +1925,42 @@ class Admin_model extends CI_Model {
 		
 	// }
 
+	public function searchBookingItem($id){   
+		
+		$this->db->select('DISTINCT(a.userID), c.*');
+
+		$this->db->from('bookings as a');
+
+		$this->db->like('c.firstName', $id);
+
+		$this->db->or_like('c.lastName', $id);
+		
+		//$this->db->where('b.type', 'rss');
+		
+		$this->db->join('transaction_tbl as b', 'b.verification_id = a.verification_id');
+		
+		$this->db->join('user_tbl as c', 'a.userID = c.userID');
+		
+		//$this->db->join('property_tbl as d', 'd.propertyID = a.propertyID');
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+		
+		//$this->db->group_by('a.bookingID');
+		
+		$this->db->order_by('a.id', 'DESC');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
 	public function fetchBookings(){   
 		
 		$this->db->select('DISTINCT(a.userID), c.*');
 
 		$this->db->from('bookings as a');
 		
-		$this->db->where('b.type', 'rss');
+		//$this->db->where('b.type', 'rss');
 		
 		$this->db->join('transaction_tbl as b', 'b.verification_id = a.verification_id');
 		

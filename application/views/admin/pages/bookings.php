@@ -18,7 +18,7 @@
 			<div class="col-md-12">
 				<div class="main-card mb-3 card">
 					<div class="card-header">
-					    <form action="<?php echo base_url('admin/search-bookings/'); ?>" method="POST">
+					    <form action="<?php echo base_url('admin/search-bookings'); ?>" method="POST">
 							<div class="search-wrapper active">
 								<div class="input-holder">
 									<input name="search-input" type="text" class="search-input" placeholder="Type to search">
@@ -37,12 +37,12 @@
 							<thead>
 							<tr>
 								<!-- <th class="text-left">&nbsp;</th> -->
-								<th class="text-left">Booked By</th>
+								<th class="text-left">Subscriber Name</th>
 								<!-- <th class="text-left">Tranx Date</th>
 								<th class="text-left">Move in</th>
 								<th class="text-left">Move out</th>
 								<th class="text-left">Status</th> -->
-								<th class="text-left">Actions</th>
+								<th class="text-left">Booking details</th>
 							</tr>
 							</thead>
 							<tbody>

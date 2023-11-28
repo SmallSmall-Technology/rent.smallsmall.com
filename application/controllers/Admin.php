@@ -4458,7 +4458,6 @@ class Admin extends CI_Controller
 
 	public function view_properties()
 	{
-
 		$config['total_rows'] = $this->admin_model->countProperties();
 
 		$data['total_count'] = $config['total_rows'];
@@ -4520,7 +4519,6 @@ class Admin extends CI_Controller
 			$this->load->view('admin/templates/footer.php', $data);
 
 			//$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
-
 
 		} else {
 
@@ -7037,11 +7035,10 @@ public function uploadBuytoletProperty()
 			}
 		}
 	}
+
 	public function search_properties()
 	{
-
 		$s_data['s_query']  = $this->input->post('search-input');
-
 
 		$config['total_rows'] = $this->admin_model->getSearchCount($s_data);
 
@@ -7100,6 +7097,74 @@ public function uploadBuytoletProperty()
 			$this->load->view('admin/pages/search-properties.php', $data);
 
 			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+	public function search_bookings()
+	{
+		$s_data  = $this->input->post('search-input');
+
+		$config['total_rows'] = $this->admin_model->countPropBookings();
+
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
+
+		if ($config['total_rows'] > 0) {
+
+			$page_number = $this->uri->segment(3);
+
+			$config['base_url'] = base_url() . 'admin/search-bookings';
+
+			if (empty($page_number))
+
+				$page_number = 1;
+
+			$offset = ($page_number - 1) * $this->pagination->per_page;
+
+			$this->admin_model->setPageNumber($this->pagination->per_page);
+
+			$this->admin_model->setOffset($offset);
+
+			$this->pagination->cur_page = $page_number;
+
+			$this->pagination->initialize($config);
+
+			$data['page_links'] = $this->pagination->create_links();
+
+			$data['bookings'] = $this->admin_model->searchBookingItem($s_data);
+		}
+
+		if (!file_exists(APPPATH . 'views/admin/pages/bookings.php')) {
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+
+		//check if Admin is logged in
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['title'] = "Bookings :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/bookings.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+
+			$this->load->view('admin/templates/booking-modal.php', $data);
 		} else {
 
 			redirect(base_url() . 'admin/login', 'refresh');

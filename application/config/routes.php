@@ -448,6 +448,8 @@ $route['admin/search-properties'] = 'admin/search_properties';
 
 $route['admin/search-properties/(:any)'] = 'admin/search_properties/$1';
 
+$route['admin/search-bookings'] = 'admin/search_bookings';
+
 $route['admin/view-properties'] = 'admin/view_properties';
 
 $route['admin/view-properties/(:any)'] = 'admin/view_properties/$1';
