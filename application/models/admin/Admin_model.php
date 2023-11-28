@@ -1954,6 +1954,27 @@ class Admin_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function countSearchBookings($id){   
+		
+		$this->db->select('DISTINCT(a.userID), c.*');
+
+		$this->db->from('bookings as a');
+
+		$this->db->like('c.firstName', $id);
+
+		$this->db->or_like('c.lastName', $id);
+		
+		//$this->db->where('b.type', 'rss');
+		
+		$this->db->join('transaction_tbl as b', 'b.verification_id = a.verification_id');
+		
+		$this->db->join('user_tbl as c', 'a.userID = c.userID');
+		
+		//$this->db->join('property_tbl as d', 'd.propertyID = a.propertyID');
+
+		return $this->db->count_all_results();
+	}
+
 	public function fetchBookings(){   
 		
 		$this->db->select('DISTINCT(a.userID), c.*');

@@ -490,8 +490,7 @@ class App extends CI_Controller {
 	    
     	    for($i = 0; $i < count($unserialized_ra); $i++){
     	        
-    	        array_push($data['property']['renting_as'], $unserialized_ra[$i]);
-    	        
+    	        array_push($data['property']['renting_as'], $unserialized_ra[$i]);     
     	    }
 	    }
 	    
