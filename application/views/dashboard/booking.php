@@ -439,7 +439,7 @@ $userID = $this->session->userdata('userID');
                         </div>
                         <div class="col-md-4 col-12 custom-btn mb-2">
                         <button class="btn font-weight-light  p-3 secondary-background w-100" type="submit" onclick="pay()">Subscribe to
-                                wallet
+                                Paystack
                                 direct
                                 debit</button>
                         </div>
