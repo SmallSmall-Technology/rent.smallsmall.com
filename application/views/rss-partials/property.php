@@ -568,7 +568,7 @@ function shortenText($text, $maxLength)
               <h6>Managed by RentSmallsmall</h6>
 
               <div class="d-flex flex-column align-items-center">
-                <p class="managed-title">Like this property? Book to it and subscribe</p>
+                <p class="managed-title">Like this property? Book it and subscribe</p>
                 <div class="schedule-container d-flex mb-2">
                   <div class="schedule-container__schedule schedule-item-container" data-toggle="modal" data-target="#staticBackdrop">
                     <span class="">Schedule a visit</span>
