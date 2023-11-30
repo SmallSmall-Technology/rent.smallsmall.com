@@ -82,7 +82,7 @@
 								<td class="text-left"><?php echo ucfirst($value['payment_type']); ?></td>
 								<td class="text-left"><span style="font-family:helvetica;">&#x20A6;</span><?php echo number_format($value['amount']); ?></td>
 								<td class="text-left"><?php echo date("d M Y - H:i", strtotime($value['transaction_date'])); ?></td>
-								<td class="text-left"><div class="mb-2 mr-2 badge <?php echo $stat; ?>"><?php echo $value['payment_status']; ?></div></td>
+								<td class="text-left"><div class="mb-2 mr-2 badge <?php echo $stat; ?>"><?php echo $value['status']; ?></div></td>
 								<td class="text-left">
 									<?php if($value['payment_status'] == 'Pending' || $value['payment_status'] == 'pending'){ ?>
 										<button type="button" id="approve-<?php echo $value['reference_id']; ?>-<?php echo $value['transaction_id']; ?>" class="btn btn-primary btn-sm approve-payment">Approve</button>
