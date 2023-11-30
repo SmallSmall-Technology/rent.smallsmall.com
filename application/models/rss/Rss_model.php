@@ -3212,7 +3212,7 @@ class Rss_model extends CI_Model {
 
 		$this->type = 'rss';
 
-		$this->payment_type = $payment_type;
+		$this->payment_type = 'paystack';
 
 		$this->invoice = $invoice;
 
