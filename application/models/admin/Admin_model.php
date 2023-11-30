@@ -2685,11 +2685,11 @@ class Admin_model extends CI_Model {
 		
 		$this->db->join('user_tbl as b', 'b.userID = a.user_id'); 
 		
-		$this->db->join('valid_ids as c', 'c.verification_id = a.verification_id'); 
+		$this->db->join('valid_ids as c', 'c.verification_id = a.verification_id', 'LEFT OUTER');
 		
-		$this->db->join('bank_statements as d', 'd.verification_id = a.verification_id'); 
+		$this->db->join('bank_statements as d', 'd.verification_id = a.verification_id', 'LEFT OUTER'); // seen
 		
-		$this->db->join('bookings as e', 'e.verification_id = a.verification_id', 'LEFT OUTER');
+		$this->db->join('bookings as e', 'e.verification_id = a.verification_id', 'LEFT OUTER');// no ver id for 9297831669
 		
 		$this->db->join('property_tbl as f', 'f.propertyID = e.propertyID', 'LEFT OUTER');
 		
