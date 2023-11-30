@@ -7087,7 +7087,7 @@ public function uploadBuytoletProperty()
 	{
 		$s_data  = $this->input->post('search-input');
 
-		$config['total_rows'] = $this->admin_model->countPropBookings();
+		$config['total_rows'] = $this->admin_model->countSearchBookings($s_data);
 
 		$data['total_count'] = $config['total_rows'];
 
