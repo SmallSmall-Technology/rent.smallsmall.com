@@ -291,7 +291,7 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
-	
+
 	public function add_advert()
 	{
 
@@ -328,7 +328,7 @@ class Admin extends CI_Controller
 	public function prc_adverts()
 	{
 		require 'vendor/autoload.php';
-		
+
 		//sleep(3);
 
 		// $bucket = 'dev-rss-uploads'; // bucket name
@@ -346,7 +346,7 @@ class Admin extends CI_Controller
 		// ]);
 
 		// for($i=0; $i<$count; $i++)
-        // {
+		// {
 		// 	$config['upload_path']          = './uploads/adverts/';
 		// 	$config['allowed_types']        = 'jpg|png|jpeg';
 		// 	$config['max_size']             = 0;
@@ -366,7 +366,7 @@ class Admin extends CI_Controller
 		// 	$img = $_FILES['imgName']['name'][$i];
 
 		// 	$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-        //     //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
+		//     //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
 
 		// 	$s3ObjectKey = 'uploads/adverts/'. $img;
 
@@ -392,15 +392,15 @@ class Admin extends CI_Controller
 		// 	}
 		// }
 
-		
+
 		// $filename = $val;
-		
+
 		// $link = $this->input->post('advertTitle');
 
 		// $title = $this->input->post('notificationTitle');
 
 		// //$date = 
-				
+
 		// $res = $this->admin_model->insertCxAdvert($link, $filename, $title);
 
 		// if ($res) {
@@ -420,12 +420,12 @@ class Admin extends CI_Controller
 		//$count = count($_FILES['imgName']['name']);
 		$val = '';
 		$error = '';
-	
+
 		$s3 = new Aws\S3\S3Client([
 			'version' => 'latest',
 			'region'  => 'eu-west-1'
 		]);
-	
+
 		$config['upload_path'] = './uploads/adverts/';
 		$config['allowed_types'] = 'jpg|png|jpeg';
 		$config['max_size'] = 0;
@@ -442,7 +442,7 @@ class Admin extends CI_Controller
 		$img = $_FILES['imgName']['name'];
 		$postimg_tmp = $_FILES['imgName']['tmp_name'];
 		$s3ObjectKey = 'uploads/adverts/' . $img;
-		
+
 
 		try {
 			$result = $s3->putObject([
@@ -458,20 +458,20 @@ class Admin extends CI_Controller
 
 		$img = "/uploads/adverts/$img";
 		$val = $img . " ";
-	
+
 		if (empty($error)) {
 			// No errors occurred during file uploads and S3 upload
-	
+
 			$filename = $val;
 			$link = $this->input->post('advertTitle');
 			$title = $this->input->post('notificationTitle');
-	
+
 			$res = $this->admin_model->insertCxAdvert($link, $filename, $title);
-	
+
 			if ($res) {
 				// Assuming you're using CodeIgniter, use the URL helper to create URLs
 				$user_profile_url = site_url('admin/add_advert/');
-	
+
 				// Redirect to user profile with a success message
 				echo "<script>
 					alert('Upload Successful');
@@ -482,20 +482,19 @@ class Admin extends CI_Controller
 				$error = 'Database insertion error';
 			}
 		}
-	
+
 		if (!empty($error)) {
 			// Handle and display the error to the user
 			echo "<script>
 				alert('Error: $error');
 			</script>";
 		}
-		
 	}
 
 	public function edit_adverts()
 	{
 		require 'vendor/autoload.php';
-		
+
 		//sleep(3);
 
 		$bucket = 'rss-prod-uploads'; // bucket name
@@ -514,8 +513,7 @@ class Admin extends CI_Controller
 
 		$val = '';
 
-		for($i=0; $i<$count; $i++)
-        {
+		for ($i = 0; $i < $count; $i++) {
 			$config['upload_path']          = './uploads/adverts/';
 			$config['allowed_types']        = 'jpg|png|jpeg';
 			$config['max_size']             = 0;
@@ -535,14 +533,14 @@ class Admin extends CI_Controller
 			$img = $_FILES['imgName']['name'][$i];
 
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            //move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
+			//move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
 
-			$s3ObjectKey = 'uploads/adverts/'. $img;
+			$s3ObjectKey = 'uploads/adverts/' . $img;
 			$data = $this->upload->data();
 
 			$img = "/uploads/adverts/$img";
 
-			$val .= $img." ";
+			$val .= $img . " ";
 
 			try {
 				$result = $s3->putObject([
@@ -553,16 +551,15 @@ class Admin extends CI_Controller
 
 					'Body'   => file_get_contents($data["full_path"]),
 				]);
-
 			} catch (Aws\S3\Exception\S3Exception $e) {
 
 				$error = 'S3 Upload Error: ' . $e->getMessage();
 			}
 		}
 
-		
+
 		$filename = $val;
-		
+
 		$link = $this->input->post('link');
 
 		$title = $this->input->post('title');
@@ -570,16 +567,16 @@ class Admin extends CI_Controller
 		$id = $this->input->post('adv_id');
 
 		//$date = 
-				
+
 		$res = $this->admin_model->editCxAdvert($link, $filename, $title, $id);
 
 		if ($res) {
 
 			// Assuming you're using CodeIgniter, use the URL helper to create URLs
-		$user_profile_url = site_url('admin/all-adverts/');
+			$user_profile_url = site_url('admin/all-adverts/');
 
-		// Redirect to user profile with a success message
-		echo "<script>
+			// Redirect to user profile with a success message
+			echo "<script>
 				alert('Upload Successful');
 				window.location.href='$user_profile_url';
 			</script>";
@@ -1054,13 +1051,9 @@ class Admin extends CI_Controller
 		$status = 0;
 		$type = 'vacancy';
 
-		if($vacancy == 0)
-		{
+		if ($vacancy == 0) {
 			$subject = 'Property Vacant';
-		}
-
-		else
-		{
+		} else {
 			$subject = 'Property Tenanted';
 		}
 
@@ -1200,17 +1193,17 @@ class Admin extends CI_Controller
 
 	}
 
-	public function proptySearch(){
-	    
-	    $value =  $this->input->post("input");
+	public function proptySearch()
+	{
+
+		$value =  $this->input->post("input");
 
 		$data = $this->admin_model->searchPropty($value);
 
-		foreach ($data->result() as $row) 
-        {
-            // echo "<li  id='getVal-$row->propertyID-$row->propertyTitle' class='checkagr' onclick= >$row->propertyTitle</li>";
+		foreach ($data->result() as $row) {
+			// echo "<li  id='getVal-$row->propertyID-$row->propertyTitle' class='checkagr' onclick= >$row->propertyTitle</li>";
 
-			echo "<li id = '$row->propertyID' class = '$row->propertyTitle' onClick= getsVal($row->propertyID) >$row->propertyTitle</li>";	
+			echo "<li id = '$row->propertyID' class = '$row->propertyTitle' onClick= getsVal($row->propertyID) >$row->propertyTitle</li>";
 		}
 	}
 
@@ -1580,23 +1573,23 @@ class Admin extends CI_Controller
 		//check if Admin is logged in
 		//if ($this->session->has_userdata('adminLoggedIn')) {
 
-			$data['adminPriv'] = $this->functions_model->getUserAccess();
+		$data['adminPriv'] = $this->functions_model->getUserAccess();
 
-			$data['adminID'] = $this->session->userdata('adminID');
+		$data['adminID'] = $this->session->userdata('adminID');
 
-			$data['userAccess'] = $this->session->userdata('userAccess');
+		$data['userAccess'] = $this->session->userdata('userAccess');
 
-			$data['title'] = "User Profile :: RSS";
+		$data['title'] = "User Profile :: RSS";
 
-			$this->load->view('admin/templates/header.php', $data);
+		$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php', $data);
+		$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/pages/user-profile.php', $data);
+		$this->load->view('admin/pages/user-profile.php', $data);
 
-			$this->load->view('admin/templates/footer.php', $data);
+		$this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/templates/payment-modal.php', $data);
+		$this->load->view('admin/templates/payment-modal.php', $data);
 		// } else {
 
 		// 	redirect(base_url() . 'admin/login', 'refresh');
@@ -1754,7 +1747,7 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
-	
+
 	public function bookings()
 	{
 		$config['total_rows'] = $this->admin_model->countPropBookings();
@@ -1821,7 +1814,7 @@ class Admin extends CI_Controller
 		}
 	}
 
-	
+
 	public function userbooking($id)
 	{
 		// $config['total_rows'] = $this->admin_model->countPropBookings();
@@ -1852,7 +1845,7 @@ class Admin extends CI_Controller
 
 		// 	$data['page_links'] = $this->pagination->create_links();
 
-			$data['bookings'] = $this->admin_model->fetchBooking($id);
+		$data['bookings'] = $this->admin_model->fetchBooking($id);
 		// }
 
 		if (!file_exists(APPPATH . 'views/admin/pages/bookings.php')) {
@@ -2692,7 +2685,7 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
-	
+
 	public function add_new_rss_property()
 	{
 
@@ -2893,7 +2886,6 @@ class Admin extends CI_Controller
 	public function edit_buytolet_property($id)
 	{
 
-
 		if (!file_exists(APPPATH . 'views/admin/pages/edit-buytolet-property.php')) {
 			// Whoops, we don't have a page for that!
 
@@ -2903,34 +2895,74 @@ class Admin extends CI_Controller
 		//check if Admin is logged in
 		if ($this->session->has_userdata('adminLoggedIn')) {
 
-			$data['aptTypes'] = $this->admin_model->fetchAptType();
+			require 'vendor/autoload.php'; // Include the AWS SDK
 
-			$data['investTypes'] = $this->admin_model->fetchInvestType();
+			$s3 = new Aws\S3\S3Client([
 
-			$data['adminPriv'] = $this->functions_model->getUserAccess();
+				'version' => 'latest',
 
-			$data['adminID'] = $this->session->userdata('adminID');
+				'region' => 'eu-west-1',
 
-			$data['userAccess'] = $this->session->userdata('userAccess');
+			]);
 
-			$data['countries'] = $this->functions_model->get_countries();
+			try {
 
-			$data['property'] = $this->admin_model->fetchBuytoletProperty($id);
+				$bucketName = 'dev-bss-uploads';
 
-			$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
+				$s3FolderPath = 'uploads/buytolet/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image'];
 
-			//Get Images
-			$data['btl_images'] = file_get_contents('https://dev-buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
+				// Get the object (image) from S3 instead of file content from site 2
+				$result = $s3->getObject([
 
-			$data['title'] = "Edit Property :: Buytolet";
+					'Bucket' => $bucketName,
 
-			$this->load->view('admin/templates/header.php', $data);
+					'Key' => $s3FolderPath,
 
-			$this->load->view('admin/templates/sidebar.php', $data);
+				]);
 
-			$this->load->view('admin/pages/edit-buytolet-property.php', $data);
+				// Get the image data
+				$imageData = $result['Body'];
 
-			$this->load->view('admin/templates/footer.php', $data);
+
+				$data['aptTypes'] = $this->admin_model->fetchAptType();
+
+				$data['investTypes'] = $this->admin_model->fetchInvestType();
+
+				$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+				$data['adminID'] = $this->session->userdata('adminID');
+
+				$data['userAccess'] = $this->session->userdata('userAccess');
+
+				$data['countries'] = $this->functions_model->get_countries();
+
+				$data['property'] = $this->admin_model->fetchBuytoletProperty($id);
+
+				$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
+
+				// $bucketName = 'dev-bss-uploads';
+
+				// $folderPath = 'uploads/buytolet/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image'];
+
+				//Get Images
+				$data['btl_images'] = $imageData;
+
+				// $data['btl_images'] = file_get_contents('https://dev-buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
+
+				$data['title'] = "Edit Property :: Buytolet";
+
+				$this->load->view('admin/templates/header.php', $data);
+
+				$this->load->view('admin/templates/sidebar.php', $data);
+
+				$this->load->view('admin/pages/edit-buytolet-property.php', $data);
+
+				$this->load->view('admin/templates/footer.php', $data);
+				
+			} catch (Aws\S3\Exception\S3Exception $e) {
+
+				echo "Error getting file from S3: " . $e->getMessage();
+			}
 		} else {
 
 			redirect(base_url() . 'admin/login', 'refresh');
@@ -3210,10 +3242,10 @@ class Admin extends CI_Controller
 		if ($res) {
 
 			// Assuming you're using CodeIgniter, use the URL helper to create URLs
-		$user_profile_url = site_url('admin/addRepairs/');
+			$user_profile_url = site_url('admin/addRepairs/');
 
-		// Redirect to user profile with a success message
-		echo "<script>
+			// Redirect to user profile with a success message
+			echo "<script>
 				alert('Upload Successful');
 				window.location.href='$user_profile_url';
 			</script>";
@@ -5525,17 +5557,15 @@ class Admin extends CI_Controller
 
 			require 'vendor/autoload.php'; // Include the AWS SDK
 
-        	$s3 = new Aws\S3\S3Client([
+			$s3 = new Aws\S3\S3Client([
 
-            'version' => 'latest',
+				'version' => 'latest',
 
-            'region' => 'eu-west-1',
+				'region' => 'eu-west-1',
 
-        	]);
+			]);
 
-			// $config["upload_path"] = '../buy.smallsmall.com/uploads/buytolet/' . $folder;
-
-			$config["upload_path"] = 'https://s3-eu-west-1.amazonaws.com/dev-bss-uploads/uploads/buytolet/' . $folder;
+			$config["upload_path"] = '../buy.smallsmall.com/uploads/buytolet/' . $folder;
 
 			$config["allowed_types"] = 'jpg|jpeg|png';
 
@@ -5576,9 +5606,7 @@ class Admin extends CI_Controller
 
 						'Key' => 'uploads/buytolet/' . $folder . '/' . $data["file_name"],
 
-						// 'Body' => fopen('../buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"], 'rb'),
-
-						'Body' => fopen('https://s3-eu-west-1.amazonaws.com/dev-bss-uploads/uploads/buytolet/' . $folder . '/' . $data["file_name"], 'rb'),
+						'Body' => fopen('../buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"], 'rb'),
 
 					];
 
@@ -5592,8 +5620,6 @@ class Admin extends CI_Controller
                             <img src="https://s3-eu-west-1.amazonaws.com/dev-bss-uploads/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
                             <div class="remove-btl-img img-removal" id="img-buytolet-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
                             <!--<span class="featTT">featured</span>--></span>';
-
-
 				} else {
 
 					$error = $this->upload->display_errors('', '');
@@ -5689,25 +5715,25 @@ class Admin extends CI_Controller
 
 	// 			// $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
 
-			//
+	//
 
-			// if (!$this->upload->do_upload('file')) {
+	// if (!$this->upload->do_upload('file')) {
 
-			// 	$status = 'error';
+	// 	$status = 'error';
 
-			// 	$msg = $this->upload->display_errors('', '');
+	// 	$msg = $this->upload->display_errors('', '');
 
-			// } else {
+	// } else {
 
-				// $data = $this->upload->data();
+	// $data = $this->upload->data();
 
-				// $folder =
+	// $folder =
 
-				// $site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
+	// $site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
 
-				// $upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
+	// $upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
 
-				// unlink('./tmp/' . $data["file_name"]);
+	// unlink('./tmp/' . $data["file_name"]);
 
 	// 			//Populate the property table
 	// 			$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $data["file_name"], $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
@@ -5738,9 +5764,9 @@ class Admin extends CI_Controller
 
 	//Test
 
-public function uploadBuytoletProperty()
-{
-    //Get data from AJAX
+	public function uploadBuytoletProperty()
+	{
+		//Get data from AJAX
 		$propName = $this->input->post('propTitle');
 		$propType = $this->input->post('propType');
 		$propDesc = htmlentities($this->input->post('propDesc', ENT_QUOTES));
@@ -5787,168 +5813,163 @@ public function uploadBuytoletProperty()
 		$status = "";
 
 
-    // Checking if the admin is logged in
-    if ($this->session->has_userdata('adminLoggedIn')) {
+		// Checking if the admin is logged in
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
-        $userID = $this->session->userdata('adminID');
+			$userID = $this->session->userdata('adminID');
 
-		require 'vendor/autoload.php'; // Include the AWS SDK
+			require 'vendor/autoload.php'; // Include the AWS SDK
 
-        	$s3 = new Aws\S3\S3Client([
+			$s3 = new Aws\S3\S3Client([
 
-            'version' => 'latest',
+				'version' => 'latest',
 
-            'region' => 'eu-west-1',
-
-        	]);
-
-		$bucketName = 'dev-bss-uploads';
-
-    	$folderPath = 'uploads/buytolet/' . $imageFolder;
-
-		try {
-			// List objects in the specified S3 folder
-			$objects = $s3->listObjectsV2([
-
-				'Bucket' => $bucketName,
-
-				'Prefix' => $folderPath,
+				'region' => 'eu-west-1',
 
 			]);
-	
-			if (count($objects['Contents']) > 0) {
 
-				// Retrieve the first image name from the list of objects
-				$firstImageName = $objects['Contents'][0]['Key'];
+			$bucketName = 'dev-bss-uploads';
 
-				// You may want to extract the actual image file name from the path
-				// Example: if the key is 'uploads/buytolet/imageFolder/imagename.jpg',
-				// you can extract 'imagename.jpg' from it
+			$folderPath = 'uploads/buytolet/' . $imageFolder;
 
-				$imageName = basename($firstImageName);
+			try {
+				// List objects in the specified S3 folder
+				$objects = $s3->listObjectsV2([
 
-				$propertyImageDir = $imageFolder . '/' . $imageName;
+					'Bucket' => $bucketName,
 
-				$propertyImagedir = rtrim($propertyImageDir, '/');
+					'Prefix' => $folderPath,
 
-				// removing the slash that occurs at end
-				// $propertyImagedir = 'test';
+				]);
 
-				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $imageName, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+				if (count($objects['Contents']) > 0) {
 
-            if ($property != 0) {
+					// Retrieve the first image name from the list of objects
+					$firstImageName = $objects['Contents'][0]['Key'];
 
-                $status = "success";
+					// You may want to extract the actual image file name from the path
+					// Example: if the key is 'uploads/buytolet/imageFolder/imagename.jpg',
+					// you can extract 'imagename.jpg' from it
 
-                $msg = "Property successfully uploaded";
+					$imageName = basename($firstImageName);
 
-            } else {
+					$propertyImageDir = $imageFolder . '/' . $imageName;
 
-                $status = "error";
+					$propertyImagedir = rtrim($propertyImageDir, '/');
 
-                $msg = "Could not upload property";
-            }
-	
-			} else {
+					// removing the slash that occurs at end
+					// $propertyImagedir = 'test';
+
+					$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $imageName, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+
+					if ($property != 0) {
+
+						$status = "success";
+
+						$msg = "Property successfully uploaded";
+					} else {
+
+						$status = "error";
+
+						$msg = "Could not upload property";
+					}
+				} else {
+
+					$status = "error";
+
+					$msg = $this->upload->display_errors('', '');
+
+					// No objects found in the specified folder
+
+				}
+			} catch (Exception $e) {
+
+				// Handle any exceptions that occurred during the API call
 
 				$status = "error";
 
-            $msg = $this->upload->display_errors('', '');
-
-				// No objects found in the specified folder
-
+				$msg = "Error: " . $e->getMessage();
 			}
 
-		} catch (Exception $e) {
+			// Checking if files are being uploaded
+			// if ($_FILES["userfile"]["name"] != '') {
 
-			// Handle any exceptions that occurred during the API call
+			//     $error = 0;
 
-			$status = "error";
+			//     $config["upload_path"] = './tmp/';
 
-            $msg = "Error: " . $e->getMessage();
+			// 	$config["allowed_types"] = 'jpg|jpeg|png';
 
+			// 	$config['encrypt_name'] = TRUE;
+
+			// 	$config['max_size'] = 10 * 1024;
+
+			// 	$this->load->library('upload', $config);
+
+			// 	$this->upload->initialize($config);
+
+			//     // Looping through uploaded files
+			//     for ($count = 0; $count < count($_FILES["userfile"]["name"]); $count++) {
+
+			//         $_FILES["file"]["name"] = $_FILES["userfile"]["name"][$count];
+
+			// 		$_FILES["file"]["type"] = $_FILES["userfile"]["type"][$count];
+
+			// 		$_FILES["file"]["tmp_name"] = $_FILES["userfile"]["tmp_name"][$count];
+
+			// 		$_FILES["file"]["error"] = $_FILES["userfile"]["error"][$count];
+
+			// 		$_FILES["file"]["size"] = $_FILES["userfile"]["size"][$count];
+
+			//         if ($this->upload->do_upload('file')) {
+
+			//             $data = $this->upload->data();
+
+			//         } else {
+
+			//             $error = $this->upload->display_errors('', '');
+
+			//         }
+			//     }
+			// }
+
+			// Handling upload status
+			// if ($is_uploaded) {
+
+			//     // var_dump($data);
+
+			//     // Inserting data into the property table
+			// 	$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $data["file_name"], $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+
+			//     if ($property != 0) {
+
+			//         $status = "success";
+
+			//         $msg = "Property successfully uploaded";
+
+			//     } else {
+
+			//         $status = "error";
+
+			//         $msg = "Could not upload property";
+			//     }
+			// } else {
+
+			//     $status = "error";
+
+			//     $msg = $this->upload->display_errors('', '');
+
+			// }
+
+		} else {
+
+			// Redirecting if admin is not logged in
+
+			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
 
-        // Checking if files are being uploaded
-        // if ($_FILES["userfile"]["name"] != '') {
-
-        //     $error = 0;
-
-        //     $config["upload_path"] = './tmp/';
-
-		// 	$config["allowed_types"] = 'jpg|jpeg|png';
-
-		// 	$config['encrypt_name'] = TRUE;
-
-		// 	$config['max_size'] = 10 * 1024;
-
-		// 	$this->load->library('upload', $config);
-
-		// 	$this->upload->initialize($config);
-
-        //     // Looping through uploaded files
-        //     for ($count = 0; $count < count($_FILES["userfile"]["name"]); $count++) {
-
-        //         $_FILES["file"]["name"] = $_FILES["userfile"]["name"][$count];
-
-		// 		$_FILES["file"]["type"] = $_FILES["userfile"]["type"][$count];
-
-		// 		$_FILES["file"]["tmp_name"] = $_FILES["userfile"]["tmp_name"][$count];
-
-		// 		$_FILES["file"]["error"] = $_FILES["userfile"]["error"][$count];
-
-		// 		$_FILES["file"]["size"] = $_FILES["userfile"]["size"][$count];
-
-        //         if ($this->upload->do_upload('file')) {
-
-        //             $data = $this->upload->data();
-
-        //         } else {
-
-        //             $error = $this->upload->display_errors('', '');
-
-        //         }
-        //     }
-        // }
-        
-        // Handling upload status
-        // if ($is_uploaded) {
-
-        //     // var_dump($data);
-
-        //     // Inserting data into the property table
-		// 	$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $data["file_name"], $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
-
-        //     if ($property != 0) {
-
-        //         $status = "success";
-
-        //         $msg = "Property successfully uploaded";
-
-        //     } else {
-
-        //         $status = "error";
-
-        //         $msg = "Could not upload property";
-        //     }
-        // } else {
-
-        //     $status = "error";
-
-        //     $msg = $this->upload->display_errors('', '');
-
-        // }
-
-    } else {
-
-        // Redirecting if admin is not logged in
-
-        redirect(base_url() . "admin/dashboard", 'refresh');
-
-    }
-
-    echo json_encode(array('status' => $status, 'msg' => $msg));
-}
+		echo json_encode(array('status' => $status, 'msg' => $msg));
+	}
 
 
 
@@ -6024,14 +6045,14 @@ public function uploadBuytoletProperty()
 
 	// 			// Temporary upload path for the file
 	// 			$tempUploadPath = './tmp/';
-			
+
 	// 			// Check if upload folder exists, if not, create it
 	// 			if (!is_dir($tempUploadPath)) {
 
 	// 				mkdir($tempUploadPath, 0777, true);
 
 	// 			}
-			
+
 	// 			// Configuration for file upload
 	// 			$config['upload_path'] = './tmp/';
 
@@ -6042,20 +6063,20 @@ public function uploadBuytoletProperty()
 	// 			// $config['file_name'] = $_FILES['imgName']['name'];
 
 	// 			$config['encrypt_name'] = true;
-			
+
 	// 			$this->load->library('upload', $config);
 
 	// 			$this->upload->initialize($config);
-			
+
 	// 			// Perform file upload
 	// 			// if (!$this->upload->do_upload($file_element_name)) {
 	// 				if (!$this->upload->do_upload($file)) {
 
 	// 				// Debugging - Print upload data for inspection
 
-    // 				// var_dump($_FILES);
+	// 				// var_dump($_FILES);
 
-    // 				// var_dump($this->upload->data());
+	// 				// var_dump($this->upload->data());
 
 	// 				// Handle upload error
 	// 				$status = 'error';
@@ -6067,7 +6088,7 @@ public function uploadBuytoletProperty()
 	// 				$uploadedData = $this->upload->data();
 
 	// 				$uploadedFilePath = $tempUploadPath . $uploadedData['file_name'];
-			
+
 	// 				// Uploading file to S3
 	// 				$uploadParams = [
 	// 					'Bucket' => $bucket . '/uploads/tmp/',
@@ -6076,20 +6097,20 @@ public function uploadBuytoletProperty()
 	// 					'Body' => file_get_contents($this->upload->data()['full_path']),
 
 	// 				];
-			
+
 	// 				$result = $s3->putObject($uploadParams);
-			
+
 	// 				// Get the uploaded file URL from AWS S3
 	// 				$uploadedFileUrl = $result['ObjectURL'];
-			
+
 	// 				// Extracting the file name from the URL
 	// 				$pathParts = pathinfo($uploadedFileUrl);
 
 	// 				$fileName = $pathParts['basename'];
-			
+
 	// 				// Example: Inserting property details into the database using admin_model method
 	// 				$property = $this->admin_model->insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
-			
+
 	// 				if ($property != 0) {
 
 	// 					$status = "success";
@@ -6112,7 +6133,7 @@ public function uploadBuytoletProperty()
 
 	// 			$msg = $e->getMessage();
 	// 		}
-			
+
 
 	// 	} else {
 
@@ -6121,10 +6142,10 @@ public function uploadBuytoletProperty()
 	// 		redirect(base_url() . "admin/dashboard", 'refresh');
 
 	// 	}
-	
+
 	// 	// Deleting temporary uploaded files
 	// 	@unlink($_FILES[$file_element_name]);
-	
+
 	// 	// Sending JSON response containing the status and message
 	// 	echo json_encode(array('status' => $status, 'msg' => $msg));
 	// }
@@ -6358,9 +6379,10 @@ public function uploadBuytoletProperty()
 					$data = $this->upload->data();
 
 
-					$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);dev-buy.smallsmall.com/uploads/buytolet/
+					$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
+					dev - buy . smallsmall . com / uploads / buytolet /
 
-					$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan");
+						$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan");
 
 					unlink('./tmp/' . $data["file_name"]);
 
@@ -6590,407 +6612,405 @@ public function uploadBuytoletProperty()
 	// public function removeImg()
 
 	public function propertiesFeatureImage()
-{
-    // $folder = $this->input->post('folder');
-    $folder = $this->input->post('foldername');
+	{
+		// $folder = $this->input->post('folder');
+		$folder = $this->input->post('foldername');
 
-    // $img_name = $this->input->post('imgName');
-	$img_name = $this->input->post('imageKey');
+		// $img_name = $this->input->post('imgName');
+		$img_name = $this->input->post('imageKey');
 
 
-    if ($folder && $img_name) {
-		
-        require 'vendor/autoload.php';
-    
-        $s3 = new Aws\S3\S3Client([
-            'version' => 'latest',
-            'region' => 'eu-west-1', // Replace with your region
-        ]);
+		if ($folder && $img_name) {
 
-        $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+			require 'vendor/autoload.php';
 
-        $objectKey = 'uploads/' . $folder . '/' . $img_name;
+			$s3 = new Aws\S3\S3Client([
+				'version' => 'latest',
+				'region' => 'eu-west-1', // Replace with your region
+			]);
 
-        try {
-            // List all versions of the object
-            $versions = $s3->listObjectVersions([
-                'Bucket' => $bucket,
+			$bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-                'Prefix' => $objectKey,
+			$objectKey = 'uploads/' . $folder . '/' . $img_name;
 
-            ]);
+			try {
+				// List all versions of the object
+				$versions = $s3->listObjectVersions([
+					'Bucket' => $bucket,
 
-            // Delete all versions of the object
-            foreach ($versions['Versions'] as $version) {
-                $s3->deleteObject([
+					'Prefix' => $objectKey,
 
-                    'Bucket' => $bucket,
+				]);
 
-                    'Key' => $version['Key'],
-
-                    'VersionId' => $version['VersionId'],
+				// Delete all versions of the object
+				foreach ($versions['Versions'] as $version) {
+					$s3->deleteObject([
 
-                ]);
-            }
-            
-            echo 1; // Success
+						'Bucket' => $bucket,
 
-        } catch (Aws\Exception\AwsException $e) {
+						'Key' => $version['Key'],
 
-            echo 'S3 Error: ' . $e->getAwsErrorMessage();
+						'VersionId' => $version['VersionId'],
 
-        }
-    } else {
+					]);
+				}
 
-        echo 'Missing folder or image name';
-		
-    }
-}
+				echo 1; // Success
 
-// public function propertiesFeatureImage()
-// {
-//     require 'vendor/autoload.php';
+			} catch (Aws\Exception\AwsException $e) {
 
-//     $folder = $this->input->post('foldername');
-//     $img_name = $this->input->post('imageKey');
-
-//     if ($folder && $img_name) {
-//         $s3 = new Aws\S3\S3Client([
-//             'version' => 'latest',
-//             'region' => 'eu-west-1', // Replace with your region
-//         ]);
-
-//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
-
-//         $objectKey = 'uploads/properties' . $folder . '/' . $img_name;
-
-//         try {
-//             // Delete the object
-//             $s3->deleteObject([
-//                 'Bucket' => $bucket,
-//                 'Key' => $objectKey,
-//             ]);
-
-// 			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
-//             // echo 1; // Success
-//         } catch (Aws\Exception\AwsException $e) {
-
-// 			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
-//             // echo 'S3 Error: ' . $e->getAwsErrorMessage();
-//         }
-//     } else {
-//         echo 'Missing folder or image name';
-//     }
-// }
-
-
-// public function propertiesFeatureImage()
-// {
-// 	require 'vendor/autoload.php';
-
-// 	$folder = $this->input->post('foldername');
-//     $img_name = $this->input->post('imageKey');
-
-//     if ($folder && $img_name) {
-//         $s3 = new Aws\S3\S3Client([
-//             'version' => 'latest',
-//             'region' => 'eu-west-1', // Replace with your region
-//         ]);
-
-
-//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
-
-//         $objectKey = 'uploads/' . $folder . '/' . $img_name;
-
-//         try {
-//             // List all versions of the object
-//             $versions = $s3->listObjectVersions([
-//                 'Bucket' => $bucket,
-//                 'Prefix' => $objectKey,
-//             ]);
-
-//             // Delete all versions of the object
-//             foreach ($versions['Versions'] as $version) {
-//                 $s3->deleteObject([
-//                     'Bucket' => $bucket,
-//                     'Key' => $version['Key'],
-//                     'VersionId' => $version['VersionId'],
-//                 ]);
-//             }
-            
-//             echo 1; // Success
-//         } catch (Aws\Exception\AwsException $e) {
-//             echo 'S3 Error: ' . $e->getAwsErrorMessage();
-//         }
-//     } else {
-//         echo 'Missing folder or image name';
-//     }
-//     // if ($folder && $img_name) {
-//         // require 'vendor/autoload.php';
-
-//         // $s3 = new Aws\S3\S3Client([
-//         //     'version' => 'latest',
-//         //     'region' => 'eu-west-1', // Replace with your region
-//         // ]);
-
-//         // $bucket = 'dev-rss-uploads'; // Replace with your bucket name
-
-//         // $objectKey = 'uploads/' . $folder . '/' . $img_name;
-
-//         // try {
-//         //     // List all versions of the object
-//         //     $versions = $s3->listObjectVersions([
-//         //         'Bucket' => $bucket,
-//         //         'Prefix' => $objectKey,
-//         //     ]);
+				echo 'S3 Error: ' . $e->getAwsErrorMessage();
+			}
+		} else {
 
-//         //     // Create an array to store version IDs
-//         //     $versionIds = [];
+			echo 'Missing folder or image name';
+		}
+	}
 
-//         //     // Collect version IDs of the object
-//         //     foreach ($versions['Versions'] as $version) {
-//         //         $versionIds[] = [
-//         //             'Key' => $version['Key'],
-//         //             'VersionId' => $version['VersionId'],
-//         //         ];
-//         //     }
+	// public function propertiesFeatureImage()
+	// {
+	//     require 'vendor/autoload.php';
 
-//         //     // Delete all versions of the object
-//         //     foreach ($versionIds as $versionId) {
-//         //         $s3->deleteObject([
-//         //             'Bucket' => $bucket,
-//         //             'Key' => $versionId['Key'],
-//         //             'VersionId' => $versionId['VersionId'],
-//         //         ]);
-//         //     }
+	//     $folder = $this->input->post('foldername');
+	//     $img_name = $this->input->post('imageKey');
 
-//         //     // Read the file contents using file_get_contents
-//         //     $fileContents = file_get_contents($objectKey);
+	//     if ($folder && $img_name) {
+	//         $s3 = new Aws\S3\S3Client([
+	//             'version' => 'latest',
+	//             'region' => 'eu-west-1', // Replace with your region
+	//         ]);
 
-//         //     // Re-upload the object with the same key to move it to the beginning
-//         //     $s3->putObject([
-//         //         'Bucket' => $bucket,
-//         //         'Key' => $objectKey,
-//         //         'Body' => $fileContents, // Use the file contents as the 'Body'
-//         //         // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
-//         //     ]);
+	//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-//         //     echo 'Image featured successfully and reordered.';
-//         // } catch (Aws\Exception\AwsException $e) {
-//         //     echo 'S3 Error: ' . $e->getAwsErrorMessage();
-//         // }
-//     // } else {
-//     //     echo 'Missing folder or image name';
-//     // }
-// }
+	//         $objectKey = 'uploads/properties' . $folder . '/' . $img_name;
 
-// public function propertiesFeatureImage()
-// {
-// 	require 'vendor/autoload.php';
+	//         try {
+	//             // Delete the object
+	//             $s3->deleteObject([
+	//                 'Bucket' => $bucket,
+	//                 'Key' => $objectKey,
+	//             ]);
 
-//     $folder = $this->input->post('foldername'); // Use foldername instead of folder
+	// 			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
+	//             // echo 1; // Success
+	//         } catch (Aws\Exception\AwsException $e) {
 
-//     $img_name = $this->input->post('imageKey');
+	// 			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
+	//             // echo 'S3 Error: ' . $e->getAwsErrorMessage();
+	//         }
+	//     } else {
+	//         echo 'Missing folder or image name';
+	//     }
+	// }
+
+
+	// public function propertiesFeatureImage()
+	// {
+	// 	require 'vendor/autoload.php';
+
+	// 	$folder = $this->input->post('foldername');
+	//     $img_name = $this->input->post('imageKey');
 
-//     if ($folder && $img_name) {
+	//     if ($folder && $img_name) {
+	//         $s3 = new Aws\S3\S3Client([
+	//             'version' => 'latest',
+	//             'region' => 'eu-west-1', // Replace with your region
+	//         ]);
+
+
+	//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+	//         $objectKey = 'uploads/' . $folder . '/' . $img_name;
+
+	//         try {
+	//             // List all versions of the object
+	//             $versions = $s3->listObjectVersions([
+	//                 'Bucket' => $bucket,
+	//                 'Prefix' => $objectKey,
+	//             ]);
+
+	//             // Delete all versions of the object
+	//             foreach ($versions['Versions'] as $version) {
+	//                 $s3->deleteObject([
+	//                     'Bucket' => $bucket,
+	//                     'Key' => $version['Key'],
+	//                     'VersionId' => $version['VersionId'],
+	//                 ]);
+	//             }
+
+	//             echo 1; // Success
+	//         } catch (Aws\Exception\AwsException $e) {
+	//             echo 'S3 Error: ' . $e->getAwsErrorMessage();
+	//         }
+	//     } else {
+	//         echo 'Missing folder or image name';
+	//     }
+	//     // if ($folder && $img_name) {
+	//         // require 'vendor/autoload.php';
+
+	//         // $s3 = new Aws\S3\S3Client([
+	//         //     'version' => 'latest',
+	//         //     'region' => 'eu-west-1', // Replace with your region
+	//         // ]);
+
+	//         // $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+	//         // $objectKey = 'uploads/' . $folder . '/' . $img_name;
 
-//         $s3 = new Aws\S3\S3Client([
-//             'version' => 'latest',
-//             'region' => 'eu-west-1', // Replace with your region
-//         ]);
+	//         // try {
+	//         //     // List all versions of the object
+	//         //     $versions = $s3->listObjectVersions([
+	//         //         'Bucket' => $bucket,
+	//         //         'Prefix' => $objectKey,
+	//         //     ]);
 
-// 		sleep(3);
+	//         //     // Create an array to store version IDs
+	//         //     $versionIds = [];
 
-//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+	//         //     // Collect version IDs of the object
+	//         //     foreach ($versions['Versions'] as $version) {
+	//         //         $versionIds[] = [
+	//         //             'Key' => $version['Key'],
+	//         //             'VersionId' => $version['VersionId'],
+	//         //         ];
+	//         //     }
 
-//         // $objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
+	//         //     // Delete all versions of the object
+	//         //     foreach ($versionIds as $versionId) {
+	//         //         $s3->deleteObject([
+	//         //             'Bucket' => $bucket,
+	//         //             'Key' => $versionId['Key'],
+	//         //             'VersionId' => $versionId['VersionId'],
+	//         //         ]);
+	//         //     }
 
-// 		$objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
+	//         //     // Read the file contents using file_get_contents
+	//         //     $fileContents = file_get_contents($objectKey);
 
-//         try {
+	//         //     // Re-upload the object with the same key to move it to the beginning
+	//         //     $s3->putObject([
+	//         //         'Bucket' => $bucket,
+	//         //         'Key' => $objectKey,
+	//         //         'Body' => $fileContents, // Use the file contents as the 'Body'
+	//         //         // 'ContentType' => 'image/jpeg', // Replace with the appropriate content type
+	//         //     ]);
 
-// 			$content_types = [
-// 				'jpg' => 'image/jpeg',
-// 				'jpeg' => 'image/jpeg',
-// 				'png' => 'image/png',
-// 				'gif' => 'image/gif',
-// 				// Add more file extensions and content types as needed
-// 			];
-
-// 			$result = $s3->putObject([
-
-// 				'Bucket' => $bucket,
-
-// 				'Key'    => $objectKey,
-
-// 				'Body'   => $img_name,
-
-// 				'ContentType' => $content_types,
-// 			]);
-// 			// Print the URL to the object.
-
-// 			echo $img_name;
-
-// 			echo $result['ObjectURL'] . PHP_EOL;
-
-// 			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
-
-//             // echo 1; // Success
-
-//         } catch (Aws\Exception\AwsException $e) {
-
-// 			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
-
-//             // echo 'S3 Error: ' . $e->getAwsErrorMessage();
-
-//         }
-//     } else {
-
-// 		echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
-
-//         // echo 'Missing foldername or imageKey';
-
-//     }
-// }
-
-// public function propertiesFeatureImage()
-// {
-//     require 'vendor/autoload.php';
-
-//     $folder = $this->input->post('foldername'); // Use foldername instead of folder
-//     $img_name = $this->input->post('imageKey');
-
-//     if ($folder && $img_name) {
-//         $s3 = new Aws\S3\S3Client([
-//             'version' => 'latest',
-//             'region' => 'eu-west-1', // Replace with your region
-//         ]);
-
-//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
-
-//         // Generate a unique name for the image in S3
-//         $s3ImageName = uniqid() . '.' . pathinfo($img_name, PATHINFO_EXTENSION);
-
-//         try {
-//             // Upload the image to S3
-//             $s3->putObject([
-//                 'Bucket' => $bucket,
-//                 'Key'    => 'uploads/properties/' . $folder . '/' . $s3ImageName,
-//                 'Body'   => file_get_contents($img_name), // Read the image content
-//             ]);
-
-//             // Get the URL of the uploaded image
-//             $imageURL = $s3->getObjectUrl($bucket, 'uploads/properties/' . $folder . '/' . $s3ImageName);
-
-//             // Return the URL to the uploaded image
-//             echo json_encode(['success' => true, 'image_url' => $imageURL, 'message' => 'Image uploaded successfully']);
-//         } catch (Aws\Exception\AwsException $e) {
-//             echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
-//         }
-//     } else {
-//         echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
-//     }
-// }
-
-// public function propertiesFeatureImage()
-// {
-//     require 'vendor/autoload.php';
-
-//     $folder = $this->input->post('foldername');
-//     $img_name = $this->input->post('imageKey');
-
-//     if ($folder && $img_name) {
-//         $s3 = new Aws\S3\S3Client([
-//             'version' => 'latest',
-//             'region' => 'eu-west-1', // Replace with your region
-//         ]);
-
-// 		$bucket = 'dev-rss-uploads';
-// 		$folderPath = 'uploads/properties/' . $folder . '/';
-// 		$targetKey = $folderPath . $img_name;
-		
-// 		try {
-// 			// Delete the existing image with the same name if it exists
-// 			$s3->deleteObject([
-// 				'Bucket' => $bucket,
-// 				'Key' => $targetKey,
-// 			]);
-		
-// 			// Upload the image to the folder with the same name
-// 			$s3->putObject([
-// 				'Bucket' => $bucket,
-// 				'Key' => $targetKey,
-// 				'Body' => $img_name,
-// 				'ContentType' => 'image/' . pathinfo($img_name, PATHINFO_EXTENSION),
-// 			]);
-		
-// 			// Generate the URL for the uploaded image
-// 			$url = $s3->getObjectUrl($bucket, $targetKey);
-		
-// 			echo json_encode(['success' => true, 'message' => 'Image moved to the front successfully', 'url' => $url]);
-// 		} catch (Aws\Exception\AwsException $e) {
-// 			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
-// 		}
-// 	}
-
-// }
-
-
-
-
-
-// public function propertiesFeatureImage()
-// {
-//     require 'vendor/autoload.php';
-
-//     $folder = $this->input->post('foldername');
-//     $img_name = $this->input->post('imageKey');
-
-//     if ($folder && $img_name) {
-//         $s3 = new Aws\S3\S3Client([
-//             'version' => 'latest',
-//             'region' => 'eu-west-1', // Replace with your region
-//         ]);
-
-//         $bucket = 'dev-rss-uploads';
-//         $folderPath = 'uploads/properties/' . $folder . '/';
-//         $targetKey = $folderPath . $img_name;
-
-//         try {
-//             // Check if the existing image with the same name exists
-//             $existingObject = $s3->headObject([
-//                 'Bucket' => $bucket,
-//                 'Key' => $targetKey,
-//             ]);
-
-//             // If the existing image exists, delete it
-//             if ($existingObject) {
-//                 $s3->deleteObject([
-//                     'Bucket' => $bucket,
-//                     'Key' => $targetKey,
-//                 ]);
-//             }
-
-//             // Upload the image to the folder with the same name
-//             $s3->putObject([
-//                 'Bucket' => $bucket,
-//                 'Key' => $targetKey,
-//                 'Body' => $img_name,
-//                 'ContentType' => 'image/' . pathinfo($img_name, PATHINFO_EXTENSION),
-//             ]);
-
-//             // Generate the URL for the uploaded image
-//             $url = $s3->getObjectUrl($bucket, $targetKey);
-
-//             echo json_encode(['success' => true, 'message' => 'Image moved to the front successfully', 'url' => $url]);
-
-//         } catch (Aws\Exception\AwsException $e) {
-//             echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
-//         }
-//     } else {
-//         echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
-//     }
-// }
+	//         //     echo 'Image featured successfully and reordered.';
+	//         // } catch (Aws\Exception\AwsException $e) {
+	//         //     echo 'S3 Error: ' . $e->getAwsErrorMessage();
+	//         // }
+	//     // } else {
+	//     //     echo 'Missing folder or image name';
+	//     // }
+	// }
+
+	// public function propertiesFeatureImage()
+	// {
+	// 	require 'vendor/autoload.php';
+
+	//     $folder = $this->input->post('foldername'); // Use foldername instead of folder
+
+	//     $img_name = $this->input->post('imageKey');
+
+	//     if ($folder && $img_name) {
+
+	//         $s3 = new Aws\S3\S3Client([
+	//             'version' => 'latest',
+	//             'region' => 'eu-west-1', // Replace with your region
+	//         ]);
+
+	// 		sleep(3);
+
+	//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+	//         // $objectKey = 'uploads/properties/' . $folder . '/' . basename($img_name);
+
+	// 		$objectKey = 'uploads/properties/' . $folder . '/' . $img_name;
+
+	//         try {
+
+	// 			$content_types = [
+	// 				'jpg' => 'image/jpeg',
+	// 				'jpeg' => 'image/jpeg',
+	// 				'png' => 'image/png',
+	// 				'gif' => 'image/gif',
+	// 				// Add more file extensions and content types as needed
+	// 			];
+
+	// 			$result = $s3->putObject([
+
+	// 				'Bucket' => $bucket,
+
+	// 				'Key'    => $objectKey,
+
+	// 				'Body'   => $img_name,
+
+	// 				'ContentType' => $content_types,
+	// 			]);
+	// 			// Print the URL to the object.
+
+	// 			echo $img_name;
+
+	// 			echo $result['ObjectURL'] . PHP_EOL;
+
+	// 			echo json_encode(['success' => true, 'message' => 'Image uploaded successfully']);
+
+	//             // echo 1; // Success
+
+	//         } catch (Aws\Exception\AwsException $e) {
+
+	// 			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
+
+	//             // echo 'S3 Error: ' . $e->getAwsErrorMessage();
+
+	//         }
+	//     } else {
+
+	// 		echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
+
+	//         // echo 'Missing foldername or imageKey';
+
+	//     }
+	// }
+
+	// public function propertiesFeatureImage()
+	// {
+	//     require 'vendor/autoload.php';
+
+	//     $folder = $this->input->post('foldername'); // Use foldername instead of folder
+	//     $img_name = $this->input->post('imageKey');
+
+	//     if ($folder && $img_name) {
+	//         $s3 = new Aws\S3\S3Client([
+	//             'version' => 'latest',
+	//             'region' => 'eu-west-1', // Replace with your region
+	//         ]);
+
+	//         $bucket = 'dev-rss-uploads'; // Replace with your bucket name
+
+	//         // Generate a unique name for the image in S3
+	//         $s3ImageName = uniqid() . '.' . pathinfo($img_name, PATHINFO_EXTENSION);
+
+	//         try {
+	//             // Upload the image to S3
+	//             $s3->putObject([
+	//                 'Bucket' => $bucket,
+	//                 'Key'    => 'uploads/properties/' . $folder . '/' . $s3ImageName,
+	//                 'Body'   => file_get_contents($img_name), // Read the image content
+	//             ]);
+
+	//             // Get the URL of the uploaded image
+	//             $imageURL = $s3->getObjectUrl($bucket, 'uploads/properties/' . $folder . '/' . $s3ImageName);
+
+	//             // Return the URL to the uploaded image
+	//             echo json_encode(['success' => true, 'image_url' => $imageURL, 'message' => 'Image uploaded successfully']);
+	//         } catch (Aws\Exception\AwsException $e) {
+	//             echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
+	//         }
+	//     } else {
+	//         echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
+	//     }
+	// }
+
+	// public function propertiesFeatureImage()
+	// {
+	//     require 'vendor/autoload.php';
+
+	//     $folder = $this->input->post('foldername');
+	//     $img_name = $this->input->post('imageKey');
+
+	//     if ($folder && $img_name) {
+	//         $s3 = new Aws\S3\S3Client([
+	//             'version' => 'latest',
+	//             'region' => 'eu-west-1', // Replace with your region
+	//         ]);
+
+	// 		$bucket = 'dev-rss-uploads';
+	// 		$folderPath = 'uploads/properties/' . $folder . '/';
+	// 		$targetKey = $folderPath . $img_name;
+
+	// 		try {
+	// 			// Delete the existing image with the same name if it exists
+	// 			$s3->deleteObject([
+	// 				'Bucket' => $bucket,
+	// 				'Key' => $targetKey,
+	// 			]);
+
+	// 			// Upload the image to the folder with the same name
+	// 			$s3->putObject([
+	// 				'Bucket' => $bucket,
+	// 				'Key' => $targetKey,
+	// 				'Body' => $img_name,
+	// 				'ContentType' => 'image/' . pathinfo($img_name, PATHINFO_EXTENSION),
+	// 			]);
+
+	// 			// Generate the URL for the uploaded image
+	// 			$url = $s3->getObjectUrl($bucket, $targetKey);
+
+	// 			echo json_encode(['success' => true, 'message' => 'Image moved to the front successfully', 'url' => $url]);
+	// 		} catch (Aws\Exception\AwsException $e) {
+	// 			echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
+	// 		}
+	// 	}
+
+	// }
+
+
+
+
+
+	// public function propertiesFeatureImage()
+	// {
+	//     require 'vendor/autoload.php';
+
+	//     $folder = $this->input->post('foldername');
+	//     $img_name = $this->input->post('imageKey');
+
+	//     if ($folder && $img_name) {
+	//         $s3 = new Aws\S3\S3Client([
+	//             'version' => 'latest',
+	//             'region' => 'eu-west-1', // Replace with your region
+	//         ]);
+
+	//         $bucket = 'dev-rss-uploads';
+	//         $folderPath = 'uploads/properties/' . $folder . '/';
+	//         $targetKey = $folderPath . $img_name;
+
+	//         try {
+	//             // Check if the existing image with the same name exists
+	//             $existingObject = $s3->headObject([
+	//                 'Bucket' => $bucket,
+	//                 'Key' => $targetKey,
+	//             ]);
+
+	//             // If the existing image exists, delete it
+	//             if ($existingObject) {
+	//                 $s3->deleteObject([
+	//                     'Bucket' => $bucket,
+	//                     'Key' => $targetKey,
+	//                 ]);
+	//             }
+
+	//             // Upload the image to the folder with the same name
+	//             $s3->putObject([
+	//                 'Bucket' => $bucket,
+	//                 'Key' => $targetKey,
+	//                 'Body' => $img_name,
+	//                 'ContentType' => 'image/' . pathinfo($img_name, PATHINFO_EXTENSION),
+	//             ]);
+
+	//             // Generate the URL for the uploaded image
+	//             $url = $s3->getObjectUrl($bucket, $targetKey);
+
+	//             echo json_encode(['success' => true, 'message' => 'Image moved to the front successfully', 'url' => $url]);
+
+	//         } catch (Aws\Exception\AwsException $e) {
+	//             echo json_encode(['success' => false, 'message' => 'S3 Error: ' . $e->getAwsErrorMessage()]);
+	//         }
+	//     } else {
+	//         echo json_encode(['success' => false, 'message' => 'Missing foldername or imageKey']);
+	//     }
+	// }
 
 
 	public function removeStayoneImg()
@@ -8506,7 +8526,7 @@ public function uploadBuytoletProperty()
 			echo 0;
 		}
 	}
-	
+
 	public function all_notifications()
 	{
 
@@ -9074,7 +9094,7 @@ public function uploadBuytoletProperty()
 
 		return array("result" => $result, "amount" => $new_amount);
 	}
-	
+
 	public function fill_payment_table($userID, $refID, $payment_period, $finance_balance)
 	{
 
@@ -9834,80 +9854,80 @@ public function uploadBuytoletProperty()
 
 	// public function direct_debit_subscription ()
 	// {
-    //     // Check if it's an AJAX request
-    //     if ($this->input->is_ajax_request()) {
+	//     // Check if it's an AJAX request
+	//     if ($this->input->is_ajax_request()) {
 
-    //         // Get the data from the AJAX request
-    //         $data = $this->input->post();
+	//         // Get the data from the AJAX request
+	//         $data = $this->input->post();
 
 	// 		// Insert the data into the 'direct debit subscriber table' table using the model
-    //         $insert_result = $this->Admin_model->directDebitSubsciber($data);
+	//         $insert_result = $this->Admin_model->directDebitSubsciber($data);
 
 	// 		if ($insert_result) {
-    //             // Data inserted successfully
-    //             $response = array('message' => 'Data inserted successfully');
+	//             // Data inserted successfully
+	//             $response = array('message' => 'Data inserted successfully');
 
-    //             echo json_encode($response);
+	//             echo json_encode($response);
 
-    //         } else {
+	//         } else {
 
-    //             // Handle insert failure
-    //             $response = array('message' => 'Data insertion failed');
+	//             // Handle insert failure
+	//             $response = array('message' => 'Data insertion failed');
 
-    //             echo json_encode($response);
+	//             echo json_encode($response);
 
-    //         }
+	//         }
 
-    //         // // Insert the data into the 'user_account' table
-    //         // $this->db->insert('direct_debit_subsciber', $data);
+	//         // // Insert the data into the 'user_account' table
+	//         // $this->db->insert('direct_debit_subsciber', $data);
 
-    //         // Return a response (e.g., success message)
+	//         // Return a response (e.g., success message)
 
-    //         $response = array('message' => 'Data inserted successfully');
+	//         $response = array('message' => 'Data inserted successfully');
 
-    //         echo json_encode($response);
+	//         echo json_encode($response);
 
-    //     } else {
+	//     } else {
 
-    //         // Handle non-AJAX requests as needed
-    //     }
+	//         // Handle non-AJAX requests as needed
+	//     }
 
-		
+
 	// }
 
-    public function direct_debit_subscription() {
-        // Check if it's an AJAX request
-        if ($this->input->is_ajax_request()) {
-            // Get the data from the AJAX request
-            $data = array(
-                'accountBalance' => $this->input->post('accountBalance'),
-                'accountName' => $this->input->post('accountName'),
-                'accountNumber' => $this->input->post('accountNumber'),
-                'bankName' => $this->input->post('bankName'),
-                'price' => $this->input->post('price'),
-                'serviceCharge' => $this->input->post('serviceCharge'),
-                'bookingID' => $this->input->post('bookingID'),
-                'userID' => $this->input->post('userID'),
-                'email' => $this->input->post('email'),
-                'fname' => $this->input->post('rentExpirationDate')
-            );
+	public function direct_debit_subscription()
+	{
+		// Check if it's an AJAX request
+		if ($this->input->is_ajax_request()) {
+			// Get the data from the AJAX request
+			$data = array(
+				'accountBalance' => $this->input->post('accountBalance'),
+				'accountName' => $this->input->post('accountName'),
+				'accountNumber' => $this->input->post('accountNumber'),
+				'bankName' => $this->input->post('bankName'),
+				'price' => $this->input->post('price'),
+				'serviceCharge' => $this->input->post('serviceCharge'),
+				'bookingID' => $this->input->post('bookingID'),
+				'userID' => $this->input->post('userID'),
+				'email' => $this->input->post('email'),
+				'fname' => $this->input->post('rentExpirationDate')
+			);
 
-            // Insert the data into the 'direct_debit_subscriber' table using the model
+			// Insert the data into the 'direct_debit_subscriber' table using the model
 
-            $insert_result = $this->admin_model->directDebitSubscriber($data);
+			$insert_result = $this->admin_model->directDebitSubscriber($data);
 
-            if ($insert_result) {
-                // Data inserted successfully
-                $response = array('message' => 'Data inserted successfully');
-                echo json_encode($response);
-            } else {
-                // Handle insert failure
-                $response = array('message' => 'Data insertion failed');
-                echo json_encode($response);
-            }
-        } else {
-            // Handle non-AJAX requests as needed
-        }
-    }
-
+			if ($insert_result) {
+				// Data inserted successfully
+				$response = array('message' => 'Data inserted successfully');
+				echo json_encode($response);
+			} else {
+				// Handle insert failure
+				$response = array('message' => 'Data insertion failed');
+				echo json_encode($response);
+			}
+		} else {
+			// Handle non-AJAX requests as needed
+		}
+	}
 }
