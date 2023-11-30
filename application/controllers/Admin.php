@@ -5516,15 +5516,6 @@ class Admin extends CI_Controller
 
 			mkdir('../buy.smallsmall.com/uploads/buytolet/' . $folder, 0777, TRUE);
 		}
-		//Connect to buy2let and create property Image folder
-		//$success = file_get_contents("https://dev-buy.smallsmall.com/create-folder/".$folder);
-
-		//if(!$success){
-		//Create the floor plan folder
-		//file_get_contents("https://www.buy2let.ng/create-folder/".$folder."/floor-plan");
-		//$error = "Could not create remote folder";
-
-		//}		
 
 		if ($_FILES["files"]["name"] != '') {
 
@@ -5542,7 +5533,9 @@ class Admin extends CI_Controller
 
         	]);
 
-			$config["upload_path"] = '../buy.smallsmall.com/uploads/buytolet/' . $folder;
+			// $config["upload_path"] = '../buy.smallsmall.com/uploads/buytolet/' . $folder;
+
+			$config["upload_path"] = 'https://s3-eu-west-1.amazonaws.com/dev-bss-uploads/uploads/buytolet/' . $folder;
 
 			$config["allowed_types"] = 'jpg|jpeg|png';
 
@@ -5572,15 +5565,8 @@ class Admin extends CI_Controller
 
 				if ($this->upload->do_upload('file')) {
 
-					//$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
-
-					//$upl_result = file_get_contents('https://dev-buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$folder);
-
-					//if($upl_result){
 
 					$data = $this->upload->data();
-
-					//
 
 					// Uploading file to S3
 
@@ -5590,21 +5576,15 @@ class Admin extends CI_Controller
 
 						'Key' => 'uploads/buytolet/' . $folder . '/' . $data["file_name"],
 
-						'Body' => fopen('../buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"], 'rb'),
+						// 'Body' => fopen('../buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"], 'rb'),
+
+						'Body' => fopen('https://s3-eu-west-1.amazonaws.com/dev-bss-uploads/uploads/buytolet/' . $folder . '/' . $data["file_name"], 'rb'),
 
 					];
 
 					// Put into s3
 
 					$s3->putObject($uploadParams);
-
-					//
-
-
-					// $output .= '
-					// 			<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://dev-buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
-					// 			<div class="remove-btl-img img-removal" id="img-buytolet-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
-					// 			<!--<span class="featTT">featured</span>--></span>';
 
 					//Out from s3
 
