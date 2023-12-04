@@ -3449,9 +3449,31 @@ public function uploadIdentification($folder)
 
 		// end Unione Template
 
+
+		//testing passing verification_id
+
+		$digits = 10;
+
+		$randomNumber = '';
+
+		$count = 0;
+
+		while($count < $digits){
+
+			$randomDigit = mt_rand(0, 9);
+
+			$randomNumber .= $randomDigit;
+
+			$count++;
+		}
+
+		$ver_id = $randomNumber;
+
+		//
+
 		//Insert details into verification table
 
-		$ver_result = $this->rss_model->insertVerification($details['profile'][0]['firstname'], $details['profile'][0]['lastname'], $details['profile'][0]['email'], $details['profile'][0]['phone'], $details['profile'][0]['gross_pay'], $details['profile'][0]['dob'], $details['profile'][0]['gender'], $details['profile'][0]['marital_status'], $details['profile'][0]['state'], $details['profile'][0]['city'],  $details['profile'][0]['linkedinUrl'], $details['profile'][0]['country'], $details['profile'][0]['passport_number'], $details['renting'][0]['present_address'], $details['renting'][0]['country'], $details['renting'][0]['state'], $details['renting'][0]['city'], $details['renting'][0]['previous_rent_duration'], $details['renting'][0]['renting_status'], $details['renting'][0]['previous_eviction'], $details['renting'][0]['pet'], $details['renting'][0]['critical_illness'], $details['renting'][0]['landlord_full_name'], $details['renting'][0]['landlord_email'], $details['renting'][0]['landlord_phone'], $details['renting'][0]['landlord_address'], $details['renting'][0]['reason_for_leaving'], $details['employment'][0]['employment_status'], $details['employment'][0]['job_title'], $details['employment'][0]['company_address'], $details['employment'][0]['manager_hr_name'], $details['employment'][0]['manager_hr_email'], $details['employment'][0]['manager_hr_phone'], $details['employment'][0]['guarantor_name'], $details['employment'][0]['guarantor_email'], $details['employment'][0]['guarantor_phone'], $details['employment'][0]['guarantor_job_title'], $details['employment'][0]['guarantor_address'], $details['uploads'][0]['statement_path'], $details['uploads'][0]['id_path'], $details['uploads'][0]['user_id'], $details['employment'][0]['company_name'], 'Web', $user_agent['userAgent']);
+		$ver_result = $this->rss_model->insertVerification($details['profile'][0]['firstname'], $details['profile'][0]['lastname'], $details['profile'][0]['email'], $details['profile'][0]['phone'], $ver_id, $details['profile'][0]['gross_pay'], $details['profile'][0]['dob'], $details['profile'][0]['gender'], $details['profile'][0]['marital_status'], $details['profile'][0]['state'], $details['profile'][0]['city'],  $details['profile'][0]['linkedinUrl'], $details['profile'][0]['country'], $details['profile'][0]['passport_number'], $details['renting'][0]['present_address'], $details['renting'][0]['country'], $details['renting'][0]['state'], $details['renting'][0]['city'], $details['renting'][0]['previous_rent_duration'], $details['renting'][0]['renting_status'], $details['renting'][0]['previous_eviction'], $details['renting'][0]['pet'], $details['renting'][0]['critical_illness'], $details['renting'][0]['landlord_full_name'], $details['renting'][0]['landlord_email'], $details['renting'][0]['landlord_phone'], $details['renting'][0]['landlord_address'], $details['renting'][0]['reason_for_leaving'], $details['employment'][0]['employment_status'], $details['employment'][0]['job_title'], $details['employment'][0]['company_address'], $details['employment'][0]['manager_hr_name'], $details['employment'][0]['manager_hr_email'], $details['employment'][0]['manager_hr_phone'], $details['employment'][0]['guarantor_name'], $details['employment'][0]['guarantor_email'], $details['employment'][0]['guarantor_phone'], $details['employment'][0]['guarantor_job_title'], $details['employment'][0]['guarantor_address'], $details['uploads'][0]['statement_path'], $details['uploads'][0]['id_path'], $details['uploads'][0]['user_id'], $details['employment'][0]['company_name'], 'Web', $user_agent['userAgent']);
 
 		$notify = $this->functions_model->insert_user_notifications('Verification Request Submitted', 'You have successfully submitted a verification request. You will be notified of the status of your verification as it changes.', $details['uploads'][0]['user_id'], 'Rent');
 
@@ -3594,7 +3616,7 @@ public function uploadIdentification($folder)
 
 				$booking_id = $this->random_strings(5);
 
-				$booked = $this->rss_model->insertBooking($booking_id, $ver_result, $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+				$booked = $this->rss_model->insertBooking($booking_id, $ver_id, $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 
 				if ($booked) {
 
