@@ -1440,24 +1440,24 @@ class Rss_model extends CI_Model {
 	    
 	}
 
-	public function insertVerification($firstname, $lastname, $email, $phone, $ver_id, $gross_pay, $dob, $gender, $marital_status, $state, $city, $linkedinUrl, $country, $passport_number, $present_address, $rent_country, $rent_state, $rent_city, $previous_rent_duration, $renting_status, $previous_eviction, $pet, $critical_illness, $landlord_fullname, $landlord_email, $landlord_phone, $landlord_address, $reason_for_leaving, $employment_status, $job_title, $company_address, $manager_hr_name, $manager_hr_email, $manager_hr_phone, $guarantor_name, $guarantor_email, $guarantor_phone, $guarantor_job_title, $guarantor_address, $statement_path, $id_path, $user_id, $company_name, $platform, $user_agent, $propertyID = NULL){
+	public function insertVerification($firstname, $lastname, $email, $phone, $gross_pay, $dob, $gender, $marital_status, $state, $city, $linkedinUrl, $country, $passport_number, $present_address, $rent_country, $rent_state, $rent_city, $previous_rent_duration, $renting_status, $previous_eviction, $pet, $critical_illness, $landlord_fullname, $landlord_email, $landlord_phone, $landlord_address, $reason_for_leaving, $employment_status, $job_title, $company_address, $manager_hr_name, $manager_hr_email, $manager_hr_phone, $guarantor_name, $guarantor_email, $guarantor_phone, $guarantor_job_title, $guarantor_address, $statement_path, $id_path, $user_id, $company_name, $platform, $user_agent, $propertyID = NULL){
 
-		// $digits = 10;
+		$digits = 10;
 
-		// $randomNumber = '';
+		$randomNumber = '';
 
-		// $count = 0;
+		$count = 0;
 
-		// while($count < $digits){
+		while($count < $digits){
 
-		// 	$randomDigit = mt_rand(0, 9);
+			$randomDigit = mt_rand(0, 9);
 
-		// 	$randomNumber .= $randomDigit;
+			$randomNumber .= $randomDigit;
 
-		// 	$count++;
-		// }
+			$count++;
+		}
 
-		// $ver_id = $randomNumber;
+		$ver_id = $randomNumber;
 
 		$this->user_id = $user_id;
 		
@@ -1590,7 +1590,7 @@ class Rss_model extends CI_Model {
 
     public function insertBooking($id, $verificationID, $user_id, $productID, $productTitle, $paymentPlan, $prodPrice, $imageLink, $productUrl, $securityDeposit, $duration, $booked_as, $move_in_date, $payment_type, $total_cost, $ref, $subscriptionFees, $serviceChargeDeposit, $securityDepositFund, $total){
 		
-		//$nMonths = 12;
+		$nMonths = 12;
 		
 		$startdate = date("Y-m-d", strtotime($move_in_date));
 
@@ -1672,7 +1672,6 @@ class Rss_model extends CI_Model {
 
 			$this->db->insert('transaction_tbl', array('verification_id' => $verificationID, 'type' => 'rss', 'transaction_id' => $id, 'reference_id' => $ref, 'userID' => $user_id, 'amount' => $total_cost, 'status' => 'pending', 'payment_type' => $payment_type, 'transaction_date' => date('Y-m-d')));
 			
-			
 			// Store the bookingReferenceID value in the session
             $this->session->set_userdata('bookingReferenceID', $ref);
 			
@@ -1685,7 +1684,6 @@ class Rss_model extends CI_Model {
 		}
 
 		
-
 	}
 	
 	public function editBooking($paymentPlan, $prodPrice, $duration, $booked_as, $move_in_date, $payment_type, $total_cost, $ref, $id, $verificationID, $user_id, $subscriptionFees, $serviceChargeDeposit, $securityDepositFund, $total){
