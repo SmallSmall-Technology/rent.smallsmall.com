@@ -3478,6 +3478,19 @@ public function uploadIdentification($folder)
 
 		$notify = $this->functions_model->insert_user_notifications('Verification Request Submitted', 'You have successfully submitted a verification request. You will be notified of the status of your verification as it changes.', $details['uploads'][0]['user_id'], 'Rent');
 
+		//
+
+		if ($ver_result){
+
+		$ver_id = $this->rss_model->getVerification($userID);
+
+		$booking_id = $this->random_strings(5);
+
+		$booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+
+		}
+
+		//
 		$data['ver_title'] = "Verification Notification";
 
 		$data['ver_note'] = "There is a new verification request profile. ";
@@ -3580,118 +3593,119 @@ public function uploadIdentification($folder)
 		// 	}
 		// }
 
-		if ($ver_result) {
+		// if ($ver_result) {
 
-			$ver_id = $this->rss_model->getVerification($userID);
+		// 	$ver_id = $this->rss_model->getVerification($userID);
 
-			$booking_id = $this->random_strings(5);
+		// 	$booking_id = $this->random_strings(5);
 
-			$booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+		// 	$booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 
-			if ($order['orderType'] == "property") {
+		// 	if ($order['orderType'] == "property") {
 
-					$propertyTitle = $order['property'][0]['productTitle'];
+		// 			$propertyTitle = $order['property'][0]['productTitle'];
 
-					// Replace the placeholder in the HTML body with the username
+		// 			// Replace the placeholder in the HTML body with the username
 					
-					$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+		// 			$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
 					
-					$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+		// 			$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
 					
-					$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
+		// 			$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
 
-					$data['response'] = $htmlBody;
+		// 			$data['response'] = $htmlBody;
 				
-        		// Prepare the email data
-       			 	$emailDataTeam = [
-            			"message" => [
-                			"recipients" => [
-                    			// ["email" => 'customerexperience@smallsmall.com'],
-					["email" => 'yusuf.i@smallsmall.com'],
-                			],
-                		"body" => ["html" => $htmlBody],
-                		"subject" => "New Verification alert",
-                		"from_email" => "donotreply@smallsmall.com",
-                		"from_name" => "SmallSmall Alert",
-            			],
-        			];
+        // 		// Prepare the email data
+       	// 		 	$emailDataTeam = [
+        //     			"message" => [
+        //         			"recipients" => [
+        //             			// ["email" => 'customerexperience@smallsmall.com'],
+		// 			["email" => 'yusuf.l@smallsmall.com'],
+        //         			],
+        //         		"body" => ["html" => $htmlBody],
+        //         		"subject" => "New Verification alert",
+        //         		"from_email" => "donotreply@smallsmall.com",
+        //         		"from_name" => "SmallSmall Alert",
+        //     			],
+        // 			];
 
-				$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
+		// 		$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
 
-				$price = $order['property'][0]['prodPrice'] /*+ $order['property'][0]['securityDeposit']*/;
+		// 		$price = $order['property'][0]['prodPrice'] /*+ $order['property'][0]['securityDeposit']*/;
 
-				//Insert Booking
+		// 		//Insert Booking
 
-				// $ver_id = $this->rss_model->getVerification($userID);
+		// 		// $ver_id = $this->rss_model->getVerification($userID);
 
-				// $booking_id = $this->random_strings(5);
+		// 		// $booking_id = $this->random_strings(5);
 
-				// $booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+		// 		// $booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 
-				if ($booked) {
+		// 		if ($booked) {
 
-					//Get property details
-					$props = $this->rss_model->get_property($order['property'][0]['productID']);
+		// 			//Get property details
+		// 			$props = $this->rss_model->get_property($order['property'][0]['productID']);
 
-					//Get user details
-					$user = $this->rss_model->get_user($details['uploads'][0]['user_id']);
+		// 			//Get user details
+		// 			$user = $this->rss_model->get_user($details['uploads'][0]['user_id']);
 
-					$result = "success";
+		// 			$result = "success";
 
-					$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+		// 			$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
 
-					$data['email'] = $user['email'];
+		// 			$data['email'] = $user['email'];
 
-					$data['phone'] = $user['phone'];
+		// 			$data['phone'] = $user['phone'];
 
-					$data['propName'] = $props['propertyTitle'];
+		// 			$data['propName'] = $props['propertyTitle'];
 
-					$data['propAddress'] = $props['address'];
+		// 			$data['propAddress'] = $props['address'];
 
-					$data['amount'] = $price;
+		// 			$data['amount'] = $price;
 
-					$data['paymentOption'] = $order['paymentOption'];
+		// 			$data['paymentOption'] = $order['paymentOption'];
 
-					$data['duration'] = $order['property'][0]['duration'];
+		// 			$data['duration'] = $order['property'][0]['duration'];
 
-					$data['paymentPlan'] = $order['property'][0]['paymentPlan'];
+		// 			$data['paymentPlan'] = $order['property'][0]['paymentPlan'];
 
-					$this->email->from('noreply@smallsmall.com', 'Automated');
+		// 			$this->email->from('noreply@smallsmall.com', 'Automated');
 
-					$this->email->to('customerexperience@smallsmall.com');
+		// 			$this->email->to('customerexperience@smallsmall.com');
 
-					$this->email->subject("Property Booked");
+		// 			$this->email->subject("Property Booked");
 
-					$this->email->set_mailtype("html");
+		// 			$this->email->set_mailtype("html");
 
-					$message = $this->load->view('email/header.php', $data, TRUE);
+		// 			$message = $this->load->view('email/header.php', $data, TRUE);
 
-					$message .= $this->load->view('email/apt-booking-email.php', $data, TRUE);
+		// 			$message .= $this->load->view('email/apt-booking-email.php', $data, TRUE);
 
-					$message .= $this->load->view('email/footer.php', $data, TRUE);
+		// 			$message .= $this->load->view('email/footer.php', $data, TRUE);
 
-					$this->email->message($message);
+		// 			$this->email->message($message);
 
-					$emailRes = $this->email->send();
-				} else {
+		// 			$emailRes = $this->email->send();
+		// 		} else {
 
-					$result = "error";
-					$price = 0;
-				}
-			} else {
+		// 			$result = "error";
+		// 			$price = 0;
+		// 		}
+		// 	} else {
 
-				for ($i = 0; $i < count($order['furnisure']); $i++) {
+		// 		for ($i = 0; $i < count($order['furnisure']); $i++) {
 
-					$price = $price + $order['furnisure'][$i]['prodPrice'] + $order['furnisure'][$i]['securityDeposit'];
+		// 			$price = $price + $order['furnisure'][$i]['prodPrice'] + $order['furnisure'][$i]['securityDeposit'];
 
-					$this->rss_model->insertFurnisureOrders($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['duration'], $order['paymentOption'], $i, count($order['furnisure']), $price, $ref);
+		// 			$this->rss_model->insertFurnisureOrders($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['duration'], $order['paymentOption'], $i, count($order['furnisure']), $price, $ref);
 
-					/*($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['productUrl'], $order['furnisure'][$i]['securityDeposit'], $order['furnisure'][$i]['duration'], $order['furnisure'][$i]['duration'],$order['paymentOption'], $i, count($order['furnisure']), $price);*/
-				}
+		// 			/*($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['productUrl'], $order['furnisure'][$i]['securityDeposit'], $order['furnisure'][$i]['duration'], $order['furnisure'][$i]['duration'],$order['paymentOption'], $i, count($order['furnisure']), $price);*/
+		// 		}
 
-				$result = "success";
-			}
-		}
+		// 		$result = "success";
+		// 	}
+		// }
+
 		//This is where you send an email to customer for verification process starting
 		$data['name'] = $fname;
 
