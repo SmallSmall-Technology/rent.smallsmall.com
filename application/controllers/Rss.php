@@ -3582,6 +3582,12 @@ public function uploadIdentification($folder)
 
 		if ($ver_result) {
 
+			$ver_id = $this->rss_model->getVerification($userID);
+
+			$booking_id = $this->random_strings(5);
+
+			$booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+
 			if ($order['orderType'] == "property") {
 
 					$propertyTitle = $order['property'][0]['productTitle'];
@@ -3600,8 +3606,8 @@ public function uploadIdentification($folder)
        			 	$emailDataTeam = [
             			"message" => [
                 			"recipients" => [
-                    			["email" => 'customerexperience@smallsmall.com'],
-					// ["email" => 'pidah.t@smallsmall.com'],
+                    			// ["email" => 'customerexperience@smallsmall.com'],
+					["email" => 'yusuf.i@smallsmall.com'],
                 			],
                 		"body" => ["html" => $htmlBody],
                 		"subject" => "New Verification alert",
@@ -3613,13 +3619,14 @@ public function uploadIdentification($folder)
 				$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
 
 				$price = $order['property'][0]['prodPrice'] /*+ $order['property'][0]['securityDeposit']*/;
+
 				//Insert Booking
 
-				$ver_id = $this->rss_model->getVerification($userID);
+				// $ver_id = $this->rss_model->getVerification($userID);
 
-				$booking_id = $this->random_strings(5);
+				// $booking_id = $this->random_strings(5);
 
-				$booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+				// $booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 
 				if ($booked) {
 
