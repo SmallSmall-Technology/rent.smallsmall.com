@@ -3402,333 +3402,333 @@ public function uploadIdentification($folder)
 }
 
 
-	public function insertDetails()
-	{
+	// public function insertDetails()
+	// {
 
-		require 'vendor/autoload.php'; // For Unione template authoload
+	// 	require 'vendor/autoload.php'; // For Unione template authoload
 
-		$details = $this->input->post('details');
+	// 	$details = $this->input->post('details');
 
-		$userID = $this->session->userdata('userID');
+	// 	$userID = $this->session->userdata('userID');
 
-		$order = $this->input->post('order');
+	// 	$order = $this->input->post('order');
 
-		$ua = $_SERVER['HTTP_USER_AGENT'];
+	// 	$ua = $_SERVER['HTTP_USER_AGENT'];
 
-		$user_agent = $this->browserName($ua);
+	// 	$user_agent = $this->browserName($ua);
 
-		$result = "error";
+	// 	$result = "error";
 
-		$msg = "";
+	// 	$msg = "";
 
-		$price = 0;
+	// 	$price = 0;
 
-		$fname = $details['profile'][0]['firstname'];
+	// 	$fname = $details['profile'][0]['firstname'];
 
-		$email = $details['profile'][0]['email'];
+	// 	$email = $details['profile'][0]['email'];
 
-		$ref = 'rss_' . md5(rand(1000000, 9999999999));
+	// 	$ref = 'rss_' . md5(rand(1000000, 9999999999));
 
-		// Unione Template
+	// 	// Unione Template
 
-		$headers = array(
-			'Content-Type' => 'application/json',
-			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
-		);
+	// 	$headers = array(
+	// 		'Content-Type' => 'application/json',
+	// 		'Accept' => 'application/json',
+	// 		'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+	// 	);
 
-		$client = new \GuzzleHttp\Client([
-			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-		]);
+	// 	$client = new \GuzzleHttp\Client([
+	// 		'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+	// 	]);
 
-		$requestBody = [
-			"id" => "05d45b98-11ae-11ee-9bc2-0a93cf78caa3"
-		];
+	// 	$requestBody = [
+	// 		"id" => "05d45b98-11ae-11ee-9bc2-0a93cf78caa3"
+	// 	];
 
-		$requestBodyForTeam = [
-			"id" => "f368198a-11c2-11ee-8731-76c23e12fa03"
-		];
+	// 	$requestBodyForTeam = [
+	// 		"id" => "f368198a-11c2-11ee-8731-76c23e12fa03"
+	// 	];
 
-		// end Unione Template
+	// 	// end Unione Template
 
-		//testing passing verification_id
+	// 	//testing passing verification_id
 
-		// $digits = 10;
+	// 	// $digits = 10;
 
-		// $randomNumber = '';
+	// 	// $randomNumber = '';
 
-		// $count = 0;
+	// 	// $count = 0;
 
-		// while($count < $digits){
+	// 	// while($count < $digits){
 
-		// 	$randomDigit = mt_rand(0, 9);
+	// 	// 	$randomDigit = mt_rand(0, 9);
 
-		// 	$randomNumber .= $randomDigit;
+	// 	// 	$randomNumber .= $randomDigit;
 
-		// 	$count++;
-		// }
+	// 	// 	$count++;
+	// 	// }
 
-		// $ver_id = $randomNumber;
+	// 	// $ver_id = $randomNumber;
 
-		//
+	// 	//
 
-		//Insert details into verification table
+	// 	//Insert details into verification table
 
-		// $ver_result = $this->rss_model->insertVerification($details['profile'][0]['firstname'], $details['profile'][0]['lastname'], $details['profile'][0]['email'], $details['profile'][0]['phone'], $details['profile'][0]['gross_pay'], $details['profile'][0]['dob'], $details['profile'][0]['gender'], $details['profile'][0]['marital_status'], $details['profile'][0]['state'], $details['profile'][0]['city'],  $details['profile'][0]['linkedinUrl'], $details['profile'][0]['country'], $details['profile'][0]['passport_number'], $details['renting'][0]['present_address'], $details['renting'][0]['country'], $details['renting'][0]['state'], $details['renting'][0]['city'], $details['renting'][0]['previous_rent_duration'], $details['renting'][0]['renting_status'], $details['renting'][0]['previous_eviction'], $details['renting'][0]['pet'], $details['renting'][0]['critical_illness'], $details['renting'][0]['landlord_full_name'], $details['renting'][0]['landlord_email'], $details['renting'][0]['landlord_phone'], $details['renting'][0]['landlord_address'], $details['renting'][0]['reason_for_leaving'], $details['employment'][0]['employment_status'], $details['employment'][0]['job_title'], $details['employment'][0]['company_address'], $details['employment'][0]['manager_hr_name'], $details['employment'][0]['manager_hr_email'], $details['employment'][0]['manager_hr_phone'], $details['employment'][0]['guarantor_name'], $details['employment'][0]['guarantor_email'], $details['employment'][0]['guarantor_phone'], $details['employment'][0]['guarantor_job_title'], $details['employment'][0]['guarantor_address'], $details['uploads'][0]['statement_path'], $details['uploads'][0]['id_path'], $details['uploads'][0]['user_id'], $details['employment'][0]['company_name'], 'Web', $user_agent['userAgent']);
+	// 	// $ver_result = $this->rss_model->insertVerification($details['profile'][0]['firstname'], $details['profile'][0]['lastname'], $details['profile'][0]['email'], $details['profile'][0]['phone'], $details['profile'][0]['gross_pay'], $details['profile'][0]['dob'], $details['profile'][0]['gender'], $details['profile'][0]['marital_status'], $details['profile'][0]['state'], $details['profile'][0]['city'],  $details['profile'][0]['linkedinUrl'], $details['profile'][0]['country'], $details['profile'][0]['passport_number'], $details['renting'][0]['present_address'], $details['renting'][0]['country'], $details['renting'][0]['state'], $details['renting'][0]['city'], $details['renting'][0]['previous_rent_duration'], $details['renting'][0]['renting_status'], $details['renting'][0]['previous_eviction'], $details['renting'][0]['pet'], $details['renting'][0]['critical_illness'], $details['renting'][0]['landlord_full_name'], $details['renting'][0]['landlord_email'], $details['renting'][0]['landlord_phone'], $details['renting'][0]['landlord_address'], $details['renting'][0]['reason_for_leaving'], $details['employment'][0]['employment_status'], $details['employment'][0]['job_title'], $details['employment'][0]['company_address'], $details['employment'][0]['manager_hr_name'], $details['employment'][0]['manager_hr_email'], $details['employment'][0]['manager_hr_phone'], $details['employment'][0]['guarantor_name'], $details['employment'][0]['guarantor_email'], $details['employment'][0]['guarantor_phone'], $details['employment'][0]['guarantor_job_title'], $details['employment'][0]['guarantor_address'], $details['uploads'][0]['statement_path'], $details['uploads'][0]['id_path'], $details['uploads'][0]['user_id'], $details['employment'][0]['company_name'], 'Web', $user_agent['userAgent']);
 
-		$notify = $this->functions_model->insert_user_notifications('Verification Request Submitted', 'You have successfully submitted a verification request. You will be notified of the status of your verification as it changes.', $details['uploads'][0]['user_id'], 'Rent');
+	// 	$notify = $this->functions_model->insert_user_notifications('Verification Request Submitted', 'You have successfully submitted a verification request. You will be notified of the status of your verification as it changes.', $details['uploads'][0]['user_id'], 'Rent');
 
-		//
+	// 	//
 
-		// if ($ver_result){
+	// 	// if ($ver_result){
 
-		$ver_id = $this->rss_model->getVerification($userID);
+	// 	$ver_id = $this->rss_model->getVerification($userID);
 
-		$booking_id = $this->random_strings(5);
+	// 	$booking_id = $this->random_strings(5);
 
-		$booked = $this->rss_model->insertBooking($booking_id, '3034681361', $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+	// 	$booked = $this->rss_model->insertBooking($booking_id, '3034681361', $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 
-		// }
+	// 	// }
 
-		//
-		$data['ver_title'] = "Verification Notification";
+	// 	//
+	// 	$data['ver_title'] = "Verification Notification";
 
-		$data['ver_note'] = "There is a new verification request profile. ";
+	// 	$data['ver_note'] = "There is a new verification request profile. ";
 
-		//Unione Template
+	// 	//Unione Template
 
-		try {
-			$response = $client->request('POST', 'template/get.json', array(
-				'headers' => $headers,
-				'json' => $requestBody,
-			));
+	// 	try {
+	// 		$response = $client->request('POST', 'template/get.json', array(
+	// 			'headers' => $headers,
+	// 			'json' => $requestBody,
+	// 		));
 
-			$jsonResponse = $response->getBody()->getContents();
+	// 		$jsonResponse = $response->getBody()->getContents();
 
-			$responseData = json_decode($jsonResponse, true);
+	// 		$responseData = json_decode($jsonResponse, true);
 
-			$htmlBody = $responseData['template']['body']['html'];
+	// 		$htmlBody = $responseData['template']['body']['html'];
 
-			$userName = $fname;
+	// 		$userName = $fname;
 
-			// Replace the placeholder in the HTML body with the username
+	// 		// Replace the placeholder in the HTML body with the username
 
-			$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+	// 		$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
 
-			$data['response'] = $htmlBody;
+	// 		$data['response'] = $htmlBody;
 
-			// Prepare the email data
-			$emailData = [
-				"message" => [
-					"recipients" => [
-						["email" => $email],
-					],
-					"body" => ["html" => $htmlBody],
-					"subject" => "Verification Submitted notification",
-					"from_email" => "donotreply@smallsmall.com",
-					"from_name" => "SmallSmall Alert",
-				],
-			];
+	// 		// Prepare the email data
+	// 		$emailData = [
+	// 			"message" => [
+	// 				"recipients" => [
+	// 					["email" => $email],
+	// 				],
+	// 				"body" => ["html" => $htmlBody],
+	// 				"subject" => "Verification Submitted notification",
+	// 				"from_email" => "donotreply@smallsmall.com",
+	// 				"from_name" => "SmallSmall Alert",
+	// 			],
+	// 		];
 
-			// Send the email using the Unione API
-			$responseEmail = $client->request('POST', 'email/send.json', [
-				'headers' => $headers,
-				'json' => $emailData,
-			]);
-		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-			$data['response'] = $e->getMessage();
-		}
+	// 		// Send the email using the Unione API
+	// 		$responseEmail = $client->request('POST', 'email/send.json', [
+	// 			'headers' => $headers,
+	// 			'json' => $emailData,
+	// 		]);
+	// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+	// 		$data['response'] = $e->getMessage();
+	// 	}
 
-		// if ($responseEmail) {
+	// 	// if ($responseEmail) {
 
-		// 	try {
-		// 		$response = $client->request('POST', 'template/get.json', array(
-		// 			'headers' => $headers,
-		// 			'json' => $requestBodyForTeam,
-		// 		));
+	// 	// 	try {
+	// 	// 		$response = $client->request('POST', 'template/get.json', array(
+	// 	// 			'headers' => $headers,
+	// 	// 			'json' => $requestBodyForTeam,
+	// 	// 		));
 
-		// 		$jsonResponse = $response->getBody()->getContents();
+	// 	// 		$jsonResponse = $response->getBody()->getContents();
 
-		// 		$responseData = json_decode($jsonResponse, true);
+	// 	// 		$responseData = json_decode($jsonResponse, true);
 
-		// 		$htmlBody = $responseData['template']['body']['html'];
+	// 	// 		$htmlBody = $responseData['template']['body']['html'];
 
-		// 		$userName = $fname;
+	// 	// 		$userName = $fname;
 
-		// 		$userEmail = $email;
+	// 	// 		$userEmail = $email;
 
-		// 		$propertyID = $order['property'][0]['productID'];
+	// 	// 		$propertyID = $order['property'][0]['productID'];
 
-		// 		// Replace the placeholder in the HTML body with the username
+	// 	// 		// Replace the placeholder in the HTML body with the username
 
-		// 		$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+	// 	// 		$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
 
-		// 		$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+	// 	// 		$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
 
-		// 		$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
+	// 	// 		$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
 
-		// 		$data['response'] = $htmlBody;
+	// 	// 		$data['response'] = $htmlBody;
 
-		// 		// Prepare the email data
-		// 		$emailDataTeam = [
-		// 			"message" => [
-		// 				"recipients" => [
-		// 					["email" => 'verification@smallsmall.com'],
-		// 					// ["email" => 'pidah.t@smallsmall.com'],
-		// 				],
-		// 				"body" => ["html" => $htmlBody],
-		// 				"subject" => "New Verification alert",
-		// 				"from_email" => "donotreply@smallsmall.com",
-		// 				"from_name" => "SmallSmall Alert",
-		// 			],
-		// 		];
+	// 	// 		// Prepare the email data
+	// 	// 		$emailDataTeam = [
+	// 	// 			"message" => [
+	// 	// 				"recipients" => [
+	// 	// 					["email" => 'verification@smallsmall.com'],
+	// 	// 					// ["email" => 'pidah.t@smallsmall.com'],
+	// 	// 				],
+	// 	// 				"body" => ["html" => $htmlBody],
+	// 	// 				"subject" => "New Verification alert",
+	// 	// 				"from_email" => "donotreply@smallsmall.com",
+	// 	// 				"from_name" => "SmallSmall Alert",
+	// 	// 			],
+	// 	// 		];
 
-		// 		// Send the email using the Unione API
-		// 		$responseEmail = $client->request('POST', 'email/send.json', [
-		// 			'headers' => $headers,
-		// 			'json' => $emailDataTeam,
-		// 		]);
-		// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-		// 		$data['response'] = $e->getMessage();
-		// 	}
-		// }
+	// 	// 		// Send the email using the Unione API
+	// 	// 		$responseEmail = $client->request('POST', 'email/send.json', [
+	// 	// 			'headers' => $headers,
+	// 	// 			'json' => $emailDataTeam,
+	// 	// 		]);
+	// 	// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+	// 	// 		$data['response'] = $e->getMessage();
+	// 	// 	}
+	// 	// }
 
-		// if ($ver_result) {
+	// 	// if ($ver_result) {
 
-		// 	$ver_id = $this->rss_model->getVerification($userID);
+	// 	// 	$ver_id = $this->rss_model->getVerification($userID);
 
-		// 	$booking_id = $this->random_strings(5);
+	// 	// 	$booking_id = $this->random_strings(5);
 
-		// 	$booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+	// 	// 	$booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 
-		// 	if ($order['orderType'] == "property") {
+	// 	// 	if ($order['orderType'] == "property") {
 
-		// 			$propertyTitle = $order['property'][0]['productTitle'];
+	// 	// 			$propertyTitle = $order['property'][0]['productTitle'];
 
-		// 			// Replace the placeholder in the HTML body with the username
+	// 	// 			// Replace the placeholder in the HTML body with the username
 					
-		// 			$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+	// 	// 			$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
 					
-		// 			$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+	// 	// 			$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
 					
-		// 			$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
+	// 	// 			$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
 
-		// 			$data['response'] = $htmlBody;
+	// 	// 			$data['response'] = $htmlBody;
 				
-        // 		// Prepare the email data
-       	// 		 	$emailDataTeam = [
-        //     			"message" => [
-        //         			"recipients" => [
-        //             			// ["email" => 'customerexperience@smallsmall.com'],
-		// 			["email" => 'yusuf.l@smallsmall.com'],
-        //         			],
-        //         		"body" => ["html" => $htmlBody],
-        //         		"subject" => "New Verification alert",
-        //         		"from_email" => "donotreply@smallsmall.com",
-        //         		"from_name" => "SmallSmall Alert",
-        //     			],
-        // 			];
+    //     // 		// Prepare the email data
+    //    	// 		 	$emailDataTeam = [
+    //     //     			"message" => [
+    //     //         			"recipients" => [
+    //     //             			// ["email" => 'customerexperience@smallsmall.com'],
+	// 	// 			["email" => 'yusuf.l@smallsmall.com'],
+    //     //         			],
+    //     //         		"body" => ["html" => $htmlBody],
+    //     //         		"subject" => "New Verification alert",
+    //     //         		"from_email" => "donotreply@smallsmall.com",
+    //     //         		"from_name" => "SmallSmall Alert",
+    //     //     			],
+    //     // 			];
 
-		// 		$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
+	// 	// 		$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
 
-		// 		$price = $order['property'][0]['prodPrice'] /*+ $order['property'][0]['securityDeposit']*/;
+	// 	// 		$price = $order['property'][0]['prodPrice'] /*+ $order['property'][0]['securityDeposit']*/;
 
-		// 		//Insert Booking
+	// 	// 		//Insert Booking
 
-		// 		// $ver_id = $this->rss_model->getVerification($userID);
+	// 	// 		// $ver_id = $this->rss_model->getVerification($userID);
 
-		// 		// $booking_id = $this->random_strings(5);
+	// 	// 		// $booking_id = $this->random_strings(5);
 
-		// 		// $booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+	// 	// 		// $booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 
-		// 		if ($booked) {
+	// 	// 		if ($booked) {
 
-		// 			//Get property details
-		// 			$props = $this->rss_model->get_property($order['property'][0]['productID']);
+	// 	// 			//Get property details
+	// 	// 			$props = $this->rss_model->get_property($order['property'][0]['productID']);
 
-		// 			//Get user details
-		// 			$user = $this->rss_model->get_user($details['uploads'][0]['user_id']);
+	// 	// 			//Get user details
+	// 	// 			$user = $this->rss_model->get_user($details['uploads'][0]['user_id']);
 
-		// 			$result = "success";
+	// 	// 			$result = "success";
 
-		// 			$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+	// 	// 			$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
 
-		// 			$data['email'] = $user['email'];
+	// 	// 			$data['email'] = $user['email'];
 
-		// 			$data['phone'] = $user['phone'];
+	// 	// 			$data['phone'] = $user['phone'];
 
-		// 			$data['propName'] = $props['propertyTitle'];
+	// 	// 			$data['propName'] = $props['propertyTitle'];
 
-		// 			$data['propAddress'] = $props['address'];
+	// 	// 			$data['propAddress'] = $props['address'];
 
-		// 			$data['amount'] = $price;
+	// 	// 			$data['amount'] = $price;
 
-		// 			$data['paymentOption'] = $order['paymentOption'];
+	// 	// 			$data['paymentOption'] = $order['paymentOption'];
 
-		// 			$data['duration'] = $order['property'][0]['duration'];
+	// 	// 			$data['duration'] = $order['property'][0]['duration'];
 
-		// 			$data['paymentPlan'] = $order['property'][0]['paymentPlan'];
+	// 	// 			$data['paymentPlan'] = $order['property'][0]['paymentPlan'];
 
-		// 			$this->email->from('noreply@smallsmall.com', 'Automated');
+	// 	// 			$this->email->from('noreply@smallsmall.com', 'Automated');
 
-		// 			$this->email->to('customerexperience@smallsmall.com');
+	// 	// 			$this->email->to('customerexperience@smallsmall.com');
 
-		// 			$this->email->subject("Property Booked");
+	// 	// 			$this->email->subject("Property Booked");
 
-		// 			$this->email->set_mailtype("html");
+	// 	// 			$this->email->set_mailtype("html");
 
-		// 			$message = $this->load->view('email/header.php', $data, TRUE);
+	// 	// 			$message = $this->load->view('email/header.php', $data, TRUE);
 
-		// 			$message .= $this->load->view('email/apt-booking-email.php', $data, TRUE);
+	// 	// 			$message .= $this->load->view('email/apt-booking-email.php', $data, TRUE);
 
-		// 			$message .= $this->load->view('email/footer.php', $data, TRUE);
+	// 	// 			$message .= $this->load->view('email/footer.php', $data, TRUE);
 
-		// 			$this->email->message($message);
+	// 	// 			$this->email->message($message);
 
-		// 			$emailRes = $this->email->send();
-		// 		} else {
+	// 	// 			$emailRes = $this->email->send();
+	// 	// 		} else {
 
-		// 			$result = "error";
-		// 			$price = 0;
-		// 		}
-		// 	} else {
+	// 	// 			$result = "error";
+	// 	// 			$price = 0;
+	// 	// 		}
+	// 	// 	} else {
 
-		// 		for ($i = 0; $i < count($order['furnisure']); $i++) {
+	// 	// 		for ($i = 0; $i < count($order['furnisure']); $i++) {
 
-		// 			$price = $price + $order['furnisure'][$i]['prodPrice'] + $order['furnisure'][$i]['securityDeposit'];
+	// 	// 			$price = $price + $order['furnisure'][$i]['prodPrice'] + $order['furnisure'][$i]['securityDeposit'];
 
-		// 			$this->rss_model->insertFurnisureOrders($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['duration'], $order['paymentOption'], $i, count($order['furnisure']), $price, $ref);
+	// 	// 			$this->rss_model->insertFurnisureOrders($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['duration'], $order['paymentOption'], $i, count($order['furnisure']), $price, $ref);
 
-		// 			/*($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['productUrl'], $order['furnisure'][$i]['securityDeposit'], $order['furnisure'][$i]['duration'], $order['furnisure'][$i]['duration'],$order['paymentOption'], $i, count($order['furnisure']), $price);*/
-		// 		}
+	// 	// 			/*($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['productUrl'], $order['furnisure'][$i]['securityDeposit'], $order['furnisure'][$i]['duration'], $order['furnisure'][$i]['duration'],$order['paymentOption'], $i, count($order['furnisure']), $price);*/
+	// 	// 		}
 
-		// 		$result = "success";
-		// 	}
-		// }
+	// 	// 		$result = "success";
+	// 	// 	}
+	// 	// }
 
-		//This is where you send an email to customer for verification process starting
-		$data['name'] = $fname;
+	// 	//This is where you send an email to customer for verification process starting
+	// 	$data['name'] = $fname;
 
-		$this->email->from('donotreply@smallsmall.com', 'SmallSmall');
+	// 	$this->email->from('donotreply@smallsmall.com', 'SmallSmall');
 
-		$this->email->to($email);
+	// 	$this->email->to($email);
 
-		$this->email->subject("Verification Submitted");
+	// 	$this->email->subject("Verification Submitted");
 
-		$this->email->set_mailtype("html");
+	// 	$this->email->set_mailtype("html");
 
-		$message = $this->load->view('email/header.php', $data, TRUE);
+	// 	$message = $this->load->view('email/header.php', $data, TRUE);
 
-		$message .= $this->load->view('email/verificationemail.php', $data, TRUE);
+	// 	$message .= $this->load->view('email/verificationemail.php', $data, TRUE);
 
-		$message .= $this->load->view('email/footer.php', $data, TRUE);
+	// 	$message .= $this->load->view('email/footer.php', $data, TRUE);
 
-		$this->email->message($message);
+	// 	$this->email->message($message);
 
-		$emailRes = $this->email->send();
+	// 	$emailRes = $this->email->send();
 
-		echo json_encode(array('result' => $result, 'msg' => $price));
-	}
+	// 	echo json_encode(array('result' => $result, 'msg' => $price));
+	// }
 
 	public function insertPropertyDetails()
 	{
