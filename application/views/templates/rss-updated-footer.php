@@ -9,7 +9,8 @@
           <div class="row">
             <div class="col-md-12 footer-logo-container d-flex justify-content-center mb-4">
               <a href="<?php echo base_url(); ?>">
-                <img src="<?php echo base_url(); ?>assets/updated-assets/images/rssfooterlogo.svg" class="w-100" alt="rss_logo" />
+                <!-- <img src="</?php echo base_url(); ?>assets/updated-assets/images/rssfooterlogo.svg" class="w-100" alt="rss_logo" /> -->
+                <img src="<?php echo base_url(); ?>assets/updated-assets/images/rssfooterlogo.png" class="w-100" alt="rss_logo" />
               </a>
             </div>
             <div style="font-size: 14px" class="col-md-12 d-md-flex justify-content-center d-none">
