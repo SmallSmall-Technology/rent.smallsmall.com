@@ -7309,7 +7309,6 @@ class Admin extends CI_Controller
 			$this->pagination->initialize($config);
 
 
-
 			$data['page_links'] = $this->pagination->create_links();
 
 
