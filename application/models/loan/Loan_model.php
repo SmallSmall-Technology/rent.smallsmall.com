@@ -57,7 +57,7 @@ class Loan_model extends CI_Model {
 	
 	}
 	
-	public function insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, $platform){
+	public function insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, $platform, $website){
 	    
 	    $this->userID = $userID;
 	    
@@ -78,6 +78,8 @@ class Loan_model extends CI_Model {
 	    $this->credit_limit = 0;
 	    
 	    $this->platform = $platform;
+
+		$this->website = $website;
 	    
 	    $this->date_created = date('Y-m-d');
 	    

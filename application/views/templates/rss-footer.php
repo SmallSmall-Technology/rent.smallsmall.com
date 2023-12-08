@@ -12,7 +12,8 @@
         <div class="footer">
             <div class="footer-inner">
                 <div class="footer-logos">
-                    <div class="rss-footer-logo"><img src="<?php echo base_url(); ?>assets/img/logo-blue.png" alt="rss logo blue" /></div>
+                    <!-- <div class="rss-footer-logo"><img src="</?php echo base_url(); ?>assets/img/logo-blue.png" alt="rss logo blue" /></div> -->
+                    <div class="rss-footer-logo"><img src="<?php echo base_url(); ?>assets/img/logo-blue.svg" alt="rss logo blue" /></div>
                     <ul class="footer-social-container">
                         <li class="footer-social-item"><a target="_blank" href="https://apps.apple.com/us/app/smallsmall/id1643608622"><img src="<?php echo base_url(); ?>assets/img/home-icons/app-store.png" alt="App store logo" /></a></li>
                         <li class="footer-social-item"><a target="_blank" href="https://play.google.com/store/apps/details?id=com.smallsmall.mobile"><img src="<?php echo base_url(); ?>assets/img/home-icons/google-play.png" alt="Google Play store logo" /></a></li>

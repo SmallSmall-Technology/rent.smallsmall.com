@@ -431,6 +431,8 @@ class Loans extends CI_Controller {
 
 			$account_name = $this->input->post("account_name");
 
+			$website = 'RSS';
+
 			//check if account exists already
 			$account_check = $this->loan_model->check_for_account($userID);
 
@@ -443,7 +445,8 @@ class Loans extends CI_Controller {
 					$data = '{
                         "accountName" : "' . $account_name . '", 
                         "bvn" : "' . $bvn . '",
-                        "isStatic" : ' . true . '
+                        "isStatic" : ' . true . ',
+						"createNewAccount": ' . true . '
                         }';
 
 					$curl = curl_init();
@@ -481,7 +484,7 @@ class Loans extends CI_Controller {
 
 						$bankCode = $response['data']['bankAccount']['bank']['code'];
 
-						$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'Web');
+						$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, $website, 'Web');
 
 						$resp = TRUE;
 
@@ -496,6 +499,7 @@ class Loans extends CI_Controller {
 							try {
 								$response = $client->request('POST', 'template/get.json', array(
 									'headers' => $headers,
+									
 									'json' => $requestBody,
 								));
 

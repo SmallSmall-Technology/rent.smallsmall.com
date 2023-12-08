@@ -151,7 +151,9 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
       <div class="logo-container">
         <a class="navbar-brand logo-link mr-4" href="<?php echo base_url(); ?>">
           <!--<img class="logo-img img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/logo.png" alt="" />-->
-        <img class="img-fluid logo" src="<?php echo base_url(); ?>assets/img/logo-blue.png" style ="width:250px;" alt="" />
+        <!-- <img class="img-fluid logo" src="</?php echo base_url(); ?>assets/img/logo-blue.png" style ="width:250px;" alt="" /> -->
+        <img class="img-fluid logo" src="<?php echo base_url(); ?>assets/img/logo-blue.svg" style ="width:250px;" alt="" />
+
 
         </a>
       </div>
