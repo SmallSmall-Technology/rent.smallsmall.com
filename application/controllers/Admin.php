@@ -454,14 +454,14 @@ class Admin extends CI_Controller
 
 	public function edit_advert($id)
 	{
-		if(!file_exists(APPPATH . 'views/admin/pages/edit-advert.php')) {
+		if (!file_exists(APPPATH . 'views/admin/pages/edit-advert.php')) {
 			// Whoops, we don't have a page for that!
 
 			show_404();
 		}
 
 		//check if Admin is logged in
-		if($this->session->has_userdata('adminLoggedIn')) {
+		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['notification'] = $this->admin_model->get_advert($id);
 
@@ -506,7 +506,7 @@ class Admin extends CI_Controller
 	public function prc_adverts()
 	{
 		require 'vendor/autoload.php';
-		
+
 		//sleep(3);
 
 		$bucket = 'rss-prod-uploads'; // bucket name
@@ -524,8 +524,7 @@ class Admin extends CI_Controller
 
 		]);
 
-		for($i=0; $i<$count; $i++)
-        {
+		for ($i = 0; $i < $count; $i++) {
 			$config['upload_path']          = './uploads/adverts/';
 			$config['allowed_types']        = 'jpg|png|jpeg';
 			$config['max_size']             = 0;
@@ -545,17 +544,17 @@ class Admin extends CI_Controller
 			$img = $_FILES['imgName']['name'][$i];
 
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
+			move_uploaded_file($postimg_tmp, "uploads/adverts/$img");
 
-			$s3ObjectKey = 'uploads/adverts/'. $img;
+			$s3ObjectKey = 'uploads/adverts/' . $img;
 
 			$data = $this->upload->data();
 
 			$img = "/uploads/adverts/$img";
 
-			$val .= $img." ";
+			$val .= $img . " ";
 
-			
+
 			try {
 				$result = $s3->putObject([
 
@@ -565,31 +564,30 @@ class Admin extends CI_Controller
 
 					'Body'   => file_get_contents($data["full_path"]),
 				]);
-
 			} catch (Aws\S3\Exception\S3Exception $e) {
 
 				$error = 'S3 Upload Error: ' . $e->getMessage();
 			}
 		}
 
-		
+
 		$filename = $val;
-		
+
 		$link = $this->input->post('advertTitle');
 
 		$title = $this->input->post('notificationTitle');
 
 		//$date = 
-				
+
 		$res = $this->admin_model->insertCxAdvert($link, $filename, $title);
 
 		if ($res) {
 
 			// Assuming you're using CodeIgniter, use the URL helper to create URLs
-		$user_profile_url = site_url('admin/add_advert/');
+			$user_profile_url = site_url('admin/add_advert/');
 
-		// Redirect to user profile with a success message
-		echo "<script>
+			// Redirect to user profile with a success message
+			echo "<script>
 				alert('Upload Successful');
 				window.location.href='$user_profile_url';
 			</script>";
@@ -599,7 +597,7 @@ class Admin extends CI_Controller
 	public function edit_adverts()
 	{
 		require 'vendor/autoload.php';
-		
+
 		//sleep(3);
 
 		$bucket = 'rss-prod-uploads'; // bucket name
@@ -618,8 +616,7 @@ class Admin extends CI_Controller
 
 		$val = '';
 
-		for($i=0; $i<$count; $i++)
-        {
+		for ($i = 0; $i < $count; $i++) {
 			$config['upload_path']          = './uploads/adverts/';
 			$config['allowed_types']        = 'jpg|png|jpeg';
 			$config['max_size']             = 0;
@@ -639,14 +636,14 @@ class Admin extends CI_Controller
 			$img = $_FILES['imgName']['name'][$i];
 
 			$postimg_tmp = $_FILES['imgName']['tmp_name'][$i];
-            move_uploaded_file($postimg_tmp,"uploads/adverts/$img");
+			move_uploaded_file($postimg_tmp, "uploads/adverts/$img");
 
-			$s3ObjectKey = 'uploads/adverts/'. $img;
+			$s3ObjectKey = 'uploads/adverts/' . $img;
 			$data = $this->upload->data();
 
 			$img = "/uploads/adverts/$img";
 
-			$val .= $img." ";
+			$val .= $img . " ";
 
 			try {
 				$result = $s3->putObject([
@@ -657,16 +654,15 @@ class Admin extends CI_Controller
 
 					'Body'   => file_get_contents($data["full_path"]),
 				]);
-
 			} catch (Aws\S3\Exception\S3Exception $e) {
 
 				$error = 'S3 Upload Error: ' . $e->getMessage();
 			}
 		}
 
-		
+
 		$filename = $val;
-		
+
 		$link = $this->input->post('link');
 
 		$title = $this->input->post('title');
@@ -674,16 +670,16 @@ class Admin extends CI_Controller
 		$id = $this->input->post('adv_id');
 
 		//$date = 
-				
+
 		$res = $this->admin_model->editCxAdvert($link, $filename, $title, $id);
 
 		if ($res) {
 
 			// Assuming you're using CodeIgniter, use the URL helper to create URLs
-		$user_profile_url = site_url('admin/all-adverts/');
+			$user_profile_url = site_url('admin/all-adverts/');
 
-		// Redirect to user profile with a success message
-		echo "<script>
+			// Redirect to user profile with a success message
+			echo "<script>
 				alert('Upload Successful');
 				window.location.href='$user_profile_url';
 			</script>";
@@ -2503,7 +2499,7 @@ class Admin extends CI_Controller
 
 		// 	$data['page_links'] = $this->pagination->create_links();
 
-			$data['bookings'] = $this->admin_model->fetchBooking($id);
+		$data['bookings'] = $this->admin_model->fetchBooking($id);
 		// }
 
 		if (!file_exists(APPPATH . 'views/admin/pages/bookings.php')) {
@@ -2999,41 +2995,41 @@ class Admin extends CI_Controller
 	}
 
 
-	public function proptySearch(){
-	    
-	    $value =  $this->input->post("input");
+	public function proptySearch()
+	{
+
+		$value =  $this->input->post("input");
 
 		$data = $this->admin_model->searchPropty($value);
 
-		foreach ($data->result() as $row) 
-        {
-            // echo "<li  id='getVal-$row->propertyID-$row->propertyTitle' class='checkagr' onclick= >$row->propertyTitle</li>";
+		foreach ($data->result() as $row) {
+			// echo "<li  id='getVal-$row->propertyID-$row->propertyTitle' class='checkagr' onclick= >$row->propertyTitle</li>";
 
-			echo "<li id = '$row->propertyID' class = '$row->propertyTitle' onClick= getsVal($row->propertyID) >$row->propertyTitle</li>";	
+			echo "<li id = '$row->propertyID' class = '$row->propertyTitle' onClick= getsVal($row->propertyID) >$row->propertyTitle</li>";
 		}
 	}
 
-	public function deleteAgreement(){
-		
+	public function deleteAgreement()
+	{
+
 		$id = $this->input->post('bookingID');
-		
+
 		//$propID = $this->input->post('propertyID');		
-				
+
 		$res = $this->admin_model->delAgreement($id);
 
-		if($res){
-			
+		if ($res) {
+
 			echo 1;
-			
-		}else{
-			
+		} else {
+
 			echo 0;
-			
 		}
 	}
 
-	public function edit_agr($id){
-		
+	public function edit_agr($id)
+	{
+
 		$data['ids'] = $id;
 
 		$data['details'] = $this->admin_model->get_user_details($id);
@@ -3041,41 +3037,40 @@ class Admin extends CI_Controller
 		$data['bookings'] = $this->admin_model->get_user_bookings($id);
 
 		$data['user_hstry'] = $this->admin_model->get_user_hstry($id);
-		
+
 		$data['proptys'] = $this->admin_model->get_user_propty($id);
-		
+
 		$data['user_transactions'] = $this->admin_model->get_user_transactions($id);
 
 		$data['debts'] = $this->admin_model->get_debts($id);
 
-		if ( ! file_exists(APPPATH.'views/admin/pages/user-profile.php')){
+		if (!file_exists(APPPATH . 'views/admin/pages/user-profile.php')) {
 
-                // Whoops, we don't have a page for that!
+			// Whoops, we don't have a page for that!
 
-                show_404();
+			show_404();
+		}
 
-        }
-        
 		//check if Admin is logged in
 		//if($this->session->has_userdata('adminLoggedIn')){			
 
-			$data['adminPriv'] = $this->functions_model->getUserAccess();
+		$data['adminPriv'] = $this->functions_model->getUserAccess();
 
-			$data['adminID'] = $this->session->userdata('adminID');	
-			
-			$data['userAccess'] = $this->session->userdata('userAccess');		
+		$data['adminID'] = $this->session->userdata('adminID');
 
-			$data['title'] = "User Profile :: RSS";
+		$data['userAccess'] = $this->session->userdata('userAccess');
 
-			$this->load->view('admin/templates/header.php' , $data);
+		$data['title'] = "User Profile :: RSS";
 
-			$this->load->view('admin/templates/sidebar.php' , $data);
+		$this->load->view('admin/templates/header.php', $data);
 
-			$this->load->view('admin/pages/edit-agr.php' , $data);
+		$this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/templates/footer.php' , $data);
+		$this->load->view('admin/pages/edit-agr.php', $data);
 
-			$this->load->view('admin/templates/payment-modal.php' , $data);	
+		$this->load->view('admin/templates/footer.php', $data);
+
+		$this->load->view('admin/templates/payment-modal.php', $data);
 
 		// }else{			
 
@@ -3086,54 +3081,51 @@ class Admin extends CI_Controller
 	}
 
 
-	public function edit_upload(){
-	    
-	    $config['upload_path']          = './uploads/agreement/';
-        $config['allowed_types']        = 'doc|docx|pdf';
-        $config['max_size']             = 0;
-        // $config['max_width']            = 1024;
-        // $config['max_height']           = 768;
+	public function edit_upload()
+	{
 
-        $this->load->library('upload', $config);
-        
-        //$usrs = $this->session->userdata('userID');
-        
-        //$usrs = $this->admin_model->get_username($usrs);
+		$config['upload_path']          = './uploads/agreement/';
+		$config['allowed_types']        = 'doc|docx|pdf';
+		$config['max_size']             = 0;
+		// $config['max_width']            = 1024;
+		// $config['max_height']           = 768;
 
-        if (!$this->upload->do_upload('filename'))
-        {
-            $error = array('error' => $this->upload->display_errors());
+		$this->load->library('upload', $config);
 
-            $this->load->view('agr_error', $error);
-        }
-        
-        else
-        {
-                $data = $this->upload->data();
-                
-                $id = $this->input->post('sub_id');
-                
-                $str_yr = $this->input->post('start-yr');
-                
-                $data = array(
-                    'filename' => $data['file_name'],
-                    'start_year' => $str_yr,
-                    'end_year' => $this->input->post('end-yr'),
-                    'property' => $this->input->post('sub-propty'),
-                    'date' => date('Y-m-d H:i:s')
-                    );
-				
-				$this->db->where('id', $id);
-                    
-                $this->db->update('sub_agreement', $data);
-                
-                //print_r($data);
-                
-                echo "<script>
+		//$usrs = $this->session->userdata('userID');
+
+		//$usrs = $this->admin_model->get_username($usrs);
+
+		if (!$this->upload->do_upload('filename')) {
+			$error = array('error' => $this->upload->display_errors());
+
+			$this->load->view('agr_error', $error);
+		} else {
+			$data = $this->upload->data();
+
+			$id = $this->input->post('sub_id');
+
+			$str_yr = $this->input->post('start-yr');
+
+			$data = array(
+				'filename' => $data['file_name'],
+				'start_year' => $str_yr,
+				'end_year' => $this->input->post('end-yr'),
+				'property' => $this->input->post('sub-propty'),
+				'date' => date('Y-m-d H:i:s')
+			);
+
+			$this->db->where('id', $id);
+
+			$this->db->update('sub_agreement', $data);
+
+			//print_r($data);
+
+			echo "<script>
                             alert('Upload Successful');
-                            window.location.href='edit-agr/".$id."';
+                            window.location.href='edit-agr/" . $id . "';
                       </script>";
-        }
+		}
 	}
 
 
@@ -4868,28 +4860,22 @@ class Admin extends CI_Controller
 				if ($action == 'delete') {
 
 					$action_details = 'delete';
-
 				} else if ($action == 'release') {
 
 					$action_details = 'Available';
-
 				} else if ($action == 'lock') {
 
 					$action_details = 'Locked';
-
 				} else if ($action == 'hold') {
 
 					$action_details = 'Hold';
 				}
 
 				$res = $this->admin_model->update_btl_property($action_details, $details[$i]['propertyID']);
-
 			}
-			
 		}
 
 		echo 1;
-
 	}
 
 	public function changePropStatus()
@@ -5349,6 +5335,89 @@ class Admin extends CI_Controller
 		}
 	}
 
+	// public function uploadBuytoletImages($folder)
+	// {
+
+	// 	if (!$folder) {
+
+	// 		$folder = md5(date("Ymd His"));
+	// 	}
+
+	// 	//sleep(3);
+
+	// 	if (!is_dir('../buy.smallsmall.com/uploads/buytolet/' . $folder)) {
+
+	// 		mkdir('../buy.smallsmall.com/uploads/buytolet/' . $folder, 0777, TRUE);
+	// 	}
+	// 	//Connect to buy2let and create property Image folder
+	// 	//$success = file_get_contents("https://buy.smallsmall.com/create-folder/".$folder);
+
+	// 	//if(!$success){
+	// 	//Create the floor plan folder
+	// 	//file_get_contents("https://www.buy2let.ng/create-folder/".$folder."/floor-plan");
+	// 	//$error = "Could not create remote folder";
+
+	// 	//}		
+
+	// 	if ($_FILES["files"]["name"] != '') {
+
+	// 		$output = '';
+
+	// 		$error = 0;
+
+	// 		$config["upload_path"] = '../buy.smallsmall.com/uploads/buytolet/' . $folder;
+
+	// 		$config["allowed_types"] = 'jpg|jpeg|png';
+
+	// 		$config['encrypt_name'] = TRUE;
+
+	// 		$config['max_size'] = 10 * 1024;
+
+	// 		$this->load->library('upload', $config);
+
+	// 		$this->upload->initialize($config);
+
+	// 		for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
+	// 			$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+
+	// 			$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+
+	// 			$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+
+	// 			$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+
+	// 			$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+	// 			//$this->upload->do_upload('file');
+
+	// 			//$data = $this->upload->data();
+
+	// 			if ($this->upload->do_upload('file')) {
+
+	// 				//$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
+
+	// 				//$upl_result = file_get_contents('https://buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$folder);
+
+	// 				//if($upl_result){
+
+	// 				$data = $this->upload->data();
+
+	// 				$output .= '
+	// 							<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+	// 							<div class="remove-btl-img img-removal" id="img-buytolet-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
+	// 							<!--<span class="featTT">featured</span>--></span>';
+	// 			} else {
+
+	// 				$error = $this->upload->display_errors('', '');
+	// 			}
+	// 		}
+
+	// 		echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));
+	// 	}
+	// }
+
+	// BSS Image Property Uploads  
 	public function uploadBuytoletImages($folder)
 	{
 
@@ -5363,21 +5432,22 @@ class Admin extends CI_Controller
 
 			mkdir('../buy.smallsmall.com/uploads/buytolet/' . $folder, 0777, TRUE);
 		}
-		//Connect to buy2let and create property Image folder
-		//$success = file_get_contents("https://buy.smallsmall.com/create-folder/".$folder);
-
-		//if(!$success){
-		//Create the floor plan folder
-		//file_get_contents("https://www.buy2let.ng/create-folder/".$folder."/floor-plan");
-		//$error = "Could not create remote folder";
-
-		//}		
 
 		if ($_FILES["files"]["name"] != '') {
 
 			$output = '';
 
 			$error = 0;
+
+			require 'vendor/autoload.php'; // Include the AWS SDK
+
+			$s3 = new Aws\S3\S3Client([
+
+				'version' => 'latest',
+
+				'region' => 'eu-west-1',
+
+			]);
 
 			$config["upload_path"] = '../buy.smallsmall.com/uploads/buytolet/' . $folder;
 
@@ -5409,18 +5479,31 @@ class Admin extends CI_Controller
 
 				if ($this->upload->do_upload('file')) {
 
-					//$site1FileMd5 = md5_file('./tmp/'.$data["file_name"]);
-
-					//$upl_result = file_get_contents('https://buy.smallsmall.com/upload-images/'.$data["file_name"].'/'.$site1FileMd5.'/'.$folder);
-
-					//if($upl_result){
 
 					$data = $this->upload->data();
 
-					$output .= '
-								<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '"><img src="https://buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
-								<div class="remove-btl-img img-removal" id="img-buytolet-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
-								<!--<span class="featTT">featured</span>--></span>';
+					// Uploading file to S3
+
+					$uploadParams = [
+
+						'Bucket' => 'bss-prod-uploads',
+
+						'Key' => 'uploads/buytolet/' . $folder . '/' . $data["file_name"],
+
+						'Body' => fopen('../buy.smallsmall.com/uploads/buytolet/' . $folder . '/' . $data["file_name"], 'rb'),
+
+					];
+
+					// Put into s3
+
+					$s3->putObject($uploadParams);
+
+					//Out from s3
+
+					$output .= '<span class="imgCover removal-id-' . $count . '" id="id-' . $data["file_name"] . '">
+                            <img src="https://s3-eu-west-1.amazonaws.com/bss-prod-uploads/uploads/buytolet/' . $folder . '/' . $data["file_name"] . '" id="' . $data["file_name"] . '" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
+                            <div class="remove-btl-img img-removal" id="img-buytolet-' . $data['file_name'] . '-' . $count . '">remove <i class="fa fa-trash"></i></div>
+                            <!--<span class="featTT">featured</span>--></span>';
 				} else {
 
 					$error = $this->upload->display_errors('', '');
@@ -5430,8 +5513,127 @@ class Admin extends CI_Controller
 			echo json_encode(array('pictures' => $output, 'folder' => $folder, 'error' => $error));
 		}
 	}
+
+
+
+	// public function uploadBuytoletProperty()
+	// {
+	// 	//Get data from AJAX
+	// 	$propName = $this->input->post('propTitle');
+	// 	$propType = $this->input->post('propType');
+	// 	$propDesc = htmlentities($this->input->post('propDesc', ENT_QUOTES));
+	// 	$locationInfo = htmlentities($this->input->post('locationInfo', ENT_QUOTES));
+	// 	$address = $this->input->post('propAddress');
+	// 	$city = $this->input->post('city');
+	// 	$state = $this->input->post('state');
+	// 	$country = $this->input->post('country');
+	// 	$tenantable = $this->input->post('tenantable');
+	// 	$asset_appreciation_1 = $this->input->post('asset_appreciation_1');
+	// 	$asset_appreciation_2 = $this->input->post('asset_appreciation_2');
+	// 	$asset_appreciation_3 = $this->input->post('asset_appreciation_3');
+	// 	$asset_appreciation_4 = $this->input->post('asset_appreciation_4');
+	// 	$asset_appreciation_5 = $this->input->post('asset_appreciation_5');
+	// 	$price = $this->input->post('price');
+	// 	$marketValue = $this->input->post("marketValue");
+	// 	$outrightDiscount = $this->input->post("outrightDiscount");
+	// 	$promo_price = $this->input->post('promo_price');
+	// 	$promo_category = $this->input->post('promo_category');
+	// 	$expected_rent = $this->input->post('expected_rent');
+	// 	$bed = $this->input->post('bed');
+	// 	$bath = $this->input->post('bath');
+	// 	$toilet = $this->input->post('toilet');
+	// 	$hpi = $this->input->post('hpi');
+	// 	$payment_plan = $this->input->post('payment_plan');
+	// 	$payment_plan_period = $this->input->post('payment_plan_period');
+	// 	$min_pp_val = $this->input->post('min_pp_val');
+	// 	$mortgage = $this->input->post('mortgage');
+	// 	$propertySize = $this->input->post('propertySize');
+	// 	$investmentType = $this->input->post('investmentType');
+	// 	$imageFolder = $this->input->post('imageFolder');
+	// 	$featuredPic = $this->input->post('featuredPic');
+	// 	$pool_buy = $this->input->post('pool_buy');
+	// 	$pooling_units = $this->input->post('pooling_units');
+	// 	$floor_level = $this->input->post('floor_level');
+	// 	$construction_lvl = $this->input->post('construction_lvl');
+	// 	$start_date = date('Y-m-d', strtotime($this->input->post('start_date')));
+	// 	$finish_date = date('Y-m-d', strtotime($this->input->post('finish_date')));
+	// 	$maturity_date = date('Y-m-d', strtotime($this->input->post('maturity_date')));
+	// 	$closing_date = date('Y-m-d', strtotime($this->input->post('closing_date')));
+	// 	$hold_period = $this->input->post('hold_period');
+	// 	$co_appr = explode(',', $this->input->post('co_appr'));
+	// 	$co_rent = explode(',', $this->input->post('co_rent'));
+	// 	$lockdownFee = $this->input->post('lockdownFee');
+	// 	$lockdownPeriod = $this->input->post('lockdownPeriod');
+	// 	$status = "";
+
+
+	// 	if ($this->session->has_userdata('adminLoggedIn')) {
+
+	// 		$userID = $this->session->userdata('adminID');
+	// 		$file_element_name = 'plan-image';
+
+	// 		//Check if upload folder exists
+	// 		if (!is_dir('./tmp/')) {
+
+	// 			mkdir('./tmp/', 0777, TRUE);
+	// 		}
+
+
+	// 		$config['upload_path'] = './tmp/';
+
+	// 		$config['allowed_types'] = 'jpg|png|jpeg';
+
+	// 		$config['max_size'] = 1024 * 10;
+
+	// 		$config['encrypt_name'] = TRUE;
+
+	// 		$this->load->library('upload', $config);
+
+	// 		if (!$this->upload->do_upload($file_element_name)) {
+
+	// 			$status = 'error';
+
+	// 			$msg = $this->upload->display_errors('', '');
+	// 		} else {
+
+	// 			$data = $this->upload->data();
+
+	// 			$folder =
+
+	// 				$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
+
+	// 			$upl_result = file_get_contents('https://buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
+
+	// 			unlink('./tmp/' . $data["file_name"]);
+
+	// 			//Populate the property table
+	// 			$property = $this->admin_model->insertBuytoletProperty($propName, $lockdownPeriod,$lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+
+	// 			if ($property != 0) {
+
+	// 				$status = "success";
+
+	// 				$msg = "Property successfully uploaded";
+	// 			} else {
+	// 				$status = "error";
+
+	// 				$msg = "Could not upload property";
+	// 			}
+	// 		}
+	// 	} else {
+
+	// 		redirect(base_url() . "admin/dashboard", 'refresh');
+	// 	}
+
+	// 	@unlink($_FILES[$file_element_name]);
+
+
+	// 	echo json_encode(array('status' => $status, 'msg' => $msg));
+	// }
+
 	public function uploadBuytoletProperty()
 	{
+
 		//Get data from AJAX
 		$propName = $this->input->post('propTitle');
 		$propType = $this->input->post('propType');
@@ -5481,66 +5683,90 @@ class Admin extends CI_Controller
 		$status = "";
 
 
+
+		// Checking if the admin is logged in
 		if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$userID = $this->session->userdata('adminID');
-			$file_element_name = 'plan-image';
 
-			//Check if upload folder exists
-			if (!is_dir('./tmp/')) {
+			require 'vendor/autoload.php'; // Include the AWS SDK
 
-				mkdir('./tmp/', 0777, TRUE);
-			}
+			$s3 = new Aws\S3\S3Client([
 
+				'version' => 'latest',
 
-			$config['upload_path'] = './tmp/';
+				'region' => 'eu-west-1',
 
-			$config['allowed_types'] = 'jpg|png|jpeg';
+			]);
 
-			$config['max_size'] = 1024 * 10;
+			$bucketName = 'bss-prod-uploads';
 
-			$config['encrypt_name'] = TRUE;
+			$folderPath = 'uploads/buytolet/' . $imageFolder;
 
-			$this->load->library('upload', $config);
+			try {
+				// List objects in the specified S3 folder
+				$objects = $s3->listObjectsV2([
 
-			if (!$this->upload->do_upload($file_element_name)) {
+					'Bucket' => $bucketName,
 
-				$status = 'error';
+					'Prefix' => $folderPath,
 
-				$msg = $this->upload->display_errors('', '');
-			} else {
+				]);
 
-				$data = $this->upload->data();
+				if (count($objects['Contents']) > 0) {
 
-				$folder =
+					// Retrieve the first image name from the list of objects
+					$firstImageName = $objects['Contents'][0]['Key'];
 
-					$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
+					// You may want to extract the actual image file name from the path
+					// Example: if the key is 'uploads/buytolet/imageFolder/imagename.jpg',
+					// you can extract 'imagename.jpg' from it
 
-				$upl_result = file_get_contents('https://buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
+					$imageName = basename($firstImageName);
 
-				unlink('./tmp/' . $data["file_name"]);
+					$propertyImageDir = $imageFolder . '/' . $imageName;
 
-				//Populate the property table
-				$property = $this->admin_model->insertBuytoletProperty($propName, $lockdownPeriod,$lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
+					$propertyImagedir = rtrim($propertyImageDir, '/');
 
-				if ($property != 0) {
+					// removing the slash that occurs at end
+					// $propertyImagedir = 'test';
 
-					$status = "success";
+					$property = $this->admin_model->insertBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $imageName, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
 
-					$msg = "Property successfully uploaded";
+					if ($property != 0) {
+
+						$status = "success";
+
+						$msg = "Property successfully uploaded";
+					} else {
+
+						$status = "error";
+
+						$msg = "Could not upload property";
+					}
 				} else {
+
 					$status = "error";
 
-					$msg = "Could not upload property";
+					$msg = $this->upload->display_errors('', '');
+
+					// No objects found in the specified folder
+
 				}
+			} catch (Exception $e) {
+
+				// Handle any exceptions that occurred during the API call
+
+				$status = "error";
+
+				$msg = "Error: " . $e->getMessage();
 			}
 		} else {
 
+			// Redirecting if admin is not logged in
+
 			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
-
-		@unlink($_FILES[$file_element_name]);
-
 
 		echo json_encode(array('status' => $status, 'msg' => $msg));
 	}
@@ -5641,7 +5867,7 @@ class Admin extends CI_Controller
 					unlink('./tmp/' . $data["file_name"]);
 
 					//Populate the property table
-					$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod,$lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+					$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
 
 					if ($property != 0) {
 
@@ -5655,7 +5881,7 @@ class Admin extends CI_Controller
 					}
 				}
 			} else {
-				$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod,$lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, 'no', $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+				$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, 'no', $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
 
 				if ($property != 0) {
 
@@ -6534,7 +6760,7 @@ class Admin extends CI_Controller
 					$emailDataCx = [
 						"message" => [
 							"recipients" => [
-								
+
 								["email" => 'customerexperience@smallsmall.com'],
 
 								["email" => 'wasiu.i@smallsmall.com'],
