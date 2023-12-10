@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -80,7 +80,7 @@ $db['default'] = array(
 	// 'username' => 'rentsmallsmall_buytolet',
 	'username' => 'rentsmallsmall_b',
 	'password' => 'Buytolet!2021',
- 	'database' => 'rentsmallsmall_furnisure_buytolet_database',
+	'database' => 'rentsmallsmall_furnisure_buytolet_database',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -96,6 +96,7 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
 $db['second'] = array(
 	'dsn'	=> '',
 	// 'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
