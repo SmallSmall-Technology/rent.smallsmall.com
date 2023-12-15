@@ -2895,15 +2895,15 @@ class Admin extends CI_Controller
 	// 	//check if Admin is logged in
 	// 	if ($this->session->has_userdata('adminLoggedIn')) {
 
-	// 		require 'vendor/autoload.php'; // Include the AWS SDK
+			// require 'vendor/autoload.php'; // Include the AWS SDK
 
-	// 		$s3 = new Aws\S3\S3Client([
+			// $s3 = new Aws\S3\S3Client([
 
-	// 			'version' => 'latest',
+			// 	'version' => 'latest',
 
-	// 			'region' => 'eu-west-1',
+			// 	'region' => 'eu-west-1',
 
-	// 		]);
+			// ]);
 
 	// 		try {
 
@@ -2980,6 +2980,18 @@ class Admin extends CI_Controller
 		//check if Admin is logged in
 		if ($this->session->has_userdata('adminLoggedIn')) {
 
+			require 'vendor/autoload.php'; // Include the AWS SDK
+
+			$s3 = new Aws\S3\S3Client([
+
+				'version' => 'latest',
+
+				'region' => 'eu-west-1',
+
+			]);
+
+			$bucketName = 'dev-bss-uploads';
+
 			$data['aptTypes'] = $this->admin_model->fetchAptType();
 
 			$data['investTypes'] = $this->admin_model->fetchInvestType();
@@ -2997,7 +3009,19 @@ class Admin extends CI_Controller
 			$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
 
 			//Get Images
-			$data['btl_images'] = file_get_contents('https://buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
+			// $data['btl_images'] = file_get_contents('https://buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
+
+
+			// Get Images from S3 instead of local files
+			$s3Object = $s3->getObject([
+
+				'Bucket' => $bucketName,
+
+				'Key' => 'uploads/buytolet/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image'],
+
+			]);
+	
+			$data['btl_images'] = $s3Object['Body'];
 
 			$data['title'] = "Edit Property :: Buytolet";
 
