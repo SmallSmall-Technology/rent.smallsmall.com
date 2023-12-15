@@ -2883,6 +2883,91 @@ class Admin extends CI_Controller
 		}
 	}
 
+	// public function edit_buytolet_property($id)
+	// {
+
+	// 	if (!file_exists(APPPATH . 'views/admin/pages/edit-buytolet-property.php')) {
+	// 		// Whoops, we don't have a page for that!
+
+	// 		show_404();
+	// 	}
+
+	// 	//check if Admin is logged in
+	// 	if ($this->session->has_userdata('adminLoggedIn')) {
+
+	// 		require 'vendor/autoload.php'; // Include the AWS SDK
+
+	// 		$s3 = new Aws\S3\S3Client([
+
+	// 			'version' => 'latest',
+
+	// 			'region' => 'eu-west-1',
+
+	// 		]);
+
+	// 		try {
+
+	// 			$bucketName = 'dev-bss-uploads';
+
+	// 			$s3FolderPath = 'uploads/buytolet/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image'];
+
+	// 			// Get the object (image) from S3 instead of file content from site 2
+	// 			$result = $s3->getObject([
+
+	// 				'Bucket' => $bucketName,
+
+	// 				'Key' => $s3FolderPath,
+
+	// 			]);
+
+	// 			// Get the image data
+	// 			$imageData = $result['Body'];
+
+
+	// 			$data['aptTypes'] = $this->admin_model->fetchAptType();
+
+	// 			$data['investTypes'] = $this->admin_model->fetchInvestType();
+
+	// 			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+	// 			$data['adminID'] = $this->session->userdata('adminID');
+
+	// 			$data['userAccess'] = $this->session->userdata('userAccess');
+
+	// 			$data['countries'] = $this->functions_model->get_countries();
+
+	// 			$data['property'] = $this->admin_model->fetchBuytoletProperty($id);
+
+	// 			$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
+
+	// 			// $bucketName = 'dev-bss-uploads';
+
+	// 			// $folderPath = 'uploads/buytolet/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image'];
+
+	// 			//Get Images
+	// 			$data['btl_images'] = $imageData;
+
+	// 			// $data['btl_images'] = file_get_contents('https://dev-buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
+
+	// 			$data['title'] = "Edit Property :: Buytolet";
+
+	// 			$this->load->view('admin/templates/header.php', $data);
+
+	// 			$this->load->view('admin/templates/sidebar.php', $data);
+
+	// 			$this->load->view('admin/pages/edit-buytolet-property.php', $data);
+
+	// 			$this->load->view('admin/templates/footer.php', $data);
+	// 		} catch (Aws\S3\Exception\S3Exception $e) {
+
+	// 			echo "Error getting file from S3: " . $e->getMessage();
+	// 		}
+	// 	} else {
+
+	// 		redirect(base_url() . 'admin/login', 'refresh');
+	// 	}
+	// }
+
 	public function edit_buytolet_property($id)
 	{
 
@@ -2895,73 +2980,34 @@ class Admin extends CI_Controller
 		//check if Admin is logged in
 		if ($this->session->has_userdata('adminLoggedIn')) {
 
-			require 'vendor/autoload.php'; // Include the AWS SDK
+			$data['aptTypes'] = $this->admin_model->fetchAptType();
 
-			$s3 = new Aws\S3\S3Client([
+			$data['investTypes'] = $this->admin_model->fetchInvestType();
 
-				'version' => 'latest',
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
-				'region' => 'eu-west-1',
+			$data['adminID'] = $this->session->userdata('adminID');
 
-			]);
+			$data['userAccess'] = $this->session->userdata('userAccess');
 
-			try {
+			$data['countries'] = $this->functions_model->get_countries();
 
-				$bucketName = 'dev-bss-uploads';
+			$data['property'] = $this->admin_model->fetchBuytoletProperty($id);
 
-				$s3FolderPath = 'uploads/buytolet/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image'];
+			$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
 
-				// Get the object (image) from S3 instead of file content from site 2
-				$result = $s3->getObject([
+			//Get Images
+			$data['btl_images'] = file_get_contents('https://buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
 
-					'Bucket' => $bucketName,
+			$data['title'] = "Edit Property :: Buytolet";
 
-					'Key' => $s3FolderPath,
+			$this->load->view('admin/templates/header.php', $data);
 
-				]);
+			$this->load->view('admin/templates/sidebar.php', $data);
 
-				// Get the image data
-				$imageData = $result['Body'];
+			$this->load->view('admin/pages/edit-buytolet-property.php', $data);
 
-
-				$data['aptTypes'] = $this->admin_model->fetchAptType();
-
-				$data['investTypes'] = $this->admin_model->fetchInvestType();
-
-				$data['adminPriv'] = $this->functions_model->getUserAccess();
-
-				$data['adminID'] = $this->session->userdata('adminID');
-
-				$data['userAccess'] = $this->session->userdata('userAccess');
-
-				$data['countries'] = $this->functions_model->get_countries();
-
-				$data['property'] = $this->admin_model->fetchBuytoletProperty($id);
-
-				$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
-
-				// $bucketName = 'dev-bss-uploads';
-
-				// $folderPath = 'uploads/buytolet/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image'];
-
-				//Get Images
-				$data['btl_images'] = $imageData;
-
-				// $data['btl_images'] = file_get_contents('https://dev-buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
-
-				$data['title'] = "Edit Property :: Buytolet";
-
-				$this->load->view('admin/templates/header.php', $data);
-
-				$this->load->view('admin/templates/sidebar.php', $data);
-
-				$this->load->view('admin/pages/edit-buytolet-property.php', $data);
-
-				$this->load->view('admin/templates/footer.php', $data);
-			} catch (Aws\S3\Exception\S3Exception $e) {
-
-				echo "Error getting file from S3: " . $e->getMessage();
-			}
+			$this->load->view('admin/templates/footer.php', $data);
 		} else {
 
 			redirect(base_url() . 'admin/login', 'refresh');
