@@ -2988,6 +2988,8 @@ class Admin extends CI_Controller
 
 				'region' => 'eu-west-1',
 
+				'endpoint' => 'https://s3-eu-west-1.amazonaws.com', // Specify the correct endpoint
+
 			]);
 
 			$bucketName = 'dev-bss-uploads';
@@ -3011,16 +3013,26 @@ class Admin extends CI_Controller
 			//Get Images
 			// $data['btl_images'] = file_get_contents('https://buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
 
+			try {
+				// Get Images from S3 instead of local files
+				$s3Object = $s3->getObject([
 
-			// Get Images from S3 instead of local files
-			$s3Object = $s3->getObject([
+					'Bucket' => $bucketName,
 
-				'Bucket' => $bucketName,
-
-				'Key' => 'uploads/buytolet/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image'],
-
-			]);
+					'Key' => 'uploads/buytolet/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image'],
+				]);
 	
+				$data['btl_images'] = $s3Object['Body'];
+
+			} catch (Aws\S3\Exception\S3Exception $e) {
+
+				// Log the error to console or error log
+				error_log('Error retrieving object from S3: ' . $e->getMessage());
+
+				$data['btl_images'] = ''; // Set a default/placeholder image
+
+			}
+
 			$data['btl_images'] = $s3Object['Body'];
 
 			$data['title'] = "Edit Property :: Buytolet";
