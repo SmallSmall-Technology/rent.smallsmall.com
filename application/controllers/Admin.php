@@ -6767,6 +6767,65 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function removeImg()
+	{
+		$folder = $this->input->post('folder');
+
+		$img_name = $this->input->post('imgName');
+
+		if ($folder && $img_name) {
+
+			require 'vendor/autoload.php';
+
+			$s3 = new Aws\S3\S3Client([
+				
+				'version' => 'latest',
+
+				'region' => 'eu-west-1', // region
+			]);
+
+			$bucket = 'dev-rss-uploads'; // bucket name
+
+			$objectKey = 'uploads/' . $folder . '/' . $img_name;
+
+			try {
+
+				// List all the object images content
+				$versions = $s3->listObjectVersions([
+
+					'Bucket' => $bucket,
+
+					'Prefix' => $objectKey,
+
+				]);
+
+				// Delete the selected object images
+				foreach ($versions['Versions'] as $version) {
+
+					$s3->deleteObject([
+
+						'Bucket' => $bucket,
+
+						'Key' => $version['Key'],
+
+						'VersionId' => $version['VersionId'],
+
+					]);
+				}
+
+				echo 1; // Success
+
+			} catch (Aws\Exception\AwsException $e) {
+
+				echo 'S3 Error: ' . $e->getAwsErrorMessage();
+			}
+		} else {
+			
+			echo 'Missing folder or image name';
+		}
+	}
+
+
 	// public function removeImg(){
 
 	// 	$folder = $this->input->post('folder');
@@ -6808,6 +6867,7 @@ class Admin extends CI_Controller
 			require 'vendor/autoload.php';
 
 			$s3 = new Aws\S3\S3Client([
+				
 				'version' => 'latest',
 				'region' => 'eu-west-1', // Replace with your region
 			]);
@@ -7891,10 +7951,10 @@ class Admin extends CI_Controller
 
 						'CopySource' => $bucketName . '/' . $object['Key'],
 
-						'Key' => $folderPath . '/' . basename($object['Key']),// copy content to destination folder
+						'Key' => $folderPath . '/' . basename($object['Key']), // copy content to destination folder
 					]);
 				}
-	
+
 				echo 1; // Success message
 
 			} else {
