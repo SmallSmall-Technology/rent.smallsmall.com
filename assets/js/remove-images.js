@@ -10,6 +10,14 @@ $(document). on('click', '.remove-img', function(){
 	//the_values[0]+' - '+the_values[1];
 	
 	var folder = $('#foldername').val();
+	var imageName = $('#featuredPic').val();
+
+	console.log('Folder Name: ' + folder);
+	console.log('Image Name: ' + imageName);
+	console.log('Image Name1: ' + the_values[0]);
+	console.log('Image Name2: ' + the_values[2]);
+	console.log('Image Name3: ' + the_values[3]);
+	console.log('Image Name4: ' + the_values);
 	
 	$(this).html('removing...');
 	
@@ -21,12 +29,16 @@ $(document). on('click', '.remove-img', function(){
 		
 		var data = {
 			
-			"imgName" : the_values[1],
-			
-			"folder"  : the_values[0]+'/'+folder
+			// "imgName" : the_values[1],
+			"imgName" : imageName,
+	
+			// "folder"  : the_values[0]+'/'+folder
+			"folder"  : folder
+
 		};
 		
 		$.ajaxSetup ({ cache: false });
+
 		$.ajax({
 
 			url : baseUrl+'admin/removeImg/',
