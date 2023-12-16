@@ -2980,20 +2980,6 @@ class Admin extends CI_Controller
 		//check if Admin is logged in
 		if ($this->session->has_userdata('adminLoggedIn')) {
 
-			require 'vendor/autoload.php'; // Include the AWS SDK
-
-			$s3 = new Aws\S3\S3Client([
-
-				'version' => 'latest',
-
-				'region' => 'eu-west-1',
-
-				'endpoint' => 'https://s3-eu-west-1.amazonaws.com', // Specify the correct endpoint
-
-			]);
-
-			$bucketName = 'dev-bss-uploads';
-
 			$data['aptTypes'] = $this->admin_model->fetchAptType();
 
 			$data['investTypes'] = $this->admin_model->fetchInvestType();
@@ -3010,30 +2996,8 @@ class Admin extends CI_Controller
 
 			$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
 
-			//Get Images
-			$data['btl_images'] = file_get_contents('https://buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
-
-			// try {
-			// 	// Get Images from S3 instead of local files
-			// 	$s3Object = $s3->getObject([
-
-			// 		'Bucket' => $bucketName,
-
-			// 		'Key' => 'uploads/buytolet/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image'],
-			// 	]);
-	
-			// 	$data['btl_images'] = $s3Object['Body'];
-
-			// } catch (Aws\S3\Exception\S3Exception $e) {
-
-			// 	// Log the error to console or error log
-			// 	error_log('Error retrieving object from S3: ' . $e->getMessage());
-
-			// 	$data['btl_images'] = ''; // Set a default/placeholder image
-
-			// }
-
-			// $data['btl_images'] = $s3Object['Body'];
+			//Get Images: Comment out because we are getting images from the s3 folder directly now not local api 
+			// $data['btl_images'] = file_get_contents('https://buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
 
 			$data['title'] = "Edit Property :: Buytolet";
 
@@ -7922,6 +7886,7 @@ class Admin extends CI_Controller
 				foreach ($objects['Contents'] as $object) {
 
 					$s3->copyObject([
+
 						'Bucket' => $bucketName,
 
 						'CopySource' => $bucketName . '/' . $object['Key'],
@@ -7937,6 +7902,7 @@ class Admin extends CI_Controller
 				echo "Error inserting new property"; // Error message
 
 			}
+
 		} catch (Aws\S3\Exception\S3Exception $e) {
 
 			echo "Error: " . $e->getMessage(); // Handle S3 exceptions
