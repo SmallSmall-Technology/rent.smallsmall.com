@@ -582,6 +582,7 @@
 											</div>
 											<div id="uploaded_files">
 												<label>Click to add Images</label>
+
 												<input type="file" name='userfile[]' id="multipleUplFiles" class='multipleUplFiles' multiple />
 											</div>
 
@@ -589,18 +590,18 @@
 
 											require 'vendor/autoload.php'; // Include the AWS SDK
 
-											$bucketName = 'dev-bss-uploads';
+											$bucketName = 'dev-bss-uploads'; // bucket name
 
 											$region = 'eu-west-1';
 
-											$s3 = new Aws\S3\S3Client([
+											$s3 = new Aws\S3\S3Client([ // aws client
 
 												'version' => 'latest',
 
 												'region' => $region,
 											]);
 
-											$propertyImageFolder = $property['image_folder'];
+											$propertyImageFolder = $property['image_folder']; // Folder name
 
 											try {
 
@@ -608,11 +609,12 @@
 
 													'Bucket' => $bucketName,
 
-													'Prefix' => 'uploads/buytolet/' . $propertyImageFolder . '/'
+													'Prefix' => 'uploads/buytolet/' . $propertyImageFolder . '/' // Image dir
 												]);
 
-												$imageObjects = $objects['Contents'];
-											} catch (Aws\Exception\AwsException $e) {
+												$imageObjects = $objects['Contents']; // Get the images
+
+											} catch (Aws\Exception\AwsException $e) { 
 
 												echo $e->getMessage();
 
@@ -621,10 +623,12 @@
 
 											?>
 
-											<!-- // -->
+											<!-- // End Added for s3 integration -->
 
 											<div id="uploaded_images">
+
 												<?php
+
 												foreach ($imageObjects as $object) {
 
 													$key = $object['Key'];

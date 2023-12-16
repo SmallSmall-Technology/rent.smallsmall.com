@@ -5962,7 +5962,7 @@ class Admin extends CI_Controller
 					// No objects found in the specified folder
 
 				}
-			} catch (Exception $e) {
+			} catch (Aws\S3\Exception\S3Exception $e) {
 
 				// Handle any exceptions that occurred during the API call
 
@@ -7782,13 +7782,80 @@ class Admin extends CI_Controller
 		redirect(base_url() . "admin/view-properties", 'refresh');
 	}
 
+	// public function clone_btl_property($propID)
+	// {
+
+	// 	$digits = 12;
+
+	// 	$randomNumber = '';
+
+	// 	$count = 0;
+
+	// 	while ($count < $digits) {
+
+	// 		$randomDigit = mt_rand(0, 9);
+
+	// 		$randomNumber .= $randomDigit;
+
+	// 		$count++;
+	// 	}
+
+	// 	$imageFolder = md5(date("Y-m-d H:i:s"));
+
+	// 	$id = $randomNumber;
+		
+
+	// 	$property = $this->admin_model->get_btl_property_details($propID);
+
+
+	// 	$userID = $this->session->userdata('adminID');
+
+	// 	//Create folder on remote server
+
+	// 	$success = file_get_contents('https://dev-buy.smallsmall.com/create-folder/' . $imageFolder);
+
+	// 	if (!$success) {
+	// 		//Create the floor plan folder
+	// 		//file_get_contents("https://www.buy2let.ng/create-folder/".$folder."/floor-plan");
+	// 		$error = "Could not create remote folder";
+	// 	}
+
+
+
+	// 	//Insert new property
+	// 	$views = 0;
+
+	// 	$new_id = $this->admin_model->insertBtlPropertyClone($id, $property['property_name'], $property['apartment_type'], $property['price'], $property['promo_price'], $property['promo_category'], $property['address'], $property['city'], $property['state'], $property['country'], $property['bed'], $property['bath'], $property['toilet'], $property['tenantable'], $property['expected_rent'], $property['hpi'], $property['developer'], $property['mortgage'], $property['payment_plan'], $property['payment_plan_period'], $imageFolder, $property['pool_units'], $property['available_units'],  $userID, $property['pool_buy'], $property['property_size'], $property['property_info'], $property['location_info'], $property['floor_plan'], $property['featured_image'], $property['status'], $views, $property['availability'], $property['asset_appreciation_1'], $property['asset_appreciation_2'], $property['asset_appreciation_3'], $property['asset_appreciation_4'], $property['asset_appreciation_5'], $property['floor_level'], $property['construction_lvl'], $property['start_date'], $property['finish_date'], $property['investment_type'], $property['marketValue']);
+
+	// 	if ($new_id) {
+
+	// 		$sourceFolder = $property['image_folder'];
+
+	// 		$destinationFolder = $imageFolder;
+
+	// 		//Initiate a copy on the remote server
+	// 		$result = file_get_contents('https://dev-buy.smallsmall.com/copy-images/' . $sourceFolder . '/' . $destinationFolder);
+
+	// 		if ($result) {
+
+	// 			echo 1;
+	// 		} else {
+
+	// 			echo $result;
+	// 		}
+	// 	}
+
+
+	// 	redirect(base_url() . "admin/all-buytolet-properties", 'refresh');
+	// }
+
 	public function clone_btl_property($propID)
 	{
-
 		$digits = 12;
 
 		$randomNumber = '';
-
+	
+		// Generate a random folder name
 		$count = 0;
 
 		while ($count < $digits) {
@@ -7799,54 +7866,86 @@ class Admin extends CI_Controller
 
 			$count++;
 		}
-
+	
 		$imageFolder = md5(date("Y-m-d H:i:s"));
 
 		$id = $randomNumber;
-
+	
 		$property = $this->admin_model->get_btl_property_details($propID);
 
-
 		$userID = $this->session->userdata('adminID');
+	
+		$bucketName = 'dev-bss-uploads'; // bucket name
 
-		//Create folder on remote server
+		$region = 'eu-west-1'; // region
+	
+		// Create S3 client
+		$s3 = new Aws\S3\S3Client([
 
-		$success = file_get_contents('https://dev-buy.smallsmall.com/create-folder/' . $imageFolder);
+			'version' => 'latest',
 
-		if (!$success) {
-			//Create the floor plan folder
-			//file_get_contents("https://www.buy2let.ng/create-folder/".$folder."/floor-plan");
-			$error = "Could not create remote folder";
-		}
+			'region' => $region,
 
+		]);
+	
+		try {
 
+			// Create a new folder in the S3 bucket
+			$folderPath = 'uploads/buytolet/' . $imageFolder;
 
-		//Insert new property
-		$views = 0;
+			$s3->putObject([
 
-		$new_id = $this->admin_model->insertBtlPropertyClone($id, $property['property_name'], $property['apartment_type'], $property['price'], $property['promo_price'], $property['promo_category'], $property['address'], $property['city'], $property['state'], $property['country'], $property['bed'], $property['bath'], $property['toilet'], $property['tenantable'], $property['expected_rent'], $property['hpi'], $property['developer'], $property['mortgage'], $property['payment_plan'], $property['payment_plan_period'], $imageFolder, $property['pool_units'], $property['available_units'],  $userID, $property['pool_buy'], $property['property_size'], $property['property_info'], $property['location_info'], $property['floor_plan'], $property['featured_image'], $property['status'], $views, $property['availability'], $property['asset_appreciation_1'], $property['asset_appreciation_2'], $property['asset_appreciation_3'], $property['asset_appreciation_4'], $property['asset_appreciation_5'], $property['floor_level'], $property['construction_lvl'], $property['start_date'], $property['finish_date'], $property['investment_type'], $property['marketValue']);
+				'Bucket' => $bucketName,
 
-		if ($new_id) {
+				'Key' => $folderPath . '/',
 
-			$sourceFolder = $property['image_folder'];
+				'Body' => '',
+			]);
+	
+			// Insert new property with details and also content from already craeted folder source
+			$views = 0;
 
-			$destinationFolder = $imageFolder;
+			$new_id = $this->admin_model->insertBtlPropertyClone($id, $property['property_name'], $property['apartment_type'], $property['price'], $property['promo_price'], $property['promo_category'], $property['address'], $property['city'], $property['state'], $property['country'], $property['bed'], $property['bath'], $property['toilet'], $property['tenantable'], $property['expected_rent'], $property['hpi'], $property['developer'], $property['mortgage'], $property['payment_plan'], $property['payment_plan_period'], $imageFolder, $property['pool_units'], $property['available_units'],  $userID, $property['pool_buy'], $property['property_size'], $property['property_info'], $property['location_info'], $property['floor_plan'], $property['featured_image'], $property['status'], $views, $property['availability'], $property['asset_appreciation_1'], $property['asset_appreciation_2'], $property['asset_appreciation_3'], $property['asset_appreciation_4'], $property['asset_appreciation_5'], $property['floor_level'], $property['construction_lvl'], $property['start_date'], $property['finish_date'], $property['investment_type'], $property['marketValue']);
+	
+			if ($new_id) {
 
-			//Initiate a copy on the remote server
-			$result = file_get_contents('https://dev-buy.smallsmall.com/copy-images/' . $sourceFolder . '/' . $destinationFolder);
+				$sourceFolder = 'uploads/buytolet/' . $property['image_folder'];
+	
+				// Copy content from source folder to destination folder within the same bucket
+				$objects = $s3->listObjects([
 
-			if ($result) {
+					'Bucket' => $bucketName,
 
-				echo 1;
+					'Prefix' => $sourceFolder . '/',
+				]);
+	
+				foreach ($objects['Contents'] as $object) {
+
+					$s3->copyObject([
+						'Bucket' => $bucketName,
+
+						'CopySource' => $bucketName . '/' . $object['Key'],
+
+						'Key' => $folderPath . '/' . basename($object['Key']),// copy content to destination folder
+					]);
+				}
+	
+				echo 1; // Success message
+
 			} else {
 
-				echo $result;
+				echo "Error inserting new property"; // Error message
+
 			}
+		} catch (Aws\S3\Exception\S3Exception $e) {
+
+			echo "Error: " . $e->getMessage(); // Handle S3 exceptions
+
 		}
-
-
+	
 		redirect(base_url() . "admin/all-buytolet-properties", 'refresh');
 	}
+
 
 	public function count_unread_requests()
 	{
