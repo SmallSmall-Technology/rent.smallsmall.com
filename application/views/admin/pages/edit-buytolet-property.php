@@ -660,6 +660,12 @@
 															} ?>
 															<div class="remove-img img-removal" id="img-properties-<?php echo $file; ?>">remove <i class="fa fa-trash"></i></div>
 														</span>
+
+
+														<script>
+												            console.log('File ValueNew: <?php echo $file; ?>'); // Log file value
+													   </script>
+
 												<?php
 
 													}
@@ -676,7 +682,8 @@
 								</div>
 								<input type="hidden" name="propID" id="propID" class="propID" value="<?php echo $property['propertyID']; ?>" />
 								<input type="hidden" name="foldername" id="foldername" class="folderName" value="<?php echo $property['image_folder']; ?>" />
-								<input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $property['featured_image']; ?>" />
+								<!-- <input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $property['featured_image']; ?>" /> -->
+								<input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $file; ?>" />
 							</div>
 							<button type="submit" id="editPropBut" class="mt-2 btn btn-primary">Save</button>
 							</form>
