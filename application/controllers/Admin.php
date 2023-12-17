@@ -6786,7 +6786,7 @@ class Admin extends CI_Controller
 
 			$bucket = 'dev-rss-uploads'; // bucket name
 
-			$objectKey = 'uploads/' . $folder . '/' . $img_name;
+			$objectKey = 'uploads/buytolet/' . $folder . '/' . $img_name;
 
 			try {
 
@@ -6799,26 +6799,50 @@ class Admin extends CI_Controller
 
 				]);
 
-				// Delete the selected object images
-				foreach ($versions['Versions'] as $version) {
 
-					$s3->deleteObject([
+			// 	if (!empty($versions['Versions'][0])) {
 
-						'Bucket' => $bucket,
+			// 		$version = $versions['Versions'][0];
 
-						'Key' => $version['Key'],
+			// 		$s3->deleteObject([
 
-						'VersionId' => $version['VersionId'],
+			// 			'Bucket' => $bucket,
 
-					]);
-				}
+			// 			'Key' => $version['Key'],
 
-				echo 1; // Success
+			// 			'VersionId' => $version['VersionId'],
+
+			// 		]);
+
+
+			// 	echo 1; // Success
+
+			// } else {
+
+            //     echo 'No image found for deletion';
+            // }
+
+			// Delete the selected object images
+			foreach ($versions['Versions'] as $version) {
+
+				$s3->deleteObject([
+
+					'Bucket' => $bucket,
+
+					'Key' => $version['Key'],
+
+					'VersionId' => $version['VersionId'],
+
+				]);
+			}
+
+			echo 1;
 
 			} catch (Aws\Exception\AwsException $e) {
 
 				echo 'S3 Error: ' . $e->getAwsErrorMessage();
 			}
+
 		} else {
 			
 			echo 'Missing folder or image name';

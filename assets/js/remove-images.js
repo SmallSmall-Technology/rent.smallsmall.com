@@ -2,7 +2,7 @@ var baseUrl = "https://dev-rent.smallsmall.com/";
 
 $(document). on('click', '.remove-img', function(){
 	"use strict";
-	var remove_img_name = $(this).attr("id").replace(/img-/, "");
+	var remove_img_name = $(this).attr("id").replace(/img-properties-/, "");
 	
 	var the_values = remove_img_name.split('-');
 	
@@ -10,14 +10,20 @@ $(document). on('click', '.remove-img', function(){
 	//the_values[0]+' - '+the_values[1];
 	
 	var folder = $('#foldername').val();
+
 	var imageName = $('#featuredPic').val();
+
+	var imageNameTest = $('#featuredPic').val(remove_img_id);
 
 	console.log('Folder Name: ' + folder);
 	console.log('Image Name: ' + imageName);
-	console.log('Image Name1: ' + the_values[0]);
-	console.log('Image Name2: ' + the_values[2]);
-	console.log('Image Name3: ' + the_values[3]);
-	console.log('Image Name4: ' + the_values);
+	console.log('Image Name1: ' + imageNameTest);
+
+	console.log('Image Name2: ' + the_values[0]);
+
+	console.log('Image Name3: ' + the_values[2]);
+	console.log('Image Name4: ' + the_values[3]);
+	console.log('Image Name5: ' + the_values);
 	
 	$(this).html('removing...');
 	
