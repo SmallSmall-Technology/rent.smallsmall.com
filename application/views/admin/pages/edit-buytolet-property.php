@@ -614,6 +614,10 @@
 
 												$imageObjects = $objects['Contents']; // Get the images
 
+												$firstImageName = $objects['Contents'][0]['key']; // get object key
+
+												$imageNameTest = basename($firstImageName);// Extract the imagename
+
 											} catch (Aws\Exception\AwsException $e) { 
 
 												echo $e->getMessage();
@@ -641,6 +645,14 @@
 
 														// Rest of your HTML code for displaying the images
 												?>
+
+														<script>
+												            console.log('File Value1: <?php echo $file; ?>'); // Log file value
+															console.log('image URL2: <?php echo $imgUrl; ?>'); // Log file value
+															console.log('ImageName3: <?php echo basename($key); ?>'); // Log file value
+															console.log('ImageNameTest4: <?php echo $imageNameTest; ?>');
+													   </script>
+
 														<span class="imgCover removal-id-<?php echo $file; ?>" id="id-<?php echo $file; ?>">
 															<img src="<?php echo $imgUrl; ?>" id="<?php echo $file; ?>" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
 															<?php if ($file == $property['featured_image']) {
