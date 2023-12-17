@@ -614,9 +614,9 @@
 
 												$imageObjects = $objects['Contents']; // Get the images
 
-												$firstImageName = $objects['Contents'][0]['key']; // get object key
+												// $firstImageName = $objects['Contents'][0]['key']; // get object key
 
-												$imageNameTest = basename($firstImageName);// Extract the imagename
+												// $imageNameTest = basename($firstImageName);// Extract the imagename
 
 											} catch (Aws\Exception\AwsException $e) { 
 
@@ -647,10 +647,8 @@
 												?>
 
 														<script>
-												            console.log('File Value1: <?php echo $file; ?>'); // Log file value
+												            console.log('File Value1 Imagename: <?php echo $file; ?>'); // Log file value
 															console.log('image URL2: <?php echo $imgUrl; ?>'); // Log file value
-															console.log('ImageName3: <?php echo basename($key); ?>'); // Log file value
-															console.log('ImageNameTest4: <?php echo $imageNameTest; ?>');
 													   </script>
 
 														<span class="imgCover removal-id-<?php echo $file; ?>" id="id-<?php echo $file; ?>">
