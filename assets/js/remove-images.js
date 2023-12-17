@@ -13,7 +13,7 @@ $(document). on('click', '.remove-img', function(){
 
 	var imageName = $('#featuredPic').val();
 
-	var imageNameTest = $('#featuredPic').val(remove_img_id);
+	var imageNameTest = $('#featuredPic').val(remove_img_name);
 
 	console.log('Folder Name: ' + folder);
 	console.log('Image Name: ' + imageName);
