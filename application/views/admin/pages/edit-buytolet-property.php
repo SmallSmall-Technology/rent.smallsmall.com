@@ -646,6 +646,8 @@
 														// Rest of your HTML code for displaying the images
 												?>
 
+														<input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $file; ?>" />
+
 														<script>
 												            console.log('File Value1 Imagename: <?php echo $file; ?>'); // Log file value
 															console.log('image URL2: <?php echo $imgUrl; ?>'); // Log file value
@@ -681,7 +683,7 @@
 								<input type="hidden" name="propID" id="propID" class="propID" value="<?php echo $property['propertyID']; ?>" />
 								<input type="hidden" name="foldername" id="foldername" class="folderName" value="<?php echo $property['image_folder']; ?>" />
 								<!-- <input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $property['featured_image']; ?>" /> -->
-								<input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $file; ?>" />
+								<!-- <input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $file; ?>" /> -->
 							</div>
 							<button type="submit" id="editPropBut" class="mt-2 btn btn-primary">Save</button>
 							</form>
