@@ -12,9 +12,12 @@ if ($verification_status == 'yes') {
 
 $userID = $this->session->userdata('userID');
 
+<<<<<<< HEAD
 //$bookings = $this->rss_model->get_bookings($userID);
 
 //$this->rss_model->newBookingUpdate($bkId, $transID, $userID);
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 ?>
 
 <!DOCTYPE html>
@@ -406,11 +409,16 @@ $userID = $this->session->userdata('userID');
                     </div>
                     <div class="row">
                         <div class="col-md-3 col-12 custom-btn mb-2">
+<<<<<<< HEAD
                             <a href="<?php echo base_url('dashboard/wallet'); ?>"><button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Pay
                                     With Wallet</button></a>
+=======
+                            <a href = "<?php echo base_url('dashboard/wallet'); ?>"><button class="btn font-weight-light  p-3 secondary-background w-100" type="button">Pay With Wallet</button></a>
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                         </div>
                         
                         <div class="col-md-3 col-12 custom-btn mb-2">
+<<<<<<< HEAD
                         <form id="paymentForm">
         
                         <input type="hidden" class="email" id="email" value="<?php echo $dets['email']; ?>" required />			  
@@ -442,12 +450,49 @@ $userID = $this->session->userdata('userID');
 
                         </form>
 
+=======
+                            <form id="paymentForm">
+            
+                                <input type="hidden" class="email" id="email" value="<?php echo $dets['email']; ?>" required />			  
+
+                                <input type="hidden" class="amount" id="amount" value="<?php if(@$UserPayment < 1){ echo $dets['amount']; } else {echo ($bookings['price'] + $bookings['serviceCharge']); } ?>" required />
+
+                                <input class="fname" type="hidden" id="fname" value="<?php echo $dets['firstName']; ?>" />
+
+                                <input class="lname" type="hidden" id="lname" value="<?php echo $dets['lastName']; ?>" />
+                                
+                                <input class="refID" type="hidden" id="refID" value="<?php echo $dets['refID']; ?>" />
+
+                                <input class="userID" type="hidden" id="userID" value="<?php echo $dets['usersID']; ?>" />
+                                
+                                <input type="hidden" class="booking_id" id="booking_id" value="<?php echo $dets['bookingID']; ?>" required />
+                                
+                                <input type="hidden" class="rent_exp" id="rent_exp" value="<?php echo $dets['rent_expiration']; ?>" required />
+                                
+                                <input type="hidden" class="duration" id="duration" value="<?php echo $dets['duration']; ?>" required />
+                                
+                                <input type="hidden" class="payment_plan" id="payment_plan" value="<?php echo $dets['payment_plan']; ?>" required />
+                                
+                                <input type="hidden" class="propID" id="propID" value="<?php echo $dets['propertyID']; ?>" required />
+                                
+                                <!-- <button type="submit" class="green-bg pay-now-btn" onclick="payWithPaystack()"> Pay now </button> -->
+
+                                    <button class="btn font-weight-light  p-3 secondary-background w-100" type="submit" onclick="payWithPaystack()" type="button">Pay with Paystack</button>
+                                
+
+                            </form>
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                         </div>
 
                         <div class="col-md-4 col-12 custom-btn mb-2">
+<<<<<<< HEAD
                             <div style="margin-top: -24px;"><b>Coming soon</b></div>
                             <button class="btn font-weight-light  p-3 secondary-background w-100" type="submit" onclick="pay()">Subscribe to
                                 wallet
+=======
+                        <button class="btn font-weight-light  p-3 secondary-background w-100" type="submit" onclick="pay()">Subscribe to
+                                Paystack
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                                 direct
                                 debit</button>
                         </div>
@@ -634,10 +679,13 @@ $userID = $this->session->userdata('userID');
     </div>
     <!-- success modal for payment ends here-->
 
+<<<<<<< HEAD
     <!----Paystack form ---->
     
     <!----Paystack form ---->
 
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
     <footer>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light justify-content-end">
@@ -846,6 +894,7 @@ $userID = $this->session->userdata('userID');
         });
     </script>
 
+<<<<<<< HEAD
     <script>
             function pay() 
             {
@@ -1014,7 +1063,176 @@ $userID = $this->session->userdata('userID');
         </script>
         <script src="https://js.paystack.co/v1/inline.js"></script> 
         <script src="https://checkout.basqet.com/static/prod/basqet.js"></script> 
+=======
+    <script>     
+        function pay() 
+        {
+            recurringTransaction(bID, refID);
+        }
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
+        function recurringTransaction(){
+            
+            var baseURL = "<?php echo base_url(); ?>";
+        
+            var userID = document.getElementById('userID').value;
+            
+            var data = {"userID" : userID};
+            
+            $.ajaxSetup ({ cache: false });
+
+            $.ajax({
+        
+                url : baseURL+'rss/recurringTransaction/',
+        
+                type: "POST",
+        
+                async: true,
+        
+                data: data,
+        
+                success	: function (data){
+                
+                window.location.href= data
+                }
+        
+            });
+        }
+
+        const paymentForm = document.getElementById('paymentForm');
+        
+        var bID = document.getElementById('booking_id').value;
+        
+        var refID = document.getElementById("refID").value;
+    
+        paymentForm.addEventListener("submit", payWithPaystack, false);
+    
+        function payWithPaystack(e) {
+    
+            var link = document.getElementById('modalSuccess');
+
+            e.preventDefault();
+    
+            let handler = PaystackPop.setup({
+    
+                key: 'pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2', // Replace with your public key
+        
+                email: document.getElementById("email").value,
+        
+                amount: document.getElementById("amount").value * 100,
+        
+                ref: document.getElementById("refID").value, // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+        
+                // label: "Optional string that replaces customer email"
+        
+                onClose: function(){
+        
+                },
+        
+                callback: function(response){
+            
+                    let message = 'Payment complete! Reference: ' + response.reference;
+                    
+                    link.click();
+                    updateTransaction(bID, refID);
+            
+                }
+            });
+    
+            handler.openIframe();
+        
+        }
+        
+        function updateTransaction(bookingID, refID){
+            //alert(bookingID+' - '+refID);
+            //var baseURL = "https://rent.smallsmall.com/";
+            
+            var baseURL = "<?php echo base_url(); ?>";
+            
+            var rent_exp = document.getElementById('rent_exp').value;
+            
+            var duration = document.getElementById('duration').value;
+            
+            var pplan = document.getElementById('payment_plan').value;
+            
+            var amount = document.getElementById('amount').value;
+            
+            var propID = document.getElementById('propID').value;
+
+            var userID = document.getElementById('userID').value;
+            
+            var data = {"bookingID" : bookingID, "referenceID" : refID, "rent_exp" : rent_exp, "duration" : duration, "pplan" : pplan, "amount" : amount, "userID" : userID, "propertyID" : propID};
+            
+            $.ajaxSetup ({ cache: false });
+
+            $.ajax({
+    
+                url : baseURL+'rss/updateTransaction/',
+    
+                type: "POST",
+    
+                async: true,
+    
+                data: data,
+    
+                success	: function (data){
+                    if(data == 1){
+                        alert('Your Payment Was Successful');
+                        window.location.href = baseURL+"dashboard/paymentSummary";
+                    }else{                 
+                        alert('Your Payment Was not Successful');      
+                    }				
+    
+                }
+    
+            });
+        }
+    </script>
+    <script>
+        const amountInput = document.querySelector(".amountInput");
+        const payButton = document.querySelector(".payButton");
+        const emailInput = document.querySelector(".emailInput");
+        const descriptionInput = document.querySelector(".descriptionInput");
+        const publicKeyInput = document.querySelector(".publicKeyInput");
+        const currencyInput = document.querySelector(".currencyInput");
+        const refInput = document.querySelector(".refNum");
+        const bookingInput = document.querySelector(".bookingNum");
+    
+        payButton.addEventListener("click", () => {
+            const amount = amountInput.value;
+            const email = emailInput.value;
+            const publicKey = publicKeyInput.value;
+            const description = descriptionInput.value;
+            const currency = currencyInput.value;
+            const refID = refInput.value;
+            const bookingID = bookingInput.value;
+        
+            window.payWithBasqet({
+                amount,
+                email,
+                ...(description && { description }),
+                currency: currency,
+                public_key: publicKey,
+                meta: {
+                    transaction_reference: "REF56768798"
+                },
+                onSuccess: (ref) => {
+                    alert(`Transaction successful: ${ref}`);
+                },
+                onError: (error) => {
+                    alert(`Transaction failed ${error}`);
+                },
+                onClose: () => {
+                    alert("Checkout closed");
+                },
+                onAbandoned: () => {
+                    alert("Checkout Abandoned");
+                }
+            });
+        });
+    </script>
+    <script src="https://js.paystack.co/v1/inline.js"></script> 
+    <script src="https://checkout.basqet.com/static/prod/basqet.js"></script>
 </body>
 
 </html>

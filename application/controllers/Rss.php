@@ -495,11 +495,61 @@ class Rss extends CI_Controller
 		}
 	}
 
+	// Verification Old - Incase of revert
+
+	// public function verification($page)
+	// {
+
+	// 	if ($this->session->has_userdata('userID')) {
+
+	// 		$data['mob_color'] = "white";
+
+	// 		$data['mob_icons'] = "blue";
+
+	// 		$data['color'] = "white";
+
+	// 		$data['logo'] = "blue";
+
+	// 		$data['image'] = "without-image";
+
+	// 		$data['userID'] = $this->session->userdata('userID');
+
+	// 		$data['fname'] = $this->session->userdata('fname');
+
+	// 		$data['lname'] = $this->session->userdata('lname');
+
+	// 		$data['email'] = $this->session->userdata('email');
+
+	// 		$data['user_type'] = $this->session->userdata('user_type');
+
+	// 		$data['interest'] = $this->session->userdata('interest');
+
+
+	// 		$data['title'] = "Profile Verification";
+
+	// 		$this->load->view('templates/rss-header', $data);
+
+	// 		$this->load->view('rss-partials/' . $page, $data);
+
+	// 		$this->load->view('templates/rss-footer', $data);
+	// 	} else {
+
+	// 		//$userdata = array('page_link' => base_url().'verification/'.$page);
+
+	// 		//$_SESSION['page_link'] = base_url().'verification/'.$page;
+
+	// 		redirect(base_url() . 'login', 'refresh');
+	// 	}
+	// }
+
+	// Verification New
+
 	public function verification($page)
 	{
 
 		if ($this->session->has_userdata('userID')) {
 
+<<<<<<< HEAD
 			// $data['mob_color'] = "white";
 
 			// $data['mob_icons'] = "blue";
@@ -510,6 +560,8 @@ class Rss extends CI_Controller
 
 			$data['image'] = "without-image";
 
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
@@ -526,35 +578,41 @@ class Rss extends CI_Controller
 
 			$user = $this->rss_model->get_user($data['userID']);
 
+<<<<<<< HEAD
 			$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
 
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 			$data['phone'] = $user['phone'];
 
 			$data['gender'] = $user['gender'];
 
 			$data['title'] = "Profile Verification";
 
+<<<<<<< HEAD
 			// $this->load->view('templates/rss-header', $data);
 
 			// $this->load->view('rss-partials/' . $page, $data);
 
 			// $this->load->view('templates/rss-footer', $data);
 
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 			$this->load->view('templates/rss-updated-header', $data);
 
 			$this->load->view('rss-partials/' . $page, $data);
 
 			$this->load->view('templates/rss-updated-footer', $data);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 		} else {
-
-			//$userdata = array('page_link' => base_url().'verification/'.$page);
-
-			//$_SESSION['page_link'] = base_url().'verification/'.$page;
 
 			redirect(base_url() . 'login', 'refresh');
 		}
 	}
+
 	public function signup()
 	{
 
@@ -2662,6 +2720,8 @@ class Rss extends CI_Controller
 
 			$registration = $this->rss_model->register($fname, $lname, $email, $password, $phone, $income, $confirmationCode, $referral, $user_type, $interest, $referred_by, $rc, $age, $gender, $user_agent['userAgent']);
 
+			$sendUsersRecordToSelzy = $this->insertToSelzyDashboard($fname, $lname, $email, $phone);
+
 			if ($registration) {
 
 				$data['confirmationLink'] = base_url() . 'confirm/' . $confirmationCode;
@@ -2722,6 +2782,47 @@ class Rss extends CI_Controller
 				}
 			}
 		}
+	}
+
+	public function insertToSelzyDashboard($fname, $lname, $email, $phone){
+
+		// Construct the API URL with the required parameters with selzy
+
+		$method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
+
+		$curl = curl_init(); // Initialize a cURL session
+
+		// Set cURL options
+
+		curl_setopt_array($curl, array(
+
+			CURLOPT_URL => $method, // URL to send the request to
+
+			CURLOPT_CUSTOMREQUEST => "POST", // Using POST request method
+
+			CURLOPT_RETURNTRANSFER => true, // Return the response as a string for me 
+
+			CURLOPT_HTTPHEADER => [
+
+				"content-type: application/json" // Set the request header to specify JSON data as requested
+
+			],
+
+		));
+
+		// return curl_exec($curl);
+		$result = curl_exec($curl); // Execute the cURL request and capture the response
+
+		if (curl_errno($curl)) { // Check for cURL errors
+			echo 'cURL Error: ' . curl_error($curl);
+		}
+	
+		// Close the cURL session
+		curl_close($curl);
+	
+		// Return the API response
+		return $result;
+
 	}
 
 	public function resend_verification()
@@ -2939,6 +3040,8 @@ class Rss extends CI_Controller
 							"message" => [
 								"recipients" => [
 									["email" => 'customerexperience@smallsmall.com'],
+
+									["email" => 'wasiu.i@smallsmall.com'],
 								],
 								"body" => ["html" => $htmlBody],
 								"subject" => "New Inspection Request!",
@@ -3136,6 +3239,12 @@ class Rss extends CI_Controller
 
 	// public function uploadIdentification($folder)
 	// {
+<<<<<<< HEAD
+
+	// 	$filename = '';
+
+	// 	if (!$folder) {
+=======
 
 	// 	$filename = '';
 
@@ -3220,6 +3329,190 @@ class Rss extends CI_Controller
 
 	// 				$filename = $data["file_name"];
 
+	// 				//$output .= '<span class="imgCover" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/furnisure/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" /></span>';
+
+	// 			}
+	// 		}
+
+	// 		//echo $output;
+
+	// 		echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
+	// 	}
+	// }
+
+
+	// S3 integration for uploadIdentification - All verification details save to S3 bucket and also fetch from S3
+
+	public function uploadIdentification($folder)
+	{
+		require 'vendor/autoload.php';
+
+		// Step 1: Initialize the variables
+		$filename = '';
+
+		// Step 2: Generate folder name if not provided
+		if (!$folder) {
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+	// 		$folder = md5(date("Ymd His"));
+	// 	}
+
+<<<<<<< HEAD
+	// 	sleep(1);
+=======
+		// Step 3: Wait for 1 second (sleep)
+		sleep(1);
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+		// Step 4: Create directory if it doesn't exist
+
+	// 	if (!is_dir('./uploads/verification/' . $folder)) {
+
+<<<<<<< HEAD
+	// 		// mkdir('./uploads/verification/' . $folder, 0711, TRUE);
+	// 		mkdir('./uploads/verification/' . $folder, 0777, TRUE);
+	// 	}
+
+
+	// 	if ($_FILES["files"]["name"] != '') {
+=======
+			mkdir('./uploads/verification/' . $folder, 0777, TRUE);
+		}
+
+		// Step 5: Check if files were uploaded
+		if ($_FILES["files"]["name"] != '') {
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+	// 		$output = '';
+
+<<<<<<< HEAD
+	// 		$config["upload_path"] = './uploads/verification/' . $folder;
+=======
+			// Step 6: Configure file upload settings
+			$config["upload_path"] = './uploads/verification/' . $folder;
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+	// 		$config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
+
+	// 		$config['max_size'] = '5000';
+
+	// 		$config['encrypt_name'] = TRUE;
+
+<<<<<<< HEAD
+	// 		$this->load->library('upload', $config);
+=======
+			// Step 7: Load and initialize the upload library
+			$this->load->library('upload', $config);
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+	// 		$this->upload->initialize($config);
+
+<<<<<<< HEAD
+	// 		if (is_array($_FILES["files"]["name"])) {
+=======
+			// Step 8: Loop through uploaded files
+			if (is_array($_FILES["files"]["name"])) {
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+	// 			for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+
+	// 				$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+
+	// 				$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+
+	// 				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+
+	// 				$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+
+	// 				$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+<<<<<<< HEAD
+	// 				if ($this->upload->do_upload('file')) {
+=======
+					// Step 9: Perform file upload
+					if ($this->upload->do_upload('file')) {
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+	// 					$data = $this->upload->data();
+
+	// 					$output = "success";
+
+	// 					$filename = $data["file_name"];
+
+<<<<<<< HEAD
+	// 					//$output .= '<span class="imgCover" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/furnisure/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" /></span>';
+
+	// 				}
+	// 			}
+	// 		} else {
+=======
+						// Step 10: Upload the file to AWS S3
+						$bucket = 'rss-prod-uploads'; // My bucket name
+
+						$keyname = 'uploads/verification/' . $folder . '/' . $data["file_name"]; // My Object key for the file
+
+						$s3 = new Aws\S3\S3Client([
+
+							'version' => 'latest',
+
+							'region'  => 'eu-west-1' // My region
+						]);
+
+						try {
+							// Step 11: Upload data to S3.
+							$result = $s3->putObject([
+
+								'Bucket' => $bucket,
+
+								'Key'    => $keyname,
+
+								'Body'   => file_get_contents($data["full_path"]),
+							]);
+
+							// Step 12: Display S3 Object URL
+							$objectUrl = $result['ObjectURL'];
+
+							echo "File uploaded to S3: " . $objectUrl . PHP_EOL;
+
+							// Step 13: Perform any additional actions with $objectUrl
+						} catch (Aws\S3\Exception\S3Exception $e) {
+							// Step 14: Handle S3 upload error
+
+							echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+						}
+					}
+				}
+			} else {
+				// ... (same logic as before for a single file)
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+	// 			$_FILES["file"]["name"] = $_FILES["files"]["name"];
+
+	// 			$_FILES["file"]["type"] = $_FILES["files"]["type"];
+
+	// 			$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
+
+	// 			$_FILES["file"]["error"] = $_FILES["files"]["error"];
+
+	// 			$_FILES["file"]["size"] = $_FILES["files"]["size"];
+
+<<<<<<< HEAD
+	// 			//$upload_data = $this->upload->do_upload('file');
+
+	// 			//$file_name = $upload_data['file_name'];
+=======
+				// Step 9: Perform file upload
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+	// 			if ($this->upload->do_upload('file')) {
+
+	// 				$data = $this->upload->data();
+
+	// 				$output = "success";
+
+	// 				$filename = $data["file_name"];
+
+<<<<<<< HEAD
 	// 				//$output .= '<span class="imgCover" id="id-'.$data["file_name"].'"><img src="'.base_url().'uploads/furnisure/'.$folder.'/'.$data["file_name"].'" id="'.$data["file_name"].'" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" /></span>';
 
 	// 			}
@@ -3391,14 +3684,60 @@ public function uploadIdentification($folder)
 
 					// Step 14: Handle S3 upload error
 					echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+=======
+					// Step 10: Upload the file to AWS S3
+
+					$bucket = 'rss-prod-uploads'; // My bucket name
+
+					$keyname = 'uploads/verification/' . $folder . '/' . $data["file_name"]; // My Object key for the file
+
+					$s3 = new Aws\S3\S3Client([
+
+						'version' => 'latest',
+
+						'region'  => 'eu-west-1' // My region
+					]);
+
+					try {
+						// Step 11: Upload data to S3.
+						$result = $s3->putObject([
+							'Bucket' => $bucket,
+
+							'Key'    => $keyname,
+
+							'Body'   => file_get_contents($data["full_path"]),
+						]);
+
+						// Step 12: Display S3 Object URL
+						$objectUrl = $result['ObjectURL'];
+
+						echo "File uploaded to S3: " . $objectUrl . PHP_EOL;
+
+						// Step 13: Perform any additional actions with $objectUrl
+					} catch (Aws\S3\Exception\S3Exception $e) {
+
+						// Step 14: Handle S3 upload error
+						echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+					}
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 				}
 			}
         }
 
+<<<<<<< HEAD
         // Step 15: Output JSON response
         echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
     }
 }
+=======
+			// Step 15: Output JSON response
+			echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
+		}
+	}
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+	// End of S3 integration
+
 
 
 	public function insertDetails()
@@ -3532,6 +3871,7 @@ public function uploadIdentification($folder)
 
 		// 		$data['response'] = $htmlBody;
 
+<<<<<<< HEAD
 		// 		// Prepare the email data
 		// 		$emailDataTeam = [
 		// 			"message" => [
@@ -3545,6 +3885,26 @@ public function uploadIdentification($folder)
 		// 				"from_name" => "SmallSmall Alert",
 		// 			],
 		// 		];
+=======
+				// Prepare the email data
+				$emailDataTeam = [
+					"message" => [
+						"recipients" => [
+							["email" => 'verification@smallsmall.com'],
+
+							["email" => 'pidah.t@smallsmall.com'],
+
+							["email" => 'wasiu.i@smallsmall.com'],
+
+							// ["email" => 'customerexperience@smallsmall.com'],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "New Verification alert",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "SmallSmall Alert",
+					],
+				];
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
 		// 		// Send the email using the Unione API
 		// 		$responseEmail = $client->request('POST', 'email/send.json', [
@@ -3560,31 +3920,31 @@ public function uploadIdentification($folder)
 
 			if ($order['orderType'] == "property") {
 
-					$propertyTitle = $order['property'][0]['productTitle'];
+				$propertyTitle = $order['property'][0]['productTitle'];
 
-					// Replace the placeholder in the HTML body with the username
-					
-					$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
-					
-					$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
-					
-					$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
+				// Replace the placeholder in the HTML body with the username
 
-					$data['response'] = $htmlBody;
-				
-        		// Prepare the email data
-       			 	$emailDataTeam = [
-            			"message" => [
-                			"recipients" => [
-                    			["email" => 'customerexperience@smallsmall.com'],
-					// ["email" => 'pidah.t@smallsmall.com'],
-                			],
-                		"body" => ["html" => $htmlBody],
-                		"subject" => "New Verification alert",
-                		"from_email" => "donotreply@smallsmall.com",
-                		"from_name" => "SmallSmall Alert",
-            			],
-        			];
+				$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+
+				$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+
+				$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
+
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailDataTeam = [
+					"message" => [
+						"recipients" => [
+							["email" => 'customerexperience@smallsmall.com'],
+							// ["email" => 'pidah.t@smallsmall.com'],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "New Verification alert",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "SmallSmall Alert",
+					],
+				];
 
 				$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
 
@@ -4307,15 +4667,15 @@ public function uploadIdentification($folder)
 
 		if ($this->session->has_userdata('userID')) {
 
-			$data['mob_color'] = "white";
+			// $data['mob_color'] = "white";
 
-			$data['mob_icons'] = "blue";
+			// $data['mob_icons'] = "blue";
 
-			$data['color'] = "white";
+			// $data['color'] = "white";
 
-			$data['logo'] = "blue";
+			// $data['logo'] = "blue";
 
-			$data['image'] = "without-image";
+			// $data['image'] = "without-image";
 
 			$data['userID'] = $this->session->userdata('userID');
 
@@ -4335,12 +4695,15 @@ public function uploadIdentification($folder)
 
 			$data['reason'] = 'Thank you for taking your time to fill our verification forms, you are one step closer to making your home dream a reality.<br /> <br />Your details will be reviewed in 48 hours and a response will be sent to your registered email.';
 
-			$this->load->view('templates/rss-header', $data);
+			$this->load->view('templates/rss-updated-header', $data);
 
 			$this->load->view('pages/confirmation-result', $data);
 
-			$this->load->view('templates/rss-footer');
+			$this->load->view('templates/rss-updated-footer', $data);
+
+			$this->load->view('templates/rss-updated-js-files');
 		} else {
+
 			redirect(base_url(), 'refresh');
 		}
 	}
@@ -4601,7 +4964,6 @@ public function uploadIdentification($folder)
 						'headers' => $headers,
 						'json' => $emailData,
 					]);
-					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 
 					$data['response'] = $e->getMessage();
@@ -5120,6 +5482,7 @@ public function uploadIdentification($folder)
 						"recipients" => [
 							["email" => $email],
 							["email" => 'pidah.t@smallsmall.com'], // Just for testing
+							["email" => 'accounts@smallsmall.com'], // Just for testing
 						],
 						"body" => ["html" => $htmlBody],
 						"subject" => "RentSmallsmall Payment successful notification",
@@ -5813,6 +6176,349 @@ public function uploadIdentification($folder)
 	}
 
 
+	public function recurringTransaction()
+	{
+		// $bID = $this->input->post("bookingID");
+
+		// $refID = $this->input->post("referenceID");
+
+		// $rent_exp = $this->input->post("rent_exp");
+
+		// $duration = $this->input->post("duration");
+
+		// $amount = $this->input->post("amount");
+
+		// $pplan = $this->input->post("pplan");
+
+		// $propertyID = $this->input->post("propertyID");
+
+		// $bkId = $this->random_strings(5);
+
+		// $newtransID = $this->rss_model->getTransDet($userID);
+
+		// $transID = $newtransID['reference_id']; 
+
+		$userID = $this->input->post("userID");
+
+		$bkdets = $this->rss_model->checkRSSLastTran($userID);
+
+		$srlz = $bkdets['userIntervals'];
+		$srlz = unserialize($srlz);
+
+		if($srlz[0] == 'Upfront') 
+		{
+			$plan = 'annually';
+			$time = date("Y-m-d");
+			$nextDate = date('Y-m-d', strtotime($time. ' + 12 months'));
+		}
+
+		elseif($srlz[0] == 'Monthly')
+		{
+			$plan = 'monthly';
+			$time = date("Y-m-d");
+			$nextDate = date('Y-m-d', strtotime($time. ' + 1 months'));
+		}
+
+		elseif($srlz[0] == 'Quarterly')
+		{
+			$plan = 'quarterly';
+			$time = date("Y-m-d");
+			$nextDate = date('Y-m-d', strtotime($time. ' + 3 months'));
+		}
+
+		elseif($srlz[0] == 'Bi-annually')
+		{
+			$plan = 'biannually';
+			$time = date("Y-m-d");
+			$nextDate = date('Y-m-d', strtotime($time. ' + 6 months'));
+		}
+
+		$amount = ($bkdets['subscription_fees'] + $bkdets['service_charge_deposit']) * 100;
+		$pbookingID = $bkdets['bookingID'];
+		//Create a Plan
+
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		CURLOPT_URL => "https://api.paystack.co/plan",
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS => array(
+			"name" => "Plan for booking $pbookingID",
+			"interval" => "$plan",
+			"amount" => $amount
+		),
+		CURLOPT_HTTPHEADER => array(
+			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Cache-Control: no-cache"
+		),
+		)
+		);
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+		echo "cURL Error #:" . $err;
+		} else {
+			$response = json_decode($response, true);
+			$planCode = $response['data']['plan_code'];
+		}
+
+
+		//add customer to a plan
+
+		$email = $bkdets['userEmail'];
+
+		$url = "https://api.paystack.co/transaction/initialize";
+
+		$fields = [
+			'email' => "$email",
+			'amount' => "$amount",
+			'plan' => "$planCode"
+		];
+
+		$fields_string = http_build_query($fields);
+
+		//open connection
+		$ch = curl_init();
+		
+		//set the url, number of POST vars, POST data
+		curl_setopt($ch,CURLOPT_URL, $url);
+		curl_setopt($ch,CURLOPT_POST, true);
+		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Cache-Control: no-cache",
+		));
+		
+		//So that curl_exec returns the contents of the cURL; rather than echoing it
+		curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+		
+		//execute post
+		$result = curl_exec($ch);
+
+		$response = json_decode($result, true);
+		$authUrl = $response['data']['authorization_url'];
+		$reference = $response['data']['reference'];
+		$date = date("Y-m-d");
+
+
+		$transdet = $this->rss_model->getTransDet($userID);
+
+		$bkId = $this->random_strings(5);
+
+		$amount = ($amount / 100);
+
+		$this->rss_model->insTransUpdates($transdet['verification_id'], $bkId, $reference, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $date, $planCode);
+
+		$refrID = 'rss_' . md5(rand(1000000, 9999999999));
+
+		//$user_profile_url = "$authUrl";
+
+		
+		echo $authUrl;
+		
+		// // Redirect to user profile with a success message
+		// echo "<script>
+		// 		window.location.href='$user_profile_url';
+		// 	</script>";
+
+		
+		// //get customer code
+		// $curl = curl_init();
+  
+		// curl_setopt_array($curl, array(
+		// 	CURLOPT_URL => "https://api.paystack.co/transaction/verify/rss_d9ac0278f46f4ffed5e80a93fd55b48e",
+		// 	CURLOPT_RETURNTRANSFER => true,
+		// 	CURLOPT_ENCODING => "",
+		// 	CURLOPT_MAXREDIRS => 10,
+		// 	CURLOPT_TIMEOUT => 30,
+		// 	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		// 	CURLOPT_CUSTOMREQUEST => "GET",
+		// 	CURLOPT_HTTPHEADER => array(
+		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+		// 	"Cache-Control: no-cache",
+		// 	),
+		// ));
+		
+		// $response = curl_exec($curl);
+		// $err = curl_error($curl);
+
+		// curl_close($curl);
+		
+		// if ($err) {
+		// 	echo "cURL Error #:" . $err;
+		// } else {
+		// 	$response = json_decode($response, true);
+		// 	$authCode = $response['data']['authorization']['authorization_code'];
+		// 	$customerCode = $response['data']['customer']['customer_code'];
+		// 	echo $customerCode;
+		// }
+			
+
+		//send Emails out
+
+		require 'vendor/autoload.php'; // For Unione template authoload
+
+		
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "1f5c104c-82f1-11ee-9282-5e142e2ab8ae"
+		];
+
+		$requestCxBody = [
+			"id" => "46334e68-82fd-11ee-8b8d-eedad67a19a8"
+		];
+
+		
+		$user = $this->rss_model->checkRSSLastTran($userID);
+
+		$transDate = date("Y-m-d H:i:s", strtotime($user['transaction_date']));
+
+		$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+		$data['plancode'] = $planCode;
+
+		$data['Amount'] = $amount;
+
+		$data['Plan'] = $plan;
+
+		$data['chargeDate'] = $nextDate;
+
+		$data['bookingID'] = $user['transaction_id'];
+
+		$data['currentdate'] = $time;
+
+		//Unione Template
+
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
+
+			$jsonResponse = $response->getBody()->getContents();
+
+			$responseData = json_decode($jsonResponse, true);
+
+			$htmlBody = $responseData['template']['body']['html'];
+
+			$username = $data['name'];
+			//$propertyName = $data['propName'];
+			$amount = number_format($data['Amount']);
+			$plan = $data['Plan'];
+			$plancode = $data['plancode'];
+			$chargeDate = $data['chargeDate'];
+			$bookingID = $data['bookingID'];
+			$currdate = $data['currentdate'];
+
+			//Replace the placeholder in the HTML body with the username
+
+			$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+			$htmlBody = str_replace('{{PlanID}}', $plancode, $htmlBody);
+			$htmlBody = str_replace('{{RecurringAmount}}', $amount, $htmlBody);
+			$htmlBody = str_replace('{{Plan}}', $plan, $htmlBody);
+			$htmlBody = str_replace('{{NextChargedate}}', $chargeDate, $htmlBody);
+			$htmlBody = str_replace('{{BookingID}}', $bookingID, $htmlBody);
+			$htmlBody = str_replace('{{Date}}', $currdate, $htmlBody);
+
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailData = [
+				"message" => [
+					"recipients" => [
+						["email" => $user['userEmail']],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "Property Booking Details",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "Small Small Inspection",
+				],
+			];
+
+			// Send the email using the Unione API
+			$responseEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailData,
+			]);
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+			$data['response'] = $e->getMessage();
+		}
+
+		if ($responseEmail) {
+
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestCxBody,
+				));
+
+				$jsonResponse = $response->getBody()->getContents();
+
+				$responseData = json_decode($jsonResponse, true);
+
+				$htmlBody = $responseData['template']['body']['html'];
+
+				// Replace the placeholder in the HTML body with the username
+
+				$htmlBody = str_replace('{{SubscriberName}}', $username, $htmlBody);
+				$htmlBody = str_replace('{{PlanID}}', $plancode, $htmlBody);
+				$htmlBody = str_replace('{{RecurringAmount}}', $amount, $htmlBody);
+				$htmlBody = str_replace('{{Plan}}', $plan, $htmlBody);
+				$htmlBody = str_replace('{{NextChargedate}}', $chargeDate, $htmlBody);
+				$htmlBody = str_replace('{{BookingID}}', $bookingID, $htmlBody);
+				$htmlBody = str_replace('{{Date}}', $currdate, $htmlBody);
+		
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailCxData = [
+					"message" => [
+						"recipients" => [
+							["email" => 'customerexperience@smallsmall.com'],
+							["email" => 'accounts@smallsmall.com'],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "Property Booking Details!",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "Small Small Inspection",
+					],
+				];
+
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailCxData,
+				]);
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
+			}
+
+			$nbkId = $this->random_strings(5);
+
+			$this->rss_model->insTransUpdate($transdet['verification_id'], $nbkId, $refrID, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $date);
+		}
+	}
+
 	public function updateTransaction()
 	{
 		$bID = $this->input->post("bookingID");
@@ -6020,7 +6726,11 @@ public function uploadIdentification($folder)
 
 			$this->type = 'rss';
 
+<<<<<<< HEAD
 			$this->payment_type = $transdet['payment_type'];
+=======
+			$this->payment_type = 'paystack';
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
 			$this->invoice = $transdet['invoice'];
 
@@ -8029,7 +8739,11 @@ value1&metadata[meta2]=value2*/
 
 			$data['dets'] = $this->rss_model->checkRSSLastTran($data['userID']);
 
+<<<<<<< HEAD
 			//$data['bookings'] = $this->rss_model->get_bookings($data['userID']);
+=======
+			// 			$data['bookings'] = $this->rss_model->get_bookings($data['userID']);
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 			$data['bookings'] = $this->rss_model->get_payment_details($data['bookingReferenceID']);
 
 			$data['profile_title'] = "Payment Summary";
@@ -8457,6 +9171,7 @@ value1&metadata[meta2]=value2*/
 		}
 	}
 
+<<<<<<< HEAD
 	// public function aws_s3_integration_test()
 	// {
 	// 	require 'vendor/autoload.php';
@@ -8507,6 +9222,9 @@ value1&metadata[meta2]=value2*/
 	// 	}
 	// }
 
+=======
+	// Testing
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 	public function aws_s3_integration_test()
 {
     require 'vendor/autoload.php';

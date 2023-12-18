@@ -236,13 +236,66 @@ class Admin_model extends CI_Model {
 		return $this->db->count_all_results();
 
 	}
+
+	public function countAdverts() {
+
+		$this->db->from('cx_adverts');
+
+		return $this->db->count_all_results();
+	}
+
+	public function get_advert($id) {       
+
+		$this->db->select('*');
+
+		$this->db->from('cx_adverts');          
+
+		$this->db->where('id', $id);
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
+	public function delAdvert($bookingID){
+	    
+	    $this->db-> where('id', $bookingID);
+    	
+		if($this->db->delete('cx_adverts')){
+		    
+		   return 1; 
+		        
+		}
+
+		else{
+			
+			return 0;
+			
+		}
+		
+	}
+
+	public function fetchadverts() {       
+
+		$this->db->select('*');
+
+		$this->db->from('cx_adverts');          
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+
+	}
+
 	public function countBookings() {
 
 		$this->db->from('stayone_booking');
 
 		return $this->db->count_all_results();
-
 	}
+
 	public function countAppRequests() {
 
 		$this->db2->from('residential_inspections');
@@ -1317,6 +1370,7 @@ class Admin_model extends CI_Model {
 	        return 0;
 	    }
 	}
+	
 	public function editApartment($id, $propName, $propType, $stayType, $propDesc, $address, $cost, $security_deposit, $imageFolder, $featuredPic, $amenities, $bed, $bath, $toilet, $guest, $policies, $house_rules){
 	  
 	    
@@ -1856,6 +1910,38 @@ class Admin_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	public function searchPropty($id){
+		
+		$this->db->select("*");
+		
+		$this->db->from("property_tbl");
+		
+		$this->db->like('propertyTitle', $id);
+		
+		$query = $this->db->get();
+		
+		return $query;
+		
+	}
+
+	public function delAgreement($bookingID){
+	    
+	    $this->db-> where('id', $bookingID);
+    	
+		if($this->db->delete('sub_agreement')){
+		    
+		   return 1; 
+		        
+		}
+
+		else{
+			
+			return 0;
+			
+		}
+		
+	}
+
 	public function getRows($propID)
 	{
 		$this->db->select('*');
@@ -1901,7 +1987,11 @@ class Admin_model extends CI_Model {
 	
 	// public function fetchBookings(){   
 		
+<<<<<<< HEAD
 	// 	$this->db->select('a.id, a.verification_id, a.bookingID, a.propertyID, a.userID, a.booked_as, a.payment_plan, a.duration, a.move_in_date, a.next_rental, a.rent_expiration, a.booked_on, b.verification_id, b.transaction_id, b.amount, b.status, b.payment_type, b.type, b.transaction_date, b.reference_id, c.firstName, c.lastName, c.userID as buserId, d.propertyID, d.propertyTitle, d.propertyType');
+=======
+	// 	$this->db->select('a.id, a.verification_id, a.bookingID, a.propertyID, a.userID, a.booked_as, a.payment_plan, a.duration, a.move_in_date, a.next_rental, a.rent_expiration, a.booked_on, b.verification_id, b.transaction_id, b.amount, b.status, b.payment_type, b.type, b.transaction_date, b.reference_id, c.firstName, c.lastName, d.propertyID, d.propertyTitle, d.propertyType');
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
 	// 	$this->db->from('bookings as a');
 		
@@ -1925,6 +2015,7 @@ class Admin_model extends CI_Model {
 		
 	// }
 
+<<<<<<< HEAD
 	public function searchBookingItem($id){   
 		
 		$this->db->select('DISTINCT(a.userID), c.*');
@@ -1974,14 +2065,46 @@ class Admin_model extends CI_Model {
 
 		return $this->db->count_all_results();
 	}
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
 	public function fetchBookings(){   
 		
 		$this->db->select('DISTINCT(a.userID), c.*');
+<<<<<<< HEAD
 
 		$this->db->from('bookings as a');
 		
 		//$this->db->where('b.type', 'rss');
+		
+		$this->db->join('transaction_tbl as b', 'b.verification_id = a.verification_id');
+		
+		$this->db->join('user_tbl as c', 'a.userID = c.userID');
+		
+		//$this->db->join('property_tbl as d', 'd.propertyID = a.propertyID');
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+		
+		//$this->db->group_by('a.bookingID');
+		
+		$this->db->order_by('a.id', 'DESC');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function fetchBooking($id){   
+		
+		$this->db->select('a.id, a.verification_id, a.bookingID, a.propertyID, a.userID, a.booked_as, a.payment_plan, a.duration, a.move_in_date, a.next_rental, a.rent_expiration, a.booked_on, b.verification_id, b.transaction_id, b.amount, b.status, b.payment_type, b.type, b.transaction_date, b.reference_id, c.firstName, c.lastName, c.userID as buserId, d.propertyID, d.propertyTitle, d.propertyType');
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+		$this->db->from('bookings as a');
+		
+		$this->db->where('b.type', 'rss');
+
+		$this->db->where('c.userID', $id);
 		
 		$this->db->join('transaction_tbl as b', 'b.verification_id = a.verification_id');
 		
@@ -2028,6 +2151,10 @@ class Admin_model extends CI_Model {
 		
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 	// public function fetchBookingDetails($id){
 	    
 	//     $this->db->select('a.*, b.*, c.*, d.amount');
@@ -2114,7 +2241,7 @@ class Admin_model extends CI_Model {
 		return $query->result_array();
 		
 	}
-	public function editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $id, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period){
+	public function editBuytoletProperty($propName, $lockdownPeriod,$lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $id, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period){
 	    
 		$this->property_name = $propName;
 		$this->apartment_type = $propType;
@@ -2159,6 +2286,8 @@ class Admin_model extends CI_Model {
 		$this->start_date = $start_date;
 		$this->finish_date = $finish_date;
 		$this->maturity_date = $maturity_date;
+		$this->lockdown_fee = $lockdownFee;
+		$this->lockdown_period = $lockdownPeriod;
 		$this->closing_date = $closing_date;
 		$this->hold_period = $hold_period;
 		$this->co_appr_1 = $co_appr[0];
@@ -2188,7 +2317,7 @@ class Admin_model extends CI_Model {
 		}
 		
 	}
-	public function insertBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, $status, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period){
+	public function insertBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, $status, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period){
 	    
 		$digits = 12;
 		
@@ -2236,6 +2365,8 @@ class Admin_model extends CI_Model {
 		$this->floor_plan = $floorPlan;
 		$this->status = $status;
 		$this->mortgage = $mortgage;
+		$this->lockdown_fee = $lockdownFee;
+		$this->lockdown_period = $lockdownPeriod;
 		$this->payment_plan = $payment_plan;
 		$this->payment_plan_period = $payment_plan_period;
 		$this->minimum_payment_plan = $min_pp_val;
@@ -2366,19 +2497,45 @@ class Admin_model extends CI_Model {
 	}
 	public function release_property($id){
 	    
-	    $release = array("available_date" => '0000-00-00');
+	    $status = array("available_date" => '0000-00-00');
 	    
 	    $this->db->where('propertyID', $id);
 	    
-	    return $this->db->update("property_tbl", $release);
+	    return $this->db->update("property_tbl", $status);
 	    
 	}
+	
+	
 	public function del_property($id){
 		
 		$this->db->where('propertyID', $id);
     	
 		return $this->db->delete('property_tbl');
 		
+	}
+	
+	public function update_btl_property($action, $propertyID){
+
+		$result = 0;
+
+		if($action == 'delete') {
+
+			$this->db->where('propertyID', $propertyID);
+    	
+			$result = $this->db->delete('buytolet_property');
+
+		} else {
+
+			$status = array("availability" => $action);
+	    
+	    	$this->db->where('propertyID', $propertyID);
+	    
+	    	$result = $this->db->update("buytolet_property", $status);
+
+		}
+
+		return $result;
+
 	}
 	public function activate_user($id){
 		
@@ -2684,10 +2841,12 @@ class Admin_model extends CI_Model {
 		$this->db->where('a.verification_id', $id);
 		
 		$this->db->join('user_tbl as b', 'b.userID = a.user_id'); 
+
+		$this->db->join('valid_ids as c', 'c.verification_id = a.verification_id', 'LEFT OUTER'); // Used this so that it't will return data, even if the path is empty here
 		
-		$this->db->join('valid_ids as c', 'c.verification_id = a.verification_id'); 
+		// $this->db->join('valid_ids as c', 'c.verification_id = a.verification_id'); 
 		
-		$this->db->join('bank_statements as d', 'd.verification_id = a.verification_id'); 
+		$this->db->join('bank_statements as d', 'd.verification_id = a.verification_id', 'LEFT OUTER'); // Apply same here. Make its left join
 		
 		$this->db->join('bookings as e', 'e.verification_id = a.verification_id', 'LEFT OUTER');
 		
@@ -3779,6 +3938,40 @@ class Admin_model extends CI_Model {
 		return $query->row_array();
 
 	}
+
+	public function editCxAdvert($link, $filename, $title, $id){
+	    
+	    $edits = array("link" => $link, "filename" => $filename, "title" => $title, "date" => date('Y-m-d'));
+	    
+	    $this->db->where("id", $id);
+	    
+	    return $this->db->update("cx_adverts", $edits);
+	    
+	}
+
+
+	public function insertCxAdvert($link, $filename, $title){
+
+        $data = array(
+			'title' => $title,
+            'link' => $link,
+            'filename'   => $filename,
+            'Date' => date('Y-m-d'),
+        );
+
+		if($this->db->insert('cx_adverts', $data)){
+
+			return 1;
+
+		}else{
+
+			return 0;
+
+		}	
+		
+	}
+
+
 	
 	public function insertCoOwnRequest($ref, $buyer_type, $payment_plan, $property_id, $cost, $userID, $payable, $balance, $mop, $payment_period, $unit_amount, $promo_code, $id_path, $statement_path, $firstname, $lastname, $email, $phone, $company_name, $position, $occupation, $income_range, $company_address, $admin_id, $offer_type, $share_condition = 1){ 
 	    
@@ -3953,11 +4146,13 @@ class Admin_model extends CI_Model {
 
 public function fetchSubscribers() {
 
-	$this->db->select('a.*, a.id as stp_id, a.userID as user_id, b.*');
+	$this->db->select('a.*, a.id as stp_id, a.userID as user_id, b.*, c.*');
 
 	$this->db->from('target_options as a'); 
 	
 	$this->db->join('user_tbl as b', 'b.userID = a.userID');
+
+	$this->db->join('buytolet_transactions as c', 'c.transaction_id = a.request_id');
     
     	$this->db->limit($this->_pageNumber, $this->_offset);
 

@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -76,10 +76,17 @@ $query_builder = TRUE;
 // dev database connection
 $db['default'] = array(
 	'dsn'	=> '',
+<<<<<<< HEAD
 	'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
 	'username' => 'rentsmallsmall_buytolet',
+=======
+	// 'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
+	'hostname' => 'rss-new.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
+	// 'username' => 'rentsmallsmall_buytolet',
+	'username' => 'rentsmallsmall_b',
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 	'password' => 'Buytolet!2021',
- 	'database' => 'rentsmallsmall_furnisure_buytolet_database',
+	'database' => 'rentsmallsmall_furnisure_buytolet_database',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -95,11 +102,20 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
 $db['second'] = array(
 	'dsn'	=> '',
+<<<<<<< HEAD
 	'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
 	// 'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
 	'username' => 'rentsmallsmall_buytolet',
+=======
+	// 'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
+	// 'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
+	'hostname' => 'rss-new.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
+	// 'username' => 'rentsmallsmall_buytolet',
+	'username' => 'rentsmallsmall_b',
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 	'password' => 'Buytolet!2021',
 	'database' => 'rentsmallsmall_live_apis',
 	// 'database' => 'rentsmallsmall_furnisure_buytolet_database',

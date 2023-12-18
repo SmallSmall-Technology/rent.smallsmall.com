@@ -10,10 +10,17 @@ function shortenText($text, $maxLength)
   }
 }
 
+// Function to check if a string starts with a specific prefix
+function startsWith($string, $prefix) {
+  return substr($string, 0, strlen($prefix)) === $prefix;
+}
+
 ?>
 
 
 <!-- MAIN SECTION -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allproperty.css" />
+
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allproperty.css" />
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allPropertyPage.css" />
@@ -563,7 +570,11 @@ function shortenText($text, $maxLength)
 
                   //S3 Integration
 
+<<<<<<< HEAD
                   $bucket = 'dev-rss-uploads'; // Your bucket name
+=======
+                  $bucket = 'rss-prod-uploads'; // Your bucket name
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
                   $imageFolderPath = 'uploads/properties/' . $value['imageFolder'];
                   
@@ -690,7 +701,7 @@ function shortenText($text, $maxLength)
 
 
           </div>
-
+          
         <?php } ?>
 
         <!--Pagination -->

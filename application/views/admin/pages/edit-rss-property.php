@@ -513,7 +513,11 @@
 															        
                             										<option <?php if($property['securityDepositTerm'] == 2){ echo 'selected="selected"'; } ?> value="2">Two Month</option>
 
+<<<<<<< HEAD
 																	<option <?php if($property['securityDepositTerm'] == 3){ echo 'selected="selected"'; } ?> value="3">SD 25-30</option>
+=======
+																	<option <?php if($property['securityDepositTerm'] == 3){ echo 'selected="selected"'; } ?> value="3">Upfront 25-30</option>
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
 																	<option <?php if($property['securityDepositTerm'] == 4){ echo 'selected="selected"'; } ?> value="4">One month with SD</option>
                             

@@ -16,7 +16,12 @@ user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
 /vendor/
 /aws.php/
+<<<<<<< HEAD
 # /uploads/
+=======
+# /uploads/ 
+
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
 # IDE Files
 #-------------------------

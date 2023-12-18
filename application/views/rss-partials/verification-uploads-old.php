@@ -95,7 +95,11 @@
         
         <script>
                  
+<<<<<<< HEAD
                 var baseUrl = "https://dev-rent.smallsmall.com/";
+=======
+                var baseUrl = "https://rent.smallsmall.com/";
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                 
                 let button = document.querySelector('.browse-btn');
                 let input = document.querySelector('.input');

@@ -109,11 +109,15 @@ $route['admin/all-bookings/(:any)'] = 'admin/all_bookings/$1';
 
 $route['admin/all-bookings'] = 'admin/all_bookings';
 
+$route['admin/userbooking/(:any)'] = 'admin/userbooking/$1';
+
 $route['admin/all-apartments/(:any)'] = 'admin/all_apartments/$1';
 
 $route['admin/all-apartments'] = 'admin/all_apartments';
 
 $route['admin/new-apartment'] = 'admin/new_apartment';
+
+$route['admin/edit-agr/(:any)'] = 'admin/edit_agr/$1';
 
 $route['admin/edit-apartment/(:any)'] = 'admin/edit_apartment/$1';
 /********** Stay SmallSmall *******************/
@@ -480,7 +484,15 @@ $route['admin/rss-verfd'] = 'admin/rss_verfd';
 
 $route['admin/agr-upload'] = 'admin/agr_upload';
 
+$route['admin/edit-advert/(:any)'] = 'admin/edit_advert/$1';
+
+$route['admin/all-adverts'] = 'admin/all_adverts';
+
+$route['admin/add-advert'] = 'admin/add_advert';
+
 $route['admin/rss-verfd/(:any)'] = 'admin/rss_verfd/$1';
+
+$route['app/adverts'] = 'app/adverts';
 
 $route['admin/download/(:any)'] = 'admin/download/$1';
 

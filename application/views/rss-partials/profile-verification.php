@@ -1,4 +1,5 @@
  <!-- MAIN SECTION -->
+<<<<<<< HEAD
  
  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/verification.css" />
  
@@ -51,10 +52,78 @@
                                  <div class="customized-select">
                                      <!-- <input type="text" class="form-control verify-txt-f" id="email" placeholder="Email"> -->
                                      <input type="text" class="form-control verify-txt-f" id="email" placeholder="<?php echo !empty($email) ? $email : 'Email'; ?>" >
+=======
+
+ <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/verification.css" />
+
+ <main class="container-fluid">
+     <div class="row">
+         <div class="col-md-3 verify-container">
+             <div class="d-flex align-items-center">
+                 <p class="mr-md-4 mr-0 verify-me">Verify me</p>
+                 <p class="verify-number d-md-block d-none">1 of 4</p>
+             </div>
+             <p class="verify-body">Before you can subscribe with us we need to know who you are since this will be a long
+                 partnership. Please
+                 <a href="<?php echo base_url('privacy-policy'); ?>">read</a> our policy on data sharing.
+             </p>
+             <p class="verify-number d-md-none d-block">1 of 4</p>
+         </div>
+         <div class="col-md-6">
+             <div class="text-center mt-md-5">
+                 <h2 class="verify-title">Personal details</h2>
+                 <p class="verify-body">Provide your personal details.</p>
+             </div>
+             <div class="form-container mt-5">
+                 <form class="px-md-5" id="profileVerification" method="POST" autocomplete="off">
+                     <div class="row">
+
+                         <!-- first name -->
+                         <div class="col-md-6 col-12">
+                             <div class="form-group">
+                                 <div class="customized-select">
+                                     <input type="text" class="form-control verify-txt-f" id="first-name" placeholder="<?php echo !empty($fname) ? $fname : 'Firstname'; ?>">
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                                  </div>
                              </div>
                          </div>
 
+<<<<<<< HEAD
+                         <!-- Phone Number -->
+                         <div class="col-md-6 col-12">
+                             <div class="form-group">
+                                 <div class="customized-select">
+                                     <input type="text" class="form-control verify-txt-f" id="phone" placeholder="<?php echo !empty($phone) ? $phone : 'Phone Number'; ?>">
+=======
+                         <!-- Last Name -->
+                         <div class="col-md-6 col-12">
+                             <div class="form-group">
+                                 <div class="customized-select">
+                                     <input type="text" class="form-control verify-txt-f" id="last-name" placeholder="<?php echo !empty($lname) ? $lname : 'Lastname'; ?>">
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+                                 </div>
+                             </div>
+                         </div>
+
+<<<<<<< HEAD
+                         <!-- Net Monthly Income -->
+                         <div class="col-md-6 col-12">
+                             <div class="form-group">
+                                 <div class="customized-select">
+                                     <input type="text" class="form-control verify-txt-f" id="gross-pay" placeholder="Net Monthly Income" />
+=======
+                         <!-- Email -->
+                         <div class="col-md-6 col-12">
+                             <div class="form-group">
+                                 <div class="customized-select">
+                                     <input type="text" class="form-control verify-txt-f" id="email" placeholder="<?php echo !empty($email) ? $email : 'Email'; ?>">
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+                                 </div>
+                             </div>
+                         </div>
+
+<<<<<<< HEAD
+=======
                          <!-- Phone Number -->
                          <div class="col-md-6 col-12">
                              <div class="form-group">
@@ -73,6 +142,7 @@
                              </div>
                          </div>
 
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                          <!-- Gender -->
                          <div class="col-md-6 col-12">
                              <div class="form-group">
@@ -178,7 +248,10 @@
                          <div class="col-12 mt-5 text-center">
                              <button type="submit" class="btn verify-btn px-5 py-2 rss-form-button verifyBut" id="verifyBut">Next
                          </div>
+<<<<<<< HEAD
                          <!-- <a href="verificationTwo.html" class="btn verify-btn px-5 py-2">Next</a> -->
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                      </div>
              </div>
              </form>
@@ -186,10 +259,17 @@
      </div>
      </div>
  </main>
+<<<<<<< HEAD
  
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
  
+=======
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
  <script src="<?php echo base_url() . 'assets/js/verification.js' ?>"></script>
@@ -197,6 +277,7 @@
  <script src="<?php echo base_url() . 'assets/js/country-picker.js' ?>"></script>
 
  <script src="<?php echo base_url() . 'assets/js/state-picker.js' ?>" type="text/html"></script>
+<<<<<<< HEAD
  
  
  <!--Bootstrap js and Popper js -->
@@ -209,3 +290,17 @@
  </body>
 
 </html>
+=======
+
+
+ <!--Bootstrap js and Popper js -->
+ <script src="<?php echo base_url(); ?>assets/updated-assets/js/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+ </script>
+
+ <script src="<?php echo base_url(); ?>assets/updated-assets/js/bootstrap-js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+
+
+ </body>
+
+ </html>
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2

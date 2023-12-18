@@ -1,6 +1,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allproperty.css" />
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/singleProperty.css" />
@@ -15,7 +18,11 @@ $propertyPrice = $property['price'];
 
 // get the eviction deposit value
 
+<<<<<<< HEAD
 if(empty($propertyPrice) || is_null($propertyPrice)) {
+=======
+if (empty($propertyPrice) || is_null($propertyPrice)) {
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
   $evictionDeposit = 0; // set default
 
@@ -41,7 +48,11 @@ $srlz = $property['intervals'];
 $srlz = unserialize($srlz);
 $yrnt = $property['price'] * 12;
 
+<<<<<<< HEAD
 if($srlz[0] == 'Upfront') {
+=======
+if ($srlz[0] == 'Upfront') {
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
   $mnth = 'Upfront';
   $vmnth = 'Upfront';
 
@@ -341,11 +352,16 @@ function shortenText($text, $maxLength)
   }
 }
 
+<<<<<<< HEAD
  //Function to check if a string starts with a specific prefix
+=======
+ // Function to check if a string starts with a specific prefix
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
  function startsWith($string, $prefix) {
   return substr($string, 0, strlen($prefix)) === $prefix;
 }
 
+<<<<<<< HEAD
 // function shortenText($text, $maxLength)
 // {
 
@@ -360,6 +376,8 @@ function shortenText($text, $maxLength)
 //   }
 // }
 
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 ?>
 
 <!-- MAIN SECTION -->
@@ -375,21 +393,46 @@ function shortenText($text, $maxLength)
 
     <!-- caroisel slider -->
 
+<<<<<<< HEAD
     <!-- <div class="row">
+=======
+    <!-- AWS S3 Integration -->
+
+    <div class="row">
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
       <div class="col">
         <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
 
+<<<<<<< HEAD
             </?php
+=======
+      <div class="carousel-inner">
+
+            <?php
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+            require 'vendor/autoload.php';
+
+            // Create an S3 client
+            $s3 = new Aws\S3\S3Client([
+
+              'version' => 'latest',
+
+              'region' => 'eu-west-1'
+
+            ]);
+
+            $bucket = 'rss-prod-uploads'; // My bucket name
 
             $imageFolder = $property['imageFolder'];
 
             // $imageFolderPath = "./uploads/properties/$imageFolder";
 
-            $imageFolderPath = "./uploads/properties/$imageFolder";
+            // $imageFolderPath = "./uploads/properties/$imageFolder";
 
-            if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
+            // if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
 
+<<<<<<< HEAD
               $imageFiles = scandir($imageFolderPath);
 
               $activeClass = 'active';
@@ -397,9 +440,15 @@ function shortenText($text, $maxLength)
               $content_size = count($imageFiles);
 
               $count = 0;
+=======
+            //     $imageFiles = scandir($imageFolderPath);
 
-              foreach ($imageFiles as $file) {
+            //     $activeClass = 'active';
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
+            //     $content_size = count($imageFiles);
+
+<<<<<<< HEAD
                 if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
 
                   // if ($file === '.' || $file === '..') {
@@ -413,24 +462,107 @@ function shortenText($text, $maxLength)
                         </div>
                       ';
 
+=======
+            //     $count = 0;
+
+            //   foreach ($imageFiles as $file) {
+
+            //       if ( $file !== '.' && $file !== '..'&& $count <= ($content_size - 2) ){
+
+            //     // if ($file === '.' || $file === '..') {
+            //     //   continue;
+            //     // }
+
+            //     $imageSrc = base_url() . 'uploads/properties/' . $property['imageFolder'] . '/' . $file;
+            //     echo '
+            //             <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+            //               <img src="' . $imageSrc . '"  alt="RSS property image"/>
+            //             </div>
+            //           ';
+
+            //     $activeClass = '';
+            //   }
+
+            //   $count++;
+
+            // }
+
+            // } else {
+
+            //   echo '<div class="carousel-item-imgcarousel-item active" data-interval="10000">
+            //                 <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
+            //               </div>';
+
+            //   echo '<div class="carousel-item-img carousel-item" data-interval="2000">
+            //                 <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
+            //               </div>';
+            // }
+
+            // List objects in the specified S3 folder
+            try {
+              $objects = $s3->listObjects([
+                'Bucket' => $bucket,
+                'Prefix' => "uploads/properties/$imageFolder/",
+              ]);
+
+              $content_size = count($objects['Contents']);
+
+              $count = 0;
+
+              $activeClass = 'active';
+
+              foreach ($objects['Contents'] as $object) {
+
+                // if ($object['Key'] !== '.' && $object['Key'] !== '..' ) {
+
+                  if (strpos($object['Key'], 'uploads/properties/' . $imageFolder . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
+
+                  $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
+
+                  echo '
+                                  <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+                                      <img src="' . $imageSrc . '" alt="RSS property image"/>
+                                  </div>
+                              ';
+
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                   $activeClass = '';
                 }
 
                 $count++;
+<<<<<<< HEAD
               }
             } else {
+=======
 
-              echo '<div class="carousel-item-imgcarousel-item active" data-interval="10000">
+                // $imageSrc = $object['Key'];
+                // echo '
+                //             <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+                //                 <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image"/>
+                //             </div>
+                //         ';
+                // $activeClass = '';
+              }
+            } catch (Aws\S3\Exception\S3Exception $e) {
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
+
+              // Handle S3 error by displaying a placeholder image
+
+              echo '<div class="carousel-item-img carousel-item active" data-interval="10000">
                             <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
-                          </div>';
+                        </div>';
 
               echo '<div class="carousel-item-img carousel-item" data-interval="2000">
                             <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
-                          </div>';
+                        </div>';
             }
+
+            // End of AWS S3 Integration
+
             ?>
 
           </div>
+
           <button class="carousel-control-prev" type="button" data-target="#carouselExampleInterval" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
@@ -551,6 +683,7 @@ function shortenText($text, $maxLength)
             <p><?php echo $property['address'] . ' ' . $property['city'] . ' ' . $property['name']; ?></p>
             <div class="d-md-none mobile-subscription">
               <p class="mb-0 mobile-subscription-price">Subscription Price</p>
+<<<<<<< HEAD
               <p class="font-weight-bolder primary-text-color mobile-subscription-amount">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup
                     data-toggle="tooltip" data-placement="top" title="This is your recurring subscription payment."><img
                       class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
@@ -559,6 +692,15 @@ function shortenText($text, $maxLength)
                     data-placement="right"
                     title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img
                       class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+=======
+              <p class="font-weight-bolder primary-text-color mobile-subscription-amount">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup data-toggle="tooltip" data-placement="top" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup>
+              </p>
+              <p class="mb-0 mobile-subscription-security">Security deposit fund</p>
+              <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($evc_dep); ?>
+                <sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt="">
+                </sup>
+              </p>
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
             </div>
 
 
@@ -601,7 +743,7 @@ function shortenText($text, $maxLength)
               <h6>Managed by RentSmallsmall</h6>
 
               <div class="d-flex flex-column align-items-center">
-                <p class="managed-title">Like this property? Book to it and subscribe</p>
+                <p class="managed-title">Like this property? Book it and subscribe</p>
                 <div class="schedule-container d-flex mb-2">
                   <div class="schedule-container__schedule schedule-item-container" data-toggle="modal" data-target="#staticBackdrop">
                     <span class="">Schedule a visit</span>
@@ -860,6 +1002,10 @@ function shortenText($text, $maxLength)
                                         <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($evc_dep); ?><sup class="text-dark"></sup>
                                         </td>
                                       </tr>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
                                   </tbody>
 
@@ -1079,6 +1225,10 @@ function shortenText($text, $maxLength)
             <div class="col-12">
               <div>
                 <p>subscription price</p>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                 <p class="subcription-amount font-weight-bold">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup id="subtips" data-toggle="tooltip" data-placement="right" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
                 <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($evc_dep); ?></span><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
               </div>
@@ -1217,7 +1367,11 @@ function shortenText($text, $maxLength)
 
   <input type="hidden" class="prop-monthly-price" id="monthly-price" value="<?php echo $property['price']; ?>" />
 
+<<<<<<< HEAD
   <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo $evc_dep; ?>" />
+=======
+  <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo ($evc_dep); ?>" />
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
   <input type="hidden" class="serv-charge" id="serv-charge" value="<?php echo ($property['serviceCharge'] * $property['serviceChargeTerm']); ?>" />
 
@@ -1437,6 +1591,8 @@ function shortenText($text, $maxLength)
     </div>
   </div>
 
+  <!-- AWS S3 Integration -->
+
   <div class="container-fluid p-md-5 my-5">
     <div class="row px-md-5">
       <div class="col-12">
@@ -1444,6 +1600,7 @@ function shortenText($text, $maxLength)
       </div>
 
       <?php
+<<<<<<< HEAD
       require 'vendor/autoload.php';
 
       // Create an S3 client
@@ -1453,6 +1610,21 @@ function shortenText($text, $maxLength)
       ]);
 
       $bucket = 'rss-prod-uploads'; // Your bucket name
+=======
+
+      require 'vendor/autoload.php';
+
+      // Create an S3 client
+
+      $s3 = new Aws\S3\S3Client([
+
+        'version' => 'latest',
+        'region' => 'eu-west-1'
+
+      ]);
+
+      $bucket = 'rss-prod-uploads'; // My bucket name
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
       if (isset($properties) && !empty($properties)) {
         $currentPropertyCity = $property['city']; // Get the city of the current property
@@ -1569,14 +1741,15 @@ function shortenText($text, $maxLength)
                   </div>
                 </a>
               </div>
-            </div>
-          <?php } ?>
+            </div>          
+            <?php } ?>
 
         <?php } else { ?>
           <div style="width:100%;padding:15px 0;font-family:gotham-medium;color:#414042">No results matching your search</div>
         <?php }
       } else { ?>
         <div style="width:100%;padding:15px 0;font-family:gotham-medium;color:#414042">No results matching your search</div>
+        
       <?php } ?>
     </div>
   </div>

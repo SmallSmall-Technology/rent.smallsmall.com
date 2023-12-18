@@ -6,10 +6,17 @@
         <div class="col-md-4 col-12 col-lg-3 verify-container">
             <div class="d-flex align-items-center">
                 <p class="mr-md-4 mr-0 verify-me">Verify me</p>
+<<<<<<< HEAD
                 <p class="verify-number d-md-block d-none">3 of 5</p>
             </div>
             <p class="verify-body">Before you can subscribe with us, we need to know who you are since this will be a long partnership. Please <a href="<?php echo base_url('privacy-policy'); ?>">read</a> our policy on data sharing.</p>
             <p class="verify-number d-md-none d-block">3 of 5</p>
+=======
+                <p class="verify-number d-md-block d-none">3 of 4</p>
+            </div>
+            <p class="verify-body">Before you can subscribe with us, we need to know who you are since this will be a long partnership. Please <a href="<?php echo base_url('privacy-policy'); ?>">read</a> our policy on data sharing.</p>
+            <p class="verify-number d-md-none d-block">3 of 4</p>
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
         </div>
         <div class="col-md-8 col-12 col-lg-6">
             <div class="text-center mt-md-5">
@@ -71,7 +78,10 @@
 
                     </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                     <!-- Horizontal divider -->
                     <div class="divider my-5"></div>
 
@@ -169,7 +179,11 @@
                     <!-- Submit or next button -->
                     <div class="row mb-5">
                         <div class="col-12 mt-5 text-center">
+<<<<<<< HEAD
                             <a href="https://dev-rent.smallsmall.com/rss/verification/renting-history" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
+=======
+                            <a href="https://rent.smallsmall.com/rss/verification/renting-history" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                             <button type="submit" class="btn verify-btn px-5 py-2 rss-form-button verifyBut" id="verifyBut">Next</button>
                         </div>
                     </div>
@@ -179,6 +193,7 @@
     </div>
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<<<<<<< HEAD
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -190,3 +205,15 @@
 
 <script src="<?php echo base_url(); ?>assets/updated-assets/js/bootstrap-js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
+=======
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="<?php echo base_url() . 'assets/js/verification.js' ?>"></script>
+
+<!--Bootstrap js and Popper js -->
+<script src="<?php echo base_url(); ?>assets/updated-assets/js/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+</script>
+
+<script src="<?php echo base_url(); ?>assets/updated-assets/js/bootstrap-js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2

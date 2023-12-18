@@ -3,7 +3,11 @@ jQuery(document).ready(function ($) {
 
 	//Insert into local storage
 
+<<<<<<< HEAD
 	var baseUrl = "https://dev-rent.smallsmall.com/";
+=======
+	var baseUrl = "https://rent.smallsmall.com/";
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
 	var details = "";
 
@@ -329,6 +333,7 @@ jQuery(document).ready(function ($) {
 
 	});
 
+<<<<<<< HEAD
 	// Verication - Old uploads 
 
 	// $('#uploadForm').submit(function(e){
@@ -564,6 +569,10 @@ jQuery(document).ready(function ($) {
 
 	// $('#finishVerifyBut').click(function () {
 
+=======
+
+	// Verication uploads for new design
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 	$('#finishVerifyBut').click(function (e) {
 
 		"use strict";
@@ -589,7 +598,11 @@ jQuery(document).ready(function ($) {
 		// Load verification storage
 		var details = JSON.parse(localStorage.getItem('verificationStorage'));
 
+<<<<<<< HEAD
 		console.log(details);
+=======
+		// console.log(details);
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
 		// Additional Checks
 		if (details.profile.length < 1) {
@@ -630,7 +643,11 @@ jQuery(document).ready(function ($) {
 			order: order
 		};
 
+<<<<<<< HEAD
 		$.ajaxSetup ({ cache: false });
+=======
+		$.ajaxSetup({ cache: false });
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
 		// Send the data via AJAX
 		$.ajax({
@@ -645,14 +662,22 @@ jQuery(document).ready(function ($) {
 			complete: function (data) {
 
 				// Redirect to the verification-complete page
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 				localStorage.removeItem('verificationStorage');
 
 				localStorage.removeItem('rentalBasket');
 
 				window.location.href = baseUrl + "rss/verification-complete";
 
+<<<<<<< HEAD
 				return false; 
+=======
+				return false;
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 			},
 
 			error: function (error) {
@@ -662,6 +687,9 @@ jQuery(document).ready(function ($) {
 			}
 		});
 	});
+<<<<<<< HEAD
 
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 
 });

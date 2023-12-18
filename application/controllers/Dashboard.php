@@ -70,8 +70,13 @@ class Dashboard extends CI_Controller
 			
 			$data['debt'] = $this->rss_model->get_debt($data['userID']);
 			
+<<<<<<< HEAD
 			$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']); 
 
+=======
+			$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+			
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 			$data['dets'] = $this->rss_model->checkRSSLastTran($data['userID']);
 
 			$data['lastproptyID'] = $data['dets']['proptyID'];
@@ -192,8 +197,11 @@ class Dashboard extends CI_Controller
 			$data['lastproptyID'] = $data['dets']['proptyID'];
 
 			$data['UserPayment'] = $this->rss_model->checkUserPayment($data['userID'], $data['lastproptyID']);
+<<<<<<< HEAD
 
 			//$data['transactionCount'] = $this->rss_model->get_transCount($data['userID']);
+=======
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
 			
 			$data['stayone_bookings'] = $this->rss_model->get_stayone_bookings($data['userID']);
 			
@@ -375,6 +383,70 @@ class Dashboard extends CI_Controller
 			$data['title'] = "Profile SmallSmall";
 
 			$this->load->view('dashboard/profile.php', $data);				
+
+		}else{			
+
+			redirect( base_url()."login" ,'refresh');			
+
+		}
+    }
+
+	public function paymentSummary()
+    {
+        if($this->session->has_userdata('userID')){			
+
+			$data['userID'] = $this->session->userdata('userID');			
+
+			$data['fname'] = $this->session->userdata('fname');			
+
+			$data['lname'] = $this->session->userdata('lname');			
+
+			$data['email'] = $this->session->userdata('email');		
+
+			$data['refCode'] = $this->session->userdata('referral_code');		
+
+			$data['user_type'] = $this->session->userdata('user_type');	
+			
+			$data['interest'] = $this->session->userdata('interest');
+
+			$data['rss_points'] = $this->rss_model->get_points($data['userID']);
+			
+			//Change this as soon as we migrate tables
+			$data['profile'] = $this->rss_model->get_user($data['userID']);
+			
+			$check_bvn = $this->rss_model->checkBVN($data['userID']);
+			
+			$data['profile_pic'] = $this->rss_model->get_user_pic($data['userID']);	
+			
+			$data['verification_status'] = $this->session->userdata('verified');
+			
+			$data['rss_transaction'] = $this->rss_model->checkRSSLastTrans($data['userID']);
+			
+			$data['new_subscription'] = $this->rss_model->checkLastApprovedSubscriptionPayment($data['userID']);
+			
+			$data['rss_paid'] = $this->rss_model->checkSubsequentPayment($data['userID']);
+			
+			$data['bss_request_count'] = $this->buytolet_model->count_user_requests($data['userID']);
+			
+			$data['debt'] = $this->rss_model->get_debt($data['userID']);
+			
+			$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+			
+			$data['furnisure_transaction'] = $this->rss_model->checkFurnisureLastTrans($data['userID']);
+			
+			$data['account_details'] = $this->rss_model->get_account_details($data['userID']);		
+
+			$data['profile_title'] = "Wallet";
+
+			$data['title'] = "Wallet SmallSmall";
+			
+			$data['bvn'] = $check_bvn['bvn'];
+
+			$this->load->view('dashboard/paymentSummary.php', $data);
+			
+			//$this->load->view('rss-partials/user/modals/wallet-funding-modal', $data);
+			
+			$this->load->view('templates/footer-user');
 
 		}else{			
 

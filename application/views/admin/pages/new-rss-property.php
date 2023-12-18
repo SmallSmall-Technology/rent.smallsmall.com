@@ -354,9 +354,19 @@
 															    
 															    <select name="security-deposit-term" id="security-deposit-term" class="form-control">
 															        
+<<<<<<< HEAD
                             										<option selected="selected" value="1">One Month</option>
 															        
                             										<option value="2">Two Month</option>
+=======
+                            										<option selected="selected" value="1">One month</option>
+															        
+                            										<option value="2">Two months</option>
+
+																	<option value="3">Upfront 25 / 30</option>
+
+																	<option value="4">One month with SD</option>
+>>>>>>> 957cfdaf36b5e9631ff69236967b891029cf90a2
                             
                             									</select>
 															</div>

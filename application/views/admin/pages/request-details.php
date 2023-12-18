@@ -113,6 +113,12 @@
                         <table class="mb-0 table">
                             
                             <tbody>
+			    <?php if($details['method'] == 'Promotional'){ ?>
+	                            <tr>
+	                                <th width="200px" scope="row">Purchase Type</th>
+	                                <td><?php echo $details['purchase_beneficiary']; ?></td>
+	                            </tr>
+			    <?php } ?>
                             <tr>
                                 <th width="200px" scope="row">Property</th>
                                 <td><?php echo $details['property_name']; ?></td>
@@ -151,6 +157,16 @@
                                 <th scope="row">Units</th>
                                 <td><?php echo ($details['plan'] == 'co-own')? $details['unit_amount'] : '1' ; ?></td>
                             </tr>	
+			<?php if($details['promo_amount'] > 0){ ?>
+			    <tr>
+                                <th scope="row">Promo Amount</th>
+                                <td><?php echo $details['promo_amount']; ?></td>
+                            </tr>
+			    <tr>
+                                <th scope="row">Coupon code</th>
+                                <td><?php echo $details['promo_code']; ?></td>
+                            </tr>
+			<?php } ?>
                             </tbody>
                         </table>
                     </div>
