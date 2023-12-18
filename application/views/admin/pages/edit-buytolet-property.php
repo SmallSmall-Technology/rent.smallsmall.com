@@ -661,9 +661,8 @@
 															<div class="remove-img img-removal" id="img-properties-<?php echo $file; ?>">remove <i class="fa fa-trash"></i></div>
 														</span>
 
-
 														<script>
-												            console.log(<?php echo $file; ?>); // Log file value
+												            // console.log(</?php echo $file; ?>); // Log file value
 													   </script>
 
 												<?php

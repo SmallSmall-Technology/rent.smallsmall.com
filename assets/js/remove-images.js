@@ -1,87 +1,90 @@
 var baseUrl = "https://dev-rent.smallsmall.com/";
 
-$(document). on('click', '.remove-img', function(){
-	"use strict";
-	var remove_img_name = $(this).attr("id").replace(/img-properties-/, "");
+// $(document). on('click', '.remove-img', function(){
+// 	"use strict";
+// 	var remove_img_name = $(this).attr("id").replace(/img-properties-/, "");
 	
-	var the_values = remove_img_name.split('-');
+// 	var the_values = remove_img_name.split('-');
 
-	console.log(remove_img_name);
+// 	console.log(remove_img_name);
 
-	console.log(the_values);
+// 	console.log(the_values);
 	
-	//folder            //image
-	//the_values[0]+' - '+the_values[1];
+// 	//folder            //image
+// 	//the_values[0]+' - '+the_values[1];
 	
-	var folder = $('#foldername').val();
+// 	var folder = $('#foldername').val();
 
-	var imageName = $('#featuredPic').val();
+// 	var imageName = $('#featuredPic').val();
 
-	// var imageNameTest = $('#featuredPic').val(remove_img_name);
+// 	// var imageNameTest = $('#featuredPic').val(remove_img_name);
 
-	// console.log('Folder Name: ' + folder);
-	// console.log('Image Name: ' + imageName);
-	// console.log('Image Name1: ' + imageNameTest);
+// 	// console.log('Folder Name: ' + folder);
+// 	// console.log('Image Name: ' + imageName);
+// 	// console.log('Image Name1: ' + imageNameTest);
 
-	// console.log('Image Name2: ' + the_values[0]);
+// 	// console.log('Image Name2: ' + the_values[0]);
 
-	// console.log('Image Name3: ' + the_values[1]);
-	// console.log('Image Name5: ' + the_values);
+// 	// console.log('Image Name3: ' + the_values[1]);
+// 	// console.log('Image Name5: ' + the_values);
 	
-	$(this).html('removing...');
+// 	$(this).html('removing...');
 	
-	var id = the_values[2];
+// 	var id = the_values[2];
 					
-	//$(this).parent().remove();
+// 	//$(this).parent().remove();
 	
-	if(confirm("Are you sure you want to DELETE image?")){
+// 	if(confirm("Are you sure you want to DELETE image?")){
 		
-		var data = {
+// 		var data = {
 			
-			// "imgName" : the_values[1],
-			"imgName" : imageName,
+// 			// "imgName" : the_values[1],
+// 			"imgName" : imageName,
 	
-			// "folder"  : the_values[0]+'/'+folder
-			"folder"  : folder
+// 			// "folder"  : the_values[0]+'/'+folder
+// 			"folder"  : folder
 
-		};
+// 		};
 		
-		$.ajaxSetup ({ cache: false });
+// 		$.ajaxSetup ({ cache: false });
 
-		$.ajax({
+// 		$.ajax({
 
-			url : baseUrl+'admin/removeImg/',
+// 			url : baseUrl+'admin/removeImg/',
 
-			type: "POST",
+// 			type: "POST",
 
-			async: true,
+// 			async: true,
 
-			data: data,
+// 			data: data,
 
-			success	: function (data){
+// 			success	: function (data){
 
-				if(data == 1){
+// 				if(data == 1){
 										
-					alert("Image successfully deleted!" );
+// 					alert("Image successfully deleted!" );
 					
-					$('.removal-id-'+id).remove();
+// 					$('.removal-id-'+id).remove();
 							
-				}else{
+// 				}else{
 
-					alert('Could not delete image');
+// 					alert('Could not delete image');
 					
-					$('.remove-img').html('remove <i class"fa fa-trash"></i>');
+// 					$('.remove-img').html('remove <i class"fa fa-trash"></i>');
 
-				}				
+// 				}				
 
-			}  
+// 			}  
 
-		});
-	}else{
-		$(this).html('remove <i class"fa fa-trash"></i>');
-	}
+// 		});
+
+// 	}else{
+
+// 		$(this).html('remove <i class"fa fa-trash"></i>');
+
+// 	}
 	
-}); 
+// }); 
 
 
 $(document). on('click', '.remove-btl-img', function(){

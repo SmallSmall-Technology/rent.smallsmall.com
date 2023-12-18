@@ -6769,9 +6769,15 @@ class Admin extends CI_Controller
 
 	public function removeImg()
 	{
-		$folder = $this->input->post('folder');
 
-		$img_name = $this->input->post('imgName');
+		// $folder = $this->input->post('folder');
+
+		// $img_name = $this->input->post('imgName');
+
+		$folder = $this->input->post('foldername');
+
+		$img_name = $this->input->post('imageKey');
+
 
 		if ($folder && $img_name) {
 
@@ -6823,6 +6829,7 @@ class Admin extends CI_Controller
             // }
 
 			// Delete the selected object images
+			
 			foreach ($versions['Versions'] as $version) {
 
 				$s3->deleteObject([
