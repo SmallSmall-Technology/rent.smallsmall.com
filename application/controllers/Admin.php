@@ -6877,62 +6877,62 @@ class Admin extends CI_Controller
 	// Code modify to make ref to AWS S3 folders.
 	// public function removeImg()
 
-	public function propertiesFeatureImage()
-	{
-		// $folder = $this->input->post('folder');
-		$folder = $this->input->post('foldername');
+	// public function propertiesFeatureImage()
+	// {
+	// 	// $folder = $this->input->post('folder');
+	// 	$folder = $this->input->post('foldername');
 
-		// $img_name = $this->input->post('imgName');
-		$img_name = $this->input->post('imageKey');
+	// 	// $img_name = $this->input->post('imgName');
+	// 	$img_name = $this->input->post('imageKey');
 
 
-		if ($folder && $img_name) {
+	// 	if ($folder && $img_name) {
 
-			require 'vendor/autoload.php';
+	// 		require 'vendor/autoload.php';
 
-			$s3 = new Aws\S3\S3Client([
+	// 		$s3 = new Aws\S3\S3Client([
 				
-				'version' => 'latest',
-				'region' => 'eu-west-1', // Replace with your region
-			]);
+	// 			'version' => 'latest',
+	// 			'region' => 'eu-west-1', // Replace with your region
+	// 		]);
 
-			$bucket = 'dev-rss-uploads'; // Replace with your bucket name
+	// 		$bucket = 'dev-rss-uploads'; // Replace with your bucket name
 
-			$objectKey = 'uploads/' . $folder . '/' . $img_name;
+	// 		$objectKey = 'uploads/' . $folder . '/' . $img_name;
 
-			try {
-				// List all versions of the object
-				$versions = $s3->listObjectVersions([
-					'Bucket' => $bucket,
+	// 		try {
+	// 			// List all versions of the object
+	// 			$versions = $s3->listObjectVersions([
+	// 				'Bucket' => $bucket,
 
-					'Prefix' => $objectKey,
+	// 				'Prefix' => $objectKey,
 
-				]);
+	// 			]);
 
-				// Delete all versions of the object
-				foreach ($versions['Versions'] as $version) {
-					$s3->deleteObject([
+	// 			// Delete all versions of the object
+	// 			foreach ($versions['Versions'] as $version) {
+	// 				$s3->deleteObject([
 
-						'Bucket' => $bucket,
+	// 					'Bucket' => $bucket,
 
-						'Key' => $version['Key'],
+	// 					'Key' => $version['Key'],
 
-						'VersionId' => $version['VersionId'],
+	// 					'VersionId' => $version['VersionId'],
 
-					]);
-				}
+	// 				]);
+	// 			}
 
-				echo 1; // Success
+	// 			echo 1; // Success
 
-			} catch (Aws\Exception\AwsException $e) {
+	// 		} catch (Aws\Exception\AwsException $e) {
 
-				echo 'S3 Error: ' . $e->getAwsErrorMessage();
-			}
-		} else {
+	// 			echo 'S3 Error: ' . $e->getAwsErrorMessage();
+	// 		}
+	// 	} else {
 
-			echo 'Missing folder or image name';
-		}
-	}
+	// 		echo 'Missing folder or image name';
+	// 	}
+	// }
 
 	// public function propertiesFeatureImage()
 	// {
