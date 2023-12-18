@@ -1492,7 +1492,6 @@ class Rss extends CI_Controller
 
 	function fetchMessages()
 	{
-
 		$output = '';
 
 		$userID = $this->session->userdata('userID');

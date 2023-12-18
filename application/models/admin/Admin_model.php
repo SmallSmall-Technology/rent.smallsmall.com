@@ -3537,6 +3537,7 @@ class Admin_model extends CI_Model {
 	    
 	    return $query->result_array();
 	}
+	
 	public function fetchUserWalletAccounts($id){
 	    
 	    $this->db->select('*');
