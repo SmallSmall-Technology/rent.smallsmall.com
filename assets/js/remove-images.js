@@ -1,5 +1,3 @@
-const { log } = require("console");
-
 var baseUrl = "https://dev-rent.smallsmall.com/";
 
 $(document). on('click', '.remove-img', function(){
@@ -19,7 +17,7 @@ $(document). on('click', '.remove-img', function(){
 
 	var imageName = $('#featuredPic').val();
 
-	var imageNameTest = $('#featuredPic').val(remove_img_name);
+	// var imageNameTest = $('#featuredPic').val(remove_img_name);
 
 	// console.log('Folder Name: ' + folder);
 	// console.log('Image Name: ' + imageName);
