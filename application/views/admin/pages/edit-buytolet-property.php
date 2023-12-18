@@ -663,7 +663,7 @@
 
 
 														<script>
-												            // console.log('File ValueNew: </?php echo $file; ?>'); // Log file value
+												            console.log(<?php echo $file; ?>); // Log file value
 													   </script>
 
 												<?php
