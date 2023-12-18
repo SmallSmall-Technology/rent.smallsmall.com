@@ -1,3 +1,5 @@
+const { log } = require("console");
+
 var baseUrl = "https://dev-rent.smallsmall.com/";
 
 $(document). on('click', '.remove-img', function(){
@@ -5,6 +7,10 @@ $(document). on('click', '.remove-img', function(){
 	var remove_img_name = $(this).attr("id").replace(/img-properties-/, "");
 	
 	var the_values = remove_img_name.split('-');
+
+	console.log(remove_img_name);
+
+	console.log(the_values);
 	
 	//folder            //image
 	//the_values[0]+' - '+the_values[1];
@@ -15,14 +21,14 @@ $(document). on('click', '.remove-img', function(){
 
 	var imageNameTest = $('#featuredPic').val(remove_img_name);
 
-	console.log('Folder Name: ' + folder);
-	console.log('Image Name: ' + imageName);
-	console.log('Image Name1: ' + imageNameTest);
+	// console.log('Folder Name: ' + folder);
+	// console.log('Image Name: ' + imageName);
+	// console.log('Image Name1: ' + imageNameTest);
 
-	console.log('Image Name2: ' + the_values[0]);
+	// console.log('Image Name2: ' + the_values[0]);
 
-	console.log('Image Name3: ' + the_values[1]);
-	console.log('Image Name5: ' + the_values);
+	// console.log('Image Name3: ' + the_values[1]);
+	// console.log('Image Name5: ' + the_values);
 	
 	$(this).html('removing...');
 	

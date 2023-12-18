@@ -649,8 +649,8 @@
 														<input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $file; ?>" />
 
 														<script>
-												            console.log('File Value1 Imagename: <?php echo $file; ?>'); // Log file value
-															console.log('image URL2: <?php echo $imgUrl; ?>'); // Log file value
+												            // console.log('File Value1 Imagename: </?php echo $file; ?>'); // Log file value
+															// console.log('image URL2: </?php echo $imgUrl; ?>'); // Log file value
 													   </script>
 
 														<span class="imgCover removal-id-<?php echo $file; ?>" id="id-<?php echo $file; ?>">
@@ -663,7 +663,7 @@
 
 
 														<script>
-												            console.log('File ValueNew: <?php echo $file; ?>'); // Log file value
+												            // console.log('File ValueNew: </?php echo $file; ?>'); // Log file value
 													   </script>
 
 												<?php
