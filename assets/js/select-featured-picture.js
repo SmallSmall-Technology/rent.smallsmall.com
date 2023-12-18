@@ -143,12 +143,16 @@ function selectFeatured(evt) {
             console.log('Image featured successfully.');
             
             if(response == 1){
+
+                console.log('Image success response' + response);
 										
                 alert("Image successfully deleted!" );
                 
                 $('.removal-id-'+id).remove();
                         
             }else{
+
+                console.log('Could not delete image response' + response);
 
                 alert('Could not delete image');
                 

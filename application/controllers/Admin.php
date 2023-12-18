@@ -6768,6 +6768,7 @@ class Admin extends CI_Controller
 	}
 
 	public function removeImg()
+
 	{
 
 		// $folder = $this->input->post('folder');
@@ -6777,7 +6778,6 @@ class Admin extends CI_Controller
 		$folder = $this->input->post('foldername');
 
 		$img_name = $this->input->post('imageKey');
-
 
 		if ($folder && $img_name) {
 
@@ -6806,48 +6806,50 @@ class Admin extends CI_Controller
 				]);
 
 
-			// 	if (!empty($versions['Versions'][0])) {
+				if (!empty($versions['Versions'][0])) {
 
-			// 		$version = $versions['Versions'][0];
+					$version = $versions['Versions'][0];
 
-			// 		$s3->deleteObject([
+					$s3->deleteObject([
 
-			// 			'Bucket' => $bucket,
+						'Bucket' => $bucket,
 
-			// 			'Key' => $version['Key'],
+						'Key' => $version['Key'],
 
-			// 			'VersionId' => $version['VersionId'],
+						'VersionId' => $version['VersionId'],
 
-			// 		]);
+					]);
 
 
-			// 	echo 1; // Success
+				echo 1; // Success
 
-			// } else {
+			} else {
 
-            //     echo 'No image found for deletion';
-            // }
+                echo 'No image found for deletion';
+
+            }
 
 			// Delete the selected object images
-			
-			foreach ($versions['Versions'] as $version) {
 
-				$s3->deleteObject([
+			// foreach ($versions['Versions'] as $version) {
 
-					'Bucket' => $bucket,
+			// 	$s3->deleteObject([
 
-					'Key' => $version['Key'],
+			// 		'Bucket' => $bucket,
 
-					'VersionId' => $version['VersionId'],
+			// 		'Key' => $version['Key'],
 
-				]);
-			}
+			// 		'VersionId' => $version['VersionId'],
 
-			echo 1;
+			// 	]);
+			// }
+
+			// echo 1;
 
 			} catch (Aws\Exception\AwsException $e) {
 
 				echo 'S3 Error: ' . $e->getAwsErrorMessage();
+				
 			}
 
 		} else {
