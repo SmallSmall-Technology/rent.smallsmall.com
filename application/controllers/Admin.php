@@ -2895,15 +2895,15 @@ class Admin extends CI_Controller
 	// 	//check if Admin is logged in
 	// 	if ($this->session->has_userdata('adminLoggedIn')) {
 
-			// require 'vendor/autoload.php'; // Include the AWS SDK
+	// require 'vendor/autoload.php'; // Include the AWS SDK
 
-			// $s3 = new Aws\S3\S3Client([
+	// $s3 = new Aws\S3\S3Client([
 
-			// 	'version' => 'latest',
+	// 	'version' => 'latest',
 
-			// 	'region' => 'eu-west-1',
+	// 	'region' => 'eu-west-1',
 
-			// ]);
+	// ]);
 
 	// 		try {
 
@@ -6784,7 +6784,7 @@ class Admin extends CI_Controller
 			require 'vendor/autoload.php';
 
 			$s3 = new Aws\S3\S3Client([
-				
+
 				'version' => 'latest',
 
 				'region' => 'eu-west-1', // region
@@ -6821,39 +6821,36 @@ class Admin extends CI_Controller
 					]);
 
 
-				echo 1; // Success
+					echo 1; // Success
 
-			} else {
+				} else {
 
-                echo 'No image found for deletion';
+					echo 'No image found for deletion';
+				}
 
-            }
+				// Delete the selected object images
 
-			// Delete the selected object images
+				// foreach ($versions['Versions'] as $version) {
 
-			// foreach ($versions['Versions'] as $version) {
+				// 	$s3->deleteObject([
 
-			// 	$s3->deleteObject([
+				// 		'Bucket' => $bucket,
 
-			// 		'Bucket' => $bucket,
+				// 		'Key' => $version['Key'],
 
-			// 		'Key' => $version['Key'],
+				// 		'VersionId' => $version['VersionId'],
 
-			// 		'VersionId' => $version['VersionId'],
+				// 	]);
+				// }
 
-			// 	]);
-			// }
-
-			// echo 1;
+				// echo 1;
 
 			} catch (Aws\Exception\AwsException $e) {
 
 				echo 'S3 Error: ' . $e->getAwsErrorMessage();
-				
 			}
-
 		} else {
-			
+
 			echo 'Missing folder or image name';
 		}
 	}
@@ -6900,7 +6897,7 @@ class Admin extends CI_Controller
 	// 		require 'vendor/autoload.php';
 
 	// 		$s3 = new Aws\S3\S3Client([
-				
+
 	// 			'version' => 'latest',
 	// 			'region' => 'eu-west-1', // Replace with your region
 	// 		]);
@@ -7860,7 +7857,7 @@ class Admin extends CI_Controller
 	// 	$imageFolder = md5(date("Y-m-d H:i:s"));
 
 	// 	$id = $randomNumber;
-		
+
 
 	// 	$property = $this->admin_model->get_btl_property_details($propID);
 
@@ -7911,7 +7908,7 @@ class Admin extends CI_Controller
 		$digits = 12;
 
 		$randomNumber = '';
-	
+
 		// Generate a random folder name
 		$count = 0;
 
@@ -7923,19 +7920,19 @@ class Admin extends CI_Controller
 
 			$count++;
 		}
-	
+
 		$imageFolder = md5(date("Y-m-d H:i:s"));
 
 		$id = $randomNumber;
-	
+
 		$property = $this->admin_model->get_btl_property_details($propID);
 
 		$userID = $this->session->userdata('adminID');
-	
+
 		$bucketName = 'dev-bss-uploads'; // bucket name
 
 		$region = 'eu-west-1'; // region
-	
+
 		// Create S3 client
 		$s3 = new Aws\S3\S3Client([
 
@@ -7944,7 +7941,7 @@ class Admin extends CI_Controller
 			'region' => $region,
 
 		]);
-	
+
 		try {
 
 			// Create a new folder in the S3 bucket
@@ -7958,16 +7955,16 @@ class Admin extends CI_Controller
 
 				'Body' => '',
 			]);
-	
+
 			// Insert new property with details and also content from already craeted folder source
 			$views = 0;
 
 			$new_id = $this->admin_model->insertBtlPropertyClone($id, $property['property_name'], $property['apartment_type'], $property['price'], $property['promo_price'], $property['promo_category'], $property['address'], $property['city'], $property['state'], $property['country'], $property['bed'], $property['bath'], $property['toilet'], $property['tenantable'], $property['expected_rent'], $property['hpi'], $property['developer'], $property['mortgage'], $property['payment_plan'], $property['payment_plan_period'], $imageFolder, $property['pool_units'], $property['available_units'],  $userID, $property['pool_buy'], $property['property_size'], $property['property_info'], $property['location_info'], $property['floor_plan'], $property['featured_image'], $property['status'], $views, $property['availability'], $property['asset_appreciation_1'], $property['asset_appreciation_2'], $property['asset_appreciation_3'], $property['asset_appreciation_4'], $property['asset_appreciation_5'], $property['floor_level'], $property['construction_lvl'], $property['start_date'], $property['finish_date'], $property['investment_type'], $property['marketValue']);
-	
+
 			if ($new_id) {
 
 				$sourceFolder = 'uploads/buytolet/' . $property['image_folder'];
-	
+
 				// Copy content from source folder to destination folder within the same bucket
 				$objects = $s3->listObjects([
 
@@ -7975,7 +7972,7 @@ class Admin extends CI_Controller
 
 					'Prefix' => $sourceFolder . '/',
 				]);
-	
+
 				foreach ($objects['Contents'] as $object) {
 
 					$s3->copyObject([
@@ -7995,13 +7992,12 @@ class Admin extends CI_Controller
 				echo "Error inserting new property"; // Error message
 
 			}
-
 		} catch (Aws\S3\Exception\S3Exception $e) {
 
 			echo "Error: " . $e->getMessage(); // Handle S3 exceptions
 
 		}
-	
+
 		redirect(base_url() . "admin/all-buytolet-properties", 'refresh');
 	}
 
@@ -8875,13 +8871,12 @@ class Admin extends CI_Controller
 		if ($res) {
 
 			echo 1;
-
 		} else {
 
 			echo 0;
 		}
 	}
-	
+
 	public function editNotification()
 	{
 
@@ -8904,11 +8899,9 @@ class Admin extends CI_Controller
 		if ($res) {
 
 			echo 1;
-
 		} else {
 
 			echo 0;
-
 		}
 	}
 

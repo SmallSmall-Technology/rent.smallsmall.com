@@ -10,7 +10,7 @@
     <div id="notification-bar-home" class="notification-bar-home">
       <div id="notification-container">
         <span id="notification-icn">New</span>
-        <span id="notification-details"><?php echo $notifications['message']; ?></span>
+        <span id="notification-details" class="notification-details"><?php echo $notifications['message']; ?></span>
         <span id="notification-lnk"
           ><a target="_blank" href="<?php echo $notifications['notification_link']; ?>"><i class="fa fa-angle-right"></i></a
         ></span>

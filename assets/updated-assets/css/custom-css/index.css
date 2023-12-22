@@ -133,10 +133,11 @@ body {
 
 /* For mobile view (breakpoint: 768px) */
 @media (max-width: 768px) {
+
   .notification-bar-home {
     width: 90%;
     left: 5%;
-    top: 74px;
+    top: 82px;
     padding: 10px;
     border-radius: 10px;
 
@@ -147,10 +148,11 @@ body {
 
   }
 
-  #notification-details {
+  .notification-details {
     width: 60%;
     font-size: 12px;
     line-height: 18px;
+
   }
 
 }

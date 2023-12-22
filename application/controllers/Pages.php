@@ -1,10 +1,11 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 
 
-class Pages extends CI_Controller {
+class Pages extends CI_Controller
+{
 
 	/**
 
@@ -36,44 +37,43 @@ class Pages extends CI_Controller {
 
 	 */
 
-	public function __construct() {
+	public function __construct()
+	{
 
 		Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
 
-	   	parent::__construct();
-
+		parent::__construct();
 	}
 
 	public function old_index()
-	{  
-	    $data['color'] = "";
-	    
-	    $data['mob_color'] = "none-white";
-	    
-	    $data['mob_icons'] = "white";
-	    
-	    $data['logo'] = "white";
-	    
-	    $data['image'] = "with-image";
+	{
+		$data['color'] = "";
 
-		if($this->session->has_userdata('loggedIn')){
+		$data['mob_color'] = "none-white";
+
+		$data['mob_icons'] = "white";
+
+		$data['logo'] = "white";
+
+		$data['image'] = "with-image";
+
+		if ($this->session->has_userdata('loggedIn')) {
 
 			$data['userID'] = $this->session->userdata('userID');
-			
+
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');			
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
-
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['premium_props'] = $this->rss_model->count_premium_properties();
-		
+
 		$data['bedspaces'] = $this->rss_model->count_bedspaces();
-		
+
 		$data['shared_homes'] = $this->rss_model->count_shared_homes();
-		
+
 		$data['verified_homes'] = $this->rss_model->countProperties();
 
 		//Fetch the country code
@@ -82,14 +82,14 @@ class Pages extends CI_Controller {
 
 		$data['notifications'] = $this->rss_model->fetchNotification();
 
-		
+
 
 		//Use the country code to display the states
 
 		$data['states'] = $this->rss_model->fetchStates($country['id']);
-		
+
 		$states = array('2648', '2671');
-		
+
 		//Explicitly specifying lagos and abuja here for now
 		$data['the_cities'] = $this->rss_model->fetchHomeCities($states);
 
@@ -117,10 +117,11 @@ class Pages extends CI_Controller {
 
 		$this->load->view('templates/rss-footer', $data);
 	}
-	
-	public function signup(){
-	    
-		if(!$this->session->has_userdata('userID')){
+
+	public function signup()
+	{
+
+		if (!$this->session->has_userdata('userID')) {
 
 			$data['title'] = "Signup RentSmallSmall";
 
@@ -130,59 +131,56 @@ class Pages extends CI_Controller {
 
 			//$this->load->view('templates/footer');
 
-		}else{
+		} else {
 
-			redirect( base_url() ,'refresh');
-
+			redirect(base_url(), 'refresh');
 		}
-
 	}
 
-	public function verification($page){
+	public function verification($page)
+	{
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');				
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
+			$data['user_type'] = $this->session->userdata('user_type');
 
 			$data['title'] = "Profile Verification";
 
 			$this->load->view('templates/rss-header', $data);
 
-			$this->load->view('rss-partials/'.$page, $data);
+			$this->load->view('rss-partials/' . $page, $data);
 
 			$this->load->view('templates/footer');
-
-		}else{
+		} else {
 
 			//$userdata = array('page_link' => base_url().'verification/'.$page);
 
 			//$_SESSION['page_link'] = base_url().'verification/'.$page;
 
-			redirect( base_url().'login' ,'refresh');			
-
+			redirect(base_url() . 'login', 'refresh');
 		}
-
 	}
 
-	public function property_alert(){
+	public function property_alert()
+	{
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');			
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		//$data['result'] = $this->rss_model->getUpcomingProp($id);
 
 		$data['propTypes'] = $this->rss_model->getPropTypes();
@@ -194,20 +192,19 @@ class Pages extends CI_Controller {
 		$this->load->view('rss-partials/property-alert', $data);
 
 		$this->load->view('templates/footer');
-		
 	}
-	public function upcoming_properties(){
+	public function upcoming_properties()
+	{
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');				
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
-
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
 
 		$data['upcomingProps'] = $this->rss_model->getUpcomingProps();
@@ -219,43 +216,42 @@ class Pages extends CI_Controller {
 		$this->load->view('rss-partials/upcoming-properties', $data);
 
 		$this->load->view('templates/footer');
-
 	}
-	
-	public function get_upcoming_streets($city){
-	
-	    return $this->rss_model->getUpcomingStr($city);
-	    
-	}
-    public function get_units($city){
-        
-        return $this->rss_model->getUnits($city);
-        
-    }
-	public function partner_with_us(){
 
-		if($this->session->has_userdata('userID')){
+	public function get_upcoming_streets($city)
+	{
+
+		return $this->rss_model->getUpcomingStr($city);
+	}
+	public function get_units($city)
+	{
+
+		return $this->rss_model->getUnits($city);
+	}
+	public function partner_with_us()
+	{
+
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
-			
-			$data['lname'] = $this->session->userdata('lname');			
 
-			$data['user_type'] = $this->session->userdata('user_type');	
+			$data['lname'] = $this->session->userdata('lname');
 
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
 
 		//$data['propTypes'] = $this->rss_model->getUpcomingProps();
 		$data['color'] = "";
-	    
-	    $data['mob_color'] = "none-white";
-	    
-	    $data['mob_icons'] = "white";
-	    
-	    $data['logo'] = "white";
-	    
-	    $data['image'] = "with-image";
+
+		$data['mob_color'] = "none-white";
+
+		$data['mob_icons'] = "white";
+
+		$data['logo'] = "white";
+
+		$data['image'] = "with-image";
 
 		$data['title'] = "Partner with us";
 
@@ -263,22 +259,22 @@ class Pages extends CI_Controller {
 
 		$this->load->view('pages/partner-with-us', $data);
 
-		$this->load->view('templates/rss-footer', $data);	
-
+		$this->load->view('templates/rss-footer', $data);
 	}
 
-	public function add_property(){
-		
+	public function add_property()
+	{
 
-		if($this->session->has_userdata('userID')){			
 
-			$data['userID'] = $this->session->userdata('userID');			
+		if ($this->session->has_userdata('userID')) {
 
-			$data['fname'] = $this->session->userdata('fname');			
+			$data['userID'] = $this->session->userdata('userID');
 
-			$data['lname'] = $this->session->userdata('lname');			
+			$data['fname'] = $this->session->userdata('fname');
 
-			$data['user_type'] = $this->session->userdata('user_type');			
+			$data['lname'] = $this->session->userdata('lname');
+
+			$data['user_type'] = $this->session->userdata('user_type');
 
 			$data['rentTypes'] = $this->rss_model->getRentTypes();
 
@@ -291,27 +287,25 @@ class Pages extends CI_Controller {
 			$this->load->view('pages/add-property', $data);
 
 			$this->load->view('templates/footer');
-			
-		}else{
+		} else {
 			//$_SESSION['page_link'] = base_url().'add-property;
-			redirect( base_url().'login' ,'refresh');
-			
+			redirect(base_url() . 'login', 'refresh');
 		}
-
 	}
 
-	public function add_amenities(){
-		
+	public function add_amenities()
+	{
 
-		if($this->session->has_userdata('userID')){
 
-			$data['userID'] = $this->session->userdata('userID');			
+		if ($this->session->has_userdata('userID')) {
 
-			$data['fname'] = $this->session->userdata('fname');			
+			$data['userID'] = $this->session->userdata('userID');
 
-			$data['lname'] = $this->session->userdata('lname');				
+			$data['fname'] = $this->session->userdata('fname');
 
-			$data['user_type'] = $this->session->userdata('user_type');			
+			$data['lname'] = $this->session->userdata('lname');
+
+			$data['user_type'] = $this->session->userdata('user_type');
 
 			$data['rentTypes'] = $this->rss_model->getRentTypes();
 
@@ -321,29 +315,27 @@ class Pages extends CI_Controller {
 
 			$this->load->view('pages/add-amenities', $data);
 
-			$this->load->view('templates/footer');	
-		}else{
+			$this->load->view('templates/footer');
+		} else {
 			//$_SESSION['page_link'] = base_url().'add-property;
-			redirect( base_url().'login' ,'refresh');
-			
+			redirect(base_url() . 'login', 'refresh');
 		}
-
 	}
 
-	public function thank_you(){
+	public function thank_you()
+	{
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
-			
+
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');			
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
-
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 
 		$data['title'] = "Thank you";
 
@@ -351,11 +343,11 @@ class Pages extends CI_Controller {
 
 		$this->load->view('pages/thank-you', $data);
 
-		$this->load->view('templates/footer');			
-
+		$this->load->view('templates/footer');
 	}
 
-	public function frequently_asked_questions(){
+	public function frequently_asked_questions()
+	{
 
 		//$data['propTypes'] = $this->rss_model->getUpcomingProps();
 
@@ -369,52 +361,51 @@ class Pages extends CI_Controller {
 
 	}
 
-	public function tenancy_terms(){
+	public function tenancy_terms()
+	{
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');				
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
-
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
 
 		$data['mob_color'] = "white";
-		
+
 		$data['mob_icons'] = "blue";
-		
+
 		$data['color'] = "white";
-		
+
 		$data['logo'] = "blue";
-		
+
 		$data['image'] = "without-image";
-		
+
 		$data['title'] = "Tenancy Terms RentSmallSmall";
 
 		$this->load->view('templates/rss-header', $data);
 
 		$this->load->view('pages/tenancy-terms', $data);
 
-		$this->load->view('templates/rss-footer');	
-
+		$this->load->view('templates/rss-footer');
 	}
 
-	public function contact_us(){
+	public function contact_us()
+	{
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');				
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
-
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
 
 		//$data['propTypes'] = $this->rss_model->getUpcomingProps();
@@ -427,139 +418,139 @@ class Pages extends CI_Controller {
 		$this->load->view('pages/contact-us', $data);
 
 		$this->load->view('templates/footer');
-
 	}
 
-	public function privacy_policy(){
+	public function privacy_policy()
+	{
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');				
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
-// 		$data['mob_color'] = "white";
-		
-// 		$data['mob_icons'] = "blue";
-		
-// 		$data['color'] = "white";
-		
-// 		$data['logo'] = "blue";
-		
-// 		$data['image'] = "without-image";
+
+		// 		$data['mob_color'] = "white";
+
+		// 		$data['mob_icons'] = "blue";
+
+		// 		$data['color'] = "white";
+
+		// 		$data['logo'] = "blue";
+
+		// 		$data['image'] = "without-image";
 
 		//$data['propTypes'] = $this->rss_model->getUpcomingProps();
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Privacy Policy RentSmallSmall";
 
 		$this->load->view('templates/rss-updated-header', $data);
 
 		$this->load->view('pages/privacy-policy', $data);
-		
+
 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer', $data);
 
-// 		$this->load->view('templates/rss-footer');
+		// 		$this->load->view('templates/rss-footer');
 
 	}
 
-	public function terms_of_use(){
+	public function terms_of_use()
+	{
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');				
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
-
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
-// 		$data['mob_color'] = "white";
-		
-// 		$data['mob_icons'] = "blue";
-		
-// 		$data['color'] = "white";
-		
-// 		$data['logo'] = "blue";
-		
-// 		$data['image'] = "without-image";
+		// 		$data['mob_color'] = "white";
+
+		// 		$data['mob_icons'] = "blue";
+
+		// 		$data['color'] = "white";
+
+		// 		$data['logo'] = "blue";
+
+		// 		$data['image'] = "without-image";
 
 		//$data['propTypes'] = $this->rss_model->getUpcomingProps();
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Terms of Use RentSmallSmall";
 
 		$this->load->view('templates/rss-updated-header', $data);
 
 		$this->load->view('pages/terms-of-use', $data);
-		
+
 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer', $data);
-
 	}
 
-	public function about(){
+	public function about()
+	{
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');				
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
-
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		//$data['propTypes'] = $this->rss_model->getUpcomingProps();
 
 		$data['content'] = $this->admin_model->get_rss_about_us();
 
 		$data['title'] = "About RentSmallSmall";
-		
+
 		$this->load->view('templates/rss-updated-header', $data);
 
-// 		$this->load->view('templates/rss-header', $data);
+		// 		$this->load->view('templates/rss-header', $data);
 
 		$this->load->view('pages/about', $data);
-		
+
 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer', $data);
 
 
-// 		$this->load->view('templates/footer');
+		// 		$this->load->view('templates/footer');
 
 	}
 
-	public function news(){
+	public function news()
+	{
 
 		$config['total_rows'] = $this->rss_model->countArticles();
 
@@ -590,70 +581,68 @@ class Pages extends CI_Controller {
 			$data['page_links'] = $this->pagination->create_links();
 
 			$data['articles'] = $this->rss_model->getArticles();
-
 		}
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');				
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
-
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
-// 		$data['mob_color'] = "white";
-		
-// 		$data['mob_icons'] = "blue";
-		
-// 		$data['color'] = "white";
-		
-// 		$data['logo'] = "blue";
-		
-// 		$data['image'] = "without-image";
+
+		// 		$data['mob_color'] = "white";
+
+		// 		$data['mob_icons'] = "blue";
+
+		// 		$data['color'] = "white";
+
+		// 		$data['logo'] = "blue";
+
+		// 		$data['image'] = "without-image";
 
 		$data['title'] = "Newsroom";
-		
+
 		$this->load->view('templates/rss-updated-header', $data);
 
-// 		$this->load->view('templates/rss-header', $data);
+		// 		$this->load->view('templates/rss-header', $data);
 
 		$this->load->view('pages/blog', $data);
-		
+
 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer', $data);
 
 
 
-// 		$this->load->view('templates/rss-footer');		
+		// 		$this->load->view('templates/rss-footer');		
 
 	}
-    public function refer_and_earn(){
+	public function refer_and_earn()
+	{
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');	
-			
-			$data['user_type'] = $this->session->userdata('user_type');
+			$data['lname'] = $this->session->userdata('lname');
 
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['mob_color'] = "white";
-		
+
 		$data['mob_icons'] = "blue";
-		
+
 		$data['color'] = "white";
-		
+
 		$data['logo'] = "blue";
-		
+
 		$data['image'] = "without-image";
 
 		//$data['propTypes'] = $this->rss_model->getUpcomingProps();
@@ -664,42 +653,42 @@ class Pages extends CI_Controller {
 
 		$this->load->view('pages/refer-and-earn', $data);
 
-		$this->load->view('templates/rss-footer');	
-
+		$this->load->view('templates/rss-footer');
 	}
-	public function article($id){
+	public function article($id)
+	{
 
-		if($this->session->has_userdata('userID')){
+		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');			
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
 
 		$data['article'] = $this->rss_model->getArticle($id);
-		
+
 		$data['og_title'] = $data['article']['articleTitle'];
-		
+
 		$view = $this->rss_model->get_view($id);
-		
+
 		$views = $view['views'] + 1;
-		
+
 		$data['mob_color'] = "white";
-		
+
 		$data['mob_icons'] = "blue";
-		
+
 		$data['color'] = "white";
-		
+
 		$data['logo'] = "blue";
-		
+
 		$data['image'] = "without-image";
-		
+
 		$this->rss_model->increaseView($views, $id);
-		
+
 		$data['title'] = "Article RentSmallSmall";
 
 		$this->load->view('templates/rss-header', $data);
@@ -707,10 +696,10 @@ class Pages extends CI_Controller {
 		$this->load->view('pages/article', $data);
 
 		$this->load->view('templates/rss-footer');
-
 	}
 
-	public function setupAlert(){
+	public function setupAlert()
+	{
 		$firstname = $this->input->post("firstname");
 		$lastname = $this->input->post("lastname");
 		$email = $this->input->post("email");
@@ -721,124 +710,125 @@ class Pages extends CI_Controller {
 		$max_price = $this->input->post("max_price");
 		$property_type = $this->input->post("property_type");
 		$city = $this->input->post("city");
-		
+
 		$alerted = $this->rss_model->insertAlert($firstname, $lastname, $email, $min_price, $max_price, $property_type, $city, $phone, $renting_as, $rent_plan);
-		if($alerted){
+		if ($alerted) {
 			echo 1;
-		}else{
+		} else {
 			echo 0;
 		}
 	}
 
-	public function get_countries(){
+	public function get_countries()
+	{
 
 		return $this->functions_model->get_countries();
-
 	}
 
-	public function get_states(){
+	public function get_states()
+	{
 
 		$country_code = $this->input->post('country');
 
-		
+
 
 		$states = $this->functions_model->get_states($country_code);
 
-		
+
 
 		echo json_encode(array('status' => 'success', 'msg' => $states));
-
 	}
 
-	public function get_cities(){
+	public function get_cities()
+	{
 
 		$state_code = $this->input->post('states');
 
 		$cities = $this->functions_model->get_cities($state_code);
 
 		echo json_encode(array('status' => 'success', 'msg' => $cities));
-
 	}
-	public function get_available_date($propID){
-		
+	public function get_available_date($propID)
+	{
+
 		$res = $this->rss_model->get_available_date($propID);
-		if($res){
+		if ($res) {
 			return $res;
-		}else{
+		} else {
 			return 0;
 		}
 	}
-	
-	public function shorten_title($string){
-		
+
+	public function shorten_title($string)
+	{
+
 		if (strlen($string) >= 30) {
-			echo substr($string, 0, 30). " ... ";
-		}
-		else {
+			echo substr($string, 0, 30) . " ... ";
+		} else {
 			echo $string;
 		}
-		
 	}
-	public function insert_stats(){
-		
+	public function insert_stats()
+	{
+
 		//Get IP Address		
 		$ip_add = $_SERVER['REMOTE_ADDR'];
-		
+
 		$user_agent = $_SERVER['HTTP_USER_AGENT'];
-		
+
 		$referrer = 'https://www.rentsmallsmall.com';
-		
-		if(isset($_SERVER['HTTP_REFERER'])){
-		    $referrer = $_SERVER['HTTP_REFERER'];
+
+		if (isset($_SERVER['HTTP_REFERER'])) {
+			$referrer = $_SERVER['HTTP_REFERER'];
 		}
-		
+
 		//Get Device Type
-		
+
 		//Get Country and city
 		$geo = $this->getGeo($ip_add);
-		
+
 		$country = $geo[0];
-		
+
 		$city = $geo[1];
-		
+
 		$ua = $this->browserName($user_agent);
-		
+
 		//Browser name
 		$browser_name = $ua['name'];
-		
+
 		//Device name
 		$device = $ua['userAgent'];
-		
+
 		$visits = 1;
-		
+
 		//Check if user has visits today already
-		
+
 		$today_result = $this->rss_model->check_returning($ip_add);
-		
-		if(@$today_result){
-		
-		    $visits = $today_result['visits'] + 1;
-		    
+
+		if (@$today_result) {
+
+			$visits = $today_result['visits'] + 1;
 		}
-		
-		if(!$today_result){
-		    //Add to visits today
-		    $this->rss_model->addVisits($ip_add, $country, $city, $browser_name, 1, $device, $referrer);
-		}else{
-		    $this->rss_model->updateVisits( $visits, $ip_add );
+
+		if (!$today_result) {
+			//Add to visits today
+			$this->rss_model->addVisits($ip_add, $country, $city, $browser_name, 1, $device, $referrer);
+		} else {
+			$this->rss_model->updateVisits($visits, $ip_add);
 		}
-		
 	}
-	
-	public function getGeo($ip){ 
-  
+
+	public function getGeo($ip)
+	{
+
 		// Use JSON encoded string and converts 
 		// it into a PHP variable 
-		$ipdat = @json_decode(file_get_contents( 
-			"http://www.geoplugin.net/json.gp?ip=" . $ip)); 
-		
-		$geos = array($ipdat->geoplugin_countryName, $ipdat->geoplugin_city );
-		
+		$ipdat = @json_decode(file_get_contents(
+			"http://www.geoplugin.net/json.gp?ip=" . $ip
+		));
+
+		$geos = array($ipdat->geoplugin_countryName, $ipdat->geoplugin_city);
+
 		return $geos;
 
 		/*echo 'Country Name: ' . $ipdat->geoplugin_countryName . "\n"; 
@@ -850,180 +840,87 @@ class Pages extends CI_Controller {
 		echo 'Currency Code: ' . $ipdat->geoplugin_currencyCode . "\n"; 
 		echo 'Timezone: ' . $ipdat->geoplugin_timezone; */
 	}
-	
-	public function browserName($u_agent){
-		
-		  $bname = 'Unknown';
-		  $platform = 'Unknown';
-		  $version= "";
 
-		  //First get the platform?
-		  if (preg_match('/linux/i', $u_agent)) {
+	public function browserName($u_agent)
+	{
+
+		$bname = 'Unknown';
+		$platform = 'Unknown';
+		$version = "";
+
+		//First get the platform?
+		if (preg_match('/linux/i', $u_agent)) {
 			$platform = 'linux';
-		  }elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
+		} elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
 			$platform = 'mac';
-		  }elseif (preg_match('/windows|win32/i', $u_agent)) {
+		} elseif (preg_match('/windows|win32/i', $u_agent)) {
 			$platform = 'windows';
-		  }
+		}
 
-		  // Next get the name of the useragent yes seperately and for good reason
-		  if(preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent)){
+		// Next get the name of the useragent yes seperately and for good reason
+		if (preg_match('/MSIE/i', $u_agent) && !preg_match('/Opera/i', $u_agent)) {
 			$bname = 'Internet Explorer';
 			$ub = "MSIE";
-		  }elseif(preg_match('/Firefox/i',$u_agent)){
+		} elseif (preg_match('/Firefox/i', $u_agent)) {
 			$bname = 'Mozilla Firefox';
 			$ub = "Firefox";
-		  }elseif(preg_match('/OPR/i',$u_agent)){
+		} elseif (preg_match('/OPR/i', $u_agent)) {
 			$bname = 'Opera';
 			$ub = "Opera";
-		  }elseif(preg_match('/Chrome/i',$u_agent) && !preg_match('/Edge/i',$u_agent)){
+		} elseif (preg_match('/Chrome/i', $u_agent) && !preg_match('/Edge/i', $u_agent)) {
 			$bname = 'Google Chrome';
 			$ub = "Chrome";
-		  }elseif(preg_match('/Safari/i',$u_agent) && !preg_match('/Edge/i',$u_agent)){
+		} elseif (preg_match('/Safari/i', $u_agent) && !preg_match('/Edge/i', $u_agent)) {
 			$bname = 'Apple Safari';
 			$ub = "Safari";
-		  }elseif(preg_match('/Netscape/i',$u_agent)){
+		} elseif (preg_match('/Netscape/i', $u_agent)) {
 			$bname = 'Netscape';
 			$ub = "Netscape";
-		  }elseif(preg_match('/Edge/i',$u_agent)){
+		} elseif (preg_match('/Edge/i', $u_agent)) {
 			$bname = 'Edge';
 			$ub = "Edge";
-		  }elseif(preg_match('/Trident/i',$u_agent)){
+		} elseif (preg_match('/Trident/i', $u_agent)) {
 			$bname = 'Internet Explorer';
 			$ub = "MSIE";
-		  }
+		}
 
-		  // finally get the correct version number
-		  $known = array('Version', @$ub, 'other');
-		  $pattern = '#(?<browser>' . join('|', $known) .
-		')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
-		  if (!preg_match_all($pattern, $u_agent, $matches)) {
+		// finally get the correct version number
+		$known = array('Version', @$ub, 'other');
+		$pattern = '#(?<browser>' . join('|', $known) .
+			')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+		if (!preg_match_all($pattern, $u_agent, $matches)) {
 			// we have no matching number just continue
-		  }
-		  // see how many we have
-		  $i = count($matches['browser']);
-		  if ($i != 1) {
+		}
+		// see how many we have
+		$i = count($matches['browser']);
+		if ($i != 1) {
 			//we will have two since we are not using 'other' argument yet
 			//see if version is before or after the name
-			if (strripos($u_agent,"Version") < strripos($u_agent,@$ub)){
-				$version= $matches['version'][0];
-			}else {
-				$version= $matches['version'][1];
+			if (strripos($u_agent, "Version") < strripos($u_agent, @$ub)) {
+				$version = $matches['version'][0];
+			} else {
+				$version = $matches['version'][1];
 			}
-		  }else {
-			$version= $matches['version'][0];
-		  }
+		} else {
+			$version = $matches['version'][0];
+		}
 
-		  // check if we have a number
-		  if ($version==null || $version=="") {$version="?";}
+		// check if we have a number
+		if ($version == null || $version == "") {
+			$version = "?";
+		}
 
-		  return array(
+		return array(
 			'userAgent' => $u_agent,
 			'name'      => $bname,
 			'version'   => $version,
 			'platform'  => $platform,
 			'pattern'    => $pattern
-		  );
-		 
-	} 
-	
-	public function landlord_landing(){
-
-		if($this->session->has_userdata('userID')){
-
-			$data['userID'] = $this->session->userdata('userID');
-
-			$data['fname'] = $this->session->userdata('fname');
-			
-			$data['lname'] = $this->session->userdata('lname');			
-
-			$data['user_type'] = $this->session->userdata('user_type');	
-
-		}
-		
-		$data['verification_status'] = $this->session->userdata('verified');
-
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
-
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
-
-		$data['title'] = "Landlord Landing";
-
-		$this->load->view('templates/rss-updated-header', $data);
-
-		$this->load->view('pages/landlord-landing', $data);
-		
-		$this->load->view('templates/rss-updated-js-files');	
-
-		$this->load->view('templates/rss-updated-footer');	
-
-	
+		);
 	}
-	
-	public function faq_update(){
-	    
-	    if($this->session->has_userdata('userID')){
 
-			$data['userID'] = $this->session->userdata('userID');
-
-			$data['fname'] = $this->session->userdata('fname');
-			
-			$data['lname'] = $this->session->userdata('lname');			
-
-			$data['user_type'] = $this->session->userdata('user_type');	
-
-		}
-		
-		$data['verification_status'] = $this->session->userdata('verified');
-
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
-
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
-
-		$data['title'] = "FAQ";
-
-		$this->load->view('templates/rss-updated-header', $data);
-
-		$this->load->view('pages/faq-update', $data);
-		
-		$this->load->view('templates/rss-updated-js-files');	
-
-		$this->load->view('templates/rss-updated-footer');	
-
-	    
-	}
-	
-	// For Mobile App
-	
-	public function rss_faq(){
-	    
-	    if($this->session->has_userdata('userID')){
-
-			$data['userID'] = $this->session->userdata('userID');
-
-			$data['fname'] = $this->session->userdata('fname');
-			
-			$data['lname'] = $this->session->userdata('lname');			
-
-			$data['user_type'] = $this->session->userdata('user_type');	
-
-		}
-		
-		$data['verification_status'] = $this->session->userdata('verified');
-
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
-
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
-
-		$data['title'] = "FAQ";
-
-		$this->load->view('pages/rss-faq-update', $data);
-		
-		$this->load->view('templates/rss-updated-js-files');	
-
-	}
-	
-	public function subscription(){
+	public function landlord_landing()
+	{
 
 		if ($this->session->has_userdata('userID')) {
 
@@ -1035,12 +932,103 @@ class Pages extends CI_Controller {
 
 			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+
+		$data['title'] = "Landlord Landing";
+
+		$this->load->view('templates/rss-updated-header', $data);
+
+		$this->load->view('pages/landlord-landing', $data);
+
+		$this->load->view('templates/rss-updated-js-files');
+
+		$this->load->view('templates/rss-updated-footer');
+	}
+
+	public function faq_update()
+	{
+
+		if ($this->session->has_userdata('userID')) {
+
+			$data['userID'] = $this->session->userdata('userID');
+
+			$data['fname'] = $this->session->userdata('fname');
+
+			$data['lname'] = $this->session->userdata('lname');
+
+			$data['user_type'] = $this->session->userdata('user_type');
+		}
+
+		$data['verification_status'] = $this->session->userdata('verified');
+
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+
+		$data['title'] = "FAQ";
+
+		$this->load->view('templates/rss-updated-header', $data);
+
+		$this->load->view('pages/faq-update', $data);
+
+		$this->load->view('templates/rss-updated-js-files');
+
+		$this->load->view('templates/rss-updated-footer');
+	}
+
+	// For Mobile App
+
+	public function rss_faq()
+	{
+
+		if ($this->session->has_userdata('userID')) {
+
+			$data['userID'] = $this->session->userdata('userID');
+
+			$data['fname'] = $this->session->userdata('fname');
+
+			$data['lname'] = $this->session->userdata('lname');
+
+			$data['user_type'] = $this->session->userdata('user_type');
+		}
+
+		$data['verification_status'] = $this->session->userdata('verified');
+
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+
+		$data['title'] = "FAQ";
+
+		$this->load->view('pages/rss-faq-update', $data);
+
+		$this->load->view('templates/rss-updated-js-files');
+	}
+
+	public function subscription()
+	{
+
+		if ($this->session->has_userdata('userID')) {
+
+			$data['userID'] = $this->session->userdata('userID');
+
+			$data['fname'] = $this->session->userdata('fname');
+
+			$data['lname'] = $this->session->userdata('lname');
+
+			$data['user_type'] = $this->session->userdata('user_type');
+		}
+
+		$data['verification_status'] = $this->session->userdata('verified');
+
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Subscription FAQ";
 
@@ -1051,10 +1039,10 @@ class Pages extends CI_Controller {
 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer');
-	
 	}
 
-	public function apartment_policy(){
+	public function apartment_policy()
+	{
 
 		if ($this->session->has_userdata('userID')) {
 
@@ -1066,12 +1054,12 @@ class Pages extends CI_Controller {
 
 			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Apartment Policy";
 
@@ -1079,16 +1067,15 @@ class Pages extends CI_Controller {
 
 		$this->load->view('pages/apartment-policy', $data);
 
-// 		$this->load->view('templates/rss-updated-js-files');
+		// 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer');
-		
+
 		$this->load->view('templates/rss-updated-js-files');
-
-
 	}
 
-	public function move_in(){
+	public function move_in()
+	{
 
 		if ($this->session->has_userdata('userID')) {
 
@@ -1100,12 +1087,12 @@ class Pages extends CI_Controller {
 
 			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "FAQ Moving";
 
@@ -1116,10 +1103,10 @@ class Pages extends CI_Controller {
 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer');
-
 	}
 
-	public function safety_and_security(){
+	public function safety_and_security()
+	{
 
 		if ($this->session->has_userdata('userID')) {
 
@@ -1131,12 +1118,12 @@ class Pages extends CI_Controller {
 
 			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Safety & Security";
 
@@ -1147,10 +1134,10 @@ class Pages extends CI_Controller {
 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer');
-
 	}
-	
-	public function faq_tenants(){
+
+	public function faq_tenants()
+	{
 
 		if ($this->session->has_userdata('userID')) {
 
@@ -1162,12 +1149,12 @@ class Pages extends CI_Controller {
 
 			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Tenants";
 
@@ -1178,11 +1165,11 @@ class Pages extends CI_Controller {
 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer');
-
 	}
 
 
-	public function faq_payout(){
+	public function faq_payout()
+	{
 
 		if ($this->session->has_userdata('userID')) {
 
@@ -1194,12 +1181,12 @@ class Pages extends CI_Controller {
 
 			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Pay Out";
 
@@ -1210,10 +1197,10 @@ class Pages extends CI_Controller {
 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer');
-
 	}
 
-	public function property_management(){
+	public function property_management()
+	{
 
 		if ($this->session->has_userdata('userID')) {
 
@@ -1225,12 +1212,12 @@ class Pages extends CI_Controller {
 
 			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Property Management";
 
@@ -1241,32 +1228,30 @@ class Pages extends CI_Controller {
 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer');
-
 	}
-	
+
 	// Test for new index page
 
 	public function index()
-	{  
+	{
 
-		if($this->session->has_userdata('loggedIn')){
+		if ($this->session->has_userdata('loggedIn')) {
 
 			$data['userID'] = $this->session->userdata('userID');
-			
+
 			$data['fname'] = $this->session->userdata('fname');
 
-			$data['lname'] = $this->session->userdata('lname');			
+			$data['lname'] = $this->session->userdata('lname');
 
-			$data['user_type'] = $this->session->userdata('user_type');	
-
+			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['premium_props'] = $this->rss_model->count_premium_properties();
-		
+
 		$data['bedspaces'] = $this->rss_model->count_bedspaces();
-		
+
 		$data['shared_homes'] = $this->rss_model->count_shared_homes();
-		
+
 		$data['verified_homes'] = $this->rss_model->countProperties();
 
 		//Fetch the country code
@@ -1278,9 +1263,9 @@ class Pages extends CI_Controller {
 		//Use the country code to display the states
 
 		$data['states'] = $this->rss_model->fetchStates($country['id']);
-		
+
 		$states = array('2648', '2671');
-		
+
 		//Explicitly specifying lagos and abuja here for now
 		$data['the_cities'] = $this->rss_model->fetchHomeCities($states);
 
@@ -1299,12 +1284,12 @@ class Pages extends CI_Controller {
 		$data['new_props'] = $this->rss_model->fetchHomeLatestProperties();
 
 		$data['populars'] = $this->rss_model->fetchHomeHighestViewedProperties();
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-	    $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "RentSmallsmall: Rent & Pay Monthly";
 
@@ -1313,13 +1298,13 @@ class Pages extends CI_Controller {
 		$this->load->view('rss-partials/new-index', $data);
 
 		$this->load->view('templates/rss-updated-js-files');
-		
+
 		$this->load->view('templates/rss-updated-footer', $data);
 	}
-	
-// End of New Index Test
 
-    public function subscription_terms()
+	// End of New Index Test
+
+	public function subscription_terms()
 	{
 
 		if ($this->session->has_userdata('userID')) {
@@ -1332,12 +1317,12 @@ class Pages extends CI_Controller {
 
 			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Subscription Terms RentSmallSmall";
 
@@ -1349,9 +1334,9 @@ class Pages extends CI_Controller {
 
 		$this->load->view('templates/rss-updated-footer', $data);
 	}
-	
+
 	// For Mobile App Dev
-	
+
 	public function rss_subscription_terms()
 	{
 
@@ -1365,22 +1350,21 @@ class Pages extends CI_Controller {
 
 			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Subscription Terms RentSmallSmall";
 
 		$this->load->view('pages/rss-subscription-terms', $data);
 
 		$this->load->view('templates/rss-updated-js-files');
-
 	}
-	
-	
+
+
 	public function careers()
 	{
 
@@ -1394,12 +1378,12 @@ class Pages extends CI_Controller {
 
 			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Careers RentSmallSmall";
 
@@ -1411,8 +1395,8 @@ class Pages extends CI_Controller {
 
 		$this->load->view('templates/rss-updated-footer', $data);
 	}
-	
-	
+
+
 	public function ask_us()
 	{
 
@@ -1426,12 +1410,12 @@ class Pages extends CI_Controller {
 
 			$data['user_type'] = $this->session->userdata('user_type');
 		}
-		
+
 		$data['verification_status'] = $this->session->userdata('verified');
 
-        $data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-        $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Ask Us RentSmallSmall";
 
@@ -1443,8 +1427,4 @@ class Pages extends CI_Controller {
 
 		$this->load->view('templates/rss-updated-footer', $data);
 	}
-
-
-
-
-} 
+}
