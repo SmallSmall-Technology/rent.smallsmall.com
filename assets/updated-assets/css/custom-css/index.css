@@ -126,6 +126,24 @@ body {
   color:#007aff;
 }
 
+/* For mobile view (breakpoint: 768px) */
+@media (max-width: 768px) {
+  .notification-bar-home {
+    width: 90%; 
+    left: 5%; 
+    top: 50px; 
+    padding: 10px; 
+    border-radius: 10px; 
+   
+  }
+
+  #notification-container {
+    width: 90%; 
+   
+  }
+
+}
+
 /* End Notification */
 
 .how-it-works {
