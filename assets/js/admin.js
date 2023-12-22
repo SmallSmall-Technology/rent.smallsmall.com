@@ -1,5 +1,5 @@
 // JavaScript Document
-$(window).on('load', function(){
+$(window).on('load', function () {
 
 	"use strict";
 
@@ -9,121 +9,119 @@ $(window).on('load', function(){
 
 	var theCat = "";
 
-	$.ajaxSetup ({ cache: false });
-	
-	$.ajax({			
+	$.ajaxSetup({ cache: false });
 
-			url: baseUrl+"admin/getDistance/",
+	$.ajax({
 
-			type: "POST",
+		url: baseUrl + "admin/getDistance/",
 
-			dataType : 'json',
-			
-			success: function(data) {
+		type: "POST",
 
-				//alert(data.status+' : '+data.msg);
+		dataType: 'json',
 
-				//distance = data.msg;
+		success: function (data) {
 
-				var result = data;
+			//alert(data.status+' : '+data.msg);
 
-		
+			//distance = data.msg;
 
-				//console.log(result.msg[0].distance);
+			var result = data;
 
-				for(let i = 0; i < result.msg.length; i++){
 
-					distance += '<option value="'+result.msg[i].distance+'">'+result.msg[i].distance+'</option>';
 
-				}
+			//console.log(result.msg[0].distance);
 
-				//distance = result.msg[0].distance;
+			for (let i = 0; i < result.msg.length; i++) {
+
+				distance += '<option value="' + result.msg[i].distance + '">' + result.msg[i].distance + '</option>';
 
 			}
 
+			//distance = result.msg[0].distance;
+
+		}
+
 	});
 
-	$.ajaxSetup ({ cache: false });
+	$.ajaxSetup({ cache: false });
 
-	$.ajax({			
+	$.ajax({
 
-			url: baseUrl+"admin/getCategory/",
+		url: baseUrl + "admin/getCategory/",
 
-			type: "POST",
+		type: "POST",
 
-			dataType : 'json',
+		dataType: 'json',
 
-			beforeSend: function() {
+		beforeSend: function () {
 
 
 
-			},
+		},
 
-			success: function(data) {
+		success: function (data) {
 
-				//alert(data.status+' : '+data.msg);
+			//alert(data.status+' : '+data.msg);
 
-				//distance = data.msg;
+			//distance = data.msg;
 
-				var results = data;
+			var results = data;
 
-		
 
-				//console.log(result.msg[0].distance);
 
-				for(let i = 0; i < results.msg.length; i++){
+			//console.log(result.msg[0].distance);
 
-					theCat += '<option value="'+results.msg[i].category+'">'+results.msg[i].category+'</option>';
+			for (let i = 0; i < results.msg.length; i++) {
 
-				}
-
-				//distance = result.msg[0].distance;
+				theCat += '<option value="' + results.msg[i].category + '">' + results.msg[i].category + '</option>';
 
 			}
 
+			//distance = result.msg[0].distance;
+
+		}
+
 	});
 
-	
-	$(document).on('change','.payment-plan',function(){
-		
+
+	$(document).on('change', '.payment-plan', function () {
+
 		var p_plan = $('.payment-plan').val();
-		
-		if(p_plan == 'yes'){
-			
-		   $('.payment-plan-period-spc').show();
-			
-		}else{
-			
+
+		if (p_plan == 'yes') {
+
+			$('.payment-plan-period-spc').show();
+
+		} else {
+
 			$('.payment-plan-period-spc').hide();
-			
+
 		}
 	});
 
 
-	$("#live_search").keyup(function(){
+	$("#live_search").keyup(function () {
 
 		var input = $(this).val();
 
-		if(input != "")
-		{
+		if (input != "") {
 			$.ajax({
 
 				url: baseUrl + "admin/proptySearch/",
 				type: "POST",
-				data: {input:input},
-	
+				data: { input: input },
+
 				success: function (data) {
-					
+
 					$("#searchresult").css("display", "block");
 					$("#searchresult").html(data);
 
 				}
-	
+
 			});
 		}
 
-		else
-		{
+		else {
 			$("#searchresult").css("display", "none");
 		}
 	});
@@ -183,7 +181,7 @@ $(window).on('load', function(){
 
 	});
 
-	
+
 	$('.checkagr').click(function () {
 
 		var the_ids = $(this).attr("id").replace(/getVal-/, "").split("-");
@@ -193,7 +191,7 @@ $(window).on('load', function(){
 		var title = the_ids[1];
 
 		let inputId = document.getElementById("sub-propty");
-		
+
 		let inputTitle = document.getElementById("live_search")
 
 		inputId.value = id;
@@ -202,127 +200,127 @@ $(window).on('load', function(){
 		alert('hello');
 
 	});
-	
 
-	$('.close-msg').click(function(){
+
+	$('.close-msg').click(function () {
 
 		$('.error-msg').slideUp(500);
 
 	});
 
-	$('.initiate-payment').click(function(){
-	    
-	     $(this).html('Initiating...');
-	     
-	     var ids = $(this).attr("id").split("-");
-	     
-	     var bookingID = ids[0];
-	     
-	     var propertyID = ids[1];
-	     
-	     var userID = ids[2];
-	     
-	     var verID = ids[3];
-	     
-	     $('#user-id-float').val(userID);
-	     
-	     $('#prop-id-float').val(propertyID);
-	     
-	     $('#booking-id-float').val(bookingID);
-	     
-	     $('#verification-id-float').val(verID);
-	     
-	     
-	     $(this).html('Initiate payment');
-	     
-	     $('#paymentModal').css("display", "block");
-	     
-	     $('#paymentModal').addClass('show');
-	     
+	$('.initiate-payment').click(function () {
+
+		$(this).html('Initiating...');
+
+		var ids = $(this).attr("id").split("-");
+
+		var bookingID = ids[0];
+
+		var propertyID = ids[1];
+
+		var userID = ids[2];
+
+		var verID = ids[3];
+
+		$('#user-id-float').val(userID);
+
+		$('#prop-id-float').val(propertyID);
+
+		$('#booking-id-float').val(bookingID);
+
+		$('#verification-id-float').val(verID);
+
+
+		$(this).html('Initiate payment');
+
+		$('#paymentModal').css("display", "block");
+
+		$('#paymentModal').addClass('show');
+
 	});
-	$(document).on('click', '.lock-transaction', function(){
-	    
-	    $('.lock-transaction').html("Wait...");
-	    
-	    var user_id = $('#user-id-float').val();
-	     
-	    var prop_id = $('#prop-id-float').val();
-	    
-	    var payment_month = $('#payment-month').val();
-	     
-        var booking_id = $('#booking-id-float').val();
-        
-        var ver_id = $('#verification-id-float').val();
-	     
-        var rent_due = $('#rent-due-float').val();
-	     
-        var tnx_date = $('#tnx-date-float').val();
-        
-        var rent_amount = $('#rent-amount-float').val();
-	     
-        var security_deposit = $('#sec-dep-float').val();
-	     
-        var sec_dep_term = $('#sec-dep-term').val();
-        
-        var duration = $('.duration-float').val();
-        
-        var payment_lvl = $('input[name="lvl-payment"]:checked').val();
-        
-        //alert(user_id+'/'+prop_id+'/'+booking_id+'/'+duration);
-        
-        var data = { "userID" : user_id, "propID" : prop_id, "bookingID" : booking_id, "duration" : duration, "rentDue" : rent_due, "verID" : ver_id, "security_deposit" : security_deposit, "sec_dep_term" : sec_dep_term, "tnx_date" : tnx_date, "rent_amount" : rent_amount, "payment_month" : payment_month, "payment_lvl" : payment_lvl };
-	    
-	    //Get transaction information
-	     $.ajaxSetup ({ cache: false });
-         $.ajax({			
-        
-    		url: baseUrl+"admin/lockTransaction/",
-    		type: "POST",
-    		data : data,
-    		
-    		success: function(data) {
-    		    
-    			if(data == 1){
-    			    
-    			    alert("Transaction initiated!!!");
-    			    
-    			    $('#paymentModal').css("display", "none");
-	     
-	                $('#paymentModal').removeClass('show');
-	                
-	                $('.lock-transaction').html("Save Changes");
-	                
-	                return false;
-    			}else{
-    			    
-    			    alert("Error initiating transaction");
-    			    
-    			    $('.lock-transaction').html("Save Changes");
-    			    
-    			}
-    
-    		}
-        
-        });
-	});
-	
-	$('.close').click(function(){
-	    
-	     $('#paymentModal').css("display", "none");
-	     
-	     $('#paymentModal').removeClass('show');
-	});
-	
-	$('.close-payment-modal').click(function(){
-	    
-	     $('#paymentModal').css("display", "none");
-	     
-	     $('#paymentModal').removeClass('show');
+	$(document).on('click', '.lock-transaction', function () {
+
+		$('.lock-transaction').html("Wait...");
+
+		var user_id = $('#user-id-float').val();
+
+		var prop_id = $('#prop-id-float').val();
+
+		var payment_month = $('#payment-month').val();
+
+		var booking_id = $('#booking-id-float').val();
+
+		var ver_id = $('#verification-id-float').val();
+
+		var rent_due = $('#rent-due-float').val();
+
+		var tnx_date = $('#tnx-date-float').val();
+
+		var rent_amount = $('#rent-amount-float').val();
+
+		var security_deposit = $('#sec-dep-float').val();
+
+		var sec_dep_term = $('#sec-dep-term').val();
+
+		var duration = $('.duration-float').val();
+
+		var payment_lvl = $('input[name="lvl-payment"]:checked').val();
+
+		//alert(user_id+'/'+prop_id+'/'+booking_id+'/'+duration);
+
+		var data = { "userID": user_id, "propID": prop_id, "bookingID": booking_id, "duration": duration, "rentDue": rent_due, "verID": ver_id, "security_deposit": security_deposit, "sec_dep_term": sec_dep_term, "tnx_date": tnx_date, "rent_amount": rent_amount, "payment_month": payment_month, "payment_lvl": payment_lvl };
+
+		//Get transaction information
+		$.ajaxSetup({ cache: false });
+		$.ajax({
+
+			url: baseUrl + "admin/lockTransaction/",
+			type: "POST",
+			data: data,
+
+			success: function (data) {
+
+				if (data == 1) {
+
+					alert("Transaction initiated!!!");
+
+					$('#paymentModal').css("display", "none");
+
+					$('#paymentModal').removeClass('show');
+
+					$('.lock-transaction').html("Save Changes");
+
+					return false;
+				} else {
+
+					alert("Error initiating transaction");
+
+					$('.lock-transaction').html("Save Changes");
+
+				}
+
+			}
+
+		});
 	});
 
-	$('#adminLoginForm').submit(function(e){
+	$('.close').click(function () {
 
-		
+		$('#paymentModal').css("display", "none");
+
+		$('#paymentModal').removeClass('show');
+	});
+
+	$('.close-payment-modal').click(function () {
+
+		$('#paymentModal').css("display", "none");
+
+		$('#paymentModal').removeClass('show');
+	});
+
+	$('#adminLoginForm').submit(function (e) {
+
+
 
 		e.preventDefault();
 
@@ -330,7 +328,7 @@ $(window).on('load', function(){
 
 		$('.error-msg').slideUp(500);
 
-		
+
 
 		var username = $('.adminUsername').val();
 
@@ -338,116 +336,23 @@ $(window).on('load', function(){
 
 		//var url = $('.url').val();
 
-			
+
 
 		//var emptyValues = [];
 
-		var filteredList = $('.login-txt-f').filter(function(){
+		var filteredList = $('.login-txt-f').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.error-msg').slideDown(500);
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			$('#login-but').html('Login');
-			
-			return false;
-
-		}
-
-		 var data = {
-
-            'username' : username,
-
-            'password' : password
-
-        };
-
-        $.ajaxSetup ({ cache: false });
-
-        $.ajax({
-
-            url: baseUrl+"admin/login_admin/",
-
-            type: "POST",
-
-            async: true,
-
-            data: data,
-
-            success: function(data) {
-
-				if(data == 0){
-
-					$('.msg-fb').html("User does not exist.");
-
-                	$('.error-msg').slideDown(500);
-					
-					$('#login-but').html('Login');
-
-					return false;
-
-				}else{
-
-					data = $.trim(data);
-
-					window.location.href = baseUrl+""+data;	
-
-				}
-
-            },
-
-            error: function() {
-
-                //modalAjaxError('openLogIn');
-
-				$('.msg-fb').html("Error!!!");
-				
-				$('#login-but').html('Login');
-
-                $('.error-msg').slideDown(500);
-
-            }
-
-        });
-
-	});
-
-
-	$('#adminSignupForm').submit(function(e){
-
-	    e.preventDefault();
-
-		$("#add-admin-but").html("Sending...");
-
-	    var fname = $('#fname').val();
-
-	    var lname = $('#lname').val();
-
-	    var email = $('#email').val();
-
-	    var access = $('#userAccess').val();
-
-	    var filteredList = $('.verify-txt').filter(function(){
-
-			return $(this).val() == "";
-
-		});
-
-		if(filteredList.length > 0){
-
-			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
-
-
-
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
-			
-			$("#add-admin-but").html("Submit");
 
 			return false;
 
@@ -455,21 +360,17 @@ $(window).on('load', function(){
 
 		var data = {
 
-			'fname' : fname,
+			'username': username,
 
-			'lname' : lname,
-
-			'email' : email,
-
-			'userAccess' : access
+			'password': password
 
 		};
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url: baseUrl+"admin/addAdmin/",
+			url: baseUrl + "admin/login_admin/",
 
 			type: "POST",
 
@@ -477,76 +378,73 @@ $(window).on('load', function(){
 
 			data: data,
 
-			dataType : 'json', 
+			success: function (data) {
 
-			success	: function (data){			
+				if (data == 0) {
 
-				if(data.status == 'error'){					
+					$('.msg-fb').html("User does not exist.");
 
-					alert("Upload error: "+data.msg);
-					
-					$("#add-admin-but").html("Submit");
+					$('.error-msg').slideDown(500);
 
-					return false;					
+					$('#login-but').html('Login');
 
-				}else if(data.status == 'success'){				    
+					return false;
 
-				    alert("Admin Successfully Added!");
-				    
-				    $("#add-admin-but").html("Submit");
+				} else {
 
-				    $(".verify-txt").val("");			    
+					data = $.trim(data);
 
-				}			
+					window.location.href = baseUrl + "" + data;
+
+				}
+
+			},
+
+			error: function () {
+
+				//modalAjaxError('openLogIn');
+
+				$('.msg-fb').html("Error!!!");
+
+				$('#login-but').html('Login');
+
+				$('.error-msg').slideDown(500);
 
 			}
 
 		});
 
-	});	
-	
-	$('#landlordForm').submit(function(e){
+	});
 
-	    e.preventDefault();
+
+	$('#adminSignupForm').submit(function (e) {
+
+		e.preventDefault();
 
 		$("#add-admin-but").html("Sending...");
 
-	    var fname = $('#fname').val();
+		var fname = $('#fname').val();
 
-	    var lname = $('#lname').val();
+		var lname = $('#lname').val();
 
-	    var email = $('#email').val();
+		var email = $('#email').val();
 
-	    var phone = $('#phone').val();
+		var access = $('#userAccess').val();
 
-	    var gender = $('#gender').val();
-
-	    var rep_name = $('#rep_name').val();
-
-	    var rep_email = $('#rep_email').val();
-
-	    var rep_phone = $('#rep_phone').val();
-
-	    var referral = $('#referral').val();
-	    
-	    var landlord_type = $('#landlord-type').val();
-	    
-	    
-
-	    var filteredList = $('.verify-txt').filter(function(){
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
 
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
-			
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
+
 			$("#add-admin-but").html("Submit");
 
 			return false;
@@ -555,67 +453,167 @@ $(window).on('load', function(){
 
 		var data = {
 
-			'fname' : fname,
+			'fname': fname,
 
-			'lname' : lname,
+			'lname': lname,
 
-			'phone' : phone,
+			'email': email,
 
-			'email' : email,
-
-			'gender' : gender,
-			
-			'rep_name' : rep_name,
-			
-			'rep_phone' : rep_phone,
-			
-			'rep_email' : rep_email,
-			
-			'referral' : referral,
-			
-			'landlord_type' : landlord_type
+			'userAccess': access
 
 		};
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url: baseUrl+"admin/addLandlord/",
+			url: baseUrl + "admin/addAdmin/",
 
 			type: "POST",
 
 			async: true,
 
-			data: data, 
+			data: data,
 
-			success	: function (data){			
+			dataType: 'json',
 
-				if(data == 0){					
+			success: function (data) {
 
-					alert("Upload error: "+data);
-					
+				if (data.status == 'error') {
+
+					alert("Upload error: " + data.msg);
+
 					$("#add-admin-but").html("Submit");
 
-					return false;					
+					return false;
 
-				}else{				    
+				} else if (data.status == 'success') {
 
-				    alert("Landlord Successfully Added!");
-				    
-				    $("#add-admin-but").html("Submit");
+					alert("Admin Successfully Added!");
 
-				    $(".form-control").val("");			    
+					$("#add-admin-but").html("Submit");
 
-				}			
+					$(".verify-txt").val("");
+
+				}
 
 			}
 
 		});
 
-	});	
+	});
 
-	$('#createCategory').submit(function(e){
+	$('#landlordForm').submit(function (e) {
+
+		e.preventDefault();
+
+		$("#add-admin-but").html("Sending...");
+
+		var fname = $('#fname').val();
+
+		var lname = $('#lname').val();
+
+		var email = $('#email').val();
+
+		var phone = $('#phone').val();
+
+		var gender = $('#gender').val();
+
+		var rep_name = $('#rep_name').val();
+
+		var rep_email = $('#rep_email').val();
+
+		var rep_phone = $('#rep_phone').val();
+
+		var referral = $('#referral').val();
+
+		var landlord_type = $('#landlord-type').val();
+
+
+
+		var filteredList = $('.verify-txt').filter(function () {
+
+			return $(this).val() == "";
+
+		});
+
+		if (filteredList.length > 0) {
+
+			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
+
+
+
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
+
+			$("#add-admin-but").html("Submit");
+
+			return false;
+
+		}
+
+		var data = {
+
+			'fname': fname,
+
+			'lname': lname,
+
+			'phone': phone,
+
+			'email': email,
+
+			'gender': gender,
+
+			'rep_name': rep_name,
+
+			'rep_phone': rep_phone,
+
+			'rep_email': rep_email,
+
+			'referral': referral,
+
+			'landlord_type': landlord_type
+
+		};
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+
+			url: baseUrl + "admin/addLandlord/",
+
+			type: "POST",
+
+			async: true,
+
+			data: data,
+
+			success: function (data) {
+
+				if (data == 0) {
+
+					alert("Upload error: " + data);
+
+					$("#add-admin-but").html("Submit");
+
+					return false;
+
+				} else {
+
+					alert("Landlord Successfully Added!");
+
+					$("#add-admin-but").html("Submit");
+
+					$(".form-control").val("");
+
+				}
+
+			}
+
+		});
+
+	});
+
+	$('#createCategory').submit(function (e) {
 
 		e.preventDefault();
 
@@ -627,23 +625,23 @@ $(window).on('load', function(){
 
 		var imgContent = 0;
 
-		if(catImage){
+		if (catImage) {
 
-		   imgContent = 1;
+			imgContent = 1;
 
 		}
 
-		var filteredList = $('.verify-txt').filter(function(){
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.error-msg').slideDown(500);
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
@@ -651,37 +649,37 @@ $(window).on('load', function(){
 
 		var data = {
 
-			'category' : category,
+			'category': category,
 
-			'parent' : parent,
+			'parent': parent,
 
-			'imgContent' : imgContent
+			'imgContent': imgContent
 
 		};
 
 		$.ajaxFileUpload({
 
-			url : baseUrl+'admin/createCat/', 
+			url: baseUrl + 'admin/createCat/',
 
-			secureuri : false,
+			secureuri: false,
 
-			fileElementId : 'userfile',
+			fileElementId: 'userfile',
 
-			dataType : 'json',
+			dataType: 'json',
 
-			data : data,
+			data: data,
 
-			success	: function (data, status, msg){
+			success: function (data, status, msg) {
 
-			
 
-				if(data.status !== 'error'){
+
+				if (data.status !== 'error') {
 
 					alert(data.msg);
 
 					location.reload(true);
 
-				}else{
+				} else {
 
 					alert(data.msg);
 
@@ -689,11 +687,11 @@ $(window).on('load', function(){
 
 				}
 
-				
+
 
 			},
 
-			error: function() {
+			error: function () {
 
 				//modalAjaxError('openLogIn');
 
@@ -703,15 +701,15 @@ $(window).on('load', function(){
 
 		});
 
-		
+
 
 	});
 
-	
 
-	$('.delete-cat').click(function(){
 
-		
+	$('.delete-cat').click(function () {
+
+
 
 		var id = $(this).attr('id').split('-');
 
@@ -719,29 +717,29 @@ $(window).on('load', function(){
 
 		var catImg = '';
 
-		
 
-		if(id[1]){
+
+		if (id[1]) {
 
 			catImg = id[1];
 
 		}
 
-		
+
 
 		var data = {
 
-			'categoryID' : catID,
+			'categoryID': catID,
 
-			'catImage' : catImg
+			'catImage': catImg
 
 		};
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url: baseUrl+"admin/deleteCat/",
+			url: baseUrl + "admin/deleteCat/",
 
 			type: "POST",
 
@@ -749,21 +747,21 @@ $(window).on('load', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 
 
 			},
 
-			success: function(data) {
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert('Category deleted!');
 
 					location.reload(true);
 
-				}else{
+				} else {
 
 					alert('Could not delete category.');
 
@@ -773,7 +771,7 @@ $(window).on('load', function(){
 
 			},
 
-			error: function() {
+			error: function () {
 
 				return false;
 
@@ -781,31 +779,31 @@ $(window).on('load', function(){
 
 		});
 
-		
+
 
 	});
 
-	$('.delete-tax').click(function(){
+	$('.delete-tax').click(function () {
 
-		
+
 
 		var id = $(this).attr('id');
 
-				
+
 
 		var data = {
 
-			'taxID' : id
+			'taxID': id
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url: baseUrl+"admin/deleteTax/",
+			url: baseUrl + "admin/deleteTax/",
 
 			type: "POST",
 
@@ -813,21 +811,21 @@ $(window).on('load', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 
 
 			},
 
-			success: function(data) {
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert('Deleted!');
 
 					location.reload(true);
 
-				}else{
+				} else {
 
 					alert('Error deleting!');
 
@@ -837,7 +835,7 @@ $(window).on('load', function(){
 
 			},
 
-			error: function() {
+			error: function () {
 
 				return false;
 
@@ -845,15 +843,15 @@ $(window).on('load', function(){
 
 		});
 
-		
 
-	});	
 
-	$('#colorForm').submit(function(e){
+	});
+
+	$('#colorForm').submit(function (e) {
 
 		e.preventDefault();
 
-		
+
 
 		var color = $('#colorName').val();
 
@@ -863,61 +861,61 @@ $(window).on('load', function(){
 
 		//if(catImage){
 
-		   //imgContent = 1;
+		//imgContent = 1;
 
 		//}
 
-		var filteredList = $('.verify-txt').filter(function(){
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.error-msg').slideDown(500);
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		alert(color+' - '+hexCode);
+		alert(color + ' - ' + hexCode);
 
 		var data = {
 
-			'color' : color,
+			'color': color,
 
-			'hexCode' : hexCode
+			'hexCode': hexCode
 
 		};
 
-		
+
 
 		$.ajaxFileUpload({
 
-			url : baseUrl+'admin/insertColor/', 
+			url: baseUrl + 'admin/insertColor/',
 
-			secureuri : false,
+			secureuri: false,
 
-			fileElementId : 'userfile',
+			fileElementId: 'userfile',
 
-			dataType : 'json',
+			dataType: 'json',
 
-			data : data,
+			data: data,
 
-			success	: function (data, status, msg){
+			success: function (data, status, msg) {
 
-			
 
-				if(data.status !== 'error'){
+
+				if (data.status !== 'error') {
 
 					alert(data.msg);
 
 					location.reload(true);
 
-				}else{
+				} else {
 
 					alert(data.msg);
 
@@ -925,11 +923,11 @@ $(window).on('load', function(){
 
 				}
 
-				
+
 
 			},
 
-			error: function() {
+			error: function () {
 
 				//modalAjaxError('openLogIn');
 
@@ -939,37 +937,37 @@ $(window).on('load', function(){
 
 		});
 
-		
+
 
 	});
 
-	
 
-	$('#sizeForm').submit(function(e){
+
+	$('#sizeForm').submit(function (e) {
 
 		e.preventDefault();
 
-		
+
 
 		var size = $('#size').val();
 
 		var desc = $('#desc').val();
 
-		
+
 
 		//alert(size+' - '+desc);
 
-		var filteredList = $('.verify-txt').filter(function(){
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.error-msg').slideDown(500);
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
@@ -977,45 +975,45 @@ $(window).on('load', function(){
 
 		var data = {
 
-			'size' : size,
+			'size': size,
 
-			'desc' : desc
+			'desc': desc
 
 		};
 
-		
+
 
 		$.ajaxFileUpload({
 
-			url : baseUrl+'admin/insertSize/', 
+			url: baseUrl + 'admin/insertSize/',
 
-			secureuri : false,
+			secureuri: false,
 
-			fileElementId : 'userfile',
+			fileElementId: 'userfile',
 
-			dataType : 'json',
+			dataType: 'json',
 
-			data : data,
+			data: data,
 
-			success	: function (data, status, msg){			
+			success: function (data, status, msg) {
 
-				if(data.status !== 'error'){
+				if (data.status !== 'error') {
 
 					alert(data.msg);
 
 					location.reload(true);
 
-				}else{
+				} else {
 
 					alert(data.msg);
 
 					return false;
 
-				}				
+				}
 
 			},
 
-			error: function() {
+			error: function () {
 
 				//modalAjaxError('openLogIn');
 
@@ -1025,31 +1023,31 @@ $(window).on('load', function(){
 
 		});
 
-		
+
 
 	});
 
-	$('.delete-color').click(function(){
+	$('.delete-color').click(function () {
 
-	
+
 
 		var colorID = $(this).attr('id');
 
-				
+
 
 		var data = {
 
-			'colorID' : colorID
+			'colorID': colorID
 
 		};
 
-		if(confirm("Confirm action...")){
+		if (confirm("Confirm action...")) {
 
-			$.ajaxSetup ({ cache: false });
+			$.ajaxSetup({ cache: false });
 
 			$.ajax({
 
-				url: baseUrl+"admin/deleteColor/",
+				url: baseUrl + "admin/deleteColor/",
 
 				type: "POST",
 
@@ -1057,21 +1055,21 @@ $(window).on('load', function(){
 
 				data: data,
 
-				beforeSend: function() {
+				beforeSend: function () {
 
 
 
 				},
 
-				success: function(data) {
+				success: function (data) {
 
-					if(data == 1){
+					if (data == 1) {
 
 						alert('Deleted!');
 
 						location.reload(true);
 
-					}else{
+					} else {
 
 						alert('Could not delete color.');
 
@@ -1081,7 +1079,7 @@ $(window).on('load', function(){
 
 				},
 
-				error: function() {
+				error: function () {
 
 					return false;
 
@@ -1093,29 +1091,29 @@ $(window).on('load', function(){
 
 	});
 
-	
 
-	$('.delete-size').click(function(){
 
-	
+	$('.delete-size').click(function () {
+
+
 
 		var sizeID = $(this).attr('id');
 
-				
+
 
 		var data = {
 
-			'sizeID' : sizeID
+			'sizeID': sizeID
 
 		};
 
-		if(confirm("Confirm action...")){
+		if (confirm("Confirm action...")) {
 
-			$.ajaxSetup ({ cache: false });
+			$.ajaxSetup({ cache: false });
 
 			$.ajax({
 
-				url: baseUrl+"admin/deleteSize/",
+				url: baseUrl + "admin/deleteSize/",
 
 				type: "POST",
 
@@ -1123,21 +1121,21 @@ $(window).on('load', function(){
 
 				data: data,
 
-				beforeSend: function() {
+				beforeSend: function () {
 
 
 
 				},
 
-				success: function(data) {
+				success: function (data) {
 
-					if(data == 1){
+					if (data == 1) {
 
 						alert('Deleted!');
 
 						location.reload(true);
 
-					}else{
+					} else {
 
 						alert('Could not delete color.');
 
@@ -1147,7 +1145,7 @@ $(window).on('load', function(){
 
 				},
 
-				error: function() {
+				error: function () {
 
 					return false;
 
@@ -1157,31 +1155,31 @@ $(window).on('load', function(){
 
 		}
 
-		
+
 
 	});
 
-	$('.delete-cost').click(function(){
+	$('.delete-cost').click(function () {
 
-	
+
 
 		var costID = $(this).attr('id');
 
-				
+
 
 		var data = {
 
-			'costID' : costID
+			'costID': costID
 
 		};
 
-		if(confirm("Confirm action...")){
+		if (confirm("Confirm action...")) {
 
-			$.ajaxSetup ({ cache: false });
+			$.ajaxSetup({ cache: false });
 
 			$.ajax({
 
-				url: baseUrl+"admin/deleteShippingCost/",
+				url: baseUrl + "admin/deleteShippingCost/",
 
 				type: "POST",
 
@@ -1189,21 +1187,21 @@ $(window).on('load', function(){
 
 				data: data,
 
-				beforeSend: function() {
+				beforeSend: function () {
 
 
 
 				},
 
-				success: function(data) {
+				success: function (data) {
 
-					if(data == 1){
+					if (data == 1) {
 
 						alert('Deleted!');
 
 						location.reload(true);
 
-					}else{
+					} else {
 
 						alert('Could not delete color.');
 
@@ -1213,7 +1211,7 @@ $(window).on('load', function(){
 
 				},
 
-				error: function() {
+				error: function () {
 
 					return false;
 
@@ -1223,31 +1221,31 @@ $(window).on('load', function(){
 
 		}
 
-		
+
 
 	});
 
-	$('.delete-method').click(function(){
+	$('.delete-method').click(function () {
 
-	
+
 
 		var methodID = $(this).attr('id');
 
-				
+
 
 		var data = {
 
-			'methodID' : methodID
+			'methodID': methodID
 
 		};
 
-		if(confirm("Confirm action...")){
+		if (confirm("Confirm action...")) {
 
-			$.ajaxSetup ({ cache: false });
+			$.ajaxSetup({ cache: false });
 
 			$.ajax({
 
-				url: baseUrl+"admin/deleteShippingMethod/",
+				url: baseUrl + "admin/deleteShippingMethod/",
 
 				type: "POST",
 
@@ -1255,21 +1253,21 @@ $(window).on('load', function(){
 
 				data: data,
 
-				beforeSend: function() {
+				beforeSend: function () {
 
 
 
 				},
 
-				success: function(data) {
+				success: function (data) {
 
-					if(data == 1){
+					if (data == 1) {
 
 						alert('Deleted!');
 
 						location.reload(true);
 
-					}else{
+					} else {
 
 						alert('Could not delete color.');
 
@@ -1279,7 +1277,7 @@ $(window).on('load', function(){
 
 				},
 
-				error: function() {
+				error: function () {
 
 					return false;
 
@@ -1289,33 +1287,33 @@ $(window).on('load', function(){
 
 		}
 
-		
+
 
 	});
 
-	$('#createShippingCost').submit(function(e){
+	$('#createShippingCost').submit(function (e) {
 
 		e.preventDefault();
 
-		
+
 
 		var shippingState = [];
 
 		var cost = $('#cost').val();
 
-		
-
-		shippingState = $('#state-list .eachState').map(function(){
-
-	    	return $(this).attr('id');
-
-	  	}).get();
 
 
+		shippingState = $('#state-list .eachState').map(function () {
 
-		if(shippingState.length < 1){
+			return $(this).attr('id');
 
-			$('#shippingState').css("border","2px solid rgba(251,1,1,0.5)");
+		}).get();
+
+
+
+		if (shippingState.length < 1) {
+
+			$('#shippingState').css("border", "2px solid rgba(251,1,1,0.5)");
 
 			alert("Pick min of one state from list");
 
@@ -1323,23 +1321,23 @@ $(window).on('load', function(){
 
 		}
 
-		
+
 
 		var data = {
 
-			'shippingState' : shippingState.toString(),
+			'shippingState': shippingState.toString(),
 
-			'cost' : cost
+			'cost': cost
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url: baseUrl+"admin/createShippingCost/",
+			url: baseUrl + "admin/createShippingCost/",
 
 			type: "POST",
 
@@ -1347,21 +1345,21 @@ $(window).on('load', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 
 
 			},
 
-			success: function(data) {
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert('Shipping cost inserted');
 
 					location.reload(true);
 
-				}else{
+				} else {
 
 					alert('Error inserting cost.');
 
@@ -1371,7 +1369,7 @@ $(window).on('load', function(){
 
 			},
 
-			error: function() {
+			error: function () {
 
 				return false;
 
@@ -1379,55 +1377,55 @@ $(window).on('load', function(){
 
 		});
 
-		
+
 
 	});
 
-	$('#createShippingMethod').submit(function(e){
+	$('#createShippingMethod').submit(function (e) {
 
 		e.preventDefault();
 
-		
+
 
 		var method = $('#method').val();
 
 		var cost = $('#cost').val();
 
-		
 
-		var filteredList = $('.verify-txt').filter(function(){
+
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.error-msg').slideDown(500);
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 
 		var data = {
 
-			'method' : method,
+			'method': method,
 
-			'cost' : cost
+			'cost': cost
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url: baseUrl+"admin/createShippingMethod/",
+			url: baseUrl + "admin/createShippingMethod/",
 
 			type: "POST",
 
@@ -1435,21 +1433,21 @@ $(window).on('load', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 
 
 			},
 
-			success: function(data) {
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert('Shipping method inserted');
 
 					location.reload(true);
 
-				}else{
+				} else {
 
 					alert('Error inserting method.');
 
@@ -1459,7 +1457,7 @@ $(window).on('load', function(){
 
 			},
 
-			error: function() {
+			error: function () {
 
 				return false;
 
@@ -1467,55 +1465,55 @@ $(window).on('load', function(){
 
 		});
 
-		
+
 
 	});
 
-	$('#createTax').submit(function(e){
+	$('#createTax').submit(function (e) {
 
 		e.preventDefault();
 
-		
+
 
 		var taxName = $('#taxName').val();
 
 		var taxRate = $('#taxRate').val();
 
-		
 
-		var filteredList = $('.verify-txt').filter(function(){
+
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.error-msg').slideDown(500);
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 
 		var data = {
 
-			'taxName' : taxName,
+			'taxName': taxName,
 
-			'taxRate' : taxRate
+			'taxRate': taxRate
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url: baseUrl+"admin/createTax/",
+			url: baseUrl + "admin/createTax/",
 
 			type: "POST",
 
@@ -1523,21 +1521,21 @@ $(window).on('load', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 
 
 			},
 
-			success: function(data) {
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert('Tax Rate Inserted!');
 
 					location.reload(true);
 
-				}else{
+				} else {
 
 					alert('Error Tax Rate!');
 
@@ -1547,7 +1545,7 @@ $(window).on('load', function(){
 
 			},
 
-			error: function() {
+			error: function () {
 
 				alert("Error!!!");
 
@@ -1557,17 +1555,17 @@ $(window).on('load', function(){
 
 		});
 
-		
+
 
 	});
 
-	$('#productForm').on('submit', function(e){
+	$('#productForm').on('submit', function (e) {
 
 		e.preventDefault();
 
-		
 
-		
+
+
 
 		var productTitle = $.trim($('.productTitle').val());
 
@@ -1583,11 +1581,11 @@ $(window).on('load', function(){
 
 		var newProd = "";
 
-		if($("input[name='newProd']:checked")){
+		if ($("input[name='newProd']:checked")) {
 
 			newProd = "Yes";
 
-		}else{
+		} else {
 
 			newProd = "No";
 
@@ -1605,19 +1603,19 @@ $(window).on('load', function(){
 
 		var featuredPic = $.trim($('.featuredPic').val());
 
-		
 
-		var filteredList = $('.verify-txt').filter(function(){
+
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
@@ -1625,41 +1623,41 @@ $(window).on('load', function(){
 
 		var data = {
 
-			'productTitle' : productTitle,
+			'productTitle': productTitle,
 
-			'productDesc' : productDesc,
+			'productDesc': productDesc,
 
-			'productCat' : productCat,
+			'productCat': productCat,
 
-			'prodPrice' : prodPrice,
+			'prodPrice': prodPrice,
 
-			'salesPrice' : salesPrice,
+			'salesPrice': salesPrice,
 
-			'customLnk' : customLnk,
+			'customLnk': customLnk,
 
-			'newProd' : newProd,
+			'newProd': newProd,
 
-			'pickedColors' : pickedColors,
+			'pickedColors': pickedColors,
 
-			'pickedSizes' : pickedSizes,
+			'pickedSizes': pickedSizes,
 
-			'skuNumber' : skuNumber,
+			'skuNumber': skuNumber,
 
-			'stockQty' : stockQty,
+			'stockQty': stockQty,
 
-			'foldername' : foldername,
+			'foldername': foldername,
 
-			'featuredPic' : featuredPic
+			'featuredPic': featuredPic
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url: baseUrl+"admin/upload_product",
+			url: baseUrl + "admin/upload_product",
 
 			type: "POST",
 
@@ -1667,33 +1665,33 @@ $(window).on('load', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 				$('.prodAddBut').addClass('disabled');
 
 			},
 
-			success	: function (data){
+			success: function (data) {
 
 
 
-				if(data == 1){
+				if (data == 1) {
 
 					$('.form-result').html('<div class="alert alert-info alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Upload Successful</div>');
 
 					$('.prodAddBut').removeClass('disabled');
 
-				}else{
+				} else {
 
 					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Couldn\'t Upload to DB</div>');
 
 					$('.prodAddBut').removeClass('disabled');
 
-				}				
+				}
 
 			},
 
-			error: function() {
+			error: function () {
 
 				$('.prodAddBut').removeClass('disabled');
 
@@ -1703,85 +1701,85 @@ $(window).on('load', function(){
 
 		});
 
-		
+
 
 	});
 
-	
 
-	$('#amenityFloat').on('submit', function(e){
 
-		
+	$('#amenityFloat').on('submit', function (e) {
+
+
 
 		e.preventDefault();
 
-		
+
 
 		var title = $('#title').val();
 
 		var amenity_type = $('#amenityType').val();
 
-		
 
-		var filteredList = $('.float-txt').filter(function(){
+
+		var filteredList = $('.float-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
-			
 
-			filteredList.css("border","1px solid rgba(251,1,1,0.5)");
+
+			filteredList.css("border", "1px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 
 		var data = {
 
-			'title' : title,
+			'title': title,
 
-			'amenity_type' : amenity_type
+			'amenity_type': amenity_type
 
 		};
 
-		
+
 
 		$.ajaxFileUpload({
 
-			url : baseUrl+'admin/createAmenity/', 
+			url: baseUrl + 'admin/createAmenity/',
 
-			secureuri : false,
+			secureuri: false,
 
-			fileElementId : 'userfile',
+			fileElementId: 'userfile',
 
-			dataType : 'json',
+			dataType: 'json',
 
-			data : data,
+			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 				$('.amenity-but').html('working...');
 
 			},
 
-			success	: function (data, status, msg){
+			success: function (data, status, msg) {
 
 
 
-				if( data.status == 'error' ){
+				if (data.status == 'error') {
 
 					$('.amenity-but').html("Upload Amenity");
 
-					alert("Image upload error: "+data.msg);
+					alert("Image upload error: " + data.msg);
 
 					return false;
 
-				}else if( data.status == 'success'){
+				} else if (data.status == 'success') {
 
 					alert("successful!");
 
@@ -1797,51 +1795,51 @@ $(window).on('load', function(){
 
 	});
 
-	$('#fCFloat').on('submit', function(e){
+	$('#fCFloat').on('submit', function (e) {
 
-		
+
 
 		e.preventDefault();
 
-		
+
 
 		var category = $('#category').val();
 
-		
 
-		
 
-		var filteredList = $('.float-txt').filter(function(){
+
+
+		var filteredList = $('.float-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
-			
 
-			filteredList.css("border","1px solid rgba(251,1,1,0.5)");
+
+			filteredList.css("border", "1px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 
 		var data = {
 
-			'category' : category
+			'category': category
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url : baseUrl+'admin/createFacilityCategory/',
+			url: baseUrl + 'admin/createFacilityCategory/',
 
 			type: "POST",
 
@@ -1849,27 +1847,27 @@ $(window).on('load', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 				$('.amenity-but').html('working...');
 
 			},
 
-			success	: function (data){
+			success: function (data) {
 
 
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert("successful!");
 
 					location.reload();
 
-				}else{
+				} else {
 
 					alert(data);
 
-				}				
+				}
 
 			}
 
@@ -1877,51 +1875,51 @@ $(window).on('load', function(){
 
 	});
 
-	$('#nDFloat').on('submit', function(e){
+	$('#nDFloat').on('submit', function (e) {
 
-		
+
 
 		e.preventDefault();
 
-		
+
 
 		var distance = $('#distance').val();
 
-		
 
-		
 
-		var filteredList = $('.float-txt').filter(function(){
+
+
+		var filteredList = $('.float-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
-			
 
-			filteredList.css("border","1px solid rgba(251,1,1,0.5)");
+
+			filteredList.css("border", "1px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 
 		var data = {
 
-			'distance' : distance
+			'distance': distance
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url : baseUrl+'admin/createNeighborhoodDistance/',
+			url: baseUrl + 'admin/createNeighborhoodDistance/',
 
 			type: "POST",
 
@@ -1929,17 +1927,17 @@ $(window).on('load', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 				$('.amenity-but').html('working...');
 
 			},
 
-			success	: function (data){
+			success: function (data) {
 
 
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert("successful!");
 
@@ -1947,11 +1945,11 @@ $(window).on('load', function(){
 
 					location.reload();
 
-				}else{
+				} else {
 
 					alert(data);
 
-				}				
+				}
 
 			}
 
@@ -1959,51 +1957,51 @@ $(window).on('load', function(){
 
 	});
 
-	$('#aTFloat').on('submit', function(e){
+	$('#aTFloat').on('submit', function (e) {
 
-		
+
 
 		e.preventDefault();
 
-		
+
 
 		var category = $('#category').val();
 
-		
 
-		
 
-		var filteredList = $('.float-txt').filter(function(){
+
+
+		var filteredList = $('.float-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
-			
 
-			filteredList.css("border","1px solid rgba(251,1,1,0.5)");
+
+			filteredList.css("border", "1px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 
 		var data = {
 
-			'category' : category
+			'category': category
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url : baseUrl+'admin/createAptType/',
+			url: baseUrl + 'admin/createAptType/',
 
 			type: "POST",
 
@@ -2011,27 +2009,27 @@ $(window).on('load', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 				$('.amenity-but').html('working...');
 
 			},
 
-			success	: function (data){
+			success: function (data) {
 
 
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert("successful!");
 
 					location.reload();
 
-				}else{
+				} else {
 
 					alert(data);
 
-				}				
+				}
 
 			}
 
@@ -2039,51 +2037,51 @@ $(window).on('load', function(){
 
 	});
 
-	$('#rentTypeFloat').on('submit', function(e){
+	$('#rentTypeFloat').on('submit', function (e) {
 
-		
+
 
 		e.preventDefault();
 
-		
+
 
 		var rent_type = $('#rent_type').val();
 
-		
 
-		
 
-		var filteredList = $('.float-txt').filter(function(){
+
+
+		var filteredList = $('.float-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
-			
 
-			filteredList.css("border","1px solid rgba(251,1,1,0.5)");
+
+			filteredList.css("border", "1px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 
 		var data = {
 
-			'rent_type' : rent_type
+			'rent_type': rent_type
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url : baseUrl+'admin/createRentType/',
+			url: baseUrl + 'admin/createRentType/',
 
 			type: "POST",
 
@@ -2091,27 +2089,27 @@ $(window).on('load', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 				$('.amenity-but').html('working...');
 
 			},
 
-			success	: function (data){
+			success: function (data) {
 
 
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert("successful!");
 
 					location.reload();
 
-				}else{
+				} else {
 
 					alert(data);
 
-				}				
+				}
 
 			}
 
@@ -2121,29 +2119,29 @@ $(window).on('load', function(){
 
 	//listner for the payment plan dropdown menu
 
-	$('.payment-plan').change(function(){
+	$('.payment-plan').change(function () {
 
-		
+
 
 		var pPlan = $('#payment-plan').val();
 
-		
 
-		if(pPlan === "upfront"){
 
-			
+		if (pPlan === "upfront") {
 
-		   	$(".rent-freq-row").hide();
 
-			
 
-		}else if(pPlan === "flexible"){
+			$(".rent-freq-row").hide();
 
-			
+
+
+		} else if (pPlan === "flexible") {
+
+
 
 			$(".rent-freq-row").show();
 
-			
+
 
 		}
 
@@ -2151,167 +2149,167 @@ $(window).on('load', function(){
 
 	//listener for the payment interval dropdown menu
 
-	$('#pay-interval').change(function(){
+	$('#pay-interval').change(function () {
 
-		
+
 
 		var theval = "";
 
 		var pPlan = $('#pay-interval').val();
 
-		
 
-		if(pPlan == "Monthly"){
+
+		if (pPlan == "Monthly") {
 
 			theval = "Monthly";
 
-		}else if(pPlan == "Quarterly"){
+		} else if (pPlan == "Quarterly") {
 
 			theval = "Quarterly";
 
-		}else if(pPlan == "Bi-annually"){
+		} else if (pPlan == "Bi-annually") {
 
 			theval = "Bi-annually";
 
-		}else if(pPlan == "Upfront"){
+		} else if (pPlan == "Upfront") {
 
 			theval = "Upfront";
 
 		}
 
-		
+
 
 		//$("#payment-int-txt").append(pPlan+"-");
 
-		
 
-		$("#pay-interval option[value='"+pPlan+"']").hide();
 
-		
+		$("#pay-interval option[value='" + pPlan + "']").hide();
 
-		$('.payment-interval-options').append('<span class="chosen" id="int-'+pPlan+'"><input class="allInts" type="hidden" value="'+pPlan+'" /><span class="close close-int" id="'+pPlan+'">x</span><span class="text">'+theval+'</span>');
+
+
+		$('.payment-interval-options').append('<span class="chosen" id="int-' + pPlan + '"><input class="allInts" type="hidden" value="' + pPlan + '" /><span class="close close-int" id="' + pPlan + '">x</span><span class="text">' + theval + '</span>');
 
 	});
 
-$(document). on('click', '.close-int', function(){
+	$(document).on('click', '.close-int', function () {
 
 		var theval = "";
 
 		var id = $(this).attr("id");
 
-		
 
-		if(id == "Monthly"){
+
+		if (id == "Monthly") {
 
 			theval = "Monthly";
 
-		}else if(id == "Quarterly"){
+		} else if (id == "Quarterly") {
 
 			theval = "Quarterly";
 
-		}else if(id == "Bi-annually"){
+		} else if (id == "Bi-annually") {
 
 			theval = "Bi-Annually";
 
-		}else if(id == "Upfront"){
+		} else if (id == "Upfront") {
 
 			theval = "Upfront";
 
 		}
 
-			
 
-		$("#pay-interval option[value='"+theval+"']").show();
 
-		$("#int-"+id).remove();	
+		$("#pay-interval option[value='" + theval + "']").show();
+
+		$("#int-" + id).remove();
 
 	});
 
-	
+
 
 	//listner for the rent frequency dropdown menu
 
-	$('#rent-freq').change(function(){
+	$('#rent-freq').change(function () {
 
-		
+
 
 		var theval = "";
 
 		var rfeq = parseInt($('#rent-freq').val());
 
-		
 
-		if(rfeq === 1){
+
+		if (rfeq === 1) {
 
 			theval = "One Month";
 
-		}else if(rfeq === 3){
+		} else if (rfeq === 3) {
 
 			theval = "Three Months";
 
-		}else if(rfeq === 6){
+		} else if (rfeq === 6) {
 
 			theval = "Six Months";
 
-		}else if(rfeq === 9){
+		} else if (rfeq === 9) {
 
 			theval = "Nine Months";
 
-		}else if(rfeq === 12){
+		} else if (rfeq === 12) {
 
 			theval = "Twelve Months";
 
 		}
 
-		
 
-		$("#rent-freq option[value='"+rfeq+"']").hide();
 
-		$('.payment-frequency-options').append('<span class="chosen" id="freq-'+rfeq+'"><input class="allFreq" type="hidden" value="'+rfeq+'" /><span class="close close-freq" id="'+rfeq+'">x</span><span class="text">'+theval+'</span>');
+		$("#rent-freq option[value='" + rfeq + "']").hide();
+
+		$('.payment-frequency-options').append('<span class="chosen" id="freq-' + rfeq + '"><input class="allFreq" type="hidden" value="' + rfeq + '" /><span class="close close-freq" id="' + rfeq + '">x</span><span class="text">' + theval + '</span>');
 
 	});
 
-	$(document). on('click', '.close-freq', function(){
+	$(document).on('click', '.close-freq', function () {
 
 		var theval = "";
 
 		var id = parseInt($(this).attr("id"));
 
-		
 
-		if(id === 1){
+
+		if (id === 1) {
 
 			theval = "One Month";
 
-		}else if(id === 3){
+		} else if (id === 3) {
 
 			theval = "Three Months";
 
-		}else if(id === 6){
+		} else if (id === 6) {
 
 			theval = "Six Months";
 
-		}else if(id === 9){
+		} else if (id === 9) {
 
 			theval = "Nine Months";
 
-		}else if(id === 12){
+		} else if (id === 12) {
 
 			theval = "Twelve Months";
 
 		}
 
-				
 
-		$("#rent-freq option[value='"+id+"']").show();
 
-		$("#freq-"+id).remove();	
+		$("#rent-freq option[value='" + id + "']").show();
+
+		$("#freq-" + id).remove();
 
 	});
 
-	
 
-	$('#newPropForm').submit(function(){
+
+	$('#newPropForm').submit(function () {
 
 		var propName = $('#propTitle').val();
 
@@ -2319,18 +2317,18 @@ $(document). on('click', '.close-int', function(){
 
 		var propAddress = $('#propAddress').val();
 
-		var propDesc = $('.propDesc').val();		
+		var propDesc = $('.propDesc').val();
 
 		var propNote = $('.propNote').val();
 
 		var price = $('#monthly-price').val();
-		
+
 		var prop_manager = $('#prop_manager').val();
 
 		var security_deposit = $('#security-deposit').val();
 
 		var security_deposit_term = $('#security-deposit-term').val();
-		
+
 		var service_charge = $('#service-charge').val();
 
 		var service_charge_term = $('#service-charge-term').val();
@@ -2339,12 +2337,12 @@ $(document). on('click', '.close-int', function(){
 
 		var featuredPic = $('#featuredPic').val();
 
-		var amenities = [];		
+		var amenities = [];
 
 		var allInts = document.getElementsByClassName("allInts");
 
 		var allFreq = document.getElementsByClassName("allFreq");
-		
+
 		var bed = $('#bed-number').val();
 
 		var bath = $('#bath-number').val();
@@ -2366,83 +2364,83 @@ $(document). on('click', '.close-int', function(){
 		var facilityImages = [];
 
 		var status = "New";
-		
+
 		var featuredProp = 'no';
-		
+
 		var premiumProp = 0;
 
 		var filedata = document.getElementsByName("facility-image");
 
-		
 
-		if($("input[name='newProp']:checked").length > 0){
+
+		if ($("input[name='newProp']:checked").length > 0) {
 
 			status = "New";
 
 		}
-		
-		if($("input[name='featuredProp']:checked").length > 0){
+
+		if ($("input[name='featuredProp']:checked").length > 0) {
 
 			featuredProp = "yes";
 
 		}
-		
-		if($("input[name='premiumProp']:checked").length > 0){
+
+		if ($("input[name='premiumProp']:checked").length > 0) {
 
 			premiumProp = 1;
 
 		}
 
-		
+
 		//Check for at least one nearby facility entry
 
-		if(fName.length < 1){
+		if (fName.length < 1) {
 
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill in at least one neighborhood facility</div>');
 
-			
+
 
 			document.body.scrollTop = 0; // For Safari
 
-  			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 
-			return false;	   
+			return false;
 
 		}
 
-		
+
 
 		var fd = new FormData(this);
 		var files = "";
-		if(fName.length >= 1){
-    		
-    		files = $('.facility-image');
-    		
-    		for(let i = 0; i < files.length; i++){
-    						
-    		}
-    		for(let i = 0; i < fName.length; i++){
-    			fd.append("facility-name[]", fName[i].value);
-    			fd.append("facility-category[]", fCat[i].value);
-    			fd.append("facility-distance[]", fDist[i].value);
-    			fd.append("files[]", files[i].files[0]);
-    		}
+		if (fName.length >= 1) {
+
+			files = $('.facility-image');
+
+			for (let i = 0; i < files.length; i++) {
+
+			}
+			for (let i = 0; i < fName.length; i++) {
+				fd.append("facility-name[]", fName[i].value);
+				fd.append("facility-category[]", fCat[i].value);
+				fd.append("facility-distance[]", fDist[i].value);
+				fd.append("files[]", files[i].files[0]);
+			}
 		}
-		for(let i = 0; i < allInts.length; i++){
+		for (let i = 0; i < allInts.length; i++) {
 			fd.append("intervals[]", allInts[i].value);
 		}
-				
-		if(allFreq.length > 0){
-			for(let i = 0; i < allFreq.length; i++){
+
+		if (allFreq.length > 0) {
+			for (let i = 0; i < allFreq.length; i++) {
 				fd.append("frequency[]", allFreq[i].value);
-			}   
+			}
 		}
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url : baseUrl+'admin/uploadProperty/',
+			url: baseUrl + 'admin/uploadProperty/',
 
 			type: "POST",
 
@@ -2450,31 +2448,31 @@ $(document). on('click', '.close-int', function(){
 
 			dataType: 'json',
 
-		    secureuri : false,
+			secureuri: false,
 
 			processData: false,
 
-            contentType: false,
+			contentType: false,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 				$("#newPropBut").html("Uploading...");
 
 			},
 
-			success	: function (data){
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert("Upload successful!");
 
 					location.reload();
 
-				}else{
+				} else {
 
-					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>'+data+'</div>');
+					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>' + data + '</div>');
 
-					
+
 
 					$("#newPropBut").html("Upload Property");
 
@@ -2484,13 +2482,13 @@ $(document). on('click', '.close-int', function(){
 
 					return false;
 
-				}				
+				}
 
 			},
 
-			error: function(){
+			error: function () {
 
-				
+
 
 				$("#newPropBut").html("Upload Property");
 
@@ -2500,219 +2498,219 @@ $(document). on('click', '.close-int', function(){
 
 		});
 
-		
 
-	
+
+
 
 		//validate text fields		
 
 	});
-	
-	$('#newAptForm').submit(function(e){
-    
-        e.preventDefault();
-        
-        $("#newPropBut").html("Uploading ...");
-    
-    	var propName = $('#aptTitle').val();
-    
-    	var propType = $('#propType').val();
-    
-    	var stayType = $('#stayType').val();
-    
-    	var propAddress = $('#propAddress').val();
-    
-    	var state = $('#states').val();
-    
-    	var city = $('#city').val();
-    
-    	var country = $('#country').val();
-    
-    	var propDesc = $('.aptDesc').val();	
-    
-    	var policies = $('.policies').val();
-    
-    	var house_rules = $('.house_rules').val();	
-    
-    	var cost = $('#cost').val();			
-    
-    	var security_deposit = $('#security-deposit').val();
-    
-    	var imageFolder = $('#foldername').val();
-    
-    	var featuredPic = $('#featuredPic').val();
-    
-    	var amenities = [];		
-    	
-    	var guest = $('#guest-number').val();	
-    	
-    	var bed = $('#bed-number').val();
-    
-    	var bath = $('#bath-number').val();
-    
-    	var toilet = $('#toilet-number').val();
-    	
-    	
-    	$('.amenities:checked').each(function(i){
-            amenities.push($(this).val());
-        });
-    	
-    	
-    	var data = {"propTitle" : propName, "propType" : propType, "stayType" : stayType, "propAddress" : propAddress, "country" : country, "state" : state, "city" : city, "propDesc" : propDesc, "cost" : cost, "security-deposit" : security_deposit, "foldername" : imageFolder, "featuredPic" : featuredPic, "amenities" : amenities, "bed-number" : bed, "bath-number" : bath, "toilet-number" : toilet, "guest-number" : guest, "policies" : policies, "house_rules" : house_rules};
-    
-    	$.ajaxSetup ({ cache: false });
-    
-    	$.ajax({
-    
-    		url : baseUrl+'admin/uploadApt/',
-    
-    		type: "POST",
-    
-    		data: data,
-    
-    		success	: function (data){
-    
-    			if(data == 1){
-    
-    				alert("Upload successful!");
-    
-    				location.reload();
-    
-    			}else{
-    
-    				$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>'+data+'</div>');
-    
-    				$("#newPropBut").html("Upload Property");
-    
-    				document.body.scrollTop = 0; // For Safari
-    
-    				document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    
-    				return false;
-    
-    			}				
-    
-    		},
-    
-    		error: function(){
-    
-    			$("#newPropBut").html("Upload Property");
-    
-    			return false;
-    
-    		}
-    
-    	});
-    	//validate text fields		
-    
-    });
-    $('#editAptForm').submit(function(e){
-        
-        e.preventDefault();
-        
-        $("#newPropBut").html("Saving ...");
-    
-    	var aptID = $('#aptID').val();
-    
-    	var propName = $('#aptTitle').val();
-    
-    	var propType = $('#propType').val();
-    
-    	var stayType = $('#stayType').val();
-    
-    	var propAddress = $('#propAddress').val();
-    
-    	var propDesc = $('.aptDesc').val();	
-    
-    	var policies = $('.policies').val();
-    
-    	var house_rules = $('.house_rules').val();		
-    
-    	var cost = $('#cost').val();			
-    
-    	var security_deposit = $('#security-deposit').val();
-    
-    	var imageFolder = $('#foldername').val();
-    
-    	var featuredPic = $('#featuredPic').val();
-    
-    	var amenities = [];		
-    	
-    	var guest = $('#guest-number').val();	
-    	
-    	var bed = $('#bed-number').val();
-    
-    	var bath = $('#bath-number').val();
-    
-    	var toilet = $('#toilet-number').val();
-    	
-    	
-    	$('.amenities:checked').each(function(i){
-    	    
-            amenities.push($(this).val());
-            
-        });
-    	
-    	
-    	var data = {"aptID" : aptID, "propTitle" : propName, "propType" : propType, "stayType" : stayType, "propAddress" : propAddress, "propDesc" : propDesc, "cost" : cost, "security-deposit" : security_deposit, "foldername" : imageFolder, "featuredPic" : featuredPic, "amenities" : amenities, "bed-number" : bed, "bath-number" : bath, "toilet-number" : toilet, "guest-number" : guest, "policies" : policies, "house_rules" : house_rules};
-    
-    	$.ajaxSetup ({ cache: false });
-    
-    	$.ajax({
-    
-    		url : baseUrl+'admin/editApt/',
-    
-    		type: "POST",
-    
-    		data: data,
-    
-    		success	: function (data){
-    
-    			if(data == 1){
-    
-    				alert("Upload successful!");
-    
-    				location.reload();
-    
-    			}else{
-    
-    				$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>'+data+'</div>');
-    
-    				$("#newPropBut").html("Save Changes");
-    
-    				document.body.scrollTop = 0; // For Safari
-    
-    				document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    
-    				return false;
-    
-    			}				
-    
-    		},
-    
-    		error: function(){
-    
-    			$("#newPropBut").html("Save Changes");
-    
-    			return false;
-    
-    		}
-    
-    	});
-    	//validate text fields		
-    
-    });
-	
-	$('#newUpcomingProp').submit(function(e){
-	    
-	    e.preventDefault();
-	    
+
+	$('#newAptForm').submit(function (e) {
+
+		e.preventDefault();
+
+		$("#newPropBut").html("Uploading ...");
+
+		var propName = $('#aptTitle').val();
+
+		var propType = $('#propType').val();
+
+		var stayType = $('#stayType').val();
+
+		var propAddress = $('#propAddress').val();
+
+		var state = $('#states').val();
+
+		var city = $('#city').val();
+
+		var country = $('#country').val();
+
+		var propDesc = $('.aptDesc').val();
+
+		var policies = $('.policies').val();
+
+		var house_rules = $('.house_rules').val();
+
+		var cost = $('#cost').val();
+
+		var security_deposit = $('#security-deposit').val();
+
+		var imageFolder = $('#foldername').val();
+
+		var featuredPic = $('#featuredPic').val();
+
+		var amenities = [];
+
+		var guest = $('#guest-number').val();
+
+		var bed = $('#bed-number').val();
+
+		var bath = $('#bath-number').val();
+
+		var toilet = $('#toilet-number').val();
+
+
+		$('.amenities:checked').each(function (i) {
+			amenities.push($(this).val());
+		});
+
+
+		var data = { "propTitle": propName, "propType": propType, "stayType": stayType, "propAddress": propAddress, "country": country, "state": state, "city": city, "propDesc": propDesc, "cost": cost, "security-deposit": security_deposit, "foldername": imageFolder, "featuredPic": featuredPic, "amenities": amenities, "bed-number": bed, "bath-number": bath, "toilet-number": toilet, "guest-number": guest, "policies": policies, "house_rules": house_rules };
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+
+			url: baseUrl + 'admin/uploadApt/',
+
+			type: "POST",
+
+			data: data,
+
+			success: function (data) {
+
+				if (data == 1) {
+
+					alert("Upload successful!");
+
+					location.reload();
+
+				} else {
+
+					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>' + data + '</div>');
+
+					$("#newPropBut").html("Upload Property");
+
+					document.body.scrollTop = 0; // For Safari
+
+					document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+
+					return false;
+
+				}
+
+			},
+
+			error: function () {
+
+				$("#newPropBut").html("Upload Property");
+
+				return false;
+
+			}
+
+		});
+		//validate text fields		
+
+	});
+	$('#editAptForm').submit(function (e) {
+
+		e.preventDefault();
+
+		$("#newPropBut").html("Saving ...");
+
+		var aptID = $('#aptID').val();
+
+		var propName = $('#aptTitle').val();
+
+		var propType = $('#propType').val();
+
+		var stayType = $('#stayType').val();
+
+		var propAddress = $('#propAddress').val();
+
+		var propDesc = $('.aptDesc').val();
+
+		var policies = $('.policies').val();
+
+		var house_rules = $('.house_rules').val();
+
+		var cost = $('#cost').val();
+
+		var security_deposit = $('#security-deposit').val();
+
+		var imageFolder = $('#foldername').val();
+
+		var featuredPic = $('#featuredPic').val();
+
+		var amenities = [];
+
+		var guest = $('#guest-number').val();
+
+		var bed = $('#bed-number').val();
+
+		var bath = $('#bath-number').val();
+
+		var toilet = $('#toilet-number').val();
+
+
+		$('.amenities:checked').each(function (i) {
+
+			amenities.push($(this).val());
+
+		});
+
+
+		var data = { "aptID": aptID, "propTitle": propName, "propType": propType, "stayType": stayType, "propAddress": propAddress, "propDesc": propDesc, "cost": cost, "security-deposit": security_deposit, "foldername": imageFolder, "featuredPic": featuredPic, "amenities": amenities, "bed-number": bed, "bath-number": bath, "toilet-number": toilet, "guest-number": guest, "policies": policies, "house_rules": house_rules };
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+
+			url: baseUrl + 'admin/editApt/',
+
+			type: "POST",
+
+			data: data,
+
+			success: function (data) {
+
+				if (data == 1) {
+
+					alert("Upload successful!");
+
+					location.reload();
+
+				} else {
+
+					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>' + data + '</div>');
+
+					$("#newPropBut").html("Save Changes");
+
+					document.body.scrollTop = 0; // For Safari
+
+					document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+
+					return false;
+
+				}
+
+			},
+
+			error: function () {
+
+				$("#newPropBut").html("Save Changes");
+
+				return false;
+
+			}
+
+		});
+		//validate text fields		
+
+	});
+
+	$('#newUpcomingProp').submit(function (e) {
+
+		e.preventDefault();
+
 		var units = $('#available-units-upc').val();
 
 		var propType = $('#propType-upc').val();
 
 		var services = $('#services-upc').val();
-		
+
 		var airtable_url = $('#airtable-url').val();
 
 		var propAddress = $('#propAddress-upc').val();
@@ -2724,24 +2722,24 @@ $(document). on('click', '.close-int', function(){
 		var city = $('#city-upc').val();
 
 		var price = $('#price-upc').val();
-		
+
 		var i = 0;
-		
-		var typeOfTenant = []; 
-		
-        //var inputElements = document.getElementsByClassName('suitable-for');
-        
-        $('.suitable-for-upc:checked').each(function () {
-           typeOfTenant[i++] = $(this).val();
-        });
-		
-		var filteredList = $('.verify-upc-field').filter(function(){
+
+		var typeOfTenant = [];
+
+		//var inputElements = document.getElementsByClassName('suitable-for');
+
+		$('.suitable-for-upc:checked').each(function () {
+			typeOfTenant[i++] = $(this).val();
+		});
+
+		var filteredList = $('.verify-upc-field').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
@@ -2749,41 +2747,41 @@ $(document). on('click', '.close-int', function(){
 
 			document.body.scrollTop = 0; // For Safari
 
-  			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 
 			return false;
 
 		}
-		
-		var data = {"units":units, "propType":propType, "services":services, "typeOfTenant":typeOfTenant, "propAddress":propAddress, "country":country, "state":state, "city":city, "price":price, "airtable_url" : airtable_url};
 
-		$.ajaxSetup ({ cache: false });
+		var data = { "units": units, "propType": propType, "services": services, "typeOfTenant": typeOfTenant, "propAddress": propAddress, "country": country, "state": state, "city": city, "price": price, "airtable_url": airtable_url };
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url : baseUrl+'admin/uplUpcomingProp/',
+			url: baseUrl + 'admin/uplUpcomingProp/',
 
 			type: "POST",
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 				$("#newPropBut").html("Uploading...");
 
 			},
 
-			success	: function (data){
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert("Upload successful!");
 
 					location.reload();
 
-				}else{
+				} else {
 
-					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>'+data+'</div>');
+					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>' + data + '</div>');
 
 					$("#newPropBut").html("Post Property");
 
@@ -2793,11 +2791,11 @@ $(document). on('click', '.close-int', function(){
 
 					return false;
 
-				}				
+				}
 
 			},
 
-			error: function(){
+			error: function () {
 
 				$("#newPropBut").html("Post Property");
 
@@ -2810,9 +2808,9 @@ $(document). on('click', '.close-int', function(){
 		//validate text fields		
 
 	});
-	
-	
-	$('#editPropForm').submit(function(e){
+
+
+	$('#editPropForm').submit(function (e) {
 
 		e.preventDefault();
 
@@ -2828,11 +2826,11 @@ $(document). on('click', '.close-int', function(){
 
 		var city = $('#city').val();
 
-		var propDesc = $('.propDesc').val();		
+		var propDesc = $('.propDesc').val();
 
 		var propNote = $('.propNote').val();
 
-		var price = $('#monthly-price').val();		
+		var price = $('#monthly-price').val();
 
 		var security_deposit = $('#security-deposit').val();
 
@@ -2881,8 +2879,8 @@ $(document). on('click', '.close-int', function(){
 		var facilityImages = [];
 
 		var filedata = document.getElementsByName("facility-image");
-		
-		
+
+
 		//Check for at least one nearby facility entry
 
 		/*if(fName.length < 1){
@@ -2893,47 +2891,47 @@ $(document). on('click', '.close-int', function(){
 
 			document.body.scrollTop = 0; // For Safari
 
-  			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+				document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 
 			return false;	   
 
 		}*/
 
-		
+
 
 		var fd = new FormData(this);
 		var files = "";
-		if(fName.length >= 1){
-    		
-    		files = $('.facility-image');
-    		
-    		for(let i = 0; i < files.length; i++){
-    						
-    		}
-    		for(let i = 0; i < fName.length; i++){
-    			fd.append("facility-name[]", fName[i].value);
-    			fd.append("facility-category[]", fCat[i].value);
-    			fd.append("facility-distance[]", fDist[i].value);
-    			fd.append("files[]", files[i].files[0]);
-    		}
+		if (fName.length >= 1) {
+
+			files = $('.facility-image');
+
+			for (let i = 0; i < files.length; i++) {
+
+			}
+			for (let i = 0; i < fName.length; i++) {
+				fd.append("facility-name[]", fName[i].value);
+				fd.append("facility-category[]", fCat[i].value);
+				fd.append("facility-distance[]", fDist[i].value);
+				fd.append("files[]", files[i].files[0]);
+			}
 		}
-		for(let i = 0; i < allInts.length; i++){
+		for (let i = 0; i < allInts.length; i++) {
 			fd.append("intervals[]", allInts[i].value);
 		}
-				
-		if(allFreq.length > 0){
-			for(let i = 0; i < allFreq.length; i++){
+
+		if (allFreq.length > 0) {
+			for (let i = 0; i < allFreq.length; i++) {
 				fd.append("frequency[]", allFreq[i].value);
-			}   
+			}
 		}
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url : baseUrl+'admin/editProperty/',
+			url: baseUrl + 'admin/editProperty/',
 
 			type: "POST",
 
@@ -2941,31 +2939,31 @@ $(document). on('click', '.close-int', function(){
 
 			dataType: 'json',
 
-		    secureuri : false,
+			secureuri: false,
 
 			processData: false,
 
-            contentType: false,
+			contentType: false,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 				$("#newPropBut").html("Uploading...");
 
 			},
 
-			success	: function (data){
+			success: function (data) {
 
 
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert("Update successful!");
 
 					location.reload();
 
-				}else{
+				} else {
 
-					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>'+data+'</div>');
+					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>' + data + '</div>');
 
 					$("#newPropBut").html("Edit Property");
 
@@ -2975,11 +2973,11 @@ $(document). on('click', '.close-int', function(){
 
 					return false;
 
-				}				
+				}
 
 			},
 
-			error: function(){
+			error: function () {
 
 				alert("Timeout: Please try again later");
 
@@ -2991,107 +2989,107 @@ $(document). on('click', '.close-int', function(){
 
 		});
 
-		
 
-	
+
+
 
 		//validate text fields		
 
 	});
 
-	$('.new-facility').click(function(){
+	$('.new-facility').click(function () {
 
 		//Get Distance and Facility Category
 
-		
+
 
 		// Add new element
 
 
 
-  		// Finding total number of elements added
+		// Finding total number of elements added
 
 		var total_element = $(".element").length;
 
- 
-
-  		// last <div> with element class id
-
-  		var lastid = $(".element:last").attr("id");
-
-  		var split_id = lastid.split("_");
-
-  		var nextindex = Number(split_id[1]) + 1;
 
 
+		// last <div> with element class id
 
-  		var max = 4;
+		var lastid = $(".element:last").attr("id");
 
-  		// Check total number elements
+		var split_id = lastid.split("_");
 
-  		if(total_element < max ){
+		var nextindex = Number(split_id[1]) + 1;
 
-   			// Adding new div container after last occurance of element class
 
-   			$(".element:last").after("<div class='form-row element' id='div_"+ nextindex +"'></div>");
 
- 
+		var max = 4;
 
-   			// Adding element to <div>
+		// Check total number elements
 
-   			$("#div_" + nextindex).append('<div class="col-md-4"><div class="position-relative form-group"><label for="facility-name" class="">Facility Name</label><input name="facility-name[]" id="facility_name_'+ nextindex +'" type="text" class="facility-name form-control" /></div></div><div class="col-md-4"><div class="position-relative form-group"><label for="facility_category" class="">Category</label><select name="facility_category[]" id="facility_category_'+ nextindex +'" class="facility-category form-control">'+theCat+'</select></div></div><div class="col-md-4"><div class="position-relative form-group"><label for="facility-distance" class="">Distance</label><select name="facility-distance[]" id="facility_distance_'+ nextindex +'" class="facility-distance form-control">'+distance+'</select></div></div><div class="col-md-4"><div class="position-relative form-group"><label for="facility-image" class="">Facility Image</label><input name="facility-image[]" id="facility_image_'+ nextindex +'" type="file" class="facility-image form-control" /></div></div>');			
+		if (total_element < max) {
 
- 
+			// Adding new div container after last occurance of element class
 
-  		}		
+			$(".element:last").after("<div class='form-row element' id='div_" + nextindex + "'></div>");
+
+
+
+			// Adding element to <div>
+
+			$("#div_" + nextindex).append('<div class="col-md-4"><div class="position-relative form-group"><label for="facility-name" class="">Facility Name</label><input name="facility-name[]" id="facility_name_' + nextindex + '" type="text" class="facility-name form-control" /></div></div><div class="col-md-4"><div class="position-relative form-group"><label for="facility_category" class="">Category</label><select name="facility_category[]" id="facility_category_' + nextindex + '" class="facility-category form-control">' + theCat + '</select></div></div><div class="col-md-4"><div class="position-relative form-group"><label for="facility-distance" class="">Distance</label><select name="facility-distance[]" id="facility_distance_' + nextindex + '" class="facility-distance form-control">' + distance + '</select></div></div><div class="col-md-4"><div class="position-relative form-group"><label for="facility-image" class="">Facility Image</label><input name="facility-image[]" id="facility_image_' + nextindex + '" type="file" class="facility-image form-control" /></div></div>');
+
+
+
+		}
 
 	});
 
-	$('#furnisureCat').on('submit', function(e){
+	$('#furnisureCat').on('submit', function (e) {
 
-		
+
 
 		e.preventDefault();
 
-		
+
 
 		var category = $('#category').val();
 
-		
 
-		
 
-		var filteredList = $('.float-txt').filter(function(){
+
+
+		var filteredList = $('.float-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
-			
 
-			filteredList.css("border","1px solid rgba(251,1,1,0.5)");
+
+			filteredList.css("border", "1px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 
 		var data = {
 
-			'category' : category
+			'category': category
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url : baseUrl+'admin/createFurnisureCategory/',
+			url: baseUrl + 'admin/createFurnisureCategory/',
 
 			type: "POST",
 
@@ -3099,27 +3097,27 @@ $(document). on('click', '.close-int', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 				$('.amenity-but').html('working...');
 
 			},
 
-			success	: function (data){
+			success: function (data) {
 
 
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert("successful!");
 
 					location.reload();
 
-				}else{
+				} else {
 
 					alert(data);
 
-				}				
+				}
 
 			}
 
@@ -3127,51 +3125,51 @@ $(document). on('click', '.close-int', function(){
 
 	});
 
-	$('#furnisureType').on('submit', function(e){
+	$('#furnisureType').on('submit', function (e) {
 
-		
+
 
 		e.preventDefault();
 
-		
+
 
 		var type = $('#type').val();
 
-		
 
-		
 
-		var filteredList = $('.float-txt').filter(function(){
+
+
+		var filteredList = $('.float-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
-			
 
-			filteredList.css("border","1px solid rgba(251,1,1,0.5)");
+
+			filteredList.css("border", "1px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 
 		var data = {
 
-			'type' : type
+			'type': type
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url : baseUrl+'admin/createFurnisureType/',
+			url: baseUrl + 'admin/createFurnisureType/',
 
 			type: "POST",
 
@@ -3179,27 +3177,27 @@ $(document). on('click', '.close-int', function(){
 
 			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
 				$('.amenity-but').html('working...');
 
 			},
 
-			success	: function (data){
+			success: function (data) {
 
 
 
-				if(data == 1){
+				if (data == 1) {
 
 					alert("successful!");
 
 					location.reload();
 
-				}else{
+				} else {
 
 					alert(data);
 
-				}				
+				}
 
 			}
 
@@ -3207,10 +3205,10 @@ $(document). on('click', '.close-int', function(){
 
 	});
 
-	$('#furnitureForm').on('submit', function(e){
+	$('#furnitureForm').on('submit', function (e) {
 
 		e.preventDefault();
-		
+
 		$('#newFurnitureBut').html("Uploading");
 
 		var title = $.trim($('#title').val());
@@ -3231,7 +3229,7 @@ $(document). on('click', '.close-int', function(){
 
 		var spec = $.trim($('#specs-info').val());
 
-		
+
 
 		/*var newProd = "";
 
@@ -3245,32 +3243,32 @@ $(document). on('click', '.close-int', function(){
 
 		}*/
 
-		
+
 
 		var foldername = $.trim($('.folderName').val());
 
 		var featuredPic = $.trim($('.featuredPic').val());
 
-		
 
-		var filteredList = $('.verify-field').filter(function(){
+
+		var filteredList = $('.verify-field').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			document.body.scrollTop = 0; // For Safari
 
 			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-			
-			
-		
+
+
+
 			$('#newFurnitureBut').html("Upload Item");
 
 			return false;
@@ -3279,35 +3277,35 @@ $(document). on('click', '.close-int', function(){
 
 		var data = {
 
-			'title' : title,
+			'title': title,
 
-			'category' : category,
+			'category': category,
 
-			'type' : type,
+			'type': type,
 
-			'cost' : cost,
+			'cost': cost,
 
-			'securityDep' : securityDep,
+			'securityDep': securityDep,
 
-			'desc' : desc,
+			'desc': desc,
 
-			'payment' : payment,
+			'payment': payment,
 
-			'delivery' : delivery,
+			'delivery': delivery,
 
-			'spec' : spec,
+			'spec': spec,
 
-			'foldername' : foldername,
+			'foldername': foldername,
 
-			'featuredPic' : featuredPic
+			'featuredPic': featuredPic
 
 		};
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url: baseUrl+"admin/upload_furniture",
+			url: baseUrl + "admin/upload_furniture",
 
 			type: "POST",
 
@@ -3315,9 +3313,9 @@ $(document). on('click', '.close-int', function(){
 
 			data: data,
 
-			success	: function (data){
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 
 					$('.form-result').html('<div class="alert alert-info alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Upload Successful</div>');
 
@@ -3333,9 +3331,9 @@ $(document). on('click', '.close-int', function(){
 
 					$('#newFurnitureBut').html('Upload Item');
 
-				}else{
+				} else {
 
-					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>'+data+'</div>');
+					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>' + data + '</div>');
 
 					document.body.scrollTop = 0; // For Safari
 
@@ -3343,11 +3341,11 @@ $(document). on('click', '.close-int', function(){
 
 					$('#newFurnitureBut').html('Upload Item');
 
-				}				
+				}
 
 			},
 
-			error: function() {
+			error: function () {
 
 				$('#newFurnitureBut').html('Upload Item');
 
@@ -3357,14 +3355,14 @@ $(document). on('click', '.close-int', function(){
 
 		});
 
-		
+
 
 	});
 
-	$('#editFurnitureForm').on('submit', function(e){
+	$('#editFurnitureForm').on('submit', function (e) {
 
 		e.preventDefault();
-		
+
 		$('#newFurnitureBut').html("Uploading");
 
 		var title = $.trim($('#title').val());
@@ -3383,34 +3381,34 @@ $(document). on('click', '.close-int', function(){
 
 		var delivery = $.trim($('#delivery-info').val());
 
-		var spec = $.trim($('#specs-info').val());	
+		var spec = $.trim($('#specs-info').val());
 
 		var foldername = $('.folderName').val();
 
 		var featuredPic = $('.featuredPic').val();
-		
+
 		var app_id = $('#appliance_id').val();
 
-		
 
-		var filteredList = $('.verify-field').filter(function(){
+
+		var filteredList = $('.verify-field').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			document.body.scrollTop = 0; // For Safari
 
 			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-			
-			
-		
+
+
+
 			$('#newFurnitureBut').html("Edit Item");
 
 			return false;
@@ -3419,39 +3417,39 @@ $(document). on('click', '.close-int', function(){
 
 		var data = {
 
-			'title' : title,
+			'title': title,
 
-			'category' : category,
+			'category': category,
 
-			'type' : type,
+			'type': type,
 
-			'cost' : cost,
+			'cost': cost,
 
-			'securityDep' : securityDep,
+			'securityDep': securityDep,
 
-			'desc' : desc,
+			'desc': desc,
 
-			'payment' : payment,
+			'payment': payment,
 
-			'delivery' : delivery,
+			'delivery': delivery,
 
-			'spec' : spec,
+			'spec': spec,
 
-			'foldername' : foldername,
+			'foldername': foldername,
 
-			'featuredPic' : featuredPic,
-			
-			'app_id' : app_id
+			'featuredPic': featuredPic,
+
+			'app_id': app_id
 
 		};
 
-		
 
-		$.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 
 		$.ajax({
 
-			url: baseUrl+"admin/edit_furniture",
+			url: baseUrl + "admin/edit_furniture",
 
 			type: "POST",
 
@@ -3459,20 +3457,20 @@ $(document). on('click', '.close-int', function(){
 
 			data: data,
 
-			success	: function (data){
+			success: function (data) {
 
 
 
-				if(data == 1){
+				if (data == 1) {
 					alert("Successfully updated.");
 					//Restart page
 					location.reload();
 
 					$('#newFurnitureBut').html('Edit Item');
 
-				}else{
+				} else {
 
-					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>'+data+'</div>');
+					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>' + data + '</div>');
 
 					document.body.scrollTop = 0; // For Safari
 
@@ -3480,11 +3478,11 @@ $(document). on('click', '.close-int', function(){
 
 					$('#newFurnitureBut').html('Edit Item');
 
-				}				
+				}
 
 			},
 
-			error: function() {
+			error: function () {
 
 				$('#newFurnitureBut').html('Edit Item');
 
@@ -3496,33 +3494,33 @@ $(document). on('click', '.close-int', function(){
 
 	});
 
-	$('#newsForm').submit(function(e){
+	$('#newsForm').submit(function (e) {
 
 		e.preventDefault();
 
 		$('.submit-but').html("wait...");
 
 		var title = $.trim($('#articleSubject').val());
-		
+
 		var content = $('.content').val().replace(/"/g, '&quot;');
 
 		//var content = $.trim($('.content').val());
 
 		var credit = $.trim($('#articleCredit').val());
-		
-		var filteredList = $('.verify-txt').filter(function(){
+
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.submit-but').html("Submit");
 
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
@@ -3530,48 +3528,48 @@ $(document). on('click', '.close-int', function(){
 
 		var data = {
 
-			'title' : title,
+			'title': title,
 
-			'content' : content,
+			'content': content,
 
-			'credit' : credit
+			'credit': credit
 
 		};
 
 		$.ajaxFileUpload({
 
-			url : baseUrl+'admin/addNews/', 
+			url: baseUrl + 'admin/addNews/',
 
-			secureuri : false,
+			secureuri: false,
 
-			fileElementId : 'userfile',
+			fileElementId: 'userfile',
 
-			dataType : 'json',
+			dataType: 'json',
 
-			data : data,
+			data: data,
 
-			beforeSend: function() {
+			beforeSend: function () {
 
-                subBut.classList.add('disabled');
+				subBut.classList.add('disabled');
 
 			},
 
-			success	: function (data, status, msg){
+			success: function (data, status, msg) {
 
-				if(data.status == 'error'){
+				if (data.status == 'error') {
 
-					alert("Upload error: "+data.msg);
+					alert("Upload error: " + data.msg);
 
 					return false;
 
 					$('.submit-but').html("Submit");
 
-				}else if(data.status == 'success'){
+				} else if (data.status == 'success') {
 
-				    alert(data.msg);
+					alert(data.msg);
 
 					$('.submit-but').html("Submit");
-					
+
 					window.location.reload();
 
 				}
@@ -3580,11 +3578,11 @@ $(document). on('click', '.close-int', function(){
 
 		});
 
-		
+
 
 	});
-	
-	$('#editNewsForm').submit(function(e){
+
+	$('#editNewsForm').submit(function (e) {
 
 		"use strict";
 
@@ -3596,7 +3594,7 @@ $(document). on('click', '.close-int', function(){
 
 		//var content = $('.content').val();
 		//replace all double quotes
-        var content = $('.content').val().replace(/"/g, '&quot;');
+		var content = $('.content').val().replace(/"/g, '&quot;');
 
 		var credit = $.trim($('#articleCredit').val());
 
@@ -3605,21 +3603,21 @@ $(document). on('click', '.close-int', function(){
 		var featImg = $.trim($('#featImg').val());
 
 		var folder = $.trim($('#slug').val());
-		
 
-		var filteredList = $('.verify-txt').filter(function(){
+
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.submit-but').html("Save");
 
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
@@ -3627,50 +3625,50 @@ $(document). on('click', '.close-int', function(){
 
 		var data = {
 
-			'title' : title,
+			'title': title,
 
-			'content' : content,
+			'content': content,
 
-			'credit' : credit,
-			
-			'articleID' : articleID,
-			
-			'featImg' : featImg,
-			
-			'folder' : folder
+			'credit': credit,
+
+			'articleID': articleID,
+
+			'featImg': featImg,
+
+			'folder': folder
 
 		};
 
-		
+
 
 		$.ajaxFileUpload({
 
-			url : baseUrl+'admin/editNews/', 
+			url: baseUrl + 'admin/editNews/',
 
-			secureuri : false,
+			secureuri: false,
 
-			fileElementId : 'userfile',
+			fileElementId: 'userfile',
 
-			dataType : 'json',
+			dataType: 'json',
 
-			data : data,
+			data: data,
 
-			success	: function (data, status, msg){
+			success: function (data, status, msg) {
 
-				if(data.status == 'error'){
+				if (data.status == 'error') {
 
-					alert("Upload error: "+data.msg);
+					alert("Upload error: " + data.msg);
 
 					$('.submit-but').html("Save");
 
 					return false;
 
-				}else if(data.status == 'success'){
+				} else if (data.status == 'success') {
 
-				    alert(data.msg);
+					alert(data.msg);
 
 					$('.submit-but').html("Save");
-					
+
 					window.location.reload();
 
 				}
@@ -3680,7 +3678,7 @@ $(document). on('click', '.close-int', function(){
 		});
 
 	});
-	
+
 	/*$('.process-action').click(function(){
 		
 		$('.process-action').html("wait...");
@@ -3706,7 +3704,7 @@ $(document). on('click', '.close-int', function(){
 				}
 				
 			}
-		   	var data = {"details": details, "action" : action};
+				  var data = {"details": details, "action" : action};
 			
 		}
 		
@@ -3734,106 +3732,106 @@ $(document). on('click', '.close-int', function(){
 		
 		
 	});*/
-	
-	$('.inspection-detail').click(function(){
-		
+
+	$('.inspection-detail').click(function () {
+
 		var the_ids = $(this).attr('id').replace(/request-/, '');
-		
-		$('.request-msg').html("*************"); 
-		
-		$('.request-by').html("*************"); 
-		
-		$('.request-date').html("*************"); 
-		
+
+		$('.request-msg').html("*************");
+
+		$('.request-by').html("*************");
+
+		$('.request-date').html("*************");
+
 		$('.inspection-type').html("*************");
-		
+
 		var all_ids = the_ids.split("-");
-		
+
 		var id = all_ids[0];
-		
+
 		var msgID = all_ids[1];
-		
-		var data = {"id" : id, "msgID" : msgID};
-		
-		$.ajaxSetup ({ cache: false });
+
+		var data = { "id": id, "msgID": msgID };
+
+		$.ajaxSetup({ cache: false });
 		$.ajax({
-			url: baseUrl+"admin/getInspMsg",
+			url: baseUrl + "admin/getInspMsg",
 			type: "POST",
-			dataType : 'json',
+			dataType: 'json',
 			data: data,
-			beforeSend: function() {
-				$('#request-'+id).html('Wait...');
+			beforeSend: function () {
+				$('#request-' + id).html('Wait...');
 			},
-			success: function(data) {
-				if(data.status == 'success'){ 
-					$('.request-msg').html(data.content); 
-					$('.request-by').html(data.firstname+' '+data.lastname); 
-					$('.request-date').html(data.inspectionDate); 
-					$('.inspection-type').html(data.inspectionType); 
-					$('.msg_id').val(data.msgID); 
-					$('.user_id').val(data.userID); 
-					$('#request-'+id).html('Details');					
-				}else{
-					$('.request-msg').html("*************"); 
-					$('.request-by').html("*************"); 
-					$('.request-date').html("*************"); 
-					$('.inspection-type').html("*************"); 
-					$('#request-'+id).html('Details');	
+			success: function (data) {
+				if (data.status == 'success') {
+					$('.request-msg').html(data.content);
+					$('.request-by').html(data.firstname + ' ' + data.lastname);
+					$('.request-date').html(data.inspectionDate);
+					$('.inspection-type').html(data.inspectionType);
+					$('.msg_id').val(data.msgID);
+					$('.user_id').val(data.userID);
+					$('#request-' + id).html('Details');
+				} else {
+					$('.request-msg').html("*************");
+					$('.request-by').html("*************");
+					$('.request-date').html("*************");
+					$('.inspection-type').html("*************");
+					$('#request-' + id).html('Details');
 				}
-				
-			} 
-		});	
-		
+
+			}
+		});
+
 	});
-	
-	$('#requestFloat').submit(function(e){
-		
+
+	$('#requestFloat').submit(function (e) {
+
 		e.preventDefault();
-		
+
 		$('.reply-but').val("Sending...");
-		
+
 		var reply_msg = $.trim($('.reply-msg').val());
 		var user_id = $('.user_id').val();
 		var msg_id = $('.msg_id').val();
-		
-		if(reply_msg == ''){
+
+		if (reply_msg == '') {
 			alert("You need to type a reply in the message box");
-			
+
 			$('.reply-but').val("Send Reply");
-			
+
 			return false;
 		}
-		
-		var data = {"reply_msg" : reply_msg, "user_id" : user_id, "msg_id" : msg_id};
-				
-		$.ajaxSetup ({ cache: false });
+
+		var data = { "reply_msg": reply_msg, "user_id": user_id, "msg_id": msg_id };
+
+		$.ajaxSetup({ cache: false });
 		$.ajax({
-			url: baseUrl+"admin/replyInspMsg",
+			url: baseUrl + "admin/replyInspMsg",
 			type: "POST",
 			async: true,
 			data: data,
-			success: function(data) {
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 					alert("Message successfully sent");
 					$('.reply-but').val("Send Reply");
 					location.reload();
-				}else{
+				} else {
 					alert("Error sending message!!!");
 					$('.reply-but').val("Send Reply");
 					return false;
 				}
 
 			}
-		});	
-		
+		});
+
 	});
-	$('#newBuytoletForm').submit(function(e){
-			
+	$('#newBuytoletForm').submit(function (e) {
+
 		e.preventDefault();
-               
+
 		$("#newPropBut").html("Wait...");
-		
+
 		var propName = $('#propTitle').val();
 		var propType = $('#propType').val();
 		var investmentType = $('.investment-type').val();
@@ -3868,7 +3866,7 @@ $(document). on('click', '.close-int', function(){
 		var property_size = $('#property-size').val();
 		var location_info = $('.location-info').val();
 		var pooling_units = $('#pooling-units').val();
-		var pool_buy = $('.pool-buy').val();		
+		var pool_buy = $('.pool-buy').val();
 		var imageFolder = $('#foldername').val();
 		var featuredPic = $('#featuredPic').val();
 		var construction_lvl = $('.construction-level').val();
@@ -3879,118 +3877,118 @@ $(document). on('click', '.close-int', function(){
 		var floor_level = $('#floor-level').val();
 		var hold_period = $('#hold-period').val();
 		var featuredProp = 0;
-		var co_appr = $('input[name="co-appr[]"]').map(function(){return $(this).val();}).get();
-	
-	    var co_rent = $('input[name="co-rent[]"]').map(function(){return $(this).val();}).get();
-	    
-	    //console.log(co_appr);
-	    
-	    //console.log(co_rent);
-	    
-	    //return false;
-		
-		if($("input[name='featuredProp']:checked").length > 0){
+		var co_appr = $('input[name="co-appr[]"]').map(function () { return $(this).val(); }).get();
+
+		var co_rent = $('input[name="co-rent[]"]').map(function () { return $(this).val(); }).get();
+
+		//console.log(co_appr);
+
+		//console.log(co_rent);
+
+		//return false;
+
+		if ($("input[name='featuredProp']:checked").length > 0) {
 
 			featuredProp = 1;
 
 		}
 
-		var filteredList = $('.verify-field').filter(function(){
+		var filteredList = $('.verify-field').filter(function () {
 			return $(this).val() == "";
 		});
-		
-		if(filteredList.length > 0){
+
+		if (filteredList.length > 0) {
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
-			
+
 			$("#newPropBut").html("Upload Property");
 			document.body.scrollTop = 0; // For Safari
-  			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 			return false;
 		}
 		var data = {
-			"propTitle" : propName,
-			"propType"  : propType,
-			"propAddress" : propAddress,
-			"country" : country,
-			"state"  : state,
-			"city"  : city,
-			"propDesc" : propDesc,
-			"tenantable" : tenantable,
-			"investmentType" : investmentType,
-			"price" : price,
-			"marketValue" : marketValue,
-			"outrightDiscount" : outrightDiscount,
-			"asset_appreciation_1" : asset_appreciation_1,
-			"asset_appreciation_2" : asset_appreciation_2,
-			"asset_appreciation_3" : asset_appreciation_3,
-			"asset_appreciation_4" : asset_appreciation_4,
-			"asset_appreciation_5" : asset_appreciation_5,
-			"promo_price" : promo_price,
-			"promo_category" : promo_category,
-			"expected_rent" :expected_rent,
-			"bed" : bed,
-			"toilet" : toilet,
-			"bath" : bath,
-			"hpi" : hpi_growth,
-			"mortgage" : mortgage,
-			"payment_plan" : payment_plan,
-			"payment_plan_period" : payment_plan_period,
-			"min_pp_val" : min_pp_val,
+			"propTitle": propName,
+			"propType": propType,
+			"propAddress": propAddress,
+			"country": country,
+			"state": state,
+			"city": city,
+			"propDesc": propDesc,
+			"tenantable": tenantable,
+			"investmentType": investmentType,
+			"price": price,
+			"marketValue": marketValue,
+			"outrightDiscount": outrightDiscount,
+			"asset_appreciation_1": asset_appreciation_1,
+			"asset_appreciation_2": asset_appreciation_2,
+			"asset_appreciation_3": asset_appreciation_3,
+			"asset_appreciation_4": asset_appreciation_4,
+			"asset_appreciation_5": asset_appreciation_5,
+			"promo_price": promo_price,
+			"promo_category": promo_category,
+			"expected_rent": expected_rent,
+			"bed": bed,
+			"toilet": toilet,
+			"bath": bath,
+			"hpi": hpi_growth,
+			"mortgage": mortgage,
+			"payment_plan": payment_plan,
+			"payment_plan_period": payment_plan_period,
+			"min_pp_val": min_pp_val,
 			"propertySize": property_size,
-			"locationInfo" : location_info,
-			"pooling_units" : pooling_units,
-			"pool_buy" : pool_buy,
-			"imageFolder" : imageFolder,
-			"featuredPic" : featuredPic,
-			"construction_lvl" : construction_lvl,
-			"finish_date" : finish_date,
-			"start_date" : start_date,
-			"maturity_date" : maturity_date,
-			"closing_date" : closing_date,
-			"featuredProp" : featuredProp,
-			"floor_level" : floor_level,
-			"hold_period" : hold_period,
-			"co_appr" : co_appr,
-			"co_rent" : co_rent,
-			"lockdownFee" : lockdownFee,
-			"lockdownPeriod" : lockdownPeriod
+			"locationInfo": location_info,
+			"pooling_units": pooling_units,
+			"pool_buy": pool_buy,
+			"imageFolder": imageFolder,
+			"featuredPic": featuredPic,
+			"construction_lvl": construction_lvl,
+			"finish_date": finish_date,
+			"start_date": start_date,
+			"maturity_date": maturity_date,
+			"closing_date": closing_date,
+			"featuredProp": featuredProp,
+			"floor_level": floor_level,
+			"hold_period": hold_period,
+			"co_appr": co_appr,
+			"co_rent": co_rent,
+			"lockdownFee": lockdownFee,
+			"lockdownPeriod": lockdownPeriod
 		};
-		
-		$.ajaxFileUpload({
-			url : baseUrl+'admin/uploadBuytoletProperty/', 
-			secureuri : false,
-			fileElementId : 'floor-plan',
-			dataType : 'json',
-			data : data,
-			success	: function (data){
 
-				if(data.status == "success"){
+		$.ajaxFileUpload({
+			url: baseUrl + 'admin/uploadBuytoletProperty/',
+			secureuri: false,
+			fileElementId: 'floor-plan',
+			dataType: 'json',
+			data: data,
+			success: function (data) {
+
+				if (data.status == "success") {
 					alert(data.msg);
-					
+
 					location.reload();
 					/*alert("Upload successful!");
 					location.reload();*/
-				}else{
-					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>'+data.msg+'</div>');
-					
+				} else {
+					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>' + data.msg + '</div>');
+
 					$("#newPropBut").html("Upload Property");
 					document.body.scrollTop = 0; // For Safari
 					document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 					return false;
-				}				
+				}
 			}
 		});
-		
-	
+
+
 		//validate text fields		
 	});
-	
-	$('#editBuytoletForm').submit(function(e){
-			
+
+	$('#editBuytoletForm').submit(function (e) {
+
 		e.preventDefault();
-               
+
 		$("#editPropBut").html("Saving...");
-		
+
 		var propID = $('#propID').val();
 		var propName = $('#propTitle').val();
 		var propType = $('#propType').val();
@@ -4025,130 +4023,130 @@ $(document). on('click', '.close-int', function(){
 		var location_info = $('.location-info').val();
 		var pooling_units = $('#pooling-units').val();
 		var available_units = $('#available-units').val();
-		var pool_buy = $('.pool-buy').val();		
+		var pool_buy = $('.pool-buy').val();
 		var imageFolder = $('#foldername').val();
 		var featuredPic = $('#featuredPic').val();
 		var construction_lvl = $('.construction-level').val();
-		var start_date = $('#start-date').val();  
+		var start_date = $('#start-date').val();
 		var finish_date = $('#finish-date').val();
 		var maturity_date = $('#maturity-date').val();
 		var closing_date = $('#closing-date').val();
 		var featuredProp = 0;
 		var hold_period = $('#hold-period').val();
 		var floor_level = $('#floor-level').val();
-		var co_appr = $('input[name="co-appr[]"]').map(function(){return $(this).val();}).get();
-	
-	    var co_rent = $('input[name="co-rent[]"]').map(function(){return $(this).val();}).get();
-	    
-	    //console.log(co_appr);
-	    
-	    //console.log(co_rent);
-	    
-	    //return false;
-		
-		if($("input[name='featuredProp']:checked").length > 0){
+		var co_appr = $('input[name="co-appr[]"]').map(function () { return $(this).val(); }).get();
+
+		var co_rent = $('input[name="co-rent[]"]').map(function () { return $(this).val(); }).get();
+
+		//console.log(co_appr);
+
+		//console.log(co_rent);
+
+		//return false;
+
+		if ($("input[name='featuredProp']:checked").length > 0) {
 
 			featuredProp = 1;
 
 		}
-					
-		var filteredList = $('.verify-field').filter(function(){
+
+		var filteredList = $('.verify-field').filter(function () {
 			return $(this).val() == "";
 		});
-		
-		if(filteredList.length > 0){
+
+		if (filteredList.length > 0) {
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
-			
+
 			$("#newPropBut").html("Save");
 			document.body.scrollTop = 0; // For Safari
-  			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 			return false;
 		}
 		var data = {
-			"propID" : propID,
-			"propTitle" : propName,
-			"propType"  : propType,
-			"propAddress" : propAddress,
-			"country" : country,
-			"state"  : state,
-			"city"  : city,
-			"propDesc" : propDesc,
-			"tenantable" : tenantable,
-			"investmentType" : investmentType,
-			"asset_appreciation_1" : asset_appreciation_1,
-			"asset_appreciation_2" : asset_appreciation_2,
-			"asset_appreciation_3" : asset_appreciation_3,
-			"asset_appreciation_4" : asset_appreciation_4,
-			"asset_appreciation_5" : asset_appreciation_5,
-			"price" : price,
-			"marketValue" : marketValue,
-			"outrightDiscount" : outrightDiscount,
-			"promo_price" : promo_price,
-			"promo_category" : promo_category,
-			"expected_rent" :expected_rent,
-			"bed" : bed,
-			"toilet" : toilet,
-			"bath" : bath,
-			"mortgage" : mortgage,
-			"payment_plan" : payment_plan,
-			"payment_plan_period" : payment_plan_period,
-			"min_pp_val" : min_pp_val,
+			"propID": propID,
+			"propTitle": propName,
+			"propType": propType,
+			"propAddress": propAddress,
+			"country": country,
+			"state": state,
+			"city": city,
+			"propDesc": propDesc,
+			"tenantable": tenantable,
+			"investmentType": investmentType,
+			"asset_appreciation_1": asset_appreciation_1,
+			"asset_appreciation_2": asset_appreciation_2,
+			"asset_appreciation_3": asset_appreciation_3,
+			"asset_appreciation_4": asset_appreciation_4,
+			"asset_appreciation_5": asset_appreciation_5,
+			"price": price,
+			"marketValue": marketValue,
+			"outrightDiscount": outrightDiscount,
+			"promo_price": promo_price,
+			"promo_category": promo_category,
+			"expected_rent": expected_rent,
+			"bed": bed,
+			"toilet": toilet,
+			"bath": bath,
+			"mortgage": mortgage,
+			"payment_plan": payment_plan,
+			"payment_plan_period": payment_plan_period,
+			"min_pp_val": min_pp_val,
 			"propertySize": property_size,
-			"locationInfo" : location_info,
-			"pooling_units" : pooling_units,
-			"pool_buy" : pool_buy,
-			"imageFolder" : imageFolder,
-			"featuredPic" : featuredPic,
-			"construction_lvl" : construction_lvl,
-			"start_date" : start_date,
-			"finish_date" : finish_date,
-			"maturity_date" : maturity_date,
-			"closing_date" : closing_date,
-			"featuredProp" : featuredProp,
-			"floor_level" : floor_level,
-			"hold_period" : hold_period,
-			"co_appr" : co_appr,
-			"co_rent" : co_rent,
-			"available_units" : available_units,
-			"lockdownFee" : lockdownFee,
-			"lockdownPeriod" : lockdownPeriod
+			"locationInfo": location_info,
+			"pooling_units": pooling_units,
+			"pool_buy": pool_buy,
+			"imageFolder": imageFolder,
+			"featuredPic": featuredPic,
+			"construction_lvl": construction_lvl,
+			"start_date": start_date,
+			"finish_date": finish_date,
+			"maturity_date": maturity_date,
+			"closing_date": closing_date,
+			"featuredProp": featuredProp,
+			"floor_level": floor_level,
+			"hold_period": hold_period,
+			"co_appr": co_appr,
+			"co_rent": co_rent,
+			"available_units": available_units,
+			"lockdownFee": lockdownFee,
+			"lockdownPeriod": lockdownPeriod
 		};
-		
+
 		$.ajaxFileUpload({
-			url : baseUrl+'admin/editBuytoletProperty/', 
-			secureuri : false,
-			fileElementId : 'floor-plan',
-			dataType : 'json',
-			data : data,
-			success	: function (data){
-				
-				if(data.status == "success"){
-				    
+			url: baseUrl + 'admin/editBuytoletProperty/',
+			secureuri: false,
+			fileElementId: 'floor-plan',
+			dataType: 'json',
+			data: data,
+			success: function (data) {
+
+				if (data.status == "success") {
+
 					alert("Successful!");
-					
+
 					location.reload();
-					
+
 					return false;
 					/*alert("Upload successful!");
 					location.reload();*/
-				}else{
-				    
-				    alert("Not Successful!");
-				    
-				    $("#editPropBut").html("Save");
-					
+				} else {
+
+					alert("Not Successful!");
+
+					$("#editPropBut").html("Save");
+
 					return false;
-				    
+
 				}
-								
+
 			}
 		});
-		
-	
+
+
 		//validate text fields		
 	});
-	
-	$('#aboutUsForm').submit(function(e){
+
+	$('#aboutUsForm').submit(function (e) {
 
 		"use strict";
 
@@ -4165,9 +4163,9 @@ $(document). on('click', '.close-int', function(){
 		var story_two = $.trim($('.storyTwo').val());
 
 		var id = $.trim($('.id').val());
-		
 
-		var filteredList = $('.verify-txt').filter(function(){
+
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
@@ -4175,7 +4173,7 @@ $(document). on('click', '.close-int', function(){
 
 
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('#newPropBut').html("Post Page");
 
@@ -4183,60 +4181,60 @@ $(document). on('click', '.close-int', function(){
 
 			$('.form-result').show();
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 		var data = {
 
-			'title' : title,
+			'title': title,
 
-			'content' : content,
+			'content': content,
 
-			'id' : id,
-			
-			'story_one' : story_one,
-			
-			'story_two' : story_two
+			'id': id,
+
+			'story_one': story_one,
+
+			'story_two': story_two
 
 		};
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 		$.ajax({
-			url: baseUrl+"admin/updateAbout",
+			url: baseUrl + "admin/updateAbout",
 			type: "POST",
 			data: data,
-			beforeSend: function() {
-				$('#request-'+id).html('Wait...');
+			beforeSend: function () {
+				$('#request-' + id).html('Wait...');
 			},
-			success: function(data) {
-				if(data.status == 'success'){
-					
+			success: function (data) {
+				if (data.status == 'success') {
+
 					alert("Upload Successful");
-					
+
 					$('#newPropBut').html("Post Page");
 
 					$('.form-result').show();
-					
+
 					location.reload(true);
-					
-				}else{
+
+				} else {
 					$('#newPropBut').html("Post Page");
 
 					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
-					$('.form-result').show();	
+					$('.form-result').show();
 				}
-				
-			} 
-		});	
+
+			}
+		});
 
 	});
-	
-	$('#hiwFormBtl').submit(function(e){
+
+	$('#hiwFormBtl').submit(function (e) {
 
 		"use strict";
 
@@ -4253,9 +4251,9 @@ $(document). on('click', '.close-int', function(){
 		var checkout = $.trim($('.checkout').val());
 
 		var id = $.trim($('.id').val());
-		
 
-		var filteredList = $('.verify-txt').filter(function(){
+
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
@@ -4263,7 +4261,7 @@ $(document). on('click', '.close-int', function(){
 
 
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('#newPropBut').html("Post Page");
 
@@ -4271,78 +4269,78 @@ $(document). on('click', '.close-int', function(){
 
 			$('.form-result').show();
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 		var data = {
 
-			'search' : search,
+			'search': search,
 
-			'analyse' : analyse,
+			'analyse': analyse,
 
-			'id' : id,
-			
-			'qualify' : qualify,
-			
-			'checkout' : checkout
+			'id': id,
+
+			'qualify': qualify,
+
+			'checkout': checkout
 
 		};
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 		$.ajax({
-			url: baseUrl+"admin/updateBtlHiw",
+			url: baseUrl + "admin/updateBtlHiw",
 			type: "POST",
 			data: data,
-			beforeSend: function() {
-				
+			beforeSend: function () {
+
 			},
-			success: function(data) {
-				if(data == 1){
-					
+			success: function (data) {
+				if (data == 1) {
+
 					alert("Upload Successful");
-					
+
 					$('#newPropBut').html("Post Page");
 
 					$('.form-result').show();
-					
+
 					location.reload(true);
-					
-				}else{
+
+				} else {
 					$('#newPropBut').html("Post Page");
 
 					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
-					$('.form-result').show();	
+					$('.form-result').show();
 				}
-				
-			} 
-		});	
+
+			}
+		});
 
 	});
-	
-	$('.delete-type').click(function(){		
-		
+
+	$('.delete-type').click(function () {
+
 		var id = $(this).attr('id').replace(/delete-/, '');
 
-		$('delete-'+id).html('Wait...');
-		
+		$('delete-' + id).html('Wait...');
+
 		var data = {
 
-			'type_id' : id
+			'type_id': id
 
 		};
-		
-		if(confirm("Are you sure you want to DELETE?")){
 
-			$.ajaxSetup ({ cache: false });
+		if (confirm("Are you sure you want to DELETE?")) {
+
+			$.ajaxSetup({ cache: false });
 
 			$.ajax({
 
-				url: baseUrl+"admin/deleteType/",
+				url: baseUrl + "admin/deleteType/",
 
 				type: "POST",
 
@@ -4350,21 +4348,21 @@ $(document). on('click', '.close-int', function(){
 
 				data: data,
 
-				beforeSend: function() {
+				beforeSend: function () {
 
 
 
 				},
 
-				success: function(data) {
+				success: function (data) {
 
-					if(data == 1){
+					if (data == 1) {
 
 						alert('Apartment type deleted!');
 
 						location.reload(true);
 
-					}else{
+					} else {
 
 						alert('Could not delete type.');
 
@@ -4374,7 +4372,7 @@ $(document). on('click', '.close-int', function(){
 
 				},
 
-				error: function() {
+				error: function () {
 
 					return false;
 
@@ -4382,334 +4380,334 @@ $(document). on('click', '.close-int', function(){
 
 			});
 		}
-		
-		$('delete-'+id).html('Delete');
+
+		$('delete-' + id).html('Delete');
 
 	});
-	
-	$('.property-delete').click(function(){
-		
-		
-		
-		var propID = $(this).attr("id").replace(/property-/,'');
-		
+
+	$('.property-delete').click(function () {
+
+
+
+		var propID = $(this).attr("id").replace(/property-/, '');
+
 		$(this).html("Wait...");
-		
-		var data = { "propID" : propID };
-		
-		if(confirm("Are you sure you want to DELETE?")){
-		
-			$.ajaxSetup ({ cache: false });
-			
+
+		var data = { "propID": propID };
+
+		if (confirm("Are you sure you want to DELETE?")) {
+
+			$.ajaxSetup({ cache: false });
+
 			$.ajax({
-				
-				url: baseUrl+"admin/delProp",
-				
+
+				url: baseUrl + "admin/delProp",
+
 				type: "POST",
-				
+
 				data: data,
-				
-				success: function(data) {
-					
-					if(data == 1){
-					   
+
+				success: function (data) {
+
+					if (data == 1) {
+
 						alert("Property successfully deleted!");
-						
+
 						location.reload(true)
-						
-					}else{
-						
+
+					} else {
+
 						alert(data);
-						
+
 						$(this).html("Delete");
-						
+
 					}
-					
+
 				}
 
 			});
 		}
-		
+
 		$(this).html("Delete");
-		
+
 	});
-	
-	$('.btl-property-delete').click(function(){		
-		
-		var propDet = $(this).attr("id").replace(/property-/,'');
-		
+
+	$('.btl-property-delete').click(function () {
+
+		var propDet = $(this).attr("id").replace(/property-/, '');
+
 		var props = propDet.split('-');
-		
+
 		$(this).html("Wait...");
-		
-		var data = { "propID" : props[0], "propFolder" : props[1] };
-		
-		if(confirm("Are you sure you want to DELETE?")){
-		
-			$.ajaxSetup ({ cache: false });
-			
+
+		var data = { "propID": props[0], "propFolder": props[1] };
+
+		if (confirm("Are you sure you want to DELETE?")) {
+
+			$.ajaxSetup({ cache: false });
+
 			$.ajax({
-				
-				url: baseUrl+"admin/delBtlProp",
-				
+
+				url: baseUrl + "admin/delBtlProp",
+
 				type: "POST",
-				
+
 				data: data,
-				
-				success: function(data) {
-					
-					if(data == 1){
-					   
+
+				success: function (data) {
+
+					if (data == 1) {
+
 						alert("Property successfully deleted!");
-						
+
 						location.reload(true)
-						
-					}else{
-						
+
+					} else {
+
 						alert(data);
-						
+
 						$(this).html("Delete");
-						
+
 					}
-					
+
 				}
 
 			});
 		}
-		
+
 		$(this).html("Delete");
-		
+
 	});
-	$('.article-delete').click(function(){
-		
-		var art = $(this).attr("id").replace(/article-/,'');
-		
+	$('.article-delete').click(function () {
+
+		var art = $(this).attr("id").replace(/article-/, '');
+
 		var articleInfo = art.split('_');
-		
+
 		$(this).html("Wait...");
-		
-		var data = { "articleID" : articleInfo[0], "folder" : articleInfo[1] };
-		
-		if(confirm("Are you sure you want to DELETE?")){
-		
-			$.ajaxSetup ({ cache: false });
-			
+
+		var data = { "articleID": articleInfo[0], "folder": articleInfo[1] };
+
+		if (confirm("Are you sure you want to DELETE?")) {
+
+			$.ajaxSetup({ cache: false });
+
 			$.ajax({
-				
-				url: baseUrl+"admin/delArticle",
-				
+
+				url: baseUrl + "admin/delArticle",
+
 				type: "POST",
-				
+
 				data: data,
-				
-				success: function(data) {
-					
-					if(data == 1){
-					   
+
+				success: function (data) {
+
+					if (data == 1) {
+
 						alert("Article successfully deleted!");
-						
+
 						location.reload(true)
-						
-					}else{
-						
+
+					} else {
+
 						alert(data);
-						
+
 						$(this).html("Delete");
-						
+
 					}
-					
+
 				}
 
 			});
-		}else{
-		    $(this).html("Delete");
+		} else {
+			$(this).html("Delete");
 		}
-		
-		
+
+
 	});
-	$('.btl-property-sold').click(function(){		
-		
-		var propID = $(this).attr("id").replace(/property-/,'');
-		
+	$('.btl-property-sold').click(function () {
+
+		var propID = $(this).attr("id").replace(/property-/, '');
+
 		$(this).html("Wait...");
-		
-		var data = { "propID" : propID };
-		
-		if(confirm("Are you sure ?")){
-		
-			$.ajaxSetup ({ cache: false });
-			
+
+		var data = { "propID": propID };
+
+		if (confirm("Are you sure ?")) {
+
+			$.ajaxSetup({ cache: false });
+
 			$.ajax({
-				
-				url: baseUrl+"admin/soldProp",
-				
+
+				url: baseUrl + "admin/soldProp",
+
 				type: "POST",
-				
+
 				data: data,
-				
-				success: function(data) {
-					
-					if(data == 1){
-					   
+
+				success: function (data) {
+
+					if (data == 1) {
+
 						alert("Successful!");
-						
-						$('#property-'+propID).remove();
-						
+
+						$('#property-' + propID).remove();
+
 						return false;
-						
-					}else{
-						
-						alert("Error: "+data);
-						
+
+					} else {
+
+						alert("Error: " + data);
+
 						$(this).html("Sold");
-						
+
 						return false;
-						
+
 					}
-					
+
 				}
 
 			});
-		}else{
-		    $(this).html("Sold");
-		    return false;
-		    
+		} else {
+			$(this).html("Sold");
+			return false;
+
 		}
-		
-		
-		
+
+
+
 	});
-	$('.btl-property-listing').click(function(){		
-		
-		var propID = $(this).attr("id").replace(/property-/,'');
-		
+	$('.btl-property-listing').click(function () {
+
+		var propID = $(this).attr("id").replace(/property-/, '');
+
 		var propDets = propID.split('-');
-		
+
 		var theState = 0;
-		
+
 		var reState = '';
-		
-		if(propDets[1] == 0){
-		    
-		    theState = 1;
-		    
+
+		if (propDets[1] == 0) {
+
+			theState = 1;
+
 		}
-		
+
 		$(this).html("Wait...");
-		
+
 		//alert("Property ID: "+propDets[0]+" PropState: "+theState);
-		
+
 		//return false;
-		
-		var data = { "propID" : propDets[0], "propState" : theState };
-		
-		if(propDets[1] == 0){
-		    reState = "List";
-		}else{
-		    reState = "Unist";
+
+		var data = { "propID": propDets[0], "propState": theState };
+
+		if (propDets[1] == 0) {
+			reState = "List";
+		} else {
+			reState = "Unist";
 		}
-		
-		if(confirm("Are you sure ?")){
-		
-			$.ajaxSetup ({ cache: false });
-			
+
+		if (confirm("Are you sure ?")) {
+
+			$.ajaxSetup({ cache: false });
+
 			$.ajax({
-				
-				url: baseUrl+"admin/propListing",
-				
+
+				url: baseUrl + "admin/propListing",
+
 				type: "POST",
-				
+
 				data: data,
-			
-				success: function(data) {
-					
-					if(data == 1){
-					   
+
+				success: function (data) {
+
+					if (data == 1) {
+
 						alert("Successful!");
-						
+
 						//location.reload();
-						
+
 						return false;
-						
-					}else{
-						
-						alert("Error: "+data);
-						
-						
-						$('#property-'+propDets[0]+'-'+propDets[1]).html(reState);
-						
+
+					} else {
+
+						alert("Error: " + data);
+
+
+						$('#property-' + propDets[0] + '-' + propDets[1]).html(reState);
+
 						return false;
-						
+
 					}
-					
+
 				}
 
 			});
-		}else{
-		    $(this).html("Sold");
-		    return false;
-		    
+		} else {
+			$(this).html("Sold");
+			return false;
+
 		}
-		
-		
-		
+
+
+
 	});
-	$('.process-action').click(function(){
-		
+	$('.process-action').click(function () {
+
 		$(this).html("Wait...");
-		
+
 		var action = document.getElementById('action');
-		
+
 		var actionItem = document.getElementsByClassName('action-item');
-		
+
 		var details = [];
-		
-		
+
+
 		var counted = actionItem.length;
 
-		if(counted < 1){
-			
+		if (counted < 1) {
+
 			alert("Select at least one checkbox");
-			
+
 			return false;
-			
+
 		}
 
-		for(let i = 0; i < actionItem.length; i++){
-			
-			if(actionItem[i].checked){
+		for (let i = 0; i < actionItem.length; i++) {
 
-				if(action.value === ''){
-					
+			if (actionItem[i].checked) {
+
+				if (action.value === '') {
+
 					alert("Pick an action to perform");
-					
+
 					return false;
-					
-				}else{
+
+				} else {
 
 					var info = actionItem[i].id;
-					
-					details.push({"propertyID": info});
+
+					details.push({ "propertyID": info });
 				}
 			}
 		}
-		var data = {"details": details, "action": action.value}; 
+		var data = { "details": details, "action": action.value };
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 		$.ajax({
-			url: baseUrl+"admin/changeStatus",
+			url: baseUrl + "admin/changeStatus",
 			type: "POST",
 			async: true,
 			data: data,
-			beforeSend: function() {
+			beforeSend: function () {
 
 			},
-			success: function(data) {
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 					alert("Status successfully changed!");
 					location.reload();
-				}else{
+				} else {
 					alert("Error changing status!!!");
 					return false;
 				}
@@ -4718,62 +4716,62 @@ $(document). on('click', '.close-int', function(){
 		});
 
 	});
-	
-	$('.process-prop-action').click(function(){
-		
+
+	$('.process-prop-action').click(function () {
+
 		$(this).html("Wait...");
-		
+
 		var action = document.getElementById('prop-action');
-		
+
 		var actionItem = document.getElementsByClassName('props-check-item');
-		
+
 		var details = [];
-		
+
 		var info = '';
-		
-		
+
+
 		var counted = actionItem.length;
 
-		if(counted < 1){
-			
+		if (counted < 1) {
+
 			alert("Select at least one checkbox");
-			
+
 			return false;
-			
+
 		}
 
-		for(let i = 0; i < actionItem.length; i++){
-			
-			if(actionItem[i].checked){
+		for (let i = 0; i < actionItem.length; i++) {
 
-				if(action.value === ''){
-					
+			if (actionItem[i].checked) {
+
+				if (action.value === '') {
+
 					alert("Pick an action to perform");
-					
+
 					return false;
-					
-				}else{
-					
-					details.push({ "id" : actionItem[i].id });
+
+				} else {
+
+					details.push({ "id": actionItem[i].id });
 
 				}
 			}
 		}
 
-		var data = {"details": details, "action": action.value}; 
+		var data = { "details": details, "action": action.value };
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 		$.ajax({
-			url: baseUrl+"admin/changePropStatus",
+			url: baseUrl + "admin/changePropStatus",
 			type: "POST",
 			async: true,
 			data: data,
-			success: function(data) {
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 					alert("Status successfully changed!");
 					location.reload();
-				}else{
+				} else {
 					alert("Error changing status!!!");
 					return false;
 				}
@@ -4782,64 +4780,64 @@ $(document). on('click', '.close-int', function(){
 		});
 
 	});
-	
-	$('.verification-action').click(function(){
-		
+
+	$('.verification-action').click(function () {
+
 		$(this).html("Submitting...");
-		
+
 		var action = document.getElementById('action');
-		
+
 		var actionItem = document.getElementsByClassName('action-item');
-		
+
 		var details = [];
-		
-		
+
+
 		var counted = actionItem.lenght;
 
-		if(counted < 1){
-			
+		if (counted < 1) {
+
 			alert("Select at least one checkbox");
-			
+
 			return false;
-			
+
 		}
 
-		for(let i = 0; i < actionItem.length; i++){
-			
-			if(actionItem[i].checked){
+		for (let i = 0; i < actionItem.length; i++) {
 
-				if(action.value === ''){
-					
+			if (actionItem[i].checked) {
+
+				if (action.value === '') {
+
 					alert("Pick an action to perform");
-					
+
 					return false;
-					
-				}else{
+
+				} else {
 
 					var info = actionItem[i].id.split("-");
-					
-					details.push({"verificationID": info[0], "userID": info[1], "email": info[2]});
+
+					details.push({ "verificationID": info[0], "userID": info[1], "email": info[2] });
 				}
 			}
 		}
 		console.log(details); return false;
-		var data = {"details": details, "action": action.value}; 
+		var data = { "details": details, "action": action.value };
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 		$.ajax({
-			url: baseUrl+"admin/verificationStatus",
+			url: baseUrl + "admin/verificationStatus",
 			type: "POST",
 			async: true,
 			data: data,
-			beforeSend: function() {
+			beforeSend: function () {
 
 			},
-			success: function(data) {
+			success: function (data) {
 
-				if(data == 1){
+				if (data == 1) {
 					alert("Status successfully changed!");
 					location.reload();
-				}else{
+				} else {
 					alert("Error changing status!!!");
 					return false;
 				}
@@ -4848,185 +4846,185 @@ $(document). on('click', '.close-int', function(){
 		});
 
 	});
-	
-	$('.verify-user').click(function(){ 
-		
+
+	$('.verify-user').click(function () {
+
 		$('.verify-user').html('Approving... <i class="fa fa-star"></i>');
-		
+
 		var id = $(this).attr("id");
-		
+
 		var prop_id = $('#propID').val();
-		
-		var data = {"id" : id, "prop_id" : prop_id};
-		
-		$.ajaxSetup ({ cache: false });
-		
-		$.ajax({
-			url: baseUrl+"admin/verifyUser",
-			
-			type: "POST",
-			
-			async: true,
-			
-			data: data,
-			
-			success: function(data) {
 
-				if(data == 1){
-					
+		var data = { "id": id, "prop_id": prop_id };
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+			url: baseUrl + "admin/verifyUser",
+
+			type: "POST",
+
+			async: true,
+
+			data: data,
+
+			success: function (data) {
+
+				if (data == 1) {
+
 					alert("User Verified Successfully!");
-					
+
 					$('.verify-user').html('Approve <i class="fa fa-star"></i>');
-					
+
 					return false;
-				}else{
-					
+				} else {
+
 					alert("Error changing status!!!");
-					
+
 					$('.verify-user').html('Approve <i class="fa fa-star"></i>');
-					
+
 					return false;
 				}
 
 			}
 		});
-		
+
 	});
-	$('.verify-app-user').click(function(){ 
-		
+	$('.verify-app-user').click(function () {
+
 		$('.verify-app-user').html('Approving... <i class="fa fa-star"></i>');
-		
-		var id = $(this).attr("id");
-		
-		var data = {"id" : id};
-		
-		$.ajaxSetup ({ cache: false });
-		
-		$.ajax({
-			url: baseUrl+"admin/verifyAppUser",
-			
-			type: "POST",
-			
-			async: true,
-			
-			data: data,
-			
-			success: function(data) {
 
-				if(data == 1){
-					
+		var id = $(this).attr("id");
+
+		var data = { "id": id };
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+			url: baseUrl + "admin/verifyAppUser",
+
+			type: "POST",
+
+			async: true,
+
+			data: data,
+
+			success: function (data) {
+
+				if (data == 1) {
+
 					alert("User Verified Successfully!");
-					
+
 					$('.verify-app-user').html('Approve <i class="fa fa-star"></i>');
-					
+
 					return false;
-				}else{
-					
+				} else {
+
 					alert("Error changing status!!!");
-					
+
 					$('.verify-app-user').html('Approve <i class="fa fa-star"></i>');
-					
+
 					return false;
 				}
 
 			}
 		});
-		
+
 	});
-	$('.unverify-user').click(function(){ 
-		
+	$('.unverify-user').click(function () {
+
 		$('.unverify-user').html('Working... <i class="fa fa-trash"></i>');
-		
-		var id = $(this).attr("id");
-		
-		var data = {"id" : id};
-		
-		$.ajaxSetup ({ cache: false });
-		
-		$.ajax({
-			url: baseUrl+"admin/unverifyUser",
-			
-			type: "POST",
-			
-			async: true,
-			
-			data: data,
-			
-			success: function(data) {
 
-				if(data == 1){
-					
+		var id = $(this).attr("id");
+
+		var data = { "id": id };
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+			url: baseUrl + "admin/unverifyUser",
+
+			type: "POST",
+
+			async: true,
+
+			data: data,
+
+			success: function (data) {
+
+				if (data == 1) {
+
 					alert("User Unverified!");
-					
+
 					$('.unverify-user').hide();
-					
+
 					return false;
-				}else{
-					
+				} else {
+
 					alert("Error Unverifying!!!");
-					
+
 					$('.unverify-user').html('Refuse <i class="fa fa-trash"></i>');
-					
+
 					return false;
 				}
 
 			}
 		});
-		
+
 	});
-	$('.approve-payment').click(function(){
-	    
-	    $(this).html('Wait...');
-		
-		var details = $(this).attr("id").replace(/approve-/,"").split('-');
-		
+	$('.approve-payment').click(function () {
+
+		$(this).html('Wait...');
+
+		var details = $(this).attr("id").replace(/approve-/, "").split('-');
+
 		var refID = details[0];
-		
+
 		var transactionID = details[1];
-		
-		var data = {"transactionID" : transactionID, "refID" : refID};
-		
-		if(confirm("Are you sure you want to PROCEED?")){
-		
-    		$.ajaxSetup ({ cache: false });
-    		
-    		$.ajax({
-    			url: baseUrl+"admin/approvePayment",
-    			
-    			type: "POST",
-    			
-    			async: true,
-    			
-    			data: data,
-    			
-    			success: function(data) {
-    
-    				if(data == 1){
-    					
-    					alert("Payment Approved!");
-    					
-    					$(this).html('Approve');
-    					
-    					location.reload(true);
-    					
-    				}else{
-    					
-    					alert("Error Approving!!!");
-    					
-    					$(this).html('Approve');
-    					
-    					return false;
-    				}
-    
-    			}
-    		});
-		}else{
-		    
-		    $(this).html('Approve');
-		    return false;
-		    
+
+		var data = { "transactionID": transactionID, "refID": refID };
+
+		if (confirm("Are you sure you want to PROCEED?")) {
+
+			$.ajaxSetup({ cache: false });
+
+			$.ajax({
+				url: baseUrl + "admin/approvePayment",
+
+				type: "POST",
+
+				async: true,
+
+				data: data,
+
+				success: function (data) {
+
+					if (data == 1) {
+
+						alert("Payment Approved!");
+
+						$(this).html('Approve');
+
+						location.reload(true);
+
+					} else {
+
+						alert("Error Approving!!!");
+
+						$(this).html('Approve');
+
+						return false;
+					}
+
+				}
+			});
+		} else {
+
+			$(this).html('Approve');
+			return false;
+
 		}
-		
+
 	});
 	/*$('.approve-payment').click(function(){
 		
@@ -5072,59 +5070,59 @@ $(document). on('click', '.close-int', function(){
 			}
 		});
 	});*/
-	$('.delete-booking').click(function(){
-	    
-		var the_ids = $(this).attr("id").replace(/booking-/,"").split("-");
-		
+	$('.delete-booking').click(function () {
+
+		var the_ids = $(this).attr("id").replace(/booking-/, "").split("-");
+
 		var bookingID = the_ids[0];
-		
+
 		var propertyID = the_ids[1];
-		
+
 		$(this).html('Wait...');
-		
-		var data = {"bookingID" : bookingID, "propertyID" : propertyID};
-		
-		if(confirm("Are you sure you want to DELETE booking?")){
-		
-    		$.ajaxSetup ({ cache: false });
-    		
-    		$.ajax({
-    			url: baseUrl+"admin/deleteBooking",
-    			
-    			type: "POST",
-    			
-    			async: true,
-    			
-    			data: data,
-    			
-    			success: function(data) {
-    
-    				if(data == 1){
-    					
-    					alert("Booking Deleted!");
-    					
-    					$(this).html('Delete');
-    					
-    					location.reload(true);
-    				}else{
-    					
-    					alert("Error Deleting!!!");
-    					
-    					$(this).html('Delete');
-    					
-    					return false;
-    				}
-    
-    			}
-    		});
-		}else{
-		    
-		    $(this).html('Delete');
-		    
-		    return false;
-		    
+
+		var data = { "bookingID": bookingID, "propertyID": propertyID };
+
+		if (confirm("Are you sure you want to DELETE booking?")) {
+
+			$.ajaxSetup({ cache: false });
+
+			$.ajax({
+				url: baseUrl + "admin/deleteBooking",
+
+				type: "POST",
+
+				async: true,
+
+				data: data,
+
+				success: function (data) {
+
+					if (data == 1) {
+
+						alert("Booking Deleted!");
+
+						$(this).html('Delete');
+
+						location.reload(true);
+					} else {
+
+						alert("Error Deleting!!!");
+
+						$(this).html('Delete');
+
+						return false;
+					}
+
+				}
+			});
+		} else {
+
+			$(this).html('Delete');
+
+			return false;
+
 		}
-		
+
 	});
 
 
@@ -5184,7 +5182,7 @@ $(document). on('click', '.close-int', function(){
 	});
 
 
-	$('#aboutUsFormBuytolet').submit(function(e){
+	$('#aboutUsFormBuytolet').submit(function (e) {
 
 		"use strict";
 
@@ -5198,9 +5196,9 @@ $(document). on('click', '.close-int', function(){
 		var story_two = $.trim($('.storyTwo').val());
 
 		var id = $.trim($('.id').val());
-		
 
-		var filteredList = $('.verify-txt').filter(function(){
+
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
@@ -5208,7 +5206,7 @@ $(document). on('click', '.close-int', function(){
 
 
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('#newPropBut').html("Post Page");
 
@@ -5216,825 +5214,828 @@ $(document). on('click', '.close-int', function(){
 
 			$('.form-result').show();
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
-		
+
 		var data = {
 
-			'id' : id,
-			
-			'what_we_do' : story_one,
-			
-			'our_story' : story_two
+			'id': id,
+
+			'what_we_do': story_one,
+
+			'our_story': story_two
 
 		};
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 		$.ajax({
-			url: baseUrl+"admin/updateBuytoletAbout",
+			url: baseUrl + "admin/updateBuytoletAbout",
 			type: "POST",
 			data: data,
-			beforeSend: function() {
-				$('#request-'+id).html('Wait...');
+			beforeSend: function () {
+				$('#request-' + id).html('Wait...');
 			},
-			success: function(data) {
-				if(data == 1){
-					
+			success: function (data) {
+				if (data == 1) {
+
 					alert("Upload Successful");
-					
+
 					$('#newPropBut').html("Post Page");
 
 					$('.form-result').show();
-					
+
 					location.reload(true);
-					
-				}else{
+
+				} else {
 					$('#newPropBut').html("Post Page");
 
 					$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
-					$('.form-result').show();	
+					$('.form-result').show();
 				}
-				
-			} 
-		});	
+
+			}
+		});
 
 	});
-	
-	$("#debt-form").submit(function(e){
-	    
-	    e.preventDefault();
-	    
-	    $('.debt-button').html("Wait...");
-	    
-	    $('.verify-debt-txt').css("border","1px solid #ced4da");
-	    
-	    var adminID = $('#admin_id').val();
-	    
-	    var debtorID = $('#debtor_id').val();
-	    
-	    var amount = $('#debt-amount').val();
-	    
-	    var note = $('#debt-note').val();
-	    
-	    var debt_period = $('#debt-yr').val()+'-'+$('#debt-month').val()+'-'+$('#debt-day').val();
-	    
-	    var filteredList = $('.verify-debt-txt').filter(function(){
+
+	$("#debt-form").submit(function (e) {
+
+		e.preventDefault();
+
+		$('.debt-button').html("Wait...");
+
+		$('.verify-debt-txt').css("border", "1px solid #ced4da");
+
+		var adminID = $('#admin_id').val();
+
+		var debtorID = $('#debtor_id').val();
+
+		var amount = $('#debt-amount').val();
+
+		var note = $('#debt-note').val();
+
+		var debt_period = $('#debt-yr').val() + '-' + $('#debt-month').val() + '-' + $('#debt-day').val();
+
+		var filteredList = $('.verify-debt-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			alert("All fields are required.");
 
-			filteredList.css("border","1px solid rgba(251,1,1,0.5)");
-            
-            $('.debt-button').html("Submit");
-			
+			filteredList.css("border", "1px solid rgba(251,1,1,0.5)");
+
+			$('.debt-button').html("Submit");
+
 			return false;
 
 		}
-	    
-	    var data = {"adminID" : adminID, "debtorID" : debtorID, "amount" : amount, "note" : note, "debt_period" : debt_period};
-	    
-	    
-	    $.ajaxSetup ({ cache: false });
-		
-		$.ajax({
-			url: baseUrl+"admin/addDebt",
-			
-			type: "POST",
-			
-			async: true,
-			
-			data: data,
-			
-			success: function(data) {
 
-				if(data == 1){
-					
+		var data = { "adminID": adminID, "debtorID": debtorID, "amount": amount, "note": note, "debt_period": debt_period };
+
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+			url: baseUrl + "admin/addDebt",
+
+			type: "POST",
+
+			async: true,
+
+			data: data,
+
+			success: function (data) {
+
+				if (data == 1) {
+
 					alert("Successful!");
-					
+
 					$('.debt-button').html("Submit");
-					
+
 					return false;
-				}else{
-					
+				} else {
+
 					alert("Error inserting data!");
-					
+
 					$('.debt-button').html("Submit");
-					
+
 					return false;
 				}
 
 			}
 		});
-	    
-	    
+
+
 	});
-	
-	$('.start-processing').click(function(){
-	    
+
+	$('.start-processing').click(function () {
+
 		var user_id = $(this).attr("id");
-		
-		$(this).html('Wait...');
-		
-		var data = {"user_id" : user_id};
-		
-		$.ajaxSetup ({ cache: false });
-		
-		$.ajax({
-			url: baseUrl+"admin/startProcessing",
-			
-			type: "POST",
-			
-			async: true,
-			
-			data: data,
-			
-			success: function(data) {
 
-				if(data == 1){
-					
+		$(this).html('Wait...');
+
+		var data = { "user_id": user_id };
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+			url: baseUrl + "admin/startProcessing",
+
+			type: "POST",
+
+			async: true,
+
+			data: data,
+
+			success: function (data) {
+
+				if (data == 1) {
+
 					alert("Successful!");
-					
+
 					$('.start-processing').hide();
-					
-				}else{
-					
+
+				} else {
+
 					alert("Error starting!");
-					
+
 					$('.start-processing').html('Start processing');
-					
+
 					return false;
 				}
 
 			}
 		});
-		
-		
+
+
 	});
-	
-	$('.construction-level').on("change", function(){
-	    
-	    var level = $(this).val();
-	    
-	    if(level == 'Ongoing'){
-	        
-	        $('#start-date').prop("disabled", false);
-	        
-	        $('#finish-date').prop("disabled", false);
-	        
-	        $('#construction-status-panel').css('display', 'block');
-	        
-	    }else if(level == 'Off Plan'){
-	        
-	        $('#start-date').prop("disabled", false);
-	        
-	        $('#finish-date').prop("disabled", false);
-	        
-	        $('#construction-status-panel').css('display', 'none');
-	        
-	    }else if(level == 'Completed'){
-	        
-	        $('#start-date').prop("disabled", true);
-	        
-	        $('#finish-date').prop("disabled", false);
-	        
-	        $('#construction-status-panel').css('display', 'none');
-	        
-	    }else{
-	        
-	        $('#start-date').prop("disabled", true);
-	        
-	        $('#finish-date').prop("disabled", true);
-	        
-	        $('#construction-status-panel').css('display', 'none');
-	        
-	    }
-	    
-	    
+
+	$('.construction-level').on("change", function () {
+
+		var level = $(this).val();
+
+		if (level == 'Ongoing') {
+
+			$('#start-date').prop("disabled", false);
+
+			$('#finish-date').prop("disabled", false);
+
+			$('#construction-status-panel').css('display', 'block');
+
+		} else if (level == 'Off Plan') {
+
+			$('#start-date').prop("disabled", false);
+
+			$('#finish-date').prop("disabled", false);
+
+			$('#construction-status-panel').css('display', 'none');
+
+		} else if (level == 'Completed') {
+
+			$('#start-date').prop("disabled", true);
+
+			$('#finish-date').prop("disabled", false);
+
+			$('#construction-status-panel').css('display', 'none');
+
+		} else {
+
+			$('#start-date').prop("disabled", true);
+
+			$('#finish-date').prop("disabled", true);
+
+			$('#construction-status-panel').css('display', 'none');
+
+		}
+
+
 	});
-	$('.deduction-btn').click(function(){
-	    
-	    var id = $(this).attr('id').replace(/deduction-btn-/, '');
-	    
-	    $('.deduction-line').hide();
-	    
-	    $('#deduction-line-'+id).show();
-	    
+	$('.deduction-btn').click(function () {
+
+		var id = $(this).attr('id').replace(/deduction-btn-/, '');
+
+		$('.deduction-line').hide();
+
+		$('#deduction-line-' + id).show();
+
 	});
-	$('.deduct-charges').click(function(){
-	    
-	    var id = $(this).attr('id').replace(/deduct-charges-/, '');
-	    
-	    $(this).html('Wait...');
-	    
-	    var amount = $.trim($('#deduction-amount-'+id).val());
-	    
-	    var purpose = $('#deduction-purpose-'+id).val();
-	    
-	    if(amount === '' || purpose === ''){
-	        
-	        $('#deduction-line-'+id).css('background', 'rgba(255, 0, 0, 0.3)');
-	        
-	        alert("Fill empty fields");
-	        
-	        setTimeout(function(){ $('#deduction-line-'+id).css('background', 'rgba(255, 255, 255, 1)'); }, 2000);
-	        
-	        $('#deduct-charges-'+id).html('Submit');
-	        
-	        return false;
-	        
-	    }
-	    
-	    if(isNaN(amount)){
-	        
-	        $('#deduction-amount-'+id).css('border', '1px solid rgba(255, 0, 0, 0.3)');
-	        
-	        alert("Remove special characters from amount. Insert only numbers");
-	        
-	        setTimeout(function(){ $('#deduction-amount-'+id).css('border', '1px solid #ced4da'); }, 2000);
-	        
-	        $('#deduct-charges-'+id).html('Submit');
-	        
-	        return false;
-	        
-	    }
-	    
-	    var data = {"amount" : amount, "purpose" : purpose, "userID" : id};
-	    
-	    $.ajaxSetup ({ cache: false });
-    		
+	$('.deduct-charges').click(function () {
+
+		var id = $(this).attr('id').replace(/deduct-charges-/, '');
+
+		$(this).html('Wait...');
+
+		var amount = $.trim($('#deduction-amount-' + id).val());
+
+		var purpose = $('#deduction-purpose-' + id).val();
+
+		if (amount === '' || purpose === '') {
+
+			$('#deduction-line-' + id).css('background', 'rgba(255, 0, 0, 0.3)');
+
+			alert("Fill empty fields");
+
+			setTimeout(function () { $('#deduction-line-' + id).css('background', 'rgba(255, 255, 255, 1)'); }, 2000);
+
+			$('#deduct-charges-' + id).html('Submit');
+
+			return false;
+
+		}
+
+		if (isNaN(amount)) {
+
+			$('#deduction-amount-' + id).css('border', '1px solid rgba(255, 0, 0, 0.3)');
+
+			alert("Remove special characters from amount. Insert only numbers");
+
+			setTimeout(function () { $('#deduction-amount-' + id).css('border', '1px solid #ced4da'); }, 2000);
+
+			$('#deduct-charges-' + id).html('Submit');
+
+			return false;
+
+		}
+
+		var data = { "amount": amount, "purpose": purpose, "userID": id };
+
+		$.ajaxSetup({ cache: false });
+
 		$.ajax({
-			url: baseUrl+"admin/deductWallet",
-			
+			url: baseUrl + "admin/deductWallet",
+
 			type: "POST",
-			
+
 			dataType: 'json',
-			
+
 			data: data,
-			
-			success: function(data) {
 
-				if( data.response == 1 ){
+			success: function (data) {
 
-					$('#deduction-line-'+id).css('background', 'rgba(0, 128, 0, 0.3)');
-	        
-        	        alert("Deducted successfully!");
-        	        
-        	        $('#deduction-amount-'+id).val('');
-	    
-	                $('#deduction-purpose-'+id).val('');
-        	        
-        	        setTimeout(function(){ $('#deduction-line-'+id).css('background', 'rgba(255, 255, 255, 1)'); }, 2000);
-        	        
-                    location.reload(true);
-                    
-				}else if( data.response == 0){
-				    
-				    $('#deduction-line-'+id).css('background', 'rgba(255, 0, 0, 0.3)');
-	        
-        	        alert(data.message);
-        	        
-        	        setTimeout(function(){ $('#deduction-line-'+id).css('background', 'rgba(255, 255, 255, 1)'); }, 2000);
-        	        
-        	        $('#deduct-charges-'+id).html('Submit');
-					
+				if (data.response == 1) {
+
+					$('#deduction-line-' + id).css('background', 'rgba(0, 128, 0, 0.3)');
+
+					alert("Deducted successfully!");
+
+					$('#deduction-amount-' + id).val('');
+
+					$('#deduction-purpose-' + id).val('');
+
+					setTimeout(function () { $('#deduction-line-' + id).css('background', 'rgba(255, 255, 255, 1)'); }, 2000);
+
+					location.reload(true);
+
+				} else if (data.response == 0) {
+
+					$('#deduction-line-' + id).css('background', 'rgba(255, 0, 0, 0.3)');
+
+					alert(data.message);
+
+					setTimeout(function () { $('#deduction-line-' + id).css('background', 'rgba(255, 255, 255, 1)'); }, 2000);
+
+					$('#deduct-charges-' + id).html('Submit');
+
 
 				}
 
 			}
 
 		});
-	    
-	    
+
+
 	});
-	$('#faqForm').on('submit', function(e){
-	    
-	    e.preventDefault();
-	    
-	    $('.faq-but').val("Uploading...");
-	    
-	    var question = $('#question').val();
-    
+	$('#faqForm').on('submit', function (e) {
+
+		e.preventDefault();
+
+		$('.faq-but').val("Uploading...");
+
+		var question = $('#question').val();
+
 		var answer = $('#answer').val();
 
 		var faq_order = $('#faq-order').val();
-		
-		var filteredList = $('.float-txt').filter(function(){
-    
+
+		var filteredList = $('.float-txt').filter(function () {
+
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
-			filteredList.css("border","1px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "1px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
-	    
-	    if(!$('#faq-id').val()){
-    
-    		var data = {
-    
-    			'question' : question,
-    
-    			'answer' : answer,
-    			
-    			'faq_order' : faq_order
-    
-    		};
-    
-    		$.ajaxSetup ({ cache: false });
-    		
-    		$.ajax({
-    			url: baseUrl+"admin/insertFaq",
-    			
-    			type: "POST",
-    			
-    			async: true,
-    			
-    			data: data,
-    			
-    			success: function(data) {
-    
-    				if( data == 1 ){
-    
-    					$('.faq-but').val("Upload Entry");
-    
-    					alert("successful!");
-    
-    					$('.txt-f').val("");
-    
-    				}else if( data == 0){
-    				    
-    				    $('.faq-but').val("Upload Entry");
-    
-    					alert("Error uploading entry"+data.msg);
-    					
-    					return false;
-    
-    				}
-    
-    			}
-    
-    		});
-	    }else{
-	        
-	        var faq_id = $('#faq-id').val();
-	        
-	        var data = {
-    
-    			'question' : question,
-    
-    			'answer' : answer,
-    			
-    			'faq_order' : faq_order,
-    			
-    			'faq_id' : faq_id
-    
-    		};
-    
-    		$.ajaxSetup ({ cache: false });
-    		
-    		$.ajax({
-    		    
-    			url: baseUrl+"admin/editFaq",
-    			
-    			type: "POST",
-    			
-    			async: true,
-    			
-    			data: data,
-    			
-    			success: function(data) {
-    
-    				if( data == 1 ){
-    
-    					alert("Successfully edited!");
-    					
-    					$('.faq-but').val("Upload Entry");
-    
-    					$('.txt-f').val("");
-    
-    				}else if( data == 0){
-    
-    					alert("Error editing entry"+data.msg);
-    					
-    					$('.faq-but').val("Upload Entry");
-    					
-    					return false;
-    
-    				}
-    
-    			}
-    
-    		});
-	        
-	    }
+
+		if (!$('#faq-id').val()) {
+
+			var data = {
+
+				'question': question,
+
+				'answer': answer,
+
+				'faq_order': faq_order
+
+			};
+
+			$.ajaxSetup({ cache: false });
+
+			$.ajax({
+				url: baseUrl + "admin/insertFaq",
+
+				type: "POST",
+
+				async: true,
+
+				data: data,
+
+				success: function (data) {
+
+					if (data == 1) {
+
+						$('.faq-but').val("Upload Entry");
+
+						alert("successful!");
+
+						$('.txt-f').val("");
+
+					} else if (data == 0) {
+
+						$('.faq-but').val("Upload Entry");
+
+						alert("Error uploading entry" + data.msg);
+
+						return false;
+
+					}
+
+				}
+
+			});
+		} else {
+
+			var faq_id = $('#faq-id').val();
+
+			var data = {
+
+				'question': question,
+
+				'answer': answer,
+
+				'faq_order': faq_order,
+
+				'faq_id': faq_id
+
+			};
+
+			$.ajaxSetup({ cache: false });
+
+			$.ajax({
+
+				url: baseUrl + "admin/editFaq",
+
+				type: "POST",
+
+				async: true,
+
+				data: data,
+
+				success: function (data) {
+
+					if (data == 1) {
+
+						alert("Successfully edited!");
+
+						$('.faq-but').val("Upload Entry");
+
+						$('.txt-f').val("");
+
+					} else if (data == 0) {
+
+						alert("Error editing entry" + data.msg);
+
+						$('.faq-but').val("Upload Entry");
+
+						return false;
+
+					}
+
+				}
+
+			});
+
+		}
 
 	});
-	
-	$('.faq-edit').on('click', function(){
-	    
-	    var id = $(this).attr("id").replace(/faq-/, '');
-	    
-	    $('#faq-'+id).html("Wait...");
-	    
-	    var data = { "id" : id };
-	    
-	    $.ajaxSetup ({ cache: false });
-	    
-    	$.ajax({		
-    
-			url: baseUrl+"admin/getFaqDetails/",
+
+	$('.faq-edit').on('click', function () {
+
+		var id = $(this).attr("id").replace(/faq-/, '');
+
+		$('#faq-' + id).html("Wait...");
+
+		var data = { "id": id };
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+
+			url: baseUrl + "admin/getFaqDetails/",
 			type: "POST",
-			dataType : 'json',
+			dataType: 'json',
 			data: data,
 
-			success: function(data) {
-			    
-			    if(data.result == 'success'){
-    			    
-    			    $('#question').val(data.question);
-    			    
-    			    $('#answer').val(data.answer);
-    			    
-    			    $('#faq-order').val(data.faq_order);
-    			    
-    			    $('.faq-id').val(data.id);
-    			    
-    			    $('.modal-backdrop').css('visibility', 'visible');
-    			    
-            		$('.modal-backdrop').addClass('show fade');
-            		
-            		$('body').addClass('modal-open');
-            		
-            		$('#exampleModalLong').addClass('show');
-            		
-            		$('#exampleModalLong').css('display', 'block');
-            		
-            		$('#exampleModalLong').css('padding-right', '17px');
-			    
-    			    $('#faq-'+id).html("Edit");
-			    }else{
-			        
-			        $('#faq-'+id).html("Edit");
-			        
-			        alert("Unknown error");
-			        
-			    }
+			success: function (data) {
+
+				if (data.result == 'success') {
+
+					$('#question').val(data.question);
+
+					$('#answer').val(data.answer);
+
+					$('#faq-order').val(data.faq_order);
+
+					$('.faq-id').val(data.id);
+
+					$('.modal-backdrop').css('visibility', 'visible');
+
+					$('.modal-backdrop').addClass('show fade');
+
+					$('body').addClass('modal-open');
+
+					$('#exampleModalLong').addClass('show');
+
+					$('#exampleModalLong').css('display', 'block');
+
+					$('#exampleModalLong').css('padding-right', '17px');
+
+					$('#faq-' + id).html("Edit");
+				} else {
+
+					$('#faq-' + id).html("Edit");
+
+					alert("Unknown error");
+
+				}
 
 			}
 
-    	});
-	    
+		});
+
 	});
-	
-	$(document).on("click", ".close", function(){
-	    
-	    $('.modal-backdrop').css('visibility', 'hidden');
+
+	$(document).on("click", ".close", function () {
+
+		$('.modal-backdrop').css('visibility', 'hidden');
 		$('.modal-backdrop').removeClass('show fade');
 		$('body').removeClass('modal-open');
 		$('#exampleModalLong').removeClass('show');
 		$('#exampleModalLong').css('display', 'none');
 		$('#exampleModalLong').css('padding-right', '0');
-		
+
 		$('.txt-f').val("");
-		
+
 	});
-	
-	$('.switch-property').click(function(){
-	    
-	    //$('.prop-search-field').hide();
-	    
-	    var ids = $(this).attr('id').replace(/switch-/, '').split("-");
-	    
-	    if($('.prop-search-field-'+ids[1]).is(":hidden")){
-	    
-    	    $(this).html("Close Option");
-    	    
-    	    $('.prop-search-field-'+ids[1]).show();
-    	    
-    	}else{
-    	 
-    	    $('#switch-'+ids[0]+'-'+ids[1]+'-'+ids['2']+'-'+ids['3']).html("Open Option");
-    	    
-    	    $('.prop-search-field-'+ids[1]).hide();
-    	}
-	    
+
+	$('.switch-property').click(function () {
+
+		//$('.prop-search-field').hide();
+
+		var ids = $(this).attr('id').replace(/switch-/, '').split("-");
+
+		if ($('.prop-search-field-' + ids[1]).is(":hidden")) {
+
+			$(this).html("Close Option");
+
+			$('.prop-search-field-' + ids[1]).show();
+
+		} else {
+
+			$('#switch-' + ids[0] + '-' + ids[1] + '-' + ids['2'] + '-' + ids['3']).html("Open Option");
+
+			$('.prop-search-field-' + ids[1]).hide();
+		}
+
 	});
-	
-	$('#bookingStatusChange').submit(function(){
-	    
-	    var reason = $('#booking-status').val();
-	    
-	    var status_note = $('#status-note').val();
-	    
-	    var user_id = $('#user_id').val();
-	    
-	    var booking_id = $('#booking_id').val();
-	    
-	    var move_out_date = $('#move_out_date').val();
-	    
-	    var data = {"reason" : reason, "status_note" : status_note, "user_id" : user_id, "booking_id" : booking_id, "move_out_date" : move_out_date};
-	    
-	    $.ajaxSetup ({ cache: false });
-	    
-    	$.ajax({		
-    
-			url: baseUrl+"admin/changeBookingStatus/",
-			
+
+	$('#bookingStatusChange').submit(function () {
+
+		var reason = $('#booking-status').val();
+
+		var status_note = $('#status-note').val();
+
+		var user_id = $('#user_id').val();
+
+		var booking_id = $('#booking_id').val();
+
+		var move_out_date = $('#move_out_date').val();
+
+		var data = { "reason": reason, "status_note": status_note, "user_id": user_id, "booking_id": booking_id, "move_out_date": move_out_date };
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+
+			url: baseUrl + "admin/changeBookingStatus/",
+
 			type: "POST",
-			
-			async : true,
-			
+
+			async: true,
+
 			data: data,
 
-			success: function(data) {
-			    
-			    if(data == 1){
-			        
-			        alert("Successful!");
-			        
-			        $('#status-note').val('');
+			success: function (data) {
+
+				if (data == 1) {
+
+					alert("Successful!");
+
+					$('#status-note').val('');
 
 					location.reload(true);
-    			    
-			    }else{
-			        alert(data);
-			        
-			        
-			        return false;
-			        
-			    }
+
+				} else {
+					alert(data);
+
+
+					return false;
+
+				}
 
 			}
 
-    	});
-	    
+		});
+
 	});
-	
-	$('.activate-switch').click(function(){
-	    
-	    $(this).html("Processing...");
-	    
-	    var ids = $(this).attr('id').replace(/activate-/, '').split("-");
-	    
-	    var bookingID = ids[0];
-	    
-	    var userID = ids[2];
-	    
-	    var propertyID = ids[1];
-	    
-	    var verificationID = ids[3];
-	    
-	    var new_propID = $('#prop-id-'+propertyID).val();
-	    
-	    var move_in_date = $('#move-in-date-'+propertyID).val();
-	    
-	    var payment_plan = $('#payment-plan-'+propertyID).val();
-	    
-	    var security_deposit = $('#security-dep-'+propertyID).val();
-	    
-	    var renting_as = $('#renting-as-'+propertyID).val();
-	    
-	    var period_paid = $('#period-'+propertyID).val();
-	    
-	    if(new_propID == '' || move_in_date == '' || payment_plan == '' || security_deposit == '' || renting_as == ''){
-	        alert("Please fill in all fields");
-	        
-	        $('#activate-'+ids[0]+'-'+ids[1]+'-'+ids['2']+'-'+ids['3']).html("Activate switch");
-	        
-	        return false;
-	    }
-	    
-	    //alert(bookingID+' - '+userID+' - '+propertyID+' - '+verificationID);
-	    
-	    var data = {"bookingID" : bookingID, "userID" : userID, "propertyID" : propertyID, "verificationID" : verificationID, "newPropertyID" : new_propID, "move_in_date" : move_in_date, "paymentPlan" : payment_plan, "securityDeposit" : security_deposit, "renting_as" : renting_as, "period_paid" : period_paid};
-	    
-	    $.ajaxSetup ({ cache: false });
-	    
-    	$.ajax({		
-    
-			url: baseUrl+"admin/switchProperty/",
-			
+
+	$('.activate-switch').click(function () {
+
+		$(this).html("Processing...");
+
+		var ids = $(this).attr('id').replace(/activate-/, '').split("-");
+
+		var bookingID = ids[0];
+
+		var userID = ids[2];
+
+		var propertyID = ids[1];
+
+		var verificationID = ids[3];
+
+		var new_propID = $('#prop-id-' + propertyID).val();
+
+		var move_in_date = $('#move-in-date-' + propertyID).val();
+
+		var payment_plan = $('#payment-plan-' + propertyID).val();
+
+		var security_deposit = $('#security-dep-' + propertyID).val();
+
+		var renting_as = $('#renting-as-' + propertyID).val();
+
+		var period_paid = $('#period-' + propertyID).val();
+
+		if (new_propID == '' || move_in_date == '' || payment_plan == '' || security_deposit == '' || renting_as == '') {
+			alert("Please fill in all fields");
+
+			$('#activate-' + ids[0] + '-' + ids[1] + '-' + ids['2'] + '-' + ids['3']).html("Activate switch");
+
+			return false;
+		}
+
+		//alert(bookingID+' - '+userID+' - '+propertyID+' - '+verificationID);
+
+		var data = { "bookingID": bookingID, "userID": userID, "propertyID": propertyID, "verificationID": verificationID, "newPropertyID": new_propID, "move_in_date": move_in_date, "paymentPlan": payment_plan, "securityDeposit": security_deposit, "renting_as": renting_as, "period_paid": period_paid };
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+
+			url: baseUrl + "admin/switchProperty/",
+
 			type: "POST",
-			
-			async : true,
-			
+
+			async: true,
+
 			data: data,
 
-			success: function(data) {
-			    
-			    if(data == 1){
-			        
-			        alert("Successful!");
+			success: function (data) {
+
+				if (data == 1) {
+
+					alert("Successful!");
 
 					location.reload(true);
-    			    
-			    }else{
-			        alert(data);
-			        
-			        $('#activate-'+ids[0]+'-'+ids[1]+'-'+ids['2']+'-'+ids['3']).html("Activate switch");
-			        
-			        return false;
-			        
-			    }
+
+				} else {
+					alert(data);
+
+					$('#activate-' + ids[0] + '-' + ids[1] + '-' + ids['2'] + '-' + ids['3']).html("Activate switch");
+
+					return false;
+
+				}
 
 			}
 
-    	});
-	    
+		});
+
 	});
-	
-	$('.change-status').click(function(){
-	    
-        var actions = $(this).attr('id').split('-');
-        
-        var bookingID = actions[0];
-        
-        var action = actions[1];
-        
-        var data = {"bookingID" : bookingID, "action" : action};
-        
-        if(confirm("Are you sure you want to proceed?")){
-        
-            $.ajaxSetup ({ cache: false });
-        
-        	$.ajax({
-        
-        		url : baseUrl+'admin/changeStayoneBookingStatus',
-        
-        		type: "POST",
-        
-        		data: data,
-        
-        		success	: function (data){
-        
-        			if(data == 1){
-        
-        				alert("Successful!");
-        
-        				location.reload();
-        
-        			}else{
-        
-        				alert(data);
-        				
-        				return false;
-        
-        			}				
-        
-        		},
-        
-        		error: function(){
-        
-        			alert("Error!");
-        
-        			return false;
-        
-        		}
-        	});
-        }else{
-            
-            return false;
-            
-        }
-        
-    });
-    
-    $('.approve-finance').click(function(){
-	    
-        var ids = $(this).attr('id').replace(/finance-/, '').split('-');
-        
-        var refID = ids[0];
-        
-        var userID = ids[1];
-        
-        var data = {"refID" : refID, "userID" : userID};
-        
-        if(confirm("Are you sure you want to proceed?")){
-        
-            $.ajaxSetup ({ cache: false });
-        
-        	$.ajax({
-        
-        		url : baseUrl+'admin/approve_finance',
-        
-        		type: "POST",
-        
-        		data: data,
-        
-        		success	: function (data){
-        
-        			if(data == 1){
-        
-        				alert("Successful!");
-        
-        				location.reload();
-        
-        			}else{
-        
-        				alert(data);
-        				
-        				return false;
-        
-        			}				
-        
-        		},
-        
-        		error: function(){
-        
-        			alert("Error!");
-        
-        			return false;
-        
-        		}
-        	});
-        }else{
-            
-            return false;
-            
-        }
-        
-    });
-	
-	$('.new-booking').click(function(){
-	    
-	    $(this).html("Wait...");
-	    
-	    var ids = $(this).attr('id').replace(/book-id-/, '').split("-");
-	    
-	    var userID = ids[0];
-	    
-	    var verificationID = ids[1];
-	    
-	    var new_propID = $('#book-prop-id').val();
-	    
-	    var move_in_date = $('#new-move-in-date').val();
-	    
-	    var payment_plan = $('#new-payment-plan').val();
-	    
-	    var renting_as = $('#new-renting-as').val();
-	    
-	    var duration = $('#new-duration').val();
-	    
-	    if(new_propID == '' || move_in_date == '' || payment_plan == '' || duration == ''){
-	        alert("Please fill in all fields");
-	        
-	        $('#book-id-'+ids[0]+'-'+ids[1]).html("Book Now");
-	        
-	        return false;
-	    }
-	    
-	    
-	    var data = {"userID" : userID, "verificationID" : verificationID, "propID" : new_propID, "move_in_date" : move_in_date, "paymentPlan" : payment_plan, "booked_as" : renting_as, "duration" : duration};
-	    
-	    $.ajaxSetup ({ cache: false });
-	    
-    	$.ajax({		
-    
-			url: baseUrl+"admin/insertNewBooking/",
-			
+
+	$('.change-status').click(function () {
+
+		var actions = $(this).attr('id').split('-');
+
+		var bookingID = actions[0];
+
+		var action = actions[1];
+
+		var data = { "bookingID": bookingID, "action": action };
+
+		if (confirm("Are you sure you want to proceed?")) {
+
+			$.ajaxSetup({ cache: false });
+
+			$.ajax({
+
+				url: baseUrl + 'admin/changeStayoneBookingStatus',
+
+				type: "POST",
+
+				data: data,
+
+				success: function (data) {
+
+					if (data == 1) {
+
+						alert("Successful!");
+
+						location.reload();
+
+					} else {
+
+						alert(data);
+
+						return false;
+
+					}
+
+				},
+
+				error: function () {
+
+					alert("Error!");
+
+					return false;
+
+				}
+			});
+		} else {
+
+			return false;
+
+		}
+
+	});
+
+	$('.approve-finance').click(function () {
+
+		var ids = $(this).attr('id').replace(/finance-/, '').split('-');
+
+		var refID = ids[0];
+
+		var userID = ids[1];
+
+		var data = { "refID": refID, "userID": userID };
+
+		if (confirm("Are you sure you want to proceed?")) {
+
+			$.ajaxSetup({ cache: false });
+
+			$.ajax({
+
+				url: baseUrl + 'admin/approve_finance',
+
+				type: "POST",
+
+				data: data,
+
+				success: function (data) {
+
+					if (data == 1) {
+
+						alert("Successful!");
+
+						location.reload();
+
+					} else {
+
+						alert(data);
+
+						return false;
+
+					}
+
+				},
+
+				error: function () {
+
+					alert("Error!");
+
+					return false;
+
+				}
+			});
+		} else {
+
+			return false;
+
+		}
+
+	});
+
+	$('.new-booking').click(function () {
+
+		$(this).html("Wait...");
+
+		var ids = $(this).attr('id').replace(/book-id-/, '').split("-");
+
+		var userID = ids[0];
+
+		var verificationID = ids[1];
+
+		var new_propID = $('#book-prop-id').val();
+
+		var move_in_date = $('#new-move-in-date').val();
+
+		var payment_plan = $('#new-payment-plan').val();
+
+		var renting_as = $('#new-renting-as').val();
+
+		var duration = $('#new-duration').val();
+
+		if (new_propID == '' || move_in_date == '' || payment_plan == '' || duration == '') {
+			alert("Please fill in all fields");
+
+			$('#book-id-' + ids[0] + '-' + ids[1]).html("Book Now");
+
+			return false;
+		}
+
+
+		var data = { "userID": userID, "verificationID": verificationID, "propID": new_propID, "move_in_date": move_in_date, "paymentPlan": payment_plan, "booked_as": renting_as, "duration": duration };
+
+		$.ajaxSetup({ cache: false });
+
+		$.ajax({
+
+			url: baseUrl + "admin/insertNewBooking/",
+
 			type: "POST",
-			
-			async : true,
-			
+
+			async: true,
+
 			data: data,
 
-			success: function(data) {
-			    
-			    if(data == 1){
-			        
-			        alert("Successful!");
+			success: function (data) {
+
+				if (data == 1) {
+
+					alert("Successful!");
 
 					location.reload(true);
-    			    
-			    }else{
-			        alert(data);
-			        
-			        $('#book-id-'+ids[0]+'-'+ids[1]).html("Book Now");
-			        
-			        return false;
-			        
-			    }
+
+				} else {
+					alert(data);
+
+					$('#book-id-' + ids[0] + '-' + ids[1]).html("Book Now");
+
+					return false;
+
+				}
 
 			}
 
-    	});
-	    
+		});
+
 	});
-	$('#notificationForm').submit(function(e){
+
+	// Notification tab
+
+	$('#notificationForm').submit(function (e) {
 
 		e.preventDefault();
 
@@ -6044,23 +6045,25 @@ $(document). on('click', '.close-int', function(){
 
 		var link = $.trim($('#notificationLink').val());
 
+		var platform = $('#selectSite').val();
+
 		var startDate = $('#startFrom').val();
 
 		var endDate = $('#ends').val();
-		
-		var filteredList = $('.verify-txt').filter(function(){
+
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.submit-but').html("Submit");
 
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
@@ -6068,42 +6071,45 @@ $(document). on('click', '.close-int', function(){
 
 		var data = {
 
-			'title' : title,
+			'title': title,
 
-			'link' : link,
+			'link': link,
 
-			'startDate' : startDate,
+			'platform': platform,
 
-			'endDate' : endDate
+			'startDate': startDate,
+
+			'endDate': endDate
 
 		};
-        
-        $.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
+
 		$.ajax({
 
-			url : baseUrl+'admin/addNotification/', 
+			url: baseUrl + 'admin/addNotification/',
 
 			type: "POST",
-			
-			async : true,
-			
+
+			async: true,
+
 			data: data,
 
-			success	: function (data){
+			success: function (data) {
 
-				if(data == 1){
-				    
-				    alert("Successfully uploaded!");
+				if (data == 1) {
+
+					alert("Successfully uploaded!");
 
 					$('.submit-but').html("Submit");
-					
+
 					window.location.reload();
 
-				}else{
+				} else {
 
-				    alert("Upload error: "+data);
-				    
-				    console.log(data);
+					alert("Upload error: " + data);
+
+					console.log(data);
 
 					$('.submit-but').html("Submit");
 
@@ -6115,10 +6121,9 @@ $(document). on('click', '.close-int', function(){
 
 		});
 
-		
-
 	});
-	$('#editNotificationForm').submit(function(e){
+
+	$('#editNotificationForm').submit(function (e) {
 
 		e.preventDefault();
 
@@ -6127,26 +6132,28 @@ $(document). on('click', '.close-int', function(){
 		var title = $.trim($('#notificationTitle').val());
 
 		var link = $.trim($('#notificationLink').val());
+
+		var platform = $('#selectSite').val();
 
 		var startDate = $('#startFrom').val();
 
 		var endDate = $('#ends').val();
 
 		var id = $('#notification-id').val();
-		
-		var filteredList = $('.verify-txt').filter(function(){
+
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('.submit-but').html("Save");
 
 			$('.form-result').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>Fill all compulsory fields</div>');
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
@@ -6154,44 +6161,47 @@ $(document). on('click', '.close-int', function(){
 
 		var data = {
 
-			'title' : title,
+			'title': title,
 
-			'link' : link,
+			'link': link,
 
-			'startDate' : startDate,
+			'platform': platform,
 
-			'endDate' : endDate,
-			
-			'id' : id
+			'startDate': startDate,
+
+			'endDate': endDate,
+
+			'id': id
 
 		};
-        
-        $.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
+
 		$.ajax({
 
-			url : baseUrl+'admin/editNotification/', 
+			url: baseUrl + 'admin/editNotification/',
 
 			type: "POST",
-			
-			async : true,
-			
+
+			async: true,
+
 			data: data,
 
-			success	: function (data){
+			success: function (data) {
 
-				if(data == 1){
-				    
-				    alert("Saved!");
+				if (data == 1) {
+
+					alert("Saved!");
 
 					$('.submit-but').html("Save");
-					
+
 					window.location.reload();
 
-				}else{
+				} else {
 
-				    alert("Upload error: "+data);
-				    
-				    console.log(data);
+					alert("Upload error: " + data);
+
+					console.log(data);
 
 					$('.submit-but').html("Save");
 
@@ -6204,86 +6214,86 @@ $(document). on('click', '.close-int', function(){
 		});
 
 	});
-	
-	$(document).on('change','.new-user',function(){
-		
+
+	$(document).on('change', '.new-user', function () {
+
 		var user = $('.new-user').val();
-		
+
 		alert(user);
 		return false;
-		
-		if(user == 'yes'){
-			
-		   $('.payment-plan-period-spc').show();
-			
-		}else{
-			
+
+		if (user == 'yes') {
+
+			$('.payment-plan-period-spc').show();
+
+		} else {
+
 			$('.payment-plan-period-spc').hide();
-			
+
 		}
 	});
-	
-	$('#new-user').change(function(){
-	    
-       if(this.checked)
-          $('.user-fields').show();
-       else
-          $('.user-fields').hide();
-          
-    });
-	
-	$('#adminSendShares').submit(function(e){
+
+	$('#new-user').change(function () {
+
+		if (this.checked)
+			$('.user-fields').show();
+		else
+			$('.user-fields').hide();
+
+	});
+
+	$('#adminSendShares').submit(function (e) {
 
 		e.preventDefault();
 
 		$('#send-but').html("Sending...");
 
-		var filteredList = $('.verify-txt').filter(function(){
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('#send-but').html("Send Shares");
 
 			alert('Fill all fields accordingly');
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
 		var data = $(this).serializeArray();
-		
-        $.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 		$.ajax({
 
-			url : baseUrl+'admin/sendShares/', 
+			url: baseUrl + 'admin/sendShares/',
 
 			type: "POST",
-			
-			dataType : "json",
-			
+
+			dataType: "json",
+
 			data: data,
 
-			success	: function (data){
+			success: function (data) {
 
-				if(data.response == 'success'){
-				    
-				    alert("Success: "+data.msg);
+				if (data.response == 'success') {
+
+					alert("Success: " + data.msg);
 
 					$('#send-but').html("Send Shares");
-					
+
 					window.location.reload();
 
-				}else{
+				} else {
 
-				    alert("Error: "+data.msg);
-				    
-				    console.log(data.msg);
+					alert("Error: " + data.msg);
+
+					console.log(data.msg);
 
 					$('#send-but').html("Send Shares");
 
@@ -6296,60 +6306,60 @@ $(document). on('click', '.close-int', function(){
 		});
 
 	});
-	
-	
-	$('#adminBuytoletPromoForm').submit(function(e){
+
+
+	$('#adminBuytoletPromoForm').submit(function (e) {
 
 		e.preventDefault();
 
 		$('#send-but').html("Publishing...");
 
-		var filteredList = $('.verify-txt').filter(function(){
+		var filteredList = $('.verify-txt').filter(function () {
 
 			return $(this).val() == "";
 
 		});
 
-		if(filteredList.length > 0){
+		if (filteredList.length > 0) {
 
 			$('#send-but').html("Publish");
 
 			alert('Fill required fields accordingly');
 
-			filteredList.css("border","2px solid rgba(251,1,1,0.5)");
+			filteredList.css("border", "2px solid rgba(251,1,1,0.5)");
 
 			return false;
 
 		}
 
 		var data = $(this).serializeArray();
-		
-        $.ajaxSetup ({ cache: false });
+
+		$.ajaxSetup({ cache: false });
 		$.ajax({
 
-			url : baseUrl+'admin/publishPromo/', 
+			url: baseUrl + 'admin/publishPromo/',
 
 			type: "POST",
-			
-			dataType : "json",
-			
+
+			dataType: "json",
+
 			data: data,
 
-			success	: function (data){
+			success: function (data) {
 
-				if(data.response == 'success'){
-				    
-				    alert("Success: "+data.msg);
+				if (data.response == 'success') {
+
+					alert("Success: " + data.msg);
 
 					$('#send-but').html("Publish");
-					
+
 					window.location.reload();
 
-				}else{
+				} else {
 
-				    alert("Error: "+data.msg);
-				    
-				    console.log(data.details);
+					alert("Error: " + data.msg);
+
+					console.log(data.details);
 
 					$('#send-but').html("Publish");
 
@@ -6364,10 +6374,9 @@ $(document). on('click', '.close-int', function(){
 	});
 });
 
-function getsVal(id)
-{
+function getsVal(id) {
 	let inputId = document.getElementById("sub-propty");
-	
+
 	let inputTitle = document.getElementById("live_search")
 
 	var conT = document.getElementById(id).className;
