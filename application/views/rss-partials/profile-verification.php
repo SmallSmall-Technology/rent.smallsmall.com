@@ -28,7 +28,7 @@
                          <div class="col-md-6 col-12">
                              <div class="form-group">
                                  <div class="customized-select">
-                                     <input type="text" class="form-control verify-txt-f" id="first-name" placeholder="<?php echo !empty($fname) ? $fname : 'Firstname'; ?>">
+                                     <input type="text" class="form-control verify-txt-f" id="first-name" placeholder="<?php echo !empty($fname) ? $fname : 'Firstname'; ?>" readonly>
                                  </div>
                              </div>
                          </div>
@@ -37,7 +37,7 @@
                          <div class="col-md-6 col-12">
                              <div class="form-group">
                                  <div class="customized-select">
-                                     <input type="text" class="form-control verify-txt-f" id="last-name" placeholder="<?php echo !empty($lname) ? $lname : 'Lastname'; ?>">
+                                     <input type="text" class="form-control verify-txt-f" id="last-name" placeholder="<?php echo !empty($lname) ? $lname : 'Lastname'; ?>" readonly>
                                  </div>
                              </div>
                          </div>
@@ -46,7 +46,7 @@
                          <div class="col-md-6 col-12">
                              <div class="form-group">
                                  <div class="customized-select">
-                                     <input type="text" class="form-control verify-txt-f" id="email" placeholder="<?php echo !empty($email) ? $email : 'Email'; ?>">
+                                     <input type="text" class="form-control verify-txt-f" id="email" placeholder="<?php echo !empty($email) ? $email : 'Email'; ?>" readonly>
                                  </div>
                              </div>
                          </div>
@@ -55,7 +55,7 @@
                          <div class="col-md-6 col-12">
                              <div class="form-group">
                                  <div class="customized-select">
-                                     <input type="text" class="form-control verify-txt-f" id="phone" placeholder="<?php echo !empty($phone) ? $phone : 'Phone Number'; ?>">
+                                     <input type="text" class="form-control verify-txt-f" id="phone" placeholder="<?php echo !empty($phone) ? $phone : 'Phone Number'; ?>" readonly>
                                  </div>
                              </div>
                          </div>
