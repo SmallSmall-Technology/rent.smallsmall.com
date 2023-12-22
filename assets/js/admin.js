@@ -6137,6 +6137,8 @@ $(document). on('click', '.close-int', function(){
 
 		var link = $.trim($('#notificationLink').val());
 
+		var platform = $('#selectSite').val();
+
 		var startDate = $('#startFrom').val();
 
 		var endDate = $('#ends').val();
@@ -6164,6 +6166,8 @@ $(document). on('click', '.close-int', function(){
 			'title' : title,
 
 			'link' : link,
+
+			'platform' : platform,
 
 			'startDate' : startDate,
 

@@ -4411,6 +4411,9 @@ class Rss_model extends CI_Model {
 	    $this->db->where('start_date <=', $today);
 	    
 	    $this->db->where('end_date >=', $today);
+
+		// Adding a condition to filter by notification_platform, either RSS or when both
+		$this->db->where_in('notification_platform', array('RSS', 'All'));
 	    
 	    $this->db->order_by('end_date', 'DESC');
 
@@ -4420,4 +4423,5 @@ class Rss_model extends CI_Model {
 	    
 	    return $query->row_array();
 	}
+
 }

@@ -8854,6 +8854,7 @@ class Admin extends CI_Controller
 			echo 0;
 		}
 	}
+
 	public function addNotification()
 	{
 
@@ -8861,28 +8862,34 @@ class Admin extends CI_Controller
 
 		$link = $this->input->post('link');
 
+		$platform = $this->input->post('platform');
+
 		$startDate = $this->input->post('startDate');
 
 		$endDate = $this->input->post('endDate');
 
 		$userID = $this->session->userdata('adminID');
 
-		$res = $this->admin_model->insertNotification($title, $link, $startDate, $endDate);
+		$res = $this->admin_model->insertNotification($title, $link, $platform, $startDate, $endDate);
 
 		if ($res) {
 
 			echo 1;
+
 		} else {
 
 			echo 0;
 		}
 	}
+	
 	public function editNotification()
 	{
 
 		$title = $this->input->post('title');
 
 		$link = $this->input->post('link');
+
+		$platform = $this->input->post('platform');
 
 		$startDate = $this->input->post('startDate');
 
@@ -8892,14 +8899,16 @@ class Admin extends CI_Controller
 
 		$userID = $this->session->userdata('adminID');
 
-		$res = $this->admin_model->editNotification($title, $link, $startDate, $endDate, $id);
+		$res = $this->admin_model->editNotification($title, $link, $platform, $startDate, $endDate, $id);
 
 		if ($res) {
 
 			echo 1;
+
 		} else {
 
 			echo 0;
+
 		}
 	}
 

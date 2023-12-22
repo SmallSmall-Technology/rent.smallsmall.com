@@ -1275,7 +1275,6 @@ class Pages extends CI_Controller {
 
 		$data['notifications'] = $this->rss_model->fetchNotification();
 
-
 		//Use the country code to display the states
 
 		$data['states'] = $this->rss_model->fetchStates($country['id']);

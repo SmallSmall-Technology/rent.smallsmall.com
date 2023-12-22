@@ -1698,11 +1698,14 @@ class Admin_model extends CI_Model {
 		return $this->db->insert('blog_tbl', $this);
 
 	}
-	public function insertNotification($title, $link, $startDate, $endDate){
+
+	public function insertNotification($title, $link, $platform, $startDate, $endDate){
 
 		$this->message = $title;
 
 		$this->notification_link = $link;
+
+		$this->notification_platform = $platform;
 
 		$this->start_date = $startDate;
 
@@ -1713,9 +1716,10 @@ class Admin_model extends CI_Model {
 		return $this->db->insert('notification_tbl', $this);
 
 	}
-	public function editNotification($title, $link, $startDate, $endDate, $id){
+
+	public function editNotification($title, $link, $platform, $startDate, $endDate, $id){
 	    
-	    $update = array("message" => $title, "notification_link" => $link, "start_date" => $startDate, "end_date" => $endDate);
+	    $update = array("message" => $title, "notification_link" => $link, "notification_platform" => $platform, "start_date" => $startDate, "end_date" => $endDate);
 		
 		$this->db->where('id', $id);
 
