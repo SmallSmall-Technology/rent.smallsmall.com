@@ -5,19 +5,17 @@
     <!-- Banner section -->
     <section class="banner">
 
-    <!-- Notification -->
-        <?php if(isset($notifications) && !empty($notifications)){ ?>
-        <div id="notification-bar-home" class="notification-bar-home">
-            <div id="notification-container">
-                <span id="notification-icn">New</span>
-                <span id="notification-details"><?php echo $notifications['message']; ?></span>
-                <span id="notification-lnk"
-                  ><a target="_blank" href="<?php echo $notifications['notification_link']; ?>"><i class="fa fa-angle-right"></i></a
-                ></span>
+        <!-- Notification -->
+        <?php if (isset($notifications) && !empty($notifications)) { ?>
+            <div id="notification-bar-home" class="notification-bar-home">
+                <div id="notification-container">
+                    <span id="notification-icn">New</span>
+                    <span id="notification-details" class="notification-details"><?php echo $notifications['message']; ?></span>
+                    <span id="notification-lnk"><a target="_blank" href="<?php echo $notifications['notification_link']; ?>"><i class="fa fa-angle-right"></i></a></span>
+                </div>
             </div>
-        </div>
         <?php } ?>
-    <!-- End Notification -->
+        <!-- End Notification -->
 
         <div class="banner-text">
             <h2>Do you want to pay rent monthly?</h2>
@@ -874,7 +872,23 @@
     </section>
 
     <!-- hopscotch-script -->
-    <script id="hopscotch-script" type="text/javascript">(function (w, d) {if (typeof w === "undefined") return;w.Hopscotch = w.Hopscotch || function () {(w.Hopscotch.q = w.Hopscotch.q || []).push(arguments);};var elm = d.createElement("div");elm.setAttribute("data-widget-host", "hopscotch");elm.setAttribute("data-props-api-key", "4db66c1c-9e8a-431b-b232-06c381199931");d.getElementsByTagName("body")[0].appendChild(elm);var s = d.createElement("script");s.src = "https://app.hopscotch.club/widget.js?";s.async = 1;s.defer = 1;d.getElementsByTagName("body")[0].appendChild(s);  })(window, document);</script>
+    <script id="hopscotch-script" type="text/javascript">
+        (function(w, d) {
+            if (typeof w === "undefined") return;
+            w.Hopscotch = w.Hopscotch || function() {
+                (w.Hopscotch.q = w.Hopscotch.q || []).push(arguments);
+            };
+            var elm = d.createElement("div");
+            elm.setAttribute("data-widget-host", "hopscotch");
+            elm.setAttribute("data-props-api-key", "4db66c1c-9e8a-431b-b232-06c381199931");
+            d.getElementsByTagName("body")[0].appendChild(elm);
+            var s = d.createElement("script");
+            s.src = "https://app.hopscotch.club/widget.js?";
+            s.async = 1;
+            s.defer = 1;
+            d.getElementsByTagName("body")[0].appendChild(s);
+        })(window, document);
+    </script>
     <!-- end hopscotch-script -->
 
     <!--LiveCaller -->
