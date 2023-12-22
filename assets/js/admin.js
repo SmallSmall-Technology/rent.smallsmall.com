@@ -6127,6 +6127,7 @@ $(document). on('click', '.close-int', function(){
     	});
 	    
 	});
+
 	$('#notificationForm').submit(function(e){
 
 		e.preventDefault();
@@ -6215,6 +6216,7 @@ $(document). on('click', '.close-int', function(){
 		
 
 	});
+
 	$('#editNotificationForm').submit(function(e){
 
 		e.preventDefault();
@@ -6224,6 +6226,8 @@ $(document). on('click', '.close-int', function(){
 		var title = $.trim($('#notificationTitle').val());
 
 		var link = $.trim($('#notificationLink').val());
+
+		var platform = $('#selectSite').val();
 
 		var startDate = $('#startFrom').val();
 
@@ -6254,6 +6258,8 @@ $(document). on('click', '.close-int', function(){
 			'title' : title,
 
 			'link' : link,
+
+			'platform' : platform,
 
 			'startDate' : startDate,
 
