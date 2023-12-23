@@ -3510,6 +3510,8 @@ class Admin_model extends CI_Model
 
 		$this->db->from('notification_tbl');
 
+		$this->db->order_by('entry_date', 'DESC');
+
 		$this->db->limit($this->_pageNumber, $this->_offset);
 
 		$query = $this->db->get();

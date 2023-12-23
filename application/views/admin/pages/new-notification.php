@@ -46,7 +46,7 @@
 
 								<div class="position-relative form-group"><label for="notificationTitle" class="col-form-label">Notification Link</label>
 
-									<input name="notificationTitle" id="notificationLink" placeholder="https://www.link.com" type="subject" class="form-control verify-txt">
+									<input name="notificationTitle" id="notificationLink" placeholder="https://www.link.com" type="subject" class="form-control">
 								</div>
 
 								<!-- Select Dropdown for Site -->
