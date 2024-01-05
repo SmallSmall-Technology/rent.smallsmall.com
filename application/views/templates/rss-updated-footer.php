@@ -28,7 +28,7 @@
               </a>
             </div>
             <div style="font-size: 14px" class="col-md-12 d-md-flex justify-content-center d-none">
-              <p>&copy; 2023 Smallsmall Technology</p>
+              <p>&copy; <?php echo date("Y"); ?> Smallsmall Technology</p>
             </div>
             <div class="col-md-12 d-md-none d-flex flex-column align-items-center mb-5">
               <h5 class="mb-2">Follow Us</h5>
