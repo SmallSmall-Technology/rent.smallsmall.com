@@ -8186,6 +8186,7 @@ class Admin extends CI_Controller
 		} else {
 
 			echo 0;
+
 		}
 	}
 

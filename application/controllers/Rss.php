@@ -2716,7 +2716,7 @@ class Rss extends CI_Controller
 					if ($responseEmail) {
 						echo 1;
 					} else {
-						echo 0;
+						echo "The email could not be sent. Please contact support for assistance.";
 					}
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
@@ -4695,7 +4695,7 @@ public function uploadIdentification($folder)
 
 				} else {
 
-					echo 1;
+					echo "The email could not be sent. Please contact support for assistance.";
 				}
 
 			} else {
