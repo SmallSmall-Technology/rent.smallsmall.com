@@ -30,7 +30,7 @@
                                  <div class="customized-select">
                                      <!-- <input type="text" class="rss-text-f light-blue-bg verify-txt-f" id="first-name" /> -->
                                      <!-- <input type="text" class="form-control verify-txt-f" id="first-name" placeholder="Firstname"> -->
-                                     <input type="text" class="form-control" id="first-name" value ="<?php echo !empty($fname) ? $fname : ''; ?>" placeholder="<?php echo !empty($fname) ? $fname : 'Firstname'; ?>" readonly>
+                                     <input type="text" class="form-control" id="first-name" value ="<?php echo !empty($fname) ? $fname : ''; ?>" placeholder="<?php echo !empty($fname) ? $fname : 'Firstname'; ?>" disabled>
                                  </div>
                              </div>
                          </div>
@@ -39,12 +39,8 @@
                          <div class="col-md-6 col-12">
                              <div class="form-group">
                                  <div class="customized-select">
-
-                                     <!-- Hidden input to store the actual value -->
-                                    <!-- <input type="hidden" id="last-name" name="last-name" value="<?php echo !empty($lname) ? $lname : ''; ?>"> -->
-
                                      <!-- <input type="text" class="form-control verify-txt-f" id="last-name" placeholder="Lastname"> -->
-                                     <input type="text" class="form-control" id="last-name" value = "<?php echo !empty($lname) ? $lname : ''; ?>" placeholder="<?php echo !empty($lname) ? $lname : 'Lastname'; ?>" readonly>
+                                     <input type="text" class="form-control" id="last-name" value = "<?php echo !empty($lname) ? $lname : ''; ?>" placeholder="<?php echo !empty($lname) ? $lname : 'Lastname'; ?>" disabled>
                                  </div>
                              </div>
                          </div>
@@ -54,7 +50,7 @@
                              <div class="form-group">
                                  <div class="customized-select">
                                      <!-- <input type="text" class="form-control verify-txt-f" id="email" placeholder="Email"> -->
-                                     <input type="text" class="form-control" id="email" value = "<?php echo !empty($email) ? $email : 'Email'; ?>" placeholder="<?php echo !empty($email) ? $email : 'Email'; ?>" readonly>
+                                     <input type="text" class="form-control" id="email" value = "<?php echo !empty($email) ? $email : 'Email'; ?>" placeholder="<?php echo !empty($email) ? $email : 'Email'; ?>" disabled>
                                  </div>
                              </div>
                          </div>
@@ -63,7 +59,7 @@
                          <div class="col-md-6 col-12">
                              <div class="form-group">
                                  <div class="customized-select">
-                                     <input type="text" class="form-control" id="phone" value ="<?php echo !empty($phone) ? $phone : ''; ?>" placeholder="<?php echo !empty($phone) ? $phone : 'Phone Number'; ?>" readonly>
+                                     <input type="text" class="form-control" id="phone" value ="<?php echo !empty($phone) ? $phone : ''; ?>" placeholder="<?php echo !empty($phone) ? $phone : 'Phone Number'; ?>" disabled>
                                  </div>
                              </div>
                          </div>
@@ -176,8 +172,6 @@
                                  </div>
                              </div>
                          </div>
-
-
 
                          <div class="col-12 mt-5 text-center">
                              <button type="submit" class="btn verify-btn px-5 py-2 rss-form-button verifyBut" id="verifyBut">Next
