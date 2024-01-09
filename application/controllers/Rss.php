@@ -4695,7 +4695,7 @@ public function uploadIdentification($folder)
 
 				} else {
 
-					echo 0;
+					echo 1;
 				}
 
 			} else {
