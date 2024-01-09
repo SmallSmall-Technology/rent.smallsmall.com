@@ -759,7 +759,7 @@ class Loans extends CI_Controller {
 
 			} else {
 
-				echo 0;
+				echo "The email could not be sent. Please contact support for assistance.";
 			}
 		}
 
