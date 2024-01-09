@@ -8161,6 +8161,8 @@ value1&metadata[meta2]=value2*/
 			$data['interest'] = $this->session->userdata('interest');
 		}
 
+		$data['notifications'] = $this->rss_model->fetchNotification();
+		
 		$countries = array('160');
 
 		$data['min'] = $this->rss_model->get_min_rent();

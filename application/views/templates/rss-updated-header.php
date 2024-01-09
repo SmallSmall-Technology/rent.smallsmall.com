@@ -145,6 +145,25 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
 
 <body>
   <header class="container-fluid bg-white header-section p-0">
+
+
+   <!-- Notification tab -->
+   <?php if (isset($notifications) && !empty($notifications)) { ?>
+
+<div class="mb-3 d-flex p-3 justify-content-between align-items-center primary-background">
+  <p class="m-0 font-weight-bold "><?php echo $notifications['message']; ?></p>
+  <span>
+    <a class="text-white" href="<?php echo $notifications['notification_link']; ?>" target="_blank">
+      <i class="fa-solid fa-circle-arrow-right"></i>
+    </a>
+
+  </span>
+</div>
+
+<?php } ?>
+<!-- Notification ends tab-->
+
+
     <!-- <nav class="mb-3 navbar navbar-dark navbar-expand-md text-black fixed-top"> -->
     <nav id="navbar_top" class="navbar navbar-dark navbar-expand-lg text-black bg-white">
       <!-- Brand -->
