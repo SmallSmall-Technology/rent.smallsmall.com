@@ -710,10 +710,10 @@ function shortenText($text, $maxLength)
 
                       </div>
 
-                      <!-- Tracking code for bss - Start of HubSpot Embed Code -->
+                      <!-- Tracking code for inspection details - Start of HubSpot Embed Code -->
 	                        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
                       <!-- End of HubSpot Embed Code -->
-                      
+
                     </div>
                   </div>
                 </div>
@@ -1200,6 +1200,10 @@ function shortenText($text, $maxLength)
 
 
           </div>
+
+          <!-- Tracking code for inspection details - Start of HubSpot Embed Code -->
+              <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
+          <!-- End of HubSpot Embed Code -->
 
         </div>
 
