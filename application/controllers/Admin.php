@@ -7945,16 +7945,16 @@ class Admin extends CI_Controller
 		try {
 
 			// Create a new folder in the S3 bucket
-			$folderPath = 'uploads/buytolet/' . $imageFolder;
+			// $folderPath = 'uploads/buytolet/' . $imageFolder;
 
-			$s3->putObject([
+			// $s3->putObject([
 
-				'Bucket' => $bucketName,
+			// 	'Bucket' => $bucketName,
 
-				'Key' => $folderPath . '/',
+			// 	'Key' => $folderPath . '/',
 
-				'Body' => '',
-			]);
+			// 	'Body' => '',
+			// ]);
 
 			// Insert new property with details and also content from already craeted folder source
 			$views = 0;
