@@ -5771,6 +5771,141 @@ class Admin extends CI_Controller
 		echo json_encode(array('status' => $status, 'msg' => $msg));
 	}
 
+	// public function editBuytoletProperty()
+	// {
+	// 	//Get data from AJAX
+	// 	$propID = $this->input->post('propID');
+	// 	$propName = $this->input->post('propTitle');
+	// 	$propType = $this->input->post('propType');
+	// 	$propDesc = htmlentities($this->input->post('propDesc', ENT_QUOTES));
+	// 	$locationInfo = htmlentities($this->input->post('locationInfo', ENT_QUOTES));
+	// 	$address = $this->input->post('propAddress');
+	// 	$city = $this->input->post('city');
+	// 	$state = $this->input->post('state');
+	// 	$country = $this->input->post('country');
+	// 	$asset_appreciation_1 = $this->input->post('asset_appreciation_1');
+	// 	$asset_appreciation_2 = $this->input->post('asset_appreciation_2');
+	// 	$asset_appreciation_3 = $this->input->post('asset_appreciation_3');
+	// 	$asset_appreciation_4 = $this->input->post('asset_appreciation_4');
+	// 	$asset_appreciation_5 = $this->input->post('asset_appreciation_5');
+	// 	$tenantable = $this->input->post('tenantable');
+	// 	$price = $this->input->post('price');
+	// 	$marketValue = $this->input->post('marketValue');
+	// 	$outrightDiscount = $this->input->post("outrightDiscount");
+	// 	$promo_price = $this->input->post('promo_price');
+	// 	$promo_category = $this->input->post('promo_category');
+	// 	$expected_rent = $this->input->post('expected_rent');
+	// 	$bed = $this->input->post('bed');
+	// 	$toilet = $this->input->post('toilet');
+	// 	$bath = $this->input->post('bath');
+	// 	$payment_plan = $this->input->post('payment_plan');
+	// 	$payment_plan_period = $this->input->post('payment_plan_period');
+	// 	$min_pp_val = $this->input->post('min_pp_val');
+	// 	$mortgage = $this->input->post('mortgage');
+	// 	$propertySize = $this->input->post('propertySize');
+	// 	$pool_buy = $this->input->post('pool_buy');
+	// 	$pooling_units = $this->input->post('pooling_units');
+	// 	$available_units = $this->input->post('available_units');
+	// 	$imageFolder = $this->input->post('imageFolder');
+	// 	$featuredPic = $this->input->post('featuredPic');
+	// 	$investmentType = $this->input->post('investmentType');
+	// 	$floor_level = $this->input->post('floor_level');
+	// 	$construction_lvl = $this->input->post('construction_lvl');
+	// 	$start_date = date('Y-m-d', strtotime($this->input->post('start_date')));
+	// 	$finish_date = date('Y-m-d', strtotime($this->input->post('finish_date')));
+	// 	$maturity_date = date('Y-m-d', strtotime($this->input->post('maturity_date')));
+	// 	$closing_date = date('Y-m-d', strtotime($this->input->post('closing_date')));
+	// 	$hold_period = $this->input->post('hold_period');
+	// 	$co_appr = explode(',', $this->input->post('co_appr'));
+	// 	$co_rent = explode(',', $this->input->post('co_rent'));
+	// 	$lockdownFee = $this->input->post('lockdownFee');
+	// 	$lockdownPeriod = $this->input->post('lockdownPeriod');
+	// 	$status = "";
+
+
+	// 	if ($this->session->has_userdata('adminLoggedIn')) {
+
+	// 		$userID = $this->session->userdata('adminID');
+
+	// 		$file_element_name = 'plan-image';
+
+	// 		/*if($_FILES[$file_element_name]['name']){
+	// 			print_r($_FILES[$file_element_name]['name']);
+	// 		}else{
+	// 			echo "Nothing in here brody!";
+	// 		}*/
+
+
+	// 		if ($_FILES[$file_element_name]['name']) {
+
+
+
+	// 			$config['upload_path'] = './uploads/buytolet/' . $imageFolder . '/floor-plan/';
+
+	// 			$config['allowed_types'] = 'jpg|png|jpeg';
+
+	// 			$config['max_size'] = 1024 * 10;
+
+	// 			$config['encrypt_name'] = FALSE;
+
+	// 			$this->load->library('upload', $config);
+
+	// 			if (!$this->upload->do_upload($file_element_name)) {
+
+	// 				$status = 'error';
+
+	// 				$msg = $this->upload->display_errors('', '');
+	// 			} else {
+
+	// 				$data = $this->upload->data();
+
+
+	// 				$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
+
+	// 				$upl_result = file_get_contents('https://buy.smallsmall.com/upload-images/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan");
+
+	// 				unlink('./tmp/' . $data["file_name"]);
+
+	// 				//Populate the property table
+	// 				$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+
+	// 				if ($property != 0) {
+
+	// 					$status = "success";
+
+	// 					$msg = "Property successfully uploaded";
+	// 				} else {
+	// 					$status = "error";
+
+	// 					$msg = "Could not upload property";
+	// 				}
+	// 			}
+	// 		} else {
+	// 			$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, 'no', $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+
+	// 			if ($property != 0) {
+
+	// 				$status = "success";
+
+	// 				$msg = "Property successfully uploaded";
+	// 			} else {
+	// 				$status = "error";
+
+	// 				$msg = "Could not upload property";
+	// 			}
+	// 		}
+	// 	} else {
+
+	// 		redirect(base_url() . "admin/dashboard", 'refresh');
+	// 	}
+
+	// 	@unlink($_FILES[$file_element_name]);
+
+
+	// 	echo json_encode(array('status' => $status, 'msg' => $msg));
+	// }
+
+	// New that send to s3
 	public function editBuytoletProperty()
 	{
 		//Get data from AJAX
@@ -5827,47 +5962,47 @@ class Admin extends CI_Controller
 
 			$userID = $this->session->userdata('adminID');
 
-			$file_element_name = 'plan-image';
+			require 'vendor/autoload.php'; // Include the AWS SDK
 
-			/*if($_FILES[$file_element_name]['name']){
-				print_r($_FILES[$file_element_name]['name']);
-			}else{
-				echo "Nothing in here brody!";
-			}*/
+			$s3 = new Aws\S3\S3Client([
 
+				'version' => 'latest',
 
-			if ($_FILES[$file_element_name]['name']) {
+				'region' => 'eu-west-1',
 
+			]);
 
+			$bucketName = 'bss-prod-uploads';
 
-				$config['upload_path'] = './uploads/buytolet/' . $imageFolder . '/floor-plan/';
+			$folderPath = 'uploads/buytolet/' . $imageFolder;
 
-				$config['allowed_types'] = 'jpg|png|jpeg';
+			try {
 
-				$config['max_size'] = 1024 * 10;
+				// List objects in the specified S3 folder
+				$objects = $s3->listObjectsV2([
 
-				$config['encrypt_name'] = FALSE;
+					'Bucket' => $bucketName,
 
-				$this->load->library('upload', $config);
+					'Prefix' => $folderPath,
 
-				if (!$this->upload->do_upload($file_element_name)) {
+				]);
 
-					$status = 'error';
+				if (count($objects['Contents']) > 0) {
 
-					$msg = $this->upload->display_errors('', '');
-				} else {
+					// Retrieve the first image name from the list of objects
+					$firstImageName = $objects['Contents'][0]['Key'];
 
-					$data = $this->upload->data();
+					$imageName = basename($firstImageName);
 
+					$propertyImageDir = $imageFolder . '/' . $imageName;
 
-					$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
+					$propertyImagedir = rtrim($propertyImageDir, '/');
 
-					$upl_result = file_get_contents('https://buy.smallsmall.com/upload-images/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan");
-
-					unlink('./tmp/' . $data["file_name"]);
-
-					//Populate the property table
 					$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+
+					// $property = $this->admin_model->editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $imageName, $bed, $toilet, $bath, $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+
+					// $property = $this->admin_model->editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
 
 					if ($property != 0) {
 
@@ -5875,35 +6010,53 @@ class Admin extends CI_Controller
 
 						$msg = "Property successfully uploaded";
 					} else {
+
 						$status = "error";
 
 						$msg = "Could not upload property";
 					}
-				}
-			} else {
-				$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, 'no', $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
-
-				if ($property != 0) {
-
-					$status = "success";
-
-					$msg = "Property successfully uploaded";
 				} else {
-					$status = "error";
 
-					$msg = "Could not upload property";
+					$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, 'no', $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+
+					// $property = $this->admin_model->editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $imageName, $bed, $toilet, $bath, $propertySize, 'no', $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+
+					// $property = $this->admin_model->editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, 'no', $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
+
+					if ($property != 0) {
+
+						$status = "success";
+
+						$msg = "Property successfully uploaded";
+						
+					} else {
+						$status = "error";
+
+						$msg = "Could not upload property";
+					}
+
+					// $status = "error";
+
+					// $msg = $this->upload->display_errors('', '');
+
 				}
+			} catch (Exception $e) {
+
+				// Handle any exceptions that occurred during the API call
+
+				$status = "error";
+
+				$msg = "Error: " . $e->getMessage();
 			}
 		} else {
 
 			redirect(base_url() . "admin/dashboard", 'refresh');
 		}
 
-		@unlink($_FILES[$file_element_name]);
-
-
 		echo json_encode(array('status' => $status, 'msg' => $msg));
 	}
+
+
 
 	public function updateAbout()
 	{
@@ -6533,13 +6686,80 @@ class Admin extends CI_Controller
 		redirect(base_url() . "admin/view-properties", 'refresh');
 	}
 
+	// public function clone_btl_property($propID)
+	// {
+
+	// 	$digits = 12;
+
+	// 	$randomNumber = '';
+
+	// 	$count = 0;
+
+	// 	while ($count < $digits) {
+
+	// 		$randomDigit = mt_rand(0, 9);
+
+	// 		$randomNumber .= $randomDigit;
+
+	// 		$count++;
+	// 	}
+
+	// 	$imageFolder = md5(date("Y-m-d H:i:s"));
+
+	// 	$id = $randomNumber;
+
+	// 	$property = $this->admin_model->get_btl_property_details($propID);
+
+
+	// 	$userID = $this->session->userdata('adminID');
+
+	// 	//Create folder on remote server
+
+	// 	$success = file_get_contents('https://buy.smallsmall.com/create-folder/' . $imageFolder);
+
+	// 	if (!$success) {
+	// 		//Create the floor plan folder
+	// 		//file_get_contents("https://www.buy2let.ng/create-folder/".$folder."/floor-plan");
+	// 		$error = "Could not create remote folder";
+	// 	}
+
+
+
+	// 	//Insert new property
+	// 	$views = 0;
+
+	// 	$new_id = $this->admin_model->insertBtlPropertyClone($id, $property['property_name'], $property['apartment_type'], $property['price'], $property['promo_price'], $property['promo_category'], $property['address'], $property['city'], $property['state'], $property['country'], $property['bed'], $property['bath'], $property['toilet'], $property['tenantable'], $property['expected_rent'], $property['hpi'], $property['developer'], $property['mortgage'], $property['payment_plan'], $property['payment_plan_period'], $imageFolder, $property['pool_units'], $property['available_units'],  $userID, $property['pool_buy'], $property['property_size'], $property['property_info'], $property['location_info'], $property['floor_plan'], $property['featured_image'], $property['status'], $views, $property['availability'], $property['asset_appreciation_1'], $property['asset_appreciation_2'], $property['asset_appreciation_3'], $property['asset_appreciation_4'], $property['asset_appreciation_5'], $property['floor_level'], $property['construction_lvl'], $property['start_date'], $property['finish_date'], $property['investment_type'], $property['marketValue']);
+
+	// 	if ($new_id) {
+
+	// 		$sourceFolder = $property['image_folder'];
+
+	// 		$destinationFolder = $imageFolder;
+
+	// 		//Initiate a copy on the remote server
+	// 		$result = file_get_contents('https://buy.smallsmall.com/copy-images/' . $sourceFolder . '/' . $destinationFolder);
+
+	// 		if ($result) {
+
+	// 			echo 1;
+	// 		} else {
+
+	// 			echo $result;
+	// 		}
+	// 	}
+
+
+	// 	redirect(base_url() . "admin/all-buytolet-properties", 'refresh');
+	// }
+
+	// New that clone to s3
 	public function clone_btl_property($propID)
 	{
-
 		$digits = 12;
 
 		$randomNumber = '';
 
+		// Generate a random folder name
 		$count = 0;
 
 		while ($count < $digits) {
@@ -6557,47 +6777,71 @@ class Admin extends CI_Controller
 
 		$property = $this->admin_model->get_btl_property_details($propID);
 
-
 		$userID = $this->session->userdata('adminID');
 
-		//Create folder on remote server
+		$bucketName = 'clone_btl_property'; // bucket name
 
-		$success = file_get_contents('https://buy.smallsmall.com/create-folder/' . $imageFolder);
+		$region = 'eu-west-1'; // region
 
-		if (!$success) {
-			//Create the floor plan folder
-			//file_get_contents("https://www.buy2let.ng/create-folder/".$folder."/floor-plan");
-			$error = "Could not create remote folder";
-		}
+		// Create S3 client
+		$s3 = new Aws\S3\S3Client([
 
+			'version' => 'latest',
 
+			'region' => $region,
 
-		//Insert new property
-		$views = 0;
+		]);
 
-		$new_id = $this->admin_model->insertBtlPropertyClone($id, $property['property_name'], $property['apartment_type'], $property['price'], $property['promo_price'], $property['promo_category'], $property['address'], $property['city'], $property['state'], $property['country'], $property['bed'], $property['bath'], $property['toilet'], $property['tenantable'], $property['expected_rent'], $property['hpi'], $property['developer'], $property['mortgage'], $property['payment_plan'], $property['payment_plan_period'], $imageFolder, $property['pool_units'], $property['available_units'],  $userID, $property['pool_buy'], $property['property_size'], $property['property_info'], $property['location_info'], $property['floor_plan'], $property['featured_image'], $property['status'], $views, $property['availability'], $property['asset_appreciation_1'], $property['asset_appreciation_2'], $property['asset_appreciation_3'], $property['asset_appreciation_4'], $property['asset_appreciation_5'], $property['floor_level'], $property['construction_lvl'], $property['start_date'], $property['finish_date'], $property['investment_type'], $property['marketValue']);
+		try {
 
-		if ($new_id) {
+			// Create a new folder in the S3 bucket
+			$folderPath = 'uploads/buytolet/' . $imageFolder;
 
-			$sourceFolder = $property['image_folder'];
+			// Insert new property with details and also content from already craeted folder source
+			$views = 0;
 
-			$destinationFolder = $imageFolder;
+			$new_id = $this->admin_model->insertBtlPropertyClone($id, $property['property_name'], $property['apartment_type'], $property['price'], $property['promo_price'], $property['promo_category'], $property['address'], $property['city'], $property['state'], $property['country'], $property['bed'], $property['bath'], $property['toilet'], $property['tenantable'], $property['expected_rent'], $property['hpi'], $property['developer'], $property['mortgage'], $property['payment_plan'], $property['payment_plan_period'], $imageFolder, $property['pool_units'], $property['available_units'],  $userID, $property['pool_buy'], $property['property_size'], $property['property_info'], $property['location_info'], $property['floor_plan'], $property['featured_image'], $property['status'], $views, $property['availability'], $property['asset_appreciation_1'], $property['asset_appreciation_2'], $property['asset_appreciation_3'], $property['asset_appreciation_4'], $property['asset_appreciation_5'], $property['floor_level'], $property['construction_lvl'], $property['start_date'], $property['finish_date'], $property['investment_type'], $property['marketValue']);
 
-			//Initiate a copy on the remote server
-			$result = file_get_contents('https://buy.smallsmall.com/copy-images/' . $sourceFolder . '/' . $destinationFolder);
+			if ($new_id) {
 
-			if ($result) {
+				$sourceFolder = 'uploads/buytolet/' . $property['image_folder'];
 
-				echo 1;
+				// Copy content from source folder to destination folder within the same bucket
+				$objects = $s3->listObjects([
+
+					'Bucket' => $bucketName,
+
+					'Prefix' => $sourceFolder . '/',
+				]);
+
+				foreach ($objects['Contents'] as $object) {
+
+					$s3->copyObject([
+
+						'Bucket' => $bucketName,
+
+						'CopySource' => $bucketName . '/' . $object['Key'],
+
+						'Key' => $folderPath . '/' . basename($object['Key']), // copy content to destination folder
+					]);
+				}
+
+				echo 1; // Success message
+
 			} else {
 
-				echo $result;
-			}
-		}
+				echo "Error inserting new property"; // Error message
 
+			}
+		} catch (Aws\S3\Exception\S3Exception $e) {
+
+			echo "Error: " . $e->getMessage(); // Handle S3 exceptions
+
+		}
 
 		redirect(base_url() . "admin/all-buytolet-properties", 'refresh');
 	}
+
 
 	public function count_unread_requests()
 	{
