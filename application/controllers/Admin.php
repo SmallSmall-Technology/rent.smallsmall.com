@@ -2692,9 +2692,55 @@ class Admin extends CI_Controller
 		}
 	}
 
+	// public function edit_buytolet_property($id)
+	// {
+
+
+	// 	if (!file_exists(APPPATH . 'views/admin/pages/edit-buytolet-property.php')) {
+	// 		// Whoops, we don't have a page for that!
+
+	// 		show_404();
+	// 	}
+
+	// 	//check if Admin is logged in
+	// 	if ($this->session->has_userdata('adminLoggedIn')) {
+
+	// 		$data['aptTypes'] = $this->admin_model->fetchAptType();
+
+	// 		$data['investTypes'] = $this->admin_model->fetchInvestType();
+
+	// 		$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+	// 		$data['adminID'] = $this->session->userdata('adminID');
+
+	// 		$data['userAccess'] = $this->session->userdata('userAccess');
+
+	// 		$data['countries'] = $this->functions_model->get_countries();
+
+	// 		$data['property'] = $this->admin_model->fetchBuytoletProperty($id);
+
+	// 		$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
+
+	// 		//Get Images
+	// 		$data['btl_images'] = file_get_contents('https://buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
+
+	// 		$data['title'] = "Edit Property :: Buytolet";
+
+	// 		$this->load->view('admin/templates/header.php', $data);
+
+	// 		$this->load->view('admin/templates/sidebar.php', $data);
+
+	// 		$this->load->view('admin/pages/edit-buytolet-property.php', $data);
+
+	// 		$this->load->view('admin/templates/footer.php', $data);
+	// 	} else {
+
+	// 		redirect(base_url() . 'admin/login', 'refresh');
+	// 	}
+	// }
+
 	public function edit_buytolet_property($id)
 	{
-
 
 		if (!file_exists(APPPATH . 'views/admin/pages/edit-buytolet-property.php')) {
 			// Whoops, we don't have a page for that!
@@ -2721,8 +2767,8 @@ class Admin extends CI_Controller
 
 			$data['states'] = $this->admin_model->fetchStates($data['property']['country']);
 
-			//Get Images
-			$data['btl_images'] = file_get_contents('https://buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
+			//Get Images: Comment out because we are getting images from the s3 folder directly now not local api 
+			// $data['btl_images'] = file_get_contents('https://buy.smallsmall.com/buytolet/get-all-images/' . $data['property']['image_folder'] . '/' . $data['property']['featured_image']);
 
 			$data['title'] = "Edit Property :: Buytolet";
 
@@ -6028,7 +6074,6 @@ class Admin extends CI_Controller
 						$status = "success";
 
 						$msg = "Property successfully uploaded";
-						
 					} else {
 						$status = "error";
 
@@ -6779,7 +6824,7 @@ class Admin extends CI_Controller
 
 		$userID = $this->session->userdata('adminID');
 
-		$bucketName = 'clone_btl_property'; // bucket name
+		$bucketName = 'bss-prod-uploads'; // bucket name
 
 		$region = 'eu-west-1'; // region
 
