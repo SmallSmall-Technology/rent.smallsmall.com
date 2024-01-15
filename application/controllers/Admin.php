@@ -7945,7 +7945,7 @@ class Admin extends CI_Controller
 		try {
 
 			// Create a new folder in the S3 bucket
-			// $folderPath = 'uploads/buytolet/' . $imageFolder;
+			$folderPath = 'uploads/buytolet/' . $imageFolder;
 
 			// $s3->putObject([
 
