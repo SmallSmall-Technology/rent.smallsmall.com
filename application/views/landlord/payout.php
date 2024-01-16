@@ -326,17 +326,17 @@
             <div class="certificate-item  pr-md-5 mr-md-5 mb-md-5">
               <p style="font-size: 12px;">Total Payout received</p>
               <div class="d-flex">
-                <P style="font-size: 25px" class="mr-3">&#8358;20,000</P>
+                <P style="font-size: 25px" class="mr-3"></P>
 
               </div>
             </div>
             <div class="certificate-item  pr-md-5 mr-md-5 mb-md-5">
               <p style="font-size: 12px;">Next Payout</p>
               <div class="d-flex">
-                <P style="font-size: 25px" class="mr-3">&#8358;20,000</P>
+                <P style="font-size: 25px" class="mr-3"></P>
                 <div class="d-flex align-items-end">
                   <!-- <p class="font-weight-light" style="font-size: 12px;">Pending</p> -->
-                  <p class="font-weight-light" style="font-size: 13px;">Feb 12, 2023</p>
+                  <p class="font-weight-light" style="font-size: 13px;"></p>
                 </div>
               </div>
             </div>
@@ -364,31 +364,31 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>Rentsmallsmall</td>
-                  <td>&#8358;53,000</td>
-                  <td>er355479032039034</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
-                    <p class="d-flex align-items-center">15 May, 2021</p>
+                    <p class="d-flex align-items-center"></p>
                   </td>
-                  <td>Pending</td>
+                  <td></td>
                 </tr>
                 <tr>
-                  <td>Rentsmallsmall</td>
-                  <td>&#8358;53,000</td>
-                  <td>er355479032039034</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
-                    <p class="d-flex align-items-center">15 May, 2021</p>
+                    <p class="d-flex align-items-center"></p>
                   </td>
-                  <td>Successful</td>
+                  <td></td>
                 </tr>
                 <tr>
-                  <td>Rentsmallsmall</td>
-                  <td>&#8358;53,000</td>
-                  <td>er355479032039034</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td>
-                    <p class="d-flex align-items-center">15 May, 2021</p>
+                    <p class="d-flex align-items-center"></p>
                   </td>
-                  <td>Failed</td>
+                  <td></td>
                 </tr>
 
               </tbody>

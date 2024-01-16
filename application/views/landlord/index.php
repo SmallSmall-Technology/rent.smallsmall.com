@@ -349,7 +349,7 @@
             </div>
 
             <div class="text-right mt-4">
-              <a href="<?php echo base_url('landlord/payout'); ?>" class="btn secondary-background">View more</a>
+              <a href="<?php echo base_url('landlord/wallet'); ?>" class="btn secondary-background">View more</a>
             </div>
 
           </div>

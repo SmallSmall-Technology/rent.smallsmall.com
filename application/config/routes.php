@@ -293,44 +293,44 @@ $route['landlord/single-property/(:any)'] = 'landlord/single_property/$1';
 $route['landlord/subscriber_profile/(:any)'] = 'landlord/subscriber_profile/$1';
 
 
-/**RSS Frontend Landlord profile Routes Starts Here ***/
-$route['landlord/dashboard'] = 'rss/landlord_dashboard';
+// /**RSS Frontend Landlord profile Routes Starts Here ***/
+// $route['landlord/dashboard'] = 'rss/landlord_dashboard';
 
-$route['landlord/subscribers/(:any)'] = 'rss/subscribers/$1';
+// $route['landlord/subscribers/(:any)'] = 'rss/subscribers/$1';
 
-$route['landlord/subscribers'] = 'rss/subscribers';
+// $route['landlord/subscribers'] = 'rss/subscribers';
 
-$route['landlord/messages/(:any)'] = 'rss/landlord_messages/$1';
+// $route['landlord/messages/(:any)'] = 'rss/landlord_messages/$1';
 
-$route['landlord/messages'] = 'rss/landlord_messages';
+// $route['landlord/messages'] = 'rss/landlord_messages';
 
-$route['landlord/payouts'] = 'rss/payouts';
+// $route['landlord/payouts'] = 'rss/payouts';
 
-$route['landlord/repairs'] = 'rss/landlord_repairs';
+// $route['landlord/repairs'] = 'rss/landlord_repairs';
 
-$route['landlord/properties/(:any)'] = 'rss/landlord_properties/$1';
+// $route['landlord/properties/(:any)'] = 'rss/landlord_properties/$1';
 
-$route['landlord/properties'] = 'rss/landlord_properties';
+// $route['landlord/properties'] = 'rss/landlord_properties';
 
-$route['landlord/profile'] = 'rss/landlord_profile';
+// $route['landlord/profile'] = 'rss/landlord_profile';
 
-$route['landlord/bss-requests'] = 'buytolet/buysmallsmall_requests';
+// $route['landlord/bss-requests'] = 'buytolet/buysmallsmall_requests';
 
-$route['tenant/bss-requests'] = 'buytolet/buysmallsmall_requests_tenant';
+// $route['tenant/bss-requests'] = 'buytolet/buysmallsmall_requests_tenant';
 
-$route['tenant/bss-payment-details/'] = 'buytolet/bss_payment_details_tenant';
+// $route['tenant/bss-payment-details/'] = 'buytolet/bss_payment_details_tenant';
 
-$route['tenant/bss-unit/(:any)'] = 'buytolet/bss_unit_tenant/$1';
+// $route['tenant/bss-unit/(:any)'] = 'buytolet/bss_unit_tenant/$1';
 
-$route['landlord/bss-unit/(:any)'] = 'buytolet/bss_unit/$1';
+// $route['landlord/bss-unit/(:any)'] = 'buytolet/bss_unit/$1';
 
-$route['tenant/finance-details/(:any)'] = 'buytolet/finance_details_tenant/$1';
+// $route['tenant/finance-details/(:any)'] = 'buytolet/finance_details_tenant/$1';
 
-$route['landlord/finance-details/(:any)'] = 'buytolet/finance_details/$1';
+// $route['landlord/finance-details/(:any)'] = 'buytolet/finance_details/$1';
 
-$route['landlord/payment-details/(:any)'] = 'buytolet/payment_details/$1'; 
+// $route['landlord/payment-details/(:any)'] = 'buytolet/payment_details/$1'; 
 
-$route['tenant/payment-details/(:any)'] = 'buytolet/payment_details_tenant/$1';
+// $route['tenant/payment-details/(:any)'] = 'buytolet/payment_details_tenant/$1';
 
 
 
