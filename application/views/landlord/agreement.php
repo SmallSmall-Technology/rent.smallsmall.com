@@ -121,7 +121,7 @@
             </div>
           </li>
         </ul>
-        <a href="#">
+        <a href="<?php echo base_url(); ?>/logout">
           <span class="navbar-text text-dark mr-5">
             Log out
             <img class="img-fluid" src="../assets/images2/logout.svg" alt="">
@@ -247,7 +247,7 @@
           Property Agreement
         </div>
       </a>
-      <a class="text-decoration-none secondary-text-color mr-4 py-3" href="<?php echo base_url('landlord/transactions'); ?>">
+      <a class="text-decoration-none secondary-text-color mr-4 py-3" href="#">
         <div class="sub-menu-link  ">
           Transactions
         </div>
@@ -283,7 +283,7 @@
         <div class="dropdown-menu custom-dropdown-menu primary-background border-0 dashboard-active">
           <a class="dropdown-item secondary-text-color custom-dropdown-active" href="<?php echo base_url('landlord/agreement'); ?>">Property
             Agreement</a>
-          <a class="dropdown-item secondary-text-color" href="transactions.html">Transactions</a>
+          <a class="dropdown-item secondary-text-color" href="#">Transactions</a>
         </div>
       </div>
 

@@ -143,7 +143,7 @@
           </li>
 
         </ul>
-        <a href="#">
+        <a href="<?php echo base_url(); ?>/logout">
           <span class="navbar-text text-dark mr-5">
             Log out
             <img class="img-fluid" src="../assets/images2/logout.svg" alt="">
@@ -307,7 +307,7 @@
             </div>
 
             <div class="text-right mt-5">
-              <a href="my-property.html" class="btn secondary-background">View property</a>
+              <a href="<?php echo base_url('landlord/property'); ?>" class="btn secondary-background">View property</a>
             </div>
           </div>
         </div>
@@ -349,7 +349,7 @@
             </div>
 
             <div class="text-right mt-4">
-              <a href="#" class="btn secondary-background">View more</a>
+              <a href="<?php echo base_url('landlord/payout'); ?>" class="btn secondary-background">View more</a>
             </div>
 
           </div>
@@ -420,7 +420,7 @@
             </div>
 
             <div class="text-right mt-4">
-              <a href="#" class="btn secondary-background">View</a>
+              <a href="<?php echo base_url('landlord/repair'); ?>" class="btn secondary-background">View</a>
             </div>
 
           </div>
@@ -471,7 +471,7 @@
               ?></h3>
             </div>
             <div class="text-right mt-4">
-              <a href="#" class="btn secondary-background">View</a>
+              <a href="<?php echo base_url('landlord/subscriber'); ?>" class="btn secondary-background">View</a>
             </div>
 
           </div>
@@ -495,9 +495,6 @@
       </nav>
     </div>
   </footer>
-
-
-
 
 
   <!-- Jquery js -->

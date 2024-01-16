@@ -26,8 +26,7 @@
   <!-- custom CSS -->
   <link rel="stylesheet" href="../assets/css/custom-css2/header.css" />
   <link rel="stylesheet" href="../assets/css/custom-css2/footer.css" />
-  <link rel="stylesheet" href="../assets/css/custom-css2/inbox.css" />
-
+  <link rel="stylesheet" href="../assets/css/custom-css/index.css" />
 
   <title>Inbox</title>
 </head>
@@ -68,7 +67,7 @@
           </li>
           <li class="nav-item d-flex align-items-center  mr-4">
             <div class="menu-text">
-              <a href="<?php echo base_url('landlord/index'); ?>" class=" text-dark" style="text-decoration: none;">Dashboard</a>
+              <a href="<?php echo base_url('landlord/index'); ?>" class="text-dark" style="text-decoration: none;">Dashboard</a>
             </div>
           </li>
           <li class="nav-item d-flex align-items-center">
@@ -79,7 +78,7 @@
               </div>
             </a>
           </li>
-          <li class="nav-item d-flex align-items-center dashboard-active mr-4">
+          <li class="nav-item d-flex align-items-center mr-4">
             <div class="menu-text">
               <a href="<?php echo base_url('landlord/inbox'); ?>" class=" text-dark" style="text-decoration: none;">Notification</a>
             </div>
@@ -115,7 +114,7 @@
               </div>
             </a>
           </li>
-          <li class="nav-item d-flex align-items-center mr-4">
+          <li class="nav-item d-flex dashboard-active align-items-center mr-4">
             <div class="menu-text">
               <a href="<?php echo base_url('landlord/profile'); ?>" class=" text-dark" style="text-decoration: none;">Profile</a>
             </div>
@@ -128,7 +127,6 @@
             <img class="img-fluid" src="../assets/images2/logout.svg" alt="">
           </span>
         </a>
-
 
       </div>
     </nav>
@@ -184,7 +182,7 @@
           </p>
         </div>
 
-        <div class="mb-4 pl-2 dashboard-active">
+        <div class="mb-4 pl-2">
           <p>
             <a href="<?php echo base_url('landlord/inbox'); ?>" class=" text-dark" style="text-decoration: none;">
               <img class="img-fluid" src="../assets/images2/inbox-icon.svg" alt="">
@@ -210,7 +208,7 @@
           </p>
         </div>
 
-        <div class="mb-4 pl-2">
+        <div class="mb-4 pl-2" dashboard-active>
           <p>
             <a href="<?php echo base_url('landlord/profile'); ?>" class=" text-dark" style="text-decoration: none;">
               <img class="img-fluid" src="../assets/images2/profile-icon.svg" alt="">
@@ -224,109 +222,9 @@
 
   </header>
 
-  <div class="container-fluid">
-    <div>
-
-    </div>
-  </div>
 
   <main class="container">
-    <div class="row mt-5">
-      <div class="col-12 d-flex justify-content-between">
-        <div style="color: #7D8993; font-size: 13px;" class="font-weight-lighter">
-          <span>Rentsmallsmall</span>
-          <span>></span>
-          <span>Dashboard</span>
-          <span>></span>
-          <span>Notification</span>
-        </div>
-        <div class="d-md-block d-none">
-          <!-- <button style="color:#DADADA" type="button" class="btn btn-light">Verified</button> -->
-          <!-- <button type="button" class="btn btn-dark d-none">Verified</button> -->
-          <button style="line-height: 14px;" type="button" class="btn btn-outline-dark">
-            <small style="font-size: 10px; line-height: 14px;">Referral
-              code
-            </small><br>
-            Tna2301
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 my-5">
-        <p style="font-size: 22px;">Notification</p>
-      </div>
 
-
-    </div>
-    <div class="row mb-5">
-      <div class="col-md-12 d-md-flex   d-none justify-content-between mb-4">
-        <p><span style="border-bottom: 2px solid black">All</span> notification</p>
-      </div>
-      <div class="col-12">
-        <p>Latest Notification <span class="secondary-text-color">(2)</span></p>
-      </div>
-    </div>
-
-    <div id="inbox-messages">
-                                
-    </div>
-        
-    
-    <br></br>
-    <div class="row mb-4">
-
-        <div style="text-align:center;width:100%;font-size:14px;color:#138E3D" id="inbox-data-loading"> </div>
-        <div class="text-right load-more-bar" id="load-inbox-messages">
-            <a href="#" class="btn secondary-background">Load more</a>
-        </div>
-    </div>
-      
-    <!-- Older messages -->
-    <!--<div class="row mb-4">-->
-    <!--  <div class="col-12 mb-3">-->
-    <!--    <p class="secondary-text-color">March 10,2023</p>-->
-    <!--  </div>-->
-    <!--  <div class="col-12 mb-3">-->
-    <!--    <div class="message-container px-3 py-4 justify-content-between d-flex">-->
-    <!--      <div class="d-flex align-items-center">-->
-    <!--        <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-block">-->
-    <!--          Rentsmallsmall-->
-    <!--        </div>-->
-    <!--        <div class="bss-btn p-2  mr-2 d-md-none d-block">-->
-    <!--          RSS-->
-    <!--        </div>-->
-    <!--        <div class="msg-intro">-->
-    <!--          <p>Property shares notification</p>-->
-    <!--          <p style="font-size: 13px;">Dear John, Your shares are....</p>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--      <div class="align-self-center mr-md-4 mr-1">-->
-    <!--        <i class="fa-solid fa-greater-than"></i>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--  </div>-->
-    <!--  <div class="col-12 mb-3">-->
-    <!--    <div class="message-container px-3 py-4 justify-content-between d-flex">-->
-    <!--      <div class="d-flex align-items-center">-->
-    <!--        <div class="bss-btn px-3 py-2  mr-md-5 d-none d-md-block">-->
-    <!--          Rentsmallsmall-->
-    <!--        </div>-->
-    <!--        <div class="bss-btn p-2  mr-2 d-md-none d-block">-->
-    <!--          BSS-->
-    <!--        </div>-->
-    <!--        <div class="msg-intro">-->
-    <!--          <p>Property shares notification</p>-->
-    <!--          <p style="font-size: 13px;">Dear John, Your shares are....</p>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--      <div class="align-self-center mr-md-4 mr-1">-->
-    <!--        <i class="fa-solid fa-greater-than"></i>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--  </div>-->
-
-    <!--</div>-->
 
   </main>
 
@@ -335,13 +233,14 @@
       <nav class="navbar navbar-expand-lg navbar-light justify-content-end">
         <div>
           <a class="mr-3" href="#">Rentsmallsmall FAQ</a>
-          <a class="mr-3" href="#">Rentsmallsmall FAQ</a>
+          <a class="mr-3" href="#">Buysmallsmall FAQ</a>
           <a class="mr-3" href="#">About Us</a>
           <a class="" href="#">Blog</a>
         </div>
       </nav>
     </div>
   </footer>
+
 
 
   <!-- Jquery js -->
@@ -353,109 +252,6 @@
   <script src="../assets/js/bootstrap-js/bootstrap.min.js"
     crossorigin="anonymous"></script>
 
-
-    <script src="<?php echo base_url(); ?>assets/js/message-opener.js" type="text/javascript"></script>
-    <script>
-    $(document).ready(function(){
-        
-        var limit = 10;
-        
-        var start = 0;
-        
-        var action = 'inactive';
-    
-        function lazzy_loader(limit){
-            
-            var output = '';
-          
-            for(var count=0; count<limit; count++){
-              
-                output += '<div class="post-data">';
-                output += '<p><span class="content-placeholder" style="width:100%; height: 30px;">&nbsp;</span></p>';
-                output += '<p><span class="content-placeholder" style="width:100%; height: 100px;">&nbsp;</span></p>';
-                output += '</div>';
-                
-            }
-            
-            $('#inbox-data-loading').html(output);
-            
-        }
-    
-        lazzy_loader(limit);
-    
-        function load_data(limit, start)
-        {
-            $.ajax({
-                
-                url:"<?php echo base_url(); ?>rss/fetchLandlordMessage",
-                
-                method:"POST",
-                
-                data:{limit:limit, start:start},
-                
-                cache: false,
-                
-                success:function(data){
-                    
-                    if(data == ''){
-                        
-                        $('#inbox-data-loading').html('No more result found');
-                        action = 'active';
-                        
-                    }else{
-                        
-                        $('#inbox-messages').append(data);
-                        
-                        $('#inbox-data-loading').html("");
-                        
-                        action = 'inactive';
-                    }
-                }
-            })
-        }
-        
-        if(action == 'inactive'){
-            
-            action = 'active';
-            
-            load_data(limit, start);         
-        }
-        
-        $('#load-inbox-messages').click(function(){
-            
-            lazzy_loader(limit);
-            
-            action = 'active';
-            
-            start = start + limit;
-            
-            setTimeout(function(){
-                
-                load_data(limit, start);
-                
-            }, 1000);
-            
-        });
-        
-    });
-    
-    function insVal(val)
-    {
-        $.ajax({
-        type: 'POST',
-        url: '<?php echo base_url('landlord/mark_as_read'); ?>',
-        data: {
-          notification_id: val
-        },
-        success: function(response) {
-          console.log(response); // Debugging purposes
-        },
-        error: function(xhr, status, error) {
-        //   console.log(error); // Debugging purposes
-        }
-      });
-    }
-</script>
 
 </body>
 
