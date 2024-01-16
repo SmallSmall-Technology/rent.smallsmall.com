@@ -329,7 +329,6 @@ else{
     
     <br></br>
     <div class="row mb-4">
-
         <div style="text-align:center;width:100%;font-size:14px;color:#138E3D" id="inbox-data-loading"> </div>
         <div class="text-right load-more-bar" id="load-inbox-messages">
             <a href="#" class="btn secondary-background">Load more</a>
@@ -412,7 +411,6 @@ else{
     <script src="<?php echo base_url(); ?>assets/js/message-opener.js" type="text/javascript"></script>
     <script>
     $(document).ready(function(){
-        
         var limit = 10;
         
         var start = 0;
@@ -429,7 +427,6 @@ else{
                 output += '<p><span class="content-placeholder" style="width:100%; height: 30px;">&nbsp;</span></p>';
                 output += '<p><span class="content-placeholder" style="width:100%; height: 100px;">&nbsp;</span></p>';
                 output += '</div>';
-                
             }
             
             $('#inbox-data-loading').html(output);

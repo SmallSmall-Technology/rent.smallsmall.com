@@ -314,14 +314,11 @@ $('#pwdResetForm').submit(function(e){
 				window.scrollTo(0,100);
 				
 				return false;
-
 			}
 
 		}
 
 	});
-
-	
 
 });
 
