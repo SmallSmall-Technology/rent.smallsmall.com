@@ -95,6 +95,103 @@ class Landlord extends CI_Controller {
 	}
 
 	
+	public function wallet()
+	{
+		if($this->session->has_userdata('userID')){
+ 
+			 $data['userID'] = $this->session->userdata('userID');
+			 
+			 $data['proptys'] = $this->landlord_model->get_propty($data['userID']);
+
+			 $data['fname'] = $this->session->userdata('fname');			
+ 
+			 $data['lname'] = $this->session->userdata('lname');			
+ 
+			 $data['email'] = $this->session->userdata('email');		
+ 
+			 $data['refCode'] = $this->session->userdata('referral_code');		
+ 
+			 $data['user_type'] = $this->session->userdata('user_type');		
+			 
+			 $data['profile'] = $this->rss_model->get_user($data['userID']);	
+			 
+			 $data['profile_pic'] = $this->rss_model->get_user_pic($data['userID']);
+			 
+			 $data['verification_status'] = $this->session->userdata('verified');
+			 
+			 $data['rss_transaction'] = $this->rss_model->checkRSSLastTrans($data['userID']);
+			 
+			 $data['debt'] = $this->rss_model->get_debt($data['userID']);
+			 
+			 $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']); 
+			 
+			 $data['bss_request_count'] = $this->buytolet_model->count_user_requests($data['userID']);
+			 
+			 $data['bss_inspection_count'] = $this->buytolet_model->count_bss_inspections($data['userID']);
+ 
+			 $data['profile_title'] = "Dashboard";
+ 
+			 $data['title'] = "Dashboard";
+
+			//$this->load->view('landlord/indexHeader.php', $data);
+
+			$this->load->view('landlord/payout.php', $data);
+ 
+		}
+		else{			
+ 
+		  redirect( base_url()."login" ,'refresh');			
+		}
+	}
+
+	public function profile()
+	{
+		if($this->session->has_userdata('userID')){
+ 
+			 $data['userID'] = $this->session->userdata('userID');
+			 
+			 $data['proptys'] = $this->landlord_model->get_propty($data['userID']);
+
+			 $data['fname'] = $this->session->userdata('fname');			
+ 
+			 $data['lname'] = $this->session->userdata('lname');			
+ 
+			 $data['email'] = $this->session->userdata('email');		
+ 
+			 $data['refCode'] = $this->session->userdata('referral_code');		
+ 
+			 $data['user_type'] = $this->session->userdata('user_type');		
+			 
+			 $data['profile'] = $this->rss_model->get_user($data['userID']);	
+			 
+			 $data['profile_pic'] = $this->rss_model->get_user_pic($data['userID']);
+			 
+			 $data['verification_status'] = $this->session->userdata('verified');
+			 
+			 $data['rss_transaction'] = $this->rss_model->checkRSSLastTrans($data['userID']);
+			 
+			 $data['debt'] = $this->rss_model->get_debt($data['userID']);
+			 
+			 $data['balance'] = $this->rss_model->get_wallet_balance($data['userID']); 
+			 
+			 $data['bss_request_count'] = $this->buytolet_model->count_user_requests($data['userID']);
+			 
+			 $data['bss_inspection_count'] = $this->buytolet_model->count_bss_inspections($data['userID']);
+ 
+			 $data['profile_title'] = "Dashboard";
+ 
+			 $data['title'] = "Dashboard";
+
+			//$this->load->view('landlord/indexHeader.php', $data);
+
+			$this->load->view('landlord/profile.php', $data);
+		}
+		else{			
+ 
+		  redirect( base_url()."login" ,'refresh');			
+		}
+	}
+	
 	public function inbox()
     {
         if($this->session->has_userdata('userID')){			
