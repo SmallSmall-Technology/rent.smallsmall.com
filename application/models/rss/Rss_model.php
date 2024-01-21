@@ -1035,23 +1035,59 @@ class Rss_model extends CI_Model
 	public function check_email($email)
 	{
 
-		$this->db->select('email');
+		$this->db->select('email, password, userID');
 
 		$this->db->from('user_tbl');
 
 		$this->db->where('email', $email);
 
-		$this->db->limit(1);
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
+	public function get_user_login($user_id)
+	{
+
+		$this->db->select('a.password, a.lastLogin, a.confirmation, b.*, b.user_type');
+
+		$this->db->from('login_tbl as a');
+
+		$this->db->where('a.userID', $user_id);
+
+		$this->db->where('b.status', 'Active');
+
+		$this->db->join('user_tbl as b', 'b.userID = a.userID');
 
 		$query = $this->db->get();
 
-		if ($query->num_rows() > 0) {
+		return $query->row_array();
+	}
 
-			return 1;
-		} else {
+	public function update_password_to_hash($id, $password){
+
+		$new_password = array("password" => $password);
+
+		$this->db->where('userID', $id);
+
+		if($this->db->update('user_tbl', $new_password)){
+
+			if($this->db->update('login_tbl', $new_password)){
+				
+				return 1;
+
+			}else{
+
+				return 0;
+
+			}
+
+		}else{
 
 			return 0;
+
 		}
+
 	}
 
 	public function changeRefferal($referral, $id)
@@ -2308,7 +2344,7 @@ class Rss_model extends CI_Model
 	public function changePass($pass, $userID, $referral)
 	{
 
-		$pass = md5($pass);
+		$pass = password_hash($pass, PASSWORD_DEFAULT);
 
 		if ($referral == 'wordpress') {
 

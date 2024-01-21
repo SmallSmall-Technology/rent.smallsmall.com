@@ -60,46 +60,48 @@ class Rss extends CI_Controller
 
 		$username = strtolower($this->input->post('username'));
 
-		$password = md5($this->input->post('password'));
+		$raw_password = $this->input->post('password');
 
-		$users = $this->rss_model->login($username, $password);
+		$check_email = $this->rss_model->check_email($username);
 
-		if ($users) {
+		//$users = $this->rss_model->login($username, $password);
 
-			if (trim($users['confirmation']) == '' || $users['confirmation'] == '') {
+		if (!empty($check_email)) {
 
-				if ($users['referral'] != 'wordpress' && $users['password'] == $password) {
+			$result = $this->login_user($username, $raw_password, $check_email['password'], $check_email['userID']);
 
-					//Update login date to now
-					$this->rss_model->updateLoginDate($users['userID']);
+			$users = $this->rss_model->get_user_login($check_email['userID']);
 
-					$key = $users['userID'];
+			if($result){
 
-					//Set session keys
-					$userdata = array('userID' => $users['userID'], 'loggedIn' => 'yes', 'fname' => $users['firstName'], 'lname' => $users['lastName'], 'email' => $users['email'], 'verified' => $users['verified'], "user_type" => $users['user_type'], 'referral_code' => $users['referral_code'], 'rss_points' => $users['points'], 'interest' => $users['interest']);
+				if(!empty($users)){
 
-					$this->session->set_userdata($userdata);
-					//print_r($userdata);
-					//Ok
-					$result = "success";
+					if (trim($users['confirmation']) == '' || $users['confirmation'] == '') {				
 
-					$user_type = $users['user_type'];
-				} else if ($users['about_us'] != 'wordpress' && $users['password'] != $password) {
+						//Update login date to now
+						$this->rss_model->updateLoginDate($users['userID']);
 
-					$details = "Username/Password incorrect";
-				} else {
+						$key = $users['userID'];
 
-					//Set session keys
-					$userdata = array('tempID' => $users['userID']);
+						//Set session keys
+						$userdata = array('userID' => $users['userID'], 'loggedIn' => 'yes', 'fname' => $users['firstName'], 'lname' => $users['lastName'], 'email' => $users['email'], 'verified' => $users['verified'], "user_type" => $users['user_type'], 'referral_code' => $users['referral_code'], 'rss_points' => $users['points'], 'interest' => $users['interest']);
 
-					$this->session->set_userdata($userdata);
+						$this->session->set_userdata($userdata);
+						//print_r($userdata);
+						//Ok
+						$result = "success";
 
-					//redirect user to change password
-					$result = 'redirect';
+						$user_type = $users['user_type'];
+						
+					} else {
+
+						$details = 'Account not confirmed!';
+					}
+				}else{
+					$details = "Contact site administrator";
 				}
-			} else {
-
-				$details = 'Account not confirmed!';
+			}else{
+				$details = "Username or Password incorrect";
 			}
 		} else {
 
@@ -107,6 +109,46 @@ class Rss extends CI_Controller
 		}
 
 		echo json_encode(array("details" => $details, "result" => $result, "user_type" => $user_type));
+	}
+
+	public function login_user($username, $password, $dbpassword, $userID){
+
+		$login_limit = 5;
+
+		$user = 0;
+
+		$md5_password = md5($password);
+
+		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+		if($md5_password == $dbpassword){
+
+			$this->rss_model->update_password_to_hash($userID, $hashed_password);
+
+			$user = 1;
+
+		}else if(password_verify($password, $dbpassword)){
+
+			$user = 1;
+
+		}else{
+
+			if(!$this->session->has_userdata('attempt')){
+
+				$this->session->set_userdata(array('attempt' => 1));
+
+			}else{
+
+				$new_val = $this->session->userdata('attempt') + 1;
+
+				$this->session->set_userdata('attempt', $new_val);
+
+			}
+
+
+		}
+
+		return $user;
 	}
 
 	public function properties_old()
@@ -2466,7 +2508,7 @@ class Rss extends CI_Controller
 
 		$email = strtolower($this->input->post('email'));
 
-		$password = md5($this->input->post('password'));
+		$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
 
 		$phone = $this->input->post('phone');
 
@@ -2495,7 +2537,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -2578,7 +2620,7 @@ class Rss extends CI_Controller
 					if ($responseEmail) {
 						echo 1;
 					} else {
-						echo "The email could not be sent. Please contact support for assistance.";
+						echo 0;
 					}
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
@@ -2591,7 +2633,7 @@ class Rss extends CI_Controller
 
 		// Construct the API URL with the required parameters with selzy
 
-		$method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
+		$method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
 
 		$curl = curl_init(); // Initialize a cURL session
 
@@ -2682,7 +2724,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -3341,7 +3383,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -4433,7 +4475,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -4564,7 +4606,7 @@ class Rss extends CI_Controller
 					echo 1;
 				} else {
 
-					echo "The email could not be sent. Please contact support for assistance.";
+					echo 0;
 				}
 
 				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
@@ -4964,7 +5006,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -5929,7 +5971,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -5941,7 +5983,7 @@ class Rss extends CI_Controller
 		];
 
 		$requestCxBody = [
-			"id" => "46334e68-82fd-11ee-8b8d-eedad67a19a8"
+			"id" => "a8de7f86-7198-11ee-9b86-1ef0731c1c1d"
 		];
 
 		
@@ -6036,7 +6078,7 @@ class Rss extends CI_Controller
 
 				// Replace the placeholder in the HTML body with the username
 
-				$htmlBody = str_replace('{{SubscriberName}}', $username, $htmlBody);
+				$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
 				$htmlBody = str_replace('{{PlanID}}', $plancode, $htmlBody);
 				$htmlBody = str_replace('{{RecurringAmount}}', $amount, $htmlBody);
 				$htmlBody = str_replace('{{Plan}}', $plan, $htmlBody);
@@ -6107,7 +6149,7 @@ class Rss extends CI_Controller
 			$headers = array(
 				'Content-Type' => 'application/json',
 				'Accept' => 'application/json',
-				'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+				'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 			);
 
 			$client = new \GuzzleHttp\Client([
@@ -6282,7 +6324,7 @@ class Rss extends CI_Controller
 
 			$this->type = 'rss';
 
-			$this->payment_type = 'paystack';
+			$this->payment_type = $transdet['payment_type'];
 
 			$this->invoice = $transdet['invoice'];
 
@@ -7875,7 +7917,7 @@ FROMNAME&sender_email=FROMMAIL&subject=SUBJECT
 [filename2]=FILE2&lang=LANG&error_checking=1&metadata[meta1]=
 value1&metadata[meta2]=value2*/
 
-	public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $key = '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y', $subject = 'Test Email', $sender_email = 'test@smallsmall.com', $body = 'hi')
+	public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $key = '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha', $subject = 'Test Email', $sender_email = 'test@smallsmall.com', $body = 'hi')
 	{
 
 		$curl = curl_init();
@@ -8034,8 +8076,6 @@ value1&metadata[meta2]=value2*/
 			$data['interest'] = $this->session->userdata('interest');
 		}
 
-		$data['notifications'] = $this->rss_model->fetchNotification(); // For Notification tab
-
 		$countries = array('160');
 
 		$data['min'] = $this->rss_model->get_min_rent();
@@ -8191,7 +8231,7 @@ value1&metadata[meta2]=value2*/
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -8261,7 +8301,7 @@ value1&metadata[meta2]=value2*/
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -8318,7 +8358,7 @@ value1&metadata[meta2]=value2*/
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
