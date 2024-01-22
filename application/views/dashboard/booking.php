@@ -345,8 +345,8 @@ $userID = $this->session->userdata('userID');
                         </div>
 
                         <div class="col-md-3 col-12 d-flex mt-5 justify-content-between">
-                            <button onclick="request()" class="btn secondary-background default-border-radius" style="width: 70%"
-                                type="button"> Upload Project</button>
+                            <button onclick="request()" class="btn secondary-background default-border-radius" 
+                                type="button"> Submit</button>
                         </div>
                     </div>
                 </form>
@@ -1006,6 +1006,10 @@ $userID = $this->session->userdata('userID');
                 var propID = document.getElementById('propID').value;
 
                 var moveOutDate = document.getElementById('moveOutDate').value;
+
+                console.log(userID);
+                console.log(propID);
+                console.log(moveOutDate);
                 
                 var data = {"userID" : userID, "propID" : propID, "moveOutDate" : moveOutDate};
                 
@@ -1022,6 +1026,7 @@ $userID = $this->session->userdata('userID');
                   data: data,
             
                   success	: function (data){
+                    console.log(data);
                     alert("Your request has been delivered.");
                     //window.location.href= data
                   }
