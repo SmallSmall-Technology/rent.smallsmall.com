@@ -335,7 +335,7 @@ $userID = $this->session->userdata('userID');
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="" method="post">
-                    <div class="modal-body filter-modal-body secondary-background">
+                    <div class="modal-body filter-modal-body primary-background">
                         <div>
                             <i class="fa-solid fa-xmark fa-3x" data-dismiss="modal"></i>
                         </div>
@@ -345,7 +345,7 @@ $userID = $this->session->userdata('userID');
                         </div>
 
                         <div class="col-md-3 col-12 d-flex mt-5 justify-content-between">
-                            <button onclick="request()" class="btn primary-background default-border-radius" style="width: 70%"
+                            <button onclick="request()" class="btn secondary-background default-border-radius" style="width: 70%"
                                 type="button"> Upload Project</button>
                         </div>
                     </div>
@@ -405,7 +405,7 @@ $userID = $this->session->userdata('userID');
             <div class="col-12 mt-5 collapse show " id="currentBooking">
                 <div class="primary-background p-md-5 p-3">
                     <div class = "d-flex justify-content-end">
-                        <button class="btn font-weight-light  p-3 secondary-background " type="button" data-toggle="modal" style = "width: 211px; height: 35px;" data-target="#requestModal">Request move-out</button>
+                        <button class="btn font-weight-light  p-3 secondary-background " type="button" data-toggle="modal" style = "width: 211px; height: 50px;" data-target="#requestModal">Request move-out</button>
                     </div>
                     
                     <div class="row">
