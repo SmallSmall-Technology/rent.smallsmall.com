@@ -331,7 +331,7 @@ $userID = $this->session->userdata('userID');
     </div>
 
     <!--Request moveout modal starts here -->
-    <div class="modal fade mobilePopup d-none" id="requestModal" data-backdrop="static" data-keyboard="false"       tabindex="-1" aria-labelledby="requestModal" aria-hidden="true">
+    <div class="modal fade mobilePopup" id="requestModal" data-backdrop="static" data-keyboard="false"       tabindex="-1" aria-labelledby="requestModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="" method="post">
@@ -404,8 +404,8 @@ $userID = $this->session->userdata('userID');
             <!-- current booking -->
             <div class="col-12 mt-5 collapse show " id="currentBooking">
                 <div class="primary-background p-md-5 p-3">
-                    <div>
-                        <a><button class="btn font-weight-light  p-3 secondary-background w-100" type="button" data-toggle="modal" data-target="#requestModal">Request move-out</button></a>
+                    <div class = "d-flex justify-content-end">
+                        <button class="btn font-weight-light  p-3 secondary-background " type="button" data-toggle="modal" style = "width: 211px; height: 35px;" data-target="#requestModal">Request move-out</button>
                     </div>
                     
                     <div class="row">
