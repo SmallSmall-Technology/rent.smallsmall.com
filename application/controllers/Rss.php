@@ -2635,7 +2635,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -2779,7 +2779,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -3434,7 +3434,7 @@ public function uploadIdentification($folder)
 	// 	$headers = array(
 	// 		'Content-Type' => 'application/json',
 	// 		'Accept' => 'application/json',
-	// 		'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+	// 		'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
 	// 	);
 
 	// 	$client = new \GuzzleHttp\Client([
@@ -4561,7 +4561,7 @@ public function uploadIdentification($folder)
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -5094,7 +5094,7 @@ public function uploadIdentification($folder)
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -5892,7 +5892,7 @@ public function uploadIdentification($folder)
 			$headers = array(
 				'Content-Type' => 'application/json',
 				'Accept' => 'application/json',
-				'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+				'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
 			);
 
 			$client = new \GuzzleHttp\Client([
@@ -6287,7 +6287,7 @@ public function uploadIdentification($folder)
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -8003,7 +8003,7 @@ FROMNAME&sender_email=FROMMAIL&subject=SUBJECT
 [filename2]=FILE2&lang=LANG&error_checking=1&metadata[meta1]=
 value1&metadata[meta2]=value2*/
 
-	public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $key = '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha', $subject = 'Test Email', $sender_email = 'test@smallsmall.com', $body = 'hi')
+	public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $key = '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y', $subject = 'Test Email', $sender_email = 'test@smallsmall.com', $body = 'hi')
 	{
 
 		$curl = curl_init();
@@ -8317,7 +8317,7 @@ value1&metadata[meta2]=value2*/
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -8387,7 +8387,7 @@ value1&metadata[meta2]=value2*/
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -8444,7 +8444,7 @@ value1&metadata[meta2]=value2*/
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -8633,52 +8633,102 @@ value1&metadata[meta2]=value2*/
 		echo $e->getMessage() . PHP_EOL;
 	}
 
-	public function request()
-	{
-		$moveOutDate = $this->input->post("moveOutDate");
-
-		$propertyID = $this->input->post("propID");
-
-		$userID = $this->input->post("userID");
 	
-		//send Emails out
+}
 
-		require 'vendor/autoload.php'; // For Unione template authoload
+public function request()
+{
+	$moveOutDate = $this->input->post("moveOutDate");
 
-		// Unione Template
+	$propertyID = $this->input->post("propID");
 
-		$headers = array(
-			'Content-Type' => 'application/json',
-			'Accept' => 'application/json',
-			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
-		);
+	$userID = $this->input->post("userID");
 
-		$client = new \GuzzleHttp\Client([
-			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+	//send Emails out
+
+	require 'vendor/autoload.php'; // For Unione template authoload
+
+	// Unione Template
+
+	$headers = array(
+		'Content-Type' => 'application/json',
+		'Accept' => 'application/json',
+		'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+	);
+
+	$client = new \GuzzleHttp\Client([
+		'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+	]);
+
+	$requestBody = [
+		"id" => "ad092734-b6ba-11ee-9134-be8bf92962ee"
+	];
+
+	$requestCxBody = [
+		"id" => "de5151bc-b6bb-11ee-93f3-260eb473b7db"
+	];
+
+	$user = $this->rss_model->checkRSSLastTran($userID);
+
+	$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+	$data['propName'] = $user['propertyTitle'];
+
+	$data['moveOutDate'] = $moveOutDate;
+
+	//Unione Template
+
+	try {
+		$response = $client->request('POST', 'template/get.json', array(
+			'headers' => $headers,
+			'json' => $requestBody,
+		));
+
+		$jsonResponse = $response->getBody()->getContents();
+
+		$responseData = json_decode($jsonResponse, true);
+
+		$htmlBody = $responseData['template']['body']['html'];
+
+		$SubscriberName = $data['name'];
+		$moveoutdate = $data['moveOutDate'];
+		$PropertyName = $data['propName'];
+
+		//Replace the placeholder in the HTML body with the username
+
+		$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
+		$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
+		
+		$data['response'] = $htmlBody;
+
+		// Prepare the email data
+		$emailData = [
+			"message" => [
+				"recipients" => [
+					["email" => $user['userEmail']],
+				],
+				"body" => ["html" => $htmlBody],
+				"subject" => "Request Move out",
+				"from_email" => "donotreply@smallsmall.com",
+				"from_name" => "Rentsmallsmall Payment Alert",
+			],
+		];
+
+		// Send the email using the Unione API
+		$responseEmail = $client->request('POST', 'email/send.json', [
+			'headers' => $headers,
+			'json' => $emailData,
 		]);
+	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+		$data['response'] = $e->getMessage();
+	}
 
-		$requestBody = [
-			"id" => "ad092734-b6ba-11ee-9134-be8bf92962ee"
-		];
-
-		$requestCxBody = [
-			"id" => "de5151bc-b6bb-11ee-93f3-260eb473b7db"
-		];
-
-		$user = $this->rss_model->checkRSSLastTran($userID);
-
-		$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
-
-		$data['propName'] = $user['propertyTitle'];
-
-		$data['moveOutDate'] = $moveOutDate;
-
-		//Unione Template
+	if ($responseEmail) {
 
 		try {
 			$response = $client->request('POST', 'template/get.json', array(
 				'headers' => $headers,
-				'json' => $requestBody,
+				'json' => $requestCxBody,
 			));
 
 			$jsonResponse = $response->getBody()->getContents();
@@ -8687,88 +8737,40 @@ value1&metadata[meta2]=value2*/
 
 			$htmlBody = $responseData['template']['body']['html'];
 
-			$SubscriberName = $data['name'];
-			$moveoutdate = $data['moveOutDate'];
-			$PropertyName = $data['propName'];
-
-			//Replace the placeholder in the HTML body with the username
+			// Replace the placeholder in the HTML body with the username
 
 			$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
 			$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
-			
+			$htmlBody = str_replace('{{PropertyName}}', $PropertyName, $htmlBody);
+	
 			$data['response'] = $htmlBody;
 
 			// Prepare the email data
-			$emailData = [
+			$emailCxData = [
 				"message" => [
 					"recipients" => [
-						["email" => $user['userEmail']],
+						["email" => 'customerexperience@smallsmall.com'],
+						// ["email" => 'accounts@smallsmall.com'],
 					],
 					"body" => ["html" => $htmlBody],
-					"subject" => "Request Move out",
+					"subject" => "Property Booking Details!",
 					"from_email" => "donotreply@smallsmall.com",
-					"from_name" => "Rentsmallsmall Payment Alert",
+					"from_name" => "Small Small Inspection",
 				],
 			];
 
 			// Send the email using the Unione API
 			$responseEmail = $client->request('POST', 'email/send.json', [
 				'headers' => $headers,
-				'json' => $emailData,
+				'json' => $emailCxData,
 			]);
 		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 			$data['response'] = $e->getMessage();
 		}
 
-		if ($responseEmail) {
-
-			try {
-				$response = $client->request('POST', 'template/get.json', array(
-					'headers' => $headers,
-					'json' => $requestCxBody,
-				));
-
-				$jsonResponse = $response->getBody()->getContents();
-
-				$responseData = json_decode($jsonResponse, true);
-
-				$htmlBody = $responseData['template']['body']['html'];
-
-				// Replace the placeholder in the HTML body with the username
-
-				$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
-				$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
-				$htmlBody = str_replace('{{PropertyName}}', $PropertyName, $htmlBody);
-		
-				$data['response'] = $htmlBody;
-
-				// Prepare the email data
-				$emailCxData = [
-					"message" => [
-						"recipients" => [
-							["email" => 'customerexperience@smallsmall.com'],
-							// ["email" => 'accounts@smallsmall.com'],
-						],
-						"body" => ["html" => $htmlBody],
-						"subject" => "Property Booking Details!",
-						"from_email" => "donotreply@smallsmall.com",
-						"from_name" => "Small Small Inspection",
-					],
-				];
-
-				// Send the email using the Unione API
-				$responseEmail = $client->request('POST', 'email/send.json', [
-					'headers' => $headers,
-					'json' => $emailCxData,
-				]);
-			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-				$data['response'] = $e->getMessage();
-			}
-
-			echo 1;
-		}
+		echo 1;
 	}
-	
 }
+
 
 }
