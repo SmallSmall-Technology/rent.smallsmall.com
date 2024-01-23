@@ -4549,6 +4549,165 @@ public function uploadIdentification($folder)
 		echo json_encode(array('status' => 'success', 'msg' => $cities));
 	}
 
+	// public function passReset()
+	// {
+
+	// 	require 'vendor/autoload.php';
+
+	// 	$email = $this->input->post('username');
+
+	// 	// Unione Template
+
+	// 	$headers = array(
+	// 		'Content-Type' => 'application/json',
+	// 		'Accept' => 'application/json',
+	// 		'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+	// 	);
+
+	// 	$client = new \GuzzleHttp\Client([
+	// 		'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+	// 	]);
+
+	// 	$requestBody = [
+	// 		"id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48"
+	// 	];
+
+	// 	// end Unione Template
+
+	// 	//Check if email exists the create onetime code for password reset
+
+	// 	$res = $this->rss_model->check_reset_email($email);
+
+	// 	if ($res) {
+
+	// 		if ($res['referral'] == 'wordpress') {
+
+	// 			$this->rss_model->changeRefferal("Instagram", $res['userID']);
+	// 		}
+
+	// 		//If email exists insert create reset row in DB
+
+	// 		$code = md5(date('Y-m-d H:i:s'));
+
+	// 		$result = $this->rss_model->insertResetDetails($res['userID'], $code);
+
+	// 		if ($result) {
+
+	// 			$data['resetLink'] = base_url() . 'reset/' . $res['userID'] . '/' . $code;
+
+	// 			// $names = explode(" ", $res['name']);
+
+	// 			$names = explode(" ", $res['firstName']);
+
+	// 			$data['name'] = $names[0];
+
+	// 			//Unione Template 
+
+	// 			try {
+	// 				$response = $client->request('POST', 'template/get.json', array(
+	// 					'headers' => $headers,
+	// 					'json' => $requestBody,
+	// 				));
+
+	// 				$jsonResponse = $response->getBody()->getContents();
+
+	// 				$responseData = json_decode($jsonResponse, true);
+
+	// 				$htmlBody = $responseData['template']['body']['html'];
+
+	// 				// Get the unique username
+	// 				// $user = $this->admin_model->get_user($id);
+
+	// 				$username = $data['name'];
+
+	// 				$resetLink = $data['resetLink'];
+
+	// 				// Replace the placeholder in the HTML body with the username
+	// 				$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+
+	// 				$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+
+	// 				$data['response'] = $htmlBody;
+
+	// 				// Prepare the email data
+	// 				$emailData = [
+	// 					"message" => [
+	// 						"recipients" => [
+	// 							["email" => $email],
+	// 							["email" => 'loyaglobaltech@gmail.com'],
+	// 						],
+	// 						"body" => ["html" => $htmlBody],
+	// 						"subject" => "Password Reset RentSmallsmall",
+	// 						"from_email" => "donotreply@smallsmall.com",
+	// 						"from_name" => "SmallSmall Password Reset",
+	// 					],
+	// 				];
+
+	// 				// Send the email using the Unione API
+	// 				$responseEmail = $client->request('POST', 'email/send.json', [
+	// 					'headers' => $headers,
+	// 					'json' => $emailData,
+	// 				]);
+					
+	// 			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+	// 				$data['response'] = $e->getMessage();
+	// 			}
+
+	// 			// End Of Unione
+
+	// 			// $this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
+
+	// 			// $this->email->to($email);
+
+	// 			// $this->email->subject("Password Reset RentSmallsmall");
+
+	// 			// $this->email->set_mailtype("html");
+
+	// 			// $message = $this->load->view('email/header.php', $data, TRUE);
+
+	// 			// $message .= $this->load->view('email/emailreset.php', $data, TRUE);
+
+	// 			// $message .= $this->load->view('email/footer.php', $data, TRUE);
+
+	// 			// $message = $this->load->view('email/unione-email-template.php', $data, TRUE);
+
+	// 			// $message = 'This is a test message 1.';
+
+	// 			// var_dump($message);
+
+	// 			// $msg = $this->email->message('This is a test message 2.');
+
+	// 			// var_dump($msg);
+
+	// 			// $emailRes = $this->email->send();
+
+	// 			// var_dump($emailRes);
+
+	// 			// Print the debug output
+	// 			// echo $this->email->print_debugger();
+
+	// 			$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
+
+	// 			if ($responseEmail) {
+
+	// 				echo 1;
+
+	// 			} else {
+
+	// 				echo "The email could not be sent. Please contact support for assistance.";
+	// 			}
+
+	// 		} else {
+
+	// 			echo "Error inserting reset data";
+	// 		}
+	// 	} else {
+
+	// 		echo "Email does not exist!";
+	// 	}
+	// }
+
 	public function passReset()
 	{
 
@@ -4601,7 +4760,7 @@ public function uploadIdentification($folder)
 
 				$data['name'] = $names[0];
 
-				//Unione Template 
+				//Unione Template
 
 				try {
 					$response = $client->request('POST', 'template/get.json', array(
@@ -4634,7 +4793,6 @@ public function uploadIdentification($folder)
 						"message" => [
 							"recipients" => [
 								["email" => $email],
-								["email" => 'loyaglobaltech@gmail.com'],
 							],
 							"body" => ["html" => $htmlBody],
 							"subject" => "Password Reset RentSmallsmall",
@@ -4648,7 +4806,6 @@ public function uploadIdentification($folder)
 						'headers' => $headers,
 						'json' => $emailData,
 					]);
-					
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 
 					$data['response'] = $e->getMessage();
@@ -4698,6 +4855,7 @@ public function uploadIdentification($folder)
 					echo "The email could not be sent. Please contact support for assistance.";
 				}
 
+
 			} else {
 
 				echo "Error inserting reset data";
@@ -4707,7 +4865,6 @@ public function uploadIdentification($folder)
 			echo "Email does not exist!";
 		}
 	}
-
 
 	public function first_timer_reset()
 	{
@@ -4806,6 +4963,7 @@ public function uploadIdentification($folder)
 			return 0;
 		}
 	}
+
 	public function updateUserInfo()
 	{
 
@@ -8437,77 +8595,77 @@ value1&metadata[meta2]=value2*/
 		}
 	}
 
-	function unione_template_get()
-	{
-		require 'vendor/autoload.php';
+	// function unione_template_get()
+	// {
+	// 	require 'vendor/autoload.php';
 
-		$headers = array(
-			'Content-Type' => 'application/json',
-			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
-		);
+	// 	$headers = array(
+	// 		'Content-Type' => 'application/json',
+	// 		'Accept' => 'application/json',
+	// 		'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+	// 	);
 
-		$client = new \GuzzleHttp\Client([
-			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-		]);
+	// 	$client = new \GuzzleHttp\Client([
+	// 		'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+	// 	]);
 
-		// Request body for retrieving the template
-		$requestBody = [
-			"id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
-		];
+	// 	// Request body for retrieving the template
+	// 	$requestBody = [
+	// 		"id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
+	// 	];
 
-		try {
-			// Retrieve the template from the Unione API
-			$response = $client->request('POST', 'template/get.json', [
-				'headers' => $headers,
-				'json' => $requestBody,
-			]);
+	// 	try {
+	// 		// Retrieve the template from the Unione API
+	// 		$response = $client->request('POST', 'template/get.json', [
+	// 			'headers' => $headers,
+	// 			'json' => $requestBody,
+	// 		]);
 
-			$responseData = json_decode($response->getBody()->getContents(), true);
+	// 		$responseData = json_decode($response->getBody()->getContents(), true);
 
-			// Get the HTML body from the template response
-			$htmlBody = $responseData['template']['body']['html'];
+	// 		// Get the HTML body from the template response
+	// 		$htmlBody = $responseData['template']['body']['html'];
 
-			// Replace placeholders in the HTML body with actual values
-			// $username = "Yusuf";
-			// $resetLink = 'https://buy.rentsmallsmall.com/';
-			// $email = 'yusuf.i@smallsmall.com';
-			// $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-			// $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+	// 		// Replace placeholders in the HTML body with actual values
+	// 		// $username = "Yusuf";
+	// 		// $resetLink = 'https://buy.rentsmallsmall.com/';
+	// 		// $email = 'yusuf.i@smallsmall.com';
+	// 		// $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+	// 		// $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
-			// Prepare the email data
-			// $emailData = [
-			// 	"message" => [
-			// 		"recipients" => [
-			// 			["email" => $email],
-			// 		],
-			// 		"body" => ["html" => $htmlBody],
-			// 		"subject" => "Testing",
-			// 		"from_email" => "donotreply@smallsmall.com",
-			// 		"from_name" => "Smallsmall",
-			// 	],
-			// ];
+	// 		// Prepare the email data
+	// 		// $emailData = [
+	// 		// 	"message" => [
+	// 		// 		"recipients" => [
+	// 		// 			["email" => $email],
+	// 		// 		],
+	// 		// 		"body" => ["html" => $htmlBody],
+	// 		// 		"subject" => "Testing",
+	// 		// 		"from_email" => "donotreply@smallsmall.com",
+	// 		// 		"from_name" => "Smallsmall",
+	// 		// 	],
+	// 		// ];
 
-			// // Send the email using the Unione API
-			// $response = $client->request('POST', 'email/send.json', [
-			// 	'headers' => $headers,
-			// 	'json' => $emailData,
-			// ]);
+	// 		// // Send the email using the Unione API
+	// 		// $response = $client->request('POST', 'email/send.json', [
+	// 		// 	'headers' => $headers,
+	// 		// 	'json' => $emailData,
+	// 		// ]);
 
-			// Output the result
-			// echo 'Email Sent successfully to ' . $email;
-			// echo $htmlBody;
-			echo $responseData;
+	// 		// Output the result
+	// 		// echo 'Email Sent successfully to ' . $email;
+	// 		// echo $htmlBody;
+	// 		echo $responseData;
 
-		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+	// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 
-			// Handle API errors
-			print_r($e->getMessage());
-		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-			// Handle other exceptions
-			print_r($e->getMessage());
-		}
-	}
+	// 		// Handle API errors
+	// 		print_r($e->getMessage());
+	// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+	// 		// Handle other exceptions
+	// 		print_r($e->getMessage());
+	// 	}
+	// }
 
 	// public function aws_s3_integration_test()
 	// {
