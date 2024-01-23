@@ -8476,26 +8476,28 @@ value1&metadata[meta2]=value2*/
 			$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
 			// Prepare the email data
-			$emailData = [
-				"message" => [
-					"recipients" => [
-						["email" => $email],
-					],
-					"body" => ["html" => $htmlBody],
-					"subject" => "Testing",
-					"from_email" => "donotreply@smallsmall.com",
-					"from_name" => "Smallsmall",
-				],
-			];
+			// $emailData = [
+			// 	"message" => [
+			// 		"recipients" => [
+			// 			["email" => $email],
+			// 		],
+			// 		"body" => ["html" => $htmlBody],
+			// 		"subject" => "Testing",
+			// 		"from_email" => "donotreply@smallsmall.com",
+			// 		"from_name" => "Smallsmall",
+			// 	],
+			// ];
 
-			// Send the email using the Unione API
-			$response = $client->request('POST', 'email/send.json', [
-				'headers' => $headers,
-				'json' => $emailData,
-			]);
+			// // Send the email using the Unione API
+			// $response = $client->request('POST', 'email/send.json', [
+			// 	'headers' => $headers,
+			// 	'json' => $emailData,
+			// ]);
 
 			// Output the result
-			echo 'Email Sent successfully to ' . $email;
+			// echo 'Email Sent successfully to ' . $email;
+			echo $htmlBody;
+
 		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 
 			// Handle API errors

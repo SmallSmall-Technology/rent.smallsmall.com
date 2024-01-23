@@ -1137,11 +1137,11 @@ class Rss_model extends CI_Model
 
 		$this->db->where('propertyID', $id);
 
-		$this->db->join('neighborhood_facility_tbl as b', 'b.property = a.propertyID', 'LEFT');
+		$this->db->join('neighborhood_facility_tbl as b', 'b.property = a.propertyID', 'LEFT OUTER');//
 
-		$this->db->join('states as c', 'c.id = a.state', 'LEFT');
+		$this->db->join('states as c', 'c.id = a.state', 'LEFT OUTER');//
 
-		$this->db->join('apt_type_tbl as d', 'd.id = a.propertyType', 'LEFT');
+		$this->db->join('apt_type_tbl as d', 'd.id = a.propertyType', 'LEFT OUter');//
 
 		$this->db->join('property_managers as e', 'e.id = a.managed_by', 'LEFT OUTER');
 

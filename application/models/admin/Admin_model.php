@@ -2664,6 +2664,24 @@ class Admin_model extends CI_Model
 		return $query->row_array();
 	}
 
+	// public function get_verification($id) // Test for web
+	
+	// {
+
+	// 	$this->db2->select('a.id, a.user_id, a.gross_annual_income, a.marital_status, a.dob, a.birth_place, a.country_id, a.present_address, a.present_country, a.duration_present_address, a.current_renting_status, a.disability, a.pets, a.present_landlord, a.landlord_email, a.landlord_phone, a.landlord_address, a.reason_for_living, a.employment_status, a.occupation, a.company_name, a.company_address, a.hr_manager_name, a.hr_manager_email, a.office_phone, a.guarantor_name, a.guarantor_email, a.guarantor_phone, a.guarantor_occupation, a.guarantor_address, a.created_at, a.updated_at, a.is_verified, a.validID_path, a.bank_statement_1, a.bank_statement_2, a.bank_statement_3, a.pID, b.id, b.name, b.income_level, b.email');
+
+	// 	$this->db2->from('verifications as a');
+
+	// 	$this->db2->where('a.id', $id);
+
+	// 	$this->db2->join('users as b', 'b.id = a.user_id');
+
+	// 	$query = $this->db2->get();
+
+	// 	return $query->row_array();
+	// }
+
+
 	public function get_app_verification($id)
 	{
 

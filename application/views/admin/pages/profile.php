@@ -364,7 +364,8 @@
                 </div>
             </div>
         <?php } else { ?>
-            <div class="col-lg-6">
+
+            <!-- <div class="col-lg-6">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
                         <h5 class="card-title">Furnisure Details</h5>
@@ -392,7 +393,46 @@
                         </table>
                     </div>
                 </div>
+            </div> -->
+
+            
+
+            
+            <div class="col-lg-6">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Property Description</h5>
+                        <table class="mb-0 table">
+                            <tbody>
+                                <tr>
+                                    <th width="200px" scope="row">Property Name</th>
+                                    <td><?php echo '<a target="_blank" href="' . base_url() . 'property/' . $details['propID'] . '">' . $details['propertyTitle'] . '</a>'; ?></td>
+                                </tr>
+                                <tr>
+                                    <th width="200px" scope="row">Property Type </th>
+                                    <td><?php echo $details['type']; ?></td>
+                                </tr>
+                                <tr>
+                                    <th width="200px" scope="row">Property Location</th>
+                                    <td><?php echo $details['city'] . ", " . $details['name']; ?></td>
+                                </tr>
+                                <tr>
+                                    <th width="200px" scope="row">Property Rent </th>
+                                    <td><span style="font-family:helvetica;">&#x20A6;</span> <?php echo number_format($details['price']); ?></td>
+                                </tr>
+                                <tr>
+                                    <th width="200px" scope="row">Security Deposit</th>
+                                    <td><span style="font-family:helvetica;">&#x20A6;</span> <?php echo number_format($details['securityDeposit']); ?></td>
+                                </tr>
+                            </tbody>
+                            <input type="hidden" id="propID" value="<?php echo $details['propID']; ?>" />
+                        </table>
+                    </div>
+                </div>
             </div>
+
+
+
 
         <?php } ?>
     </div>
