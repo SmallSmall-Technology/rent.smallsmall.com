@@ -8469,11 +8469,11 @@ value1&metadata[meta2]=value2*/
 			$htmlBody = $responseData['template']['body']['html'];
 
 			// Replace placeholders in the HTML body with actual values
-			$username = "Yusuf";
-			$resetLink = 'https://buy.rentsmallsmall.com/';
-			$email = 'yusuf.i@smallsmall.com';
-			$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-			$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+			// $username = "Yusuf";
+			// $resetLink = 'https://buy.rentsmallsmall.com/';
+			// $email = 'yusuf.i@smallsmall.com';
+			// $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+			// $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
 			// Prepare the email data
 			// $emailData = [
@@ -8496,7 +8496,8 @@ value1&metadata[meta2]=value2*/
 
 			// Output the result
 			// echo 'Email Sent successfully to ' . $email;
-			echo $htmlBody;
+			// echo $htmlBody;
+			echo $responseData;
 
 		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 
@@ -8630,6 +8631,142 @@ value1&metadata[meta2]=value2*/
 		echo $result['ObjectURL'] . PHP_EOL;
 	} catch (Aws\S3\Exception\S3Exception $e) {
 		echo $e->getMessage() . PHP_EOL;
+	}
+
+	public function request()
+	{
+		$moveOutDate = $this->input->post("moveOutDate");
+
+		$propertyID = $this->input->post("propID");
+
+		$userID = $this->input->post("userID");
+	
+		//send Emails out
+
+		require 'vendor/autoload.php'; // For Unione template authoload
+
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "ad092734-b6ba-11ee-9134-be8bf92962ee"
+		];
+
+		$requestCxBody = [
+			"id" => "de5151bc-b6bb-11ee-93f3-260eb473b7db"
+		];
+
+		$user = $this->rss_model->checkRSSLastTran($userID);
+
+		$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+		$data['propName'] = $user['propertyTitle'];
+
+		$data['moveOutDate'] = $moveOutDate;
+
+		//Unione Template
+
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
+
+			$jsonResponse = $response->getBody()->getContents();
+
+			$responseData = json_decode($jsonResponse, true);
+
+			$htmlBody = $responseData['template']['body']['html'];
+
+			$SubscriberName = $data['name'];
+			$moveoutdate = $data['moveOutDate'];
+			$PropertyName = $data['propName'];
+
+			//Replace the placeholder in the HTML body with the username
+
+			$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
+			$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
+			
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailData = [
+				"message" => [
+					"recipients" => [
+						["email" => $user['userEmail']],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "Request Move out",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "Rentsmallsmall Payment Alert",
+				],
+			];
+
+			// Send the email using the Unione API
+			$responseEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailData,
+			]);
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+			$data['response'] = $e->getMessage();
+		}
+
+		if ($responseEmail) {
+
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestCxBody,
+				));
+
+				$jsonResponse = $response->getBody()->getContents();
+
+				$responseData = json_decode($jsonResponse, true);
+
+				$htmlBody = $responseData['template']['body']['html'];
+
+				// Replace the placeholder in the HTML body with the username
+
+				$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
+				$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
+				$htmlBody = str_replace('{{PropertyName}}', $PropertyName, $htmlBody);
+		
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailCxData = [
+					"message" => [
+						"recipients" => [
+							["email" => 'customerexperience@smallsmall.com'],
+							// ["email" => 'accounts@smallsmall.com'],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "Property Booking Details!",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "Small Small Inspection",
+					],
+				];
+
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailCxData,
+				]);
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
+			}
+
+			echo 1;
+		}
 	}
 	
 }
