@@ -4604,12 +4604,13 @@ class Rss extends CI_Controller
 				if ($responseEmail) {
 
 					echo 1;
+
 				} else {
 
-					echo 0;
+					echo "The email could not be sent. Please contact support for assistance.";
 				}
 
-				$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
+
 			} else {
 
 				echo "Error inserting reset data";
