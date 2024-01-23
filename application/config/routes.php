@@ -703,6 +703,11 @@ $route['rss/verify-test-payment/(:any)'] = 'rss/verify_test_payment/$1';
 
 $route['pay-test'] = 'rss/pay_test'; 
 
+/* Unione API testing for Processor call    */
+$route['unione-testing'] = 'rss/unione_template_get';
+/* Unione testing    */
+
+
 $route['pay'] = 'rss/pay'; 
 
 $route['test-home'] = 'pages/test_home';
