@@ -405,7 +405,7 @@ $userID = $this->session->userdata('userID');
             <div class="col-12 mt-5 collapse show " id="currentBooking">
                 <div class="primary-background p-md-5 p-3">
                     <div class = "d-flex justify-content-end">
-                        <button class="btn font-weight-light  p-3 secondary-background " type="button" data-toggle="modal" style = "width: 211px; height: 50px;" data-target="#requestModal">Request move-out</button>
+                        <button class="btn font-weight-light  p-2 secondary-background " type="button" data-toggle="modal" style = "width: 211px;" data-target="#requestModal">Request move-out</button>
                     </div>
                     
                     <div class="row">
