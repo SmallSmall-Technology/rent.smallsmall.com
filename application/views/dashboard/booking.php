@@ -341,6 +341,7 @@ $userID = $this->session->userdata('userID');
                         </div>
 
                         <div class="input-container mb-3">
+                            <label>Choose move out Date</label>
                             <input type="date" class="form-control" placeholder="Last name" id="moveOutDate">
                         </div>
 
