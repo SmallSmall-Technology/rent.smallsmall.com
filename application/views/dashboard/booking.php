@@ -1026,8 +1026,15 @@ $userID = $this->session->userdata('userID');
                   data: data,
             
                   success	: function (data){
-                    console.log(data);
-                    alert("Your request has been delivered.");
+                    if(data == 1)
+                    {
+        				alert("Your request has been delivered.");
+        			}
+
+                    else
+                    {                 
+        				alert('Your request Was not Successful');      
+        			}
                     //window.location.href= data
                   }
             
