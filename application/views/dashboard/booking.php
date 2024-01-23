@@ -1026,7 +1026,7 @@ $userID = $this->session->userdata('userID');
                   data: data,
             
                   success	: function (data){
-                    if(data == 1)
+                    if(data == 123)
                     {
         				alert("Your request has been delivered.");
         			}
