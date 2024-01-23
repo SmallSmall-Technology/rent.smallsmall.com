@@ -1017,7 +1017,7 @@ $userID = $this->session->userdata('userID');
     
                 $.ajax({
             
-                  url : baseURL+'rss/request/',
+                  url : baseURL+'rss/requests/',
             
                   type: "POST",
             
