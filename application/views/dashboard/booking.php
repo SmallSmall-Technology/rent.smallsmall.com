@@ -337,7 +337,7 @@ $userID = $this->session->userdata('userID');
                 <form id="" method="post">
                     <div class="modal-body filter-modal-body primary-background">
                         <div>
-                            <i class="fa-solid fa-xmark fa-3x" data-dismiss="modal"></i>
+                            <i class="fa-solid fa-xmark fa-2x" data-dismiss="modal"></i>
                         </div>
 
                         <div class="input-container mb-3">
@@ -420,10 +420,10 @@ $userID = $this->session->userdata('userID');
                             <p class="font-weight-light custom-font-size-14">Subscription fee</p>
                             <p class="custom-font-size-26">&#8358;<?php echo number_format($bookings['price'] + $bookings['serviceCharge']);   ?></p>
                         </div>
-                        <div class="col-md-2 col-6 ">
+                        <!-- <div class="col-md-2 col-6 ">
                             <p class="font-weight-light">Service charge</p>
-                            <p class="custom-font-size-26">&#8358;<?php echo number_format($bookings['serviceCharge']); ?></p>
-                        </div>
+                            <p class="custom-font-size-26">&#8358;<?php //echo number_format($bookings['serviceCharge']); ?></p>
+                        </div> -->
                         <div class="col-md-2 col-6 ">
                             <p class="font-weight-light custom-font-size-14">Payment plan</p>
                             <p class="custom-font-size-26"><?php echo $bookings['payment_plan']; ?></p>
