@@ -376,6 +376,10 @@ $userID = $this->session->userdata('userID');
             <!-- current booking -->
             <div class="col-12 mt-5 collapse show " id="currentBooking">
                 <div class="primary-background p-md-5 p-3">
+                    <div class = "d-flex justify-content-end">
+                        <button class="btn font-weight-light  p-2 secondary-background " type="button" data-toggle="modal" style = "width: 211px;" data-target="#requestModal">Request move-out</button>
+                    </div>
+
                     <div class="row">
                         <div class="col-12">
                             <h3 class="address-title"><?php echo $bookings['propertyTitle'] ?></h3>
@@ -627,6 +631,34 @@ $userID = $this->session->userdata('userID');
         </div>
     </div>
     <!-- success modal for payment ends here-->
+
+    <!--Request moveout modal starts here -->
+    <div class="modal fade mobilePopup" id="requestModal" data-backdrop="static" data-keyboard="false"       tabindex="-1" aria-labelledby="requestModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="" method="post">
+                    <div class="modal-body filter-modal-body primary-background">
+                        <div>
+                            <i class="fa-solid fa-xmark fa-3x" data-dismiss="modal"></i>
+                        </div>
+
+                        <div class="input-container mb-3">
+                            <label>Choose move out Date</label>
+                            <input type="date" class="form-control" placeholder="Last name" id="moveOutDate">
+                        </div>
+
+                        <div class="col-md-3 col-12 d-flex mt-5 justify-content-between">
+                            <button onclick="request()" class="btn secondary-background default-border-radius" 
+                                type="button"> Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Request Modal End here -->
+
 
     <footer>
         <div class="container">
@@ -955,6 +987,51 @@ $userID = $this->session->userdata('userID');
     
             });
         }
+
+        function request(){
+                
+                var baseURL = "<?php echo base_url(); ?>";
+            
+                var userID = document.getElementById('userID').value;
+
+                var propID = document.getElementById('propID').value;
+
+                var moveOutDate = document.getElementById('moveOutDate').value;
+
+                console.log(userID);
+                console.log(propID);
+                console.log(moveOutDate);
+                
+                var data = {"userID" : userID, "propID" : propID, "moveOutDate" : moveOutDate};
+                
+                $.ajaxSetup ({ cache: false });
+    
+                $.ajax({
+            
+                  url : baseURL+'rss/request/',
+            
+                  type: "POST",
+            
+                  async: true,
+            
+                  data: data,
+            
+                  success	: function (data){
+                    if(data == 1)
+                    {
+        				alert("Your request has been delivered.");
+        			}
+
+                    else
+                    {                 
+        				alert('Your request Was not Successful');      
+        			}
+                    //window.location.href= data
+                  }
+            
+                });
+            }
+            
     </script>
     <script>
         const amountInput = document.querySelector(".amountInput");
