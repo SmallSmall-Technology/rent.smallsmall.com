@@ -6479,9 +6479,7 @@ class Rss extends CI_Controller
 				$data['response'] = $e->getMessage();
 			}
 
-			echo 1;
-		}
-	}
+			ech
 
 	public function renewedTrans()
 	{
