@@ -2633,7 +2633,7 @@ class Rss extends CI_Controller
 
 		// Construct the API URL with the required parameters with selzy
 
-		$method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
+		$method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
 
 		$curl = curl_init(); // Initialize a cURL session
 
@@ -6479,7 +6479,9 @@ class Rss extends CI_Controller
 				$data['response'] = $e->getMessage();
 			}
 
-			ech
+			echo 1;
+		}
+	}
 
 	public function renewedTrans()
 	{
