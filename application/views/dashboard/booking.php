@@ -390,7 +390,7 @@ $userID = $this->session->userdata('userID');
                         <div class="col-md-4 col-6 ">
                             <p class="font-weight-light custom-font-size-14">Subscription fee</p>
                             <p class="custom-font-size-26">&#8358;<?php echo number_format($bookings['price'] + $bookings['serviceCharge']); ?></p>
-                            <p style="font-size: 13px;">Service charge included where applicable</p>
+                            <p style="font-size: 13px;">(Service charge included where applicable)</p>
                         </div>
                         <!-- <div class="col-md-2 col-6 ">
                             <p class="font-weight-light">Service charge</p>
