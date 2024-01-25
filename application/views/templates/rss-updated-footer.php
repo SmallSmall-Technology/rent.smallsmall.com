@@ -65,7 +65,7 @@
                   <h5>Company</h5>
                   <ul class="nav flex-column">
                     <li class="nav-item">
-                      <a class="nav-link pl-0 text-white" href="#">
+                      <a class="nav-link pl-0 text-white" href="https://smallsmall.com/about">
                         About Us
                       </a>
                     </li>
