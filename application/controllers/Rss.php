@@ -2554,7 +2554,7 @@ class Rss extends CI_Controller
 
 		$email_res = $this->rss_model->check_email($email);
 
-		if ($email_res) {
+		if (!empty($email_res)) {
 
 			echo "Email already exists in our database!";
 
