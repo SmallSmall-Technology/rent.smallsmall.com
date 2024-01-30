@@ -606,6 +606,8 @@ $route['logout'] = 'rss/logout';
 
 $route['login'] = 'rss/login';
 
+$route['test-selzy'] = 'rss/testinserttoselzydashboard';  // Selzy test
+
 $route['login2'] = 'rss/login2';
 
 $route['signup'] = 'rss/signup';
