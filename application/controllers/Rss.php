@@ -624,7 +624,6 @@ class Rss extends CI_Controller
 
 	public function signup()
 	{
-
 		if (!file_exists(APPPATH . 'views/rss-partials/signup.php')) {
 			// Whoops, we don't have a page for that!
 
@@ -2633,23 +2632,45 @@ class Rss extends CI_Controller
 
 		// Construct the API URL with the required parameters with selzy
 
-		$method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
+		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
 
-		$curl = curl_init(); // Initialize a cURL session
+		$method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&list_ids=100&fields[email]=' . $email . '&fields[Name]='. $fname.'+'.$lname.'&fields[Phone]='.$phone.'&double_optin=3&overwrite=0';
 
-		// Set cURL options
+		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
+
+		// $curl = curl_init(); // Initialize a cURL session
+
+		// // Set cURL options
+
+		// curl_setopt_array($curl, array(
+
+		// 	CURLOPT_URL => $method, // URL to send the request to
+
+		// 	CURLOPT_CUSTOMREQUEST => "POST", // Using POST request method
+
+		// 	CURLOPT_RETURNTRANSFER => true, // Return the response as a string for me 
+
+		// 	CURLOPT_HTTPHEADER => [
+
+		// 		"content-type: application/json" // Set the request header to specify JSON data as requested
+
+		// 	],
+
+		// ));
+
+		$curl = curl_init();
 
 		curl_setopt_array($curl, array(
 
-			CURLOPT_URL => $method, // URL to send the request to
+			CURLOPT_URL => $method,
 
-			CURLOPT_CUSTOMREQUEST => "POST", // Using POST request method
+			CURLOPT_CUSTOMREQUEST => "POST",
 
-			CURLOPT_RETURNTRANSFER => true, // Return the response as a string for me 
+			CURLOPT_RETURNTRANSFER => true,
 
 			CURLOPT_HTTPHEADER => [
 
-				"content-type: application/json" // Set the request header to specify JSON data as requested
+				"content-type: application/json"
 
 			],
 
@@ -2663,16 +2684,14 @@ class Rss extends CI_Controller
 		}
 	
 		// Close the cURL session
-		curl_close($curl);
+		//curl_close($curl);
 	
 		// Return the API response
 		return $result;
-
 	}
 
 	public function resend_verification()
 	{
-
 		$email = $this->input->post('email');
 
 		$res = $this->rss_model->get_confirmation_link($email);
