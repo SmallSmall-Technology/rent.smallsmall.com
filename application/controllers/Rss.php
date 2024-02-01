@@ -2728,22 +2728,23 @@ class Rss extends CI_Controller
 		}
 	}
 
-
 	// Identifying a person creates or updates a person in Customer.io,
 	public function insertToCustomerDashboard($fname, $lname, $email, $phone)
 	{
 		$date = date('Y-m-d');
 
-		echo '<script>
+		$script = '
         _cio.identify({
-            id: "' . $email . '",   
-            created_at: "' . strtotime($date) . '", 
-            email: "' . $email . '",  
+            id: "' . $email . '",
+            created_at: "' . strtotime($date) . '",
+            email: "' . $email . '",
             first_name: "' . $fname . '",
-            last_name: "' . $lname . '",       
-            plan_name: "' . $phone . '"      
+            last_name: "' . $lname . '",
+            plan_name: "' . $phone . '"
         });
-        </script>';
+    ';
+
+		return '<script>' . $script . '</script>';
 	}
 
 
