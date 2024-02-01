@@ -2729,11 +2729,38 @@ class Rss extends CI_Controller
 	}
 
 	// Identifying a person creates or updates a person in Customer.io,
-	public function insertToCustomerDashboard($fname, $lname, $email, $phone)
-	{
-		$date = date('Y-m-d');
+	// public function insertToCustomerDashboard($fname, $lname, $email, $phone)
+	// {
+	// 	$date = date('Y-m-d');
 
-		$script = '
+	// 	$script = '
+    //     _cio.identify({
+    //         id: "' . $email . '",
+    //         created_at: "' . strtotime($date) . '",
+    //         email: "' . $email . '",
+    //         first_name: "' . $fname . '",
+    //         last_name: "' . $lname . '",
+    //         plan_name: "' . $phone . '"
+    //     });
+    // ';
+
+	// 	return '<script>' . $script . '</script>';
+	// }
+
+	// Identifying a person creates or updates a person in Customer.io,
+public function insertToCustomerDashboard($fname, $lname, $email, $phone)
+{
+    $date = date('Y-m-d');
+
+    $script = '
+        console.log("Executing insertToCustomerDashboard");
+        console.log("ID: ' . $email . '");
+        console.log("Created At: ' . strtotime($date) . '");
+        console.log("Email: ' . $email . '");
+        console.log("First Name: ' . $fname . '");
+        console.log("Last Name: ' . $lname . '");
+        console.log("Plan Name: ' . $phone . '");
+
         _cio.identify({
             id: "' . $email . '",
             created_at: "' . strtotime($date) . '",
@@ -2744,8 +2771,9 @@ class Rss extends CI_Controller
         });
     ';
 
-		return '<script>' . $script . '</script>';
-	}
+    return '<script>' . $script . '</script>';
+}
+
 
 
 	public function insertToSelzyDashboard($fname, $lname, $email, $phone)
