@@ -44,7 +44,7 @@ if($srlz[0] == 'Upfront') {
   $mnth = 'Upfront';
   $vmnth = 'Upfront';
 
-  if ($property['price'] > 999999) {
+  if($property['price'] > 999999) {
     $prc = (($property['price'] / 1000000) * 12) . 'M';
   } else {
     $prc = number_format($property['price'] * 12);
