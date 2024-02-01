@@ -545,7 +545,6 @@ class Rss extends CI_Controller
 			$this->load->view('rss-partials/' . $page, $data);
 
 			$this->load->view('templates/rss-updated-footer', $data);
-
 		} else {
 
 			//$userdata = array('page_link' => base_url().'verification/'.$page);
@@ -1894,7 +1893,7 @@ class Rss extends CI_Controller
 		echo $output;
 	}
 
-	
+
 	function fetchLandlordMessage()
 	{
 
@@ -2664,7 +2663,9 @@ class Rss extends CI_Controller
 			$registration = $this->rss_model->register($fname, $lname, $email, $password, $phone, $income, $confirmationCode, $referral, $user_type, $interest, $referred_by, $rc, $age, $gender, $user_agent['userAgent']);
 
 			$sendUsersRecordToSelzy = $this->insertToSelzyDashboard($fname, $lname, $email, $phone);
-			
+
+			$sendUsersRecordToCustomer_io = $this->insertToCustomerDashboard($fname, $lname, $email, $phone);
+
 			if ($registration) {
 
 				$data['confirmationLink'] = base_url() . 'confirm/' . $confirmationCode;
@@ -2728,13 +2729,32 @@ class Rss extends CI_Controller
 	}
 
 
-	public function insertToSelzyDashboard($fname, $lname, $email, $phone){
+	// Identifying a person creates or updates a person in Customer.io,
+	public function insertToCustomerDashboard($fname, $lname, $email, $phone)
+	{
+		$date = date('Y-m-d');
+
+		echo '<script>
+        _cio.identify({
+            id: "' . $email . '",   
+            created_at: "' . strtotime($date) . '", 
+            email: "' . $email . '",  
+            first_name: "' . $fname . '",
+            last_name: "' . $lname . '",       
+            plan_name: "' . $phone . '"      
+        });
+        </script>';
+	}
+
+
+	public function insertToSelzyDashboard($fname, $lname, $email, $phone)
+	{
 
 		// Construct the API URL with the required parameters with selzy
 
 		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
 
-		$method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&list_ids=100&fields[email]=' . $email . '&fields[Name]='. $fname.'+'.$lname.'&fields[Phone]='.$phone.'&double_optin=3&overwrite=0';
+		$method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&list_ids=100&fields[email]=' . $email . '&fields[Name]=' . $fname . '+' . $lname . '&fields[Phone]=' . $phone . '&double_optin=3&overwrite=0';
 
 		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
 
@@ -2782,16 +2802,16 @@ class Rss extends CI_Controller
 		if (curl_errno($curl)) { // Check for cURL errors
 			echo 'cURL Error: ' . curl_error($curl);
 		}
-	
+
 		// Close the cURL session
 		//curl_close($curl);
-	
+
 		// Return the API response
 		return $result;
-
 	}
 
-	public function testinserttoselzydashboard(){
+	public function testinserttoselzydashboard()
+	{
 
 		$fname = "Eniola";
 		$lname = "Anu";
@@ -2852,14 +2872,13 @@ class Rss extends CI_Controller
 		if (curl_errno($curl)) { // Check for cURL errors
 			echo 'cURL Error: ' . curl_error($curl);
 		}
-	
-		if($result)
-		{
+
+		if ($result) {
 			echo "Result Achieved";
 		}
 		// Close the cURL session
 		//curl_close($curl);
-	
+
 		// Return the API response
 		// return $result;
 
@@ -3374,173 +3393,170 @@ class Rss extends CI_Controller
 	// }
 
 
-public function uploadIdentification($folder)
-{
+	public function uploadIdentification($folder)
+	{
 		require 'vendor/autoload.php';
 
-    // Step 1: Initialize the variables
-    $filename = '';
+		// Step 1: Initialize the variables
+		$filename = '';
 
-    // Step 2: Generate folder name if not provided
-    if (!$folder) {
+		// Step 2: Generate folder name if not provided
+		if (!$folder) {
 
-        $folder = md5(date("Ymd His"));
+			$folder = md5(date("Ymd His"));
+		}
 
-    }
+		// Step 3: Wait for 1 second (sleep)
+		sleep(1);
 
-    // Step 3: Wait for 1 second (sleep)
-    sleep(1);
+		// Step 4: Create directory if it doesn't exist
 
-    // Step 4: Create directory if it doesn't exist
+		if (!is_dir('./uploads/verification/' . $folder)) {
 
-    if (!is_dir('./uploads/verification/' . $folder)) {
+			mkdir('./uploads/verification/' . $folder, 0777, TRUE);
+		}
 
-        mkdir('./uploads/verification/' . $folder, 0777, TRUE);
+		// Step 5: Check if files were uploaded
+		if ($_FILES["files"]["name"] != '') {
 
-    }
+			$output = '';
 
-    // Step 5: Check if files were uploaded
-    if ($_FILES["files"]["name"] != '') {
+			// Step 6: Configure file upload settings
+			$config["upload_path"] = './uploads/verification/' . $folder;
 
-        $output = '';
+			$config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
 
-        // Step 6: Configure file upload settings
-        $config["upload_path"] = './uploads/verification/' . $folder;
+			$config['max_size'] = '5000';
 
-        $config["allowed_types"] = 'jpg|jpeg|png|JPG|PNG|JPEG|pdf';
+			$config['encrypt_name'] = TRUE;
 
-        $config['max_size'] = '5000';
+			// Step 7: Load and initialize the upload library
+			$this->load->library('upload', $config);
 
-        $config['encrypt_name'] = TRUE;
+			$this->upload->initialize($config);
 
-        // Step 7: Load and initialize the upload library
-        $this->load->library('upload', $config);
+			// Step 8: Loop through uploaded files
+			if (is_array($_FILES["files"]["name"])) {
 
-        $this->upload->initialize($config);
+				for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
 
-        // Step 8: Loop through uploaded files
-        if (is_array($_FILES["files"]["name"])) {
+					$_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
 
-            for ($count = 0; $count < count($_FILES["files"]["name"]); $count++) {
+					$_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
 
-                $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+					$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
 
-                $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+					$_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
 
-                $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+					$_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
 
-                $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+					// Step 9: Perform file upload
+					if ($this->upload->do_upload('file')) {
 
-                $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+						$data = $this->upload->data();
 
-                // Step 9: Perform file upload
-                if ($this->upload->do_upload('file')) {
+						$output = "success";
 
-                    $data = $this->upload->data();
+						$filename = $data["file_name"];
 
-                    $output = "success";
+						// Step 10: Upload the file to AWS S3
+						$bucket = 'dev-rss-uploads'; // My bucket name
 
-                    $filename = $data["file_name"];
+						$keyname = 'uploads/verification/' . $folder . '/' . $data["file_name"]; // My Object key for the file
 
-                    // Step 10: Upload the file to AWS S3
-                    $bucket = 'dev-rss-uploads'; // My bucket name
+						$s3 = new Aws\S3\S3Client([
 
-                    $keyname = 'uploads/verification/' . $folder . '/' . $data["file_name"]; // My Object key for the file
+							'version' => 'latest',
 
-                    $s3 = new Aws\S3\S3Client([
+							'region'  => 'eu-west-1' // My region
+						]);
 
-                        'version' => 'latest',
+						try {
+							// Step 11: Upload data to S3.
+							$result = $s3->putObject([
 
-                        'region'  => 'eu-west-1' // My region
-                    ]);
+								'Bucket' => $bucket,
 
-                    try {
-                        // Step 11: Upload data to S3.
-                        $result = $s3->putObject([
+								'Key'    => $keyname,
 
-                            'Bucket' => $bucket,
+								'Body'   => file_get_contents($data["full_path"]),
+							]);
 
-                            'Key'    => $keyname,
+							// Step 12: Display S3 Object URL
+							$objectUrl = $result['ObjectURL'];
 
-                            'Body'   => file_get_contents($data["full_path"]),
-                        ]);
+							echo "File uploaded to S3: " . $objectUrl . PHP_EOL;
 
-                        // Step 12: Display S3 Object URL
-                        $objectUrl = $result['ObjectURL'];
+							// Step 13: Perform any additional actions with $objectUrl
+						} catch (Aws\S3\Exception\S3Exception $e) {
+							// Step 14: Handle S3 upload error
 
-                        echo "File uploaded to S3: " . $objectUrl . PHP_EOL;
+							echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+						}
+					}
+				}
+			} else {
+				// ... (same logic as before for a single file)
 
-                        // Step 13: Perform any additional actions with $objectUrl
-                    } catch (Aws\S3\Exception\S3Exception $e) {
-                        // Step 14: Handle S3 upload error
+				$_FILES["file"]["name"] = $_FILES["files"]["name"];
 
-                        echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+				$_FILES["file"]["type"] = $_FILES["files"]["type"];
 
-                    }
-                }
-            }
-        } else {
-            // ... (same logic as before for a single file)
+				$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
 
-			$_FILES["file"]["name"] = $_FILES["files"]["name"];
+				$_FILES["file"]["error"] = $_FILES["files"]["error"];
 
-			$_FILES["file"]["type"] = $_FILES["files"]["type"];
+				$_FILES["file"]["size"] = $_FILES["files"]["size"];
 
-			$_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"];
+				// Step 9: Perform file upload
+				if ($this->upload->do_upload('file')) {
 
-			$_FILES["file"]["error"] = $_FILES["files"]["error"];
+					$data = $this->upload->data();
 
-			$_FILES["file"]["size"] = $_FILES["files"]["size"];
+					$output = "success";
 
-			// Step 9: Perform file upload
-			if ($this->upload->do_upload('file')) {
+					$filename = $data["file_name"];
 
-				$data = $this->upload->data();
+					// Step 10: Upload the file to AWS S3
+					$bucket = 'dev-rss-uploads'; // My bucket name
 
-				$output = "success";
+					$keyname = 'uploads/verification/' . $folder . '/' . $data["file_name"]; // My Object key for the file
 
-				$filename = $data["file_name"];
+					$s3 = new Aws\S3\S3Client([
 
-				// Step 10: Upload the file to AWS S3
-				$bucket = 'dev-rss-uploads'; // My bucket name
+						'version' => 'latest',
 
-				$keyname = 'uploads/verification/' . $folder . '/' . $data["file_name"]; // My Object key for the file
-
-				$s3 = new Aws\S3\S3Client([
-
-					'version' => 'latest',
-
-					'region'  => 'eu-west-1' // My region
-				]);
-
-				try {
-					// Step 11: Upload data to S3.
-					$result = $s3->putObject([
-						'Bucket' => $bucket,
-
-						'Key'    => $keyname,
-
-						'Body'   => file_get_contents($data["full_path"]),
+						'region'  => 'eu-west-1' // My region
 					]);
 
-					// Step 12: Display S3 Object URL
-					$objectUrl = $result['ObjectURL'];
+					try {
+						// Step 11: Upload data to S3.
+						$result = $s3->putObject([
+							'Bucket' => $bucket,
 
-					echo "File uploaded to S3: " . $objectUrl . PHP_EOL;
+							'Key'    => $keyname,
 
-					// Step 13: Perform any additional actions with $objectUrl
-				} catch (Aws\S3\Exception\S3Exception $e) {
+							'Body'   => file_get_contents($data["full_path"]),
+						]);
 
-					// Step 14: Handle S3 upload error
-					echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+						// Step 12: Display S3 Object URL
+						$objectUrl = $result['ObjectURL'];
+
+						echo "File uploaded to S3: " . $objectUrl . PHP_EOL;
+
+						// Step 13: Perform any additional actions with $objectUrl
+					} catch (Aws\S3\Exception\S3Exception $e) {
+
+						// Step 14: Handle S3 upload error
+						echo "S3 Upload Error: " . $e->getMessage() . PHP_EOL;
+					}
 				}
 			}
-        }
 
-        // Step 15: Output JSON response
-        echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
-    }
-}
+			// Step 15: Output JSON response
+			echo json_encode(array('result' => $output, 'folder' => $folder, 'filename' => $filename));
+		}
+	}
 
 
 	// public function insertDetails()
@@ -3747,28 +3763,28 @@ public function uploadIdentification($folder)
 	// 	// 			$propertyTitle = $order['property'][0]['productTitle'];
 
 	// 	// 			// Replace the placeholder in the HTML body with the username
-					
+
 	// 	// 			$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
-					
+
 	// 	// 			$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
-					
+
 	// 	// 			$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
 
 	// 	// 			$data['response'] = $htmlBody;
-				
-    //     // 		// Prepare the email data
-    //    	// 		 	$emailDataTeam = [
-    //     //     			"message" => [
-    //     //         			"recipients" => [
-    //     //             			// ["email" => 'customerexperience@smallsmall.com'],
+
+	//     // 		// Prepare the email data
+	//    	// 		 	$emailDataTeam = [
+	//     //     			"message" => [
+	//     //         			"recipients" => [
+	//     //             			// ["email" => 'customerexperience@smallsmall.com'],
 	// 	// 			["email" => 'yusuf.l@smallsmall.com'],
-    //     //         			],
-    //     //         		"body" => ["html" => $htmlBody],
-    //     //         		"subject" => "New Verification alert",
-    //     //         		"from_email" => "donotreply@smallsmall.com",
-    //     //         		"from_name" => "SmallSmall Alert",
-    //     //     			],
-    //     // 			];
+	//     //         			],
+	//     //         		"body" => ["html" => $htmlBody],
+	//     //         		"subject" => "New Verification alert",
+	//     //         		"from_email" => "donotreply@smallsmall.com",
+	//     //         		"from_name" => "SmallSmall Alert",
+	//     //     			],
+	//     // 			];
 
 	// 	// 		$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
 
@@ -4789,7 +4805,7 @@ public function uploadIdentification($folder)
 	// 					'headers' => $headers,
 	// 					'json' => $emailData,
 	// 				]);
-					
+
 	// 			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 
 	// 				$data['response'] = $e->getMessage();
@@ -4990,13 +5006,10 @@ public function uploadIdentification($folder)
 				if ($responseEmail) {
 
 					echo 1;
-
 				} else {
 
 					echo "The email could not be sent. Please contact support for assistance.";
 				}
-
-
 			} else {
 
 				echo "Error inserting reset data";
@@ -6180,12 +6193,12 @@ public function uploadIdentification($folder)
 		$bkId = $this->random_strings(5);
 
 		if ($this->rss_model->transUpdate($bID, $refID, $amount)) {
-			
+
 			//send Emails out
 
 			require 'vendor/autoload.php'; // For Unione template authoload
 
-			
+
 			// Unione Template
 
 			$headers = array(
@@ -6206,7 +6219,7 @@ public function uploadIdentification($folder)
 				"id" => "a8de7f86-7198-11ee-9b86-1ef0731c1c1d"
 			];
 
-			
+
 			$user = $this->rss_model->checkRSSLastTran($userID);
 
 			$transDate = date("Y-m-d H:i:s", strtotime($user['transaction_date']));
@@ -6312,7 +6325,7 @@ public function uploadIdentification($folder)
 					$htmlBody = str_replace('{{Date}}', $transDate, $htmlBody);
 					$htmlBody = str_replace('{{TransactionID}}', $transID, $htmlBody);
 					$htmlBody = str_replace('{{BookingID}}', $bookingID, $htmlBody);
-			
+
 					$data['response'] = $htmlBody;
 
 					// Prepare the email data
@@ -6337,7 +6350,6 @@ public function uploadIdentification($folder)
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
 				}
-
 			}
 
 			//Update Booking	
@@ -6377,11 +6389,11 @@ public function uploadIdentification($folder)
 			$this->db->insert('transaction_tbl', $this);
 
 			echo 1;
-			
+
 			// $trans = $this->rss_model->insTransUpdate($transdet['verification_id'], $bkId, $refrID, $transdet['userID'], $amount, $transdet['type'], $transdet['payment_type'], $transdet['invoice'], $transdet['approved_by'], $transdet['transaction_date']);
 
 			//  $bookings = $this->rss_model->insBookingUpdate($bkdets['verification_id'], $refrID, $bkId, $bkdets['propertyID'], $bkdets['userID'], $bkdets['booked_as'], $bkdets['payment_plan'], $bkdets['duration'], $bkdets['move_in_date'], $bkdets['move_out_date'], $bkdets['move_out_reason'], $bkdets['rent_expiration'], $bkdets['next_rental'], $bkdets['booked_on'], $bkdets['updated_at'], $bkdets['rent_status'], $bkdets['eviction_deposit'], $bkdets['subscription_fees'], $bkdets['service_charge_deposit'], $bkdets['security_deposit_fund'], $bkdets['total']);
-						
+
 		} else {
 
 			echo 0;
@@ -6418,32 +6430,22 @@ public function uploadIdentification($folder)
 		$srlz = $bkdets['userIntervals'];
 		$srlz = unserialize($srlz);
 
-		if($srlz[0] == 'Upfront') 
-		{
+		if ($srlz[0] == 'Upfront') {
 			$plan = 'annually';
 			$time = date("Y-m-d");
-			$nextDate = date('Y-m-d', strtotime($time. ' + 12 months'));
-		}
-
-		elseif($srlz[0] == 'Monthly')
-		{
+			$nextDate = date('Y-m-d', strtotime($time . ' + 12 months'));
+		} elseif ($srlz[0] == 'Monthly') {
 			$plan = 'monthly';
 			$time = date("Y-m-d");
-			$nextDate = date('Y-m-d', strtotime($time. ' + 1 months'));
-		}
-
-		elseif($srlz[0] == 'Quarterly')
-		{
+			$nextDate = date('Y-m-d', strtotime($time . ' + 1 months'));
+		} elseif ($srlz[0] == 'Quarterly') {
 			$plan = 'quarterly';
 			$time = date("Y-m-d");
-			$nextDate = date('Y-m-d', strtotime($time. ' + 3 months'));
-		}
-
-		elseif($srlz[0] == 'Bi-annually')
-		{
+			$nextDate = date('Y-m-d', strtotime($time . ' + 3 months'));
+		} elseif ($srlz[0] == 'Bi-annually') {
 			$plan = 'biannually';
 			$time = date("Y-m-d");
-			$nextDate = date('Y-m-d', strtotime($time. ' + 6 months'));
+			$nextDate = date('Y-m-d', strtotime($time . ' + 6 months'));
 		}
 
 		$amount = ($bkdets['subscription_fees'] + $bkdets['service_charge_deposit']) * 100;
@@ -6452,24 +6454,26 @@ public function uploadIdentification($folder)
 
 		$curl = curl_init();
 
-		curl_setopt_array($curl, array(
-		CURLOPT_URL => "https://api.paystack.co/plan",
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_ENCODING => "",
-		CURLOPT_MAXREDIRS => 10,
-		CURLOPT_TIMEOUT => 30,
-		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		CURLOPT_CUSTOMREQUEST => "POST",
-		CURLOPT_POSTFIELDS => array(
-			"name" => "Plan for booking $pbookingID",
-			"interval" => "$plan",
-			"amount" => $amount
-		),
-		CURLOPT_HTTPHEADER => array(
-			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
-			"Cache-Control: no-cache"
-		),
-		)
+		curl_setopt_array(
+			$curl,
+			array(
+				CURLOPT_URL => "https://api.paystack.co/plan",
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => "",
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 30,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => "POST",
+				CURLOPT_POSTFIELDS => array(
+					"name" => "Plan for booking $pbookingID",
+					"interval" => "$plan",
+					"amount" => $amount
+				),
+				CURLOPT_HTTPHEADER => array(
+					"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+					"Cache-Control: no-cache"
+				),
+			)
 		);
 
 		$response = curl_exec($curl);
@@ -6478,7 +6482,7 @@ public function uploadIdentification($folder)
 		curl_close($curl);
 
 		if ($err) {
-		echo "cURL Error #:" . $err;
+			echo "cURL Error #:" . $err;
 		} else {
 			$response = json_decode($response, true);
 			$planCode = $response['data']['plan_code'];
@@ -6501,19 +6505,19 @@ public function uploadIdentification($folder)
 
 		//open connection
 		$ch = curl_init();
-		
+
 		//set the url, number of POST vars, POST data
-		curl_setopt($ch,CURLOPT_URL, $url);
-		curl_setopt($ch,CURLOPT_POST, true);
-		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
 			"Cache-Control: no-cache",
 		));
-		
+
 		//So that curl_exec returns the contents of the cURL; rather than echoing it
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-		
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
 		//execute post
 		$result = curl_exec($ch);
 
@@ -6535,18 +6539,18 @@ public function uploadIdentification($folder)
 
 		//$user_profile_url = "$authUrl";
 
-		
+
 		echo $authUrl;
-		
+
 		// // Redirect to user profile with a success message
 		// echo "<script>
 		// 		window.location.href='$user_profile_url';
 		// 	</script>";
 
-		
+
 		// //get customer code
 		// $curl = curl_init();
-  
+
 		// curl_setopt_array($curl, array(
 		// 	CURLOPT_URL => "https://api.paystack.co/transaction/verify/rss_d9ac0278f46f4ffed5e80a93fd55b48e",
 		// 	CURLOPT_RETURNTRANSFER => true,
@@ -6560,12 +6564,12 @@ public function uploadIdentification($folder)
 		// 	"Cache-Control: no-cache",
 		// 	),
 		// ));
-		
+
 		// $response = curl_exec($curl);
 		// $err = curl_error($curl);
 
 		// curl_close($curl);
-		
+
 		// if ($err) {
 		// 	echo "cURL Error #:" . $err;
 		// } else {
@@ -6574,13 +6578,13 @@ public function uploadIdentification($folder)
 		// 	$customerCode = $response['data']['customer']['customer_code'];
 		// 	echo $customerCode;
 		// }
-			
+
 
 		//send Emails out
 
 		require 'vendor/autoload.php'; // For Unione template authoload
 
-		
+
 		// Unione Template
 
 		$headers = array(
@@ -6601,7 +6605,7 @@ public function uploadIdentification($folder)
 			"id" => "46334e68-82fd-11ee-8b8d-eedad67a19a8"
 		];
 
-		
+
 		$user = $this->rss_model->checkRSSLastTran($userID);
 
 		$transDate = date("Y-m-d H:i:s", strtotime($user['transaction_date']));
@@ -6700,7 +6704,7 @@ public function uploadIdentification($folder)
 				$htmlBody = str_replace('{{NextChargedate}}', $chargeDate, $htmlBody);
 				$htmlBody = str_replace('{{BookingID}}', $bookingID, $htmlBody);
 				$htmlBody = str_replace('{{Date}}', $currdate, $htmlBody);
-		
+
 				$data['response'] = $htmlBody;
 
 				// Prepare the email data
@@ -8461,7 +8465,7 @@ value1&metadata[meta2]=value2*/
 		}
 
 		$data['notifications'] = $this->rss_model->fetchNotification();
-		
+
 		$countries = array('160');
 
 		$data['min'] = $this->rss_model->get_min_rent();
@@ -8859,175 +8863,126 @@ value1&metadata[meta2]=value2*/
 	// }
 
 	public function aws_s3_integration_test()
-{
-    require 'vendor/autoload.php';
+	{
+		require 'vendor/autoload.php';
 
-    // // Initialize the AWS SSM client
-    // $ssmClient = new Aws\Ssm\SsmClient([
-    //     'version' => 'latest',
-    //     'region' => 'us-east-1', // Replace with your AWS region
-    // ]);
+		// // Initialize the AWS SSM client
+		// $ssmClient = new Aws\Ssm\SsmClient([
+		//     'version' => 'latest',
+		//     'region' => 'us-east-1', // Replace with your AWS region
+		// ]);
 
-    // try {
-    //     $result = $ssmClient->getParameters([
-    //         'Names' => ['ACCESS_KEY_ID', 'SECRET_ACCESS_KEY', 'ACCESS_REGION'],
-    //         'WithDecryption' => true,
-    //     ]);
+		// try {
+		//     $result = $ssmClient->getParameters([
+		//         'Names' => ['ACCESS_KEY_ID', 'SECRET_ACCESS_KEY', 'ACCESS_REGION'],
+		//         'WithDecryption' => true,
+		//     ]);
 
-    //     $awsAccessKeyId = $result['Parameters'][0]['Value'];
-    //     $awsSecretAccessKey = $result['Parameters'][1]['Value'];
-    //     $awsRegion = $result['Parameters'][2]['Value'];
+		//     $awsAccessKeyId = $result['Parameters'][0]['Value'];
+		//     $awsSecretAccessKey = $result['Parameters'][1]['Value'];
+		//     $awsRegion = $result['Parameters'][2]['Value'];
 
-    //     // Use the retrieved values to create the S3 client
-    //     $objAwsS3Client = new Aws\S3\S3Client([
-    //         'version' => 'latest',
-    //         'region' => $awsRegion,
-    //         'credentials' => [
-    //             'key' => $awsAccessKeyId,
-    //             'secret' => $awsSecretAccessKey,
-    //         ],
-    //     ]);
+		//     // Use the retrieved values to create the S3 client
+		//     $objAwsS3Client = new Aws\S3\S3Client([
+		//         'version' => 'latest',
+		//         'region' => $awsRegion,
+		//         'credentials' => [
+		//             'key' => $awsAccessKeyId,
+		//             'secret' => $awsSecretAccessKey,
+		//         ],
+		//     ]);
 
-    //     // List all S3 Buckets
-    //     $buckets = $objAwsS3Client->listBuckets();
+		//     // List all S3 Buckets
+		//     $buckets = $objAwsS3Client->listBuckets();
 
-    //     if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
-    //         foreach ($buckets['Buckets'] as $bucket) {
-    //             echo $bucket['Name'] . "\n";
-    //         }
-    //     } else {
-    //         echo "No buckets found.\n";
-    //     }
-    // } catch (Aws\S3\Exception\S3Exception $e) {
-    //     echo "Error: " . $e->getMessage() . "\n";
-    // }
+		//     if (isset($buckets['Buckets']) && !empty($buckets['Buckets'])) {
+		//         foreach ($buckets['Buckets'] as $bucket) {
+		//             echo $bucket['Name'] . "\n";
+		//         }
+		//     } else {
+		//         echo "No buckets found.\n";
+		//     }
+		// } catch (Aws\S3\Exception\S3Exception $e) {
+		//     echo "Error: " . $e->getMessage() . "\n";
+		// }
 
-	// require 'vendor/autoload.php';
+		// require 'vendor/autoload.php';
 
-	// require APPPATH . 'vendor/autoload.php'; // Adjust the path if needed
+		// require APPPATH . 'vendor/autoload.php'; // Adjust the path if needed
 
-	// use Aws\S3\S3Client;
-	// use Aws\S3\Exception\S3Exception;
-	
-	$bucket = 'dev-rss-uploads';
-	$keyname = 'uploads/hello.txt';
-							
-	$s3 = new Aws\S3\S3Client([
-		'version' => 'latest',
-		'region'  => 'eu-west-1'
-	]);
-	
-	try {
-		// Upload data.
-		$result = $s3->putObject([
-			'Bucket' => $bucket,
-			'Key'    => $keyname,
-			'Body'   => 'Hello, Yusuf!',
-			// 'ACL'    => 'public-read'
+		// use Aws\S3\S3Client;
+		// use Aws\S3\Exception\S3Exception;
+
+		$bucket = 'dev-rss-uploads';
+		$keyname = 'uploads/hello.txt';
+
+		$s3 = new Aws\S3\S3Client([
+			'version' => 'latest',
+			'region'  => 'eu-west-1'
 		]);
-	
-		// Print the URL to the object.
-		echo $result['ObjectURL'] . PHP_EOL;
-	} catch (Aws\S3\Exception\S3Exception $e) {
-		echo $e->getMessage() . PHP_EOL;
+
+		try {
+			// Upload data.
+			$result = $s3->putObject([
+				'Bucket' => $bucket,
+				'Key'    => $keyname,
+				'Body'   => 'Hello, Yusuf!',
+				// 'ACL'    => 'public-read'
+			]);
+
+			// Print the URL to the object.
+			echo $result['ObjectURL'] . PHP_EOL;
+		} catch (Aws\S3\Exception\S3Exception $e) {
+			echo $e->getMessage() . PHP_EOL;
+		}
 	}
 
-	
-}
+	public function request()
+	{
+		$moveOutDate = $this->input->post("moveOutDate");
 
-public function request()
-{
-	$moveOutDate = $this->input->post("moveOutDate");
+		$propertyID = $this->input->post("propID");
 
-	$propertyID = $this->input->post("propID");
+		$userID = $this->input->post("userID");
 
-	$userID = $this->input->post("userID");
+		//send Emails out
 
-	//send Emails out
+		require 'vendor/autoload.php'; // For Unione template authoload
 
-	require 'vendor/autoload.php'; // For Unione template authoload
+		// Unione Template
 
-	// Unione Template
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+		);
 
-	$headers = array(
-		'Content-Type' => 'application/json',
-		'Accept' => 'application/json',
-		'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
-	);
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
 
-	$client = new \GuzzleHttp\Client([
-		'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-	]);
-
-	$requestBody = [
-		"id" => "ad092734-b6ba-11ee-9134-be8bf92962ee"
-	];
-
-	$requestCxBody = [
-		"id" => "de5151bc-b6bb-11ee-93f3-260eb473b7db"
-	];
-
-	$user = $this->rss_model->checkRSSLastTran($userID);
-
-	$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
-
-	$data['propName'] = $user['propertyTitle'];
-
-	$data['moveOutDate'] = $moveOutDate;
-
-	//Unione Template
-
-	try {
-		$response = $client->request('POST', 'template/get.json', array(
-			'headers' => $headers,
-			'json' => $requestBody,
-		));
-
-		$jsonResponse = $response->getBody()->getContents();
-
-		$responseData = json_decode($jsonResponse, true);
-
-		$htmlBody = $responseData['template']['body']['html'];
-
-		$SubscriberName = $data['name'];
-		$moveoutdate = $data['moveOutDate'];
-		$PropertyName = $data['propName'];
-
-		//Replace the placeholder in the HTML body with the username
-
-		$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
-		$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
-		
-		$data['response'] = $htmlBody;
-
-		// Prepare the email data
-		$emailData = [
-			"message" => [
-				"recipients" => [
-					["email" => $user['userEmail']],
-				],
-				"body" => ["html" => $htmlBody],
-				"subject" => "Request Move out",
-				"from_email" => "donotreply@smallsmall.com",
-				"from_name" => "Rentsmallsmall Moveout Alert",
-			],
+		$requestBody = [
+			"id" => "ad092734-b6ba-11ee-9134-be8bf92962ee"
 		];
 
-		// Send the email using the Unione API
-		$responseEmail = $client->request('POST', 'email/send.json', [
-			'headers' => $headers,
-			'json' => $emailData,
-		]);
-	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-		$data['response'] = $e->getMessage();
-	}
+		$requestCxBody = [
+			"id" => "de5151bc-b6bb-11ee-93f3-260eb473b7db"
+		];
 
-	if ($responseEmail) {
+		$user = $this->rss_model->checkRSSLastTran($userID);
+
+		$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+		$data['propName'] = $user['propertyTitle'];
+
+		$data['moveOutDate'] = $moveOutDate;
+
+		//Unione Template
 
 		try {
 			$response = $client->request('POST', 'template/get.json', array(
 				'headers' => $headers,
-				'json' => $requestCxBody,
+				'json' => $requestBody,
 			));
 
 			$jsonResponse = $response->getBody()->getContents();
@@ -9036,43 +8991,90 @@ public function request()
 
 			$htmlBody = $responseData['template']['body']['html'];
 
-			// Replace the placeholder in the HTML body with the username
+			$SubscriberName = $data['name'];
+			$moveoutdate = $data['moveOutDate'];
+			$PropertyName = $data['propName'];
+
+			//Replace the placeholder in the HTML body with the username
 
 			$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
 			$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
-			$htmlBody = str_replace('{{PropertyName}}', $PropertyName, $htmlBody);
-	
+
 			$data['response'] = $htmlBody;
 
 			// Prepare the email data
-			$emailCxData = [
+			$emailData = [
 				"message" => [
 					"recipients" => [
-						["email" => 'customerexperience@smallsmall.com'],
-						// ["email" => 'accounts@smallsmall.com'],
+						["email" => $user['userEmail']],
 					],
 					"body" => ["html" => $htmlBody],
-					"subject" => "Property Moveout alert!",
+					"subject" => "Request Move out",
 					"from_email" => "donotreply@smallsmall.com",
-					"from_name" => "Rentsmallsmall moveout alert",
+					"from_name" => "Rentsmallsmall Moveout Alert",
 				],
 			];
 
 			// Send the email using the Unione API
 			$responseEmail = $client->request('POST', 'email/send.json', [
 				'headers' => $headers,
-				'json' => $emailCxData,
+				'json' => $emailData,
 			]);
 		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 			$data['response'] = $e->getMessage();
 		}
 
-		echo 1;
+		if ($responseEmail) {
+
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestCxBody,
+				));
+
+				$jsonResponse = $response->getBody()->getContents();
+
+				$responseData = json_decode($jsonResponse, true);
+
+				$htmlBody = $responseData['template']['body']['html'];
+
+				// Replace the placeholder in the HTML body with the username
+
+				$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
+				$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
+				$htmlBody = str_replace('{{PropertyName}}', $PropertyName, $htmlBody);
+
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailCxData = [
+					"message" => [
+						"recipients" => [
+							["email" => 'customerexperience@smallsmall.com'],
+							// ["email" => 'accounts@smallsmall.com'],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "Property Moveout alert!",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "Rentsmallsmall moveout alert",
+					],
+				];
+
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailCxData,
+				]);
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
+			}
+
+			echo 1;
+		}
 	}
-}
 
 
-// Template test for processor calls
+	// Template test for processor calls
 	function unione_template_get()
 	{
 		require 'vendor/autoload.php';
@@ -9141,6 +9143,4 @@ public function request()
 			print_r($e->getMessage());
 		}
 	}
-
-
 }
