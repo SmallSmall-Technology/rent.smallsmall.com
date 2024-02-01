@@ -401,7 +401,7 @@ class App extends CI_Controller {
 	    
 	    $propertyPrice = $data['property']['price'];
 	    
-	    if (empty($propertyPrice) || is_null($propertyPrice)) {
+	    if(empty($propertyPrice) || is_null($propertyPrice)) {
 
 			$evictionDeposit = 0; // set default
 
@@ -435,25 +435,35 @@ class App extends CI_Controller {
 		{
 			$data['isItUpfront'] = 'true';
 
-			if($yrnt <= 2000000)
-			{
-				$sec_dep = 0.25 * $yrnt;
-			}
-
-			else
-			{
-				$sec_dep = 0.3 * $yrnt;
-			}
-
 			if($data['property']['securityDepositTerm'] == 1)
 			{
 				$sec_dep = $data['property']['securityDeposit'] * $data['property']['securityDepositTerm'];
+				$evictionDeposit = $data['property']['securityDeposit'];
 			}
 
 			elseif($data['property']['securityDepositTerm'] == 2)
 			{
 				$sec_dep = $data['property']['securityDeposit'] * $data['property']['securityDepositTerm'];
 				$sec_dep = 0.75 * $sec_dep;
+			}
+
+			elseif($data['property']['securityDepositTerm'] == 3)
+			{
+				if ($yrnt <= 2000000) {
+					$sec_dep = 0.3 * $yrnt;
+					$evictionDeposit = $sec_dep;
+				} 
+				
+				else 
+				{
+					$sec_dep = 0.25 * $yrnt;
+					$evictionDeposit = $sec_dep;
+				}
+			}
+
+			elseif($data['property']['securityDepositTerm'] == 4)
+			{
+				$sec_dep = $data['property']['securityDeposit'];
 			}
 		}
 
