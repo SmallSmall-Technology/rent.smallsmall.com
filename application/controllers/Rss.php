@@ -2729,52 +2729,35 @@ class Rss extends CI_Controller
 	}
 
 	// Identifying a person creates or updates a person in Customer.io,
-	// public function insertToCustomerDashboard($fname, $lname, $email, $phone)
-	// {
-	// 	$date = date('Y-m-d');
-
-	// 	$script = '
-    //     _cio.identify({
-    //         id: "' . $email . '",
-    //         created_at: "' . strtotime($date) . '",
-    //         email: "' . $email . '",
-    //         first_name: "' . $fname . '",
-    //         last_name: "' . $lname . '",
-    //         plan_name: "' . $phone . '"
-    //     });
-    // ';
-
-	// 	return '<script>' . $script . '</script>';
-	// }
-
-	// Identifying a person creates or updates a person in Customer.io,
 	public function insertToCustomerDashboard($fname, $lname, $email, $phone)
 	{
 		$script = "
-			try {
-				console.log('Executing insertToCustomerDashboard');
-				console.log('ID: $email');
-				console.log('Created At: $email');
-				console.log('Email: $email');
-				console.log('First Name: $fname');
-				console.log('Last Name: $lname');
-				console.log('Plan Name: $phone');
-	
-				_cio.identify({
-					id: '$email',
-					created_at: '$email',
-					email: '$email',
-					first_name: '$fname',
-					last_name: '$lname',
-					plan_name: '$phone'
-				});
-			} catch (error) {
-				console.error('Error in insertToCustomerDashboard:', error);
-			}
-		";
-	
-		return '<script>' . $script . '</script>';
-	}	
+        <script>
+            try {
+                console.log('Executing insertToCustomerDashboard');
+                console.log('ID: $email');
+                console.log('Created At: $email');
+                console.log('Email: $email');
+                console.log('First Name: $fname');
+                console.log('Last Name: $lname');
+                console.log('Plan Name: $phone');
+
+                _cio.identify({
+                    id: '$email',
+                    created_at: '$email',
+                    email: '$email',
+                    first_name: '$fname',
+                    last_name: '$lname',
+                    plan_name: '$phone'
+                });
+            } catch (error) {
+                console.error('Error in insertToCustomerDashboard:', error);
+            }
+        </script>
+    ";
+
+		return $script;
+	}
 
 
 	public function insertToSelzyDashboard($fname, $lname, $email, $phone)
@@ -2852,7 +2835,7 @@ class Rss extends CI_Controller
 
 
 		$method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&field_names[3]=phone&field_names[4]=LastName&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
-		
+
 		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
 
 		// $method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&list_ids=100&fields[email]=' . $email . '&fields[Name]=' . $fname . '+' . $lname . '&fields[phone]=' . $phone . '&double_optin=3&overwrite=0';
