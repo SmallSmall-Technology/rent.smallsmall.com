@@ -2728,31 +2728,32 @@ class Rss extends CI_Controller
 		}
 	}
 
-	// Identifying a person creates or updates a person in Customer.io,
+	// Identifying a person creates, updates a person and insert data to Customer.io dashboard
+
 	public function insertToCustomerDashboard($fname, $lname, $email, $phone)
 	{
+		$created_at_timestamp = strtotime('now');
+
 		$script = "
         <script>
             try {
-                console.log('Executing insertToCustomerDashboard');
-                console.log('ID: $email');
-                console.log('Created At: $email');
-                console.log('Email: $email');
-                console.log('First Name: $fname');
-                console.log('Last Name: $lname');
-                console.log('Plan Name: $phone');
-
                 _cio.identify({
                     id: '$email',
-                    created_at: '$email',
+                    created_at: $created_at_timestamp,
                     email: '$email',
                     first_name: '$fname',
                     last_name: '$lname',
                     plan_name: '$phone'
                 });
+
+                 console.log('Successfully identified user');
+
             } catch (error) {
+
                 console.error('Error in insertToCustomerDashboard:', error);
+
             }
+			
         </script>
     ";
 
