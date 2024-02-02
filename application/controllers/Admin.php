@@ -69,6 +69,83 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function testinserttoselzydashboard()
+	{
+
+		$fname = "Eniola";
+		$lname = "Anu";
+		$email = "shobowale93@gmail.com";
+		$phone = "08163536778";
+
+		// Construct the API URL with the required parameters with selzy
+
+
+		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&field_names[3]=phone&field_names[4]=LastName&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
+
+		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
+
+		// $method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&list_ids=100&fields[email]=' . $email . '&fields[Name]=' . $fname . '+' . $lname . '&fields[phone]=' . $phone . '&double_optin=3&overwrite=0';
+
+		// // $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
+
+		// // $curl = curl_init(); // Initialize a cURL session
+
+		// // Set cURL options
+
+		// curl_setopt_array($curl, array(
+
+		// 	CURLOPT_URL => $method, // URL to send the request to
+
+		// 	CURLOPT_CUSTOMREQUEST => "POST", // Using POST request method
+
+		// 	CURLOPT_RETURNTRANSFER => true, // Return the response as a string for me 
+
+		// 	CURLOPT_HTTPHEADER => [
+
+		// 		"content-type: application/json" // Set the request header to specify JSON data as requested
+
+		// 	],
+
+		// ));
+
+		$method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&list_ids=100&fields[email]=' . $email . '&fields[Name]='. $fname.'&fields[Surname]='.$lname.'&fields[phone]='.$phone.'&double_optin=3&overwrite=0';
+
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+
+			CURLOPT_URL => $method,
+
+			CURLOPT_CUSTOMREQUEST => "POST",
+
+			CURLOPT_RETURNTRANSFER => true,
+
+			CURLOPT_HTTPHEADER => [
+
+				"content-type: application/json"
+
+			],
+
+		));
+
+		// return curl_exec($curl);
+		$result = curl_exec($curl); // Execute the cURL request and capture the response
+
+		if (curl_errno($curl)) { // Check for cURL errors
+			echo 'cURL Error: ' . curl_error($curl);
+		}
+
+		if ($result) {
+			echo "Result Achieved";
+		}
+		// Close the cURL session
+		//curl_close($curl);
+
+		// Return the API response
+		// return $result;
+
+	}
+
 	public function login()
 	{
 
