@@ -56,6 +56,24 @@ class App_model extends CI_Model {
 	    return $query->row_array();
 	    
 	}
+
+	public function get_login_details($username){
+	    
+	    $this->db->select('a.userID, a.confirmation, a.lastLogin, b.firstName, b.lastName, b.user_type, b.phone, b.age, b.gender, b.verified, b.profile_picture, b.interest, b.referral_code, b.account_manager, b.interest, b.email');
+	    
+	    $this->db->from('login_tbl as a');
+	    
+	    $this->db->where('a.email', $username);
+	    
+	    $this->db->where('b.status', 'Active');
+	    
+	    $this->db->join('user_tbl as b', 'a.userID = b.userID');
+	    
+	    $query = $this->db->get();
+	    
+	    return $query->row_array();
+	    
+	}
 	
 	public function register($fname, $lname, $email, $password, $phone, $income, $confirmationCode, $referral, $user_type, $interest, $referred_by, $rc, $age, $gender, $useragent){
 	    
