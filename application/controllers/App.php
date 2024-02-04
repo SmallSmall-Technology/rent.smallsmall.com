@@ -172,47 +172,62 @@ class App extends CI_Controller
 
 		$username = $json_data->email;
 
-		$password = md5($json_data->password);
+		$raw_password = $json_data->password;
 
-		$data['profile'] = $this->app_model->login($username, $password);
+		$check_email = $this->rss_model->check_email($username);
 
-		if ($data['profile']) {
+		//$data['profile'] = $this->app_model->login($username, $password);
 
-			$key = $this->getKey();
+		$user = $this->login_user($username, $raw_password, $check_email['password'], $check_email['userID']);
 
-			$iat = time(); // current timestamp value
+		if($user){
 
-			$nbf = $iat + 10;
+			$data['profile'] = $this->app_model->get_login_details($username);		
 
-			$exp = $iat + 3600;
+			if ($data['profile']) {
 
-			$payload = array(
-				"iss" => "The_claim",
-				"aud" => "The_Aud",
-				"iat" => $iat, // issued at
-				"nbf" => $nbf, //not before in seconds
-				"exp" => $exp, // expire time in seconds
-				"user" => $data['profile']
-			);
+				$key = $this->getKey();
 
-			if ($data['profile']['confirmation'] = ' ')
+				$iat = time(); // current timestamp value
 
-				$data['profile']['confirmation'] = '';
+				$nbf = $iat + 10;
 
-			$token = $this->jwt->encode($payload, $key);
+				$exp = $iat + 3600;
 
-			array_push($payload, $token);
+				$payload = array(
+					"iss" => "The_claim",
+					"aud" => "The_Aud",
+					"iat" => $iat, // issued at
+					"nbf" => $nbf, //not before in seconds
+					"exp" => $exp, // expire time in seconds
+					"user" => $data['profile']
+				);
 
-			$data['token'] = $token;
+				if ($data['profile']['confirmation'] = ' ')
+
+					$data['profile']['confirmation'] = '';
+
+				$token = $this->jwt->encode($payload, $key);
+
+				array_push($payload, $token);
+
+				$data['token'] = $token;
+
+				$response = TRUE;
+
+				$details = "Success";
+			} else {
+
+				$response = TRUE;
+
+				$details = "Username or Password incorrect.";
+			}
+
+		}else {
 
 			$response = TRUE;
 
-			$details = "Success";
-		} else {
-
-			$response = TRUE;
-
-			$details = "Username or Password incorrect.";
+			$details = "Username does not exist";
 		}
 
 		echo json_encode(array("response" => $response, "details" => $details, "data" => $data));
@@ -237,7 +252,7 @@ class App extends CI_Controller
 
 		$email = strtolower($json_data->email);
 
-		$password = md5($json_data->password);
+		$password = password_hash($json_data->password, PASSWORD_DEFAULT);
 
 		$phone = $json_data->phone;
 
@@ -316,6 +331,31 @@ class App extends CI_Controller
 		}
 
 		echo json_encode(array("response" => $response, "details" => $details, "data" => array()));
+	}
+
+	public function login_user($username, $password, $dbpassword, $userID){
+
+		$login_limit = 5;
+
+		$user = 0;
+
+		$md5_password = md5($password);
+
+		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+		if($md5_password == $dbpassword){
+
+			$this->rss_model->update_password_to_hash($userID, $hashed_password);
+
+			$user = 1;
+
+		}else if(password_verify($password, $dbpassword)){
+
+			$user = 1;
+
+		}
+
+		return $user;
 	}
 
 	public function properties()
