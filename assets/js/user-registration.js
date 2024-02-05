@@ -96,6 +96,27 @@ function checkPassword(inputtxt){
 // }
 
 
+// Function to identify user in Customer.io
+function identifyUserInCustomerIO(email, created_at_timestamp, fname, lname, phone) {
+	try {
+		_cio.identify({
+			id: email,
+			created_at: created_at_timestamp,
+			email: email,
+			first_name: fname,
+			last_name: lname,
+			plan_name: phone
+		});
+
+		console.log('Successfully identified user in Customer.io');
+
+	} catch (error) {
+
+		console.error('Error identifying user in Customer.io:', error);
+	}
+}
+
+
 $('#regForm').submit(function(e){
 
 	"use strict";
@@ -145,6 +166,13 @@ $('#regForm').submit(function(e){
     	var referred_by = $('#referral_code').val();
     
     	var interest = $('.interest').val();
+
+		// var created_at_timestamp = strtotime('now');
+		// Timestamp for created_at
+		var created_at_timestamp = Math.floor(new Date().getTime() / 1000);
+
+		// Call the function to identify the user in Customer.io
+		identifyUserInCustomerIO(email, created_at_timestamp, fname, lname, phone);
     	
     	var filteredList = $('.reg-fields').filter(function(){
     
