@@ -6,7 +6,7 @@
   
   <div class="container-fluid d-md-block d-none">
     <div>
-      <a href="#" class="text-decoration-none font-weight-bold primary-text-color-alt">&lt; &nbsp;&nbsp;Back</a>
+      <a href="<?php echo base_url('faq'); ?>" class="text-decoration-none font-weight-bold primary-text-color-alt">&lt; &nbsp;&nbsp;Back</a>
     </div>
   </div>
 
