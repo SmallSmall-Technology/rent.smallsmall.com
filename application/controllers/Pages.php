@@ -1084,8 +1084,6 @@ class Pages extends CI_Controller {
 		$this->load->view('templates/rss-updated-footer');
 		
 		$this->load->view('templates/rss-updated-js-files');
-
-
 	}
 
 	public function move_in(){
@@ -1116,7 +1114,6 @@ class Pages extends CI_Controller {
 		$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer');
-
 	}
 
 	public function safety_and_security(){
