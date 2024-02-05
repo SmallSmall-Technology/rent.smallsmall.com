@@ -1,6 +1,6 @@
 <div class="container-fluid d-md-block d-none mt-2">
     <div>
-        <a href="#" class="text-decoration-none font-weight-bold primary-text-color-alt">&lt;
+        <a href="<?php echo base_url('faq'); ?>" class="text-decoration-none font-weight-bold primary-text-color-alt">&lt;
             &nbsp;&nbsp;Back</a>
     </div>
 </div>
