@@ -18,7 +18,6 @@
       <p>A security deposit serves as a means to
         replace or fix something in your unit that was damaged, lost or stolen
       </p>
-
     </div>
   </details>
 
