@@ -288,11 +288,21 @@ $('#regForm').submit(function(e){
                     $('.final-signup-msg').show();
                     
                     window.scrollTo(0, 0);
+
+					//Added Customer.io to track and update them in
+					_cio.identify({
+						id: email,
+						created_at: created_at_timestamp,
+						email: email,
+						first_name: fname,
+						last_name: lname,
+						plan_name: phone
+					});
+					//End Customer.io
                     
                      // Identify the user by their email and userID in Mixpanel to track Users
                     mixpanel.identify(email);
                     
-
                     // Track the user login event in mixpanel
                     mixpanel.track('User Login', {
                         'Username': email,
