@@ -163,6 +163,7 @@
     s.parentNode.insertBefore(t, s);
   })();
 </script>
+
 <!-- end customer io -->
 
 <!-- Tracking code for rss - Start of HubSpot Embed Code -->
@@ -171,7 +172,7 @@
 
 <!-- Customer.io update -->
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     // Wait for the DOM content to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
         
@@ -196,7 +197,7 @@
 
     });
 
-</script>
+</script> -->
 
 
 <script>

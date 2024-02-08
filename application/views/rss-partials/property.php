@@ -14,7 +14,7 @@ $propertyPrice = $property['price'];
 
 // get the eviction deposit value
 
-if(empty($propertyPrice) || is_null($propertyPrice)) {
+if (empty($propertyPrice) || is_null($propertyPrice)) {
 
   $evictionDeposit = 0; // set default
 
@@ -40,11 +40,11 @@ $srlz = $property['intervals'];
 $srlz = unserialize($srlz);
 $yrnt = $property['price'] * 12;
 
-if($srlz[0] == 'Upfront') {
+if ($srlz[0] == 'Upfront') {
   $mnth = 'Upfront';
   $vmnth = 'Upfront';
 
-  if($property['price'] > 999999) {
+  if ($property['price'] > 999999) {
     $prc = (($property['price'] / 1000000) * 12) . 'M';
   } else {
     $prc = number_format($property['price'] * 12);
@@ -54,7 +54,7 @@ if($srlz[0] == 'Upfront') {
 
   $total = number_format($total);
 
-  if($property['securityDepositTerm'] == 1){
+  if ($property['securityDepositTerm'] == 1) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -75,10 +75,7 @@ if($srlz[0] == 'Upfront') {
     $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
 
     $total = number_format($total);
-  }
-
-  elseif ($property['securityDepositTerm'] == 3)
-  {
+  } elseif ($property['securityDepositTerm'] == 3) {
     if ($yrnt <= 2000000) {
       $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
@@ -94,9 +91,7 @@ if($srlz[0] == 'Upfront') {
 
       $total = number_format($total);
     }
-  }
-
-  elseif ($property['securityDepositTerm'] == 4) {
+  } elseif ($property['securityDepositTerm'] == 4) {
     $sec_dep = $property['securityDeposit'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -107,12 +102,7 @@ if($srlz[0] == 'Upfront') {
 
     $total = number_format($total);
   }
-
-} 
-
-
-elseif($srlz[0] == 'Monthly') 
-{
+} elseif ($srlz[0] == 'Monthly') {
   $mnth = "/Month";
   $vmnth = "Monthly";
 
@@ -128,7 +118,7 @@ elseif($srlz[0] == 'Monthly')
 
   $total = number_format($total);
 
-  if($property['securityDepositTerm'] == 1){
+  if ($property['securityDepositTerm'] == 1) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -149,10 +139,7 @@ elseif($srlz[0] == 'Monthly')
     $total =  ($property['price'] * 1) + $sec_dep + $evictionDeposit + $serviceCharge;
 
     $total = number_format($total);
-  }
-
-  elseif ($property['securityDepositTerm'] == 3)
-  {
+  } elseif ($property['securityDepositTerm'] == 3) {
     if ($yrnt <= 2000000) {
       $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
@@ -168,9 +155,7 @@ elseif($srlz[0] == 'Monthly')
 
       $total = number_format($total);
     }
-  }
-
-  elseif ($property['securityDepositTerm'] == 4) {
+  } elseif ($property['securityDepositTerm'] == 4) {
     $sec_dep = $property['securityDeposit'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -181,11 +166,7 @@ elseif($srlz[0] == 'Monthly')
 
     $total = number_format($total);
   }
-  
-}
-
-elseif($srlz[0] == 'Quarterly') 
-{
+} elseif ($srlz[0] == 'Quarterly') {
   $mnth = "Quarterly";
   $vmnth = "Quarterly";
 
@@ -201,7 +182,7 @@ elseif($srlz[0] == 'Quarterly')
 
   $total = number_format($total);
 
-  if($property['securityDepositTerm'] == 1){
+  if ($property['securityDepositTerm'] == 1) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -222,10 +203,7 @@ elseif($srlz[0] == 'Quarterly')
     $total =  ($property['price'] * 3) + $sec_dep + $evictionDeposit + $serviceCharge;
 
     $total = number_format($total);
-  }
-
-  elseif ($property['securityDepositTerm'] == 3)
-  {
+  } elseif ($property['securityDepositTerm'] == 3) {
     if ($yrnt <= 2000000) {
       $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
@@ -241,9 +219,7 @@ elseif($srlz[0] == 'Quarterly')
 
       $total = number_format($total);
     }
-  }
-
-  elseif ($property['securityDepositTerm'] == 4) {
+  } elseif ($property['securityDepositTerm'] == 4) {
     $sec_dep = $property['securityDeposit'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -254,10 +230,7 @@ elseif($srlz[0] == 'Quarterly')
 
     $total = number_format($total);
   }
-}
-
-elseif($srlz[0] == 'Bi-annually') 
-{
+} elseif ($srlz[0] == 'Bi-annually') {
   $mnth = "Bi-annually";
   $vmnth = "Bi-annually";
 
@@ -273,7 +246,7 @@ elseif($srlz[0] == 'Bi-annually')
 
   $total = number_format($total);
 
-  if($property['securityDepositTerm'] == 1){
+  if ($property['securityDepositTerm'] == 1) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -294,10 +267,7 @@ elseif($srlz[0] == 'Bi-annually')
     $total =  ($property['price'] * 6) + $sec_dep + $evictionDeposit + $serviceCharge;
 
     $total = number_format($total);
-  }
-
-  elseif ($property['securityDepositTerm'] == 3)
-  {
+  } elseif ($property['securityDepositTerm'] == 3) {
     if ($yrnt <= 2000000) {
       $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
@@ -313,9 +283,7 @@ elseif($srlz[0] == 'Bi-annually')
 
       $total = number_format($total);
     }
-  }
-
-  elseif ($property['securityDepositTerm'] == 4) {
+  } elseif ($property['securityDepositTerm'] == 4) {
     $sec_dep = $property['securityDeposit'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -340,8 +308,9 @@ function shortenText($text, $maxLength)
   }
 }
 
- //Function to check if a string starts with a specific prefix
- function startsWith($string, $prefix) {
+//Function to check if a string starts with a specific prefix
+function startsWith($string, $prefix)
+{
   return substr($string, 0, strlen($prefix)) === $prefix;
 }
 
@@ -550,14 +519,9 @@ function shortenText($text, $maxLength)
             <p><?php echo $property['address'] . ' ' . $property['city'] . ' ' . $property['name']; ?></p>
             <div class="d-md-none mobile-subscription">
               <p class="mb-0 mobile-subscription-price">Subscription Price</p>
-              <p class="font-weight-bolder primary-text-color mobile-subscription-amount">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup
-                    data-toggle="tooltip" data-placement="top" title="This is your recurring subscription payment."><img
-                      class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+              <p class="font-weight-bolder primary-text-color mobile-subscription-amount">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup data-toggle="tooltip" data-placement="top" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
               <p class="mb-0 mobile-subscription-security">Security deposit fund</p>
-              <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($evc_dep); ?><sup data-toggle="tooltip"
-                    data-placement="right"
-                    title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img
-                      class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+              <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($evc_dep); ?><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
             </div>
 
 
@@ -710,7 +674,7 @@ function shortenText($text, $maxLength)
                       </div>
 
                       <!-- Tracking code for inspection details - Start of HubSpot Embed Code -->
-	                        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
+                      <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
                       <!-- End of HubSpot Embed Code -->
 
                     </div>
@@ -1201,7 +1165,7 @@ function shortenText($text, $maxLength)
           </div>
 
           <!-- Tracking code for inspection details - Start of HubSpot Embed Code -->
-              <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
+          <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
           <!-- End of HubSpot Embed Code -->
 
         </div>
@@ -1491,7 +1455,7 @@ function shortenText($text, $maxLength)
                     }
                     ?>
 
-                    <div class="carousel-inner" style = "border-top-left-radius: 10px; border-top-right-radius: 10px">
+                    <div class="carousel-inner" style="border-top-left-radius: 10px; border-top-right-radius: 10px">
                       <?php
                       $imageFolder = $value['imageFolder'];
 
@@ -1558,20 +1522,18 @@ function shortenText($text, $maxLength)
                       <p class="card-text">
                         &bull;<?php echo $value['bed']; ?> Bed
                         &bull;<?php echo $value['bath']; ?> Bath
-                        <?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>
-                      <!-- &bull;--> <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" 
-                    fill="none">
-                    <g clip-path="url(#clip0_7160_3254)">
-                      <path
-                        d="M7.5 2.5C7.5 1.12125 6.37875 0 5 0C3.62125 0 2.5 1.12125 2.5 2.5C2.5 3.73667 3.4025 4.76625 4.58333 4.965V9.58333C4.58333 9.81333 4.77 10 5 10C5.23 10 5.41667 9.81333 5.41667 9.58333V4.965C6.5975 4.76625 7.5 3.73667 7.5 2.5Z"
-                        fill="#414042" />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_7160_3254">
-                        <rect width="10" height="10" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg><?php echo ($value['city']); ?>
+                        <?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; 
+                        ?>
+                        <!-- &bull;--> <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                          <g clip-path="url(#clip0_7160_3254)">
+                            <path d="M7.5 2.5C7.5 1.12125 6.37875 0 5 0C3.62125 0 2.5 1.12125 2.5 2.5C2.5 3.73667 3.4025 4.76625 4.58333 4.965V9.58333C4.58333 9.81333 4.77 10 5 10C5.23 10 5.41667 9.81333 5.41667 9.58333V4.965C6.5975 4.76625 7.5 3.73667 7.5 2.5Z" fill="#414042" />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_7160_3254">
+                              <rect width="10" height="10" fill="white" />
+                            </clipPath>
+                          </defs>
+                        </svg><?php echo ($value['city']); ?>
                       </p>
                     </div>
                   </div>
@@ -1695,6 +1657,29 @@ function shortenText($text, $maxLength)
     });
   });
 </script>
+
+<!-- Mixpanel -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // Initialize Mixpanel with your project token
+    mixpanel.init('86e1f301cd45debd226a5a82ad553d5c');
+
+    // Get the property ID element
+    var propertyIdElement = document.getElementById('property_id');
+
+    // Check if the property ID element exists before tracking the event
+    if (propertyIdElement) {
+      // Track the user click event in Mixpanel
+      mixpanel.track('Property Click On', {
+        'PropertyID': propertyIdElement.value
+      });
+
+    } 
+  });
+</script>
+
+<!-- End mixpanel -->
 
 
 <!--Bootstrap js and Popper js -->
