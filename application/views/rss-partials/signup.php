@@ -150,6 +150,23 @@
 <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
 <!-- End of HubSpot Embed Code -->
 
+<!-- Customer.io update -->
+<script>
+    
+_cio.identify({
+    id: '12345678',   // Required to identify a person.
+
+    // Strongly recommended when you first identify someone
+    created_at: 1339438758,   // When a person first signed up in Unix epoch format.
+
+    // Example attributes (you can name attributes anything you want)
+    email: 'bwitlawalyusuf@gmail.com',  // Email of the currently signed in user.
+    first_name: 'Yusuf',       // First name and last name are shown on people pages.
+    last_name: 'Lawal',       
+    plan_name: '2347035579326'      
+});
+
+</script>
 
 <script>
     // Added To track Users signup using Mixpanel Platform 
