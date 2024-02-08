@@ -63,7 +63,7 @@
   <!--<<<<<<<<<<<<<< faq page 4>>>>>>>>>>>>> -->
   <div class="enquiry__cnr">
     <p class="curious__qtn">Still have questions? </p>
-    <a href="<?php echo base_url('ask-us'); ?>"><p class="ask__us">Call us at: 0903 633 9800   0903 722 2669</p></a>
+    <p class="ask__us">Call us at: 0903 633 9800   0903 722 2669</p>
   </div>
 
 </main>
