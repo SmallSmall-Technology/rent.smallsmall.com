@@ -2664,7 +2664,7 @@ class Rss extends CI_Controller
 
 			$sendUsersRecordToSelzy = $this->insertToSelzyDashboard($fname, $lname, $email, $phone);
 
-			$sendUsersRecordToCustomer_io = $this->insertToCustomerDashboard($fname, $lname, $email, $phone);
+			// $sendUsersRecordToCustomer_io = $this->insertToCustomerDashboard($fname, $lname, $email, $phone);
 
 			if ($registration) {
 
@@ -2730,28 +2730,28 @@ class Rss extends CI_Controller
 
 	// Identifying a person creates, updates a person and insert data to Customer.io dashboard
 
-	public function insertToCustomerDashboard($fname, $lname, $email, $phone)
-{
-    $created_at_timestamp = time(); // Using time() function to get current timestamp.
+// 	public function insertToCustomerDashboard($fname, $lname, $email, $phone)
+// {
+//     $created_at_timestamp = time(); // Using time() function to get current timestamp.
 
-    $script = "
-        <script>
-            _cio.identify({
-                id: '$email',
-                created_at: $created_at_timestamp,
-                email: '$email',
-                first_name: '$fname',
-                last_name: '$lname',
-                plan_name: '$phone'
-            });
+//     $script = "
+//         <script>
+//             _cio.identify({
+//                 id: '$email',
+//                 created_at: $created_at_timestamp,
+//                 email: '$email',
+//                 first_name: '$fname',
+//                 last_name: '$lname',
+//                 plan_name: '$phone'
+//             });
 
-            console.log('Successfully identified user');
-        }
-        </script>
-    ";
+//             console.log('Successfully identified user');
+//         }
+//         </script>
+//     ";
 
-    return $script;
-}
+//     return $script;
+// }
 
 
 
