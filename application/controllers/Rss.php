@@ -5132,7 +5132,7 @@ class Rss extends CI_Controller
 					"message" => [
 						"recipients" => [
 							["email" => $email],
-							["email" => 'pidah.t@smallsmall.com'], // Just for testing
+							//["email" => 'pidah.t@smallsmall.com'], // Just for testing
 							["email" => 'accounts@smallsmall.com'], // Just for testing
 						],
 						"body" => ["html" => $htmlBody],
