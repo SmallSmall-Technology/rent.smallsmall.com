@@ -151,22 +151,33 @@
 <!-- End of HubSpot Embed Code -->
 
 <!-- Customer.io update -->
-<script>
-    
-_cio.identify({
-    id: '12345678',   // Required to identify a person.
 
-    // Strongly recommended when you first identify someone
-    created_at: 1339438758,   // When a person first signed up in Unix epoch format.
+<script type="text/javascript">
+    // Wait for the DOM content to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        var fnameInput = document.getElementById('fname').value;
+        var lnameInput = document.getElementById('lname').value;
+        var emailInput = document.getElementById('email').value;
+        var phoneInput = document.getElementById('phone').value;
 
-    // Example attributes (you can name attributes anything you want)
-    email: 'bwitlawalyusuf@gmail.com',  // Email of the currently signed in user.
-    first_name: 'Yusuf',       // First name and last name are shown on people pages.
-    last_name: 'Lawal',       
-    plan_name: '2347035579326'      
-});
+        // Construct the Customer.io identify object with form values
+        var identifyObject = {
+            id: emailInput, 
+            created_at: Math.floor(Date.now() / 1000), 
+            email: emailInput,
+            first_name: fnameInput,
+            last_name: lnameInput, 
+            plan_name: phoneInput 
+        };
+
+        // Call the Customer.io identify function with the constructed object
+        _cio.identify(identifyObject);
+
+    });
 
 </script>
+
 
 <script>
     // Added To track Users signup using Mixpanel Platform 
