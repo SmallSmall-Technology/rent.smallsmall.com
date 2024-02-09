@@ -67,6 +67,9 @@ $(document).ready(function () {
 $(document).on('submit', '#paymentForm', function (e) {
     e.preventDefault();
 
+    // Initialize Mixpanel with your project token
+    mixpanel.init('86e1f301cd45debd226a5a82ad553d5c');
+
     var pay_property = document.getElementById('pay-property');
     pay_property.innerHTML = "Loading...";
 
@@ -200,6 +203,17 @@ $(document).on('submit', '#paymentForm', function (e) {
 
         $.ajaxSetup({ cache: false });
 
+        // Identify the user by their userID in Mixpanel to track Users
+        mixpanel.identify(userID);
+
+        // Track the user property event
+        mixpanel.track('Property Subscription', {
+            'PropertyID': productID,
+            'PropertyTitle': productTitle,
+            'SubscriptionFees': subscriptionFees,
+            'UserID': userID
+        });
+
         $.ajax({
             url: baseUrl + "rss/insertOrderDetails/",
             type: "POST",
@@ -212,6 +226,14 @@ $(document).on('submit', '#paymentForm', function (e) {
                 //Redirect to summary page
                 pay_property.innerHTML = "Subscribed";
 				// $('#continue-but').html("Continue");
+
+                // Track the successful subscribers
+                mixpanel.track('Successful Property Subscriber', {
+                    'PropertyID': productID,
+                    'PropertyTitle': productTitle,
+                    'SubscriptionFees': subscriptionFees,
+                    'UserID': userID
+                });
 				
                 window.localStorage.removeItem('rentalBasket');
                 window.location.href = baseUrl + "payment-summary/";
@@ -224,6 +246,9 @@ $(document).on('submit', '#paymentForm', function (e) {
 
     $('#mobPaymentForms').submit(function (e) {
         e.preventDefault();
+
+        // Initialize Mixpanel with your project token
+        mixpanel.init('86e1f301cd45debd226a5a82ad553d5c');
 
         var pay_property = document.getElementById('mob-pay-property');
         
@@ -392,6 +417,14 @@ $(document).on('submit', '#paymentForm', function (e) {
 
             $.ajaxSetup({ cache: false });
 
+            // Track the user property event
+            mixpanel.track('Property Subscription', {
+                'PropertyID': productID,
+                'PropertyTitle': productTitle,
+                'SubscriptionFees': subscriptionFees,
+                'UserID': userID
+            });
+
             $.ajax({
                 
                 url: baseUrl + "rss/insertOrderDetails/",
@@ -408,6 +441,14 @@ $(document).on('submit', '#paymentForm', function (e) {
                     
                     // console.log(data);
                     // throw new Error("Code execution stopped.");
+
+                    // Track the successful subscribers
+                    mixpanel.track('Successful Property Subscriber', {
+                        'PropertyID': productID,
+                        'PropertyTitle': productTitle,
+                        'SubscriptionFees': subscriptionFees,
+                        'UserID': userID
+                    });
                 
                     window.localStorage.removeItem('rentalBasket');
                     
@@ -440,6 +481,9 @@ $(document).on('submit', '#paymentForm', function (e) {
 
 
     $('#continue-but').click(function () {
+
+        // Initialize Mixpanel with your project token
+        mixpanel.init('86e1f301cd45debd226a5a82ad553d5c');
 
         $('#continue-but').html("wait...");
 
@@ -535,6 +579,14 @@ $(document).on('submit', '#paymentForm', function (e) {
 
             $.ajaxSetup({ cache: false });
 
+            // Track the mode of payment
+            mixpanel.track('Property Subscriber Payment Plan', {
+                'PropertyID': productID,
+                'PropertyPlan': paymentPlan,
+                'AmountDue': prodPrice,
+                'UserID': userID
+            });
+
             $.ajax({
 
                 url: baseUrl + "rss/insertOrderDetails/",
@@ -551,6 +603,13 @@ $(document).on('submit', '#paymentForm', function (e) {
 
                     //Redirect to pay
                     // 	$('#continue-but').html("Continue");
+                    // Track the mode of payment
+                    mixpanel.track('Property Subscriber Payment Plan', {
+                        'UserID': userID,
+                        'PropertyID': productID,
+                        'PropertyPlan': paymentPlan,
+                        'AmountDue': prodPrice
+                    });
 
                     window.localStorage.removeItem('rentalBasket');
 

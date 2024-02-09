@@ -1,6 +1,8 @@
 // JavaScript Document
 jQuery(document).ready(function ($) {
 
+
+
 	//Insert into local storage
 
 	var baseUrl = "https://rent.smallsmall.com/";
@@ -337,6 +339,9 @@ jQuery(document).ready(function ($) {
 
 		e.preventDefault();
 
+		// Initialize Mixpanel with your project token
+        mixpanel.init('86e1f301cd45debd226a5a82ad553d5c');
+
 		$('#finishVerifyBut').html("Wait...");
 
 		var statement_path = $('#statement').val();
@@ -399,6 +404,11 @@ jQuery(document).ready(function ($) {
 
 		$.ajaxSetup({ cache: false });
 
+		// Track the user success verification event
+		mixpanel.track('Verification Process for Subscribers Concluded', {
+			'UserID': user_id
+		});
+
 		// Send the data via AJAX
 		$.ajax({
 			url: baseUrl + "rss/insertDetails/",
@@ -412,6 +422,11 @@ jQuery(document).ready(function ($) {
 			complete: function (data) {
 
 				// Redirect to the verification-complete page
+
+				// Track the user success verification event
+				mixpanel.track('Verification Process for Subscribers Completed', {
+					'UserID': user_id
+				});
 
 				localStorage.removeItem('verificationStorage');
 

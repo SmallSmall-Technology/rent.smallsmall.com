@@ -1672,6 +1672,33 @@ function shortenText($text, $maxLength)
   });
 </script>
 
+<!-- Mixpanel track for property view-->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // Initialize Mixpanel with your project token
+    mixpanel.init('86e1f301cd45debd226a5a82ad553d5c');
+
+    // Get the property ID element  userID  productName
+    var propertyIdElement = document.getElementById('property_id');
+    var userIdElement = document.getElementById('userID');
+    var propertyNameElement = document.getElementById('productName');
+
+    // Check if the property ID element exists before tracking the event
+    if (userIdElement) {
+      // Track the user click event in Mixpanel
+      mixpanel.track('Property View', {
+        'UserID': userIdElement.value,
+        'PropertyID': propertyIdElement.value,
+        'PropertyName': propertyNameElement.value
+      });
+
+    } 
+  });
+</script>
+
+<!-- End mixpanel -->
+
 
 <!--Bootstrap js and Popper js -->
 <script src="<?php echo base_url(); ?>assets/updated-assets/js/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
