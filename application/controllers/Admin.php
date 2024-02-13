@@ -8758,7 +8758,7 @@ class Admin extends CI_Controller
 		$res = TRUE;
 
 		$user_email = 'new_user';
-
+ 
 		//Get user
 		$user = $this->admin_model->check_email($email);
 
@@ -9136,7 +9136,7 @@ class Admin extends CI_Controller
 	public function create_user_account($details)
 	{
 
-		$password = md5('Password@123');
+		$password = password_hash('Password@123', PASSWORD_DEFAULT);
 
 		$confirmationCode = md5(date('YmdHis'));
 

@@ -985,7 +985,7 @@ class Admin_model extends CI_Model
 
 	public function check_email($email)
 	{
-
+ 
 		$this->db->select('email');
 
 		$this->db->from('login_tbl');
@@ -3854,7 +3854,7 @@ class Admin_model extends CI_Model
 
 		$today = date('Y-m-d H:i:s');
 
-		$user_insert = array("userID" => $id, "firstName" => $fname, "lastName" => $lname, "email" => $email, "password" => $password, "phone" => $phone, "income" => 0, "referral" => 'Buysmallsmall Gift', "user_type" => 'Landlord', "interest" => 'Buy', "verified" => 'no', "points" => 0, "status" => 'Active', "referred_by" => $refCode, "regDate" => $today);
+		$user_insert = array("userID" => $id, "firstName" => $fname, "lastName" => $lname, "email" => $email, "password" => $password, "phone" => $phone, "income" => 0, "referral" => 'Buysmallsmall Gift', "user_type" => 'Landlord', "interest" => 'Buy', "verified" => 'no', "points" => 0, "status" => 'Active', "referred_by" => $refCode, "RegDate" => $today);
 
 		if ($this->db->insert('user_tbl', $user_insert)) {
 
