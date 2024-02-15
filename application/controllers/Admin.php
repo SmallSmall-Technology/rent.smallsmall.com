@@ -1396,6 +1396,73 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
+
+	public function lead_source()
+	{
+
+		$config['total_rows'] = $this->admin_model->countAppUsers();
+
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
+
+
+		if ($config['total_rows'] > 0) {
+
+			$page_number = $this->uri->segment(3);
+
+			$config['base_url'] = base_url() . 'admin/app-users';
+
+			if (empty($page_number))
+
+				$page_number = 1;
+
+			$offset = ($page_number - 1) * $this->pagination->per_page;
+
+			$this->admin_model->setPageNumber($this->pagination->per_page);
+
+			$this->admin_model->setOffset($offset);
+
+			$this->pagination->cur_page = $page_number;
+
+			$this->pagination->initialize($config);
+
+			$data['page_links'] = $this->pagination->create_links();
+
+			$data['app_users'] = $this->admin_model->fetchAppUsers();
+		}
+
+		if (!file_exists(APPPATH . 'views/admin/pages/app-users.php')) {
+
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
+
+		//check if Admin is logged in
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['title'] = "App Users :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/app-users.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+
 	public function btl_users()
 	{
 

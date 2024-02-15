@@ -488,6 +488,10 @@ $route['admin/app-users/(:any)'] = 'admin/app_users/$1';
 
 $route['admin/app-users'] = 'admin/app_users';
 
+$route['admin/lead-source/(:any)'] = 'admin/lead_source/$1';
+
+$route['admin/lead-source'] = 'admin/lead_source';
+
 $route['admin/btl-users/(:any)'] = 'admin/btl_users/$1';
 
 $route['admin/btl-users'] = 'admin/btl_users';

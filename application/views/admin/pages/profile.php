@@ -329,7 +329,8 @@
                 </div>
             </div>
 
-        </div>
+                                </div>
+
         <?php if ($details['propID']) { ?>
             <div class="col-lg-6">
                 <div class="main-card mb-3 card">
@@ -394,8 +395,6 @@
                     </div>
                 </div>
             </div> -->
-
-            
 
             
             <div class="col-lg-6">
