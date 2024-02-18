@@ -2014,7 +2014,7 @@ class Admin_model extends CI_Model
 
 		return $query->result_array();
 	}
-	public function editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $id, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period)
+	public function editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $id, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period, $rent_per_annum)
 	{
 
 		$this->property_name = $propName;
@@ -2076,6 +2076,7 @@ class Admin_model extends CI_Model
 		$this->co_rent_4 = $co_rent[3];
 		$this->co_rent_5 = $co_rent[4];
 		$this->co_rent_6 = $co_rent[5];
+		$this->rent_per_annum = $rent_per_annum;
 		$this->updated_at = date('Y-m-d H:i:s');
 
 		$this->db->where('propertyID', $id);
@@ -2088,7 +2089,7 @@ class Admin_model extends CI_Model
 			return 0;
 		}
 	}
-	public function insertBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, $status, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period)
+	public function insertBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, $status, $propertySize, $floorPlan, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period, $rent_per_annum)
 	{
 
 		$digits = 12;
@@ -2171,6 +2172,7 @@ class Admin_model extends CI_Model
 		$this->co_rent_5 = $co_rent[4];
 		$this->co_rent_6 = $co_rent[5];
 		$this->active = 1;
+		$this->rent_per_annum = $rent_per_annum;
 		$this->date_of_entry = date('Y-m-d H:i:s');
 
 		if ($this->db->insert('buytolet_property', $this)) {

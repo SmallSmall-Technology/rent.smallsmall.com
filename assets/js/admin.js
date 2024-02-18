@@ -3876,6 +3876,7 @@ $(window).on('load', function () {
 		var closing_date = $('#closing-date').val();
 		var floor_level = $('#floor-level').val();
 		var hold_period = $('#hold-period').val();
+		var rent_per_annum = $('#rentPerAnnum').val();
 		var featuredProp = 0;
 		var co_appr = $('input[name="co-appr[]"]').map(function () { return $(this).val(); }).get();
 
@@ -3951,7 +3952,8 @@ $(window).on('load', function () {
 			"co_appr": co_appr,
 			"co_rent": co_rent,
 			"lockdownFee": lockdownFee,
-			"lockdownPeriod": lockdownPeriod
+			"lockdownPeriod": lockdownPeriod,
+			"rent_per_annum": rent_per_annum
 		};
 
 		$.ajaxFileUpload({
@@ -4034,6 +4036,8 @@ $(window).on('load', function () {
 		var featuredProp = 0;
 		var hold_period = $('#hold-period').val();
 		var floor_level = $('#floor-level').val();
+		var rent_per_annum = $('#rentPerAnnum').val();
+
 		var co_appr = $('input[name="co-appr[]"]').map(function () { return $(this).val(); }).get();
 
 		var co_rent = $('input[name="co-rent[]"]').map(function () { return $(this).val(); }).get();
@@ -4109,7 +4113,8 @@ $(window).on('load', function () {
 			"co_rent": co_rent,
 			"available_units": available_units,
 			"lockdownFee": lockdownFee,
-			"lockdownPeriod": lockdownPeriod
+			"lockdownPeriod": lockdownPeriod,
+			"rent_per_annum": rent_per_annum
 		};
 
 		$.ajaxFileUpload({
