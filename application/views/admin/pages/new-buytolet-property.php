@@ -250,6 +250,11 @@
 											</div>
 											<div class="position-relative form-group"><label for="lockdownFee" class="">Lockdown Fee Percentage</label><input name="lockdownFee" id="lockdownFee" placeholder="Lockdown Fee" type="text" class="form-control verify-field allFields"></div>
 											<div class="position-relative form-group"><label for="lockdownPeriod" class="">Lockdown Period</label><input name="lockdownPeriod" id="lockdownPeriod" placeholder="Lockdown Period" type="text" class="form-control allFields"></div>
+
+											<div class="position-relative form-group">
+												<label for="rentPerAnnum" class="">Rent Per Annum</label>
+												<input name="rentPerAnnum" id="rentPerAnnum" placeholder="Rent Per Annum" type="text" class="form-control allFields">
+											</div>
 										</div>
 									</div>
 								</div>
