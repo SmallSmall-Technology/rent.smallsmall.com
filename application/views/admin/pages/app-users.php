@@ -17,7 +17,7 @@
 					</div>
 
 					<div>
-					    Mobile App Users
+					    Lead Source
 					</div>
 
 				</div>
@@ -27,7 +27,6 @@
 		</div>            
 
 		
-
 		<div class="row">
 
 			<div class="col-md-12">
@@ -74,7 +73,7 @@
 							<thead>
 
 							<tr>
-								<th class="text-left">&nbsp;</th>
+								<!-- <th class="text-left">&nbsp;</th>
 
 								<th class="text-left">Name</th>
 
@@ -87,6 +86,22 @@
 								<th class="text-left">Referral</th>
 
 								<th class="text-left">Registered</th>
+
+								<th class="text-left">Role</th> -->
+
+								<th class="text-left">&nbsp;</th>
+
+								<th class="text-left">Year</th>
+
+								<th class="text-left">Week Number</th>
+
+								<th class="text-left">Week Date</th>
+
+								<th class="text-left">Referal</th>
+
+								<th class="text-left">Referral</th>
+
+								<th class="text-left">Referral Count</th>
 
 								<th class="text-left">Role</th>
 
