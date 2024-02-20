@@ -33,7 +33,7 @@
 
  				<div class="main-card mb-3 card">
 
- 					<div class="card-header">All Users - <?php echo count($app_users) . " of " . $total_count; ?>
+ 					<div class="card-header">All Source - <?php echo count($referrals) . " of " . $total_count; ?>
  						<form action="<?php echo base_url('admin/search-users'); ?>" method="POST">
  							<div class="search-wrapper active">
  								<div class="input-holder">
@@ -94,7 +94,7 @@
  										<td class="text-left"><?php echo $referral['week_dates']; ?></td>
  										<td class="text-left"><?php echo $referral['referral']; ?></td>
  										<td class="text-left"><?php echo $referral['referral_count']; ?></td>
-										
+
  									</tr>
 
  								<?php endforeach; ?>
