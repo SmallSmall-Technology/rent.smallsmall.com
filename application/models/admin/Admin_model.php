@@ -1965,14 +1965,17 @@ class Admin_model extends CI_Model
 
 	public function getReferrals()
 	{
+
 		$this->db->select('YEAR(regDate) AS year, WEEK(regDate) AS week_number, CONCAT(MIN(DATE(regDate)), " - ", MAX(DATE(regDate))) AS week_dates, referral, COUNT(*) AS referral_count');
 		$this->db->from('user_tbl');
-		$this->db->where('regDate >=', '2024-01-01');
+		$this->db->where('regDate >=', '2020-01-01');
 		$this->db->where('regDate <=', 'CURDATE()', false);
 		$this->db->group_by('year, week_number, referral');
-		$this->db->order_by('year, week_number, referral');
+		// $this->db->order_by('MIN(regDate), MAX(regDate), referral');
+		$this->db->order_by('MAX(regDate), MIN(regDate), referral');
 		$query = $this->db->get();
 		return $query->result_array();
+
 	}
 
 

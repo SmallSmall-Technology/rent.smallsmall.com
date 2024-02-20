@@ -1406,7 +1406,6 @@ class Admin extends CI_Controller
 
 		$config['suffix'] = '';
 
-
 		if ($config['total_rows'] > 0) {
 
 			$page_number = $this->uri->segment(3);
