@@ -1962,6 +1962,21 @@ class Admin_model extends CI_Model
 		return $query->result_array();
 	}
 
+
+	public function getReferrals()
+	{
+		$this->db->select('YEAR(regDate) AS year, WEEK(regDate) AS week_number, CONCAT(MIN(DATE(regDate)), " - ", MAX(DATE(regDate))) AS week_dates, referral, COUNT(*) AS referral_count');
+		$this->db->from('user_tbl');
+		$this->db->where('regDate >=', '2024-01-01');
+		$this->db->where('regDate <=', 'CURDATE()', false);
+		$this->db->group_by('year, week_number, referral');
+		$this->db->order_by('year, week_number, referral');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+
+
 	public function fetchBooking($id)
 	{
 
@@ -2665,7 +2680,7 @@ class Admin_model extends CI_Model
 	}
 
 	public function get_property_details_verification($id) // Test for web
-	
+
 	{
 
 		$this->db2->select('a.id, a.user_id, a.gross_annual_income, a.marital_status, a.dob, a.birth_place, a.country_id, a.present_address, a.present_country, a.duration_present_address, a.current_renting_status, a.disability, a.pets, a.present_landlord, a.landlord_email, a.landlord_phone, a.landlord_address, a.reason_for_living, a.employment_status, a.occupation, a.company_name, a.company_address, a.hr_manager_name, a.hr_manager_email, a.office_phone, a.guarantor_name, a.guarantor_email, a.guarantor_phone, a.guarantor_occupation, a.guarantor_address, a.created_at, a.updated_at, a.is_verified, a.validID_path, a.bank_statement_1, a.bank_statement_2, a.bank_statement_3, a.pID, b.id, b.name, b.income_level, b.email');

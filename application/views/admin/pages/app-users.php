@@ -73,24 +73,34 @@
  						<table class="align-middle mb-0 table table-borderless table-striped table-hover">
  							<thead>
  								<tr>
+
  									<th class="text-left">Year</th>
  									<th class="text-left">Week Number</th>
  									<th class="text-left">Week Date</th>
  									<th class="text-left">Referral</th>
  									<th class="text-left">Referral Count</th>
+
  								</tr>
  							</thead>
+
  							<tbody>
+
  								<?php foreach ($referrals as $referral) : ?>
+
  									<tr>
+
  										<td class="text-left"><?php echo $referral['year']; ?></td>
  										<td class="text-left"><?php echo $referral['week_number']; ?></td>
  										<td class="text-left"><?php echo $referral['week_dates']; ?></td>
  										<td class="text-left"><?php echo $referral['referral']; ?></td>
  										<td class="text-left"><?php echo $referral['referral_count']; ?></td>
+										
  									</tr>
+
  								<?php endforeach; ?>
+
  							</tbody>
+
  						</table>
 
  						<!-- end new -->
