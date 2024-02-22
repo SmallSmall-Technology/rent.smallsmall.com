@@ -1464,36 +1464,6 @@ class Admin extends CI_Controller
 		}
 	}
 
-	// public function lead_source()
-	// {
-
-	// 	$data['referrals'] = $this->admin_model->getReferrals();
-
-	// 	if (!file_exists(APPPATH . 'views/admin/pages/app-users.php')) {
-	// 		// Whoops, we don't have a page for that!
-	// 		show_404();
-	// 	}
-
-	// 	//check if Admin is logged in
-	// 	if ($this->session->has_userdata('adminLoggedIn')) {
-
-	// 		$data['adminPriv'] = $this->functions_model->getUserAccess();
-	// 		$data['adminID'] = $this->session->userdata('adminID');
-	// 		$data['userAccess'] = $this->session->userdata('userAccess');
-	// 		$data['title'] = "App Users :: RSS";
-
-	// 		$this->load->view('admin/templates/header.php', $data);
-	// 		$this->load->view('admin/templates/sidebar.php', $data);
-	// 		$this->load->view('admin/pages/app-users.php', $data);
-	// 		$this->load->view('admin/templates/footer.php', $data);
-
-	// 	} else {
-
-	// 		redirect(base_url() . 'admin/login', 'refresh');
-
-	// 	}
-	// }
-
 
 	public function btl_users()
 	{

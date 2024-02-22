@@ -1963,22 +1963,6 @@ class Admin_model extends CI_Model
 	}
 
 
-// 	public function getReferrals($limit, $offset, $searchDate = null)
-// {
-//     $this->db->select('YEAR(regDate) AS year, WEEK(regDate) AS week_number, CONCAT(MIN(DATE(regDate)), " - ", MAX(DATE(regDate))) AS week_dates, referral, COUNT(*) AS referral_count');
-//     $this->db->from('user_tbl');
-//     if ($searchDate) {
-//         $this->db->where('DATE(regDate)', $searchDate);
-//     } else {
-//         $this->db->where('regDate >=', '2020-01-01');
-//         $this->db->where('regDate <=', 'CURDATE()', false);
-//     }
-//     $this->db->group_by('year, week_number, referral');
-//     $this->db->order_by('MAX(regDate), MIN(regDate), referral');
-//     $this->db->limit($limit, $offset);
-//     $query = $this->db->get();
-//     return $query->result_array();
-// }
 
 public function getReferrals($limit, $offset, $searchDate = null)
 {
