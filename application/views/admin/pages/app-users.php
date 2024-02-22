@@ -74,7 +74,7 @@
  							<thead>
  								<tr>
 
- 									<th class="text-left">&nbsp;</th>
+ 									<!-- <th class="text-left">&nbsp;</th> -->
  									<th class="text-left">Year</th>
  									<th class="text-left">Week Number</th>
  									<th class="text-left">Week Date</th>
