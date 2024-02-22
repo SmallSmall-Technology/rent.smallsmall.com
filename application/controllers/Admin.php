@@ -1414,7 +1414,7 @@ class Admin extends CI_Controller
         $page_number = 1;
     }
 
-    $config['base_url'] = base_url() . 'admin/app-users';
+    $config['base_url'] = base_url() . 'admin/lead-source';
     $offset = ($page_number - 1) * $this->pagination->per_page;
 
     $this->admin_model->setPageNumber($this->pagination->per_page);
