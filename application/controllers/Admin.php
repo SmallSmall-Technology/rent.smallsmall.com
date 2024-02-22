@@ -1400,33 +1400,9 @@ class Admin extends CI_Controller
 	public function lead_source()
 	{
 
-		// $config['total_rows'] = $this->admin_model->countAppUsers();
+	$searchDate = $this->input->post('searchDate');
 
-		// $data['total_count'] = $config['total_rows'];
-
-		// $config['suffix'] = '';
-
-		// if ($config['total_rows'] > 0) {
-
-		// 	$page_number = $this->uri->segment(3);
-
-		// 	$config['base_url'] = base_url() . 'admin/app-users';
-
-		// 	if (empty($page_number))
-
-		// 		$page_number = 1;
-
-		// 	$offset = ($page_number - 1) * $this->pagination->per_page;
-
-		// 	$this->admin_model->setPageNumber($this->pagination->per_page);
-
-		// 	$this->admin_model->setOffset($offset);
-
-		// 	$this->pagination->cur_page = $page_number;
-
-		// 	$this->pagination->initialize($config);
-
-		$searchDate = $this->input->post('searchDate');
+    $searchDate = $this->input->post('searchDate');
 
     $config['total_rows'] = $this->admin_model->countAppUsers();
     $data['total_count'] = $config['total_rows'];
@@ -1438,33 +1414,25 @@ class Admin extends CI_Controller
         $page_number = 1;
     }
 
-    $config['base_url'] = base_url() . 'admin/lead-source';
-    $config['per_page'] = 10; // Number of items per page
+    $config['base_url'] = base_url() . 'admin/app-users';
+    $offset = ($page_number - 1) * $this->pagination->per_page;
 
-    $offset = ($page_number - 1) * $config['per_page'];
-
-    $this->admin_model->setPageNumber($config['per_page']);
+    $this->admin_model->setPageNumber($this->pagination->per_page);
     $this->admin_model->setOffset($offset);
     $this->pagination->cur_page = $page_number;
 
+    $data['page_links'] = $this->pagination->create_links();
+    $data['app_users'] = $this->admin_model->fetchAppUsers();
+
     // Search functionality
     if ($searchDate) {
-        $data['referrals'] = $this->admin_model->getReferrals($searchDate);
+        $data['referrals'] = $this->admin_model->getReferrals($this->pagination->per_page, $offset, $searchDate);
         $config['total_rows'] = count($data['referrals']); // Update total_rows for pagination
     } else {
-        $data['referrals'] = $this->admin_model->getReferrals();
+        $data['referrals'] = $this->admin_model->getReferrals($this->pagination->per_page, $offset);
     }
 
-    $this->pagination->initialize($config); // Re-initialize pagination config
-
-
-		// 	$data['page_links'] = $this->pagination->create_links();
-
-		// 	$data['app_users'] = $this->admin_model->fetchAppUsers();
-
-		// 	$data['referrals'] = $this->admin_model->getReferrals();
-
-		// }
+    $this->pagination->initialize($config);
 
 		if (!file_exists(APPPATH . 'views/admin/pages/app-users.php')) {
 

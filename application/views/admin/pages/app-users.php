@@ -86,31 +86,28 @@
 
  							<tbody>
 
- 								<?php foreach (array_slice($referrals, $offset, $config['per_page']) as $referral) : ?>
+    <?php foreach ($referrals as $referral) : ?>
+        <tr>
+            <td class="text-left"><?php echo $referral['year']; ?></td>
+            <td class="text-left"><?php echo $referral['week_number']; ?></td>
+            <td class="text-left"><?php echo $referral['week_dates']; ?></td>
+            <td class="text-left"><?php echo $referral['referral']; ?></td>
+            <td class="text-left"><?php echo $referral['referral_count']; ?></td>
+        </tr>
+    <?php endforeach; ?>
+
+ 								<!-- <?php //foreach (array_slice($referrals, $offset, $config['per_page']) as $referral) : ?>
  									<tr>
- 										<td class="text-left"><?php echo $referral['year']; ?></td>
- 										<td class="text-left"><?php echo $referral['week_number']; ?></td>
- 										<td class="text-left"><?php echo $referral['week_dates']; ?></td>
- 										<td class="text-left"><?php echo $referral['referral']; ?></td>
- 										<td class="text-left"><?php echo $referral['referral_count']; ?></td>
+ 										<td class="text-left"><?php //echo $referral['year']; ?></td>
+ 										<td class="text-left"><?php //echo $referral['week_number']; ?></td>
+ 										<td class="text-left"><?php //echo $referral['week_dates']; ?></td>
+ 										<td class="text-left"><?php //echo $referral['referral']; ?></td>
+ 										<td class="text-left"><?php //echo $referral['referral_count']; ?></td>
  									</tr>
- 								<?php endforeach; ?>
+ 								<?php //endforeach; ?> -->
 
 
- 								<!-- </?php foreach ($referrals as $referral) : ?>
-
- 									<tr>
-
- 										<td class="text-left"></?php echo $referral['year']; ?></td>
- 										<td class="text-left"></?php echo $referral['week_number']; ?></td>
- 										<td class="text-left"></?php echo $referral['week_dates']; ?></td>
- 										<td class="text-left"></?php echo $referral['referral']; ?></td>
- 										<td class="text-left"></?php echo $referral['referral_count']; ?></td>
-
- 									</tr>
-
- 								</?php endforeach; ?> -->
-
+ 	
  							</tbody>
 
  						</table>
