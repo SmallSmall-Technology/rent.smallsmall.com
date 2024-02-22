@@ -74,7 +74,7 @@
  							<thead>
  								<tr>
 
-								 	<th class="text-left">&nbsp;</th>
+ 									<th class="text-left">&nbsp;</th>
  									<th class="text-left">Year</th>
  									<th class="text-left">Week Number</th>
  									<th class="text-left">Week Date</th>
@@ -86,19 +86,30 @@
 
  							<tbody>
 
- 								<?php foreach ($referrals as $referral) : ?>
-
+ 								<?php foreach (array_slice($referrals, $offset, $config['per_page']) as $referral) : ?>
  									<tr>
-
  										<td class="text-left"><?php echo $referral['year']; ?></td>
  										<td class="text-left"><?php echo $referral['week_number']; ?></td>
  										<td class="text-left"><?php echo $referral['week_dates']; ?></td>
  										<td class="text-left"><?php echo $referral['referral']; ?></td>
  										<td class="text-left"><?php echo $referral['referral_count']; ?></td>
+ 									</tr>
+ 								<?php endforeach; ?>
+
+
+ 								<!-- </?php foreach ($referrals as $referral) : ?>
+
+ 									<tr>
+
+ 										<td class="text-left"></?php echo $referral['year']; ?></td>
+ 										<td class="text-left"></?php echo $referral['week_number']; ?></td>
+ 										<td class="text-left"></?php echo $referral['week_dates']; ?></td>
+ 										<td class="text-left"></?php echo $referral['referral']; ?></td>
+ 										<td class="text-left"></?php echo $referral['referral_count']; ?></td>
 
  									</tr>
 
- 								<?php endforeach; ?>
+ 								</?php endforeach; ?> -->
 
  							</tbody>
 
