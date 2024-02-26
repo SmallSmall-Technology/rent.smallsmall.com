@@ -4276,7 +4276,7 @@ class Rss extends CI_Controller
 	{
 		$s_data['location']  = $this->input->post('locatn');
 
-		$config['total_rows'] = $this->rss_model->getPropertyFilterCount($s_data);
+		$config['total_rows'] = $this->rss_model->getPropertyFilterCounts($s_data);
 
 		$data['total_count'] = $config['total_rows'];
 

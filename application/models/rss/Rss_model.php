@@ -2000,6 +2000,17 @@ class Rss_model extends CI_Model
 		return $this->db->count_all_results();
 	}
 
+	public function getPropertyFilterCounts($s_data)
+	{
+		$this->db->select('*');
+
+		$this->db->from('property_tbl');
+
+		$this->db->like('city', $s_data['location']);
+
+		return $this->db->count_all_results();
+	}
+
 	public function get_quick_list($s_data)
 	{
 
