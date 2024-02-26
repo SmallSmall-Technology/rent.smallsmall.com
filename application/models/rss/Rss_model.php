@@ -814,7 +814,6 @@ class Rss_model extends CI_Model
 
 	public function fetch_messages($id, $limit, $start)
 	{
-
 		$this->db->select('a.*, a.id as msg_id, b.*');
 
 		$this->db->from('messages_tbl as a');
@@ -2018,6 +2017,11 @@ class Rss_model extends CI_Model
 		if (@$s_data['state']) {
 
 			$this->db->where('state', $s_data['state']);
+		}
+
+		if (@$s_data['location']) {
+
+			$this->db->where('city', $s_data['location']);
 		}
 
 		if (@$s_data['city'] && @$s_data['city'] != 'Any') {
