@@ -1491,7 +1491,6 @@ class Rss extends CI_Controller
 
 	function fetchMessages()
 	{
-
 		$output = '';
 
 		$userID = $this->session->userdata('userID');
@@ -2518,6 +2517,142 @@ class Rss extends CI_Controller
 	}
 
 
+	public function request()
+	{
+		$moveOutDate = $this->input->post("moveOutDate");
+
+		$propertyID = $this->input->post("propID");
+
+		$userID = $this->input->post("userID");
+
+		//send Emails out
+
+		require 'vendor/autoload.php'; // For Unione template authoload
+
+		// Unione Template
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "ad092734-b6ba-11ee-9134-be8bf92962ee"
+		];
+
+		$requestCxBody = [
+			"id" => "de5151bc-b6bb-11ee-93f3-260eb473b7db"
+		];
+
+		$user = $this->rss_model->checkRSSLastTran($userID);
+
+		$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+
+		$data['propName'] = $user['propertyTitle'];
+
+		$data['moveOutDate'] = $moveOutDate;
+
+		//Unione Template
+
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
+
+			$jsonResponse = $response->getBody()->getContents();
+
+			$responseData = json_decode($jsonResponse, true);
+
+			$htmlBody = $responseData['template']['body']['html'];
+
+			$SubscriberName = $data['name'];
+			$moveoutdate = $data['moveOutDate'];
+			$PropertyName = $data['propName'];
+
+			//Replace the placeholder in the HTML body with the username
+
+			$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
+			$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
+
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailData = [
+				"message" => [
+					"recipients" => [
+						["email" => $user['userEmail']],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "Request Move out",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "Rentsmallsmall Moveout Alert",
+				],
+			];
+
+			// Send the email using the Unione API
+			$responseEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailData,
+			]);
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+			$data['response'] = $e->getMessage();
+		}
+
+		if ($responseEmail) {
+
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestCxBody,
+				));
+
+				$jsonResponse = $response->getBody()->getContents();
+
+				$responseData = json_decode($jsonResponse, true);
+
+				$htmlBody = $responseData['template']['body']['html'];
+
+				// Replace the placeholder in the HTML body with the username
+
+				$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
+				$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
+				$htmlBody = str_replace('{{PropertyName}}', $PropertyName, $htmlBody);
+
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailCxData = [
+					"message" => [
+						"recipients" => [
+							["email" => 'customerexperience@smallsmall.com'],
+							// ["email" => 'accounts@smallsmall.com'],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "Property Moveout alert!",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "Rentsmallsmall moveout alert",
+					],
+				];
+
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailCxData,
+				]);
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
+			}
+
+			echo 1;
+		}
+	}
+
 
 	public function native_square()
 	{
@@ -2594,7 +2729,6 @@ class Rss extends CI_Controller
 
 	public function signup_form()
 	{
-
 		require 'vendor/autoload.php'; // For Unione template authoload
 
 		$ua = $_SERVER['HTTP_USER_AGENT'];
@@ -2634,7 +2768,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -2663,8 +2797,6 @@ class Rss extends CI_Controller
 			$registration = $this->rss_model->register($fname, $lname, $email, $password, $phone, $income, $confirmationCode, $referral, $user_type, $interest, $referred_by, $rc, $age, $gender, $user_agent['userAgent']);
 
 			$sendUsersRecordToSelzy = $this->insertToSelzyDashboard($fname, $lname, $email, $phone);
-
-			// $sendUsersRecordToCustomer_io = $this->insertToCustomerDashboard($fname, $lname, $email, $phone);
 
 			if ($registration) {
 
@@ -2719,7 +2851,7 @@ class Rss extends CI_Controller
 					if ($responseEmail) {
 						echo 1;
 					} else {
-						echo "The email could not be sent. Please contact support for assistance.";
+						echo 0;
 					}
 				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 					$data['response'] = $e->getMessage();
@@ -2728,33 +2860,6 @@ class Rss extends CI_Controller
 		}
 	}
 
-	// Identifying a person creates, updates a person and insert data to Customer.io dashboard
-
-// 	public function insertToCustomerDashboard($fname, $lname, $email, $phone)
-// {
-//     $created_at_timestamp = time(); // Using time() function to get current timestamp.
-
-//     $script = "
-//         <script>
-//             _cio.identify({
-//                 id: '$email',
-//                 created_at: $created_at_timestamp,
-//                 email: '$email',
-//                 first_name: '$fname',
-//                 last_name: '$lname',
-//                 plan_name: '$phone'
-//             });
-
-//             console.log('Successfully identified user');
-//         }
-//         </script>
-//     ";
-
-//     return $script;
-// }
-
-
-
 	public function insertToSelzyDashboard($fname, $lname, $email, $phone)
 	{
 
@@ -2762,7 +2867,7 @@ class Rss extends CI_Controller
 
 		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
 
-		$method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&list_ids=100&fields[email]=' . $email . '&fields[Name]=' . $fname . '+' . $lname . '&fields[phone]=' . $phone . '&double_optin=3&overwrite=0';
+		$method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&list_ids=100&fields[email]=' . $email . '&fields[Name]=' . $fname . '&fields[Surname]=' . $lname . '&fields[phone]=' . $phone . '&double_optin=3&overwrite=0';
 
 		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
 
@@ -2829,7 +2934,7 @@ class Rss extends CI_Controller
 		// Construct the API URL with the required parameters with selzy
 
 
-		$method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&field_names[3]=phone&field_names[4]=LastName&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
+		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&field_names[3]=phone&field_names[4]=LastName&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
 
 		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
 
@@ -2856,6 +2961,8 @@ class Rss extends CI_Controller
 		// 	],
 
 		// ));
+
+		$method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&list_ids=100&fields[email]=' . $email . '&fields[Name]=' . $fname . '&fields[Surname]=' . $lname . '&fields[phone]=' . $phone . '&double_optin=3&overwrite=0';
 
 		$curl = curl_init();
 
@@ -2892,7 +2999,6 @@ class Rss extends CI_Controller
 		// return $result;
 
 	}
-
 
 	public function resend_verification()
 	{
@@ -2948,7 +3054,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -3182,6 +3288,8 @@ class Rss extends CI_Controller
 			echo 2;
 		}
 	}
+
+
 
 	public function reply_message()
 	{
@@ -3568,333 +3676,287 @@ class Rss extends CI_Controller
 	}
 
 
-	// public function insertDetails()
-	// {
+	public function insertDetails()
+	{
 
-	// 	require 'vendor/autoload.php'; // For Unione template authoload
+		require 'vendor/autoload.php'; // For Unione template authoload
 
-	// 	$details = $this->input->post('details');
+		$details = $this->input->post('details');
 
-	// 	$userID = $this->session->userdata('userID');
+		$order = $this->input->post('order');
 
-	// 	$order = $this->input->post('order');
+		$ua = $_SERVER['HTTP_USER_AGENT'];
 
-	// 	$ua = $_SERVER['HTTP_USER_AGENT'];
+		$user_agent = $this->browserName($ua);
 
-	// 	$user_agent = $this->browserName($ua);
+		$result = "error";
 
-	// 	$result = "error";
+		$msg = "";
 
-	// 	$msg = "";
+		$price = 0;
 
-	// 	$price = 0;
+		$fname = $details['profile'][0]['firstname'];
 
-	// 	$fname = $details['profile'][0]['firstname'];
+		$email = $details['profile'][0]['email'];
 
-	// 	$email = $details['profile'][0]['email'];
+		$ref = 'rss_' . md5(rand(1000000, 9999999999));
 
-	// 	$ref = 'rss_' . md5(rand(1000000, 9999999999));
+		// Unione Template
 
-	// 	// Unione Template
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
 
-	// 	$headers = array(
-	// 		'Content-Type' => 'application/json',
-	// 		'Accept' => 'application/json',
-	// 		'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
-	// 	);
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
 
-	// 	$client = new \GuzzleHttp\Client([
-	// 		'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-	// 	]);
+		$requestBody = [
+			"id" => "05d45b98-11ae-11ee-9bc2-0a93cf78caa3"
+		];
 
-	// 	$requestBody = [
-	// 		"id" => "05d45b98-11ae-11ee-9bc2-0a93cf78caa3"
-	// 	];
+		$requestBodyForTeam = [
+			"id" => "f368198a-11c2-11ee-8731-76c23e12fa03"
+		];
 
-	// 	$requestBodyForTeam = [
-	// 		"id" => "f368198a-11c2-11ee-8731-76c23e12fa03"
-	// 	];
+		// end Unione Template
 
-	// 	// end Unione Template
+		//Insert details into verification table
 
-	// 	//testing passing verification_id
+		$ver_result = $this->rss_model->insertVerification($details['profile'][0]['firstname'], $details['profile'][0]['lastname'], $details['profile'][0]['email'], $details['profile'][0]['phone'], $details['profile'][0]['gross_pay'], $details['profile'][0]['dob'], $details['profile'][0]['gender'], $details['profile'][0]['marital_status'], $details['profile'][0]['state'], $details['profile'][0]['city'],  $details['profile'][0]['linkedinUrl'], $details['profile'][0]['country'], $details['profile'][0]['passport_number'], $details['renting'][0]['present_address'], $details['renting'][0]['country'], $details['renting'][0]['state'], $details['renting'][0]['city'], $details['renting'][0]['previous_rent_duration'], $details['renting'][0]['renting_status'], $details['renting'][0]['previous_eviction'], $details['renting'][0]['pet'], $details['renting'][0]['critical_illness'], $details['renting'][0]['landlord_full_name'], $details['renting'][0]['landlord_email'], $details['renting'][0]['landlord_phone'], $details['renting'][0]['landlord_address'], $details['renting'][0]['reason_for_leaving'], $details['employment'][0]['employment_status'], $details['employment'][0]['job_title'], $details['employment'][0]['company_address'], $details['employment'][0]['manager_hr_name'], $details['employment'][0]['manager_hr_email'], $details['employment'][0]['manager_hr_phone'], $details['employment'][0]['guarantor_name'], $details['employment'][0]['guarantor_email'], $details['employment'][0]['guarantor_phone'], $details['employment'][0]['guarantor_job_title'], $details['employment'][0]['guarantor_address'], $details['uploads'][0]['statement_path'], $details['uploads'][0]['id_path'], $details['uploads'][0]['user_id'], $details['employment'][0]['company_name'], 'Web', $user_agent['userAgent']);
 
-	// 	// $digits = 10;
+		$notify = $this->functions_model->insert_user_notifications('Verification Request Submitted', 'You have successfully submitted a verification request. You will be notified of the status of your verification as it changes.', $details['uploads'][0]['user_id'], 'Rent');
 
-	// 	// $randomNumber = '';
+		$data['ver_title'] = "Verification Notification";
 
-	// 	// $count = 0;
+		$data['ver_note'] = "There is a new verification request profile. ";
 
-	// 	// while($count < $digits){
+		//Unione Template
 
-	// 	// 	$randomDigit = mt_rand(0, 9);
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
 
-	// 	// 	$randomNumber .= $randomDigit;
+			$jsonResponse = $response->getBody()->getContents();
 
-	// 	// 	$count++;
-	// 	// }
+			$responseData = json_decode($jsonResponse, true);
 
-	// 	// $ver_id = $randomNumber;
+			$htmlBody = $responseData['template']['body']['html'];
 
-	// 	//
+			$userName = $fname;
 
-	// 	//Insert details into verification table
+			// Replace the placeholder in the HTML body with the username
 
-	// 	// $ver_result = $this->rss_model->insertVerification($details['profile'][0]['firstname'], $details['profile'][0]['lastname'], $details['profile'][0]['email'], $details['profile'][0]['phone'], $details['profile'][0]['gross_pay'], $details['profile'][0]['dob'], $details['profile'][0]['gender'], $details['profile'][0]['marital_status'], $details['profile'][0]['state'], $details['profile'][0]['city'],  $details['profile'][0]['linkedinUrl'], $details['profile'][0]['country'], $details['profile'][0]['passport_number'], $details['renting'][0]['present_address'], $details['renting'][0]['country'], $details['renting'][0]['state'], $details['renting'][0]['city'], $details['renting'][0]['previous_rent_duration'], $details['renting'][0]['renting_status'], $details['renting'][0]['previous_eviction'], $details['renting'][0]['pet'], $details['renting'][0]['critical_illness'], $details['renting'][0]['landlord_full_name'], $details['renting'][0]['landlord_email'], $details['renting'][0]['landlord_phone'], $details['renting'][0]['landlord_address'], $details['renting'][0]['reason_for_leaving'], $details['employment'][0]['employment_status'], $details['employment'][0]['job_title'], $details['employment'][0]['company_address'], $details['employment'][0]['manager_hr_name'], $details['employment'][0]['manager_hr_email'], $details['employment'][0]['manager_hr_phone'], $details['employment'][0]['guarantor_name'], $details['employment'][0]['guarantor_email'], $details['employment'][0]['guarantor_phone'], $details['employment'][0]['guarantor_job_title'], $details['employment'][0]['guarantor_address'], $details['uploads'][0]['statement_path'], $details['uploads'][0]['id_path'], $details['uploads'][0]['user_id'], $details['employment'][0]['company_name'], 'Web', $user_agent['userAgent']);
+			$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
 
-	// 	$notify = $this->functions_model->insert_user_notifications('Verification Request Submitted', 'You have successfully submitted a verification request. You will be notified of the status of your verification as it changes.', $details['uploads'][0]['user_id'], 'Rent');
+			$data['response'] = $htmlBody;
 
-	// 	//
+			// Prepare the email data
+			$emailData = [
+				"message" => [
+					"recipients" => [
+						["email" => $email],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "Verification Submitted notification",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "SmallSmall Alert",
+				],
+			];
 
-	// 	// if ($ver_result){
+			// Send the email using the Unione API
+			$responseEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailData,
+			]);
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+			$data['response'] = $e->getMessage();
+		}
 
-	// 	$ver_id = $this->rss_model->getVerification($userID);
+		// if ($responseEmail) {
 
-	// 	$booking_id = $this->random_strings(5);
+		// 	try {
+		// 		$response = $client->request('POST', 'template/get.json', array(
+		// 			'headers' => $headers,
+		// 			'json' => $requestBodyForTeam,
+		// 		));
 
-	// 	$booked = $this->rss_model->insertBooking($booking_id, '3034681361', $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+		// 		$jsonResponse = $response->getBody()->getContents();
 
-	// 	// }
+		// 		$responseData = json_decode($jsonResponse, true);
 
-	// 	//
-	// 	$data['ver_title'] = "Verification Notification";
+		// 		$htmlBody = $responseData['template']['body']['html'];
 
-	// 	$data['ver_note'] = "There is a new verification request profile. ";
+		// 		$userName = $fname;
 
-	// 	//Unione Template
+		// 		$userEmail = $email;
 
-	// 	try {
-	// 		$response = $client->request('POST', 'template/get.json', array(
-	// 			'headers' => $headers,
-	// 			'json' => $requestBody,
-	// 		));
+		// 		$propertyID = $order['property'][0]['productID'];
 
-	// 		$jsonResponse = $response->getBody()->getContents();
+		// 		// Replace the placeholder in the HTML body with the username
 
-	// 		$responseData = json_decode($jsonResponse, true);
+		// 		$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
 
-	// 		$htmlBody = $responseData['template']['body']['html'];
+		// 		$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
 
-	// 		$userName = $fname;
+		// 		$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
 
-	// 		// Replace the placeholder in the HTML body with the username
+		// 		$data['response'] = $htmlBody;
 
-	// 		$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+		// 		// Prepare the email data
+		// 		$emailDataTeam = [
+		// 			"message" => [
+		// 				"recipients" => [
+		// 					["email" => 'verification@smallsmall.com'],
+		// 					// ["email" => 'pidah.t@smallsmall.com'],
+		// 				],
+		// 				"body" => ["html" => $htmlBody],
+		// 				"subject" => "New Verification alert",
+		// 				"from_email" => "donotreply@smallsmall.com",
+		// 				"from_name" => "SmallSmall Alert",
+		// 			], this and 
+		// 		];
 
-	// 		$data['response'] = $htmlBody;
+		// 		// Send the email using the Unione API
+		// 		$responseEmail = $client->request('POST', 'email/send.json', [
+		// 			'headers' => $headers,
+		// 			'json' => $emailDataTeam,
+		// 		]);
+		// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+		// 		$data['response'] = $e->getMessage();
+		// 	}
+		// }
 
-	// 		// Prepare the email data
-	// 		$emailData = [
-	// 			"message" => [
-	// 				"recipients" => [
-	// 					["email" => $email],
-	// 				],
-	// 				"body" => ["html" => $htmlBody],
-	// 				"subject" => "Verification Submitted notification",
-	// 				"from_email" => "donotreply@smallsmall.com",
-	// 				"from_name" => "SmallSmall Alert",
-	// 			],
-	// 		];
+		if ($ver_result) {
 
-	// 		// Send the email using the Unione API
-	// 		$responseEmail = $client->request('POST', 'email/send.json', [
-	// 			'headers' => $headers,
-	// 			'json' => $emailData,
-	// 		]);
-	// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-	// 		$data['response'] = $e->getMessage();
-	// 	}
+			if ($order['orderType'] == "property") {
 
-	// 	// if ($responseEmail) {
+				$propertyTitle = $order['property'][0]['productTitle'];
 
-	// 	// 	try {
-	// 	// 		$response = $client->request('POST', 'template/get.json', array(
-	// 	// 			'headers' => $headers,
-	// 	// 			'json' => $requestBodyForTeam,
-	// 	// 		));
+				// Replace the placeholder in the HTML body with the username
 
-	// 	// 		$jsonResponse = $response->getBody()->getContents();
+				$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
 
-	// 	// 		$responseData = json_decode($jsonResponse, true);
+				$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
 
-	// 	// 		$htmlBody = $responseData['template']['body']['html'];
+				$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
 
-	// 	// 		$userName = $fname;
+				$data['response'] = $htmlBody;
 
-	// 	// 		$userEmail = $email;
+				// Prepare the email data
+				$emailDataTeam = [
+					"message" => [
+						"recipients" => [
+							["email" => 'customerexperience@smallsmall.com'],
+							//["email" => 'pidah.t@smallsmall.com'],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "New Verification alert",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "SmallSmall Alert",
+					],
+				];
 
-	// 	// 		$propertyID = $order['property'][0]['productID'];
+				$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
 
-	// 	// 		// Replace the placeholder in the HTML body with the username
+				$price = $order['property'][0]['prodPrice'] /*+ $order['property'][0]['securityDeposit']*/;
+				//Insert Booking
 
-	// 	// 		$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+				$booking_id = $this->random_strings(5);
 
-	// 	// 		$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+				$booked = $this->rss_model->insertBooking($booking_id, $ver_result, $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 
-	// 	// 		$htmlBody = str_replace('{{PropertyID}}', $propertyID, $htmlBody);
+				if ($booked) {
 
-	// 	// 		$data['response'] = $htmlBody;
+					//Get property details
+					$props = $this->rss_model->get_property($order['property'][0]['productID']);
 
-	// 	// 		// Prepare the email data
-	// 	// 		$emailDataTeam = [
-	// 	// 			"message" => [
-	// 	// 				"recipients" => [
-	// 	// 					["email" => 'verification@smallsmall.com'],
-	// 	// 					// ["email" => 'pidah.t@smallsmall.com'],
-	// 	// 				],
-	// 	// 				"body" => ["html" => $htmlBody],
-	// 	// 				"subject" => "New Verification alert",
-	// 	// 				"from_email" => "donotreply@smallsmall.com",
-	// 	// 				"from_name" => "SmallSmall Alert",
-	// 	// 			],
-	// 	// 		];
+					//Get user details
+					$user = $this->rss_model->get_user($details['uploads'][0]['user_id']);
 
-	// 	// 		// Send the email using the Unione API
-	// 	// 		$responseEmail = $client->request('POST', 'email/send.json', [
-	// 	// 			'headers' => $headers,
-	// 	// 			'json' => $emailDataTeam,
-	// 	// 		]);
-	// 	// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-	// 	// 		$data['response'] = $e->getMessage();
-	// 	// 	}
-	// 	// }
+					$result = "success";
 
-	// 	// if ($ver_result) {
+					$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
 
-	// 	// 	$ver_id = $this->rss_model->getVerification($userID);
+					$data['email'] = $user['email'];
 
-	// 	// 	$booking_id = $this->random_strings(5);
+					$data['phone'] = $user['phone'];
 
-	// 	// 	$booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+					$data['propName'] = $props['propertyTitle'];
 
-	// 	// 	if ($order['orderType'] == "property") {
+					$data['propAddress'] = $props['address'];
 
-	// 	// 			$propertyTitle = $order['property'][0]['productTitle'];
+					$data['amount'] = $price;
 
-	// 	// 			// Replace the placeholder in the HTML body with the username
+					$data['paymentOption'] = $order['paymentOption'];
 
-	// 	// 			$htmlBody = str_replace('{{Name}}', $userName, $htmlBody);
+					$data['duration'] = $order['property'][0]['duration'];
 
-	// 	// 			$htmlBody = str_replace('{{Email}}', $userEmail, $htmlBody);
+					$data['paymentPlan'] = $order['property'][0]['paymentPlan'];
 
-	// 	// 			$htmlBody = str_replace('{{PropertyID}}', $propertyTitle, $htmlBody);
+					$this->email->from('noreply@smallsmall.com', 'Automated');
 
-	// 	// 			$data['response'] = $htmlBody;
+					$this->email->to('customerexperience@smallsmall.com');
 
-	//     // 		// Prepare the email data
-	//    	// 		 	$emailDataTeam = [
-	//     //     			"message" => [
-	//     //         			"recipients" => [
-	//     //             			// ["email" => 'customerexperience@smallsmall.com'],
-	// 	// 			["email" => 'yusuf.l@smallsmall.com'],
-	//     //         			],
-	//     //         		"body" => ["html" => $htmlBody],
-	//     //         		"subject" => "New Verification alert",
-	//     //         		"from_email" => "donotreply@smallsmall.com",
-	//     //         		"from_name" => "SmallSmall Alert",
-	//     //     			],
-	//     // 			];
+					$this->email->subject("Property Booked");
 
-	// 	// 		$this->rss_model->setAvailability($locked_down, $order['property'][0]['productID']);
+					$this->email->set_mailtype("html");
 
-	// 	// 		$price = $order['property'][0]['prodPrice'] /*+ $order['property'][0]['securityDeposit']*/;
+					$message = $this->load->view('email/header.php', $data, TRUE);
 
-	// 	// 		//Insert Booking
+					$message .= $this->load->view('email/apt-booking-email.php', $data, TRUE);
 
-	// 	// 		// $ver_id = $this->rss_model->getVerification($userID);
+					$message .= $this->load->view('email/footer.php', $data, TRUE);
 
-	// 	// 		// $booking_id = $this->random_strings(5);
+					$this->email->message($message);
 
-	// 	// 		// $booked = $this->rss_model->insertBooking($booking_id, $ver_id['verification_id'], $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
+					$emailRes = $this->email->send();
+				} else {
 
-	// 	// 		if ($booked) {
+					$result = "error";
+					$price = 0;
+				}
+			} else {
 
-	// 	// 			//Get property details
-	// 	// 			$props = $this->rss_model->get_property($order['property'][0]['productID']);
+				for ($i = 0; $i < count($order['furnisure']); $i++) {
 
-	// 	// 			//Get user details
-	// 	// 			$user = $this->rss_model->get_user($details['uploads'][0]['user_id']);
+					$price = $price + $order['furnisure'][$i]['prodPrice'] + $order['furnisure'][$i]['securityDeposit'];
 
-	// 	// 			$result = "success";
+					$this->rss_model->insertFurnisureOrders($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['duration'], $order['paymentOption'], $i, count($order['furnisure']), $price, $ref);
 
-	// 	// 			$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
+					/*($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['productUrl'], $order['furnisure'][$i]['securityDeposit'], $order['furnisure'][$i]['duration'], $order['furnisure'][$i]['duration'],$order['paymentOption'], $i, count($order['furnisure']), $price);*/
+				}
 
-	// 	// 			$data['email'] = $user['email'];
+				$result = "success";
+			}
+		}
+		//This is where you send an email to customer for verification process starting
+		$data['name'] = $fname;
 
-	// 	// 			$data['phone'] = $user['phone'];
+		$this->email->from('donotreply@smallsmall.com', 'SmallSmall');
 
-	// 	// 			$data['propName'] = $props['propertyTitle'];
+		$this->email->to($email);
 
-	// 	// 			$data['propAddress'] = $props['address'];
+		$this->email->subject("Verification Submitted");
 
-	// 	// 			$data['amount'] = $price;
+		$this->email->set_mailtype("html");
 
-	// 	// 			$data['paymentOption'] = $order['paymentOption'];
+		$message = $this->load->view('email/header.php', $data, TRUE);
 
-	// 	// 			$data['duration'] = $order['property'][0]['duration'];
+		$message .= $this->load->view('email/verificationemail.php', $data, TRUE);
 
-	// 	// 			$data['paymentPlan'] = $order['property'][0]['paymentPlan'];
+		$message .= $this->load->view('email/footer.php', $data, TRUE);
 
-	// 	// 			$this->email->from('noreply@smallsmall.com', 'Automated');
+		$this->email->message($message);
 
-	// 	// 			$this->email->to('customerexperience@smallsmall.com');
+		$emailRes = $this->email->send();
 
-	// 	// 			$this->email->subject("Property Booked");
-
-	// 	// 			$this->email->set_mailtype("html");
-
-	// 	// 			$message = $this->load->view('email/header.php', $data, TRUE);
-
-	// 	// 			$message .= $this->load->view('email/apt-booking-email.php', $data, TRUE);
-
-	// 	// 			$message .= $this->load->view('email/footer.php', $data, TRUE);
-
-	// 	// 			$this->email->message($message);
-
-	// 	// 			$emailRes = $this->email->send();
-	// 	// 		} else {
-
-	// 	// 			$result = "error";
-	// 	// 			$price = 0;
-	// 	// 		}
-	// 	// 	} else {
-
-	// 	// 		for ($i = 0; $i < count($order['furnisure']); $i++) {
-
-	// 	// 			$price = $price + $order['furnisure'][$i]['prodPrice'] + $order['furnisure'][$i]['securityDeposit'];
-
-	// 	// 			$this->rss_model->insertFurnisureOrders($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['duration'], $order['paymentOption'], $i, count($order['furnisure']), $price, $ref);
-
-	// 	// 			/*($ver_result, $details['uploads'][0]['user_id'], $order['furnisure'][$i]['productID'], $order['furnisure'][$i]['productTitle'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['prodPrice'], $order['furnisure'][$i]['paymentPlan'], $order['furnisure'][$i]['productUrl'], $order['furnisure'][$i]['securityDeposit'], $order['furnisure'][$i]['duration'], $order['furnisure'][$i]['duration'],$order['paymentOption'], $i, count($order['furnisure']), $price);*/
-	// 	// 		}
-
-	// 	// 		$result = "success";
-	// 	// 	}
-	// 	// }
-
-	// 	//This is where you send an email to customer for verification process starting
-	// 	$data['name'] = $fname;
-
-	// 	$this->email->from('donotreply@smallsmall.com', 'SmallSmall');
-
-	// 	$this->email->to($email);
-
-	// 	$this->email->subject("Verification Submitted");
-
-	// 	$this->email->set_mailtype("html");
-
-	// 	$message = $this->load->view('email/header.php', $data, TRUE);
-
-	// 	$message .= $this->load->view('email/verificationemail.php', $data, TRUE);
-
-	// 	$message .= $this->load->view('email/footer.php', $data, TRUE);
-
-	// 	$this->email->message($message);
-
-	// 	$emailRes = $this->email->send();
-
-	// 	echo json_encode(array('result' => $result, 'msg' => $price));
-	// }
+		echo json_encode(array('result' => $result, 'msg' => $price));
+	}
 
 	public function insertPropertyDetails()
 	{
@@ -4071,7 +4133,6 @@ class Rss extends CI_Controller
 
 	public function get_quick_search()
 	{
-
 		$s_data['state']  = $this->input->post('state');
 
 		$s_data['price']  = $this->input->post('priceRange');
@@ -4089,6 +4150,8 @@ class Rss extends CI_Controller
 		$s_data['property_type']  = $this->input->post('property_type');
 
 		$s_data['availability_val']  = $this->input->post('availability_val');
+
+		$s_data['location']  = $this->input->post('locatn');
 
 		if ($s_data['price']) {
 
@@ -4715,165 +4778,6 @@ class Rss extends CI_Controller
 		echo json_encode(array('status' => 'success', 'msg' => $cities));
 	}
 
-	// public function passReset()
-	// {
-
-	// 	require 'vendor/autoload.php';
-
-	// 	$email = $this->input->post('username');
-
-	// 	// Unione Template
-
-	// 	$headers = array(
-	// 		'Content-Type' => 'application/json',
-	// 		'Accept' => 'application/json',
-	// 		'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
-	// 	);
-
-	// 	$client = new \GuzzleHttp\Client([
-	// 		'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-	// 	]);
-
-	// 	$requestBody = [
-	// 		"id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48"
-	// 	];
-
-	// 	// end Unione Template
-
-	// 	//Check if email exists the create onetime code for password reset
-
-	// 	$res = $this->rss_model->check_reset_email($email);
-
-	// 	if ($res) {
-
-	// 		if ($res['referral'] == 'wordpress') {
-
-	// 			$this->rss_model->changeRefferal("Instagram", $res['userID']);
-	// 		}
-
-	// 		//If email exists insert create reset row in DB
-
-	// 		$code = md5(date('Y-m-d H:i:s'));
-
-	// 		$result = $this->rss_model->insertResetDetails($res['userID'], $code);
-
-	// 		if ($result) {
-
-	// 			$data['resetLink'] = base_url() . 'reset/' . $res['userID'] . '/' . $code;
-
-	// 			// $names = explode(" ", $res['name']);
-
-	// 			$names = explode(" ", $res['firstName']);
-
-	// 			$data['name'] = $names[0];
-
-	// 			//Unione Template 
-
-	// 			try {
-	// 				$response = $client->request('POST', 'template/get.json', array(
-	// 					'headers' => $headers,
-	// 					'json' => $requestBody,
-	// 				));
-
-	// 				$jsonResponse = $response->getBody()->getContents();
-
-	// 				$responseData = json_decode($jsonResponse, true);
-
-	// 				$htmlBody = $responseData['template']['body']['html'];
-
-	// 				// Get the unique username
-	// 				// $user = $this->admin_model->get_user($id);
-
-	// 				$username = $data['name'];
-
-	// 				$resetLink = $data['resetLink'];
-
-	// 				// Replace the placeholder in the HTML body with the username
-	// 				$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-
-	// 				$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
-
-	// 				$data['response'] = $htmlBody;
-
-	// 				// Prepare the email data
-	// 				$emailData = [
-	// 					"message" => [
-	// 						"recipients" => [
-	// 							["email" => $email],
-	// 							["email" => 'loyaglobaltech@gmail.com'],
-	// 						],
-	// 						"body" => ["html" => $htmlBody],
-	// 						"subject" => "Password Reset RentSmallsmall",
-	// 						"from_email" => "donotreply@smallsmall.com",
-	// 						"from_name" => "SmallSmall Password Reset",
-	// 					],
-	// 				];
-
-	// 				// Send the email using the Unione API
-	// 				$responseEmail = $client->request('POST', 'email/send.json', [
-	// 					'headers' => $headers,
-	// 					'json' => $emailData,
-	// 				]);
-
-	// 			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-
-	// 				$data['response'] = $e->getMessage();
-	// 			}
-
-	// 			// End Of Unione
-
-	// 			// $this->email->from('donotreply@smallsmall.com', 'Small Small Password Reset');
-
-	// 			// $this->email->to($email);
-
-	// 			// $this->email->subject("Password Reset RentSmallsmall");
-
-	// 			// $this->email->set_mailtype("html");
-
-	// 			// $message = $this->load->view('email/header.php', $data, TRUE);
-
-	// 			// $message .= $this->load->view('email/emailreset.php', $data, TRUE);
-
-	// 			// $message .= $this->load->view('email/footer.php', $data, TRUE);
-
-	// 			// $message = $this->load->view('email/unione-email-template.php', $data, TRUE);
-
-	// 			// $message = 'This is a test message 1.';
-
-	// 			// var_dump($message);
-
-	// 			// $msg = $this->email->message('This is a test message 2.');
-
-	// 			// var_dump($msg);
-
-	// 			// $emailRes = $this->email->send();
-
-	// 			// var_dump($emailRes);
-
-	// 			// Print the debug output
-	// 			// echo $this->email->print_debugger();
-
-	// 			$notify = $this->functions_model->insert_user_notifications('Password Reset Request!', 'You initiated a password reset.', $res['userID'], 'Rent');
-
-	// 			if ($responseEmail) {
-
-	// 				echo 1;
-
-	// 			} else {
-
-	// 				echo "The email could not be sent. Please contact support for assistance.";
-	// 			}
-
-	// 		} else {
-
-	// 			echo "Error inserting reset data";
-	// 		}
-	// 	} else {
-
-	// 		echo "Email does not exist!";
-	// 	}
-	// }
-
 	public function passReset()
 	{
 
@@ -4886,7 +4790,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -4926,7 +4830,7 @@ class Rss extends CI_Controller
 
 				$data['name'] = $names[0];
 
-				//Unione Template
+				//Unione Template 
 
 				try {
 					$response = $client->request('POST', 'template/get.json', array(
@@ -4959,6 +4863,7 @@ class Rss extends CI_Controller
 						"message" => [
 							"recipients" => [
 								["email" => $email],
+								["email" => 'loyaglobaltech@gmail.com'],
 							],
 							"body" => ["html" => $htmlBody],
 							"subject" => "Password Reset RentSmallsmall",
@@ -5017,7 +4922,7 @@ class Rss extends CI_Controller
 					echo 1;
 				} else {
 
-					echo "The email could not be sent. Please contact support for assistance.";
+					echo 0;
 				}
 			} else {
 
@@ -5028,6 +4933,7 @@ class Rss extends CI_Controller
 			echo "Email does not exist!";
 		}
 	}
+
 
 	public function first_timer_reset()
 	{
@@ -5126,7 +5032,6 @@ class Rss extends CI_Controller
 			return 0;
 		}
 	}
-
 	public function updateUserInfo()
 	{
 
@@ -5415,7 +5320,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -5482,12 +5387,16 @@ class Rss extends CI_Controller
 
 				$data['response'] = $htmlBody;
 
+				$reponse = '$response';
+
+				$response2 = '$response2';
+
 				// Prepare the email data
 				$emailData = [
 					"message" => [
 						"recipients" => [
 							["email" => $email],
-							["email" => 'pidah.t@smallsmall.com'], // Just for testing
+							//["email" => 'pidah.t@smallsmall.com'], // Just for testing this
 						],
 						"body" => ["html" => $htmlBody],
 						"subject" => "RentSmallsmall Payment successful notification",
@@ -6213,7 +6122,7 @@ class Rss extends CI_Controller
 			$headers = array(
 				'Content-Type' => 'application/json',
 				'Accept' => 'application/json',
-				'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+				'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 			);
 
 			$client = new \GuzzleHttp\Client([
@@ -6290,7 +6199,7 @@ class Rss extends CI_Controller
 						"body" => ["html" => $htmlBody],
 						"subject" => "Property Booking Details",
 						"from_email" => "donotreply@smallsmall.com",
-						"from_name" => "Small Small Inspection",
+						"from_name" => "Rentsmallsmall Payment Alert",
 					],
 				];
 
@@ -6599,7 +6508,7 @@ class Rss extends CI_Controller
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -6677,7 +6586,7 @@ class Rss extends CI_Controller
 					"body" => ["html" => $htmlBody],
 					"subject" => "Property Booking Details",
 					"from_email" => "donotreply@smallsmall.com",
-					"from_name" => "Small Small Inspection",
+					"from_name" => "Rentsmallsmall Payment Alert",
 				],
 			];
 
@@ -6726,7 +6635,7 @@ class Rss extends CI_Controller
 						"body" => ["html" => $htmlBody],
 						"subject" => "Property Booking Details!",
 						"from_email" => "donotreply@smallsmall.com",
-						"from_name" => "Small Small Inspection",
+						"from_name" => "Rentsmallsmall Payment Alert",
 					],
 				];
 
@@ -6842,6 +6751,7 @@ class Rss extends CI_Controller
 			echo 0;
 		}
 	}
+
 	public function updatePayment()
 	{
 
@@ -8315,7 +8225,7 @@ FROMNAME&sender_email=FROMMAIL&subject=SUBJECT
 [filename2]=FILE2&lang=LANG&error_checking=1&metadata[meta1]=
 value1&metadata[meta2]=value2*/
 
-	public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $key = '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y', $subject = 'Test Email', $sender_email = 'test@smallsmall.com', $body = 'hi')
+	public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $key = '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha', $subject = 'Test Email', $sender_email = 'test@smallsmall.com', $body = 'hi')
 	{
 
 		$curl = curl_init();
@@ -8473,8 +8383,6 @@ value1&metadata[meta2]=value2*/
 			$data['interest'] = $this->session->userdata('interest');
 		}
 
-		$data['notifications'] = $this->rss_model->fetchNotification();
-
 		$countries = array('160');
 
 		$data['min'] = $this->rss_model->get_min_rent();
@@ -8629,7 +8537,7 @@ value1&metadata[meta2]=value2*/
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -8699,7 +8607,7 @@ value1&metadata[meta2]=value2*/
 		$headers = array(
 			'Content-Type' => 'application/json',
 			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
 		);
 
 		$client = new \GuzzleHttp\Client([
@@ -8749,77 +8657,74 @@ value1&metadata[meta2]=value2*/
 		}
 	}
 
-	// function unione_template_get()
-	// {
-	// 	require 'vendor/autoload.php';
+	function unione_template_get()
+	{
+		require 'vendor/autoload.php';
 
-	// 	$headers = array(
-	// 		'Content-Type' => 'application/json',
-	// 		'Accept' => 'application/json',
-	// 		'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
-	// 	);
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
 
-	// 	$client = new \GuzzleHttp\Client([
-	// 		'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-	// 	]);
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
 
-	// 	// Request body for retrieving the template
-	// 	$requestBody = [
-	// 		"id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
-	// 	];
+		// Request body for retrieving the template
+		$requestBody = [
+			"id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
+		];
 
-	// 	try {
-	// 		// Retrieve the template from the Unione API
-	// 		$response = $client->request('POST', 'template/get.json', [
-	// 			'headers' => $headers,
-	// 			'json' => $requestBody,
-	// 		]);
+		try {
+			// Retrieve the template from the Unione API
+			$response = $client->request('POST', 'template/get.json', [
+				'headers' => $headers,
+				'json' => $requestBody,
+			]);
 
-	// 		$responseData = json_decode($response->getBody()->getContents(), true);
+			$responseData = json_decode($response->getBody()->getContents(), true);
 
-	// 		// Get the HTML body from the template response
-	// 		$htmlBody = $responseData['template']['body']['html'];
+			// Get the HTML body from the template response
+			$htmlBody = $responseData['template']['body']['html'];
 
-	// 		// Replace placeholders in the HTML body with actual values
-	// 		// $username = "Yusuf";
-	// 		// $resetLink = 'https://buy.rentsmallsmall.com/';
-	// 		// $email = 'yusuf.i@smallsmall.com';
-	// 		// $htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-	// 		// $htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
+			// Replace placeholders in the HTML body with actual values
+			$username = "Yusuf";
+			$resetLink = 'https://buy.rentsmallsmall.com/';
+			$email = 'yusuf.i@smallsmall.com';
+			$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
+			$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
 
-	// 		// Prepare the email data
-	// 		// $emailData = [
-	// 		// 	"message" => [
-	// 		// 		"recipients" => [
-	// 		// 			["email" => $email],
-	// 		// 		],
-	// 		// 		"body" => ["html" => $htmlBody],
-	// 		// 		"subject" => "Testing",
-	// 		// 		"from_email" => "donotreply@smallsmall.com",
-	// 		// 		"from_name" => "Smallsmall",
-	// 		// 	],
-	// 		// ];
+			// Prepare the email data
+			$emailData = [
+				"message" => [
+					"recipients" => [
+						["email" => $email],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "Testing",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "Smallsmall",
+				],
+			];
 
-	// 		// // Send the email using the Unione API
-	// 		// $response = $client->request('POST', 'email/send.json', [
-	// 		// 	'headers' => $headers,
-	// 		// 	'json' => $emailData,
-	// 		// ]);
+			// Send the email using the Unione API
+			$response = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailData,
+			]);
 
-	// 		// Output the result
-	// 		// echo 'Email Sent successfully to ' . $email;
-	// 		// echo $htmlBody;
-	// 		echo $responseData;
+			// Output the result
+			echo 'Email Sent successfully to ' . $email;
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
 
-	// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-
-	// 		// Handle API errors
-	// 		print_r($e->getMessage());
-	// 	} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-	// 		// Handle other exceptions
-	// 		print_r($e->getMessage());
-	// 	}
-	// }
+			// Handle API errors
+			print_r($e->getMessage());
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+			// Handle other exceptions
+			print_r($e->getMessage());
+		}
+	}
 
 	// public function aws_s3_integration_test()
 	// {
@@ -8943,213 +8848,6 @@ value1&metadata[meta2]=value2*/
 			echo $result['ObjectURL'] . PHP_EOL;
 		} catch (Aws\S3\Exception\S3Exception $e) {
 			echo $e->getMessage() . PHP_EOL;
-		}
-	}
-
-	public function request()
-	{
-		$moveOutDate = $this->input->post("moveOutDate");
-
-		$propertyID = $this->input->post("propID");
-
-		$userID = $this->input->post("userID");
-
-		//send Emails out
-
-		require 'vendor/autoload.php'; // For Unione template authoload
-
-		// Unione Template
-
-		$headers = array(
-			'Content-Type' => 'application/json',
-			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
-		);
-
-		$client = new \GuzzleHttp\Client([
-			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-		]);
-
-		$requestBody = [
-			"id" => "ad092734-b6ba-11ee-9134-be8bf92962ee"
-		];
-
-		$requestCxBody = [
-			"id" => "de5151bc-b6bb-11ee-93f3-260eb473b7db"
-		];
-
-		$user = $this->rss_model->checkRSSLastTran($userID);
-
-		$data['name'] = $user['firstName'] . ' ' . $user['lastName'];
-
-		$data['propName'] = $user['propertyTitle'];
-
-		$data['moveOutDate'] = $moveOutDate;
-
-		//Unione Template
-
-		try {
-			$response = $client->request('POST', 'template/get.json', array(
-				'headers' => $headers,
-				'json' => $requestBody,
-			));
-
-			$jsonResponse = $response->getBody()->getContents();
-
-			$responseData = json_decode($jsonResponse, true);
-
-			$htmlBody = $responseData['template']['body']['html'];
-
-			$SubscriberName = $data['name'];
-			$moveoutdate = $data['moveOutDate'];
-			$PropertyName = $data['propName'];
-
-			//Replace the placeholder in the HTML body with the username
-
-			$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
-			$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
-
-			$data['response'] = $htmlBody;
-
-			// Prepare the email data
-			$emailData = [
-				"message" => [
-					"recipients" => [
-						["email" => $user['userEmail']],
-					],
-					"body" => ["html" => $htmlBody],
-					"subject" => "Request Move out",
-					"from_email" => "donotreply@smallsmall.com",
-					"from_name" => "Rentsmallsmall Moveout Alert",
-				],
-			];
-
-			// Send the email using the Unione API
-			$responseEmail = $client->request('POST', 'email/send.json', [
-				'headers' => $headers,
-				'json' => $emailData,
-			]);
-		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-			$data['response'] = $e->getMessage();
-		}
-
-		if ($responseEmail) {
-
-			try {
-				$response = $client->request('POST', 'template/get.json', array(
-					'headers' => $headers,
-					'json' => $requestCxBody,
-				));
-
-				$jsonResponse = $response->getBody()->getContents();
-
-				$responseData = json_decode($jsonResponse, true);
-
-				$htmlBody = $responseData['template']['body']['html'];
-
-				// Replace the placeholder in the HTML body with the username
-
-				$htmlBody = str_replace('{{SubscriberName}}', $SubscriberName, $htmlBody);
-				$htmlBody = str_replace('{{moveoutdate}}', $moveoutdate, $htmlBody);
-				$htmlBody = str_replace('{{PropertyName}}', $PropertyName, $htmlBody);
-
-				$data['response'] = $htmlBody;
-
-				// Prepare the email data
-				$emailCxData = [
-					"message" => [
-						"recipients" => [
-							["email" => 'customerexperience@smallsmall.com'],
-							// ["email" => 'accounts@smallsmall.com'],
-						],
-						"body" => ["html" => $htmlBody],
-						"subject" => "Property Moveout alert!",
-						"from_email" => "donotreply@smallsmall.com",
-						"from_name" => "Rentsmallsmall moveout alert",
-					],
-				];
-
-				// Send the email using the Unione API
-				$responseEmail = $client->request('POST', 'email/send.json', [
-					'headers' => $headers,
-					'json' => $emailCxData,
-				]);
-			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-				$data['response'] = $e->getMessage();
-			}
-
-			echo 1;
-		}
-	}
-
-
-	// Template test for processor calls
-	function unione_template_get()
-	{
-		require 'vendor/autoload.php';
-
-		$headers = array(
-			'Content-Type' => 'application/json',
-			'Accept' => 'application/json',
-			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
-		);
-
-		$client = new \GuzzleHttp\Client([
-			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
-		]);
-
-		// Request body for retrieving the template
-		$requestBody = [
-			"id" => "1cc035cc-0f2c-11ee-8166-821d93a29a48",
-		];
-
-		try {
-			// Retrieve the template from the Unione API
-			$response = $client->request('POST', 'template/get.json', [
-				'headers' => $headers,
-				'json' => $requestBody,
-			]);
-
-			$responseData = json_decode($response->getBody()->getContents(), true);
-
-			// Get the HTML body from the template response
-			$htmlBody = $responseData['template']['body']['html'];
-
-			// Replace placeholders in the HTML body with actual values
-			$username = "Yusuf";
-			$resetLink = 'https://buy.rentsmallsmall.com/';
-			$email = 'yusuf.i@smallsmall.com';
-			$htmlBody = str_replace('{{Name}}', $username, $htmlBody);
-			$htmlBody = str_replace('{{resetLink}}', $resetLink, $htmlBody);
-
-			// Prepare the email data
-			$emailData = [
-				"message" => [
-					"recipients" => [
-						["email" => $email],
-					],
-					"body" => ["html" => $htmlBody],
-					"subject" => "Testing",
-					"from_email" => "donotreply@smallsmall.com",
-					"from_name" => "Smallsmall",
-				],
-			];
-
-			// Send the email using the Unione API
-			$response = $client->request('POST', 'email/send.json', [
-				'headers' => $headers,
-				'json' => $emailData,
-			]);
-
-			// Output the result
-			echo 'Email Sent successfully to ' . $email;
-		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-
-			// Handle API errors
-			print_r($e->getMessage());
-		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-			// Handle other exceptions
-			print_r($e->getMessage());
 		}
 	}
 }
