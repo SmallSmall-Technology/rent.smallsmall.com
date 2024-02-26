@@ -2112,6 +2112,24 @@ class Rss_model extends CI_Model
 		return $query->result_array();
 	}
 
+	public function get_quick_lists($s_data)
+	{
+
+		$this->db->select('*');
+
+		$this->db->from('property_tbl');
+
+		$this->db->like('city', $s_data['location']);
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$this->db->order_by('available_date', 'ASC');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
 	public function get_counts($id)
 	{
 

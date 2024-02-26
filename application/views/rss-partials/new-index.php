@@ -28,7 +28,7 @@
         </div>
         <div class="search d-md-none d-block w-100 bg-white">
 
-            <form method="POST" action="<?php echo base_url('rss/filter'); ?>">
+            <form method="POST" action="<?php echo base_url('rss/filterSearch'); ?>">
                 <div class="row m-0">
                     <div class="col-11 text-dark search-left">
                         <i class="fa-solid fa-location-dot location-icon"></i>
