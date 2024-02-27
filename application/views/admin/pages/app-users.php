@@ -33,14 +33,14 @@
 
              <div class="main-card mb-3 card">
     <div class="card-header">All Source - <?php echo count($referrals) . " of " . $total_count; ?>
-        <form id="searchForm" action="<?php echo base_url('admin/lead-source'); ?>" method="POST">
+        <!-- <form id="searchForm" action="<?php echo base_url('admin/lead-source'); ?>" method="POST">
             <div class="input-group mb-3">
                 <input name="searchDate" type="date" class="form-control" placeholder="Search by date">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit">Search</button>
                 </div>
             </div>
-        </form>
+        </form> -->
         <!-- Button group for actions -->
         <div class="btn-actions-pane-right">
             <select class="form-control action" id="action">
