@@ -31,7 +31,8 @@
 
  			<div class="col-md-12">
 
-             <div class="main-card mb-3 card">
+ 			<div class="main-card mb-3 card">
+
     <div class="card-header">All Source - <?php echo count($referrals) . " of " . $total_count; ?>
         <!-- <form id="searchForm" action="<?php echo base_url('admin/lead-source'); ?>" method="POST">
             <div class="input-group mb-3">
@@ -41,19 +42,31 @@
                 </div>
             </div>
         </form> -->
-        <!-- Button group for actions -->
-        <div class="btn-actions-pane-right">
-            <select class="form-control action" id="action">
-                <option value="">Select Option</option>
-                <option value="delete">Delete</option>
-                <option value="deactivate">Deactivate</option>
-                <option value="activate">Activate</option>
-                <option value="verify">Verify</option>
-            </select>
-            <button type="button" id="" class="btn btn-primary btn-sm process-action">Submit</button>
-        </div>
+
+        <!-- <div class="btn-actions-pane-right">
+            <table>
+                <tr>
+                    <td width="200px">
+                        <select class="form-control action" id="action">
+                            <option value="">Select Option</option>
+                            <option value="delete">Delete</option>
+                            <option value="deactivate">Deactivate</option>
+                            <option value="activate">Activate</option>
+                            <option value="verify">Verify</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="button" id="" class="btn btn-primary btn-sm process-action">Submit</button>
+                    </td>
+                </tr>
+            </table>
+        </div> -->
+
     </div>
+
     <div class="table-responsive">
+
+        <!-- new -->
         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
             <thead>
                 <tr>
@@ -64,6 +77,7 @@
                     <th class="text-left">Referral Count</th>
                 </tr>
             </thead>
+
             <tbody>
                 <?php foreach ($referrals as $referral) : ?>
                     <tr>
@@ -75,13 +89,20 @@
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-        </table>
-    </div>
-    <div class="d-block text-center card-footer">
-        <div class="paginated"><?php echo $this->pagination->create_links(); ?></div>
-    </div>
-</div>
 
+        </table>
+
+        <!-- end new -->
+
+    </div>
+
+    <div class="d-block text-center card-footer">
+
+        <div class="paginated"><?php echo $this->pagination->create_links(); ?></div>
+
+    </div>
+
+</div>
 
 <script>
     $(document).ready(function() {
