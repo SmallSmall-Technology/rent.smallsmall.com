@@ -4283,7 +4283,7 @@ class Rss extends CI_Controller
 			//$this->session->set(['filterSearch' => $location]);
 		}
 
-		echo $location = $this->session->userdata('fltSearch');
+		$location = $this->session->userdata('fltSearch');
 		
 		$config['total_rows'] = $this->rss_model->getPropertyFilterCounts($location);
 
