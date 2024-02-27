@@ -229,6 +229,10 @@ $route['rss/filter/(:any)'] = 'rss/get_quick_search/$1';
 
 $route['rss/filter'] = 'rss/get_quick_search';
 
+$route['rss/filterSearch'] = 'rss/filter_search';
+
+$route['rss/filterSearch/(:any)'] = 'rss/filter_search/$1';
+
 /**RSS Staging User profile Routes Starts Here ***/
 
 $route['dashboard/request-repair'] = 'dashboard/request_repair';
