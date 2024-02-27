@@ -4279,11 +4279,11 @@ class Rss extends CI_Controller
 		if($locate != '')
 		{
 			$location  = $this->input->post('locatn');
-			$this->session->set_userdata('filterSearch', $location);
+			$this->session->set_userdata('fltSearch', $location);
 			//$this->session->set(['filterSearch' => $location]);
 		}
 
-		$location = $this->session->userdata('filterSearch');
+		echo $location = $this->session->userdata('fltSearch');
 		
 		$config['total_rows'] = $this->rss_model->getPropertyFilterCounts($location);
 
@@ -4354,9 +4354,9 @@ class Rss extends CI_Controller
 
 		$data['verification_status'] = $this->session->userdata('verified');
 
-		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+		//$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
-		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		//$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 
 		$data['title'] = "Search Result SmallSmall";
 
