@@ -4274,13 +4274,16 @@ class Rss extends CI_Controller
 
 	public function filter_search()
 	{
-		if($this->input->post('locatn') != '')
+		$locate = $this->input->post('locatn');
+
+		if($locate != '')
 		{
 			$location  = $this->input->post('locatn');
 			$this->session->set_userdata('filterSearch', $location);
+			//$this->session->set(['filterSearch' => $location]);
 		}
 
-		$location = $this->session->userdata('filterSearch');
+		$location = $this->session->get('filterSearch');
 		
 		$config['total_rows'] = $this->rss_model->getPropertyFilterCounts($location);
 
@@ -4314,7 +4317,7 @@ class Rss extends CI_Controller
 
 			$data['from_row'] = $offset + 1;
 
-			$data['properties'] = $this->rss_model->get_quick_lists($s_data);
+			$data['properties'] = $this->rss_model->get_quick_lists($location);
 
 			$data['to_row'] = $page_number * count($data['properties']);
 		}

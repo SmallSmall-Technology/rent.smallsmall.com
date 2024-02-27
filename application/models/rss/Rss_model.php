@@ -2123,14 +2123,14 @@ class Rss_model extends CI_Model
 		return $query->result_array();
 	}
 
-	public function get_quick_lists($s_data)
+	public function get_quick_lists($location)
 	{
 
 		$this->db->select('*');
 
 		$this->db->from('property_tbl');
 
-		$this->db->like('city', $s_data['location']);
+		$this->db->like('city', $location);
 
 		$this->db->limit($this->_pageNumber, $this->_offset);
 
