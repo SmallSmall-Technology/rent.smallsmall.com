@@ -12,7 +12,38 @@
 					</div>
 				</div>
 			</div>
-		</div>            
+		</div>  
+		
+		<!-- // Added -->
+
+		<div class="page-title-actions">
+				    <?php if($details['plan'] != 'co-own'){ ?>
+				    
+    					<?php if($details['request_status'] == "new"){ ?>
+    						<button type="button" id="finance-<?php echo $details['refID'].'-'.$details['userID']; ?>"  class="approve-finance btn-shadow mr-3 btn btn-info">
+    							Approve finance <i class="fa fa-lock"></i>
+    						</button>
+    					<?php }else{ ?>
+    						<button type="button" id="<?php echo $details['refID']; ?>-unlock"  class="change-status unlock-apt btn-shadow mr-3 btn btn-danger">
+    							Unapprove <i class="fa fa-unlock"></i>
+    						</button>
+    					<?php } ?>
+					
+					<?php }else{ ?>
+					       <?php if($details['payment_status'] == "Pending" || $details['payment_status'] == '' || $details['payment_status'] == NULL){ ?>
+    						<button type="button" class="unlock-apt btn-shadow mr-3 btn btn-danger">
+    							Pending payment <i class="fa fa-credit-card"></i>
+    						</button>
+    					<?php }else{ ?>
+    						<button type="button" class="btn-shadow mr-3 btn btn-info">
+    							Payment completed <i class="fa fa-credit-card"></i>
+    						</button>
+    					<?php } ?>
+					<?php } ?>
+                    
+                </div>
+
+		<!-- // -->
 	
 		<div class="row">
 			<div class="col-md-12">
