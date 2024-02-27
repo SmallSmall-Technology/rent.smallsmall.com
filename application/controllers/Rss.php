@@ -4274,15 +4274,21 @@ class Rss extends CI_Controller
 
 	public function filter_search()
 	{
-		$s_data['location']  = $this->input->post('locatn');
+		if($this->input->post('locatn') != '')
+		{
+			$location  = $this->input->post('locatn');
+			$this->session->set_userdata('filterSearch', $location);
+		}
 
-		$config['total_rows'] = $this->rss_model->getPropertyFilterCounts($s_data);
+		$location = $this->session->userdata('filterSearch');
+		
+		$config['total_rows'] = $this->rss_model->getPropertyFilterCounts($location);
 
 		$data['total_count'] = $config['total_rows'];
 
 		$config['suffix'] = '';
 
-		if ($config['total_rows'] > 0) {
+		if($config['total_rows'] > 0) {
 
 			$page_number = $this->uri->segment(3);
 
