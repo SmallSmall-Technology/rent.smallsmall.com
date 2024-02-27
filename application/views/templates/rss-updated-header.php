@@ -389,12 +389,12 @@
 
       <div class="collapse navbar-collapse justify-content-center  mr-5" id="collapsibleNavbar">
         <div class="search">
-          <form action="<?php echo base_url('rss/filter'); ?>" method="POST">
+          <form action="<?php echo base_url('rss/filterSearch'); ?>" method="POST">
             <div class="row m-0">
               <div class="col-11 search-left">
                 <i class="fa-solid fa-location-dot location-icon"></i>
                 <span class="">Location..</span>
-                <input class="search-input" type="text" placeholder="Where would you like to live?" />
+                <input class="search-input" name="locatn" type="text" placeholder="Where would you like to live?" />
 
                 <datalist role="listbox" id="cities">
                   <?php if (!empty($the_cities) && isset($the_cities)) { ?>
