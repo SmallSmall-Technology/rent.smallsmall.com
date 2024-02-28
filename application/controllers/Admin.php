@@ -9195,10 +9195,15 @@ class Admin extends CI_Controller
 
 		return $pdf_content;
 	}
+
 	public function buytolet_property_requests()
 	{
 
-		$data['details'] = $this->admin_model->fetchRequestDetails($id); // For payment completed or not
+		$tab = $this->input->get('tab');
+
+    	$data['details'] = $this->admin_model->fetchRequestDetails($id, $tab); // Pass the tab parameter to the model
+
+		// $data['details'] = $this->admin_model->fetchRequestDetails($id); // For payment completed or not
 
 		$config['total_rows'] = $this->admin_model->countBuytoletRequests();
 
