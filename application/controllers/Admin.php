@@ -9201,7 +9201,7 @@ class Admin extends CI_Controller
 
 		$tab = $this->input->get('tab');
 
-    	$data['details'] = $this->admin_model->fetchRequestDetailsBtl($id, $tab); // Pass the tab parameter to the model
+    	// $data['details'] = $this->admin_model->fetchRequestDetailsBtl($id, $tab); // Pass the tab parameter to the model
 
 		// $data['details'] = $this->admin_model->fetchRequestDetails($id); // For payment completed or not
 
