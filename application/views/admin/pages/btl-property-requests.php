@@ -20,7 +20,7 @@
 
  		<div class="row">
  			<div class="col-md-12">
-
+				
 			 <div class="main-card mb-3 card">
 
 <div class="card-header">
@@ -62,49 +62,49 @@
 			if (isset($requests) && !empty($requests)) {
 				foreach ($requests as $request => $value) {
 					$payment_status = $value['status'];
-					if (($tab === 'completed' && $payment_status !== "Completed") || ($tab === 'pending' && $payment_status !== "Pending")) {
+					if (($tab === 'completed' && $payment_status == "Completed")) {
 						continue;
 					}
 			?>
 
-						<tr id="booking-<?php echo $value['refID']; ?>">
-							<td class="text-left"><?php if ($value['status']) { ?>
-									<i style="color:green" class="fa fa-lock"></i>
-								<?php } else { ?>
-									<i style="color:red" class="fa fa-unlock"></i>
-								<?php } ?>
-							</td>
-							<td>
-								<div class="widget-content p-0">
+					<tr id="booking-<?php echo $value['refID']; ?>">
+						<td class="text-left"><?php if ($value['status']) { ?>
+								<i style="color:green" class="fa fa-lock"></i>
+							<?php } else { ?>
+								<i style="color:red" class="fa fa-unlock"></i>
+							<?php } ?>
+						</td>
+						<td>
+							<div class="widget-content p-0">
 
-									<div class="widget-content-wrapper">
+								<div class="widget-content-wrapper">
 
-										<div class="widget-content-left mr-3">
+									<div class="widget-content-left mr-3">
 
-											<div class="widget-content-left">
-												<div class="widget-heading"><?php echo ucfirst($value['firstName']) . ' ' . ucfirst($value['lastName']); ?></div>
-												<div class="widget-subheading"><b>Reference ID:</b><?php echo $value['refID']; ?> </div>
-												<div class="widget-subheading"><span style="display:block;font-size:12px;color:#e3e3e3"><?php echo "<a href='https://buy.smallsmall/property/" . $value['propertyID'] . "' />" . $value['property_name'] . "</a>" ?></span></div>
-											</div>
-
+										<div class="widget-content-left">
+											<div class="widget-heading"><?php echo ucfirst($value['firstName']) . ' ' . ucfirst($value['lastName']); ?></div>
+											<div class="widget-subheading"><b>Reference ID:</b><?php echo $value['refID']; ?> </div>
+											<div class="widget-subheading"><span style="display:block;font-size:12px;color:#e3e3e3"><?php echo "<a href='https://buy.smallsmall/property/" . $value['propertyID'] . "' />" . $value['property_name'] . "</a>" ?></span></div>
 										</div>
 
 									</div>
 
 								</div>
-							</td>
-							<td class="text-left">
-								<span class="badge badge-success"><?php echo ucfirst($value['plan']); ?></span>
-							</td>
-							<td class="text-left"><?php echo date("M d, Y", strtotime($value['request_date'])); ?></td>
-							<td class="text-left">
-								<div class="action-container">
-									<a href="<?php echo base_url() . "admin/request-details/" . $value['refID']; ?>" type="button" class="btn btn-primary btn-sm article-detail">Details</a>
 
-									<button type="button" id="delete-<?php echo $value['refID']; ?>" class="btn btn-primary btn-sm delete-request">Delete</button>
-								</div>
-							</td>
-						</tr>
+							</div>
+						</td>
+						<td class="text-left">
+							<span class="badge badge-success"><?php echo ucfirst($value['plan']); ?></span>
+						</td>
+						<td class="text-left"><?php echo date("M d, Y", strtotime($value['request_date'])); ?></td>
+						<td class="text-left">
+							<div class="action-container">
+								<a href="<?php echo base_url() . "admin/request-details/" . $value['refID']; ?>" type="button" class="btn btn-primary btn-sm article-detail">Details</a>
+
+								<button type="button" id="delete-<?php echo $value['refID']; ?>" class="btn btn-primary btn-sm delete-request">Delete</button>
+							</div>
+						</td>
+					</tr>
 			<?php
 				}
 			}
@@ -118,19 +118,6 @@
 	<div class="paginated"><?php echo $this->pagination->create_links(); ?></div>
 </div>
 </div>
-
-<!-- Added script to switch base on payment tab -->
-<script>
-$(document).ready(function() {
-	$('#myTab a').on('click', function(e) {
-		e.preventDefault();
-		$(this).tab('show');
-		var tab = $(this).attr('href').substring(1);
-		$('#searchForm').attr('action', "<?php echo base_url('admin/search-requests'); ?>?tab=" + tab);
-	});
-});
-</script>
-
 
 <!-- Added script to switch base on payment tab -->
 <script>
