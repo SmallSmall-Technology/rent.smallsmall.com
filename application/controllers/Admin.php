@@ -9196,78 +9196,148 @@ class Admin extends CI_Controller
 		return $pdf_content;
 	}
 
+	// public function buytolet_property_requests()
+	// {
+
+	// 	$tab = $this->input->get('tab');
+
+	// 	$config['total_rows'] = $this->admin_model->countBuytoletRequests();
+
+	// 	$data['total_count'] = $config['total_rows'];
+
+	// 	$config['suffix'] = '';
+
+	// 	if ($config['total_rows'] > 0) {
+
+	// 		$page_number = $this->uri->segment(3);
+
+	// 		$config['base_url'] = base_url() . 'admin/btl-requests';
+
+	// 		if (empty($page_number))
+
+	// 			$page_number = 1;
+
+	// 		$offset = ($page_number - 1) * $this->pagination->per_page;
+
+	// 		$this->admin_model->setPageNumber($this->pagination->per_page);
+
+	// 		$this->admin_model->setOffset($offset);
+
+	// 		$this->pagination->cur_page = $page_number;
+
+	// 		$this->pagination->initialize($config);
+
+	// 		$data['page_links'] = $this->pagination->create_links();
+
+	// 		// $data['requests'] = $this->admin_model->fetchBuytoletRequests();
+
+	// 		// Fetch requests based on the tab
+	// 		$data['requests'] = $this->admin_model->fetchBuytoletRequests($tab);
+	// 	}
+
+	// 	if (!file_exists(APPPATH . 'views/admin/pages/btl-property-requests.php')) {
+
+	// 		// Whoops, we don't have a page for that!
+	// 		show_404();
+	// 	}
+	// 	//check if Admin is logged in
+
+	// 	if ($this->session->has_userdata('adminLoggedIn')) {
+
+	// 		$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+	// 		$data['adminID'] = $this->session->userdata('adminID');
+
+	// 		$data['userAccess'] = $this->session->userdata('userAccess');
+
+	// 		$data['title'] = "Requests :: Stay SmallSmall";
+
+	// 		$this->load->view('admin/templates/header.php', $data);
+
+	// 		$this->load->view('admin/templates/sidebar.php', $data);
+
+	// 		$this->load->view('admin/pages/btl-property-requests.php', $data);
+
+	// 		$this->load->view('admin/templates/footer.php', $data);
+
+	// 		//$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
+
+	// 	} else {
+
+	// 		redirect(base_url() . 'admin/login', 'refresh');
+	// 	}
+	// }
+
 	public function buytolet_property_requests()
-	{
+{
 
-		$tab = $this->input->get('tab');
+    $tab = $this->input->get('tab');
 
-    	// $data['details'] = $this->admin_model->fetchRequestDetailsBtl($id, $tab); // Pass the tab parameter to the model
+    $config['total_rows'] = $this->admin_model->countBuytoletRequests();
 
-		// $data['details'] = $this->admin_model->fetchRequestDetails($id); // For payment completed or not
+    $data['total_count'] = $config['total_rows'];
 
-		$config['total_rows'] = $this->admin_model->countBuytoletRequests();
+    $config['suffix'] = '';
 
-		$data['total_count'] = $config['total_rows'];
+    if ($config['total_rows'] > 0) {
 
-		$config['suffix'] = '';
+        $page_number = $this->uri->segment(3);
 
-		if ($config['total_rows'] > 0) {
+        $config['base_url'] = base_url() . 'admin/btl-requests';
 
-			$page_number = $this->uri->segment(3);
+        if (empty($page_number))
 
-			$config['base_url'] = base_url() . 'admin/btl-requests';
+            $page_number = 1;
 
-			if (empty($page_number))
+        $offset = ($page_number - 1) * $this->pagination->per_page;
 
-				$page_number = 1;
+        $this->admin_model->setPageNumber($this->pagination->per_page);
 
-			$offset = ($page_number - 1) * $this->pagination->per_page;
+        $this->admin_model->setOffset($offset);
 
-			$this->admin_model->setPageNumber($this->pagination->per_page);
+        $this->pagination->cur_page = $page_number;
 
-			$this->admin_model->setOffset($offset);
+        $this->pagination->initialize($config);
 
-			$this->pagination->cur_page = $page_number;
+        $data['page_links'] = $this->pagination->create_links();
 
-			$this->pagination->initialize($config);
+        // Pass the tab parameter to the model
+        $data['requests'] = $this->admin_model->fetchBuytoletRequestsBtl($tab);
+    }
 
-			$data['page_links'] = $this->pagination->create_links();
+    if (!file_exists(APPPATH . 'views/admin/pages/btl-property-requests.php')) {
 
-			$data['requests'] = $this->admin_model->fetchBuytoletRequests();
-		}
+        // Whoops, we don't have a page for that!
+        show_404();
+    }
+    //check if Admin is logged in
 
-		if (!file_exists(APPPATH . 'views/admin/pages/btl-property-requests.php')) {
+    if ($this->session->has_userdata('adminLoggedIn')) {
 
-			// Whoops, we don't have a page for that!
-			show_404();
-		}
-		//check if Admin is logged in
+        $data['adminPriv'] = $this->functions_model->getUserAccess();
 
-		if ($this->session->has_userdata('adminLoggedIn')) {
+        $data['adminID'] = $this->session->userdata('adminID');
 
-			$data['adminPriv'] = $this->functions_model->getUserAccess();
+        $data['userAccess'] = $this->session->userdata('userAccess');
 
-			$data['adminID'] = $this->session->userdata('adminID');
+        $data['title'] = "Requests :: Stay SmallSmall";
 
-			$data['userAccess'] = $this->session->userdata('userAccess');
+        $this->load->view('admin/templates/header.php', $data);
 
-			$data['title'] = "Requests :: Stay SmallSmall";
+        $this->load->view('admin/templates/sidebar.php', $data);
 
-			$this->load->view('admin/templates/header.php', $data);
+        $this->load->view('admin/pages/btl-property-requests.php', $data);
 
-			$this->load->view('admin/templates/sidebar.php', $data);
+        $this->load->view('admin/templates/footer.php', $data);
 
-			$this->load->view('admin/pages/btl-property-requests.php', $data);
+        //$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
 
-			$this->load->view('admin/templates/footer.php', $data);
+    } else {
 
-			//$this->load->view('admin/templates/furnisure-category-modal.php' , $data);
+        redirect(base_url() . 'admin/login', 'refresh');
+    }
+}
 
-		} else {
-
-			redirect(base_url() . 'admin/login', 'refresh');
-		}
-	}
 	
 	public function approve_finance()
 	{

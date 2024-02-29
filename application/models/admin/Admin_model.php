@@ -3737,46 +3737,83 @@ class Admin_model extends CI_Model
 		return $query->row_array();
 	}
 
-	public function fetchRequestDetailsBtl($id, $tab = 'completed')
-	{
+	// public function fetchRequestDetailsBtl($id, $tab = 'completed')
+	// {
 
-		$this->db->select('a.*, a.firstname as buyer_fname, a.lastname as buyer_lname, a.email as buyer_email, a.phone as buyer_phone, a.status as request_status, b.*, c.*, d.name as stateName, e.*, f.statementPath, g.idPath, h.*, h.status as payment_status');
+	// 	$this->db->select('a.*, a.firstname as buyer_fname, a.lastname as buyer_lname, a.email as buyer_email, a.phone as buyer_phone, a.status as request_status, b.*, c.*, d.name as stateName, e.*, f.statementPath, g.idPath, h.*, h.status as payment_status');
 
-		$this->db->from('buytolet_request as a');
+	// 	$this->db->from('buytolet_request as a');
 
-		$this->db->where('a.refID', $id);
+	// 	$this->db->where('a.refID', $id);
 
-		$this->db->join('user_tbl as b', 'b.userID = a.userID', 'LEFT OUTER');
+	// 	$this->db->join('user_tbl as b', 'b.userID = a.userID', 'LEFT OUTER');
 
-		$this->db->join('buytolet_property as c', 'c.propertyID = a.propertyID', 'LEFT OUTER');
+	// 	$this->db->join('buytolet_property as c', 'c.propertyID = a.propertyID', 'LEFT OUTER');
 
-		$this->db->join('states as d', 'd.id = c.state', 'LEFT OUTER');
+	// 	$this->db->join('states as d', 'd.id = c.state', 'LEFT OUTER');
 
-		$this->db->join('apt_type_tbl as e', 'e.id = c.apartment_type', 'LEFT OUTER');
+	// 	$this->db->join('apt_type_tbl as e', 'e.id = c.apartment_type', 'LEFT OUTER');
 
-		$this->db->join('buytolet_bank_statement as f', 'f.userID = b.userID', 'LEFT OUTER');
+	// 	$this->db->join('buytolet_bank_statement as f', 'f.userID = b.userID', 'LEFT OUTER');
 
-		$this->db->join('buytolet_finance_id as g', 'g.userID = b.userID', 'LEFT OUTER');
+	// 	$this->db->join('buytolet_finance_id as g', 'g.userID = b.userID', 'LEFT OUTER');
 
-		$this->db->join('buytolet_transactions as h', 'h.transaction_id = a.refID', 'LEFT OUTER');
-
-		
-		// Modify the query based on the tab parameter
-		if ($tab === 'completed') {
-			$this->db->where('h.status', 'Completed');
-		} elseif ($tab === 'pending') {
-			$this->db->where('h.status', 'Pending');
-		}
+	// 	$this->db->join('buytolet_transactions as h', 'h.transaction_id = a.refID', 'LEFT OUTER');
 
 
-		$this->db->order_by('a.id', 'DESC');
+	// 	// Modify the query based on the tab parameter
+	// 	if ($tab === 'completed') {
+	// 		$this->db->where('h.status', 'Completed');
+	// 	} elseif ($tab === 'pending') {
+	// 		$this->db->where('h.status', 'Pending');
+	// 	}
 
-		$this->db->limit($this->_pageNumber, $this->_offset);
 
-		$query = $this->db->get();
+	// 	$this->db->order_by('a.id', 'DESC');
 
-		return $query->row_array();
-	}
+	// 	$this->db->limit($this->_pageNumber, $this->_offset);
+
+	// 	$query = $this->db->get();
+
+	// 	return $query->row_array();
+	// }
+
+	public function fetchBuytoletRequestsBtl($tab = 'completed')
+{
+    $this->db->select('a.*, a.firstname as buyer_fname, a.lastname as buyer_lname, a.email as buyer_email, a.phone as buyer_phone, a.status as request_status, b.*, c.*, d.name as stateName, e.*, f.statementPath, g.idPath, h.*, h.status as payment_status');
+
+    $this->db->from('buytolet_request as a');
+
+    $this->db->join('user_tbl as b', 'b.userID = a.userID', 'LEFT OUTER');
+
+    $this->db->join('buytolet_property as c', 'c.propertyID = a.propertyID', 'LEFT OUTER');
+
+    $this->db->join('states as d', 'd.id = c.state', 'LEFT OUTER');
+
+    $this->db->join('apt_type_tbl as e', 'e.id = c.apartment_type', 'LEFT OUTER');
+
+    $this->db->join('buytolet_bank_statement as f', 'f.userID = b.userID', 'LEFT OUTER');
+
+    $this->db->join('buytolet_finance_id as g', 'g.userID = b.userID', 'LEFT OUTER');
+
+    $this->db->join('buytolet_transactions as h', 'h.transaction_id = a.refID', 'LEFT OUTER');
+
+    // Modify the query based on the tab parameter
+    if ($tab === 'completed') {
+        $this->db->where('h.status', 'Completed');
+    } elseif ($tab === 'pending') {
+        $this->db->where('h.status', 'Pending');
+    }
+
+    $this->db->order_by('a.id', 'DESC');
+
+    $this->db->limit($this->_pageNumber, $this->_offset);
+
+    $query = $this->db->get();
+
+    return $query->result_array();
+}
+
 
 
 	public function fetchRequestBeneficiaries($id)
