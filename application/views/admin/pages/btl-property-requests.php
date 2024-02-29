@@ -57,12 +57,12 @@
 			<?php
 
 			$stat = '';
-			
+
 			if (isset($requests) && !empty($requests)) {
 				foreach ($requests as $request => $value) {
 					$payment_status = $value['status'];
 
-					if (($tab === 'completed' && $payment_status == "Completed")) {
+					if (($tab === 'completed' ||  $payment_status == "Completed")) {
 
 						continue;
 					}

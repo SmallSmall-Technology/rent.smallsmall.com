@@ -3738,6 +3738,7 @@ class Admin_model extends CI_Model
 	}
 
 	public function fetchRequestDetailsBtl($tab)
+	
 {
     $this->db->select('a.*, a.firstname as buyer_fname, a.lastname as buyer_lname, a.email as buyer_email, a.phone as buyer_phone, a.status as request_status, b.*, c.*, d.name as stateName, e.*, f.statementPath, g.idPath, h.*, h.status as payment_status');
     $this->db->from('buytolet_request as a');
@@ -3752,8 +3753,11 @@ class Admin_model extends CI_Model
     $this->db->order_by('a.id', 'DESC');
     
     if ($tab === 'completed') {
+
         $this->db->where('h.status', 'Completed');
+
     } else {
+
         $this->db->where('h.status !=', 'Completed');
     }
     
