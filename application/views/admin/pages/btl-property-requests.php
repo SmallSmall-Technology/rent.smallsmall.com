@@ -14,10 +14,6 @@
  			</div>
  		</div>
 
- 		<!-- // Added -->
-
- 		<!-- // -->
-
  		<div class="row">
  			<div class="col-md-12">
 				
@@ -57,15 +53,20 @@
 			</tr>
 		</thead>
 		<tbody>
+
 			<?php
+
 			$stat = '';
+			
 			if (isset($requests) && !empty($requests)) {
 				foreach ($requests as $request => $value) {
 					$payment_status = $value['status'];
+
 					if (($tab === 'completed' && $payment_status == "Completed")) {
+
 						continue;
 					}
-			?>
+				?>
 
 					<tr id="booking-<?php echo $value['refID']; ?>">
 						<td class="text-left"><?php if ($value['status']) { ?>

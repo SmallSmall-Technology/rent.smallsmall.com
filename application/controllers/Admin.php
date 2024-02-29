@@ -9233,7 +9233,7 @@ class Admin extends CI_Controller
 
 			// Fetch requests based on the tab
 			// $data['requests'] = $this->admin_model->fetchBuytoletRequests($tab);
-			$data['requests'] = $this->admin_model->fetchRequestDetails($tab);
+			$data['requests'] = $this->admin_model->fetchRequestDetailsBtl($tab);
 
 		}
 
@@ -9269,6 +9269,8 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
+
+	
 
 // 	public function buytolet_property_requests()
 // {
