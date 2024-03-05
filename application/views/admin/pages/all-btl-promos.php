@@ -72,7 +72,7 @@
                                         <?php if($value['status']){ ?>
 										    <a type="button" style="color:#FFF" id="deactivate-<?php echo $value['id']; ?>" class="btn btn-danger btn-sm deactivate-promo">Deactivate</a>
                                         <?php }else{ ?>
-                                            <a type="button" style="color:#FFF" id="reactivate-<?php echo $value['id']; ?>" class="btn btn-danger btn-sm reactivate-promo">Reactivate</a>
+                                            <a type="button" style="color:#FFF" id="reactivate-<?php echo $value['id']; ?>" class="btn btn-success btn-sm reactivate-promo">Reactivate</a>
                                         <?php } ?>
 
 										<button type="button" id="delete-<?php echo $value['id']; ?>-<?php echo $value['id']; ?>" class="btn btn-primary btn-sm delete-promo">Delete</button>
