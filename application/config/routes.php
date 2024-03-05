@@ -343,6 +343,8 @@ $route['admin/stp-subscribers/(:any)'] = 'admin/buytolet_stp_subscribers/$1';
 
 $route['admin/create-btl-promo'] = 'admin/promo_form'; 
 
+$route['admin/view-all-btl-promo'] = 'admin/all_btl_promo'; 
+
 $route['admin/share-form'] = 'admin/share_form'; 
 
 $route['admin/search-accounts/(:any)'] = 'admin/search_accounts/$1';

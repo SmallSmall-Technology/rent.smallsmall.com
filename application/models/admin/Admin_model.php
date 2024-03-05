@@ -3922,4 +3922,40 @@ class Admin_model extends CI_Model
 
 		return $query->result_array();
 	}
+	public function getAllPromos()
+	{
+		$this->db->select('*');
+
+		$this->db->from('buytolet_promos');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+	public function getPromoSubscribers($code){
+
+		$this->db->from('buytolet_request');
+
+		$this->db->where('promo_code', $code);
+
+		return $this->db->count_all_results();
+
+	}
+	public function deactivate_promo($promo_id){
+
+		$set_promo = array("status" => 0);
+
+		$this->db->where('id', $promo_id);
+
+		return $this->db->update('buytolet_promos', $set_promo);
+
+	}
+
+	public function delete_promo($promo_id){
+
+		$this->db->where('id', $promo_id);
+
+		return $this->db->delete('buytolet_promos');
+
+	}
 }

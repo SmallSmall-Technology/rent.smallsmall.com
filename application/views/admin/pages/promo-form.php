@@ -33,8 +33,10 @@
 			<div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
 
 				<div class="main-card mb-3 card">
-
-					<div class="card-body"><h5 class="card-title">Fill details</h5>
+					<div class="card-header">
+						<a style="float:right" href="view-all-btl-promo" class="btn btn-primary" >View all promo</a>
+					</div>
+					<div class="card-body">
 
 					<form autocomplete="off" id="adminBuytoletPromoForm">
 					    

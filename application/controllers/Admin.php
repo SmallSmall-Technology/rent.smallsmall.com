@@ -8678,6 +8678,92 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function all_btl_promo()
+	{
+
+		if (!file_exists(APPPATH . 'views/admin/pages/all-btl-promos.php')) {
+
+			// Whoops, we don't have a page for that!
+			show_404();
+		}
+
+		//check if Admin is logged in
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['adminID'] = $this->session->userdata('adminID');
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['promos'] = $this->admin_model->getAllPromos();
+
+			$data['title'] = "Promos";
+
+			$this->load->view('admin/templates/header', $data);
+
+			$this->load->view('admin/templates/sidebar', $data);
+
+			$this->load->view('admin/pages/all-btl-promos', $data);
+
+			$this->load->view('admin/templates/footer', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}	
+
+	public function deactivate_promo(){
+
+		$promo_id = $this->input->post('promoID');
+
+		if($promo_id){
+
+			$result = $this->admin_model->deactivate_promo($promo_id);
+
+			if($result){
+
+				echo 1;
+
+			}else{
+
+				echo "Error deactivating promo";
+
+			}
+		}else{
+
+			echo "ID error";
+
+		}
+
+	}
+
+	public function delete_promo(){
+
+		$promo_id = $this->input->post('promoID');
+
+		if($promo_id){
+
+			$result = $this->admin_model->delete_promo($promo_id);
+
+			if($result){
+
+				echo 1;
+
+			}else{
+
+				echo "Error deleting promo";
+
+			}
+		}else{
+
+			echo "ID error";
+			
+		}
+
+	}
+
 	public function getBuytoletProperties()
 	{
 
