@@ -8738,7 +8738,30 @@ class Admin extends CI_Controller
 		}
 
 	}
+	public function reactivate_promo(){
 
+		$promo_id = $this->input->post('promoID');
+
+		if($promo_id){
+
+			$result = $this->admin_model->reactivate_promo($promo_id);
+
+			if($result){
+
+				echo 1;
+
+			}else{
+
+				echo "Error re-activating promo";
+
+			}
+		}else{
+
+			echo "ID error";
+
+		}
+
+	}
 	public function delete_promo(){
 
 		$promo_id = $this->input->post('promoID');
