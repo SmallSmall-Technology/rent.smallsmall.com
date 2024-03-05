@@ -3950,7 +3950,15 @@ class Admin_model extends CI_Model
 		return $this->db->update('buytolet_promos', $set_promo);
 
 	}
+	public function reactivate_promo($promo_id){
 
+		$set_promo = array("status" => 1);
+
+		$this->db->where('id', $promo_id);
+
+		return $this->db->update('buytolet_promos', $set_promo);
+
+	}
 	public function delete_promo($promo_id){
 
 		$this->db->where('id', $promo_id);

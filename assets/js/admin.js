@@ -6377,6 +6377,164 @@ $(window).on('load', function () {
 		});
 
 	});
+
+
+	$('.deactivate-promo').click(function(){
+			
+		var ids = $(this).attr('id').replace(/deactivate-/, '');
+				
+		var data = {"promoID" : ids};
+		
+		if(confirm("Are you sure you want to proceed?")){
+		
+			$.ajaxSetup ({ cache: false });
+		
+			$.ajax({
+		
+				url : baseUrl+'admin/deactivate_promo',
+		
+				type: "POST",
+		
+				data: data,
+		
+				success	: function (data){
+		
+					if(data == 1){
+		
+						alert("Deactivated successfully!");
+		
+						location.reload();
+		
+					}else{
+		
+						alert(data);
+						
+						return false;
+		
+					}				
+		
+				},
+		
+				error: function(){
+		
+					alert("Error!");
+		
+					return false;
+		
+				}
+			});
+		}else{
+			
+			return false;
+			
+		}
+		
+	});
+
+	$('.reactivate-promo').click(function(){
+		
+		var ids = $(this).attr('id').replace(/reactivate-/, '');
+				
+		var data = {"promoID" : ids};
+		
+		if(confirm("Are you sure you want to proceed?")){
+		
+			$.ajaxSetup ({ cache: false });
+		
+			$.ajax({
+		
+				url : baseUrl+'admin/reactivate_promo',
+		
+				type: "POST",
+		
+				data: data,
+		
+				success	: function (data){
+		
+					if(data == 1){
+		
+						alert("Re-activated successfully!");
+		
+						location.reload();
+		
+					}else{
+		
+						alert(data);
+						
+						return false;
+		
+					}				
+		
+				},
+		
+				error: function(){
+		
+					alert("Error!");
+		
+					return false;
+		
+				}
+			});
+		}else{
+			
+			return false;
+			
+		}
+		
+	});
+
+	$('.delete-promo').click(function(){
+		
+		var ids = $(this).attr('id').replace(/delete-/, '');
+				
+		var data = {"promoID" : ids};
+		
+		if(confirm("Are you sure you want to proceed?")){
+		
+			$.ajaxSetup ({ cache: false });
+		
+			$.ajax({
+		
+				url : baseUrl+'admin/delete_promo',
+		
+				type: "POST",
+		
+				data: data,
+		
+				success	: function (data){
+		
+					if(data == 1){
+		
+						alert("Deleted!!!");
+		
+						location.reload();
+		
+					}else{
+		
+						alert(data);
+						
+						return false;
+		
+					}				
+		
+				},
+		
+				error: function(){
+		
+					alert("Error!");
+		
+					return false;
+		
+				}
+			});
+		}else{
+			
+			return false;
+			
+		}
+		
+	});
+
 });
 
 function getsVal(id) {
