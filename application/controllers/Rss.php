@@ -2768,10 +2768,8 @@ class Rss extends CI_Controller
 
 		// Construct the API URL with the required parameters with selzy
 
-		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
-
 		// $method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&list_ids=100&fields[email]=' . $email . '&fields[Name]='. $fname.'+'.$lname.'&fields[Phone]='.$phone.'&double_optin=3&overwrite=0';
-		$method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&list_ids=100&fields[email]=' . $email . '&fields[Name]=' . $fname . '&fields[Surname]='.$lname.'&fields[phone]=' . $phone . '&double_optin=3&overwrite=0';
+		$method = 'https://api.selzy.com/en/api/subscribe?format=json&api_key=6u7xpfqygdmqxpkz1uonenrxwpn43z3bhibuzccy&list_ids=100&fields[email]=' . $email . '&fields[Name]=' . $fname . '&fields[Surname]='.$lname.'&fields[phone]=' . $phone . '&double_optin=3&overwrite=0';
 
 		// $method = 'https://api.selzy.com/en/api/importContacts?format=json&api_key=6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha&field_names[0]=email&field_names[1]=Name&field_names[2]=email_list_ids&data[0][0]=' . $email . '&data[0][1]=' . $fname . '&data[0][2]=100&field_names[3]=phone&field_names[4]=LastName&data[0][3]=' . $phone . '&data[0][4]=' . $lname;
 
@@ -8210,7 +8208,7 @@ FROMNAME&sender_email=FROMMAIL&subject=SUBJECT
 [filename2]=FILE2&lang=LANG&error_checking=1&metadata[meta1]=
 value1&metadata[meta2]=value2*/
 
-	public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $key = '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y', $subject = 'Test Email', $sender_email = 'test@smallsmall.com', $body = 'hi')
+	public function email_test($lname = "RSS", $email = "seuncrowther@yahoo.com", $key = '6u7xpfqygdmqxpkz1uonenrxwpn43z3bhibuzccy', $subject = 'Test Email', $sender_email = 'test@smallsmall.com', $body = 'hi')
 	{
 
 		$curl = curl_init();
