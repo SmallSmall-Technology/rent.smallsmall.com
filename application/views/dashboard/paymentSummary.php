@@ -186,7 +186,7 @@ $data = $this->rss_model->selktPaymentDet($userID);
 
 
   <!-- Jquery js -->
-  <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"
+  <script src="<?php echo base_url(); ?>assets/js/jquery.slim.min.js"
     crossorigin="anonymous"></script>
   <!-- Bootstrap js and Popper js -->
   <script src="<?php echo base_url(); ?>assets/js/popper.min.js"

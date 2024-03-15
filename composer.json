@@ -11,12 +11,13 @@
 		"source": "https://github.com/bcit-ci/CodeIgniter"
 	},
 	"require": {
-		"php": "^8.1",
+		"php": ">=5.3.7",
 		"guzzlehttp/guzzle": "^7.4",
 		"firebase/php-jwt": "^6.1",
 		"pusher/pusher-push-notifications": "*",
 		"unione/unione-php": "^1.2",
-		"aws/aws-sdk-php": "^3.276"
+		"aws/aws-sdk-php": "^3.276",
+		"treblle/treblle-php": "^2.0"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

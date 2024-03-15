@@ -320,6 +320,8 @@
 												</div>
 
 											</div>
+											<div class="position-relative form-group"><label for="lockdownFee" class="">Lockdown Fee Percentage</label><input name="lockdownFee" id="lockdownFee" placeholder="Lockdown Fee" value="<?php echo @$property['lockdown_fee']; ?>" type="text" class="form-control verify-field allFields"></div>
+											<div class="position-relative form-group"><label for="lockdownPeriod" class="">Lockdown Period</label><input name="lockdownPeriod" id="lockdownPeriod" placeholder="Lockdown Period" value="<?php echo @$property['lockdown_period']; ?>" type="text" class="form-control allFields"></div>
 										</div>
 									</div>
 								</div>
@@ -582,7 +584,6 @@
 											</div>
 											<div id="uploaded_files">
 												<label>Click to add Images</label>
-
 												<input type="file" name='userfile[]' id="multipleUplFiles" class='multipleUplFiles' multiple />
 											</div>
 
@@ -590,7 +591,7 @@
 
 											require 'vendor/autoload.php'; // Include the AWS SDK
 
-											$bucketName = 'dev-bss-uploads'; // bucket name
+											$bucketName = 'bss-prod-uploads'; // bucket name
 
 											$region = 'eu-west-1';
 
@@ -614,11 +615,7 @@
 
 												$imageObjects = $objects['Contents']; // Get the images
 
-												// $firstImageName = $objects['Contents'][0]['key']; // get object key
-
-												// $imageNameTest = basename($firstImageName);// Extract the imagename
-
-											} catch (Aws\Exception\AwsException $e) { 
+											} catch (Aws\Exception\AwsException $e) {
 
 												echo $e->getMessage();
 
@@ -628,6 +625,7 @@
 											?>
 
 											<!-- // End Added for s3 integration -->
+
 
 											<div id="uploaded_images">
 
@@ -643,15 +641,14 @@
 
 														$imgUrl = $s3->getObjectUrl($bucketName, $key); // Get the URL for the image in S3
 
-														// Rest of your HTML code for displaying the images
 												?>
 
 														<input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $file; ?>" />
 
 														<script>
-												            // console.log('File Value1 Imagename: </?php echo $file; ?>'); // Log file value
+															// console.log('File Value1 Imagename: </?php echo $file; ?>'); // Log file value
 															// console.log('image URL2: </?php echo $imgUrl; ?>'); // Log file value
-													   </script>
+														</script>
 
 														<span class="imgCover removal-id-<?php echo $file; ?>" id="id-<?php echo $file; ?>">
 															<img src="<?php echo $imgUrl; ?>" id="<?php echo $file; ?>" class="upldImg img-responsive img-thumbnail" onclick="selectFeatured(this.id)" title="Click to select as featured image" />
@@ -662,8 +659,8 @@
 														</span>
 
 														<script>
-												            // console.log(</?php echo $file; ?>); // Log file value
-													   </script>
+															// console.log(</?php echo $file; ?>); // Log file value
+														</script>
 
 												<?php
 
@@ -674,15 +671,13 @@
 
 											</div>
 
-											<!-- // -->
 
 										</div>
 									</div>
 								</div>
 								<input type="hidden" name="propID" id="propID" class="propID" value="<?php echo $property['propertyID']; ?>" />
 								<input type="hidden" name="foldername" id="foldername" class="folderName" value="<?php echo $property['image_folder']; ?>" />
-								<!-- <input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $property['featured_image']; ?>" /> -->
-								<!-- <input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $file; ?>" /> -->
+								<input type="hidden" name="featuredPic" id="featuredPic" class="featuredPic" value="<?php echo $property['featured_image']; ?>" />
 							</div>
 							<button type="submit" id="editPropBut" class="mt-2 btn btn-primary">Save</button>
 							</form>

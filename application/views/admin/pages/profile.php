@@ -69,20 +69,23 @@
                                     </a>
                                 </li>
 
+                                <!-- AWS S3 Integration -->
+
                                 <li class="nav-item">
                                     <?php
 
                                     require 'vendor/autoload.php';
 
                                     // Create an S3 client
+
                                     $s3 = new Aws\S3\S3Client([
                                         'version' => 'latest',
                                         'region'  => 'eu-west-1'
                                     ]);
 
-                                    $bucket = 'dev-rss-uploads'; // Your bucket name
+                                    $bucket = 'rss-prod-uploads'; // my bucket name
 
-                                    $folder = 'uploads/verification/' . $details['user_id'] . '/'; // Specify the folder path in S3
+                                    $folder = 'uploads/verification/' . $details['user_id'] . '/'; // Folder path in S3
 
                                     try {
 
@@ -96,8 +99,8 @@
 
                                         ]);
 
-                                         // Initialize the count
-                                            $count = 1;
+                                        // Initialize the count
+                                        $count = 1;
 
                                         // Loop through the list of objects
 
@@ -126,14 +129,16 @@
                                             // Increment the count
                                             $count++;
                                         }
-
-
                                     } catch (Aws\S3\Exception\S3Exception $e) {
+
                                         // Handle S3 error
                                         echo 'S3 Error: ' . $e->getMessage() . PHP_EOL;
                                     }
                                     ?>
                                 </li>
+
+                                <!-- End of AWS S3 Integration -->
+
 
                                 <!--<li class="nav-item">
                                     <a href="javascript:void(0);" class="nav-link">
@@ -329,8 +334,7 @@
                 </div>
             </div>
 
-                                </div>
-
+        </div>
         <?php if ($details['propID']) { ?>
             <div class="col-lg-6">
                 <div class="main-card mb-3 card">
@@ -365,8 +369,7 @@
                 </div>
             </div>
         <?php } else { ?>
-
-            <!-- <div class="col-lg-6">
+            <div class="col-lg-6">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
                         <h5 class="card-title">Furnisure Details</h5>
@@ -394,44 +397,7 @@
                         </table>
                     </div>
                 </div>
-            </div> -->
-
-            
-            <div class="col-lg-6">
-                <div class="main-card mb-3 card">
-                    <div class="card-body">
-                        <h5 class="card-title">Property Description</h5>
-                        <table class="mb-0 table">
-                            <tbody>
-                                <tr>
-                                    <th width="200px" scope="row">Property Name</th>
-                                    <td><?php echo '<a target="_blank" href="' . base_url() . 'property/' . $details['propID'] . '">' . $details['propertyTitle'] . '</a>'; ?></td>
-                                </tr>
-                                <tr>
-                                    <th width="200px" scope="row">Property Type </th>
-                                    <td><?php echo $details['type']; ?></td>
-                                </tr>
-                                <tr>
-                                    <th width="200px" scope="row">Property Location</th>
-                                    <td><?php echo $details['city'] . ", " . $details['name']; ?></td>
-                                </tr>
-                                <tr>
-                                    <th width="200px" scope="row">Property Rent </th>
-                                    <td><span style="font-family:helvetica;">&#x20A6;</span> <?php echo number_format($details['price']); ?></td>
-                                </tr>
-                                <tr>
-                                    <th width="200px" scope="row">Security Deposit</th>
-                                    <td><span style="font-family:helvetica;">&#x20A6;</span> <?php echo number_format($details['securityDeposit']); ?></td>
-                                </tr>
-                            </tbody>
-                            <input type="hidden" id="propID" value="<?php echo $details['propID']; ?>" />
-                        </table>
-                    </div>
-                </div>
             </div>
-
-
-
 
         <?php } ?>
     </div>

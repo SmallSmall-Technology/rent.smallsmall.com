@@ -86,9 +86,7 @@
     <meta name="google-site-verification" content="YEuv7VXAFS6ne3GK0ZXeKi87EHC0fwoiUIPhMPwT-gs" />
     
     <!-- Facebook Pixel Code -->
-    
-    
-    >
+    <script>
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};

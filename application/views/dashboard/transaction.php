@@ -152,13 +152,13 @@ else{
                         </div>
                     </li>
                 </ul>
-                
                 <a href="<?php echo base_url(); ?>/logout">
                     <span class="navbar-text text-dark mr-5">
                         Log out
                         <img class="img-fluid" src="../assets/images/logout.svg" alt="">
                     </span>
                 </a>
+
 
             </div>
         </nav>
@@ -372,10 +372,10 @@ else{
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light justify-content-end">
                 <div>
-                    <a class="mr-3" href="https://dev-rent.smallsmall.com/faq">Rentsmallsmall FAQ</a>
-                    <a class="mr-3" href="https://dev-buy.smallsmall.com/faq">Buysmallsmall FAQ</a>
-                    <a class="mr-3" href="https://dev.smallsmall.com/about">About Us</a>
-                    <a class="" href="https://dev-rent.smallsmall.com/blog">Blog</a>
+                    <a class="mr-3" href="https://rent.smallsmall.com/faq">Rentsmallsmall FAQ</a>
+                    <a class="mr-3" href="https://buy.smallsmall.com/faq">Buysmallsmall FAQ</a>
+                    <a class="mr-3" href="https://smallsmall.com/about">About Us</a>
+                    <a class="" href="https://rent.smallsmall.com/blog">Blog</a>
                 </div>
             </nav>
         </div>

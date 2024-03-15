@@ -431,8 +431,6 @@ class Loans extends CI_Controller {
 
 			$account_name = $this->input->post("account_name");
 
-			$website = 'RSS';
-
 			//check if account exists already
 			$account_check = $this->loan_model->check_for_account($userID);
 
@@ -445,8 +443,7 @@ class Loans extends CI_Controller {
 					$data = '{
                         "accountName" : "' . $account_name . '", 
                         "bvn" : "' . $bvn . '",
-                        "isStatic" : ' . true . ',
-						"createNewAccount": ' . true . '
+                        "isStatic" : ' . true . '
                         }';
 
 					$curl = curl_init();
@@ -484,7 +481,7 @@ class Loans extends CI_Controller {
 
 						$bankCode = $response['data']['bankAccount']['bank']['code'];
 
-						$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, $website, 'Web');
+						$result = $this->loan_model->insert_account_details($userID, $accountID, $accountReference, $accountName, $accountNumber, $bankName, $bankCode, 'Web');
 
 						$resp = TRUE;
 
@@ -499,7 +496,6 @@ class Loans extends CI_Controller {
 							try {
 								$response = $client->request('POST', 'template/get.json', array(
 									'headers' => $headers,
-									
 									'json' => $requestBody,
 								));
 
@@ -623,6 +619,10 @@ class Loans extends CI_Controller {
 			"id" => "56ab446a-0f3c-11ee-93cb-821d93a29a48"
 		];
 
+		$requestBodyCxTeam = [
+			"id" => "283a4246-2fb4-11ee-8fb8-36dbf359d9e9"
+		];
+
 		// end Unione Template
 
 		//Update account balance and insert wallet transaction
@@ -701,7 +701,62 @@ class Loans extends CI_Controller {
 
 			if ($responseEmail) {
 
+				try {
+					$response = $client->request('POST', 'template/get.json', array(
+						'headers' => $headers,
+						'json' => $requestBodyCxTeam,
+					));
+	
+					$jsonResponse = $response->getBody()->getContents();
+	
+					$responseData = json_decode($jsonResponse, true);
+	
+					$htmlBody = $responseData['template']['body']['html'];
+	
+					$username = $data['name'];
+	
+					$TransactioDate = $data['transactioDate'];
+	
+					$topUpAmount = $amount;
+	
+					$transactionID = $reference;
+	
+					// Replace the placeholder in the HTML body with the username
+	
+					$htmlBody = str_replace('{{SubscriberName}}', $username, $htmlBody);
+					$htmlBody = str_replace('{{Date}}', $TransactioDate, $htmlBody);
+					$htmlBody = str_replace('{{DepositAmount}}', $topUpAmount, $htmlBody);
+	
+					$data['response'] = $htmlBody;
+	
+					// Prepare the email data
+					$emailCxTeam = [
+						"message" => [
+							"recipients" => [
+								["email" => 'customerexperience@smallsmall.com'],
+								["email" => 'accounts@smallsmall.com'],
+							],
+							"body" => ["html" => $htmlBody],
+							"subject" => "RentSmallsmall Wallet Top up successful notification",
+							"from_email" => "donotreply@smallsmall.com",
+							"from_name" => "Smallsmall",
+						],
+					];
+	
+					// Send the email using the Unione API
+					$responseCxEmail = $client->request('POST', 'email/send.json', [
+						'headers' => $headers,
+						'json' => $emailCxTeam,
+					]);
+
+				} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+					$data['response'] = $e->getMessage();
+					
+				}
+	
 				echo 1;
+
 			} else {
 
 				echo "The email could not be sent. Please contact support for assistance.";
@@ -1218,8 +1273,8 @@ class Loans extends CI_Controller {
     }
     
     public function lenco_transactions(){
-		
            
+		
         // only a post with lenco signature header gets our attention
         if((strtoupper($_SERVER['REQUEST_METHOD']) != 'POST' ) || !array_key_exists('HTTP_X_LENCO_SIGNATURE', $_SERVER) )
             exit();
@@ -1262,12 +1317,14 @@ class Loans extends CI_Controller {
 		    $walletInsert = $this->loan_model->insert_wallet_funding($acct_detail['userID'], $event['data']['transactionAmount'], 'Credit', $reference, 'Successful', 'Bank Deposit', $event['data']['transactionReference']);
 		    
 		    //Optional email to notify RSS of transaction
-		    $this->send_email("Success", "Deposit of N".$event['data']['transactionAmount']." made by ".$event['data']['virtualAccount']['bankAccount']['accountName']);
+		    if($this->send_cx_email($event['data']['virtualAccount']['bankAccount']['accountName'], $event['data']['transactionAmount'])){
+
+		    	$this->send_user_email($event['data']['virtualAccount']['bankAccount']['accountName'], $event['data']['transactionAmount'], $event['data']['id']);
 		    
-		    //Exit block
+		    }
+		
 		    exit();
-		    
-		    
+		    		    
         }else if($event["event"] == 'virtual-account.rejected-transaction'){
             
             $acct_detail = $this->loan_model->get_account_details_using_acct_num($event['data']['virtualAccount']['id']);
@@ -1294,34 +1351,188 @@ class Loans extends CI_Controller {
        
     }
     
-    public function send_email($title, $reason){
+    // public function send_email($title, $reason){
+		
         
-        $data['ver_title'] = $title;
+    //     $data['ver_title'] = $title;
 		    
-		$data['ver_note'] = $reason;
+	// 	$data['ver_note'] = $reason;
         
-        $this->email->from('donotreply@rentsmallsmall.com', 'RentSmallSmall Alert');
+    //     $this->email->from('donotreply@rentsmallsmall.com', 'RentSmallSmall Alert');
 
-		$this->email->to('customerexperience@smallsmall.com');
+	// 	$this->email->to('customerexperience@smallsmall.com');
 
-		$this->email->bcc('accounts@smallsmall.com, seuncrowther@yahoo.com');
+	// 	$this->email->bcc('accounts@smallsmall.com, seuncrowther@yahoo.com');
 
-		$this->email->subject("Lenco deposit alert!");	
+	// 	$this->email->subject("Lenco deposit alert!");	
 
-		$this->email->set_mailtype("html");
+	// 	$this->email->set_mailtype("html");
 
-		$message = $this->load->view('email/header.php', $data, TRUE);
+	// 	$message = $this->load->view('email/header.php', $data, TRUE);
 
-		$message .= $this->load->view('email/verification-alert-email.php', $data, TRUE);
+	// 	$message .= $this->load->view('email/verification-alert-email.php', $data, TRUE);
 
-		$message .= $this->load->view('email/footer.php', $data, TRUE);
+	// 	$message .= $this->load->view('email/footer.php', $data, TRUE);
 
-		$this->email->message($message);
+	// 	$this->email->message($message);
 
-		$emailRes = $this->email->send();
+	// 	$emailRes = $this->email->send();
+        
+    // }
+    
+
+	public function send_cx_email($subscriberName, $amount){
+
+		require 'vendor/autoload.php';
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBodyCxTeam = [
+			"id" => "283a4246-2fb4-11ee-8fb8-36dbf359d9e9"
+		];
+
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBodyCxTeam,
+			));
+
+			$jsonResponse = $response->getBody()->getContents();
+
+			$responseData = json_decode($jsonResponse, true);
+
+			$htmlBody = $responseData['template']['body']['html'];
+
+			$transactionDate = date("Y-m-d");;
+
+			// Still need to modify the data but still send data and later I pass the write data.
+			$htmlBody = str_replace('{{SubscriberName}}', $subscriberName, $htmlBody); 
+			$htmlBody = str_replace('{{Date}}', $transactionDate, $htmlBody);
+			$htmlBody = str_replace('{{DepositAmount}}', $amount, $htmlBody);
+
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailCxTeam = [
+				"message" => [
+					"recipients" => [
+						["email" => 'customerexperience@smallsmall.com'],
+						["email" => 'accounts@smallsmall.com'],
+						["email" => 'seuncrowther@yahoo.com'],
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "Lenco deposit alert!",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "RentSmallsmall Alert",
+				],
+			];
+
+			// Send the email using the Unione API
+			$responseCxEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailCxTeam,
+			]);
+
+			$result = json_decode($responseCxEmail, true);
+
+			if($result['status'] == 'success'){
+				return 1;
+			}else{
+				return 0;
+			}
+			
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+			$data['response'] = $e->getMessage();
+			
+		}
         
     }
-    
+
+    public function send_user_email($subscriberName, $amount, $transactionID){
+
+		require 'vendor/autoload.php';
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "56ab446a-0f3c-11ee-93cb-821d93a29a48"
+		];
+
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
+
+			$jsonResponse = $response->getBody()->getContents();
+
+			$responseData = json_decode($jsonResponse, true);
+
+			$htmlBody = $responseData['template']['body']['html'];
+
+			$transactioDate = date("Y-m-d");
+
+			// Still need to modify the data but still send data and later I pass the write data.
+			$htmlBody = str_replace('{{Name}}', $subscriberName, $htmlBody); 
+			$htmlBody = str_replace('{{TransactionDate}}', $transactionDate, $htmlBody);
+			$htmlBody = str_replace('{{TopupAmount}}', $amount, $htmlBody);
+			$htmlBody = str_replace('{{TransactionID}}', $transactionID, $htmlBody);
+
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailDetails = [
+				"message" => [
+					"recipients" => [
+						["email" => $email]
+					],
+					"body" => ["html" => $htmlBody],
+					"subject" => "Lenco deposit alert!",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "RentSmallsmall Alert",
+				],
+			];
+
+			// Send the email using the Unione API
+			$response = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailDetails,
+			]);
+
+			$result = json_decode($response, true);
+
+			if($result['status'] == 'success'){
+				return 1;
+			}else{
+				return 0;
+			}
+
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+			$data['response'] = $e->getMessage();
+			
+		}
+        
+    }
+
+
     public function get_virtual_accounts(){
     
         $curl = curl_init();

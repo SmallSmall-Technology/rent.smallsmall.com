@@ -394,9 +394,9 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
                 </p>
               </div>
               <div>
-                <p><a class="text-white" href="https://dev-stay.smallsmall.com"><small class="font-weight-light" style="font-size:10px">Nightly
+                <p><a class="text-white" href="https://stay.smallsmall.com"><small class="font-weight-light" style="font-size:10px">Nightly
                       stay</small><br>StayOne</a> </p>
-                <p><a class="text-white" href="https://dev-buy.smallsmall.com"><small class="font-weight-light"
+                <p><a class="text-white" href="https://buy.smallsmall.com"><small class="font-weight-light"
                       style="font-size:10px">Invest</small><br>BuySmallsmall</a> </p>
               </div>
               <div>

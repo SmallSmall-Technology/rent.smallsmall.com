@@ -1,4 +1,4 @@
- <div class="app-main__outer">
+<div class="app-main__outer">
 	<div class="app-main__inner">
 		<div class="app-page-title">
 			<div class="page-title-wrapper">
@@ -18,7 +18,7 @@
 			<div class="col-md-12">
 				<div class="main-card mb-3 card">
 					<div class="card-header">
-					    <form action="<?php echo base_url('admin/search-bookings'); ?>" method="POST">
+					    <form action="<?php echo base_url('admin/search-bookings/'); ?>" method="POST">
 							<div class="search-wrapper active">
 								<div class="input-holder">
 									<input name="search-input" type="text" class="search-input" placeholder="Type to search">
