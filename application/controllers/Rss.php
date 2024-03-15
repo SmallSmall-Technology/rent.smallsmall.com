@@ -4308,7 +4308,6 @@ class Rss extends CI_Controller
 
 	public function confirm($code)
 	{
-
 		if ($this->session->has_userdata('loggedIn')) {
 
 			redirect(base_url(), 'refresh');
@@ -6583,7 +6582,6 @@ class Rss extends CI_Controller
 
 	public function send_confirmation($userID)
 	{
-
 		require 'vendor/autoload.php';
 
 		$headers = array(
@@ -6596,8 +6594,12 @@ class Rss extends CI_Controller
 			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
 		]);
 
+		// $requestBody = [
+		// 	"id" => "64e145dc-0f2a-11ee-b56a-969a978c88f7"
+		// ];
+
 		$requestBody = [
-			"id" => "64e145dc-0f2a-11ee-b56a-969a978c88f7"
+			"id" => "5b4bd50c-f3ad-11ed-a4f1-dabfde6df242"
 		];
 
 		$user = $this->rss_model->getConfirmationUser($userID);
@@ -6700,7 +6702,6 @@ class Rss extends CI_Controller
 
 	public function test_pdf()
 	{
-
 		$data['prop_id'] = 356406178223;
 
 		$data['propertyName'] = 'Standard Studio Unit 7 Castle Condo';
