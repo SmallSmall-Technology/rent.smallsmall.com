@@ -6875,6 +6875,22 @@ class Rss extends CI_Controller
 	public function send_confirmation($userID)
 	{
 
+		require 'vendor/autoload.php';
+
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'Accept' => 'application/json',
+			'X-API-KEY' => '6tkb5syz5g1bgtkz1uonenrxwpngrwpq9za1u6ha',
+		);
+
+		$client = new \GuzzleHttp\Client([
+			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+		]);
+
+		$requestBody = [
+			"id" => "64e145dc-0f2a-11ee-b56a-969a978c88f7"
+		];
+
 		$user = $this->rss_model->getConfirmationUser($userID);
 
 		if (@$user) {
@@ -6884,38 +6900,87 @@ class Rss extends CI_Controller
 				exit;
 			}
 
-
 			$data['confirmationLink'] = base_url() . 'confirm/' . $user['confirmation'];
 
 			$data['name'] = $user['firstName'];
 
 			$data['email'] = $user['email'];
 
-			$this->email->from('donotreply@smallsmall.com', 'SmallSmall');
+			//Unione Template
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestBody,
+				));
 
-			$this->email->to($user['email']);
+				$jsonResponse = $response->getBody()->getContents();
 
-			$this->email->subject("Email Confirmation SmallSmall");
+				$responseData = json_decode($jsonResponse, true);
 
-			$this->email->set_mailtype("html");
+				$htmlBody = $responseData['template']['body']['html'];
 
-			$message = $this->load->view('email/header.php', $data, TRUE);
+				$confirmationLink = $data['confirmationLink'];
 
-			$message .= $this->load->view('email/confirmationemail.php', $data, TRUE);
+				// Replace the placeholder in the HTML body with the username
 
-			$message .= $this->load->view('email/footer.php', $data, TRUE);
+				$htmlBody = str_replace('{{confirmationLink}}', $confirmationLink, $htmlBody);
 
-			$this->email->message($message);
+				$data['response'] = $htmlBody;
 
-			if ($this->email->send()) {
+				// Prepare the email data
+				$emailData = [
+					"message" => [
+						"recipients" => [
+							["email" => $email],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "Email Confirmation RentSmallsmall",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "Smallsmall",
+					],
+				];
 
-				echo "Confirmation sent!";
-				exit;
-			} else {
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailData,
+				]);
 
-				echo "Unsuccessful";
-				exit;
+				// Output the result
+				if ($responseEmail) {
+					echo 1;
+				} else {
+					echo 0;
+				}
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
 			}
+
+			// $this->email->from('donotreply@smallsmall.com', 'SmallSmall');
+
+			// $this->email->to($user['email']);
+
+			// $this->email->subject("Email Confirmation SmallSmall");
+
+			// $this->email->set_mailtype("html");
+
+			// $message = $this->load->view('email/header.php', $data, TRUE);
+
+			// $message .= $this->load->view('email/confirmationemail.php', $data, TRUE);
+
+			// $message .= $this->load->view('email/footer.php', $data, TRUE);
+
+			// $this->email->message($message);
+
+			// if ($this->email->send()) {
+
+			// 	echo "Confirmation sent!";
+			// 	exit;
+			// } else {
+
+			// 	echo "Unsuccessful";
+			// 	exit;
+			// }
 		} else {
 
 			echo "User does not exist";
