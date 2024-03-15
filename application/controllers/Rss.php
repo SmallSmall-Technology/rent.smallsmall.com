@@ -6602,12 +6602,12 @@ class Rss extends CI_Controller
 
 		$user = $this->rss_model->getConfirmationUser($userID);
 
-		if (@$user) {
+		// if (@$user) {
 
-			if ($user['confirmation'] == "") {
-				echo "User already confirmed!";
-				exit;
-			}
+		// 	if ($user['confirmation'] == "") {
+		// 		echo "User already confirmed!";
+		// 		exit;
+		// 	}
 
 			$data['confirmationLink'] = base_url() . 'confirm/' . $user['confirmation'];
 
@@ -6690,11 +6690,11 @@ class Rss extends CI_Controller
 			// 	echo "Unsuccessful";
 			// 	exit;
 			// }
-		} else {
+		// } else {
 
-			echo "User does not exist";
-			exit;
-		}
+		// 	echo "User does not exist";
+		// 	exit;
+		// }
 	}
 
 
