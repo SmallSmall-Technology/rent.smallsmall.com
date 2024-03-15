@@ -374,7 +374,7 @@
                 output += '<p><span class="content-placeholder" style="width:100%; height: 30px;">&nbsp;</span></p>';
                 output += '<p><span class="content-placeholder" style="width:100%; height: 100px;">&nbsp;</span></p>';
                 output += '</div>';
-                
+         
             }
             
             $('#inbox-data-loading').html(output);

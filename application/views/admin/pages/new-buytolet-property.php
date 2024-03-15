@@ -91,7 +91,7 @@
 							</div>
 							<div id="construction-status-panel" class="position-relative form-group construction-status-panel">
 								<div class="position-relative form-group">
-									<label for="construction-status" class=""> Construction status</label>
+									<label for="construction-status" class="">Construction status</label>
 									<input autocomplete="off" class="form-control construction-status" name="construction-status" id="construction-status" />
 								</div>
 							</div>

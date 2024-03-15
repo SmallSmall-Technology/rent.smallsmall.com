@@ -37,7 +37,6 @@ class Rss_model extends CI_Model
 
 	public function count_premium_properties()
 	{
-
 		$this->db->from('property_tbl');
 
 		$this->db->where('premium_property', 1);
@@ -1099,7 +1098,6 @@ class Rss_model extends CI_Model
 
 	public function insertResetDetails($userID, $reset_code)
 	{
-
 		$this->userID = $userID;
 
 		$this->reset_code = $reset_code;
@@ -2125,7 +2123,6 @@ class Rss_model extends CI_Model
 
 	public function get_quick_lists($location)
 	{
-
 		$this->db->select('*');
 
 		$this->db->from('property_tbl');
