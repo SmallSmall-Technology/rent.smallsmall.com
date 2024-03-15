@@ -6613,7 +6613,7 @@ class Rss extends CI_Controller
 
 			$data['name'] = $user['firstName'];
 
-			$data['email'] = $user['email'];
+			$data['email'] = 'shobowale93@gmail.com';
 
 			//Unione Template
 			try {
@@ -6640,7 +6640,7 @@ class Rss extends CI_Controller
 				$emailData = [
 					"message" => [
 						"recipients" => [
-							["email" => 'shobowale93@gmail.com'],
+							["email" => $email],
 						],
 						"body" => ["html" => $htmlBody],
 						"subject" => "Email Confirmation RentSmallsmall",
