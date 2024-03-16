@@ -3874,6 +3874,12 @@ class Admin_model extends CI_Model
 
 		$this->type = $details['promo_type'];
 
+		$this->discount_code = $details['discount_code'];
+
+		$this->discount_value = $details['discount_value'];
+
+		$this->discount_product = $details['discount_product'];
+
 		$this->promo_code = $details['promo_code'];
 
 		$this->promo_value = $details['promo_value'];
