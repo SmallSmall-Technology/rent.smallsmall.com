@@ -57,6 +57,7 @@
 									<option value="">Select One</option>
                                     <option value="Free">Free Offer</option>
                                     <option value="Coupon">Coupon Offer</option>
+									<option value="Discount">Discount</option>
 								</select>
 							</div>
 
@@ -87,14 +88,14 @@
     						</div>
 						</div>
 
-						<div class="position-relative row form-group user-fields">
+						<div class="position-relative row form-group user-fields promo-fields">
 						    
 						    <label for="promo_value" class="col-sm-2 col-form-label">Promo Value</label>
 
-							<div class="col-sm-10"><input name="promo_value" id="promo_value" placeholder="Promo Value" type="text" class="verify-txt form-control"></div>
+							<div class="col-sm-10"><input name="promo_value" id="promo_value" placeholder="Promo Value" type="text" class="form-control"></div>
 
 						</div>
-						<div class="position-relative row form-group user-fields"><label for="promo_term" class="col-sm-2 col-form-label">Promo Condition</label>
+						<div class="position-relative row form-group user-fields promo-fields"><label for="promo_term" class="col-sm-2 col-form-label">Promo Condition</label>
 
 							<div class="col-sm-10">
 							    <input name="promo_term" id="promo_term" placeholder="Condition i.e 1" type="text" class="form-control">
@@ -102,6 +103,39 @@
 
 						</div>
 						
+						<div>
+							<div class="position-relative row form-group hide-fields discount-fields">
+								
+								<label for="discount_code" class="col-sm-2 col-form-label">Discount Code</label>
+	
+								<div class="col-sm-10">
+									<input name="discount_code" id="discount_code" placeholder="Discount Code" type="text" class="form-control">
+								</div>
+	
+							</div>
+						</div>
+
+						<div class="position-relative row form-group hide-fields discount-fields">
+							
+							<label for="discount_value" class="col-sm-2 col-form-label">Discount Value</label>
+
+							<div class="col-sm-10"><input name="discount_value" id="discount_value" placeholder="Discount Value" type="text" class="form-control"></div>
+
+						</div>
+						<div class="position-relative row form-group hide-fields discount-fields">
+							
+							<label for="discount_product" class="col-sm-2 col-form-label">Discount Product</label>
+
+							<div class="col-sm-10">
+								<select name="discount_product" id="discount_product" class="form-control">
+									<option value="all">Select One</option>
+									<option value="bnpl">BNPL</option>
+									<option value="onpl">ONPL</option>
+									<option value="co-own">Co-Ownership</option>
+								</select>
+							</div>
+
+						</div>
 						<div class="position-relative row form-group user-fields">
 						    
 						    <label for="start_date" class="col-sm-2 col-form-label">Start Date</label>
@@ -176,10 +210,19 @@ $(document).ready(function(){
             
             $('.hide-fields').hide();
             $('.coupon-field').css('display', 'flex');
+            $('.promo-fields').css('display', 'flex');
             
         }else if(promo_type == 'Free'){
             
             $('.hide-fields').hide();
+            $('.promo-fields').css('display', 'flex');
+            //$('.free-field').show();
+            
+        }else if(promo_type == 'Discount'){
+            
+            $('.hide-fields').hide();
+			$('.promo-fields').hide();
+            $('.discount-fields').css('display', 'flex');
             //$('.free-field').show();
             
         }
