@@ -2599,7 +2599,6 @@ class Rss extends CI_Controller
 
 	public function signup_form()
 	{
-
 		require 'vendor/autoload.php'; // For Unione template authoload
 
 		$ua = $_SERVER['HTTP_USER_AGENT'];
@@ -6874,7 +6873,6 @@ class Rss extends CI_Controller
 
 	public function send_confirmation($userID)
 	{
-
 		require 'vendor/autoload.php';
 
 		$headers = array(
@@ -6904,7 +6902,7 @@ class Rss extends CI_Controller
 
 			$data['name'] = $user['firstName'];
 
-			$data['email'] = $user['email'];
+			$email = $user['email']; //this is the customer's email
 
 			//Unione Template
 			try {
