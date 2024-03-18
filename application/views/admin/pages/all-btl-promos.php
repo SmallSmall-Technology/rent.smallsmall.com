@@ -38,8 +38,13 @@
 							<tbody>
 							<?php
 								$stat = ''; 
+								$code = '';
+								$CI =& get_instance();
+
 								if (isset($promos) && !empty($promos)) {
 									foreach($promos as $promo => $value) {
+
+										$subs = 0;
 										
 										if($value['status']){
 											$stat = 'badge-success';
@@ -48,17 +53,25 @@
 											$stat = 'badge-warning';
                                             $msg = 'Inactive';
 										}
-                                        $CI =& get_instance();
-                                        $subs = $CI->admin_model->getPromoSubscribers($value['promo_code']);
+
+										if($value['type'] == 'Discount'){
+											$code = $value['discount_code'];										
+										}else{
+											$code = $value['promo_code'];
+										}
+
+										$subs = $CI->admin_model->getPromoSubscribers($code);
+                                        
+                                        
 							?>	
 
 							<tr>
 								<td class="text-left"><input type="checkbox" class="notification-checkbox" id="<?php echo $value['id'] ?>" /></td> 
 								<td class="text-left">
-                                    <?php echo $value['promo_title'].' ('.$value['promo_code'].')'; ?>
+                                    <?php echo $value['promo_title'].' ('.$code.')'; ?>
                                     <div style="font-weight:bold;font-size:14px;color:#495057;opacity:.6" class="widget-subheading">
                                         <b style="color:#3f6ad8">From:</b> <?php echo date("d M Y" , strtotime($value['start_date'])); ?> <b style="color:#3f6ad8">To:</b> <?php echo date("d M Y" , strtotime($value['end_date'])); ?><br />
-                                        <b style="color:#3f6ad8">Subscribers:</b> <?php echo $subs; ?>
+                                        <b style="color:#3f6ad8">Subscribers:</b> <?php echo number_format($subs); ?>
 								    </div>
                                 </td>
 								
