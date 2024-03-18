@@ -2708,7 +2708,6 @@ class Rss extends CI_Controller
 
 	public function bookInspection()
 	{
-
 		require 'vendor/autoload.php'; // For Unione template authoload
 
 		$inspectionDate = $this->input->post('inspectionDate');
@@ -6594,109 +6593,113 @@ class Rss extends CI_Controller
 			'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
 		]);
 
-		// $requestBody = [
-		// 	"id" => "64e145dc-0f2a-11ee-b56a-969a978c88f7"
-		// ];
-
 		$requestBody = [
-			"id" => "5b4bd50c-f3ad-11ed-a4f1-dabfde6df242"
+			"id" => "64e145dc-0f2a-11ee-b56a-969a978c88f7"
 		];
 
+		// $requestBody = [
+		// 	"id" => "5b4bd50c-f3ad-11ed-a4f1-dabfde6df242"
+		// ];
+
 		$user = $this->rss_model->getConfirmationUser($userID);
+
+		print_r($user);
 
 		// if (@$user) {
 
 		// 	if ($user['confirmation'] == "") {
 		// 		echo "User already confirmed!";
 		// 		exit;
-		// 	}
+		// }
 
-			$data['confirmationLink'] = base_url() . 'confirm/' . $user['confirmation'];
+		$data['confirmationLink'] = base_url() . 'confirm/' . $user['confirmation'];
 
-			$data['name'] = $user['firstName'];
+		$data['name'] = $user['firstName'];
 
-			$data['email'] = 'shobowale93@gmail.com';
+		$data['email'] = 'shobowale93@gmail.com';
 
-			//Unione Template
-			try {
-				$response = $client->request('POST', 'template/get.json', array(
-					'headers' => $headers,
-					'json' => $requestBody,
-				));
+		print_r($data);
 
-				$jsonResponse = $response->getBody()->getContents();
+		//Unione Template
+		try {
+			$response = $client->request('POST', 'template/get.json', array(
+				'headers' => $headers,
+				'json' => $requestBody,
+			));
 
-				$responseData = json_decode($jsonResponse, true);
+			$jsonResponse = $response->getBody()->getContents();
 
-				$htmlBody = $responseData['template']['body']['html'];
+			$responseData = json_decode($jsonResponse, true);
 
-				$confirmationLink = $data['confirmationLink'];
+			$htmlBody = $responseData['template']['body']['html'];
 
-				// Replace the placeholder in the HTML body with the username
+			$confirmationLink = $data['confirmationLink'];
 
-				$htmlBody = str_replace('{{confirmationLink}}', $confirmationLink, $htmlBody);
+			// Replace the placeholder in the HTML body with the username
 
-				$data['response'] = $htmlBody;
+			$htmlBody = str_replace('{{confirmationLink}}', $confirmationLink, $htmlBody);
 
-				// Prepare the email data
-				$emailData = [
-					"message" => [
-						"recipients" => [
-							["email" => $email],
-						],
-						"body" => ["html" => $htmlBody],
-						"subject" => "Email Confirmation RentSmallsmall",
-						"from_email" => "donotreply@smallsmall.com",
-						"from_name" => "Smallsmall",
+			$data['response'] = $htmlBody;
+
+			// Prepare the email data
+			$emailData = [
+				"message" => [
+					"recipients" => [
+						["email" => $email],
 					],
-				];
+					"body" => ["html" => $htmlBody],
+					"subject" => "Email Confirmation RentSmallsmall",
+					"from_email" => "donotreply@smallsmall.com",
+					"from_name" => "Smallsmall",
+				],
+			];
 
-				// Send the email using the Unione API
-				$responseEmail = $client->request('POST', 'email/send.json', [
-					'headers' => $headers,
-					'json' => $emailData,
-				]);
+			// Send the email using the Unione API
+			$responseEmail = $client->request('POST', 'email/send.json', [
+				'headers' => $headers,
+				'json' => $emailData,
+			]);
 
-				// Output the result
-				if ($responseEmail) {
-					echo 1;
-				} else {
-					echo 0;
-				}
-			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
-				$data['response'] = $e->getMessage();
+			// Output the result
+			if ($responseEmail) {
+				echo 1;
+			} else {
+				echo 0;
 			}
+		} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+			$data['response'] = $e->getMessage();
+		}
 
-			// $this->email->from('donotreply@smallsmall.com', 'SmallSmall');
+		// $this->email->from('donotreply@smallsmall.com', 'SmallSmall');
 
-			// $this->email->to($user['email']);
+		// $this->email->to($user['email']);
 
-			// $this->email->subject("Email Confirmation SmallSmall");
+		// $this->email->subject("Email Confirmation SmallSmall");
 
-			// $this->email->set_mailtype("html");
+		// $this->email->set_mailtype("html");
 
-			// $message = $this->load->view('email/header.php', $data, TRUE);
+		// $message = $this->load->view('email/header.php', $data, TRUE);
 
-			// $message .= $this->load->view('email/confirmationemail.php', $data, TRUE);
+		// $message .= $this->load->view('email/confirmationemail.php', $data, TRUE);
 
-			// $message .= $this->load->view('email/footer.php', $data, TRUE);
+		// $message .= $this->load->view('email/footer.php', $data, TRUE);
 
-			// $this->email->message($message);
+		// $this->email->message($message);
 
-			// if ($this->email->send()) {
+		// if ($this->email->send()) {
 
-			// 	echo "Confirmation sent!";
-			// 	exit;
-			// } else {
-
-			// 	echo "Unsuccessful";
-			// 	exit;
-			// }
+		// 	echo "Confirmation sent!";
+		// 	exit;
 		// } else {
 
-		// 	echo "User does not exist";
+		// 	echo "Unsuccessful";
 		// 	exit;
 		// }
+	// } else {
+
+	// 	echo "User does not exist";
+	// 	exit;
+	// }
 	}
 
 
