@@ -121,7 +121,7 @@
                             <option selected value="">What is your interest?</option>
                             <option value="RSS">Renting a home</option>
                             <option value="Buy2let">Buying a home</option>
-                            <option value="Stayone">Short stays</option>
+                            <!-- <option value="Stayone">Short stays</option> -->
                         </select>
                         <input type="hidden" id="clicked" val="0" />
                     </div>
