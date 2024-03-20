@@ -2,7 +2,7 @@
 
 //alert("create alert");
 
-var baseUrl = "https://dev-rent.smallsmall.com/";
+var baseUrl = "https://rent.smallsmall.com/";
 
 function isEmail(email) {
 

@@ -290,7 +290,7 @@ body, html{
 	background-size: contain;
 }
 .mobile-logo.blue{
-    background-image:url('../img/logo-blue.svg');
+    background-image:url('../img/logo-blue.png');
 }
 .mobile-logo.white{
     background-image:url('../img/logo-white.png');
@@ -304,7 +304,7 @@ body, html{
     background-image:url('../img/logo-white.png');
 }
 .navigation-header-inner .logo.blue{
-    background-image:url('../img/logo-blue.svg');
+    background-image:url('../img/logo-blue.png');
 }
 .navigation-header-inner .navigation-container{
     width:calc(100% - 270px);

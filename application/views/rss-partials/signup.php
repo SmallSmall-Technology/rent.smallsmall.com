@@ -1,3 +1,5 @@
+
+
 <main class="m-auto p-md-0 p-3">
     <div class="signup-section">
         <div class="mt-4">
@@ -146,58 +148,10 @@
 
 </main>
 
-<!-- Customer io -->
-
-<script type="text/javascript">
-  var _cio = _cio || [];
-  (function() {
-    var a,b,c;a=function(f){return function(){_cio.push([f].
-    concat(Array.prototype.slice.call(arguments,0)))}};b=["load","identify",
-    "sidentify","track","page"];for(c=0;c<b.length;c++){_cio[b[c]]=a(b[c])};
-    var t = document.createElement('script'),
-        s = document.getElementsByTagName('script')[0];
-    t.async = true;
-    t.id    = 'cio-tracker';
-    t.setAttribute('data-site-id', '861f24af15f47859400d');
-    t.src = 'https://assets.customer.io/assets/track-eu.js';
-    s.parentNode.insertBefore(t, s);
-  })();
-</script>
-
-<!-- end customer io -->
 
 <!-- Tracking code for rss - Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
 <!-- End of HubSpot Embed Code -->
-
-<!-- Customer.io update -->
-
-<!-- <script type="text/javascript">
-    // Wait for the DOM content to be fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        
-        var fnameInput = document.getElementById('fname').value;
-        var lnameInput = document.getElementById('lname').value;
-        var emailInput = document.getElementById('email').value;
-        var phoneInput = document.getElementById('phone').value;
-
-        // Construct the Customer.io identify object with form values
-        var identifyObject = {
-            id: emailInput, 
-            created_at: Math.floor(Date.now() / 1000), 
-            email: emailInput,
-            first_name: fnameInput,
-            last_name: lnameInput, 
-            plan_name: phoneInput 
-        };
-        
-
-        // Call the Customer.io identify function with the constructed object
-        _cio.identify(identifyObject);
-
-    });
-
-</script> -->
 
 
 <script>

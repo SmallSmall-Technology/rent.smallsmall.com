@@ -62,25 +62,12 @@ body {
   left: 9%;
   background: #007aff;
   overflow-x: hidden;
-  /*display:flex;
-  flex-direction:row;
-  white-space:nowrap;*/
 }
 
 #notification-container {
   width: 350px;
-  /*transform:translateX(-100%);
-  animation: cssmarquee 10s linear infinite;*/
 }
 
-/*@keyframes cssmarquee {
-  0% {
-  transform: translateX(-100%);
-  }
-  100% {
-  transform: translateX(100%);
-  }
-}*/
 #notification-icn {
   padding: 5px 10px;
   border-radius: 20px;
@@ -133,11 +120,10 @@ body {
 
 /* For mobile view (breakpoint: 768px) */
 @media (max-width: 768px) {
-
   .notification-bar-home {
     width: 90%;
     left: 5%;
-    top: 82px;
+    top: 74px;
     padding: 10px;
     border-radius: 10px;
 
@@ -152,7 +138,6 @@ body {
     width: 60%;
     font-size: 12px;
     line-height: 18px;
-
   }
 
 }

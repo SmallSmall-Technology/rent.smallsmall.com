@@ -89,14 +89,14 @@
                             </tr>
                             <tr>
                                 <th scope="row">Identification</th>
-                                <td><a rel="nofollow" target="_blank" href="https://dev-buy.smallsmall.com/uploads/financing/'<?php echo $details['idPath']; ?>">Download</a></td>
+                                <td><a rel="nofollow" target="_blank" href="https://buy.smallsmall.com/uploads/financing/'<?php echo $details['idPath']; ?>">Download</a></td>
                             </tr>
                             
                             <tr>
                                 <th scope="row">Bank statement</th>
                                 <td>
                                     <?php if($details['plan'] == 'co-own'){ ?>
-                                    <a rel="nofollow" target="_blank" href="https://dev-buy.smallsmall.com/uploads/financing/'<?php echo $details['statementPath']; ?>">Download</a></td>
+                                    <a rel="nofollow" target="_blank" href="https://buy.smallsmall.com/uploads/financing/'<?php echo $details['statementPath']; ?>">Download</a></td>
                                     <?php }else{ ?>
                                         N/A
                                     <?php } ?>
@@ -113,6 +113,12 @@
                         <table class="mb-0 table">
                             
                             <tbody>
+			    <?php if($details['method'] == 'Promotional'){ ?>
+	                            <tr>
+	                                <th width="200px" scope="row">Purchase Type</th>
+	                                <td><?php echo $details['purchase_beneficiary']; ?></td>
+	                            </tr>
+			    <?php } ?>
                             <tr>
                                 <th width="200px" scope="row">Property</th>
                                 <td><?php echo $details['property_name']; ?></td>
@@ -151,6 +157,16 @@
                                 <th scope="row">Units</th>
                                 <td><?php echo ($details['plan'] == 'co-own')? $details['unit_amount'] : '1' ; ?></td>
                             </tr>	
+			<?php if($details['promo_amount'] > 0){ ?>
+			    <tr>
+                                <th scope="row">Promo Amount</th>
+                                <td><?php echo $details['promo_amount']; ?></td>
+                            </tr>
+			    <tr>
+                                <th scope="row">Coupon code</th>
+                                <td><?php echo $details['promo_code']; ?></td>
+                            </tr>
+			<?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -263,7 +279,7 @@
                             
                             <tr>
                                 <th scope="row">Identification</th>
-                                <td><a rel="nofollow" target="_blank" href="https://dev-stay.smallsmall.com/uploads/identification/<?php //echo $details['userID'].'/'.$details['identification']; ?>">Download</a></td>
+                                <td><a rel="nofollow" target="_blank" href="https://stay.smallsmall.com/uploads/identification/<?php //echo $details['userID'].'/'.$details['identification']; ?>">Download</a></td>
                             </tr>
                             </tbody>
                         </table>

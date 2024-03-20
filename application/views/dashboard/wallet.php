@@ -427,7 +427,7 @@ else{
                                 Subscription</button>
                         </div>
                         <div class="col-md-6 col-12">
-                            <button class="btn font-weight-light wallet-btn p-3 text-dark" type="button" id="subscribe-button">Subscribe to
+                            <button class="btn font-weight-light wallet-btn p-3 text-dark" type="button">Subscribe to
                                 wallet
                                 direct
                                 debit</button>
@@ -594,175 +594,17 @@ else{
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light justify-content-end">
                 <div>
-                    <a class="mr-3" href="https://dev-rent.smallsmall.com/faq">Rentsmallsmall FAQ</a>
-                    <a class="mr-3" href="https://dev-buy.smallsmall.com/faq">Buysmallsmall FAQ</a>
-                    <a class="mr-3" href="https://dev.smallsmall.com/about">About Us</a>
-                    <a class="" href="https://dev-rent.smallsmall.com/blog">Blog</a>
+                    <a class="mr-3" href="https://rent.smallsmall.com/faq">Rentsmallsmall FAQ</a>
+                    <a class="mr-3" href="https://buy.smallsmall.com/faq">Buysmallsmall FAQ</a>
+                    <a class="mr-3" href="https://smallsmall.com/about">About Us</a>
+                    <a class="" href="https://rent.smallsmall.com/blog">Blog</a>
                 </div>
             </nav>
         </div>
     </footer>
 
-<!-- Direct Debit -->
-
-<!-- <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Get the "Subscribe to wallet direct debit" button by its ID
-    var subscribeButton = document.getElementById("subscribe-button");
-
-    // Add a click event listener to the button
-    subscribeButton.addEventListener("click", function() {
-        // Extract and store the required data
-        var accountBalance = <?php echo json_encode(@$account_details['account_balance']); ?>;
-        var accountName = <?php echo json_encode($acc_name); ?>;
-        var accountNumber = <?php echo json_encode(@$account_details['account_number']); ?>;
-        var bankName = <?php echo json_encode(@$account_details['bank_name']); ?>;
-        var price = <?php echo json_encode(@$new_subscription['price']); ?>;
-        var serviceCharge = <?php echo json_encode(@$new_subscription['serviceCharge']); ?>;
-        var bookingID = <?php echo json_encode(@$new_subscription['bookingID']); ?>;
 
 
-
-
-
-        var moveInDate = <?php echo json_encode(@$new_subscription['move_in_date']); ?>;
-        var rentExpirationDate = <?php echo json_encode(@$new_subscription['rent_expiration']); ?>;
-        var rentStatus = <?php echo json_encode(@$new_subscription['rent_status']); ?>;
-        var propertyTitle = <?php echo json_encode(@$new_subscription['propertyTitle']); ?>;
-        var paymentPlan = <?php echo json_encode(@$new_subscription['payment_plan']); ?>;
-        var paymentType = <?php echo json_encode(@$new_subscription['payment_type']); ?>;
-
-        var transaction_id = <?php echo json_encode(@$new_subscription['transaction_id']); ?>;
-        var status = <?php echo json_encode(@$new_subscription['status']); ?>;
-        var transaction_type = <?php echo json_encode(@$new_subscription['transaction_type']); ?>;
-        var transaction_date = <?php echo json_encode(@$new_subscription['transaction_date']); ?>;
-        var duration = <?php echo json_encode(@$new_subscription['duration']); ?>;
-        var next_rental = <?php echo json_encode(@$new_subscription['next_rental']); ?>;
-        var booked_on = <?php echo json_encode(@$new_subscription['booked_on']); ?>;
-
-
-
-
-        var userID = <?php echo json_encode($userID); ?>;
-        var email = <?php echo json_encode($email); ?>;
-        var fname = <?php echo json_encode($fname); ?>;
-        
-        // Output the data to the browser's console (for testing purposes)
-        console.log("Account Balance: " + accountBalance);
-        console.log("Account Name: " + accountName);
-        console.log("Account Number: " + accountNumber);
-        console.log("Bank Name: " + bankName);
-        console.log("Price: " + price);
-        console.log("Service Charge: " + serviceCharge);
-        console.log("Booking ID: " + bookingID);
-        console.log("User ID: " + userID);
-        console.log("Email: " + email);
-        console.log("First Name: " + fname);
-
-
-        console.log("moveInDate: " + moveInDate);
-        console.log("rentExpirationDate: " + rentExpirationDate);
-        console.log("rentStatus: " + rentStatus);
-        console.log("propertyTitle: " + propertyTitle);
-        console.log("paymentPlan: " + paymentPlan);
-        console.log("paymentType: " + paymentType);
-
-
-        console.log("transaction_id: " + transaction_id);
-        console.log("status: " + status);
-        console.log("transaction_type: " + transaction_type);
-        console.log("transaction_date: " + transaction_date);
-        console.log("duration: " + duration);
-        console.log("next_rental: " + next_rental);
-        console.log("booked_on: " + booked_on);
-
-        // You can now use this data to perform further actions or send it to a backend API, for example.
-    });
-});
-</script> -->
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Get the "Subscribe to wallet direct debit" button by its ID
-    var subscribeButton = document.getElementById("subscribe-button");
-
-    // Add a click event listener to the button
-    subscribeButton.addEventListener("click", function() {
-        // Display a confirmation dialog
-        var confirmation = window.confirm("Are you sure you want to subscribe to direct wallet debit?");
-        
-        // If the user confirms, proceed with the subscription
-        if (confirmation) {
-            // Extract and store the required data
-            var accountBalance = <?php echo json_encode(@$account_details['account_balance']); ?>;
-            var accountName = <?php echo json_encode($acc_name); ?>;
-            var accountNumber = <?php echo json_encode(@$account_details['account_number']); ?>;
-            var bankName = <?php echo json_encode(@$account_details['bank_name']); ?>;
-            var price = <?php echo json_encode(@$new_subscription['price']); ?>;
-            var serviceCharge = <?php echo json_encode(@$new_subscription['serviceCharge']); ?>;
-            var bookingID = <?php echo json_encode(@$new_subscription['bookingID']); ?>;
-            var userID = <?php echo json_encode($userID); ?>;
-            var email = <?php echo json_encode($email); ?>;
-            var fname = <?php echo json_encode($fname); ?>;
-
-            var moveInDate = <?php echo json_encode(@$new_subscription['move_in_date']); ?>;
-            var rentExpirationDate = <?php echo json_encode(@$new_subscription['rent_expiration']); ?>;
-            var rentStatus = <?php echo json_encode(@$new_subscription['rent_status']); ?>;
-            var propertyTitle = <?php echo json_encode(@$new_subscription['propertyTitle']); ?>;
-            var paymentPlan = <?php echo json_encode(@$new_subscription['payment_plan']); ?>;
-            var paymentType = <?php echo json_encode(@$new_subscription['payment_type']); ?>;
-
-            
-            // Create a data object to send via AJAX
-            var dataToSend = {
-                accountBalance: accountBalance,
-                accountName: accountName,
-                accountNumber: accountNumber,
-                bankName: bankName,
-                price: price,
-                serviceCharge: serviceCharge,
-                bookingID: bookingID,
-                userID: userID,
-                email: email,
-                fname: fname,
-                moveInDate: moveInDate,
-                rentExpirationDate: rentExpirationDate,
-                rentStatus: rentStatus,
-                propertyTitle: propertyTitle,
-                paymentPlan: paymentPlan
-            };
-            
-            // Send an AJAX request to the controller
-            $.ajax({
-                type: "POST", // Use POST method
-
-                url: "<?php echo base_url('rss/direct-debit-subscription'); ?>", // Replace with the correct URL
-
-                data: dataToSend, // Send the data object
-
-                success: function(response) {
-                    // Handle the response from the controller if needed
-                    console.log(response);
-
-                },
-
-                error: function(xhr, status, error) {
-                    // Handle any AJAX errors if needed
-                    console.error(xhr.responseText);
-                }
-            });
-            
-        } else {
-
-            // If the user cancels, do nothing or handle as needed
-
-        }
-    });
-});
-</script>
-
-
-<!--End Direct Debit -->
 
 
     <!-- Jquery js -->

@@ -44,19 +44,21 @@
 									<input name="notificationTitle" id="notificationTitle" placeholder="Title" type="subject" class="form-control verify-txt">
 								</div>
 
+								<div class="position-relative form-group"><label for="notificationTitle" class="col-form-label">Notification Link</label>
+
+									<input name="notificationTitle" id="notificationLink" placeholder="https://www.link.com" type="subject" class="form-control">
+								</div>
+
 								<!-- Select Dropdown for Site -->
 								<div class="position-relative form-group">
+
 									<label for="selectSite" class="col-form-label">Select Site</label>
 									<select name="selectSite" id="selectSite" class="form-control">
 										<option value="RSS">RSS</option>
 										<option value="BSS">BSS</option>
 										<option value="All">All</option>
 									</select>
-								</div>
 
-								<div class="position-relative form-group"><label for="notificationTitle" class="col-form-label">Notification Link</label>
-
-									<input name="notificationTitle" id="notificationLink" placeholder="https://www.link.com" type="subject" class="form-control">
 								</div>
 
 								<div class="position-relative form-group">

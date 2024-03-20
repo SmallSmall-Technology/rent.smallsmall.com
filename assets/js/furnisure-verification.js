@@ -2,7 +2,7 @@
 
 //Insert into local storage
 
-var baseUrl = "https://dev-rent.smallsmall.com/";
+var baseUrl = "https://rent.smallsmall.com/";
 
 var details = "";
 

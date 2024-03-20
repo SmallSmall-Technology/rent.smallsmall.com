@@ -814,6 +814,7 @@ class Rss_model extends CI_Model
 
 	public function fetch_messages($id, $limit, $start)
 	{
+
 		$this->db->select('a.*, a.id as msg_id, b.*');
 
 		$this->db->from('messages_tbl as a');
@@ -840,24 +841,6 @@ class Rss_model extends CI_Model
 		$this->db->from('user_notification');
 
 		$this->db->where('userID', $id);
-
-		$this->db->order_by('entry_date', 'DESC');
-
-		$this->db->limit($limit, $start);
-
-		$query = $this->db->get();
-
-		return $query;
-	}
-
-	public function fetch_Landlordmessage($id, $limit, $start)
-	{
-
-		$this->db->select('*');
-
-		$this->db->from('landlord_notification');
-
-		$this->db->where('user_id', $id);
 
 		$this->db->order_by('entry_date', 'DESC');
 
@@ -985,7 +968,6 @@ class Rss_model extends CI_Model
 
 		return $query->row_array();
 	}
-
 	public function get_renewal_det($trans_id)
 	{
 
@@ -1027,6 +1009,7 @@ class Rss_model extends CI_Model
 
 		return $query->row_array();
 	}
+
 	public function get_payment_details($id)
 	{
 
@@ -1052,23 +1035,59 @@ class Rss_model extends CI_Model
 	public function check_email($email)
 	{
 
-		$this->db->select('email');
+		$this->db->select('email, password, userID');
 
 		$this->db->from('user_tbl');
 
 		$this->db->where('email', $email);
 
-		$this->db->limit(1);
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
+	public function get_user_login($user_id)
+	{
+
+		$this->db->select('a.password, a.lastLogin, a.confirmation, b.*, b.user_type');
+
+		$this->db->from('login_tbl as a');
+
+		$this->db->where('a.userID', $user_id);
+
+		$this->db->where('b.status', 'Active');
+
+		$this->db->join('user_tbl as b', 'b.userID = a.userID');
 
 		$query = $this->db->get();
 
-		if ($query->num_rows() > 0) {
+		return $query->row_array();
+	}
 
-			return 1;
-		} else {
+	public function update_password_to_hash($id, $password){
+
+		$new_password = array("password" => $password);
+
+		$this->db->where('userID', $id);
+
+		if($this->db->update('user_tbl', $new_password)){
+
+			if($this->db->update('login_tbl', $new_password)){
+				
+				return 1;
+
+			}else{
+
+				return 0;
+
+			}
+
+		}else{
 
 			return 0;
+
 		}
+
 	}
 
 	public function changeRefferal($referral, $id)
@@ -1111,22 +1130,6 @@ class Rss_model extends CI_Model
 		return $this->db->insert('pwd_reset', $this);
 	}
 
-	public function bookingPaymentUpdate($userID, $bkId, $refrId)
-	{
-
-		$bookings = $this->rss_model->getUser($userID);
-
-		$this->userID = $userID;
-
-		$this->reset_code = $reset_code;
-
-		$this->request_date = date('Y-m-d H:i:s');
-
-		$this->expiry_date = date('Y-m-d H:i:s', strtotime("+2 days"));
-
-		return $this->db->insert('pwd_reset', $this);
-	}
-
 	public function fetchProperty($id)
 	{
 
@@ -1136,11 +1139,11 @@ class Rss_model extends CI_Model
 
 		$this->db->where('propertyID', $id);
 
-		$this->db->join('neighborhood_facility_tbl as b', 'b.property = a.propertyID', 'LEFT OUTER');//
+		$this->db->join('neighborhood_facility_tbl as b', 'b.property = a.propertyID', 'LEFT');
 
-		$this->db->join('states as c', 'c.id = a.state', 'LEFT OUTER');//
+		$this->db->join('states as c', 'c.id = a.state', 'LEFT');
 
-		$this->db->join('apt_type_tbl as d', 'd.id = a.propertyType', 'LEFT OUter');//
+		$this->db->join('apt_type_tbl as d', 'd.id = a.propertyType', 'LEFT');
 
 		$this->db->join('property_managers as e', 'e.id = a.managed_by', 'LEFT OUTER');
 
@@ -1580,7 +1583,7 @@ class Rss_model extends CI_Model
 	public function insertBooking($id, $verificationID, $user_id, $productID, $productTitle, $paymentPlan, $prodPrice, $imageLink, $productUrl, $securityDeposit, $duration, $booked_as, $move_in_date, $payment_type, $total_cost, $ref, $subscriptionFees, $serviceChargeDeposit, $securityDepositFund, $total)
 	{
 
-		$nMonths = 12;
+		//$nMonths = 12;
 
 		$startdate = date("Y-m-d", strtotime($move_in_date));
 
@@ -1651,6 +1654,7 @@ class Rss_model extends CI_Model
 		if ($this->db->insert('bookings', $bookingData)) {
 
 			$this->db->insert('transaction_tbl', array('verification_id' => $verificationID, 'type' => 'rss', 'transaction_id' => $id, 'reference_id' => $ref, 'userID' => $user_id, 'amount' => $total_cost, 'status' => 'pending', 'payment_type' => $payment_type, 'transaction_date' => date('Y-m-d')));
+
 
 			// Store the bookingReferenceID value in the session
 			$this->session->set_userdata('bookingReferenceID', $ref);
@@ -2000,17 +2004,6 @@ class Rss_model extends CI_Model
 		return $this->db->count_all_results();
 	}
 
-	public function getPropertyFilterCounts($location)
-	{
-		$this->db->select('*');
-
-		$this->db->from('property_tbl');
-
-		$this->db->like('city', $location);
-
-		return $this->db->count_all_results();
-	}
-
 	public function get_quick_list($s_data)
 	{
 
@@ -2028,11 +2021,6 @@ class Rss_model extends CI_Model
 		if (@$s_data['state']) {
 
 			$this->db->where('state', $s_data['state']);
-		}
-
-		if (@$s_data['location']) {
-
-			$this->db->where('city', $s_data['location']);
 		}
 
 		if (@$s_data['city'] && @$s_data['city'] != 'Any') {
@@ -2119,24 +2107,6 @@ class Rss_model extends CI_Model
 		//print_r($this->db->last_query());
 
 		//exit;
-
-		return $query->result_array();
-	}
-
-	public function get_quick_lists($location)
-	{
-
-		$this->db->select('*');
-
-		$this->db->from('property_tbl');
-
-		$this->db->like('city', $location);
-
-		$this->db->limit($this->_pageNumber, $this->_offset);
-
-		$this->db->order_by('available_date', 'ASC');
-
-		$query = $this->db->get();
 
 		return $query->result_array();
 	}
@@ -2374,7 +2344,7 @@ class Rss_model extends CI_Model
 	public function changePass($pass, $userID, $referral)
 	{
 
-		$pass = md5($pass);
+		$pass = password_hash($pass, PASSWORD_DEFAULT);
 
 		if ($referral == 'wordpress') {
 
@@ -2468,38 +2438,6 @@ class Rss_model extends CI_Model
 		}
 	}
 
-
-	public function selktPaymentDet($id)
-	{
-
-		$this->db->select('a.*, a.id, a.verification_id, a.transaction_id, a.reference_id as refID, a.transaction_date as transDate, a.userID, a.amount as totalAmount, a.status, a.type as transaction_type, a.transaction_date, a.payment_type, b.*, b.bookingID, b.propertyID, b.payment_plan, b.duration, b.move_in_date, b.next_rental, b.rent_expiration, b.booked_on, b.rent_status, c.*, c.propertyTitle, c.price, d.type, e.*, e.email as userEmail');
-
-		$this->db->from('transaction_tbl as a');
-
-		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID', 'LEFT OUTER');
-
-		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
-
-		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
-
-		$this->db->join('user_tbl as e', 'e.userID = a.userID');
-
-		$this->db->where('a.userID', $id);
-
-		$this->db->where('a.type', 'rss');
-
-		$this->db->where('a.status', 'approved');
-
-		$this->db->order_by('a.id', 'DESC');
-
-		$this->db->limit(1);
-
-		$query = $this->db->get();
-
-		return $query->row_array();
-	}
-
-
 	public function checkRSSLastTrans($id)
 	{
 
@@ -2512,8 +2450,6 @@ class Rss_model extends CI_Model
 		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
 
 		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
-
-		$this->db->join('user_tbl as e', 'e.userID = a.userID');
 
 		$this->db->where('a.userID', $id);
 
@@ -2558,198 +2494,6 @@ class Rss_model extends CI_Model
 		$query = $this->db->get();
 
 		return $query->row_array();
-	}
-
-	public function getBookingDet($userid)
-	{
-
-		$this->db->select('a.*');
-
-		$this->db->from('bookings as a');
-
-		$this->db->where('a.userID', $userid);
-
-		$this->db->order_by('a.id', 'DESC');
-
-		$this->db->limit(1);
-
-		$query = $this->db->get();
-
-		return $query->row_array();
-	}
-
-	public function getTransDet($userid)
-	{
-
-		$this->db->select('a.*');
-
-		$this->db->from('transaction_tbl as a');
-
-		$this->db->where('a.userID', $userid);
-
-		$this->db->order_by('a.id', 'DESC');
-
-		$this->db->limit(1);
-
-		$query = $this->db->get();
-
-		return $query->row_array();
-	}
-
-	public function selktBookingDet($userID, $transID)
-	{
-
-		$this->db->select('a.*');
-
-		$this->db->from('bookings as a');
-
-		$this->db->where('a.userID', $userID);
-
-		$this->db->where('a.bookingID', $transID);
-
-		$query = $this->db->get();
-
-		return $query;
-	}
-
-	public function insTransUpdate($verification_id, $bkId, $refrID, $userID, $amount, $type, $payment_type, $invoice, $approved_by, $transaction_date)
-	{
-
-		$this->verification_id = $verification_id;
-
-		$this->transaction_id = $bkId;
-
-		$this->reference_id = $refrID;
-
-		$this->userID = $userID;
-
-		$this->amount = $amount;
-
-		$this->status = 'pending';
-
-		$this->type = 'rss';
-
-		$this->payment_type = $payment_type;
-
-		$this->invoice = $invoice;
-
-		$this->approved_by = $approved_by;
-
-		$this->transaction_date = $transaction_date;
-
-		$this->db->insert('transaction_tbl', $this);
-	}
-
-	public function insTransUpdates($verification_id, $bkId, $refrID, $userID, $amount, $type, $payment_type, $invoice, $approved_by, $transaction_date)
-	{
-
-		$this->verification_id = $verification_id;
-
-		$this->transaction_id = $bkId;
-
-		$this->reference_id = $refrID;
-
-		$this->userID = $userID;
-
-		$this->amount = $amount;
-
-		$this->status = 'Approved';
-
-		$this->type = 'rss';
-
-		$this->payment_type = $payment_type;
-
-		$this->invoice = $invoice;
-
-		$this->approved_by = $approved_by;
-
-		$this->transaction_date = $transaction_date;
-
-		$this->db->insert('transaction_tbl', $this);
-	}
-
-
-	public function insBookingUpdate($verification_id, $refrID, $bkId, $propertyID, $userID, $booked_as, $payment_plan, $duration, $move_in_date, $move_out_date, $move_out_reason, $rent_expiration, $next_rental, $booked_on, $updated_at, $rent_status, $eviction_deposit, $subscription_fees, $service_charge_deposit, $security_deposit_fund, $total)
-	{
-
-		$this->verification_id = $verification_id;
-
-		$this->reference_id = $refrID;
-
-		$this->bookingID = $bkId;
-
-		$this->propertyID = $propertyID;
-
-		$this->userID = $userID;
-
-		$this->booked_as = $booked_as;
-
-		$this->payment_plan = $payment_plan;
-
-		$this->duration = $duration;
-
-		$this->move_in_date = $move_in_date;
-
-		$this->move_out_date = $move_out_date;
-
-		$this->move_out_reason = $move_out_reason;
-
-		$this->rent_expiration = $rent_expiration;
-
-		$this->next_rental = $next_rental;
-
-		$this->booked_on = $booked_on;
-
-		$this->updated_at = $updated_at;
-
-		$this->rent_status = $rent_status;
-
-		$this->eviction_deposit = $eviction_deposit;
-
-		$this->subscription_fees = $subscription_fees;
-
-		$this->service_charge_deposit = $service_charge_deposit;
-
-		$this->security_deposit_fund = $security_deposit_fund;
-
-		$this->total = $total;
-
-		//$this->request_date = date('Y-m-d H:i:s');
-
-		$this->db->insert('bookings', $this);
-	}
-
-
-	public function checkUserPayment($userid, $proptyID)
-	{
-
-		$this->db->select('a.*, a.type as transaction_type, b.*, b.propertyID as proptyID, c.*, d.type, e.email, e.firstName, e.lastName');
-
-		$this->db->from('transaction_tbl as a');
-
-		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID', 'LEFT OUTER');
-
-		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
-
-		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
-
-		$this->db->join('user_tbl as e', 'e.userID = a.userID');
-
-		$this->db->where('a.userID', $userid);
-
-		$this->db->where('b.propertyID', $proptyID);
-
-		$this->db->where('a.type', 'rss');
-
-		$this->db->where('a.status', 'approved');
-
-		$this->db->order_by('a.id', 'DESC');
-
-		$this->db->limit(1);
-
-		$query = $this->db->get();
-
-		return $query->num_rows();
 	}
 
 	public function checkLastApprovedSubscriptionPayment($id)
@@ -3247,7 +2991,6 @@ class Rss_model extends CI_Model
 
 		return $this->db->update("transaction_tbl", $update);
 	}
-
 	public function insert_wallet_transaction($refID, $amount, $txn_type, $userID)
 	{
 
@@ -3261,20 +3004,6 @@ class Rss_model extends CI_Model
 
 		return $this->db->insert("wallet_transactions", $this);
 	}
-
-	public function newBookingUpdate($bkId, $transID, $userID)
-	{
-
-		$update = array("bookingID" => $transID);
-
-		$this->db->where("bookingID", $bkId);
-
-		$this->db->where("userID", $userID);
-
-		return $this->db->update("bookings", $update);
-	}
-
-
 	public function bookingUpdate($bookingID, $rent_exp, $duration, $paymentPlan, $propertyID)
 	{
 
@@ -3316,12 +3045,235 @@ class Rss_model extends CI_Model
 		return $this->db->update("bookings", $update);
 	}
 
+	public function selktPaymentDet($id)
+	{
+
+		$this->db->select('a.*, a.id, a.verification_id, a.transaction_id, a.reference_id as refID, a.transaction_date as transDate, a.userID, a.amount as totalAmount, a.status, a.type as transaction_type, a.transaction_date, a.payment_type, b.*, b.bookingID, b.propertyID, b.payment_plan, b.duration, b.move_in_date, b.next_rental, b.rent_expiration, b.booked_on, b.rent_status, c.*, c.propertyTitle, c.price, d.type, e.*, e.email as userEmail');
+
+		$this->db->from('transaction_tbl as a');
+
+		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID', 'LEFT OUTER');
+
+		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
+
+		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
+
+		$this->db->join('user_tbl as e', 'e.userID = a.userID');
+
+		$this->db->where('a.userID', $id);
+
+		$this->db->where('a.type', 'rss');
+
+		$this->db->where('a.status', 'approved');
+
+		$this->db->order_by('a.id', 'DESC');
+
+		$this->db->limit(1);
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
+	public function selktBookingDet($userID, $transID)
+	{
+
+		$this->db->select('a.*');
+
+		$this->db->from('bookings as a');
+
+		$this->db->where('a.userID', $userID);
+
+		$this->db->where('a.bookingID', $transID);
+
+		$query = $this->db->get();
+
+		return $query;
+	}
+
+	public function getBookingDet($userid)
+	{
+
+		$this->db->select('a.*');
+
+		$this->db->from('bookings as a');
+
+		$this->db->where('a.userID', $userid);
+
+		$this->db->order_by('a.id', 'DESC');
+
+		$this->db->limit(1);
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
+	public function getTransDet($userid)
+	{
+
+		$this->db->select('a.*');
+
+		$this->db->from('transaction_tbl as a');
+
+		$this->db->where('a.userID', $userid);
+
+		$this->db->order_by('a.id', 'DESC');
+
+		$this->db->limit(1);
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
+	public function insTransUpdate($verification_id, $bkId, $refrID, $userID, $amount, $type, $payment_type, $invoice, $approved_by, $transaction_date)
+	{
+
+		$this->verification_id = $verification_id;
+
+		$this->transaction_id = $bkId;
+
+		$this->reference_id = $refrID;
+
+		$this->userID = $userID;
+
+		$this->amount = $amount;
+
+		$this->status = 'pending';
+
+		$this->type = 'rss';
+
+		$this->payment_type = $payment_type;
+
+		$this->invoice = $invoice;
+
+		$this->approved_by = $approved_by;
+
+		$this->transaction_date = $transaction_date;
+
+		$this->db->insert('transaction_tbl', $this);
+	}
+
+	public function insTransUpdates($verification_id, $bkId, $refrID, $userID, $amount, $type, $payment_type, $invoice, $approved_by, $transaction_date, $planCode)
+	{
+
+		$this->verification_id = $verification_id;
+
+		$this->transaction_id = $bkId;
+
+		$this->reference_id = $refrID;
+
+		$this->userID = $userID;
+
+		$this->amount = $amount;
+
+		$this->status = 'approved';
+
+		$this->type = 'rss';
+
+		$this->payment_type = 'paystack';
+
+		$this->invoice = $invoice;
+
+		$this->approved_by = $approved_by;
+
+		$this->transaction_date = $transaction_date;
+
+		$this->planCode = $planCode;
+
+		$this->db->insert('transaction_tbl', $this);
+	}
+
+
+	public function insBookingUpdate($verification_id, $refrID, $bkId, $propertyID, $userID, $booked_as, $payment_plan, $duration, $move_in_date, $move_out_date, $move_out_reason, $rent_expiration, $next_rental, $booked_on, $updated_at, $rent_status, $eviction_deposit, $subscription_fees, $service_charge_deposit, $security_deposit_fund, $total)
+	{
+
+		$this->verification_id = $verification_id;
+
+		$this->reference_id = $refrID;
+
+		$this->bookingID = $bkId;
+
+		$this->propertyID = $propertyID;
+
+		$this->userID = $userID;
+
+		$this->booked_as = $booked_as;
+
+		$this->payment_plan = $payment_plan;
+
+		$this->duration = $duration;
+
+		$this->move_in_date = $move_in_date;
+
+		$this->move_out_date = $move_out_date;
+
+		$this->move_out_reason = $move_out_reason;
+
+		$this->rent_expiration = $rent_expiration;
+
+		$this->next_rental = $next_rental;
+
+		$this->booked_on = $booked_on;
+
+		$this->updated_at = $updated_at;
+
+		$this->rent_status = $rent_status;
+
+		$this->eviction_deposit = $eviction_deposit;
+
+		$this->subscription_fees = $subscription_fees;
+
+		$this->service_charge_deposit = $service_charge_deposit;
+
+		$this->security_deposit_fund = $security_deposit_fund;
+
+		$this->total = $total;
+
+		//$this->request_date = date('Y-m-d H:i:s');
+
+		$this->db->insert('bookings', $this);
+	}
+
+	public function checkUserPayment($userid, $proptyID)
+	{
+
+		$this->db->select('a.*, a.type as transaction_type, b.*, b.propertyID as proptyID, c.*, d.type, e.email, e.firstName, e.lastName');
+
+		$this->db->from('transaction_tbl as a');
+
+		$this->db->join('bookings as b', 'a.transaction_id = b.bookingID', 'LEFT OUTER');
+
+		$this->db->join('property_tbl as c', 'b.propertyID = c.propertyID', 'LEFT OUTER');
+
+		$this->db->join('apt_type_tbl as d', 'd.id = c.propertyType', 'LEFT OUTER');
+
+		$this->db->join('user_tbl as e', 'e.userID = a.userID');
+
+		$this->db->where('a.userID', $userid);
+
+		$this->db->where('b.propertyID', $proptyID);
+
+		$this->db->where('a.type', 'rss');
+
+		$this->db->where('a.status', 'approved');
+
+		$this->db->order_by('a.id', 'DESC');
+
+		$this->db->limit(1);
+
+		$query = $this->db->get();
+
+		return $query->num_rows();
+	}
+
 	public function paymentUpdate($bookingID, $expiry, $refID, $propertyID)
 	{
 
 		$transUpd = array("status", "approved");
 
-		$this->db - where("transaction_id", $bookingID);
+		$this->db->where("transaction_id", $bookingID);
 
 		$this->db->update('transaction_tbl', $transUpd);
 
@@ -4244,61 +4196,6 @@ class Rss_model extends CI_Model
 		return $query->row_array();
 	}
 
-	public function get_booking($id)
-	{
-
-		$this->db->select('a.*, a.status as transaction_status, b.*, c.*, d.*, e.name as state_name');
-
-		$this->db->from('transaction_tbl as a');
-
-		$this->db->where('a.userID', $id);
-
-		$this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
-
-		$this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
-
-		$this->db->join('user_tbl as d', 'd.userID = b.userID', 'LEFT OUTER');
-
-		$this->db->join('states as e', 'e.id = c.state', 'LEFT OUTER');
-
-		$this->db->order_by('a.id', 'DESC');
-
-		$this->db->limit(1);
-
-		$query = $this->db->get();
-
-		return $query->row_array();
-	}
-
-
-	public function get_transCount($id)
-	{
-
-		$this->db->select('a.*, a.status as transaction_status, b.*, c.*, d.*, e.name as state_name');
-
-		$this->db->from('transaction_tbl as a');
-
-		$this->db->where('a.userID', $id);
-
-		$this->db->where('a.status', 'approved');
-
-		$this->db->join('bookings as b', 'b.bookingID = a.transaction_id', 'LEFT OUTER');
-
-		$this->db->join('property_tbl as c', 'c.propertyID = b.propertyID', 'LEFT OUTER');
-
-		$this->db->join('user_tbl as d', 'd.userID = b.userID', 'LEFT OUTER');
-
-		$this->db->join('states as e', 'e.id = c.state', 'LEFT OUTER');
-
-		$this->db->order_by('a.id', 'DESC');
-
-		$this->db->limit(1);
-
-		$query = $this->db->get();
-
-		return $query->num_rows();
-	}
-
 	public function get_stayone_bookings($id)
 	{
 
@@ -4394,7 +4291,7 @@ class Rss_model extends CI_Model
 
 		$this->db->where('end_date >=', $today);
 
-		// Adding a condition to filter by notification_platform, either RSS or when both
+		// Adding a condition to filter by notification_platform
 		$this->db->where_in('notification_platform', array('RSS', 'All'));
 
 		$this->db->order_by('end_date', 'DESC');

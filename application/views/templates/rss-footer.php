@@ -12,8 +12,7 @@
         <div class="footer">
             <div class="footer-inner">
                 <div class="footer-logos">
-                    <!-- <div class="rss-footer-logo"><img src="</?php echo base_url(); ?>assets/img/logo-blue.png" alt="rss logo blue" /></div> -->
-                    <div class="rss-footer-logo"><img src="<?php echo base_url(); ?>assets/img/logo-blue.svg" alt="rss logo blue" /></div>
+                    <div class="rss-footer-logo"><img src="<?php echo base_url(); ?>assets/img/logo-blue.png" alt="rss logo blue" /></div>
                     <ul class="footer-social-container">
                         <li class="footer-social-item"><a target="_blank" href="https://apps.apple.com/us/app/smallsmall/id1643608622"><img src="<?php echo base_url(); ?>assets/img/home-icons/app-store.png" alt="App store logo" /></a></li>
                         <li class="footer-social-item"><a target="_blank" href="https://play.google.com/store/apps/details?id=com.smallsmall.mobile"><img src="<?php echo base_url(); ?>assets/img/home-icons/google-play.png" alt="Google Play store logo" /></a></li>
@@ -24,8 +23,8 @@
                     <div class="footer-items">
                         <div class="footer-head">Products</div>                     
                         <div class="footer-links"><a href="<?php echo base_url(); ?>">Rent</a></div>                     
-                        <div class="footer-links"><a href="https://dev-stay.smallsmall.com">Nightly stay</a></div>                     
-                        <div class="footer-links"><a href="https://dev-buy.smallsmall.com">Buy</a></div>
+                        <div class="footer-links"><a href="https://stay.smallsmall.com">Nightly stay</a></div>                     
+                        <div class="footer-links"><a href="https://buy.smallsmall.com">Buy</a></div>
                     </div>
                     <div class="footer-items">
                         <div class="footer-head">Company</div>                     

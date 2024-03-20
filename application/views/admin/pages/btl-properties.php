@@ -31,10 +31,11 @@
 							<table>
 								<tr>
 									<td width="200px">
-										<select class="form-control action">
+										<select id="action" class="form-control action">
 											<option value="">Select Option</option>
 											<option value="delete">Delete</option>
 											<option value="hold">On Hold</option>
+											<option value="lock">Lock</option>
 											<option value="release">Release Property</option>
 										</select>
 									</td>
@@ -74,7 +75,7 @@
 							?>	
 
 							<tr>
-								<td class="text-left"><input type="checkbox" class="props-checkbox" id="<?php echo $value['propertyID'] ?>" /></td>
+								<td class="text-left"><input type="checkbox" class="props-checkbox action-item" id="<?php echo $value['propertyID'] ?>" /></td>
 								<td class="text-left">
 								    <div class="widget-heading">
 								        <?php echo $value['property_name']; ?>

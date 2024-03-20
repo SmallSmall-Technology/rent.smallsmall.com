@@ -60,6 +60,19 @@
     </div>
   </details>
 
+  <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <summary itemprop="name">What happens if I request a refund after making a payment as a prospective subscriber?</summary>
+    <div class="details-expanded" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p>If you request a refund after making a payment, please be aware that a 5% charge on the entire fee will apply. </p>
+    </div>
+  </details>
+
+  <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <summary itemprop="name">Are there any conditions under which I won’t receive a refund?</summary>
+    <div class="details-expanded" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p>Yes, once an agreement is signed, a complete forfeiture of the fee will be enforced, and no refund will be granted. </p>
+    </div>
+  </details>
 
   <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <summary itemprop="name">Do I get a refund?</summary>
@@ -69,7 +82,6 @@
     </div>
   </details>
 
-
   <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <summary itemprop="name">Can I cancel my subscription?</summary>
     <div class="details-expanded" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
@@ -77,8 +89,6 @@
       deposit if they cancel their subscription before their subscription ends.</p>
     </div>
   </details>
-
-
 
   <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <summary itemprop="name">What does verification & other requirements for subscription mean?</summary>
@@ -89,8 +99,6 @@
     </div>
   </details>
 
-
-
   <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <summary itemprop="name">Will I pay for property inspection?</summary>
     <div class="details-expanded" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
@@ -98,7 +106,6 @@
       </p>
     </div>
   </details>
-
 
   <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <summary itemprop="name">How do I schedule to inspect a property I like on RentSmallSmall?</summary>
@@ -133,7 +140,6 @@
       A service charge report shall be made available to the subscriber/residents on a monthly basis reflecting consumption and expenses for the month. </p>
     </div>
   </details>
-
 </div>
 
 </main>

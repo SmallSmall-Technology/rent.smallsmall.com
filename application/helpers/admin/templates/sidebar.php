@@ -716,19 +716,6 @@
 								</a>
 
 							</li>
-
-							<!-- Lead source -->
-							<li>
-
-								<a href="<?php echo base_url(); ?>admin/lead-source">
-
-									<i class="metismenu-icon"></i>
-
-									Lead Source
-
-								</a>
-
-							</li>
 						</ul>
 
 					</li>
