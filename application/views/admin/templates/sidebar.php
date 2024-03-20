@@ -155,6 +155,7 @@
 							</li>
                         </ul>
 					</li>
+
                     <?php } ?>
                     <?php if($userAccess != 6){ ?>
 					<li>
@@ -825,21 +826,6 @@
 						</ul>
 
 					</li>
-
-					<li>
-
-						<a href="<?php echo base_url(); ?>admin/addRepairs">
-
-							<i class="metismenu-icon pe-7s-users"></i>
-
-							Repair
-
-							<i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-
-						</a>
-
-					</li>
-
 					<li>
 
 						<a href="#">

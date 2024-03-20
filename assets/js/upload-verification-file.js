@@ -1,5 +1,5 @@
  // JavaScript Document
-var baseUrl = "https://dev-rent.smallsmall.com/";
+var baseUrl = "https://rent.smallsmall.com/";
 
 $('#dropzone-id').on('dragover', function(){
 	"use strict";

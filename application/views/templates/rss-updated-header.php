@@ -21,7 +21,20 @@
   <!-- Pixel Code for https://www.benifit.app/ -->
     <script defer src="https://www.benifit.app/pixel/svpjnbeodkar3mju8w44lu7mujd5sdj3"></script>
     <!-- END Pixel Code -->
-  
+
+
+<!--Start of Record Script-->
+  <script>
+  !function(b,e,d,f){
+    var a=b.createElement("script");a.async=!0,
+    a.id="torecord",a.src="https://cdn.torecord.it/recordLoader.js?key="+d;
+    var c=b.getElementsByTagName("script")[0];
+    c.parentNode.insertBefore(a,c)
+  }(document,window,"bbf79ddc-ad1d-4417-9ed7-43a1977378b1")
+</script>
+<!--End of Record Script-->
+
+	
   <!--Benifit App Platform authomation pop message for users interaction 2 -->
   
   <script async type=“text/javascript” src=“https://panel.callback24.io/js/callbackWidget.js?name=rent.smallsmall.com”></script>
@@ -47,7 +60,17 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
 
 
  <!--Mixpanel Doc-->
- 
+
+<!-- clearity heatmap session -->
+ <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "kpu4vn493a");
+</script>
+<!-- end clearity heatmap session -->
+
  
  <!-----Amplitude Analytics Script ------>
 	<script type="text/javascript">
@@ -94,6 +117,17 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
     }(document, 'script', 'ti-js'));
   </script>
   <!-- End TruConversion for rent.smallsmall.com -->
+	
+  <!--Start of Record Script-->
+  <script>
+    !function(b,e,d,f){
+    var a=b.createElement("script");a.async=!0,
+    a.id="torecord",a.src="https://cdn.torecord.it/recordLoader.js?key="+d;
+    var c=b.getElementsByTagName("script")[0];
+    c.parentNode.insertBefore(a,c)
+  }(document,window,"bbf79ddc-ad1d-4417-9ed7-43a1977378b1")
+</script>
+<!--End of Record Script-->
 
   <!-- Favicon link -->
   <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/favicon.png">
@@ -145,6 +179,24 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
 
 <body>
   <header class="container-fluid bg-white header-section p-0">
+
+    <!-- new year notification tab -->
+    <?php if (isset($notifications) && !empty($notifications)) { ?>
+
+    <div class="mb-3 d-flex p-3 justify-content-between align-items-center primary-background">
+      <p class="m-0 font-weight-bold "><?php echo $notifications['message']; ?></p>
+      <span>
+        <a class="text-white" href="<?php echo $notifications['notification_link']; ?>" target="_blank">
+          <i class="fa-solid fa-circle-arrow-right"></i>
+        </a>
+
+      </span>
+    </div>
+
+    <?php } ?>
+    <!-- new year notification ends tab-->
+
+
     <!-- <nav class="mb-3 navbar navbar-dark navbar-expand-md text-black fixed-top"> -->
     <nav id="navbar_top" class="navbar navbar-dark navbar-expand-lg text-black bg-white">
       <!-- Brand -->
@@ -158,16 +210,19 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
 
       <!-- Navbar links -->
       <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
-        <ul class="navbar-nav w-100 primary-text-color justify-content-center">
-          <li class="nav-item mr-5">
-            <a class="nav-link d-sm-inline-block primary-text-color" href="https://dev-stay.smallsmall.com">
+      <ul class="navbar-nav w-100 primary-text-color">
+
+      <!-- <ul class="navbar-nav w-100 primary-text-color justify-content-center"> -->
+          <!-- <li class="nav-item mr-5">
+            <a class="nav-link d-sm-inline-block primary-text-color" href="https://stay.smallsmall.com">
               <small>Nightly stay</small>
               <br />
-              <span class="font-weight-bold">Stayone</span>
+              <span class="font-weight-bold">Staysmallsmall</span>
             </a>
-          </li>
+          </li> -->
+          
           <li class="nav-item">
-            <a class="nav-link d-sm-inline-block primary-text-color" href="https://dev-buy.smallsmall.com">
+            <a class="nav-link d-sm-inline-block primary-text-color" href="https://buy.smallsmall.com">
               <small>Own</small>
               <br />
               <span class="font-weight-bold">BuySmallsmall</span>
@@ -438,7 +493,7 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
 
             <?php } else if (@$userID && !@$ongod && @$interest == 'Buy') { ?>
               <!--- Landlord button ---->
-              <!--<li class="mob-top-btn register-btn-mobile"><a href="https://dev-buy.smallsmall.com/user/dashboard"><span></span><span>Dashboard</span></a></li>-->
+              <!--<li class="mob-top-btn register-btn-mobile"><a href="https://buy.smallsmall.com/user/dashboard"><span></span><span>Dashboard</span></a></li>-->
             <?php } else { ?>
             
             <div class="d-md-none d-block">
@@ -517,9 +572,11 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
                 </p>
               </div>
               <div>
-                <p><a class="text-white" href="https://dev-stay.smallsmall.com"><small class="font-weight-light" style="font-size:10px">Nightly
-                      stay</small><br>StayOne</a> </p>
-                <p><a class="text-white" href="https://dev-buy.smallsmall.com"><small class="font-weight-light"
+
+                <!-- <p><a class="text-white" href="https://stay.smallsmall.com"><small class="font-weight-light" style="font-size:10px">Nightly
+                      stay</small><br>Staysmallsmall</a> </p> -->
+
+                <p><a class="text-white" href="https://buy.smallsmall.com"><small class="font-weight-light"
                       style="font-size:10px">Invest</small><br>BuySmallsmall</a> </p>
               </div>
               <div>

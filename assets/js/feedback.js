@@ -1,5 +1,5 @@
 //Javascript Document
-var baseUrl = "https://dev-rent.smallsmall.com/";
+var baseUrl = "https://rent.smallsmall.com/";
 $('.satifaction-option').click(function(){
     
     var id = $(this).attr('id').replace(/satifaction-option-/, '');

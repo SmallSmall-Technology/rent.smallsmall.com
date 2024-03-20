@@ -1,5 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allproperty.css" />
+
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/singleProperty.css" />
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allPropertyPage.css" />
@@ -12,7 +14,7 @@ $propertyPrice = $property['price'];
 
 // get the eviction deposit value
 
-if(empty($propertyPrice) || is_null($propertyPrice)) {
+if (empty($propertyPrice) || is_null($propertyPrice)) {
 
   $evictionDeposit = 0; // set default
 
@@ -38,7 +40,7 @@ $srlz = $property['intervals'];
 $srlz = unserialize($srlz);
 $yrnt = $property['price'] * 12;
 
-if($srlz[0] == 'Upfront') {
+if ($srlz[0] == 'Upfront') {
   $mnth = 'Upfront';
   $vmnth = 'Upfront';
 
@@ -345,20 +347,6 @@ function shortenText($text, $maxLength)
   return substr($string, 0, strlen($prefix)) === $prefix;
 }
 
-// function shortenText($text, $maxLength)
-// {
-
-//   if (strlen($text) > $maxLength) {
-
-//     $shortenedText = substr($text, 0, $maxLength) . '...';
-
-//     return $shortenedText;
-//   } else {
-
-//     return $text;
-//   }
-// }
-
 ?>
 
 <!-- MAIN SECTION -->
@@ -371,85 +359,18 @@ function shortenText($text, $maxLength)
 
 <main class="">
   <div class="container">
-
     <!-- caroisel slider -->
 
-    <!-- <div class="row">
-      <div class="col">
-        <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-
-            </?php
-
-            $imageFolder = $property['imageFolder'];
-
-            // $imageFolderPath = "./uploads/properties/$imageFolder";
-
-            $imageFolderPath = "./uploads/properties/$imageFolder";
-
-            if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
-
-              $imageFiles = scandir($imageFolderPath);
-
-              $activeClass = 'active';
-
-              $content_size = count($imageFiles);
-
-              $count = 0;
-
-              foreach ($imageFiles as $file) {
-
-                if ($file !== '.' && $file !== '..' && $count <= ($content_size - 2)) {
-
-                  // if ($file === '.' || $file === '..') {
-                  //   continue;
-                  // }
-
-                  $imageSrc = base_url() . 'uploads/properties/' . $property['imageFolder'] . '/' . $file;
-                  echo '
-                        <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
-                          <img src="' . $imageSrc . '"  alt="RSS property image"/>
-                        </div>
-                      ';
-
-                  $activeClass = '';
-                }
-
-                $count++;
-              }
-            } else {
-
-              echo '<div class="carousel-item-imgcarousel-item active" data-interval="10000">
-                            <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
-                          </div>';
-
-              echo '<div class="carousel-item-img carousel-item" data-interval="2000">
-                            <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
-                          </div>';
-            }
-            ?>
-
-          </div>
-          <button class="carousel-control-prev" type="button" data-target="#carouselExampleInterval" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-target="#carouselExampleInterval" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </button>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- S3 Integration  -->
+    <!-- AWS S3 Integration -->
 
     <div class="row">
       <div class="col">
         <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
+
+      <div class="carousel-inner">
 
             <?php
+
             require 'vendor/autoload.php';
 
             // Create an S3 client
@@ -461,17 +382,61 @@ function shortenText($text, $maxLength)
 
             ]);
 
-            $bucket = 'dev-rss-uploads'; // Your bucket name
+            $bucket = 'rss-prod-uploads'; // My bucket name
 
             $imageFolder = $property['imageFolder'];
 
-            $activeClass = 'active';
+            // $imageFolderPath = "./uploads/properties/$imageFolder";
+
+            // $imageFolderPath = "./uploads/properties/$imageFolder";
+
+            // if (file_exists($imageFolderPath) && is_dir($imageFolderPath)) {
+
+            //     $imageFiles = scandir($imageFolderPath);
+
+            //     $activeClass = 'active';
+
+            //     $content_size = count($imageFiles);
+
+            //     $count = 0;
+
+            //   foreach ($imageFiles as $file) {
+
+            //       if ( $file !== '.' && $file !== '..'&& $count <= ($content_size - 2) ){
+
+            //     // if ($file === '.' || $file === '..') {
+            //     //   continue;
+            //     // }
+
+            //     $imageSrc = base_url() . 'uploads/properties/' . $property['imageFolder'] . '/' . $file;
+            //     echo '
+            //             <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+            //               <img src="' . $imageSrc . '"  alt="RSS property image"/>
+            //             </div>
+            //           ';
+
+            //     $activeClass = '';
+            //   }
+
+            //   $count++;
+
+            // }
+
+            // } else {
+
+            //   echo '<div class="carousel-item-imgcarousel-item active" data-interval="10000">
+            //                 <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
+            //               </div>';
+
+            //   echo '<div class="carousel-item-img carousel-item" data-interval="2000">
+            //                 <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
+            //               </div>';
+            // }
 
             // List objects in the specified S3 folder
             try {
               $objects = $s3->listObjects([
                 'Bucket' => $bucket,
-
                 'Prefix' => "uploads/properties/$imageFolder/",
               ]);
 
@@ -479,11 +444,13 @@ function shortenText($text, $maxLength)
 
               $count = 0;
 
+              $activeClass = 'active';
+
               foreach ($objects['Contents'] as $object) {
 
-                // filter out unwanted images in property page
+                // if ($object['Key'] !== '.' && $object['Key'] !== '..' ) {
 
-                if ($object['Key'] !== '.' && $object['Key'] !== '..' && $count <= ($content_size - 2)) {
+                  if (strpos($object['Key'], 'uploads/properties/' . $imageFolder . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
 
                   $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
 
@@ -497,21 +464,19 @@ function shortenText($text, $maxLength)
                 }
 
                 $count++;
+
+                // $imageSrc = $object['Key'];
+                // echo '
+                //             <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
+                //                 <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image"/>
+                //             </div>
+                //         ';
+                // $activeClass = '';
               }
-
-              // foreach ($objects['Contents'] as $object) {
-
-              //   $imageSrc = $object['Key'];
-              //   echo '
-              //               <div class="carousel-item-img carousel-item ' . $activeClass . '" data-interval="10000">
-              //                   <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image"/>
-              //               </div>
-              //           ';
-              //   $activeClass = '';
-              // }
-
             } catch (Aws\S3\Exception\S3Exception $e) {
+
               // Handle S3 error by displaying a placeholder image
+
               echo '<div class="carousel-item-img carousel-item active" data-interval="10000">
                             <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
                         </div>';
@@ -520,9 +485,13 @@ function shortenText($text, $maxLength)
                             <img src="/assets/updated-assets/images/carousel-banner1.png" class="d-block w-100" alt="No images available for this property."/>
                         </div>';
             }
+
+            // End of AWS S3 Integration
+
             ?>
 
           </div>
+
           <button class="carousel-control-prev" type="button" data-target="#carouselExampleInterval" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
@@ -534,9 +503,6 @@ function shortenText($text, $maxLength)
         </div>
       </div>
     </div>
-
-
-    <!-- End of S3 Integration -->
 
     <div class="row mt-4 px-md-0 px-3">
       <!-- Left side -->
@@ -550,14 +516,13 @@ function shortenText($text, $maxLength)
             <p><?php echo $property['address'] . ' ' . $property['city'] . ' ' . $property['name']; ?></p>
             <div class="d-md-none mobile-subscription">
               <p class="mb-0 mobile-subscription-price">Subscription Price</p>
-              <p class="font-weight-bolder primary-text-color mobile-subscription-amount">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup
-                    data-toggle="tooltip" data-placement="top" title="This is your recurring subscription payment."><img
-                      class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+              <p class="font-weight-bolder primary-text-color mobile-subscription-amount">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup data-toggle="tooltip" data-placement="top" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup>
+              </p>
               <p class="mb-0 mobile-subscription-security">Security deposit fund</p>
-              <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($evc_dep); ?><sup data-toggle="tooltip"
-                    data-placement="right"
-                    title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img
-                      class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+              <p class="font-weight-bold mobile-subscription-deposit">&#8358;<?php echo number_format($evc_dep); ?>
+                <sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt="">
+                </sup>
+              </p>
             </div>
 
 
@@ -600,7 +565,7 @@ function shortenText($text, $maxLength)
               <h6>Managed by RentSmallsmall</h6>
 
               <div class="d-flex flex-column align-items-center">
-                <p class="managed-title">Like this property? Book to it and subscribe</p>
+                <p class="managed-title">Like this property? Book it and subscribe</p>
                 <div class="schedule-container d-flex mb-2">
                   <div class="schedule-container__schedule schedule-item-container" data-toggle="modal" data-target="#staticBackdrop">
                     <span class="">Schedule a visit</span>
@@ -709,6 +674,11 @@ function shortenText($text, $maxLength)
                         </form>
 
                       </div>
+
+                      <!-- Tracking code for rss and send inspection details to Hubspot Dashboard - Start of HubSpot Embed Code-->
+	                        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
+                      <!-- End of HubSpot Embed Code -->
+
                     </div>
                   </div>
                 </div>
@@ -860,6 +830,7 @@ function shortenText($text, $maxLength)
                                         <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($evc_dep); ?><sup class="text-dark"></sup>
                                         </td>
                                       </tr>
+
 
                                   </tbody>
 
@@ -1079,6 +1050,7 @@ function shortenText($text, $maxLength)
             <div class="col-12">
               <div>
                 <p>subscription price</p>
+
                 <p class="subcription-amount font-weight-bold">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup id="subtips" data-toggle="tooltip" data-placement="right" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
                 <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($evc_dep); ?></span><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
               </div>
@@ -1193,15 +1165,17 @@ function shortenText($text, $maxLength)
               </div>
             </form>
 
-
           </div>
+
+          <!-- Tracking code for rss and send inspection details to Hubspot Dashboard - Start of HubSpot Embed Code-->
+                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
+          <!-- End of HubSpot Embed Code -->
 
         </div>
 
       </div>
     </div>
   </div>
-
 
   <!--Hidden Input for value taken-->
 
@@ -1217,7 +1191,7 @@ function shortenText($text, $maxLength)
 
   <input type="hidden" class="prop-monthly-price" id="monthly-price" value="<?php echo $property['price']; ?>" />
 
-  <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo $evc_dep; ?>" />
+  <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo ($evc_dep); ?>" />
 
   <input type="hidden" class="serv-charge" id="serv-charge" value="<?php echo ($property['serviceCharge'] * $property['serviceChargeTerm']); ?>" />
 
@@ -1294,7 +1268,6 @@ function shortenText($text, $maxLength)
                 }
 
                 ?>
-
                 <?php
                 //Set fields to disabled if user is not signed in
 
@@ -1429,6 +1402,7 @@ function shortenText($text, $maxLength)
 
               </div>
 
+
             </form>
           </div>
         </div>
@@ -1437,6 +1411,8 @@ function shortenText($text, $maxLength)
     </div>
   </div>
 
+  <!-- AWS S3 Integration -->
+
   <div class="container-fluid p-md-5 my-5">
     <div class="row px-md-5">
       <div class="col-12">
@@ -1444,15 +1420,19 @@ function shortenText($text, $maxLength)
       </div>
 
       <?php
+
       require 'vendor/autoload.php';
 
       // Create an S3 client
+
       $s3 = new Aws\S3\S3Client([
+
         'version' => 'latest',
         'region' => 'eu-west-1'
+
       ]);
 
-      $bucket = 'rss-prod-uploads'; // Your bucket name
+      $bucket = 'rss-prod-uploads'; // My bucket name
 
       if (isset($properties) && !empty($properties)) {
         $currentPropertyCity = $property['city']; // Get the city of the current property
@@ -1461,12 +1441,12 @@ function shortenText($text, $maxLength)
         });
 
         if (!empty($matchingProperties)) {
-          foreach ($matchingProperties as $property => $value) {
       ?>
+          <?php foreach ($matchingProperties as $property => $value) { ?>
             <div class="col-lg-4 col-md-6 col-12 my-4">
-              <div class="card" id="properties-container">
+              <div class="card card-custom" id="properties-container">
                 <a style="text-decoration:none" href="<?php echo base_url(); ?>property/<?php echo $value['propertyID']; ?>">
-                  <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top listing-image" data-ride="carousel">
+                  <div id="carouselExampleControls-<?php echo $value['propertyID']; ?>" class="carousel slide card-img-top" data-ride="carousel">
                     <?php
                     $CI = &get_instance();
 
@@ -1483,7 +1463,7 @@ function shortenText($text, $maxLength)
                     }
                     ?>
 
-                    <div class="carousel-inner listing-image">
+                    <div class="carousel-inner" style = "border-top-left-radius: 10px; border-top-right-radius: 10px">
                       <?php
                       $imageFolder = $value['imageFolder'];
 
@@ -1505,7 +1485,7 @@ function shortenText($text, $maxLength)
                             $imageSrc = $object['Key'];
                             echo '
                                                         <div class="carousel-item ' . $activeClass . '">
-                                                            <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image" class="d-block w-100"/>
+                                                            <img src="' . $s3->getObjectUrl($bucket, $imageSrc) . '" alt="RSS property image" width = "100%" height = "200px" class="d-block w-100"/>
                                                         </div>
                                                     ';
                             $activeClass = '';
@@ -1550,22 +1530,38 @@ function shortenText($text, $maxLength)
                       <p class="card-text">
                         &bull;<?php echo $value['bed']; ?> Bed
                         &bull;<?php echo $value['bath']; ?> Bath
-                        <!--&bull;<?php echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>-->
-                        &bull;<?php echo ($value['city']); ?>
+                        <?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>
+                      <!-- &bull;--> <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" 
+                    fill="none">
+                    <g clip-path="url(#clip0_7160_3254)">
+                      <path
+                        d="M7.5 2.5C7.5 1.12125 6.37875 0 5 0C3.62125 0 2.5 1.12125 2.5 2.5C2.5 3.73667 3.4025 4.76625 4.58333 4.965V9.58333C4.58333 9.81333 4.77 10 5 10C5.23 10 5.41667 9.81333 5.41667 9.58333V4.965C6.5975 4.76625 7.5 3.73667 7.5 2.5Z"
+                        fill="#414042" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_7160_3254">
+                        <rect width="10" height="10" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg><?php echo ($value['city']); ?>
                       </p>
                     </div>
                   </div>
                 </a>
               </div>
-            </div>
-          <?php } ?>
+            </div>          
+            <?php } ?>
+
 
         <?php } else { ?>
           <div style="width:100%;padding:15px 0;font-family:gotham-medium;color:#414042">No results matching your search</div>
         <?php }
       } else { ?>
         <div style="width:100%;padding:15px 0;font-family:gotham-medium;color:#414042">No results matching your search</div>
+        
       <?php } ?>
+
+
     </div>
   </div>
 

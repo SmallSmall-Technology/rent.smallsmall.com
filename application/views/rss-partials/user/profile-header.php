@@ -68,7 +68,7 @@
                         </div>
                         <?php if(@$bss_request_count > 0 || @$bss_inspection_count > 0){ ?>
                             <div class="dash-item-link">
-                                <a class="ll-bss <?php if($profile_title == 'Buysmallsmall'){ echo "active"; $pref_profile = 'un'; } ?>" href="https://dev-buy.smallsmall.com/user/dashboard"><span class="link-icon <?php echo $pref_profile; ?>filled-icn"></span><span class="link-txt">Buy Small Small</span></a>
+                                <a class="ll-bss <?php if($profile_title == 'Buysmallsmall'){ echo "active"; $pref_profile = 'un'; } ?>" href="https://buy.smallsmall.com/user/dashboard"><span class="link-icon <?php echo $pref_profile; ?>filled-icn"></span><span class="link-txt">Buy Small Small</span></a>
                             </div>
                         <?php } ?>
                         <div class="dash-link-category">General</div>

@@ -266,5 +266,5 @@ $autoload['language'] = array();
 
 */
 
-$autoload['model'] = array('functions_model', 'admin/admin_model', 'rss/rss_model', 'furnisure/furnisure_model', 'app/app_model', 'loan/loan_model', 'landlord/landlord_model', 'buytolet_model');
+$autoload['model'] = array('functions_model', 'admin/admin_model', 'rss/rss_model', 'furnisure/furnisure_model', 'app/app_model', 'loan/loan_model', 'buytolet_model');
 

@@ -4,6 +4,19 @@
 <main class="container-fluid">
     <!-- Banner section -->
     <section class="banner">
+
+        <!-- Notification -->
+        <?php // if (isset($notifications) && !empty($notifications)) { ?>
+            <!-- <div id="notification-bar-home" class="notification-bar-home">
+                <div id="notification-container">
+                    <span id="notification-icn">New</span>
+                    <span id="notification-details" class="notification-details"><?php // echo $notifications['message']; ?></span>
+                    <span id="notification-lnk"><a target="_blank" href="<?php  // echo $notifications['notification_link']; ?>"><i class="fa fa-angle-right"></i></a></span>
+                </div>
+            </div> -->
+        <?php // } ?>
+        <!-- End Notification -->
+
         <div class="banner-text">
             <h2>Do you want to pay rent monthly?</h2>
             <p class="font-weight-light">
@@ -858,6 +871,26 @@
         </div>
     </section>
 
+    <!-- hopscotch-script -->
+    <script id="hopscotch-script" type="text/javascript">
+        (function(w, d) {
+            if (typeof w === "undefined") return;
+            w.Hopscotch = w.Hopscotch || function() {
+                (w.Hopscotch.q = w.Hopscotch.q || []).push(arguments);
+            };
+            var elm = d.createElement("div");
+            elm.setAttribute("data-widget-host", "hopscotch");
+            elm.setAttribute("data-props-api-key", "4db66c1c-9e8a-431b-b232-06c381199931");
+            d.getElementsByTagName("body")[0].appendChild(elm);
+            var s = d.createElement("script");
+            s.src = "https://app.hopscotch.club/widget.js?";
+            s.async = 1;
+            s.defer = 1;
+            d.getElementsByTagName("body")[0].appendChild(s);
+        })(window, document);
+    </script>
+    <!-- end hopscotch-script -->
+
     <!--LiveCaller -->
 
     <script>
@@ -906,15 +939,6 @@
     <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=2d3eeb0d-adb2-4733-8b53-a7e10b20ea14"> </script>
     <!-- End of smallsmall Zendesk Widget script -->
 
-
-<!-- Nector Script -->
-    <script>var nector_params = { customer_id: window.localStorage.getItem("nector-customer-id") }</script>
-<script async src="https://cdn.nector.io/nector-static/no-cache/reward-widget/mainloader.min.js"
-	data-op="referral"
-	data-api_key="ca91f88601fb02c3c90db6bbd20da779dbb3f5d07827db9df99e290617d7d63e"
-	data-platform="custom_website"
-></script>
-
 </main>
 
 <script>
@@ -938,10 +962,3 @@
 <!-- Pixel Code for https://www.benifit.app/ -->
 <script defer src="https://www.benifit.app/pixel/p3t5u90cv9dva8170ke1h465ponmbhel"></script>
 <!-- END Pixel Code -->
-
-<script>var nector_params = { customer_id: window.localStorage.getItem("nector-customer-id") }</script>
-<script async src="https://cdn.nector.io/nector-static/no-cache/reward-widget/mainloader.min.js"
-	data-op="referral"
-	data-api_key="ca91f88601fb02c3c90db6bbd20da779dbb3f5d07827db9df99e290617d7d63e"
-	data-platform="custom_website"
-></script>

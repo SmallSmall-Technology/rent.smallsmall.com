@@ -69,20 +69,23 @@
                                     </a>
                                 </li>
 
+                                <!-- AWS S3 Integration -->
+
                                 <li class="nav-item">
                                     <?php
 
                                     require 'vendor/autoload.php';
 
                                     // Create an S3 client
+
                                     $s3 = new Aws\S3\S3Client([
                                         'version' => 'latest',
                                         'region'  => 'eu-west-1'
                                     ]);
 
-                                    $bucket = 'dev-rss-uploads'; // Your bucket name
+                                    $bucket = 'rss-prod-uploads'; // my bucket name
 
-                                    $folder = 'uploads/verification/' . $details['user_id'] . '/'; // Specify the folder path in S3
+                                    $folder = 'uploads/verification/' . $details['user_id'] . '/'; // Folder path in S3
 
                                     try {
 
@@ -96,8 +99,8 @@
 
                                         ]);
 
-                                         // Initialize the count
-                                            $count = 1;
+                                        // Initialize the count
+                                        $count = 1;
 
                                         // Loop through the list of objects
 
@@ -126,14 +129,16 @@
                                             // Increment the count
                                             $count++;
                                         }
-
-
                                     } catch (Aws\S3\Exception\S3Exception $e) {
+
                                         // Handle S3 error
                                         echo 'S3 Error: ' . $e->getMessage() . PHP_EOL;
                                     }
                                     ?>
                                 </li>
+
+                                <!-- End of AWS S3 Integration -->
+
 
                                 <!--<li class="nav-item">
                                     <a href="javascript:void(0);" class="nav-link">

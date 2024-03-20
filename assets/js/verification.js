@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
 
 	//Insert into local storage
 
-	var baseUrl = "https://dev-rent.smallsmall.com/";
+	var baseUrl = "https://rent.smallsmall.com/";
 
 	var details = "";
 
@@ -329,241 +329,8 @@ jQuery(document).ready(function ($) {
 
 	});
 
-	// Verication - Old uploads 
 
-	// $('#uploadForm').submit(function(e){
-
-	// 	"use strict";
-
-	// 	//Stop page from refreshing
-
-	// 	e.preventDefault();
-
-	// 	$('#verifyBut-right').html("Wait...");
-
-	// 	if($("input[name='terms-use-link']:checked") && $("input[name='tenancy-term']:checked")){
-
-	// 		var id_path = $('#idcard').val();
-
-	// 		var statement_path = $('#statement').val();
-
-	// 		var user_id = $('#userID').val();
-
-	//         var id_state = $('#id-state').val();
-
-	// 		var statement_state = $('#statement-state').val();
-
-	// 		if(id_path == "" || statement_path == "" || !(id_state) || !(statement_state)){
-
-	// 		   alert("Upload required files.");
-
-	// 			$('#verifyBut-right').html("Submit");
-
-	// 			return false;			
-
-	// 		 }
-
-	// 		var details = JSON.parse(localStorage.getItem('verificationStorage'));
-
-	// 		if(details.profile.length < 1){
-
-	// 		   //header.
-
-	// 			window.location.href = baseUrl+"rss/verification/profile-verification";
-
-	// 		}
-
-	// 		//Insert details into local storage
-
-	// 		if(details.uploads.length > 0){
-
-	// 			details.uploads.length = 0;
-
-	// 		}
-
-	// 		var uploadDetails = {"id_path": id_path, "statement_path" : statement_path, "user_id" : user_id};	
-
-	// 		//details.orderItemCount = details.orderItemCount + 1;
-
-	// 		details.status = "complete";
-
-	// 		details.uploads.push(uploadDetails);
-
-	// 		window.localStorage.setItem('verificationStorage', JSON.stringify(details));
-
-	// 		//Get the order details and the verification details
-
-	// 		var verification = JSON.parse(localStorage.getItem('verificationStorage'));
-
-	// 		var order = JSON.parse(localStorage.getItem('rentalBasket'));
-
-
-	// 		var data = {"details" : verification, "order" : order};
-
-
-	// 		$.ajaxSetup ({ cache: false });
-
-	// 		$.ajax({			
-
-	// 			url: baseUrl+"rss/insertDetails/",
-
-	// 			type: "POST",
-
-	// 			data: data,
-
-	// 			dataType : 'json',
-
-	// 			complete: function(data) {
-
-	//     			//Redirect to pay
-
-	//     			window.localStorage.removeItem('verificationStorage');
-
-	//     			window.localStorage.removeItem('rentalBasket');
-
-	//     			window.location.href = baseUrl+"rss/verification-complete";
-
-	//     			return false; 
-
-
-	// 			}
-
-	// 		});
-
-	// 	}else{
-
-	// 		alert("You need to agree to terms of use and tenancy terms");
-
-	// 		$('#verifyBut-right').html("Submit");
-
-	// 	}
-
-	// 	//window.location.href = baseUrl+"pay/"+details;
-
-
-
-	// 	//Continue to payment page
-
-	// });
-
-	// Verication
-
-	// $('#uploadForm').submit(function(e){
-
-	// 	"use strict";
-
-	// 	//Stop page from refreshing
-
-	// 	e.preventDefault();
-
-	// 	$('#verifyBut').html("Wait...");
-
-	// 	if($("input[name='terms-use-link']:checked") && $("input[name='tenancy-term']:checked")){
-
-	// 		var statement_path = $('#statement').val();
-
-	// 		console.log(statement_path);
-
-	// 		var user_id = $('#userID').val();
-
-	// 		if(statement_path == "" ){
-
-	// 		   alert("Upload required files.");
-
-	// 			$('#verifyBut-right').html("Submit");
-
-	// 			return false;			
-
-	// 		}
-
-	// 		var details = JSON.parse(localStorage.getItem('verificationStorage'));
-
-	// 		if(details.profile.length < 1){
-
-	// 		   //header.
-
-	// 		//    alert("Upload required files.");
-
-	// 		//    return false;
-
-	// 			window.location.href = baseUrl+"rss/verification/profile-verification";
-
-	// 		}
-
-	// 		//Insert details into local storage
-
-	// 		if(details.uploads.length > 0){
-
-	// 			details.uploads.length = 0;
-
-	// 		}
-
-	// 		var uploadDetails = {"statement_path" : statement_path, "user_id" : user_id};	
-
-	// 		//details.orderItemCount = details.orderItemCount + 1;
-
-	// 		details.status = "complete";
-
-	// 		details.uploads.push(uploadDetails);
-
-	// 		window.localStorage.setItem('verificationStorage', JSON.stringify(details));
-
-	// 		//Get the order details and the verification details
-
-	// 		var verification = JSON.parse(localStorage.getItem('verificationStorage'));
-
-	// 		var order = JSON.parse(localStorage.getItem('rentalBasket'));
-
-
-	// 		var data = {"details" : verification, "order" : order};
-
-
-	// 		$.ajaxSetup ({ cache: false });
-
-	// 		$.ajax({			
-
-	// 			url: baseUrl+"rss/insertDetails/",
-
-	// 			type: "POST",
-
-	// 			data: data,
-
-	// 			dataType : 'json',
-
-	// 			complete: function(data) {
-
-	//     			//Redirect to pay
-
-	//     			window.localStorage.removeItem('verificationStorage');
-
-	//     			window.localStorage.removeItem('rentalBasket');
-
-	//     			window.location.href = baseUrl+"rss/verification-complete";
-
-	//     			return false; 
-
-	// 			}
-
-	// 		});
-
-	// 	}else{
-
-	// 		alert("You need to agree to terms of use and tenancy terms");
-
-	// 		$('#verifyBut-right').html("Submit");
-
-	// 	}
-
-	// 	//window.location.href = baseUrl+"pay/"+details;
-
-
-
-	// 	//Continue to payment page
-
-	// });
-
-	// $('#finishVerifyBut').click(function () {
-
+	// Verication uploads for new design
 	$('#finishVerifyBut').click(function (e) {
 
 		"use strict";
@@ -589,7 +356,7 @@ jQuery(document).ready(function ($) {
 		// Load verification storage
 		var details = JSON.parse(localStorage.getItem('verificationStorage'));
 
-		console.log(details);
+		// console.log(details);
 
 		// Additional Checks
 		if (details.profile.length < 1) {
@@ -630,7 +397,7 @@ jQuery(document).ready(function ($) {
 			order: order
 		};
 
-		$.ajaxSetup ({ cache: false });
+		$.ajaxSetup({ cache: false });
 
 		// Send the data via AJAX
 		$.ajax({
@@ -645,14 +412,14 @@ jQuery(document).ready(function ($) {
 			complete: function (data) {
 
 				// Redirect to the verification-complete page
-				
+
 				localStorage.removeItem('verificationStorage');
 
 				localStorage.removeItem('rentalBasket');
 
 				window.location.href = baseUrl + "rss/verification-complete";
 
-				return false; 
+				return false;
 			},
 
 			error: function (error) {
@@ -662,6 +429,5 @@ jQuery(document).ready(function ($) {
 			}
 		});
 	});
-
 
 });

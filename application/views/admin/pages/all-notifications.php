@@ -58,6 +58,7 @@
 										<a href="<?php echo base_url()."admin/edit-notification/".$value['id']; ?>" type="button" id="notification-<?php echo $value['id']; ?>" class="btn btn-primary btn-sm article-detail">Edit</a>
 
 										<button type="button" id="notification-<?php echo $value['id']; ?>" class="btn btn-primary btn-sm notification-delete">Delete</button>
+
 										
 									</div>
 								</td> 

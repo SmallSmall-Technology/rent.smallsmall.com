@@ -109,11 +109,15 @@ $route['admin/all-bookings/(:any)'] = 'admin/all_bookings/$1';
 
 $route['admin/all-bookings'] = 'admin/all_bookings';
 
+$route['admin/userbooking/(:any)'] = 'admin/userbooking/$1';
+
 $route['admin/all-apartments/(:any)'] = 'admin/all_apartments/$1';
 
 $route['admin/all-apartments'] = 'admin/all_apartments';
 
 $route['admin/new-apartment'] = 'admin/new_apartment';
+
+$route['admin/edit-agr/(:any)'] = 'admin/edit_agr/$1';
 
 $route['admin/edit-apartment/(:any)'] = 'admin/edit_apartment/$1';
 /********** Stay SmallSmall *******************/
@@ -189,8 +193,6 @@ $route['app/property'] = 'app/property';
 $route['app/properties/(:any)'] = 'app/properties/$1';
 
 $route['app/properties'] = 'app/properties';
-
-$route['app/adverts'] = 'app/adverts';
 
 $route['app/register'] = 'app/register';
 
@@ -287,13 +289,8 @@ $route['user/transactions'] = 'rss/transactions';
 
 $route['user/feedback'] = 'rss/feedback';
 
-
-/** Landlord routes*/
-$route['landlord/single-property/(:any)'] = 'landlord/single_property/$1';
-$route['landlord/subscriber_profile/(:any)'] = 'landlord/subscriber_profile/$1';
-
-
 /**RSS Frontend Landlord profile Routes Starts Here ***/
+
 $route['landlord/dashboard'] = 'rss/landlord_dashboard';
 
 $route['landlord/subscribers/(:any)'] = 'rss/subscribers/$1';
@@ -466,15 +463,21 @@ $route['admin/rss-users/(:any)'] = 'admin/rss_users/$1';
 
 $route['admin/user-profile/(:any)'] = 'admin/user_profile/$1'; 
 
-$route['admin/edit-agr/(:any)'] = 'admin/edit_agr/$1';
-
 $route['admin/rss-users'] = 'admin/rss_users';
 
 $route['admin/rss-verfd'] = 'admin/rss_verfd';
 
 $route['admin/agr-upload'] = 'admin/agr_upload';
 
+$route['admin/edit-advert/(:any)'] = 'admin/edit_advert/$1';
+
+$route['admin/all-adverts'] = 'admin/all_adverts';
+
+$route['admin/add-advert'] = 'admin/add_advert';
+
 $route['admin/rss-verfd/(:any)'] = 'admin/rss_verfd/$1';
+
+$route['app/adverts'] = 'app/adverts';
 
 $route['admin/download/(:any)'] = 'admin/download/$1';
 
@@ -498,13 +501,7 @@ $route['admin/btl-how-it-works'] = 'admin/btl_how_it_works';
 
 $route['admin/edit-notification/(:any)'] = 'admin/edit_notification/$1';
 
-$route['admin/edit-advert/(:any)'] = 'admin/edit_advert/$1';
-
 $route['admin/add-notification'] = 'admin/add_notification';
-
-$route['admin/all-adverts'] = 'admin/all_adverts';
-
-$route['admin/add-advert'] = 'admin/add_advert';
 
 $route['admin/all-notifications/(:any)'] = 'admin/all_notifications/$1';
 
@@ -616,6 +613,8 @@ $route['areas-we-cover/(:any)/(:any)'] = 'rss/areas_we_cover/$1/$2';
 
 $route['areas-we-cover/(:any)'] = 'rss/areas_we_cover/$1';
 
+$route['upfront-properties'] = 'rss/upfrontProperties/$1';
+
 $route['properties/(:any)'] = 'rss/properties/$1';
 
 $route['test-properties'] = 'rss/test_properties';
@@ -652,8 +651,6 @@ $route['furnisure/appliances/(:any)'] = 'furnisure/appliances/$1';
 
 /*$route['rss/encdec'] = 'rss/encdec'; */ 
 
-// Direct Debit
-$route['rss/direct-debit-subscription'] = 'admin/direct_debit_subscription';
 
 /* Unione API testing    */
 $route['unione-testing'] = 'rss/unione_template_get';

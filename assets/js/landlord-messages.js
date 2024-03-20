@@ -1,5 +1,5 @@
 //Javascript 
-var baseUrl = "https://dev-rent.smallsmall.com/";
+var baseUrl = "https://rent.smallsmall.com/";
 
 $('#msgForm').submit(function(e){
     

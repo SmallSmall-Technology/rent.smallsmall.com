@@ -258,7 +258,7 @@ else{
         </div>
 
         <div class="mb-4 pl-2">
-          <a href="https://dev-buy.smallsmall.com/user/dashboard" class="btn special-link-button mt-3">
+          <a href="https://buy.smallsmall.com/user/dashboard" class="btn special-link-button mt-3">
             <div>
               <p class="text-left" style="font-size: 10px;">Go to</p>
               <p class="text-right" style="font-size: 11px;">BuySmallsmall<br>dashboard</p>
@@ -272,7 +272,7 @@ else{
 
     <div class="container-fluid">
 
-        <a href="https://dev-buy.smallsmall.com/user/dashboard" class="btn special-link-button mt-3 d-md-inline-block d-none">
+        <a href="https://buy.smallsmall.com/user/dashboard" class="btn special-link-button mt-3 d-md-inline-block d-none">
             <div>
                 <p class="text-left" style="font-size: 10px;">Go to</p>
                 <p class="text-right" style="font-size: 11px;">BuySmallsmall<br>dashboard</p>
@@ -322,7 +322,7 @@ else{
                     <div class="card-body d-flex flex-column justify-content-between">
                         <div>
                             <p class="card-text">Next Upcoming Payment</p>
-                        <h3 class="card-title">&#8358;<?php if(@$UserPayment < 1){ echo $dets['amount']; } else {echo ($bookings['price'] + $bookings['serviceCharge']); } ?></h3>
+                        <h3 class="card-title">&#8358;<?php echo number_format(@$rss_transaction['amount']); ?></h3>
                         <h3 class="card-title" style = "font-size: 14px;"><?php $time = @$rss_transaction['transaction_date']; echo date('Y-m-d', strtotime($time. ' + 1 months')); ?></h3>
                         </div>
 
@@ -371,10 +371,10 @@ else{
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light justify-content-end">
                 <div>
-                    <a class="mr-3" href="https://dev-rent.smallsmall.com/faq">Rentsmallsmall FAQ</a>
-                    <a class="mr-3" href="https://dev-buy.smallsmall.com/faq">Buysmallsmall FAQ</a>
-                    <a class="mr-3" href="https://dev.smallsmall.com/about">About Us</a>
-                    <a class="" href="https://dev-rent.smallsmall.com/blog">Blog</a>
+                    <a class="mr-3" href="https://rent.smallsmall.com/faq">Rentsmallsmall FAQ</a>
+                    <a class="mr-3" href="https://buy.smallsmall.com/faq">Buysmallsmall FAQ</a>
+                    <a class="mr-3" href="https://smallsmall.com/about">About Us</a>
+                    <a class="" href="https://rent.smallsmall.com/blog">Blog</a>
                 </div>
             </nav>
         </div>
