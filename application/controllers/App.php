@@ -51,7 +51,6 @@ class App extends CI_Controller
 
 	public function change_user_status()
 	{
-
 		$result = FALSE;
 
 		$details = '';
@@ -159,7 +158,6 @@ class App extends CI_Controller
 
 	public function app_login()
 	{
-
 		$response = FALSE;
 
 		$details = '';

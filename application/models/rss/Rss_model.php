@@ -2111,6 +2111,21 @@ class Rss_model extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getAllPropty()
+	{
+		$this->db->select('*');
+
+		$this->db->from('property_tbl');
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$this->db->order_by('available_date', 'ASC');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
 	public function get_counts($id)
 	{
 

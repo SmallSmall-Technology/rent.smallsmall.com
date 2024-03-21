@@ -40,7 +40,7 @@ $srlz = $property['intervals'];
 $srlz = unserialize($srlz);
 $yrnt = $property['price'] * 12;
 
-if ($srlz[0] == 'Upfront') {
+if($srlz[0] == 'Upfront'){
   $mnth = 'Upfront';
   $vmnth = 'Upfront';
 

@@ -516,7 +516,13 @@ function startsWith($string, $prefix) {
 
       <?php if (isset($properties) && !empty($properties)) { ?>
 
-        <?php foreach ($properties as $property => $value) { ?>
+        <?php foreach($properties as $property => $value) {
+          
+          $srlz = $value['intervals'];
+          $srlz = unserialize($srlz);
+
+          if($srlz[0] == 'Upfront'){
+          ?>
 
           <div class="col-lg-4 col-md-6 col-12 my-4">
 
@@ -697,7 +703,7 @@ function startsWith($string, $prefix) {
 
           </div>
           
-        <?php } ?>
+        <?php } }?>
 
         <!--Pagination -->
         <div class="pagination-section my-5">
