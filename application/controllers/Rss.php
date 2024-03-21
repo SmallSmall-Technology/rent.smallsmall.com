@@ -461,10 +461,10 @@ class Rss extends CI_Controller
 
 		$this->load->view('templates/rss-updated-header', $data);
 
-		$this->load->view('rss-partials/properties', $data);
+		$this->load->view('rss-partials/upfront_properties.php', $data);
 
 		$this->load->view('templates/rss-updated-footer', $data);
-		
+
 	}
 
 	public function areas_we_cover()
