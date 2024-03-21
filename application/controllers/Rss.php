@@ -343,17 +343,6 @@ class Rss extends CI_Controller
 
 	public function upfrontPropty()
 	{
-		//$locate = $this->input->post('locatn');
-
-		// if($locate != '')
-		// {
-		// 	$location  = $this->input->post('locatn');
-		// 	$this->session->set_userdata('fltSearch', $location);
-		// 	//$this->session->set(['filterSearch' => $location]);
-		// }
-
-		//$location = $this->session->userdata('fltSearch');
-
 		$dataArray = $this->rss_model->getAllPropty();
 
 		$count = 0;
@@ -422,7 +411,7 @@ class Rss extends CI_Controller
 
 		// 		$data['image'] = "without-image";
 
-		$data['curr_city']['name'] = @$s_data['city'];
+		//$data['curr_city']['name'] = @$s_data['city'];
 
 		$countries = array('160');
 
@@ -453,8 +442,6 @@ class Rss extends CI_Controller
 		$this->load->view('templates/rss-updated-header', $data);
 
 		$this->load->view('rss-partials/upfront_properties.php', $data);
-
-		//$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer', $data);
 	}
