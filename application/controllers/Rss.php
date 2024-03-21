@@ -364,11 +364,11 @@ class Rss extends CI_Controller
 
 		$config['suffix'] = '';
 
-		if($config['total_rows'] > 0) {
+		if ($config['total_rows'] > 0) {
 
 			$page_number = $this->uri->segment(3);
 
-			$config['base_url'] = base_url() . 'rss/upfrontPrpty';
+			$config['base_url'] = base_url() . 'rss/upfrontPropty';
 
 			if (empty($page_number))
 
@@ -392,14 +392,30 @@ class Rss extends CI_Controller
 
 			$data['properties'] = $dataArray;
 
-			$data['to_row'] = $page_number * count($data['properties']);
+			if (is_array($data['properties'])) {
+
+				$data['to_row'] = $page_number * count($data['properties']);
+			} else {
+
+				$data['to_row'] = 0;
+
+				$data['from_row'] = 0;
+			}
 		}
 
-		if(!file_exists(APPPATH . 'views/rss-partials/upfront_properties.php')) {
+		if ($this->session->has_userdata('loggedIn')) {
 
-			// Whoops, we don't have a page for that!
+			$data['userID'] = $this->session->userdata('userID');
 
-			show_404();
+			$data['fname'] = $this->session->userdata('fname');
+
+			$data['lname'] = $this->session->userdata('lname');
+
+			$data['email'] = $this->session->userdata('email');
+
+			$data['user_type'] = $this->session->userdata('user_type');
+
+			$data['interest'] = $this->session->userdata('interest');
 		}
 		// 		$data['mob_color'] = "white";
 
@@ -411,7 +427,13 @@ class Rss extends CI_Controller
 
 		// 		$data['image'] = "without-image";
 
-		//$data['curr_city']['name'] = @$s_data['city'];
+		$data['verification_status'] = $this->session->userdata('verified');
+
+		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+
+		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+
+		$data['curr_city']['name'] = $city['name'];
 
 		$countries = array('160');
 
@@ -423,27 +445,26 @@ class Rss extends CI_Controller
 
 		$data['available_states'] = $this->rss_model->fetchAvailableStates($countries);
 
+		//$data['condos'] = $this->rss_model->fetchAllProperties();
+
 		$data['apt_types'] = $this->rss_model->getPropTypes();
 
-		$data['verification_status'] = $this->session->userdata('verified');
+		//$data['available_cities'] = $this->rss_model->fetchHomeCities($states);
 
-		//$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
-
-		//$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
-
-		$data['title'] = "Search Result SmallSmall";
+		$data['title'] = "Properties SmallSmall";
 
 		// 		$this->load->view('templates/rss-header', $data);
 
 		// 		$this->load->view('rss-partials/properties', $data);
 
-		// 		$this->load->view('templates/rss-footer', $data);
+		// 		$this->load->view('templates/rss-footer');
 
 		$this->load->view('templates/rss-updated-header', $data);
 
-		$this->load->view('rss-partials/upfront_properties.php', $data);
+		$this->load->view('rss-partials/properties', $data);
 
 		$this->load->view('templates/rss-updated-footer', $data);
+		
 	}
 
 	public function areas_we_cover()
