@@ -379,7 +379,7 @@ class Rss extends CI_Controller
 
 			$page_number = $this->uri->segment(3);
 
-			$config['base_url'] = base_url() . 'rss/upfrontPropty';
+			$config['base_url'] = base_url() . 'rss/upfrontPrpty';
 
 			if (empty($page_number))
 
@@ -406,7 +406,7 @@ class Rss extends CI_Controller
 			$data['to_row'] = $page_number * count($data['properties']);
 		}
 
-		if (!file_exists(APPPATH . 'views/rss-partials/upfront_properties.php')) {
+		if(!file_exists(APPPATH . 'views/rss-partials/upfront_properties.php')) {
 
 			// Whoops, we don't have a page for that!
 

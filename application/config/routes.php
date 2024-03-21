@@ -694,7 +694,7 @@ $route['pay-test'] = 'rss/pay_test';
 
 $route['pay'] = 'rss/pay'; 
 
-$route['rss/upfrontPropty'] = 'rss/upfrontPropty';
+$route['rss/upfrontPrpty'] = 'rss/upfrontPropty';
 
 $route['test-home'] = 'pages/test_home';
 
