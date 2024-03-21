@@ -227,7 +227,7 @@ class App extends CI_Controller
 
 			$response = TRUE;
 
-			$details = "Username does not exist";
+			$details = "Username or Password incorrect";
 		}
 
 		echo json_encode(array("response" => $response, "details" => $details, "data" => $data));
