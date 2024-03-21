@@ -247,7 +247,7 @@ class Rss extends CI_Controller
 
 	public function property_type($slug)
 	{
-
+		
 		$config['total_rows'] = $this->rss_model->countPropertyType($slug);
 
 		$data['total_count'] = $config['total_rows'];
@@ -406,7 +406,7 @@ class Rss extends CI_Controller
 			$data['to_row'] = $page_number * count($data['properties']);
 		}
 
-		if (!file_exists(APPPATH . 'views/rss-partials/properties.php')) {
+		if (!file_exists(APPPATH . 'views/rss-partials/upfront_properties.php')) {
 
 			// Whoops, we don't have a page for that!
 
@@ -452,9 +452,9 @@ class Rss extends CI_Controller
 
 		$this->load->view('templates/rss-updated-header', $data);
 
-		$this->load->view('rss-partials/properties', $data);
+		$this->load->view('rss-partials/upfront_properties.php', $data);
 
-		// 		$this->load->view('templates/rss-updated-js-files');
+		//$this->load->view('templates/rss-updated-js-files');
 
 		$this->load->view('templates/rss-updated-footer', $data);
 	}
