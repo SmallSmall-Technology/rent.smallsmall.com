@@ -2117,7 +2117,7 @@ class Rss_model extends CI_Model
 
 		$this->db->from('property_tbl');
 
-		$this->db->limit($this->_pageNumber, $this->_offset);
+		//$this->db->limit($this->_pageNumber, $this->_offset);
 
 		$this->db->order_by('available_date', 'ASC');
 
