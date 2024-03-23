@@ -5561,122 +5561,6 @@ class Admin extends CI_Controller
 	}
 
 
-
-	// public function uploadBuytoletProperty()
-	// {
-	// 	//Get data from AJAX
-	// 	$propName = $this->input->post('propTitle');
-	// 	$propType = $this->input->post('propType');
-	// 	$propDesc = htmlentities($this->input->post('propDesc', ENT_QUOTES));
-	// 	$locationInfo = htmlentities($this->input->post('locationInfo', ENT_QUOTES));
-	// 	$address = $this->input->post('propAddress');
-	// 	$city = $this->input->post('city');
-	// 	$state = $this->input->post('state');
-	// 	$country = $this->input->post('country');
-	// 	$tenantable = $this->input->post('tenantable');
-	// 	$asset_appreciation_1 = $this->input->post('asset_appreciation_1');
-	// 	$asset_appreciation_2 = $this->input->post('asset_appreciation_2');
-	// 	$asset_appreciation_3 = $this->input->post('asset_appreciation_3');
-	// 	$asset_appreciation_4 = $this->input->post('asset_appreciation_4');
-	// 	$asset_appreciation_5 = $this->input->post('asset_appreciation_5');
-	// 	$price = $this->input->post('price');
-	// 	$marketValue = $this->input->post("marketValue");
-	// 	$outrightDiscount = $this->input->post("outrightDiscount");
-	// 	$promo_price = $this->input->post('promo_price');
-	// 	$promo_category = $this->input->post('promo_category');
-	// 	$expected_rent = $this->input->post('expected_rent');
-	// 	$bed = $this->input->post('bed');
-	// 	$bath = $this->input->post('bath');
-	// 	$toilet = $this->input->post('toilet');
-	// 	$hpi = $this->input->post('hpi');
-	// 	$payment_plan = $this->input->post('payment_plan');
-	// 	$payment_plan_period = $this->input->post('payment_plan_period');
-	// 	$min_pp_val = $this->input->post('min_pp_val');
-	// 	$mortgage = $this->input->post('mortgage');
-	// 	$propertySize = $this->input->post('propertySize');
-	// 	$investmentType = $this->input->post('investmentType');
-	// 	$imageFolder = $this->input->post('imageFolder');
-	// 	$featuredPic = $this->input->post('featuredPic');
-	// 	$pool_buy = $this->input->post('pool_buy');
-	// 	$pooling_units = $this->input->post('pooling_units');
-	// 	$floor_level = $this->input->post('floor_level');
-	// 	$construction_lvl = $this->input->post('construction_lvl');
-	// 	$start_date = date('Y-m-d', strtotime($this->input->post('start_date')));
-	// 	$finish_date = date('Y-m-d', strtotime($this->input->post('finish_date')));
-	// 	$maturity_date = date('Y-m-d', strtotime($this->input->post('maturity_date')));
-	// 	$closing_date = date('Y-m-d', strtotime($this->input->post('closing_date')));
-	// 	$hold_period = $this->input->post('hold_period');
-	// 	$co_appr = explode(',', $this->input->post('co_appr'));
-	// 	$co_rent = explode(',', $this->input->post('co_rent'));
-	// 	$lockdownFee = $this->input->post('lockdownFee');
-	// 	$lockdownPeriod = $this->input->post('lockdownPeriod');
-	// 	$status = "";
-
-
-	// 	if ($this->session->has_userdata('adminLoggedIn')) {
-
-	// 		$userID = $this->session->userdata('adminID');
-	// 		$file_element_name = 'plan-image';
-
-	// 		//Check if upload folder exists
-	// 		if (!is_dir('./tmp/')) {
-
-	// 			mkdir('./tmp/', 0777, TRUE);
-	// 		}
-
-
-	// 		$config['upload_path'] = './tmp/';
-
-	// 		$config['allowed_types'] = 'jpg|png|jpeg';
-
-	// 		$config['max_size'] = 1024 * 10;
-
-	// 		$config['encrypt_name'] = TRUE;
-
-	// 		$this->load->library('upload', $config);
-
-	// 		if (!$this->upload->do_upload($file_element_name)) {
-
-	// 			$status = 'error';
-
-	// 			$msg = $this->upload->display_errors('', '');
-	// 		} else {
-
-	// 			$data = $this->upload->data();
-
-	// 			$folder =
-
-	// 				$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
-
-	// 			$upl_result = file_get_contents('https://buy.smallsmall.com/upload-fp-image/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan/");
-
-	// 			unlink('./tmp/' . $data["file_name"]);
-
-	// 			//Populate the property table
-	// 			$property = $this->admin_model->insertBuytoletProperty($propName, $lockdownPeriod,$lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period);
-
-	// 			if ($property != 0) {
-
-	// 				$status = "success";
-
-	// 				$msg = "Property successfully uploaded";
-	// 			} else {
-	// 				$status = "error";
-
-	// 				$msg = "Could not upload property";
-	// 			}
-	// 		}
-	// 	} else {
-
-	// 		redirect(base_url() . "admin/dashboard", 'refresh');
-	// 	}
-
-	// 	@unlink($_FILES[$file_element_name]);
-
-
-	// 	echo json_encode(array('status' => $status, 'msg' => $msg));
-	// }
-
 	public function uploadBuytoletProperty()
 	{
 
@@ -5727,6 +5611,8 @@ class Admin extends CI_Controller
 		$lockdownFee = $this->input->post('lockdownFee');
 		$lockdownPeriod = $this->input->post('lockdownPeriod');
 		$rent_per_annum = $this->input->post('rent_per_annum');
+		$min_mortgage = $this->input->post('min_mortgage');
+		$max_mortgage = $this->input->post('max_mortgage');
 		$status = "";
 
 
@@ -5775,10 +5661,8 @@ class Admin extends CI_Controller
 
 					$propertyImagedir = rtrim($propertyImageDir, '/');
 
-					// removing the slash that occurs at end
-					// $propertyImagedir = 'test';
 
-					$property = $this->admin_model->insertBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $imageName, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period, $rent_per_annum);
+					$property = $this->admin_model->insertBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $imageName, $bed, $toilet, $bath, $hpi, $userID, 'New', $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $min_pp_val, $pooling_units, $pool_buy, $promo_price, $promo_category, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $maturity_date, $closing_date, $hold_period, $rent_per_annum, $min_mortgage, $max_mortgage);
 
 					if ($property != 0) {
 
@@ -5818,139 +5702,6 @@ class Admin extends CI_Controller
 		echo json_encode(array('status' => $status, 'msg' => $msg));
 	}
 
-	// public function editBuytoletProperty()
-	// {
-	// 	//Get data from AJAX
-	// 	$propID = $this->input->post('propID');
-	// 	$propName = $this->input->post('propTitle');
-	// 	$propType = $this->input->post('propType');
-	// 	$propDesc = htmlentities($this->input->post('propDesc', ENT_QUOTES));
-	// 	$locationInfo = htmlentities($this->input->post('locationInfo', ENT_QUOTES));
-	// 	$address = $this->input->post('propAddress');
-	// 	$city = $this->input->post('city');
-	// 	$state = $this->input->post('state');
-	// 	$country = $this->input->post('country');
-	// 	$asset_appreciation_1 = $this->input->post('asset_appreciation_1');
-	// 	$asset_appreciation_2 = $this->input->post('asset_appreciation_2');
-	// 	$asset_appreciation_3 = $this->input->post('asset_appreciation_3');
-	// 	$asset_appreciation_4 = $this->input->post('asset_appreciation_4');
-	// 	$asset_appreciation_5 = $this->input->post('asset_appreciation_5');
-	// 	$tenantable = $this->input->post('tenantable');
-	// 	$price = $this->input->post('price');
-	// 	$marketValue = $this->input->post('marketValue');
-	// 	$outrightDiscount = $this->input->post("outrightDiscount");
-	// 	$promo_price = $this->input->post('promo_price');
-	// 	$promo_category = $this->input->post('promo_category');
-	// 	$expected_rent = $this->input->post('expected_rent');
-	// 	$bed = $this->input->post('bed');
-	// 	$toilet = $this->input->post('toilet');
-	// 	$bath = $this->input->post('bath');
-	// 	$payment_plan = $this->input->post('payment_plan');
-	// 	$payment_plan_period = $this->input->post('payment_plan_period');
-	// 	$min_pp_val = $this->input->post('min_pp_val');
-	// 	$mortgage = $this->input->post('mortgage');
-	// 	$propertySize = $this->input->post('propertySize');
-	// 	$pool_buy = $this->input->post('pool_buy');
-	// 	$pooling_units = $this->input->post('pooling_units');
-	// 	$available_units = $this->input->post('available_units');
-	// 	$imageFolder = $this->input->post('imageFolder');
-	// 	$featuredPic = $this->input->post('featuredPic');
-	// 	$investmentType = $this->input->post('investmentType');
-	// 	$floor_level = $this->input->post('floor_level');
-	// 	$construction_lvl = $this->input->post('construction_lvl');
-	// 	$start_date = date('Y-m-d', strtotime($this->input->post('start_date')));
-	// 	$finish_date = date('Y-m-d', strtotime($this->input->post('finish_date')));
-	// 	$maturity_date = date('Y-m-d', strtotime($this->input->post('maturity_date')));
-	// 	$closing_date = date('Y-m-d', strtotime($this->input->post('closing_date')));
-	// 	$hold_period = $this->input->post('hold_period');
-	// 	$co_appr = explode(',', $this->input->post('co_appr'));
-	// 	$co_rent = explode(',', $this->input->post('co_rent'));
-	// 	$lockdownFee = $this->input->post('lockdownFee');
-	// 	$lockdownPeriod = $this->input->post('lockdownPeriod');
-	// 	$status = "";
-
-
-	// 	if ($this->session->has_userdata('adminLoggedIn')) {
-
-	// 		$userID = $this->session->userdata('adminID');
-
-	// 		$file_element_name = 'plan-image';
-
-	// 		/*if($_FILES[$file_element_name]['name']){
-	// 			print_r($_FILES[$file_element_name]['name']);
-	// 		}else{
-	// 			echo "Nothing in here brody!";
-	// 		}*/
-
-
-	// 		if ($_FILES[$file_element_name]['name']) {
-
-
-
-	// 			$config['upload_path'] = './uploads/buytolet/' . $imageFolder . '/floor-plan/';
-
-	// 			$config['allowed_types'] = 'jpg|png|jpeg';
-
-	// 			$config['max_size'] = 1024 * 10;
-
-	// 			$config['encrypt_name'] = FALSE;
-
-	// 			$this->load->library('upload', $config);
-
-	// 			if (!$this->upload->do_upload($file_element_name)) {
-
-	// 				$status = 'error';
-
-	// 				$msg = $this->upload->display_errors('', '');
-	// 			} else {
-
-	// 				$data = $this->upload->data();
-
-
-	// 				$site1FileMd5 = md5_file('./tmp/' . $data["file_name"]);
-
-	// 				$upl_result = file_get_contents('https://buy.smallsmall.com/upload-images/' . $data["file_name"] . '/' . $site1FileMd5 . '/' . $imageFolder . "/floor-plan");
-
-	// 				unlink('./tmp/' . $data["file_name"]);
-
-	// 				//Populate the property table
-	// 				$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
-
-	// 				if ($property != 0) {
-
-	// 					$status = "success";
-
-	// 					$msg = "Property successfully uploaded";
-	// 				} else {
-	// 					$status = "error";
-
-	// 					$msg = "Could not upload property";
-	// 				}
-	// 			}
-	// 		} else {
-	// 			$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, 'no', $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
-
-	// 			if ($property != 0) {
-
-	// 				$status = "success";
-
-	// 				$msg = "Property successfully uploaded";
-	// 			} else {
-	// 				$status = "error";
-
-	// 				$msg = "Could not upload property";
-	// 			}
-	// 		}
-	// 	} else {
-
-	// 		redirect(base_url() . "admin/dashboard", 'refresh');
-	// 	}
-
-	// 	@unlink($_FILES[$file_element_name]);
-
-
-	// 	echo json_encode(array('status' => $status, 'msg' => $msg));
-	// }
 
 	// New that send to s3
 	public function editBuytoletProperty()
@@ -6003,6 +5754,8 @@ class Admin extends CI_Controller
 		$lockdownFee = $this->input->post('lockdownFee');
 		$lockdownPeriod = $this->input->post('lockdownPeriod');
 		$rent_per_annum = $this->input->post('rent_per_annum');
+		$min_mortgage = $this->input->post('min_mortgage');
+		$max_mortgage = $this->input->post('max_mortgage');
 
 		$status = "";
 
@@ -6047,11 +5800,8 @@ class Admin extends CI_Controller
 
 					$propertyImagedir = rtrim($propertyImageDir, '/');
 
-					$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period, $rent_per_annum);
+					$property = $this->admin_model->editBuytoletProperty($propName, $lockdownPeriod, $lockdownFee, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $data['file_name'], $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period, $rent_per_annum, $min_mortgage, $max_mortgage);
 
-					// $property = $this->admin_model->editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $imageName, $bed, $toilet, $bath, $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
-
-					// $property = $this->admin_model->editBuytoletProperty($propName, $propType, $propDesc, $locationInfo, $address, $city, $state, $country, $tenantable, $price, $expected_rent, $imageFolder, $featuredPic, $bed, $toilet, $bath, $propertySize, $imageFolder, $mortgage, $payment_plan, $payment_plan_period, $propID, $min_pp_val, $promo_price, $promo_category, $pool_buy, $pooling_units, $asset_appreciation_1, $asset_appreciation_2, $asset_appreciation_3, $asset_appreciation_4, $asset_appreciation_5, $investmentType, $userID, $marketValue, $outrightDiscount, $floor_level, $construction_lvl, $start_date, $finish_date, $co_appr, $co_rent, $available_units, $maturity_date, $closing_date, $hold_period);
 
 					if ($property != 0) {
 

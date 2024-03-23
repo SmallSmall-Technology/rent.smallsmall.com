@@ -3877,6 +3877,8 @@ $(window).on('load', function () {
 		var floor_level = $('#floor-level').val();
 		var hold_period = $('#hold-period').val();
 		var rent_per_annum = $('#rentPerAnnum').val();
+		var min_mortgage = $('#min_mortgage').val();
+		var max_mortgage = $('#max_mortgage').val();
 		var featuredProp = 0;
 		var co_appr = $('input[name="co-appr[]"]').map(function () { return $(this).val(); }).get();
 
@@ -3953,7 +3955,9 @@ $(window).on('load', function () {
 			"co_rent": co_rent,
 			"lockdownFee": lockdownFee,
 			"lockdownPeriod": lockdownPeriod,
-			"rent_per_annum": rent_per_annum
+			"rent_per_annum": rent_per_annum,
+			"min_mortgage" : min_mortgage,
+			"max_mortgage" : max_mortgage
 		};
 
 		$.ajaxFileUpload({
@@ -4037,6 +4041,8 @@ $(window).on('load', function () {
 		var hold_period = $('#hold-period').val();
 		var floor_level = $('#floor-level').val();
 		var rent_per_annum = $('#rentPerAnnum').val();
+		var min_mortgage = $('#min_mortgage').val();
+		var max_mortgage = $('#max_mortgage').val();
 
 		var co_appr = $('input[name="co-appr[]"]').map(function () { return $(this).val(); }).get();
 
@@ -4114,7 +4120,9 @@ $(window).on('load', function () {
 			"available_units": available_units,
 			"lockdownFee": lockdownFee,
 			"lockdownPeriod": lockdownPeriod,
-			"rent_per_annum": rent_per_annum
+			"rent_per_annum": rent_per_annum,
+			"min_mortgage" : min_mortgage,
+			"max_mortgage" : max_mortgage
 		};
 
 		$.ajaxFileUpload({
