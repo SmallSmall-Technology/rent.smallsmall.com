@@ -262,6 +262,18 @@
 													</div>
 												</div>
 											</div>
+											<div class="form-row"> 
+											    <div class="col-md-6">
+                                                    <div class="position-relative form-group"><label for="min_mortgage" class="">Min. Alt-Mortgage</label>
+                                                    <input name="min_mortgage" id="min_mortgage" type="number" value="<?php echo $property['min_mortgage'] ?>" class="form-control allFields"></div>
+												</div>
+
+												<div class="col-md-6">
+                                                    <div class="position-relative form-group"><label for="max_mortgage" class="">Max. Alt-Mortgage</label>
+                                                    <input name="max_mortgage" id="max_mortgage" type="number" value="<?php echo $property['max_mortgage'] ?>" class="form-control allFields"></div>
+												</div>
+												
+											</div>
 											<div class="position-relative form-group">
 												<div class="position-relative form-group">
 													<label for="payment-plan" class="">Does this property have a payment plan?</label>
