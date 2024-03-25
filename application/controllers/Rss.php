@@ -354,7 +354,7 @@ class Rss extends CI_Controller
 			$srlz = $dataArr['intervals'];
 			$srlz = unserialize($srlz);
 
-			if($srlz[0] == 'upfront')
+			if($srlz[0] == 'Upfront')
 			{
 				$count += 1;
 			}
@@ -8103,6 +8103,138 @@ value1&metadata[meta2]=value2*/
 	}
 
 
+	// public function properties() // all properties change to properties
+	// {
+	// 	$config['total_rows'] = $this->rss_model->countProperties();
+
+	// 	$data['total_count'] = $config['total_rows'];
+
+	// 	$config['suffix'] = '';
+
+	// 	if ($config['total_rows'] > 0) {
+
+	// 		$page_number = $this->uri->segment(2);
+
+	// 		$data['page_number'] = $this->uri->segment(2);
+
+	// 		$config['base_url'] = base_url() . 'properties';
+
+	// 		if(empty($page_number))
+
+	// 			$page_number = 1;
+
+	// 		$offset = ($page_number - 1) * $this->pagination->per_page;
+
+	// 		$this->rss_model->setPageNumber($this->pagination->per_page);
+
+	// 		$this->rss_model->setOffset($offset);
+
+	// 		$this->pagination->cur_page = $page_number;
+
+	// 		$this->pagination->initialize($config);
+
+	// 		$post_per_page = 12;
+
+	// 		$data['page_links'] = $this->pagination->create_links();
+
+	// 		$data['from_row'] = $offset + 1;
+
+	// 		$data['properties'] = $this->rss_model->fetchProperties();
+
+	// 		if (is_array($data['properties'])) {
+
+	// 			$data['to_row'] = $page_number * count($data['properties']);
+	// 		} else {
+
+	// 			$data['to_row'] = 0;
+	// 			$data['from_row'] = 0;
+	// 		}
+	// 	}
+
+	// 	if ($this->session->has_userdata('loggedIn')) {
+
+	// 		$data['userID'] = $this->session->userdata('userID');
+
+	// 		$data['fname'] = $this->session->userdata('fname');
+
+	// 		$data['lname'] = $this->session->userdata('lname');
+
+	// 		$data['email'] = $this->session->userdata('email');
+
+	// 		$data['user_type'] = $this->session->userdata('user_type');
+
+	// 		$data['interest'] = $this->session->userdata('interest');
+	// 	}
+
+	// 	$countries = array('160');
+
+	// 	$data['min'] = $this->rss_model->get_min_rent();
+
+	// 	$data['max'] = $this->rss_model->get_max_rent();
+
+	// 	//$data['available_cities'] = $this->rss_model->fetchHomeCities($states);
+
+	// 	$data['available_states'] = $this->rss_model->fetchAvailableStates($countries);
+
+	// 	$data['premium_props'] = $this->rss_model->count_premium_properties();
+
+	// 	$data['bedspaces'] = $this->rss_model->count_bedspaces();
+
+	// 	$data['shared_homes'] = $this->rss_model->count_shared_homes();
+
+	// 	$data['verified_homes'] = $this->rss_model->countProperties();
+
+	// 	//Fetch the country code
+
+	// 	$country = $this->rss_model->fetchCountry('Nigeria');
+
+	// 	$data['notifications'] = $this->rss_model->fetchNotification();
+
+	// 	//Use the country code to display the states
+
+	// 	$data['states'] = $this->rss_model->fetchStates($country['id']);
+
+	// 	$states = array('2648', '2671');
+
+	// 	//Explicitly specifying lagos and abuja here for now
+	// 	$data['the_cities'] = $this->rss_model->fetchHomeCities($states);
+
+	// 	//Get apartment types
+
+	// 	$data['property_types'] = $this->rss_model->getPropTypes();
+
+	// 	$data['verification_status'] = $this->session->userdata('verified');
+
+	// 	$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+
+	// 	$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+
+	// 	//$data['cities'] = $this->rss_model->fetchCities($country['id']);
+
+	// 	$data['featureds'] = $this->rss_model->fetchFeaturedProperties();
+
+	// 	$data['shareds'] = $this->rss_model->fetchHomeProperties(8);
+
+	// 	$data['premiums'] = $this->rss_model->fetchPremiumProperties();
+
+	// 	$data['new_props'] = $this->rss_model->fetchHomeLatestProperties();
+
+	// 	$data['populars'] = $this->rss_model->fetchHomeHighestViewedProperties();
+
+	// 	$data['apt_types'] = $this->rss_model->getPropTypes();
+
+	// 	$data['title'] = "Properties SmallSmall";
+
+	// 	$this->load->view('templates/rss-updated-header', $data);
+
+	// 	$this->load->view('rss-partials/properties', $data);
+
+	// 	//  $this->load->view('templates/rss-updated-js-files');
+
+	// 	$this->load->view('templates/rss-updated-footer', $data);
+	// }
+
+
 	public function properties() // all properties change to properties
 	{
 		$config['total_rows'] = $this->rss_model->countProperties();
@@ -8227,7 +8359,9 @@ value1&metadata[meta2]=value2*/
 
 		$this->load->view('templates/rss-updated-header', $data);
 
-		$this->load->view('rss-partials/properties', $data);
+		// $this->load->view('rss-partials/properties', $data);
+
+		$this->load->view('rss-partials/test-new-properties.php', $data);
 
 		//  $this->load->view('templates/rss-updated-js-files');
 
