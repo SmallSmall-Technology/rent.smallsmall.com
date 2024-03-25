@@ -1033,7 +1033,7 @@ function startsWith($string, $prefix) {
 
 
 <!--Bootstrap js and Popper js -->
-<script src="<?php echo base_url(); ?>assets/updated-assets/js/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+<script src="<?php echo base_url(); ?>assets/updated-assets/js/popper.min.js" crossorigin="anonymous">
 </script>
 
-<script src="<?php echo base_url(); ?>assets/updated-assets/js/bootstrap-js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+<script src="<?php echo base_url(); ?>assets/updated-assets/js/bootstrap-js/bootstrap.min.js" crossorigin="anonymous"></script>
