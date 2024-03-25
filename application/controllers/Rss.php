@@ -8361,7 +8361,7 @@ value1&metadata[meta2]=value2*/
 
 		// $this->load->view('rss-partials/properties', $data);
 
-		$this->load->view('rss-partials/test-new-properties.php', $data);
+		$this->load->view('rss-partials/properties.php', $data);
 
 		//  $this->load->view('templates/rss-updated-js-files');
 

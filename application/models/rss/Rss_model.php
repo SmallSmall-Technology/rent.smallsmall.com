@@ -553,7 +553,6 @@ class Rss_model extends CI_Model
 
 	public function fetchProperties()
 	{
-
 		$this->db->select('*');
 
 		$this->db->from('property_tbl');
