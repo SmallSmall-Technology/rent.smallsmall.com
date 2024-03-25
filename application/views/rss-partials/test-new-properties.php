@@ -19,6 +19,7 @@ function startsWith($string, $prefix) {
 
 
 <!-- MAIN SECTION -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/bootstrap-css/bootstrap.min.css" crossorigin="anonymous" />
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allproperty.css" />
 
