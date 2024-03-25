@@ -133,9 +133,9 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
   <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/favicon.png">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/bootstrap-css/bootstrap.min.css"
-    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/bootstrap-css/bootstrap.min.css" crossorigin="anonymous" />
   
+     <!-- integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" -->
   <!-- Bootstrap CSS -->
   <!--<link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/bootstrap-css/bootstrap.min.css" crossorigin="anonymous" />-->
   
@@ -145,10 +145,9 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
     rel="stylesheet" />
   <!-- font-awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+  <!-- integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" -->
   <link href="<?php echo base_url(); ?>assets/updated-assets/fontawesome/css/fontawesome.css" rel="stylesheet" />
   <link href="<?php echo base_url(); ?>assets/updated-assets/fontawesome/css/brands.css" rel="stylesheet" />
   <link href="<?php echo base_url(); ?>assets/updated-assets/fontawesome/css/solid.css" rel="stylesheet" />

@@ -351,10 +351,10 @@ class Rss extends CI_Controller
 
 		foreach($dataArray as $dataArr)
 		{
-			$srlz = $dataArray['intervals'];
+			$srlz = $dataArr['intervals'];
 			$srlz = unserialize($srlz);
 
-			if($srlz[0] == 'Upfront')
+			if($srlz[0] == 'upfront')
 			{
 				$count += 1;
 			}
