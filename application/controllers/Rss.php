@@ -357,11 +357,100 @@ class Rss extends CI_Controller
 			if($srlz[0] == 'Upfront')
 			{
 				$count += 1;
-				print_r($dataArr);
+				// print_r($dataArr);
 			}
 		}
 
-		echo $count;
+		$config['total_rows'] = $count;
+
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
+
+		if($config['total_rows'] > 0) {
+
+			$page_number = $this->uri->segment(3);
+
+			$config['base_url'] = base_url() . 'rss/upfrontPropty';
+
+			if (empty($page_number))
+
+				$page_number = 1;
+
+			$offset = ($page_number - 1) * $this->pagination->per_page;
+
+			$this->rss_model->setPageNumber($this->pagination->per_page);
+
+			$this->rss_model->setOffset($offset);
+
+			$this->pagination->cur_page = $page_number;
+
+			$this->pagination->initialize($config);
+
+			$post_per_page = 10;
+
+			$data['page_links'] = $this->pagination->create_links();
+
+			$data['from_row'] = $offset + 1;
+
+			$data['properties'] = $this->rss_model->fetchProperties();
+
+			$data['to_row'] = $page_number * count($data['properties']);
+		}
+
+		if (!file_exists(APPPATH . 'views/rss-partials/properties.php')) {
+
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+		// 		$data['mob_color'] = "white";
+
+		// 		$data['mob_icons'] = "blue";
+
+		// 		$data['color'] = "white";
+
+		// 		$data['logo'] = "blue";
+
+		// 		$data['image'] = "without-image";
+
+		$data['curr_city']['name'] = @$s_data['city'];
+
+		$countries = array('160');
+
+		$data['min'] = $this->rss_model->get_min_rent();
+
+		$data['max'] = $this->rss_model->get_max_rent();
+
+		//$data['available_cities'] = $this->rss_model->fetchHomeCities($states);
+
+		$data['available_states'] = $this->rss_model->fetchAvailableStates($countries);
+
+		$data['apt_types'] = $this->rss_model->getPropTypes();
+
+		$data['verification_status'] = $this->session->userdata('verified');
+
+		//$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+
+		//$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+
+		$data['title'] = "Search Result SmallSmall";
+
+		// 		$this->load->view('templates/rss-header', $data);
+
+		// 		$this->load->view('rss-partials/properties', $data);
+
+		// 		$this->load->view('templates/rss-footer', $data);
+
+		$this->load->view('templates/rss-updated-header', $data);
+
+		$this->load->view('rss-partials/upfront_properties', $data);
+
+		// 		$this->load->view('templates/rss-updated-js-files');
+
+		$this->load->view('templates/rss-updated-footer', $data);
+
+		//echo $count;
 	}
 
 	public function areas_we_cover()
