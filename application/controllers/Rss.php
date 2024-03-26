@@ -393,7 +393,7 @@ class Rss extends CI_Controller
 
 			$data['from_row'] = $offset + 1;
 
-			$data['properties'] = $this->rss_model->fetchProperties();
+			$data['properties'] = $this->rss_model->fetchUpfrontProperty();
 
 			$data['to_row'] = $page_number * count($data['properties']);
 		}
