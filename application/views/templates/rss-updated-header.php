@@ -173,6 +173,16 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
   <!-- Script for sticky header -->
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/updated-assets/js/header.js"></script>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F9HWK0R13Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-F9HWK0R13Y');
+  </script>
+
   <title><?php echo $title; ?></title>
 </head>
 
@@ -232,12 +242,12 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
 
       <div class="collapse navbar-collapse justify-content-center  mr-5" id="collapsibleNavbar">
             <div class="search">
-                <form action="<?php echo base_url('rss/filter'); ?>" method="POST">
+                <form action="<?php echo base_url('rss/filterSearch'); ?>" method="POST">
             <div class="row m-0">
               <div class="col-11 search-left">
                 <i class="fa-solid fa-location-dot location-icon"></i>
                 <span class="">Location..</span>
-                <input class="search-input" type="text" placeholder="Where would you like to live?" />
+                <input class="search-input" name="locatn" type="text" placeholder="Where would you like to live?" />
                 
             <datalist role="listbox" id="cities">
               <?php if(!empty($the_cities) && isset($the_cities)){ ?>

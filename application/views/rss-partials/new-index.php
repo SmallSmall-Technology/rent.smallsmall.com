@@ -26,13 +26,13 @@
         </div>
         <div class="search d-md-none d-block w-100 bg-white">
 
-            <!-- <form form method="POST" action="<?php echo base_url('rss/filter'); ?>">
+            <form method="POST" action="<?php echo base_url('rss/filterSearch'); ?>">
                 <div class="row m-0">
                     <div class="col-11 text-dark search-left">
                         <i class="fa-solid fa-location-dot location-icon"></i>
                         <span class="">Location..</span>
 
-                        <input class="search-input" type="text" placeholder="Where would you like to live?" />
+                        <input class="search-input" name="locatn" type="text" placeholder="Where would you like to live?" />
 
                         <datalist role="listbox" id="cities">
                             <?php if (!empty($the_cities) && isset($the_cities)) { ?>
@@ -50,7 +50,7 @@
                         </button>
                     </div>
                 </div>
-            </form> -->
+            </form>
 
         </div>
 

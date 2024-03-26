@@ -227,6 +227,11 @@ $route['get-images/(:any).(:any)'] = 'rss/get_images/$1/$2';
 
 $route['rss/filter/(:any)'] = 'rss/get_quick_search/$1';
 
+$route['rss/filterSearch'] = 'rss/filter_search';
+
+$route['rss/filterSearch/(:any)'] = 'rss/filter_search/$1';
+
+
 $route['rss/filter'] = 'rss/get_quick_search';
 
 /**RSS Staging User profile Routes Starts Here ***/
