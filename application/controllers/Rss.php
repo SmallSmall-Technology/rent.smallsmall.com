@@ -577,13 +577,13 @@ class Rss extends CI_Controller
 
 		// 		$this->load->view('templates/rss-footer', $data);
 
-		$this->load->view('templates/rss-updated-header', $data);
+		//$this->load->view('templates/rss-updated-header', $data);
 
 		$this->load->view('rss-partials/properties', $data);
 
 		// 		$this->load->view('templates/rss-updated-js-files');
 
-		$this->load->view('templates/rss-updated-footer', $data);
+		//$this->load->view('templates/rss-updated-footer', $data);
 	}
 
 	public function get_admin($id)
