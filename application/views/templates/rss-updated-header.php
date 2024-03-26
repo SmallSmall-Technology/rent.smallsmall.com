@@ -330,8 +330,33 @@
   <!-- Script for sticky header -->
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/updated-assets/js/header.js"></script>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F9HWK0R13Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-F9HWK0R13Y');
+  </script>
+
+  <!--end of Google tag (gtag.js) -->
+
   <title><?php echo $title; ?></title>
 </head>
+
+<!--- Popupular JS Tag --->
+<script type="text/javascript">
+    window.Popupular || function (w, d, s, u, p) {
+        window.Popupular = {_q: [], _p: p, autoload: true};
+        var s = d.createElement(s);
+        s.type = "text/javascript";
+        s.src = u;
+        s.async = true;
+        d.head.appendChild(s);
+    }(window, document, "script", "https://cdn.popupular.io/script.js", "fc228fbb-c328-479d-9710-327e8b9e1857");
+</script>
+<!--- Popupular JS Tag --->
 
 <body>
   <header class="container-fluid bg-white header-section p-0">
