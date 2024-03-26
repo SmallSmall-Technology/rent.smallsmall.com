@@ -357,6 +357,7 @@ class Rss extends CI_Controller
 			if($srlz[0] == 'Upfront')
 			{
 				$count += 1;
+				print_r($dataArr);
 			}
 		}
 
@@ -595,7 +596,6 @@ class Rss extends CI_Controller
 
 	public function property($id)
 	{
-
 		$data['property'] = $this->rss_model->fetchProperty($id);
 
 		if ($this->session->has_userdata('loggedIn')) {
