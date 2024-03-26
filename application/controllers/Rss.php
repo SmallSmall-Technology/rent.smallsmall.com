@@ -345,7 +345,7 @@ class Rss extends CI_Controller
 	{
 		$dataArray = $this->rss_model->getAllPropty();
 
-		print_r($dataArray);
+		//print_r($dataArray);
 
 		$count = 0;
 

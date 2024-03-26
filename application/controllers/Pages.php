@@ -1248,7 +1248,6 @@ class Pages extends CI_Controller {
 
 	public function index()
 	{  
-
 		if($this->session->has_userdata('loggedIn')){
 
 			$data['userID'] = $this->session->userdata('userID');
@@ -1321,7 +1320,6 @@ class Pages extends CI_Controller {
 
     public function subscription_terms()
 	{
-
 		if ($this->session->has_userdata('userID')) {
 
 			$data['userID'] = $this->session->userdata('userID');
