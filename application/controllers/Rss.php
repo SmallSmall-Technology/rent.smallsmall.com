@@ -588,7 +588,6 @@ class Rss extends CI_Controller
 
 	public function get_admin($id)
 	{
-
 		$admin = $this->rss_model->get_admin($id);
 
 		return $admin;

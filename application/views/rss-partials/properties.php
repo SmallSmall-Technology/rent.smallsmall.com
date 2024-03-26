@@ -254,12 +254,12 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
 
       <div class="collapse navbar-collapse justify-content-center  mr-5" id="collapsibleNavbar">
             <div class="search">
-                <form action="<?php echo base_url('rss/filter'); ?>" method="POST">
+                <form action="<?php echo base_url('rss/filterSearch'); ?>" method="POST">
             <div class="row m-0">
               <div class="col-11 search-left">
                 <i class="fa-solid fa-location-dot location-icon"></i>
                 <span class="">Location..</span>
-                <input class="search-input" type="text" placeholder="Where would you like to live?" />
+                <input class="search-input" name="locatn" type="text" placeholder="Where would you like to live?" />
                 
             <datalist role="listbox" id="cities">
               <?php if(!empty($the_cities) && isset($the_cities)){ ?>
@@ -851,12 +851,12 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
     </div>
     <div class="col-9">
       <div class="search w-100">
-        <form method="POST" action="<?php echo base_url('rss/filter'); ?>">
+        <form method="POST" action="<?php echo base_url('rss/filterSearch'); ?>">
           <div class="row m-0">
             <div class="col-10 search-left">
               <i class="fa-solid fa-location-dot location-icon"></i>
               <span class="">City..</span>
-              <input class="search-input" type="text" placeholder="which city would you like to live in?" />
+              <input class="search-input" name="locatn" type="text" placeholder="Where would you like to live?" />
               <datalist role="listbox" id="cities">
                 <?php if (!empty($the_cities) && isset($the_cities)) { ?>
                   <?php foreach ($the_cities as $the_city =>
