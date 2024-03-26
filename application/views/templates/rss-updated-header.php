@@ -183,8 +183,23 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
     gtag('config', 'G-F9HWK0R13Y');
   </script>
 
+  <!--end of Google tag (gtag.js) -->
+
   <title><?php echo $title; ?></title>
 </head>
+
+<!--- Popupular JS Tag --->
+<script type="text/javascript">
+    window.Popupular || function (w, d, s, u, p) {
+        window.Popupular = {_q: [], _p: p, autoload: true};
+        var s = d.createElement(s);
+        s.type = "text/javascript";
+        s.src = u;
+        s.async = true;
+        d.head.appendChild(s);
+    }(window, document, "script", "https://cdn.popupular.io/script.js", "fc228fbb-c328-479d-9710-327e8b9e1857");
+</script>
+<!--- Popupular JS Tag --->
 
 <body>
   <header class="container-fluid bg-white header-section p-0">
