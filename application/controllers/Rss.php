@@ -395,6 +395,8 @@ class Rss extends CI_Controller
 
 			$data['properties'] = $this->rss_model->fetchUpfrontProperty();
 
+			print_r($data['properties']);
+
 			$data['to_row'] = $page_number * count($data['properties']);
 		}
 
@@ -442,13 +444,13 @@ class Rss extends CI_Controller
 
 		// 		$this->load->view('templates/rss-footer', $data);
 
-		$this->load->view('templates/rss-updated-header', $data);
+		//$this->load->view('templates/rss-updated-header', $data);
 
-		$this->load->view('rss-partials/upfront_properties', $data);
+		//$this->load->view('rss-partials/upfront_properties', $data);
 
 		// 		$this->load->view('templates/rss-updated-js-files');
 
-		$this->load->view('templates/rss-updated-footer', $data);
+		//$this->load->view('templates/rss-updated-footer', $data);
 
 		//echo $count;
 	}

@@ -701,6 +701,9 @@ $route['pay'] = 'rss/pay';
 
 $route['rss/upfrontPropty'] = 'rss/upfrontPropty';
 
+$route['rss/upfrontPropty/(:any)'] = 'rss/upfrontPropty/$1';
+
+
 $route['test-home'] = 'pages/test_home';
 
 $route['test-date'] = 'rss/test_date';
