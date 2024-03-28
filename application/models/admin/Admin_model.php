@@ -3888,6 +3888,8 @@ class Admin_model extends CI_Model
 
 		$this->promo_value = $details['promo_value'];
 
+		$this->promo_count = $details['promo_count'];
+
 		$this->promo_term = $details['promo_term'];
 
 		$this->promo_beneficiary = $details['promo_beneficiary'];
