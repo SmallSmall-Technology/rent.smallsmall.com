@@ -572,7 +572,7 @@ class Rss_model extends CI_Model
 
 		$this->db->from('property_tbl');
 
-		$this->db->like('intervals', '%i_0_s_7__Upfront_%');
+		$this->db->where("intervals LIKE '%i_0_s_7__Upfront_%'");
 
 		$this->db->limit($this->_pageNumber, $this->_offset);
 
