@@ -157,6 +157,17 @@ class App_model extends CI_Model {
 		return $query->result_array();
 		
 	}
+
+	public function propertyID(){
+	    
+	    $this->db->select('a.propertyID');
+
+		$this->db->from('property_tbl as a');
+		
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
 	
 	public function fetchFeaturedProperties(){
 	    

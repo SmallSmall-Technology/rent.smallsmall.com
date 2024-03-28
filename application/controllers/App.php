@@ -318,7 +318,6 @@ class App extends CI_Controller
 
 	public function properties()
 	{
-
 		$result = FALSE;
 
 		$details = '';
@@ -339,6 +338,30 @@ class App extends CI_Controller
 		}
 
 		echo json_encode(array("response" => $result, "details" => $details, "data" => $data));
+	}
+
+	public function propertyID()
+	{
+		$result = FALSE;
+
+		$details = '';
+
+		$data = array();
+
+		//$data['apartment_types'] = $this->app_model->apartment_types();
+
+		//$data['locations'] = $this->app_model->fetchLocations();
+
+		$data['properties'] = $this->app_model->propertyID();
+
+		if (is_array($data)) {
+
+			$result = TRUE;
+
+			$details = "Success";
+		}
+
+		echo json_encode(array("data" => $data));
 	}
 
 	public function featured_properties()
