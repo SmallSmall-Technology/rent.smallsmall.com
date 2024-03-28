@@ -102,6 +102,17 @@
 							</div>
 
 						</div>
+
+						<div class="position-relative row form-group user-fields promo-fields"><label for="promo_count" class="col-sm-2 col-form-label">Promo Count</label>
+
+							<div class="col-sm-10">
+							<select name="promo_count" id="promo_count" class="form-control">
+									<option value="multiples">Multiples</option>
+									<option value="single">Single</option>
+								</select>
+							</div>
+
+						</div>
 						
 						<div>
 							<div class="position-relative row form-group hide-fields discount-fields">
@@ -132,6 +143,8 @@
 									<option value="bnpl">BNPL</option>
 									<option value="onpl">ONPL</option>
 									<option value="co-own">Co-Ownership</option>
+									<option value="all">All BSS Products</option>
+									<option value="rss">RentSmallSmall</option>
 								</select>
 							</div>
 
