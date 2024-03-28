@@ -93,6 +93,38 @@ class Rss_model extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getAllPropty()
+	{
+		$this->db->select('*');
+
+		$this->db->from('property_tbl');
+
+		//$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$this->db->order_by('available_date', 'ASC');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function fetchUpfrontProperty()
+	{
+		$this->db->select('*');
+
+		$this->db->from('property_tbl');
+
+		$this->db->where("intervals LIKE '%i_0_s_7__Upfront_%'");
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$this->db->order_by('available_date', 'ASC');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
 	public function fetchCountry($country_name)
 	{
 

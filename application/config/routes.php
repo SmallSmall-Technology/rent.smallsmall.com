@@ -233,6 +233,10 @@ $route['rss/filterSearch'] = 'rss/filter_search';
 
 $route['rss/filterSearch/(:any)'] = 'rss/filter_search/$1';
 
+$route['rss/upfrontPropty'] = 'rss/upfrontPropty';
+
+$route['rss/upfrontPropty/(:any)'] = 'rss/upfrontPropty/$1';
+
 /**RSS Staging User profile Routes Starts Here ***/
 
 $route['dashboard/request-repair'] = 'dashboard/request_repair';
