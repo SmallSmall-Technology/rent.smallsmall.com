@@ -3865,6 +3865,7 @@ class Admin_model extends CI_Model
 		if ($this->db->insert('user_tbl', $user_insert)) {
 
 			return $this->db->insert('login_tbl', array('email' => $email, 'password' => $password, 'userID' => $id, 'lastLogin' => $today, 'confirmation' => $confirmationCode));
+			 
 		} else {
 
 			return 0;

@@ -8642,9 +8642,9 @@ class Admin extends CI_Controller
 
 			$details['id'] =  $this->generate_user_id(12);
 
-			$details['fname'] = $this->input->post('firstname');
+			$details['fname'] = $this->input->post('fname');
 
-			$details['lname'] = $this->input->post('lastname');
+			$details['lname'] = $this->input->post('lname');
 
 			$details['email'] = $email;
 
