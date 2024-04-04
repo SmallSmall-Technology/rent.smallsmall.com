@@ -8650,6 +8650,14 @@ class Admin extends CI_Controller
 
 			$details['phone'] = $this->input->post('phone');
 
+			$firstname = $details['fname'];
+
+			$lastname = $details['lname'];	
+
+			$phone = $details['phone'];		
+
+			$user_id = $details['id'];
+
 			$details['refCode'] = $ref;
 
 			$res = $this->create_user_account($details);
