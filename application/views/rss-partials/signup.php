@@ -1,4 +1,43 @@
 <main class="m-auto p-md-0 p-3">
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" id="btnmodal" data-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Check your email</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="m-auto text-center">
+                        <div class="mb-4">
+                            <img src="../assets/images/email-icon.svg" alt="">
+                        </div>
+                        <div class="sent-email-content ">
+                            <p class="font-weight-light" style="font-size: 18px;">We've sent a verification email to</p>
+                            <p class="" style="font-size: 24px;">james.gunn@gmail.com</p>
+                            <p class="font-weight-light" style="font-size: 14px;">Click the button in your email to activate your
+                                account.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- To trigger the button use this code -> document.getElementById('btnmodal').click() -->
+
+    <!-- end of modal -->
+
     <div class="signup-section">
         <div class="mt-4">
             <a class="navbar-brand logo-link mr-4 d-md-block d-none" href="<?php echo base_url(); ?>">
@@ -76,7 +115,6 @@
 
                     </div>
 
-
                     <div class="form-group">
                         <input type="number" class="form-control p-4 reg-fields" id="age" placeholder="Age" name="" required />
                     </div>
@@ -134,43 +172,6 @@
                 </fieldset>
 
             </form>
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary d-none" data-toggle="modal" id="btnmodal"               data-target="#exampleModal">
-                Launch demo modal
-            </button>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Check your email</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="m-auto text-center">
-                                <div class="mb-4">
-                                    <img src="../assets/images/email-icon.svg" alt="">
-                                </div>
-                                <div class="sent-email-content ">
-                                    <p class="font-weight-light" style="font-size: 18px;">We've sent a verification email to</p>
-                                    <p class="" style="font-size: 24px;">james.gunn@gmail.com</p>
-                                    <p class="font-weight-light" style="font-size: 14px;">Click the button in your email to activate your
-                                        account.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- To trigger the button use this code -> document.getElementById('btnmodal').click() -->
-
-            <!-- end of modal -->
 
             <div class="mb-2 d-md-block d-none">
                 <p>Signing up for a Rentsmallsmall account means you agree to the <a href="<?php echo base_url('privacy-policy'); ?>">Privacy Policy</a> and <a href="<?php echo base_url('terms-of-use'); ?>"> Terms Of Use.</a></p>
@@ -234,6 +235,7 @@
 
 <script>
     $(document).ready(function() {
+        document.getElementById('btnmodal').click();
         const progressBar = $('.progress-bar');
         const progressNumber = $('.progress-number p');
         const fieldsets = $('fieldset');

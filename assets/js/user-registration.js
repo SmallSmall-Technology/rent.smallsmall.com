@@ -109,7 +109,6 @@ $('#regForm').submit(function (e) {
 		if (!$('.form-report').is(':hidden')) {
 
 			$('.form-report').hide();
-
 		}
 
 		$('.finish-btn').html('Wait...');
@@ -298,7 +297,6 @@ $('#regForm').submit(function (e) {
 						'Username': email,
 						'UserID': userID
 					});
-
 
 					// 	return false;
 					document.getElementById('btnmodal').click();
