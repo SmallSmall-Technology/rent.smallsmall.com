@@ -2709,7 +2709,6 @@ class Rss extends CI_Controller
 
 	public function signup_form()
 	{
-
 		require 'vendor/autoload.php'; // For Unione template authoload
 
 		$ua = $_SERVER['HTTP_USER_AGENT'];
