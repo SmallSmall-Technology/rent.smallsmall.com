@@ -1,7 +1,7 @@
 <main class="m-auto p-md-0 p-3">
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" id="btnmodal" data-target="#exampleModal">
+    <button type="button" class="btn btn-primary d-none" data-toggle="modal" id="btnmodal" data-target="#exampleModal">
         Launch demo modal
     </button>
 

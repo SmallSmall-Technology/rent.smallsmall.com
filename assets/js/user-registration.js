@@ -300,7 +300,7 @@ $('#regForm').submit(function (e) {
 
 					// 	return false;
 					document.getElementById('btnmodal').click();
-					window.location.href = baseUrl + "login";
+					//window.location.href = baseUrl + "login";
 
 				} else {
 
