@@ -235,7 +235,6 @@
 
 <script>
     $(document).ready(function() {
-        document.getElementById('btnmodal').click();
         const progressBar = $('.progress-bar');
         const progressNumber = $('.progress-number p');
         const fieldsets = $('fieldset');
