@@ -277,6 +277,8 @@ $('#regForm').submit(function (e) {
 
 				if (data == 1) {
 
+					alert('We have sent a confirmation mail to your email. Please confirm your account');
+
 					$('#clicked').val("1");
 
 					next_step.show();
@@ -308,11 +310,9 @@ $('#regForm').submit(function (e) {
 						'Username': email,
 						'UserID': userID
 					});
-
-
+					
 					// 	return false;
-					alert('We have sent a confirmation mail to your email. Please confirm your account');
-					//window.location.href = baseUrl+"login";
+					window.location.href = baseUrl+"login";
 
 				} else {
 
@@ -327,14 +327,10 @@ $('#regForm').submit(function (e) {
 					$('.finish-btn').html('Finish');
 
 					return false;
-
 				}
-
 			}
-
 		});
 	}
-
 });
 
 $('.resend-verification').click(function () {
