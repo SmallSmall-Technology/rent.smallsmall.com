@@ -8186,7 +8186,6 @@ class Rss extends CI_Controller
 
 	public function get_balance($id)
 	{
-
 		$details = $this->loan_model->get_account_details($id);
 
 		if ($details) {
