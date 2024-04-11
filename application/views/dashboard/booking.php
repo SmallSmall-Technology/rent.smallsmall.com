@@ -940,8 +940,7 @@ $userID = $this->session->userdata('userID');
                 }
             });
     
-            handler.openIframe();
-        
+            handler.openIframe();   
         }
         
         function updateTransaction(bookingID, refID){
