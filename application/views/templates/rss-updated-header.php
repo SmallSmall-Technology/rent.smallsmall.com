@@ -555,8 +555,8 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
           <div class="dropdown-menu menu_icon--dropdown p-0">
             <!-- Menu Desktop view -->
             <div class=" menu-desktop d-md-block d-none p-4">
-              <a class="dropdown-item mb-3" href="<?php echo base_url('properties'); ?>">Properties</a>
-              <a class="dropdown-item mb-3" href="<?php echo base_url('landlord-landing'); ?>">Property Owner</a>
+              <a class="dropdown-item mb-3" href="<?php echo base_url('properties'); ?>">Monthly Properties</a>
+              <a class="dropdown-item mb-3" href="<?php echo base_url('rss/upfrontPropty'); ?>">Upfront Properties</a>
               <a class="dropdown-item" href="<?php echo base_url('faq'); ?>">FAQ</a>
               <!-- <div class="dropdown-divider"></div> -->
               <!-- <a class="dropdown-item my-4" href="#"> -->
@@ -586,10 +586,10 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
               </div>
               <div class="mb-5">
                 <p class="mb-3">
-                  <a class="text-white mb-3" href="<?php echo base_url('properties'); ?>">Properties</a>
+                  <a class="text-white mb-3" href="<?php echo base_url('properties'); ?>">Monthly Properties</a>
                 </p>
                 <p class="mb-3">
-                  <a class="text-white mb-3" href="<?php echo base_url('landlord-landing'); ?>">Property Owner</a>
+                  <a class="text-white mb-3" href="<?php echo base_url('rss/upfrontPropty'); ?>">Upfront Properties</a>
                 </p>
                 <p class="mb-3">
                   <a class="text-white" href="<?php echo base_url('faq'); ?>">Faq</a>
