@@ -298,12 +298,10 @@ $('#regForm').submit(function(e){
                         'Username': email,
                         'UserID': userID
                     });
-
                 	
-                // 	return false;
+                	// 	return false;
                     
-    				window.location.href = baseUrl+"login";
-    
+    				window.location.href = baseUrl+"login";    
     			}else{
     
     				$('.form-report').html(data);
@@ -321,10 +319,8 @@ $('#regForm').submit(function(e){
     			}
     
     		}
-    
     	});
 	}
-	
 });
 
 $('.resend-verification').click(function(){

@@ -1257,8 +1257,27 @@ class Pages extends CI_Controller {
 			$data['lname'] = $this->session->userdata('lname');			
 
 			$data['user_type'] = $this->session->userdata('user_type');	
-
 		}
+		
+		$dataArray = $this->rss_model->getAllPropty();
+
+		//print_r($dataArray);
+
+		$count = 0;
+
+		foreach($dataArray as $dataArr)
+		{
+			$srlz = $dataArr['intervals'];
+			$srlz = unserialize($srlz);
+
+			if($srlz[0] == 'Upfront')
+			{
+				$count += 1;
+				// print_r($dataArr);
+			}
+		}
+
+		$data['upfrontProptyCount'] = $count;
 		
 		$data['premium_props'] = $this->rss_model->count_premium_properties();
 		
