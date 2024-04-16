@@ -971,7 +971,6 @@ class Pages extends CI_Controller {
 			$data['lname'] = $this->session->userdata('lname');			
 
 			$data['user_type'] = $this->session->userdata('user_type');	
-
 		}
 		
 		$data['verification_status'] = $this->session->userdata('verified');
