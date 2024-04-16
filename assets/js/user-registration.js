@@ -185,7 +185,6 @@ $('#regForm').submit(function (e) {
 			return false;
 		}
 
-
 		if (!isEmail(email)) {
 
 			$('.form-report').html("Wrong email format");
@@ -199,7 +198,6 @@ $('#regForm').submit(function (e) {
 			$('.finish-btn').html('Finish');
 
 			return false;
-
 		}
 
 		if (!checkPassword(password1)) {
