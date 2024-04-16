@@ -15,6 +15,8 @@
 
   <script defer charset="UTF-8" src="https://bundle.notice.studio/index.js"></script>
 
+  <script src="https://cdn.gravitec.net/storage/16909e628b2b4433f66987cc8120e971/client.js" async></script>
+
 
   <!-- Pixel Code for https://www.benifit.app/ -->
   <script defer src="https://www.benifit.app/pixel/svpjnbeodkar3mju8w44lu7mujd5sdj3"></script>
@@ -32,7 +34,6 @@
     }(document, window, "bbf79ddc-ad1d-4417-9ed7-43a1977378b1")
   </script>
   <!--End of Record Script-->
-
 
   <!--Benifit App Platform authomation pop message for users interaction 2 -->
 
