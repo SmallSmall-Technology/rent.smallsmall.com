@@ -1248,7 +1248,6 @@ class Pages extends CI_Controller {
 
 	public function index()
 	{  
-
 		if($this->session->has_userdata('loggedIn')){
 
 			$data['userID'] = $this->session->userdata('userID');

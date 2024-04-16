@@ -325,6 +325,18 @@
                                 </small>
                             </a>
                         </div>
+                        <div class="mb-3">
+                            <a href="<?php echo base_url('rss/upfrontPropty'); ?>" class="btn primary-background explore-custom-btn" style="
+                  font-size: 25px;
+                  font-weight: 500;
+                  border-radius: 15px;
+                ">
+                                Upfront Properties
+                                <small style="font-size: 12px; font-weight: lighter;">
+                                    &nbsp;(<?php echo @$upfrontProptyCount . "+"; ?>)
+                                </small>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
