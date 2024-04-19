@@ -4362,4 +4362,37 @@ class Rss_model extends CI_Model
 
 		return $query->row_array();
 	}
+
+	public function get_dated_users( $min_date, $max_date ){
+
+		$this->db->select('*');
+
+		$this->db->from('user_tbl');
+
+		$this->db->where('reg_date >', $min_date);
+
+		$this->db->where('reg_date <', $max_date);
+
+		$this->db->where('interest', 'RSS');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+
+	}
+
+	public function get_rss_inspections(){
+
+		$this->db->select('userID');
+
+		$this->db->from('inspection_tbl');
+
+		$this->db->group_by('userID');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+
+	}
+
 }
