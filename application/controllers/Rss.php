@@ -8936,7 +8936,7 @@ value1&metadata[meta2]=value2*/
 
 	public function get_inactive_users(){
 
-		if( $this->input->is_cli_request() )
+		if( $this->input->is_cli_request() ){
 
 			$min_date = date( 'Y-m-d', strtotime('-1 week') );
 
@@ -9032,6 +9032,88 @@ value1&metadata[meta2]=value2*/
 				exit;
 
 			}
+
+		}else{
+
+			exit;
+
+		} 
+	}
+
+	public function test_inactive_users(){
+
+		if( $this->input->is_cli_request() ){	
+			
+			$name = 'Crowther';
+
+			$email = 'seuncrowther"gmail.com';
+						
+			//Send email to user
+			require 'vendor/autoload.php';
+
+			//Unione Template
+			$headers = array(
+				'Content-Type' => 'application/json',
+				'Accept' => 'application/json',
+				'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			);
+
+			$client = new \GuzzleHttp\Client([
+				'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+			]);
+
+			$requestBody = [
+				"id" => "574df962-f271-11ee-803e-6eac86941af6"
+			];
+
+			// end Unione Template
+
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+
+					'headers' => $headers,
+
+					'json' => $requestBody,
+
+				));
+
+				$jsonResponse = $response->getBody()->getContents();
+
+				$responseData = json_decode($jsonResponse, true);
+
+				$htmlBody = $responseData['template']['body']['html'];
+
+				// Replace the placeholder in the HTML body with the username
+
+				$htmlBody = str_replace('{{SubscriberName}}', $name, $htmlBody);
+
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailData = [
+					"message" => [
+						"recipients" => [
+							["email" => $email],
+						],
+						"body" => ["html" => $htmlBody],
+
+						"subject" => "You Forgot to Schedule an Inspection",
+
+						"from_email" => "donotreply@smallsmall.com",
+
+						"from_name" => "Smallsmall",
+					],
+				];
+
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailData,
+				]);
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+				$data['response'] = $e->getMessage();
+			}		
 
 		}else{
 
