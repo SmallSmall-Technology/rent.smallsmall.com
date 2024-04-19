@@ -9046,7 +9046,7 @@ value1&metadata[meta2]=value2*/
 			
 			$name = 'Crowther';
 
-			$email = 'seuncrowther"gmail.com';
+			$email = 'seuncrowther@gmail.com';
 						
 			//Send email to user
 			require 'vendor/autoload.php';
