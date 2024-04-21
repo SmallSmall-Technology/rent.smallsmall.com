@@ -1025,9 +1025,7 @@ function startsWith($string, $prefix)
 
         </div>
       </div>
-    </div>
-
-    <!-- right side -->
+      <!-- right side -->
     <div class="col-6 pl-5 d-md-block d-none">
       <div class="subscription-container ml-5" style="position: sticky; top: 98px;">
         <?php
@@ -1069,6 +1067,8 @@ function startsWith($string, $prefix)
         </div>
       </div>
     </div>
+    </div>
+    <!-- end of right side -->
   </div>
 
   </div>
