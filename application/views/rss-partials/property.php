@@ -1022,54 +1022,54 @@ function startsWith($string, $prefix)
 
         </div>
       </div>
-    </div>
+      <!-- right side -->
+      <div class="col-6 pl-5 d-md-block d-none">
+        <div class="subscription-container ml-5" style="position: sticky; top: 98px;">
+          <?php
+          $CI = &get_instance();
 
-    <!-- right side -->
-    <div class="col-6 pl-5 d-md-block d-none">
-      <div class="subscription-container ml-5" style="position: sticky; top: 98px;">
-        <?php
-        $CI = &get_instance();
+          if (date('Y-m-d') < $property['available_date']) {
 
-        if (date('Y-m-d') < $property['available_date']) {
+            echo '<div style="color: red; border-color:red" class="subscription-availability  subscription-available">Unavailable</div>';
+          } else {
 
-          echo '<div style="color: red; border-color:red" class="subscription-availability  subscription-available">Unavailable</div>';
-        } else {
-
-          echo '<div class="subscription-availability  subscription-available">Available</div>';
-        }
-        ?>
-        <div class="row">
+            echo '<div class="subscription-availability  subscription-available">Available</div>';
+          }
+          ?>
+          <div class="row">
 
 
-          <div class="col-12">
-            <div>
-              <p>subscription price</p>
+            <div class="col-12">
+              <div>
+                <p>subscription price</p>
 
-              <p class="subcription-amount font-weight-bold">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup id="subtips" data-toggle="tooltip" data-placement="right" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
-              <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($evc_dep); ?></span><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+                <p class="subcription-amount font-weight-bold">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup id="subtips" data-toggle="tooltip" data-placement="right" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+                <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($evc_dep); ?></span><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+              </div>
             </div>
-          </div>
 
 
 
-          <div class="col-12">
-            <div class="schedule-container d-flex mb-2">
-              <div id="scheduleVisit" class="schedule-container__schedule  schedule-item-container" data-toggle="modal" data-target="#exampleModal">
-                <span class="">Schedule a visit</span>
+            <div class="col-12">
+              <div class="schedule-container d-flex mb-2">
+                <div id="scheduleVisit" class="schedule-container__schedule  schedule-item-container" data-toggle="modal" data-target="#exampleModal">
+                  <span class="">Schedule a visit</span>
+                </div>
+                <div id="subscribeNow" class="schedule-container__subscribe  " data-toggle="modal" data-target="#subscribe">
+                  <span class="">Subscribe now</span>
+                </div>
+
               </div>
-              <div id="subscribeNow" class="schedule-container__subscribe  " data-toggle="modal" data-target="#subscribe">
-                <span class="">Subscribe now</span>
-              </div>
-
             </div>
           </div>
         </div>
       </div>
+      </div>
+
+      
     </div>
-  </div>
 
-  </div>
-
+</div>
 
   <!-- Modal Schedule for desk -->
   <div class="modal fade schedule-visit-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
