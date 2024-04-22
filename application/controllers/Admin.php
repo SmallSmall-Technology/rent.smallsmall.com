@@ -73,7 +73,6 @@ class Admin extends CI_Controller
 
 	public function login()
 	{
-
 		if (!$this->session->has_userdata('adminLoggedIn')) {
 
 			$data['userID'] = $this->session->userdata('userID');

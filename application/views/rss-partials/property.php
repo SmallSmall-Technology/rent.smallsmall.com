@@ -40,7 +40,7 @@ $srlz = $property['intervals'];
 $srlz = unserialize($srlz);
 $yrnt = $property['price'] * 12;
 
-if($srlz[0] == 'Upfront'){
+if ($srlz[0] == 'Upfront') {
   $mnth = 'Upfront';
   $vmnth = 'Upfront';
 
@@ -54,7 +54,7 @@ if($srlz[0] == 'Upfront'){
 
   $total = number_format($total);
 
-  if($property['securityDepositTerm'] == 1){
+  if ($property['securityDepositTerm'] == 1) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -75,10 +75,7 @@ if($srlz[0] == 'Upfront'){
     $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
 
     $total = number_format($total);
-  }
-
-  elseif ($property['securityDepositTerm'] == 3)
-  {
+  } elseif ($property['securityDepositTerm'] == 3) {
     if ($yrnt <= 2000000) {
       $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
@@ -94,9 +91,7 @@ if($srlz[0] == 'Upfront'){
 
       $total = number_format($total);
     }
-  }
-
-  elseif ($property['securityDepositTerm'] == 4) {
+  } elseif ($property['securityDepositTerm'] == 4) {
     $sec_dep = $property['securityDeposit'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -107,12 +102,7 @@ if($srlz[0] == 'Upfront'){
 
     $total = number_format($total);
   }
-
-} 
-
-
-elseif($srlz[0] == 'Monthly') 
-{
+} elseif ($srlz[0] == 'Monthly') {
   $mnth = "/Month";
   $vmnth = "Monthly";
 
@@ -128,7 +118,7 @@ elseif($srlz[0] == 'Monthly')
 
   $total = number_format($total);
 
-  if($property['securityDepositTerm'] == 1){
+  if ($property['securityDepositTerm'] == 1) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -149,10 +139,7 @@ elseif($srlz[0] == 'Monthly')
     $total =  ($property['price'] * 1) + $sec_dep + $evictionDeposit + $serviceCharge;
 
     $total = number_format($total);
-  }
-
-  elseif ($property['securityDepositTerm'] == 3)
-  {
+  } elseif ($property['securityDepositTerm'] == 3) {
     if ($yrnt <= 2000000) {
       $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
@@ -168,9 +155,7 @@ elseif($srlz[0] == 'Monthly')
 
       $total = number_format($total);
     }
-  }
-
-  elseif ($property['securityDepositTerm'] == 4) {
+  } elseif ($property['securityDepositTerm'] == 4) {
     $sec_dep = $property['securityDeposit'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -181,11 +166,7 @@ elseif($srlz[0] == 'Monthly')
 
     $total = number_format($total);
   }
-  
-}
-
-elseif($srlz[0] == 'Quarterly') 
-{
+} elseif ($srlz[0] == 'Quarterly') {
   $mnth = "Quarterly";
   $vmnth = "Quarterly";
 
@@ -201,7 +182,7 @@ elseif($srlz[0] == 'Quarterly')
 
   $total = number_format($total);
 
-  if($property['securityDepositTerm'] == 1){
+  if ($property['securityDepositTerm'] == 1) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -222,10 +203,7 @@ elseif($srlz[0] == 'Quarterly')
     $total =  ($property['price'] * 3) + $sec_dep + $evictionDeposit + $serviceCharge;
 
     $total = number_format($total);
-  }
-
-  elseif ($property['securityDepositTerm'] == 3)
-  {
+  } elseif ($property['securityDepositTerm'] == 3) {
     if ($yrnt <= 2000000) {
       $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
@@ -241,9 +219,7 @@ elseif($srlz[0] == 'Quarterly')
 
       $total = number_format($total);
     }
-  }
-
-  elseif ($property['securityDepositTerm'] == 4) {
+  } elseif ($property['securityDepositTerm'] == 4) {
     $sec_dep = $property['securityDeposit'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -254,10 +230,7 @@ elseif($srlz[0] == 'Quarterly')
 
     $total = number_format($total);
   }
-}
-
-elseif($srlz[0] == 'Bi-annually') 
-{
+} elseif ($srlz[0] == 'Bi-annually') {
   $mnth = "Bi-annually";
   $vmnth = "Bi-annually";
 
@@ -273,7 +246,7 @@ elseif($srlz[0] == 'Bi-annually')
 
   $total = number_format($total);
 
-  if($property['securityDepositTerm'] == 1){
+  if ($property['securityDepositTerm'] == 1) {
     $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -294,10 +267,7 @@ elseif($srlz[0] == 'Bi-annually')
     $total =  ($property['price'] * 6) + $sec_dep + $evictionDeposit + $serviceCharge;
 
     $total = number_format($total);
-  }
-
-  elseif ($property['securityDepositTerm'] == 3)
-  {
+  } elseif ($property['securityDepositTerm'] == 3) {
     if ($yrnt <= 2000000) {
       $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
@@ -313,9 +283,7 @@ elseif($srlz[0] == 'Bi-annually')
 
       $total = number_format($total);
     }
-  }
-
-  elseif ($property['securityDepositTerm'] == 4) {
+  } elseif ($property['securityDepositTerm'] == 4) {
     $sec_dep = $property['securityDeposit'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -342,8 +310,9 @@ function shortenText($text, $maxLength)
   }
 }
 
- // Function to check if a string starts with a specific prefix
- function startsWith($string, $prefix) {
+// Function to check if a string starts with a specific prefix
+function startsWith($string, $prefix)
+{
   return substr($string, 0, strlen($prefix)) === $prefix;
 }
 
@@ -367,7 +336,7 @@ function shortenText($text, $maxLength)
       <div class="col">
         <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
 
-      <div class="carousel-inner">
+          <div class="carousel-inner">
 
             <?php
 
@@ -450,7 +419,7 @@ function shortenText($text, $maxLength)
 
                 // if ($object['Key'] !== '.' && $object['Key'] !== '..' ) {
 
-                  if (strpos($object['Key'], 'uploads/properties/' . $imageFolder . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
+                if (strpos($object['Key'], 'uploads/properties/' . $imageFolder . '/facilities/') !== 0 && $count <= (count($objects['Contents']) - 2)) {
 
                   $imageSrc = $s3->getObjectUrl($bucket, $object['Key']);
 
@@ -631,7 +600,6 @@ function shortenText($text, $maxLength)
 
 
                             <div class="input-container mb-3">
-
                               <input autocomplete="off" list="inspection-time" name="inspection-time" type="text" class="mob-inspection-time form-control " id="input" placeholder="Inspection time" />
                               <datalist role="listbox" id="inspection-time">
                                 <option value="10:00">10:00 AM</option>
@@ -659,420 +627,446 @@ function shortenText($text, $maxLength)
                                   <label class="custom-control-label" for="customCheckDisabled1" style="font-size: 11px;">I agree to
                                     Rentsmallsmall’s <span class="primary-text-color "> Subscription
                                       terms</span></label>
-
-
                                 </div>
                               </div>
 
                             </div>
                           </div>
 
-                          <div class="show-result">
+                          <!-- <div class="show-result">
 
                             <button type="submit" class="mob-schedule-inspection" id="">Schedule inspection</button>
                           </div>
                         </form>
 
-                      </div>
+                      </div> -->
 
-                      <!-- Tracking code for rss and send inspection details to Hubspot Dashboard - Start of HubSpot Embed Code-->
-	                        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
-                      <!-- End of HubSpot Embed Code -->
+                          <?php if ($property['available_date'] <= date('Y-m-d H:is') || $property['available_date'] == '') { ?>
+
+
+                            <?php if (@$user_type == 'landlord') { ?>
+
+                              <button type="submit" disabled class="disabled-btn btn primary-background w-100" id="">Schedule a visit</button>
+
+                            <?php } else { ?>
+
+                              <button type="submit" class="btn primary-background w-100 inspection-btn schedule-inspection" id="">Schedule a visit</button>
+
+                            <?php } ?>
+
+                          <?php } else { ?>
+                            <?php if ($property['available_date'] == date('Y-m-d', strtotime('+ 1 day'))) { ?>
+                              <button disabled class="disabled-btn btn primary-background w-100">Available in 24hrs</button>
+                            <?php } else { ?>
+
+                              <button disabled class="disabled-btn btn primary-background w-100">Unavailable</button>
+
+                            <?php } ?>
+
+                          <?php } ?>
+                      </div>
+                      </form>
 
                     </div>
+
+                    <!-- Tracking code for rss and send inspection details to Hubspot Dashboard - Start of HubSpot Embed Code-->
+                    <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
+                    <!-- End of HubSpot Embed Code -->
+
                   </div>
                 </div>
-
               </div>
 
-              <!-- Mobile Subscribe section -->
-              <div class="row d-lg-none">
-                <div class="col-3 pr-0 d-flex">
+            </div>
 
-                  <!-- Modal -->
-                  <div class="modal fade" id="mobileSubscribe" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <form id="mobPaymentForms" method="POST">
+            <!-- Mobile Subscribe section -->
+            <div class="row d-lg-none">
+              <div class="col-3 pr-0 d-flex">
 
-                          <div class="modal-body filter-modal-body secondary-background">
-                            <div>
-                              <i class="fa-solid fa-xmark fa-3x" data-dismiss="modal"></i>
+                <!-- Modal -->
+                <div class="modal fade" id="mobileSubscribe" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <form id="mobPaymentForms" method="POST">
+
+                        <div class="modal-body filter-modal-body secondary-background">
+                          <div>
+                            <i class="fa-solid fa-xmark fa-3x" data-dismiss="modal"></i>
+                          </div>
+
+                          <div class="p-4">
+                            <div class="text-center">
+                              <h4 class="font-weight-bolder my-5">Subscribe</h4>
+                              <h5 class="primary-text-color font-weight-bold mt-4" style="font-size: 20px;"><?php echo $property['propertyTitle']; ?></h5>
+                              <p style="font-size: 11px;" class="mb-5"><?php echo $property['address'] . ' ' . $property['city'] . ' ' . $property['name']; ?></p>
                             </div>
 
-                            <div class="p-4">
-                              <div class="text-center">
-                                <h4 class="font-weight-bolder my-5">Subscribe</h4>
-                                <h5 class="primary-text-color font-weight-bold mt-4" style="font-size: 20px;"><?php echo $property['propertyTitle']; ?></h5>
-                                <p style="font-size: 11px;" class="mb-5"><?php echo $property['address'] . ' ' . $property['city'] . ' ' . $property['name']; ?></p>
+                            <div class="subscription-cost text-center">
+                              <div class="subscription-price--mobile">
+                                <p class="m-0 font-weight-light">Subscription Price</p>
+                                <p class="" style="font-weight:700; font-size: 28px">&#8358;<?php echo $prc . ' ' . $mnth; ?></p>
+
                               </div>
+                              <div class="subscription-deposit--mobile">
+                                <p class="m-0 font-weight-light" style="font-size: 15px">Security deposit fund</p>
+                                <p class="" style="font-weight:700; font-size: 25px">&#8358;<?php echo number_format($evc_dep); ?></p>
 
-                              <div class="subscription-cost text-center">
-                                <div class="subscription-price--mobile">
-                                  <p class="m-0 font-weight-light">Subscription Price</p>
-                                  <p class="" style="font-weight:700; font-size: 28px">&#8358;<?php echo $prc . ' ' . $mnth; ?></p>
-
-                                </div>
-                                <div class="subscription-deposit--mobile">
-                                  <p class="m-0 font-weight-light" style="font-size: 15px">Security deposit fund</p>
-                                  <p class="" style="font-weight:700; font-size: 25px">&#8358;<?php echo number_format($evc_dep); ?></p>
-
-                                </div>
                               </div>
+                            </div>
 
 
-                              <div>
-                                <p class="text-center">Choose subscription type</p>
-                              </div>
+                            <div>
+                              <p class="text-center">Choose subscription type</p>
+                            </div>
 
 
-                              <div class="input-container mb-3">
+                            <div class="input-container mb-3">
 
+                              <?php
+
+                              $duration = "";
+
+                              $fullduration = 0;
+
+                              $frequency = unserialize($property['frequency']);
+                              if (is_array($frequency)) {
+
+                                for ($i = 0; $i < count($frequency); $i++) {
+
+                                  if ($frequency[$i] == 12) {
+
+                                    $duration .= '<option value="' . $frequency[$i] . '"> 12 Months </option>';
+
+                                    $fullduration = 1;
+                                  } elseif ($frequency[$i] == 9) {
+
+                                    $duration .= '<option value="' . $frequency[$i] . '"> 9 Months </option>';
+                                  } elseif ($frequency[$i] == 6) {
+
+                                    $duration .= '<option value="' . $frequency[$i] . '"> 6 Months </option>';
+                                  } elseif ($frequency[$i] == 3) {
+
+                                    $duration .= '<option value="' . $frequency[$i] . '"> 3 Months </option>';
+                                  } elseif ($frequency[$i] == 1) {
+
+                                    $duration .= '<option value="' . $frequency[$i] . '"> 1 Month </option>';
+                                  }
+                                }
+                              } else {
+                                $duration .= '<option value="1"> 1 Month </option>';
+                              }
+
+                              ?>
+                              <select <?php echo @$field_stat; ?> class="duration form-control" id="mob-duration">
+
+                                <?php echo $duration; ?>
+                              </select>
+
+                            </div>
+
+
+
+                            <div class="input-container mb-3">
+                              <select <?php echo @$field_stat; ?> class="payment_plan form-control" name="mob-payment-plan" id="mob-payment-plan">
+                                <option value="">Payment plan</option>
                                 <?php
 
-                                $duration = "";
+                                $intervals = "";
 
-                                $fullduration = 0;
+                                $interval = unserialize($property['intervals']);
 
-                                $frequency = unserialize($property['frequency']);
-                                if (is_array($frequency)) {
+                                for ($i = 0; $i < count($interval); $i++) {
 
-                                  for ($i = 0; $i < count($frequency); $i++) {
-
-                                    if ($frequency[$i] == 12) {
-
-                                      $duration .= '<option value="' . $frequency[$i] . '"> 12 Months </option>';
-
-                                      $fullduration = 1;
-                                    } elseif ($frequency[$i] == 9) {
-
-                                      $duration .= '<option value="' . $frequency[$i] . '"> 9 Months </option>';
-                                    } elseif ($frequency[$i] == 6) {
-
-                                      $duration .= '<option value="' . $frequency[$i] . '"> 6 Months </option>';
-                                    } elseif ($frequency[$i] == 3) {
-
-                                      $duration .= '<option value="' . $frequency[$i] . '"> 3 Months </option>';
-                                    } elseif ($frequency[$i] == 1) {
-
-                                      $duration .= '<option value="' . $frequency[$i] . '"> 1 Month </option>';
-                                    }
-                                  }
-                                } else {
-                                  $duration .= '<option value="1"> 1 Month </option>';
+                                  echo '<option value="' . $interval[$i] . '">' . $interval[$i] . '</option>';
                                 }
 
                                 ?>
-                                <select <?php echo @$field_stat; ?> class="duration form-control" id="mob-duration">
 
-                                  <?php echo $duration; ?>
-                                </select>
+                              </select>
 
-                              </div>
+                            </div>
 
 
+                            <div class="input-container mb-3">
 
-                              <div class="input-container mb-3">
-                                <select <?php echo @$field_stat; ?> class="payment_plan form-control" name="mob-payment-plan" id="mob-payment-plan">
-                                  <option value="">Payment plan</option>
-                                  <?php
+                              <input <?php echo @$field_stat; ?> type="text" onclick="(this.type='date')" class="move-in-date form-control" id="mob-move-in-date" placeholder="Move in date" />
+                              <span class="field-icns"><i class="bx bx-calendar"></i></span>
 
-                                  $intervals = "";
-
-                                  $interval = unserialize($property['intervals']);
-
-                                  for ($i = 0; $i < count($interval); $i++) {
-
-                                    echo '<option value="' . $interval[$i] . '">' . $interval[$i] . '</option>';
-                                  }
-
-                                  ?>
-
-                                </select>
-
-                              </div>
+                            </div>
 
 
-                              <div class="input-container mb-3">
+                            <div>
+                              <table class="table table-light" style="background: #F9F9F9; border-radius: 15px">
 
-                                <input <?php echo @$field_stat; ?> type="text" onclick="(this.type='date')" class="move-in-date form-control" id="mob-move-in-date" placeholder="Move in date" />
-                                <span class="field-icns"><i class="bx bx-calendar"></i></span>
+                                <tbody class="border-bottom">
+                                  <tr>
+                                    <td>Subscription fees</td>
 
-                              </div>
+                                    <td class="primary-text-color">&#8358;
+                                      <span class="subc"><?php echo $prc; ?></span>
+                                      <sup class="text-dark mnth"><?php echo $vmnth; ?></sup>
+                                    </td>
+
+                                  </tr>
+
+                                  <?php if (@$userID) { ?>
 
 
-                              <div>
-                                <table class="table table-light" style="background: #F9F9F9; border-radius: 15px">
-
-                                  <tbody class="border-bottom">
                                     <tr>
-                                      <td>Subscription fees</td>
-
-                                      <td class="primary-text-color">&#8358;
-                                        <span class="subc"><?php echo $prc; ?></span>
-                                        <sup class="text-dark mnth"><?php echo $vmnth; ?></sup>
+                                      <td>Service charge deposit</td>
+                                      <td class="primary-text-color">&#8358;<?php echo ($property['serviceChargeTerm'] != '') ? number_format($property['serviceCharge'] * $property['serviceChargeTerm']) : $property['serviceCharge']; ?><sup class="text-dark"></sup>
                                       </td>
-
                                     </tr>
-
-                                    <?php if (@$userID) { ?>
-
-
-                                      <tr>
-                                        <td>Service charge deposit</td>
-                                        <td class="primary-text-color">&#8358;<?php echo ($property['serviceChargeTerm'] != '') ? number_format($property['serviceCharge'] * $property['serviceChargeTerm']) : $property['serviceCharge']; ?><sup class="text-dark"></sup>
-                                        </td>
-                                      </tr>
-
-                                      <tr>
-                                        <td>Security deposit fund</td>
-
-                                        <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($evc_dep); ?><sup class="text-dark"></sup>
-                                        </td>
-                                      </tr>
-
-
-                                  </tbody>
-
-                                  <tfoot>
 
                                     <tr>
+                                      <td>Security deposit fund</td>
 
-                                      <td class="text-center" style="border-top: 1px solid #E3EBEF;">Total</td>
-                                      <td class="primary-text-color pricing" style="font-size: 20px; border-top: 1px solid #E3EBEF;">&#x20A6;<?php echo $total ?></td>
+                                      <td class="primary-text-color sec_dep">&#8358;<?php echo number_format($evc_dep); ?><sup class="text-dark"></sup>
+                                      </td>
                                     </tr>
 
-                                  </tfoot>
 
-                                <?php } ?>
+                                </tbody>
 
-                                </table>
+                                <tfoot>
 
-                              </div>
+                                  <tr>
+
+                                    <td class="text-center" style="border-top: 1px solid #E3EBEF;">Total</td>
+                                    <td class="primary-text-color pricing" style="font-size: 20px; border-top: 1px solid #E3EBEF;">&#x20A6;<?php echo $total ?></td>
+                                  </tr>
+
+                                </tfoot>
+
+                              <?php } ?>
+
+                              </table>
+
                             </div>
                           </div>
+                        </div>
 
-                          <?php if (!@$userID) { ?>
+                        <?php if (!@$userID) { ?>
 
-                            <div class="price-notifier">Login to see price breakdown</div>
+                          <div class="price-notifier">Login to see price breakdown</div>
 
-                            <!--Hidden input fields so as to get all the changes -->
-                            <input type="hidden" class="subscription-fees" name="subscription-fees" value="<?php echo str_replace(',', '', $prc); ?>">
-                            <input type="hidden" class="service-charge-deposit" name="service-charge-deposit" value="<?php echo ($property['serviceChargeTerm'] != '') ? $property['serviceCharge'] * $property['serviceChargeTerm'] : $property['serviceCharge']; ?>">
-                            <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $evc_dep; ?>">
-                            <input type="hidden" class="total" name="total" value="<?php echo str_replace(',', '', $total) ?>">
+                          <!--Hidden input fields so as to get all the changes -->
+                          <input type="hidden" class="subscription-fees" name="subscription-fees" value="<?php echo str_replace(',', '', $prc); ?>">
+                          <input type="hidden" class="service-charge-deposit" name="service-charge-deposit" value="<?php echo ($property['serviceChargeTerm'] != '') ? $property['serviceCharge'] * $property['serviceChargeTerm'] : $property['serviceCharge']; ?>">
+                          <input type="hidden" class="security-deposit-fund" name="security-deposit-fund" value="<?php echo $evc_dep; ?>">
+                          <input type="hidden" class="total" name="total" value="<?php echo str_replace(',', '', $total) ?>">
 
 
-                          <?php } ?>
+                        <?php } ?>
 
-                          <div class="show-result">
+                        <div class="show-result">
 
-                            <button type="submit" class="" id="mob-pay-property">Subscribe</button>
-                          </div>
+                          <button type="submit" class="" id="mob-pay-property">Subscribe</button>
+                        </div>
 
-                        </form>
-                      </div>
+                      </form>
                     </div>
                   </div>
                 </div>
-
               </div>
 
             </div>
 
-            <section>
-              <p class="d-md-block d-none">Managed by <span class="font-weight-bolder"><?php echo $property['manager']; ?></span></p>
-              <h6 class="d-md-none d-block font-weight-bolder mt-5">About this property</h6>
-              <p><?php echo nl2br(html_entity_decode($property['propertyDescription'])); ?>
-              </p>
-            </section>
+          </div>
 
-            <section class="my-5">
-              <h4>Amenities</h4>
-              <div class="row">
-                <div class="col-md-4 col-6">
+          <section>
+            <p class="d-md-block d-none">Managed by <span class="font-weight-bolder"><?php echo $property['manager']; ?></span></p>
+            <h6 class="d-md-none d-block font-weight-bolder mt-5">About this property</h6>
+            <p><?php echo nl2br(html_entity_decode($property['propertyDescription'])); ?>
+            </p>
+          </section>
 
-                  <?php
-                  $amenity = unserialize($property['amenities']);
-
-                  $amenity_list = "";
-
-                  ?>
-                  <?php $amenity_count = count($amenity); ?>
-
-                  <?php if (in_array('prepaid', $amenity)) { ?>
-                    <div class="mb-3 d-flex">
-                      <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/meter.svg" alt="">
-                      <span>Prepaid meter</span>
-                    </div>
-                  <?php } ?>
-
-                  <?php if (in_array('water', $amenity)) { ?>
-                    <div class="mb-3 d-flex">
-                      <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/water.svg" alt="">
-                      <span>water</span>
-                    </div>
-                  <?php } ?>
-
-                  <?php if (in_array('security-gate', $amenity)) { ?>
-                    <div class="mb-3 d-flex">
-                      <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/security.svg" alt="">
-                      <span>Security</span>
-                    </div>
-                  <?php } ?>
-
-
-                  <?php if (in_array('waste-disposal', $amenity)) { ?>
-                    <div class="mb-3 d-flex">
-                      <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/waste-disposal.svg" alt="">
-                      <span>Waste disposal</span>
-                    </div>
-                  <?php } ?>
-                </div>
-
-
-                <div class="col-md-4 col-6">
-                  <?php if (in_array('kitchen', $amenity)) { ?>
-                    <div class="mb-3 d-flex">
-                      <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/kitchen.svg" alt="">
-                      <span>kitchen</span>
-                    </div>
-                  <?php } ?>
-
-                  <?php if (in_array('wardrobe', $amenity)) { ?>
-                    <div class="mb-3 d-flex">
-                      <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/wardrobe.svg" alt="">
-                      <span>Wardrobe</span>
-                    </div>
-                  <?php } ?>
-
-                  <?php if (in_array('dining', $amenity)) { ?>
-                    <div class="mb-3 d-flex">
-                      <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/dinning.svg" alt="">
-                      <span>Dinning</span>
-                    </div>
-                  <?php } ?>
-
-                  <?php if (in_array('air-condition', $amenity)) { ?>
-                    <div class="mb-3 d-flex">
-                      <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/ac.svg" alt="">
-                      <span>AC</span>
-                    </div>
-                  <?php } ?>
-
-                </div>
-                <div class="col-md-4 col-6">
-                  <?php if (in_array('generator', $amenity)) { ?>
-                    <div class="mb-3 d-flex">
-                      <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/gen.svg" alt="">
-                      <span>Gen</span>
-                    </div>
-                  <?php } ?>
-                </div>
-              </div>
-            </section>
-
-
-            <section>
-              <h4>House rules</h4>
-              <div class="row">
-                <div class="col-12">
-                  <p>House rules violation may result in a subscription fine</p>
-                </div>
-                <div class="col-md-4 col-6">
-                  <div class="mb-3">
-                    <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/no-smoking.svg" alt="">
-                    <span>No Smoking</span>
-                  </div>
-                  <div class="mb-3">
-                    <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/no-pets.svg" alt="">
-                    <span>No Pets</span>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <h4 class="my-4">Neighbourhood</h4>
-              <div class="row">
+          <section class="my-5">
+            <h4>Amenities</h4>
+            <div class="row">
+              <div class="col-md-4 col-6">
 
                 <?php
+                $amenity = unserialize($property['amenities']);
 
-                $CI = &get_instance();
-
-                $facilities = $CI->get_facilities($property['propertyID']);
-
-                foreach ($facilities as $facility => $outlet) {
+                $amenity_list = "";
 
                 ?>
+                <?php $amenity_count = count($amenity); ?>
 
-                  <div class="col-md-4 col-6">
-
-                    <div class="card border-0">
-                      <img src="<?php echo base_url() . "uploads/properties/" . $property['imageFolder'] . '/facilities/' . $outlet['file_path']; ?>" class="card-img-top" alt="...">
-                      <div class="p-1 card-body">
-                        <h6 class="mb-1 card-title"><?php echo $outlet['name']; ?></h6>
-                        <p class="mb-1 font-weight-lighter card-text"><?php echo $outlet['category']; ?>
-                        </p>
-                        <p class="mb-1 font-weight-bold">Under &#8358;<?php echo $outlet['distance']; ?></p>
-                      </div>
-                    </div>
-
-
+                <?php if (in_array('prepaid', $amenity)) { ?>
+                  <div class="mb-3 d-flex">
+                    <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/meter.svg" alt="">
+                    <span>Prepaid meter</span>
                   </div>
+                <?php } ?>
 
+                <?php if (in_array('water', $amenity)) { ?>
+                  <div class="mb-3 d-flex">
+                    <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/water.svg" alt="">
+                    <span>water</span>
+                  </div>
+                <?php } ?>
+
+                <?php if (in_array('security-gate', $amenity)) { ?>
+                  <div class="mb-3 d-flex">
+                    <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/security.svg" alt="">
+                    <span>Security</span>
+                  </div>
+                <?php } ?>
+
+
+                <?php if (in_array('waste-disposal', $amenity)) { ?>
+                  <div class="mb-3 d-flex">
+                    <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/waste-disposal.svg" alt="">
+                    <span>Waste disposal</span>
+                  </div>
+                <?php } ?>
+              </div>
+
+
+              <div class="col-md-4 col-6">
+                <?php if (in_array('kitchen', $amenity)) { ?>
+                  <div class="mb-3 d-flex">
+                    <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/kitchen.svg" alt="">
+                    <span>kitchen</span>
+                  </div>
+                <?php } ?>
+
+                <?php if (in_array('wardrobe', $amenity)) { ?>
+                  <div class="mb-3 d-flex">
+                    <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/wardrobe.svg" alt="">
+                    <span>Wardrobe</span>
+                  </div>
+                <?php } ?>
+
+                <?php if (in_array('dining', $amenity)) { ?>
+                  <div class="mb-3 d-flex">
+                    <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/dinning.svg" alt="">
+                    <span>Dinning</span>
+                  </div>
+                <?php } ?>
+
+                <?php if (in_array('air-condition', $amenity)) { ?>
+                  <div class="mb-3 d-flex">
+                    <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/ac.svg" alt="">
+                    <span>AC</span>
+                  </div>
                 <?php } ?>
 
               </div>
-            </section>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- right side -->
-      <div class="col-6 pl-5 d-md-block d-none">
-        <div class="subscription-container ml-5" style="position: sticky; top: 98px;">
-          <?php
-          $CI = &get_instance();
-
-          if (date('Y-m-d') < $property['available_date']) {
-
-            echo '<div style="color: red; border-color:red" class="subscription-availability  subscription-available">Unavailable</div>';
-          } else {
-
-            echo '<div class="subscription-availability  subscription-available">Available</div>';
-          }
-          ?>
-          <div class="row">
-
-
-            <div class="col-12">
-              <div>
-                <p>subscription price</p>
-
-                <p class="subcription-amount font-weight-bold">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup id="subtips" data-toggle="tooltip" data-placement="right" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
-                <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($evc_dep); ?></span><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+              <div class="col-md-4 col-6">
+                <?php if (in_array('generator', $amenity)) { ?>
+                  <div class="mb-3 d-flex">
+                    <img class="img-fluid mr-1" src="<?php echo base_url(); ?>assets/updated-assets/images/gen.svg" alt="">
+                    <span>Gen</span>
+                  </div>
+                <?php } ?>
               </div>
             </div>
+          </section>
 
 
-
-            <div class="col-12">
-              <div class="schedule-container d-flex mb-2">
-                <div id="scheduleVisit" class="schedule-container__schedule  schedule-item-container" data-toggle="modal" data-target="#exampleModal">
-                  <span class="">Schedule a visit</span>
-                </div>
-                <div id="subscribeNow" class="schedule-container__subscribe  " data-toggle="modal" data-target="#subscribe">
-                  <span class="">Subscribe now</span>
-                </div>
-
+          <section>
+            <h4>House rules</h4>
+            <div class="row">
+              <div class="col-12">
+                <p>House rules violation may result in a subscription fine</p>
               </div>
+              <div class="col-md-4 col-6">
+                <div class="mb-3">
+                  <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/no-smoking.svg" alt="">
+                  <span>No Smoking</span>
+                </div>
+                <div class="mb-3">
+                  <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/no-pets.svg" alt="">
+                  <span>No Pets</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h4 class="my-4">Neighbourhood</h4>
+            <div class="row">
+
+              <?php
+
+              $CI = &get_instance();
+
+              $facilities = $CI->get_facilities($property['propertyID']);
+
+              foreach ($facilities as $facility => $outlet) {
+
+              ?>
+
+                <div class="col-md-4 col-6">
+
+                  <div class="card border-0">
+                    <img src="<?php echo base_url() . "uploads/properties/" . $property['imageFolder'] . '/facilities/' . $outlet['file_path']; ?>" class="card-img-top" alt="...">
+                    <div class="p-1 card-body">
+                      <h6 class="mb-1 card-title"><?php echo $outlet['name']; ?></h6>
+                      <p class="mb-1 font-weight-lighter card-text"><?php echo $outlet['category']; ?>
+                      </p>
+                      <p class="mb-1 font-weight-bold">Under &#8358;<?php echo $outlet['distance']; ?></p>
+                    </div>
+                  </div>
+
+
+                </div>
+
+              <?php } ?>
+
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- right side -->
+    <div class="col-6 pl-5 d-md-block d-none">
+      <div class="subscription-container ml-5" style="position: sticky; top: 98px;">
+        <?php
+        $CI = &get_instance();
+
+        if (date('Y-m-d') < $property['available_date']) {
+
+          echo '<div style="color: red; border-color:red" class="subscription-availability  subscription-available">Unavailable</div>';
+        } else {
+
+          echo '<div class="subscription-availability  subscription-available">Available</div>';
+        }
+        ?>
+        <div class="row">
+
+
+          <div class="col-12">
+            <div>
+              <p>subscription price</p>
+
+              <p class="subcription-amount font-weight-bold">&#8358;<?php echo $prc . ' ' . $mnth; ?><sup id="subtips" data-toggle="tooltip" data-placement="right" title="This is your recurring subscription payment."><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+              <p>Security deposit fund <span class="subscription-deposit font-weight-bold">&#8358;<?php echo number_format($evc_dep); ?></span><sup data-toggle="tooltip" data-placement="right" title="This is a refundable deposit which shall be refunded only after the effluxion of the term or termination of the agreement and the successful handover/vacant possession of the property to the Legal Representative or property owner without any delays. See FAQ for more info"><img class=" w-25 " style="max-width: 15px;" src="<?php echo base_url(); ?>assets/updated-assets/images/info-icon.svg" alt=""> </sup></p>
+            </div>
+          </div>
+
+
+
+          <div class="col-12">
+            <div class="schedule-container d-flex mb-2">
+              <div id="scheduleVisit" class="schedule-container__schedule  schedule-item-container" data-toggle="modal" data-target="#exampleModal">
+                <span class="">Schedule a visit</span>
+              </div>
+              <div id="subscribeNow" class="schedule-container__subscribe  " data-toggle="modal" data-target="#subscribe">
+                <span class="">Subscribe now</span>
+              </div>
+
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
   </div>
 
@@ -1168,7 +1162,7 @@ function shortenText($text, $maxLength)
           </div>
 
           <!-- Tracking code for rss and send inspection details to Hubspot Dashboard - Start of HubSpot Embed Code-->
-                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
+          <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/143441522.js"></script>
           <!-- End of HubSpot Embed Code -->
 
         </div>
@@ -1463,7 +1457,7 @@ function shortenText($text, $maxLength)
                     }
                     ?>
 
-                    <div class="carousel-inner" style = "border-top-left-radius: 10px; border-top-right-radius: 10px">
+                    <div class="carousel-inner" style="border-top-left-radius: 10px; border-top-right-radius: 10px">
                       <?php
                       $imageFolder = $value['imageFolder'];
 
@@ -1530,27 +1524,25 @@ function shortenText($text, $maxLength)
                       <p class="card-text">
                         &bull;<?php echo $value['bed']; ?> Bed
                         &bull;<?php echo $value['bath']; ?> Bath
-                        <?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; ?>
-                      <!-- &bull;--> <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" 
-                    fill="none">
-                    <g clip-path="url(#clip0_7160_3254)">
-                      <path
-                        d="M7.5 2.5C7.5 1.12125 6.37875 0 5 0C3.62125 0 2.5 1.12125 2.5 2.5C2.5 3.73667 3.4025 4.76625 4.58333 4.965V9.58333C4.58333 9.81333 4.77 10 5 10C5.23 10 5.41667 9.81333 5.41667 9.58333V4.965C6.5975 4.76625 7.5 3.73667 7.5 2.5Z"
-                        fill="#414042" />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_7160_3254">
-                        <rect width="10" height="10" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg><?php echo ($value['city']); ?>
+                        <?php //echo ($value['state'] == 2671) ? 'Lagos' : 'Abuja'; 
+                        ?>
+                        <!-- &bull;--> <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                          <g clip-path="url(#clip0_7160_3254)">
+                            <path d="M7.5 2.5C7.5 1.12125 6.37875 0 5 0C3.62125 0 2.5 1.12125 2.5 2.5C2.5 3.73667 3.4025 4.76625 4.58333 4.965V9.58333C4.58333 9.81333 4.77 10 5 10C5.23 10 5.41667 9.81333 5.41667 9.58333V4.965C6.5975 4.76625 7.5 3.73667 7.5 2.5Z" fill="#414042" />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_7160_3254">
+                              <rect width="10" height="10" fill="white" />
+                            </clipPath>
+                          </defs>
+                        </svg><?php echo ($value['city']); ?>
                       </p>
                     </div>
                   </div>
                 </a>
               </div>
-            </div>          
-            <?php } ?>
+            </div>
+          <?php } ?>
 
 
         <?php } else { ?>
@@ -1558,7 +1550,7 @@ function shortenText($text, $maxLength)
         <?php }
       } else { ?>
         <div style="width:100%;padding:15px 0;font-family:gotham-medium;color:#414042">No results matching your search</div>
-        
+
       <?php } ?>
 
 
