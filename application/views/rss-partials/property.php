@@ -1049,7 +1049,6 @@ function startsWith($string, $prefix)
             </div>
 
 
-
             <div class="col-12">
               <div class="schedule-container d-flex mb-2">
                 <div id="scheduleVisit" class="schedule-container__schedule  schedule-item-container" data-toggle="modal" data-target="#exampleModal">
@@ -1065,8 +1064,6 @@ function startsWith($string, $prefix)
         </div>
       </div>
       </div>
-
-      
     </div>
 
 </div>

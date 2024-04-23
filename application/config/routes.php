@@ -200,6 +200,10 @@ $route['app/login'] = 'app/app_login';
 
 $route['app/check-user'] = 'api/check_user';
 
+$route['app/fetchVersion'] = 'app/fetchVersion';
+
+$route['app/updateVersion'] = 'app/updateVersion';
+
 $route['admin/notify-cx/(:any)'] = 'rss/send_inspection_email/$1';
 
 $route['rss/test-pdf'] = 'rss/test_pdf';

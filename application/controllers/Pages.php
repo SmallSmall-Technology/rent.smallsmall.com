@@ -988,8 +988,6 @@ class Pages extends CI_Controller {
 		$this->load->view('templates/rss-updated-js-files');	
 
 		$this->load->view('templates/rss-updated-footer');	
-
-	    
 	}
 	
 	// For Mobile App

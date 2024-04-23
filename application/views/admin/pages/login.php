@@ -294,7 +294,7 @@
 						<label>Username</label>
 
 						<input type="text" class="form-control login-txt-f adminUsername" placeholder="e.g email@email.com" id="" name="" />
-
+						
 					</div>
 
 					<div class="formcontent">
