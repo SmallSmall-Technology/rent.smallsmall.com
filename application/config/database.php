@@ -145,28 +145,28 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 
-$db['second'] = array(
-	'dsn'	=> '',
-	// 'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
-	// 'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
-	'hostname' => 'rss-dev-db-1.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
-	// 'username' => 'rentsmallsmall_buytolet',
-	'username' => 'admin',
-	'password' => 'Buytolet!2021',
-	'database' => 'rentsmallsmall_live_apis',
-	// 'database' => 'rentsmallsmall_furnisure_buytolet_database',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
+// $db['second'] = array(
+// 	'dsn'	=> '',
+// 	// 'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
+// 	// 'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
+// 	'hostname' => 'rss-dev-db-1.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
+// 	// 'username' => 'rentsmallsmall_buytolet',
+// 	'username' => 'admin',
+// 	'password' => 'Buytolet!2021',
+// 	'database' => 'rentsmallsmall_live_apis',
+// 	// 'database' => 'rentsmallsmall_furnisure_buytolet_database',
+// 	'dbdriver' => 'mysqli',
+// 	'dbprefix' => '',
+// 	'pconnect' => FALSE,
+// 	'db_debug' => (ENVIRONMENT !== 'production'),
+// 	'cache_on' => FALSE,
+// 	'cachedir' => '',
+// 	'char_set' => 'utf8',
+// 	'dbcollat' => 'utf8_general_ci',
+// 	'swap_pre' => '',
+// 	'encrypt' => FALSE,
+// 	'compress' => FALSE,
+// 	'stricton' => FALSE,
+// 	'failover' => array(),
+// 	'save_queries' => TRUE
+// );
