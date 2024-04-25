@@ -762,6 +762,30 @@ class App_model extends CI_Model {
 
 		}
 	}
+
+	public function fetchVersion(){
+	    
+	    $this->db->select('*');
+
+		$this->db->from('app_version');
+		
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
+	public function updateVersion($build_number, $version_number){
+	    
+		$id = 1;
+
+	    $versionUpdate = array("build_number" => $build_number, "version_number" => $version_number);
+	        
+		$this->db->where('id', $id);
+		
+		return $this->db->update('app_version', $versionUpdate);
+		
+	}
+	
 	public function count_booking_transactions($bookingID){
 	    
 	    $this->db->from('transaction_tbl');

@@ -326,18 +326,16 @@ else{
                 <div class="primary-background p-5 d-flex justify-content-center align-content-center">
                     <div class="text-center">
                         <img class="mb-4" style="width: 100px;" src="../assets/images/wallet.gif" alt="">
-                        <p class="mb-2" style="font-size: 22px;">You haven’t created a wallet yet</p>
-                        <p class="mb-4" style="font-size: 13px;">You will need to provide your BVN to create a wallet on
-                            our
-                            platform</p>
-                        <button type="button" class="btn btn-dark py-3 btn-custom-primary px-5" data-toggle="modal"
-                            data-target="#createWallet">Create Wallet</button>
+                        <!-- <p class="mb-2" style="font-size: 22px;">You haven’t created a wallet yet</p> -->
+                        <p class="mb-4" style="font-size: 13px;">Wallet creation is unavailable at this time</p>
+                        <!-- <button type="button" class="btn btn-dark py-3 btn-custom-primary px-5" data-toggle="modal"
+                            data-target="#createWallet">Create Wallet</button> -->
                     </div>
                 </div>
 
 
                 <!-- Modal -->
-                <div class="modal fade" id="createWallet" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                <!-- <div class="modal fade" id="createWallet" data-backdrop="static" data-keyboard="false" tabindex="-1"
                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -382,7 +380,7 @@ else{
 
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div>
 

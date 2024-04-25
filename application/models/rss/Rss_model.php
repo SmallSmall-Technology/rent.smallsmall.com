@@ -277,11 +277,11 @@ class Rss_model extends CI_Model
 
 	public function countProperties()
 	{
-
 		$this->db->from('property_tbl');
 
 		return $this->db->count_all_results();
 	}
+	
 	public function countPropertyType($slug)
 	{
 
