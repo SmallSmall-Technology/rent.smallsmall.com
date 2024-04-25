@@ -3333,6 +3333,61 @@ class App extends CI_Controller
 	}
 
 
+	public function fetchVersion()
+	{
+		$result = FALSE;
+
+		$details = '';
+
+		$data = array();
+
+		$data = $this->app_model->fetchVersion();
+
+		if(is_array($data)) {
+
+			$result = TRUE;
+
+			$details = "Success";
+		}
+
+		echo json_encode(array("response" => $result, "details" => $details, "data" => $data));
+	}
+
+	public function updateVersion()
+	{
+		$response = FALSE;
+
+		$details = '';
+
+		$token = '';
+
+		$json = file_get_contents('php://input');
+
+		$json_data = json_decode($json);
+
+		$build_number = $json_data->buildNumber;
+
+		$version_number = $json_data->versionNumber;
+
+		$data['version'] = $this->app_model->updateVersion($build_number, $version_number);
+
+		if($data['version'])
+		{
+			$response = TRUE;
+
+			$details = "Success";
+		}
+
+		else
+		{
+			$response = FALSE;
+
+			$details = "Error updating the version and build numbers";
+		}
+
+		echo json_encode(array("response" => $response, "details" => $details));
+	}
+
 	public function pay_subscription()
 	{
 

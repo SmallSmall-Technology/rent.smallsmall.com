@@ -237,6 +237,10 @@ $route['rss/upfrontPropty'] = 'rss/upfrontPropty';
 
 $route['rss/upfrontPropty/(:any)'] = 'rss/upfrontPropty/$1';
 
+$route['app/fetchVersion'] = 'app/fetchVersion';
+
+$route['app/updateVersion'] = 'app/updateVersion';
+
 /**RSS Staging User profile Routes Starts Here ***/
 
 $route['dashboard/request-repair'] = 'dashboard/request_repair';
