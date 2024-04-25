@@ -870,7 +870,7 @@ class Rss extends CI_Controller
 
 	public function login()
 	{
-
+		
 		if (!file_exists(APPPATH . 'views/rss-partials/login.php')) {
 
 			// Whoops, we don't have a page for that!
