@@ -4213,7 +4213,7 @@ class Rss extends CI_Controller
 
 				CURLOPT_HTTPHEADER => [
 
-					"authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7", //replace this with your own test key
+					"authorization: Bearer '.api_key.'", //replace this with your own test key
 
 					"content-type: application/json",
 
@@ -4358,7 +4358,7 @@ class Rss extends CI_Controller
 			$ch,
 			CURLOPT_HTTPHEADER,
 			[
-				'Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7'
+				'Authorization: Bearer '.api_key.''
 			]
 		);
 
@@ -5688,7 +5688,7 @@ class Rss extends CI_Controller
 
 			CURLOPT_HTTPHEADER => [
 
-				"authorization: Bearer sk_test_c547a9dec4baacddfd7a8726a131758c2102cae7", //replace this with your own test key
+				"authorization: Bearer '.api_key.'", //replace this with your own test key
 
 				"content-type: application/json",
 
@@ -5742,7 +5742,7 @@ class Rss extends CI_Controller
 			$ch,
 			CURLOPT_HTTPHEADER,
 			[
-				'Authorization: Bearer sk_test_c547a9dec4baacddfd7a8726a131758c2102cae7'
+				'Authorization: Bearer '.api_key.''
 			]
 		);
 
@@ -6060,7 +6060,7 @@ class Rss extends CI_Controller
 			"amount" => $amount
 		),
 		CURLOPT_HTTPHEADER => array(
-			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Authorization: Bearer '.api_key.'",
 			"Cache-Control: no-cache"
 		),
 		)
@@ -6101,7 +6101,7 @@ class Rss extends CI_Controller
 		curl_setopt($ch,CURLOPT_POST, true);
 		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Authorization: Bearer '.api_key.'",
 			"Cache-Control: no-cache",
 		));
 		
@@ -6150,7 +6150,7 @@ class Rss extends CI_Controller
 		// 	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 		// 	CURLOPT_CUSTOMREQUEST => "GET",
 		// 	CURLOPT_HTTPHEADER => array(
-		// 	"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+		// 	"Authorization: Bearer '.api_key.'",
 		// 	"Cache-Control: no-cache",
 		// 	),
 		// ));

@@ -339,7 +339,7 @@
 
                 let handler = PaystackPop.setup({
 
-                  key: 'pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2', // Replace with your public key
+                  key: '<?php echo public_key ?>', // Replace with your public key
               
                   email: document.getElementById("email").value,
               

@@ -73,60 +73,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-// <!-- $db['default'] = array(
-// 	'dsn'	=> '',
-// 	'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
-// 	// 'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
-// 	'username' => 'rentsmallsmall_buytolet',
-// 	'password' => 'Buytolet!2021',
-//  	'database' => 'rentsmallsmall_furnisure_buytolet_database',
-// 	'dbdriver' => 'mysqli',
-// 	'dbprefix' => '',
-// 	'pconnect' => FALSE,
-// 	'db_debug' => (ENVIRONMENT !== 'development'),
-// 	'cache_on' => FALSE,
-// 	'cachedir' => '',
-// 	'char_set' => 'utf8',
-// 	'dbcollat' => 'utf8_general_ci',
-// 	'swap_pre' => '',
-// 	'encrypt' => FALSE,
-// 	'compress' => FALSE,
-// 	'stricton' => FALSE,
-// 	'failover' => array(),
-// 	'save_queries' => TRUE
-// );
-
-// $db['second'] = array(
-// 	'dsn'	=> '',
-// 	// 'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
-// 	// 'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
-// 	'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
-// 	// 'username' => 'rentsmallsmall_buytolet',
-// 	'username' => 'rentsmallsmall_buytolet',
-// 	'password' => 'Buytolet!2021',
-// 	'database' => 'rentsmallsmall_live_apis',
-// 	// 'database' => 'rentsmallsmall_furnisure_buytolet_database',
-// 	'dbdriver' => 'mysqli',
-// 	'dbprefix' => '',
-// 	'pconnect' => FALSE,
-// 	'db_debug' => (ENVIRONMENT !== 'production'),
-// 	'cache_on' => FALSE,
-// 	'cachedir' => '',
-// 	'char_set' => 'utf8',
-// 	'dbcollat' => 'utf8_general_ci',
-// 	'swap_pre' => '',
-// 	'encrypt' => FALSE,
-// 	'compress' => FALSE,
-// 	'stricton' => FALSE,
-// 	'failover' => array(),
-// 	'save_queries' => TRUE
-// ); -->
-
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'rss-dev-db-1.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
+	'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
 	// 'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
-	'username' => 'admin',
+	'username' => 'rentsmallsmall_buytolet',
 	'password' => 'Buytolet!2021',
  	'database' => 'rentsmallsmall_furnisure_buytolet_database',
 	'dbdriver' => 'mysqli',
@@ -149,9 +100,9 @@ $db['second'] = array(
 	'dsn'	=> '',
 	// 'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
 	// 'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
-	'hostname' => 'rss-dev-db-1.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
+	'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
 	// 'username' => 'rentsmallsmall_buytolet',
-	'username' => 'admin',
+	'username' => 'rentsmallsmall_buytolet',
 	'password' => 'Buytolet!2021',
 	'database' => 'rentsmallsmall_live_apis',
 	// 'database' => 'rentsmallsmall_furnisure_buytolet_database',
@@ -170,3 +121,52 @@ $db['second'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+// $db['default'] = array(
+// 	'dsn'	=> '',
+// 	'hostname' => 'rss-dev-db-1.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
+// 	// 'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
+// 	'username' => 'admin',
+// 	'password' => 'Buytolet!2021',
+//  	'database' => 'rentsmallsmall_furnisure_buytolet_database',
+// 	'dbdriver' => 'mysqli',
+// 	'dbprefix' => '',
+// 	'pconnect' => FALSE,
+// 	'db_debug' => (ENVIRONMENT !== 'development'),
+// 	'cache_on' => FALSE,
+// 	'cachedir' => '',
+// 	'char_set' => 'utf8',
+// 	'dbcollat' => 'utf8_general_ci',
+// 	'swap_pre' => '',
+// 	'encrypt' => FALSE,
+// 	'compress' => FALSE,
+// 	'stricton' => FALSE,
+// 	'failover' => array(),
+// 	'save_queries' => TRUE
+// );
+
+// $db['second'] = array(
+// 	'dsn'	=> '',
+// 	// 'hostname' => 'rss.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
+// 	// 'hostname' => 'rss.cbhrg1lzyru7.eu-west-1.rds.amazonaws.com',
+// 	'hostname' => 'rss-dev-db-1.cojxxisixk5c.eu-west-1.rds.amazonaws.com',
+// 	// 'username' => 'rentsmallsmall_buytolet',
+// 	'username' => 'admin',
+// 	'password' => 'Buytolet!2021',
+// 	'database' => 'rentsmallsmall_live_apis',
+// 	// 'database' => 'rentsmallsmall_furnisure_buytolet_database',
+// 	'dbdriver' => 'mysqli',
+// 	'dbprefix' => '',
+// 	'pconnect' => FALSE,
+// 	'db_debug' => (ENVIRONMENT !== 'production'),
+// 	'cache_on' => FALSE,
+// 	'cachedir' => '',
+// 	'char_set' => 'utf8',
+// 	'dbcollat' => 'utf8_general_ci',
+// 	'swap_pre' => '',
+// 	'encrypt' => FALSE,
+// 	'compress' => FALSE,
+// 	'stricton' => FALSE,
+// 	'failover' => array(),
+// 	'save_queries' => TRUE
+// );
