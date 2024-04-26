@@ -4268,7 +4268,7 @@ class Rss extends CI_Controller
 
 				CURLOPT_HTTPHEADER => [
 
-					"authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7", //replace this with your own test key
+					"authorization: Bearer sk_live_f812b160dfc3696af1bba649204dacd257c9cbf9", //replace this with your own test key
 
 					"content-type: application/json",
 
@@ -4413,7 +4413,7 @@ class Rss extends CI_Controller
 			$ch,
 			CURLOPT_HTTPHEADER,
 			[
-				'Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7'
+				'Authorization: Bearer sk_live_f812b160dfc3696af1bba649204dacd257c9cbf9'
 			]
 		);
 
@@ -5745,7 +5745,7 @@ class Rss extends CI_Controller
 
 			CURLOPT_HTTPHEADER => [
 
-				"authorization: Bearer sk_test_c547a9dec4baacddfd7a8726a131758c2102cae7", //replace this with your own test key
+				"authorization: Bearer sk_live_f812b160dfc3696af1bba649204dacd257c9cbf9", //replace this with your own test key
 
 				"content-type: application/json",
 
@@ -5799,7 +5799,7 @@ class Rss extends CI_Controller
 			$ch,
 			CURLOPT_HTTPHEADER,
 			[
-				'Authorization: Bearer sk_test_c547a9dec4baacddfd7a8726a131758c2102cae7'
+				'Authorization: Bearer sk_live_f812b160dfc3696af1bba649204dacd257c9cbf9'
 			]
 		);
 
@@ -6117,7 +6117,7 @@ class Rss extends CI_Controller
 			"amount" => $amount
 		),
 		CURLOPT_HTTPHEADER => array(
-			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Authorization: Bearer sk_live_f812b160dfc3696af1bba649204dacd257c9cbf9",
 			"Cache-Control: no-cache"
 		),
 		)
@@ -6158,7 +6158,7 @@ class Rss extends CI_Controller
 		curl_setopt($ch,CURLOPT_POST, true);
 		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			"Authorization: Bearer sk_live_31982685562b561bd7d18d92333cc09ec78952f7",
+			"Authorization: Bearer sk_live_f812b160dfc3696af1bba649204dacd257c9cbf9",
 			"Cache-Control: no-cache",
 		));
 		
