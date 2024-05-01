@@ -328,10 +328,11 @@ body {
 .banner {
   padding: 18% 3% 8% 3%;
 
-  /* background-image: linear-gradient(143.43deg, #03100d -22.14%, rgba(65, 64, 66, 0) 67.1%, rgba(65, 64, 66, 0) 148.12%, rgba(65, 64, 66, 0) 148.13%),
-    url("../../images/banner-homepage.png"); */
   background-image: linear-gradient(143.43deg, #03100d -22.14%, rgba(65, 64, 66, 0) 67.1%, rgba(65, 64, 66, 0) 148.12%, rgba(65, 64, 66, 0) 148.13%),
-    url("https://raw.githubusercontent.com/SmallSmall-Technology/RSS-UIUX-Updated-Website-2023/dev/assets/images/banner-homepage.png");
+    url("../../images/banner-homepage.png");
+    
+  /* background-image: linear-gradient(143.43deg, #03100d -22.14%, rgba(65, 64, 66, 0) 67.1%, rgba(65, 64, 66, 0) 148.12%, rgba(65, 64, 66, 0) 148.13%),
+    url("https://raw.githubusercontent.com/SmallSmall-Technology/RSS-UIUX-Updated-Website-2023/dev/assets/images/banner-homepage.png"); */
 
   background-repeat: no-repeat;
   background-size: cover;
