@@ -13,6 +13,8 @@
 
   <!--Platform Blog Script Code-->
 
+  <script class="cytrio-script" src="https://cytriocpmprod.blob.core.windows.net/cytrio-public/cookiescript/2339/2438/script.js"></script>
+
   <script defer charset="UTF-8" src="https://bundle.notice.studio/index.js"></script>
 
   <script src="https://cdn.gravitec.net/storage/16909e628b2b4433f66987cc8120e971/client.js" async></script>
