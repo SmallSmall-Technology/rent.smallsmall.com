@@ -102,6 +102,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['test/email'] = 'rss/email_test';
 
+$route['admin/send-inactive-users-email'] = 'rss/send_inactive_users_email';
+
 /********** Stay SmallSmall *******************/
 $route['admin/booking-details/(:any)'] = 'admin/booking_details/$1';
 
