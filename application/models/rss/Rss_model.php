@@ -4395,4 +4395,34 @@ class Rss_model extends CI_Model
 
 	}
 
+	public function get_active_discount($code){
+
+		$today = date('Y-m-d');
+
+		$this->db->select('*');
+
+		$this->db->from('buytolet_promos');
+
+		$this->db->where('discount_product', 'rss');
+
+		$this->db->where('staus', 1);
+
+		if($code)
+
+			$this->db->where('discount_code', $code);
+
+		$this->db->where('start_date >=', $today);
+
+		$this->db->where('end_date <=', $today);
+
+		$this->db->order_by('id', 'DESC');
+
+		$this->db->limit(1);
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+
+	}
+
 }
