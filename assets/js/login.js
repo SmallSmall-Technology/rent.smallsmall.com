@@ -26,8 +26,7 @@ $('#loginForm').submit(function(e){
 
 	$('.form-report').hide();
 	
-	
-	
+
 
 	var username = $.trim($('#username').val());
 

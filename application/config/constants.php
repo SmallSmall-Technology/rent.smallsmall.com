@@ -30,8 +30,8 @@ defined('FILE_READ_MODE')  OR define('FILE_READ_MODE', 0644);
 defined('FILE_WRITE_MODE') OR define('FILE_WRITE_MODE', 0666);
 defined('DIR_READ_MODE')   OR define('DIR_READ_MODE', 0755);
 defined('DIR_WRITE_MODE')  OR define('DIR_WRITE_MODE', 0755);
-defined('public_key')  OR define('public_key', 'pk_live_7741a8fec5bee8102523ef51f19ebb467893d9d2');
-defined('api_key')  OR define('api_key', 'sk_live_42b43a476fccdf986e2015a7697374e6283126fc');
+// defined('public_key')  OR define('public_key', '');
+// defined('api_key')  OR define('api_key', '');
 
 /*
 |--------------------------------------------------------------------------
