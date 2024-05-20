@@ -56,8 +56,6 @@ for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/signup.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/passwordReset.css" />
 
-
-
   <title><?php echo $title; ?></title>
 </head>
 

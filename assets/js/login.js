@@ -34,6 +34,7 @@ $('#loginForm').submit(function(e){
 
 	var current_page = $.trim($('#current-page').val());
 	
+	
 	//Check for empty fields
 
 	var filteredList = $('.mand-f').filter(function(){

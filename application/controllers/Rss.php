@@ -51,7 +51,6 @@ class Rss extends CI_Controller
 
 	public function login_form()
 	{
-
 		$result = 'error';
 
 		$user_type = '';
@@ -870,7 +869,6 @@ class Rss extends CI_Controller
 
 	public function login()
 	{
-		
 		if (!file_exists(APPPATH . 'views/rss-partials/login.php')) {
 
 			// Whoops, we don't have a page for that!
@@ -909,7 +907,6 @@ class Rss extends CI_Controller
 			$this->load->view('rss-partials/login', $data);
 
 			// 			$this->load->view('templates/flat-footer', $data);
-
 
 		} else {
 

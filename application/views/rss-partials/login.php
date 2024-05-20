@@ -1,9 +1,9 @@
-    <div class="container-fluid d-md-block d-none mt-5">
-        <div>
-            <a href="<?php echo base_url(); ?>" class="text-decoration-none font-weight-bold primary-text-color-alt">&lt;
-                &nbsp;&nbsp;Back</a>
-        </div>
+<div class="container-fluid d-md-block d-none mt-5">
+    <div>
+        <a href="<?php echo base_url(); ?>" class="text-decoration-none font-weight-bold primary-text-color-alt">&lt;
+            &nbsp;&nbsp;Back</a>
     </div>
+</div>
 <!-- MAIN SECTION -->
 <main class="m-auto p-md-0 p-3">
     <div class="login-section">
