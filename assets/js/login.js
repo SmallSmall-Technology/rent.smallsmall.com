@@ -34,6 +34,7 @@ $('#loginForm').submit(function(e){
 
 	var current_page = $.trim($('#current-page').val());
 	
+	console.log("is working...");
 	
 	//Check for empty fields
 
