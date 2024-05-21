@@ -132,6 +132,7 @@ $('#loginForm').submit(function(e){
 
 		success: function(data) {
 
+			data = jQuery.parseJSON(data);
 
 			if(data.result == 'success'){	
 			    
@@ -140,10 +141,7 @@ $('#loginForm').submit(function(e){
                     'Username': username
                 });
 
-				window.location.href = current_page;
-				
-				
-				
+				window.location.href = current_page;				
 				
 				/*if(data.user_type == 'tenant'){
 				    
