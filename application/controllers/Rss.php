@@ -900,6 +900,7 @@ class Rss extends CI_Controller
 
 			$data['title'] = "Login SmallSmall";
 
+			
 			// 			$this->load->view('templates/no-nav-header', $data);
 
 			$this->load->view('templates/rss-login-header', $data);
