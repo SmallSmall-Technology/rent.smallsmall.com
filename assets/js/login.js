@@ -132,7 +132,7 @@ $('#loginForm').submit(function(e){
 
 		success: function(data) {
 
-			data = jQuery.parseJSON(data);
+			data = JSON.parse(data);
 
 			if(data.result == 'success'){	
 			    
