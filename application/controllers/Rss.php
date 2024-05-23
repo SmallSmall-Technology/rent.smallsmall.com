@@ -63,10 +63,6 @@ class Rss extends CI_Controller
 
 		$check_email = $this->rss_model->check_email($username);
 
-		print_r($check_email);
-
-		exit;
-
 		//$users = $this->rss_model->login($username, $password);
 
 		if (!empty($check_email)) {
@@ -147,6 +143,7 @@ class Rss extends CI_Controller
 				$this->session->set_userdata('attempt', $new_val);
 
 			} 
+			$user = 'unknown passss';
 
 		}
 		
