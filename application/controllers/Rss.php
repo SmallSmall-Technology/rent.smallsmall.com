@@ -71,7 +71,7 @@ class Rss extends CI_Controller
 
 			$users = $this->rss_model->get_user_login($check_email['userID']);
 
-			if($result){
+			if($result == 1){
 
 				if(!empty($users)){
 
