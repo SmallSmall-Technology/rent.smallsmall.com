@@ -1113,7 +1113,7 @@ class Rss_model extends CI_Model
 		}else{
 
 			return 0;
-
+		
 		}
 
 	}
