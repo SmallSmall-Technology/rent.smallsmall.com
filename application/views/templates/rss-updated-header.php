@@ -10,7 +10,6 @@
 
   <!--<script defer src="https://www.benifit.app/pixel/clejfqv6m83mhyn55g8uki6crgwk3j0q"></script>-->
 
-
   <!--Platform Blog Script Code-->
 
   <script defer charset="UTF-8" src="https://bundle.notice.studio/index.js"></script>
