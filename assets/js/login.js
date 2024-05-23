@@ -14,6 +14,7 @@ function isEmail(email) {
    return regex.test(email);
 
 }
+
 $('#loginForm').submit(function(e){
 
 	"use strict";

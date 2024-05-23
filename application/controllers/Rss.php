@@ -144,11 +144,9 @@ class Rss extends CI_Controller
 
 			}
 
-			$user = 00;
-
 
 		}
-
+		
 		return $user;
 	}
 
