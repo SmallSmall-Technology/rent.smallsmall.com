@@ -100,7 +100,7 @@ class Rss extends CI_Controller
 					$details = "Contact site administrator";
 				}
 			}else{
-				$details = "Username or Password incorrect";
+				$details = "Username or Password incorrect ->".$result;
 			}
 		} else {
 
@@ -143,6 +143,8 @@ class Rss extends CI_Controller
 				$this->session->set_userdata('attempt', $new_val);
 
 			}
+
+			$user = 00;
 
 
 		}
