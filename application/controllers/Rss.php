@@ -114,13 +114,7 @@ class Rss extends CI_Controller
 
 		$res = password_verify($password, $dbpassword);
 
-		echo $res;
-
-		exit; 
-		
-		$res = password_verify($password, $dbpassword);
-
-		echo $res;
+		return "twb-->".$res;
 
 		exit;
 
@@ -155,7 +149,7 @@ class Rss extends CI_Controller
 				$this->session->set_userdata('attempt', $new_val);
 
 			} 
-			$user = 'unknown passss';
+			
 
 		}
 		
