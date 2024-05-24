@@ -100,7 +100,7 @@ class Rss extends CI_Controller
 					$details = "Contact site administrator";
 				}
 			}else{
-				$details = "Username or Password incorrect ->".$result;
+				$details = "Username or Password incorrect";
 			}
 		} else {
 
@@ -111,12 +111,6 @@ class Rss extends CI_Controller
 	}
 
 	public function login_user($username, $password, $dbpassword, $userID){
-
-		$res = password_verify($password, $dbpassword);
-
-		return "twb-->".$res;
-
-		exit;
 
 		$login_limit = 5;
 
