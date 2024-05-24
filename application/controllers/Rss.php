@@ -112,6 +112,18 @@ class Rss extends CI_Controller
 
 	public function login_user($username, $password, $dbpassword, $userID){
 
+		$res = password_verify($password, $dbpassword);
+
+		echo $res;
+
+		exit; 
+		
+		$res = password_verify($password, $dbpassword);
+
+		echo $res;
+
+		exit;
+
 		$login_limit = 5;
 
 		$user = 0;
