@@ -8573,15 +8573,7 @@ value1&metadata[meta2]=value2*/
 
 	public function single_property($id)
 	{
-		$data['property'] = $this->rss_model->fetchProperty($id);
-
-		$data['properties'] = $this->rss_model->fetchProperties();
-
-		$data['verification_status'] = $this->session->userdata('verified');
-
-		$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
-
-		$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
+		
 
 		if ($this->session->has_userdata('loggedIn')) {
 
@@ -8598,6 +8590,16 @@ value1&metadata[meta2]=value2*/
 			$data['user_type'] = $this->session->userdata('user_type');
 
 			$data['interest'] = $this->session->userdata('interest');
+			
+			$data['property'] = $this->rss_model->fetchProperty($id);
+
+			$data['properties'] = $this->rss_model->fetchProperties();
+
+			$data['verification_status'] = $this->session->userdata('verified');
+
+			$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
+
+			$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
 		}
 
 		if ($this->session->has_userdata('userID')) {
