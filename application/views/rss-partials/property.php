@@ -885,7 +885,9 @@ function startsWith($string, $prefix)
 
 
                         <?php } ?>
-
+                        <div class="input-container mb-3">
+                          <input type="text" class="coupon-code form-control" id="mob-coupon-code" placeholder="Coupon code" />
+                        </div>
                         <div class="show-result">
 
                           <button type="submit" class="" id="mob-pay-property">Subscribe</button>
@@ -1387,7 +1389,9 @@ function startsWith($string, $prefix)
                 <?php } ?>
 
                 </table>
-
+                <div class="input-container mb-3">
+                  <input type="text" class="coupon-code form-control" id="coupon-code" placeholder="Coupon code" />
+                </div>
               </div>
 
               <?php if (!@$userID) { ?>

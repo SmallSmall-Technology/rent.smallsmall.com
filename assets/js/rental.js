@@ -143,6 +143,8 @@ $(document).on('submit', '#paymentForm', function (e) {
     var prodPrice = document.getElementById('amount-due').value;
     
     var securityDeposit = document.getElementById('sec-deposit').value;
+
+    var couponCode = document.getElementById('coupon-code').value;
     
     var img = document.getElementById('imageLink').value;
     
@@ -179,6 +181,7 @@ $(document).on('submit', '#paymentForm', function (e) {
         "subscriptionFees": subscriptionFees,
         "serviceChargeDeposit": serviceChargeDeposit,
         "securityDepositFund": securityDepositFund,
+        "couponCode": couponCode,
         "total": total
     };
 
@@ -305,6 +308,8 @@ $(document).on('submit', '#paymentForm', function (e) {
         var prodPrice = document.getElementById('amount-due').value;
         
         var securityDeposit = document.getElementById('sec-deposit').value;
+
+        var couponCode = document.getElementById('mob-coupon-code').value;
         
         var img = document.getElementById('imageLink').value;
         
@@ -358,6 +363,8 @@ $(document).on('submit', '#paymentForm', function (e) {
             "serviceChargeDeposit": serviceChargeDeposit,
         
             "securityDepositFund": securityDepositFund,
+
+            "couponCode": couponCode,
             
             "total": total
 
