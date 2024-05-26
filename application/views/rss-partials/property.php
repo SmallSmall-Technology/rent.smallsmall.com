@@ -1231,7 +1231,7 @@ function startsWith($string, $prefix)
   }
   ?>
 
-  <input type="hidden" class="inspection_stat" id="inspection_stat" value="<?php echo @$inspection_stat ?>" />
+  <input type="hidden" class="inspection_stat" id="inspection_stat" value="yes" />
 
   <input type="hidden" class="apt-type" id="apt-type" value="<?php echo @$property['type_slug']; ?>" />
 
