@@ -8574,23 +8574,24 @@ value1&metadata[meta2]=value2*/
 	public function single_property($id)
 	{
 	
-		if ($this->session->has_userdata('loggedIn')) {
+		//if ($this->session->has_userdata('loggedIn') = 1) {
+		//if (1) {
 
-			$data['userID'] = $this->session->userdata('userID');
+			$data['userID'] = 12345678; //$this->session->userdata('userID');
 
-			$data['verified'] = $this->session->userdata('verified');
+			$data['verified'] = 'yes';//$this->session->userdata('verified');
 
-			$data['fname'] = $this->session->userdata('fname');
+			$data['fname'] = 'Oluwaseun';
 
-			$data['lname'] = $this->session->userdata('lname');
+			$data['lname'] = 'Crowther';
 
-			$data['email'] = $this->session->userdata('email');
+			$data['email'] = 'seuncrowther@yahoo.com';
 
-			$data['user_type'] = $this->session->userdata('user_type');
+			$data['user_type'] = 'tenant';
 
-			$data['interest'] = $this->session->userdata('interest');
+			$data['interest'] = 'rent';
 
-			$data['verification_status'] = $this->session->userdata('verified');
+			$data['verification_status'] = 'yes';
 
 			$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
@@ -8598,12 +8599,12 @@ value1&metadata[meta2]=value2*/
 			
 			$data['property'] = $this->rss_model->fetchProperty($id);
 
-			if ($this->session->has_userdata('userID')) {
+			//if ( 12345678) {
 
 				$data['verification_profile'] = $this->rss_model->verification_profile_checker($data['userID']);
 
 				$data['check_inspection'] = $this->rss_model->check_inspection($data['userID'], $data['property']['propertyID']);
-			}
+			//}
 				
 			
 
@@ -8631,9 +8632,9 @@ value1&metadata[meta2]=value2*/
 
 				show_404();
 			}
-		}else{
+		/*}else{
 			redirect(base_url() . "login", 'refresh');
-		}
+		}*/
 	}
 
 	// Unione API Testing
