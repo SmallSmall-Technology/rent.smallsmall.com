@@ -28,10 +28,10 @@ if (empty($propertyPrice) || is_null($propertyPrice)) {
 
 //Multiply the security deposit term by security deposit amount
 if ($property['securityDepositTerm'] == 1) {
-  $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
 } else {
-  $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
-  $sec_dep = 0.75 * $sec_dep;
+    $sec_dep = $property['securityDeposit'] * $property['securityDepositTerm'];
+    $sec_dep = 0.75 * $sec_dep;
 }
 
 $evc_dep = ($sec_dep + $evictionDeposit);
@@ -75,7 +75,7 @@ if ($srlz[0] == 'Upfront') {
     $total =  ($property['price'] * 12) + $sec_dep + $evictionDeposit + $serviceCharge;
 
     $total = number_format($total);
-  } elseif ($property['securityDepositTerm'] == 3) {
+  } else if ($property['securityDepositTerm'] == 3) {
     if ($yrnt <= 2000000) {
       $sec_dep = 0.3 * $yrnt;
       $evc_dep = $sec_dep;
@@ -91,7 +91,7 @@ if ($srlz[0] == 'Upfront') {
 
       $total = number_format($total);
     }
-  } elseif ($property['securityDepositTerm'] == 4) {
+  } else if ($property['securityDepositTerm'] == 4) {
     $sec_dep = $property['securityDeposit'];
 
     $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
@@ -102,7 +102,7 @@ if ($srlz[0] == 'Upfront') {
 
     $total = number_format($total);
   }
-} elseif ($srlz[0] == 'Monthly') {
+} else if ($srlz[0] == 'Monthly') {
   $mnth = "/Month";
   $vmnth = "Monthly";
 
@@ -112,7 +112,11 @@ if ($srlz[0] == 'Upfront') {
     $prc = number_format($property['price']);
   }
 
-  $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+  $serviceCharge = 0;
+  
+  if($property['serviceCharge'] > 0){
+    $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+  }
 
   $total =  $property['price'] + $sec_dep + $evictionDeposit + $serviceCharge;
 
