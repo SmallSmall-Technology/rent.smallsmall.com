@@ -1684,7 +1684,7 @@ class Rss_model extends CI_Model
 			$this->session->set_userdata('bookingReferenceID', $ref);
 
 			return 1;
-			
+
 		} else {
 
 			return 0;
@@ -4374,9 +4374,9 @@ class Rss_model extends CI_Model
 
 		$this->db->where('discount_code', $code);
 
-		$this->db->where('start_date >=', $today);
+		$this->db->where('start_date <=', $today);
 
-		$this->db->where('end_date <=', $today);
+		$this->db->where('end_date >=', $today);
 
 		$this->db->order_by('id', 'DESC');
 
