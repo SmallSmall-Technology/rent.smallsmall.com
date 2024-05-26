@@ -8573,8 +8573,7 @@ value1&metadata[meta2]=value2*/
 
 	public function single_property($id)
 	{
-		
-
+	
 		if ($this->session->has_userdata('loggedIn')) {
 
 			$data['userID'] = $this->session->userdata('userID');
@@ -8590,48 +8589,50 @@ value1&metadata[meta2]=value2*/
 			$data['user_type'] = $this->session->userdata('user_type');
 
 			$data['interest'] = $this->session->userdata('interest');
-			
-			$data['property'] = $this->rss_model->fetchProperty($id);
-
-			$data['properties'] = $this->rss_model->fetchProperties();
 
 			$data['verification_status'] = $this->session->userdata('verified');
 
 			$data['account_details'] = $this->rss_model->get_account_details($data['userID']);
 
 			$data['balance'] = $this->rss_model->get_wallet_balance($data['userID']);
-		}
+			
+			$data['property'] = $this->rss_model->fetchProperty($id);
 
-		if ($this->session->has_userdata('userID')) {
+			if ($this->session->has_userdata('userID')) {
 
-			$data['verification_profile'] = $this->rss_model->verification_profile_checker($data['userID']);
+				$data['verification_profile'] = $this->rss_model->verification_profile_checker($data['userID']);
 
-			$data['check_inspection'] = $this->rss_model->check_inspection($data['userID'], $data['property']['propertyID']);
-		}
+				$data['check_inspection'] = $this->rss_model->check_inspection($data['userID'], $data['property']['propertyID']);
+			}
+				
+			
 
-		if (!empty($data['property'])) {
+			if (!empty($data['property'])) {
 
-			//Update property views
-			$views = intval($data['property']['views']) + 1;
+				//Update property views
+				$views = intval($data['property']['views']) + 1;
 
-			$this->rss_model->updateViews($views, $id);
+				$this->rss_model->updateViews($views, $id);
 
-			$data['rent_status'] = $this->rss_model->rent_status($data['property']['propertyID']);
+				$data['rent_status'] = $this->rss_model->rent_status($data['property']['propertyID']);
 
-			$data['relatedProps'] = $this->rss_model->fetchRelatedProperties($data['property']['propertyType'], 3);
+				$data['relatedProps'] = $this->rss_model->fetchRelatedProperties($data['property']['propertyType'], 3);
 
-			$data['load_boots'] = 'boots';
+				$data['load_boots'] = 'boots';
 
-			$data['title'] = $data['property']['propertyTitle'] . " SmallSmall";
+				$data['title'] = $data['property']['propertyTitle'] . " SmallSmall";
 
-			$this->load->view('templates/rss-updated-header', $data);
+				$this->load->view('templates/rss-updated-header', $data);
 
-			$this->load->view('rss-partials/property', $data);
+				$this->load->view('rss-partials/property', $data);
 
-			$this->load->view('templates/rss-updated-footer', $data);
-		} else {
+				$this->load->view('templates/rss-updated-footer', $data);
+			} else {
 
-			show_404();
+				show_404();
+			}
+		}else{
+			redirect(base_url() . "login", 'refresh');
 		}
 	}
 
