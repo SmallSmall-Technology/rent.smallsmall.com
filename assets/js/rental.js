@@ -209,16 +209,24 @@ $(document).on('submit', '#paymentForm', function (e) {
             data: data,
             dataType: 'json',
             complete: function (data) {
-                // console.log(data);
-                // throw new Error("Code execution stopped.");
+
+                if(data == 1){
+
+                    // console.log(data);
+                    // throw new Error("Code execution stopped.");
+                    
+                    //Redirect to summary page
+                    pay_property.innerHTML = "Subscribed";
+                    // $('#continue-but').html("Continue");
+                    
+                    //window.localStorage.removeItem('rentalBasket');
+                    //window.location.href = baseUrl + "payment-summary/";
+                    return false;
+
+                }else{
+
+                }
                 
-                //Redirect to summary page
-                pay_property.innerHTML = "Subscribed";
-				// $('#continue-but').html("Continue");
-				
-                window.localStorage.removeItem('rentalBasket');
-                window.location.href = baseUrl + "payment-summary/";
-                return false;
             }
         });
     }
