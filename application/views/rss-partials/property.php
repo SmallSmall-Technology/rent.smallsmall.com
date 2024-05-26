@@ -552,7 +552,7 @@ function startsWith($string, $prefix)
               </div>
               <div class="property-stats--child d-flex flex-column align-items-center">
                 <span>GEN</span>
-                <p><img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/gen.svg" alt=""><?php echo $property['generator']; ?></p>
+                <p><img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/gen.svg" alt=""><?php echo (@$property['generator'])? @$property['generator'] : 0; ?></p>
               </div>
             </div>
 
@@ -1210,8 +1210,13 @@ function startsWith($string, $prefix)
   <input type="hidden" class="prop-monthly-price" id="monthly-price" value="<?php echo $property['price']; ?>" />
 
   <input type="hidden" class="sec-deposit" id="sec-deposit" value="<?php echo ($evc_dep); ?>" />
-
-  <input type="hidden" class="serv-charge" id="serv-charge" value="<?php echo ($property['serviceCharge'] * $property['serviceChargeTerm']); ?>" />
+  <?php 
+    $serviceCharge = 0;
+    if($property['serviceCharge'] > 0){
+      $serviceCharge = $property['serviceCharge'] * $property['serviceChargeTerm'];
+    }
+  ?>
+  <input type="hidden" class="serv-charge" id="serv-charge" value="<?php echo ($serviceCharge); ?>" />
 
   <input type="hidden" class="cvstat" id="cvstat" value="<?php echo @$verified; ?>" />
 
