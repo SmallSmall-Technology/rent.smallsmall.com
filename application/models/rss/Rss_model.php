@@ -4370,7 +4370,7 @@ class Rss_model extends CI_Model
 
 		$this->db->where('discount_product', 'rss');
 
-		$this->db->where('staus', 1);
+		$this->db->where('staTus', 1);
 
 		$this->db->where('discount_code', $code);
 
