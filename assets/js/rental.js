@@ -212,19 +212,21 @@ $(document).on('submit', '#paymentForm', function (e) {
 
                 if(data == 1){
 
-                    console.log(data);
+                    //console.log(data);
                     // throw new Error("Code execution stopped.");
                     
                     //Redirect to summary page
                     pay_property.innerHTML = "Subscribed";
                     // $('#continue-but').html("Continue");
                     
-                    //window.localStorage.removeItem('rentalBasket');
-                    //window.location.href = baseUrl + "payment-summary/";
+                    window.localStorage.removeItem('rentalBasket');
+                    window.location.href = baseUrl + "payment-summary/";
                     return false;
 
                 }else{
-
+                    alert("Unable to subscribe at this moment, try again later.");
+                    pay_property.innerHTML = "Subscribed";
+                    return false;
                 }
                 
             }
