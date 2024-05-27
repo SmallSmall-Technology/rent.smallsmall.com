@@ -210,7 +210,7 @@ $(document).on('submit', '#paymentForm', function (e) {
             dataType: 'json',
             complete: function (data) {
 
-                if(data == 1){
+                //if(data == 1){
 
                     //console.log(data);
                     // throw new Error("Code execution stopped.");
@@ -223,11 +223,11 @@ $(document).on('submit', '#paymentForm', function (e) {
                     window.location.href = baseUrl + "payment-summary/";
                     return false;
 
-                }else{
+                /*}else{
                     alert("Unable to subscribe at this moment, try again later.");
                     pay_property.innerHTML = "Subscribed";
                     return false;
-                }
+                }*/
                 
             }
         });
