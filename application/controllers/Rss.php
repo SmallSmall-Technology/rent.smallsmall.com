@@ -8593,7 +8593,7 @@ value1&metadata[meta2]=value2*/
 	public function single_property($id)
 	{
 	
-		if ($this->session->has_userdata('loggedIn')) {
+		//if ($this->session->has_userdata('loggedIn')) {
 
 			$data['userID'] = $this->session->userdata('userID');
 
@@ -8617,16 +8617,16 @@ value1&metadata[meta2]=value2*/
 			
 			$data['property'] = $this->rss_model->fetchProperty($id);
 
-			if ($this->session->has_userdata('userID')) {
+			//if ($this->session->has_userdata('userID')) {
 
 				$data['verification_profile'] = $this->rss_model->verification_profile_checker($data['userID']);
 
 				$data['check_inspection'] = $this->rss_model->check_inspection($data['userID'], $data['property']['propertyID']);
-			}
+			//}
 				
 			
 
-			if (!empty($data['property'])) {
+			//if (!empty($data['property'])) {
 
 				//Update property views
 				$views = intval($data['property']['views']) + 1;
@@ -8646,13 +8646,13 @@ value1&metadata[meta2]=value2*/
 				$this->load->view('rss-partials/property', $data);
 
 				$this->load->view('templates/rss-updated-footer', $data);
-			} else {
+			//} else {
 
-				show_404();
-			}
-		}else{
-			redirect(base_url() . "login", 'refresh');
-		}
+				//show_404();
+			//}
+		//}else{
+			//redirect(base_url() . "login", 'refresh');
+		//}
 	}
 
 	// Unione API Testing
