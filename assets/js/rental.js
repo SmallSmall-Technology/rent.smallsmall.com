@@ -212,7 +212,7 @@ $(document).on('submit', '#paymentForm', function (e) {
 
                 if(data == 1){
 
-                    // console.log(data);
+                    console.log(data);
                     // throw new Error("Code execution stopped.");
                     
                     //Redirect to summary page
