@@ -44,7 +44,9 @@ class Rss extends CI_Controller
 	public function __construct()
 	{
 
-		Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
+		Header('Access-Control-Allow-Origin: *'); 
+        Header('Access-Control-Allow-Headers: *'); 
+        Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
 
 		parent::__construct();
 	}
