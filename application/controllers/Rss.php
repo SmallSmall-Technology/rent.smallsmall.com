@@ -6352,7 +6352,7 @@ class Rss extends CI_Controller
 		$email = $bkdets['email'];
 		
 		//Initiate Account Linking
-		$client = \Config\Services::curlrequest();
+		$client = curl_init();
 
         // Define the URL
         $url = 'https://api.withmono.com/v2/accounts/initiate';
