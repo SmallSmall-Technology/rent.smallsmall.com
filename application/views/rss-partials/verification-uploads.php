@@ -261,7 +261,7 @@
 
 
   function verifyIncome() {
-    
+
     var baseURL = "<?php echo base_url(); ?>";
         
     var userID = document.getElementById('userID').value;
@@ -280,9 +280,8 @@
 
         data: data,
 
-        success	: function (data){
-        
-          console.log(data);
+        success	: function (data){        
+          alert(data);
         //window.location.href= data
       }
 
