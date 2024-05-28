@@ -48,7 +48,7 @@
               <input type="submit" id="verify-income-submit" hidden />
 
               <!-- Show this button when not verified and make it trigger the file input -->
-              <a href="#" class="btn verify-btn px-5 py-2" id="verify-income-button">Verify income</a>
+              <button class="btn verify-btn px-5 py-2" id="verify-income-button" onclick="verifyIncome()">Verify income</button>
 
               <!-- Show this button when verified -->
               <button class="btn verified-btn px-5 py-2 d-none" id="verified-button">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
@@ -258,6 +258,37 @@
       }
     });
   });
+
+
+  function verifyIncome() {
+
+    var baseURL = "<?php echo base_url(); ?>";
+        
+    var userID = document.getElementById('userID').value;
+    
+    var data = {"userID" : userID};
+    
+    $.ajaxSetup ({ cache: false });
+
+    $.ajax({
+
+        url : baseURL+'rss/verifyIncome/',
+
+        type: "POST",
+
+        async: true,
+
+        data: data,
+
+        success	: function (data){
+        
+          console.log(data);
+        //window.location.href= data
+      }
+
+    });
+}
+
 </script>
 
 
