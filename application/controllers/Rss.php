@@ -6350,22 +6350,8 @@ class Rss extends CI_Controller
 
 		$name = $bkdets['firstName'] .' '.$bkdets['lastName'];
 		$email = $bkdets['email'];
-		
-		//Initiate Account Linking
-		$client = curl_init();
 
-        // Define the URL
-        $url = 'https://api.withmono.com/v2/accounts/initiate';
-
-        // Set the request headers
-        $headers = [
-            'accept' => 'application/json', // Replace with your actual API key
-            'Content-Type' => 'application/json',
-			'mono-sec-key' => 'Bearer test_sk_yviioi5cjr3q1fs4arif',
-        ];
-
-        // Define the request payload
-        $data = [
+		$data = [
 			"customer"=> [
 				"name"=>"$name", 
 				"email"=>"$email"
@@ -6376,29 +6362,45 @@ class Rss extends CI_Controller
 			"redirect_url" => "https://rent.smallsmall.com/rss/verification/verification-uploads"
 		];
 
-        // Send the POST request
-        try {
-            $response = $client->post($url, [
-                'headers' => $headers,
-                'json' => $data,
-            ]);
+		$headers = [
+            'accept' => 'application/json', // Replace with your actual API key
+            'Content-Type' => 'application/json',
+			'mono-sec-key' => 'Bearer test_sk_yviioi5cjr3q1fs4arif',
+        ];
 
-            // Get the response body
-            $responseBody = $response->getBody();
+		
+		//Initiate Account Linking
 
-			$responseBody = json_decode($responseBody, true);
+		$curl = curl_init();
 
-			$authUrl = $responseBody['data']['mono_url'];
+		curl_setopt_array($curl, array(
+		CURLOPT_URL => "https://api.withmono.com/v2/accounts/initiate",
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS => $data,
+		CURLOPT_HTTPHEADER => $headers,
+		)
+		);
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+		echo "cURL Error #:" . $err;
+		} else {
+			$response = json_decode($response, true);
+
+			$authUrl = $response['data']['mono_url'];
 
 			echo $authUrl;
-
-            // Return or process the response
-            //return $this->response->setJSON(['status' => 'success', 'data' => json_decode($responseBody, true)]);
-		} catch (\Exception $e) {
-            // Handle errors
-            return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
-        }	
-
+		}
+		
 		// //send Emails out
 
 		// require 'vendor/autoload.php'; // For Unione template authoload
