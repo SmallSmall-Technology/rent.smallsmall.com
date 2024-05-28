@@ -260,7 +260,9 @@
   });
 
 
-  function verifyIncome() {
+  function verifyIncome(e) {
+    
+    e.preventDefault();
 
     var baseURL = "<?php echo base_url(); ?>";
         
