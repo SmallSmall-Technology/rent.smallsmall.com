@@ -3620,7 +3620,6 @@ class Rss extends CI_Controller
 
 	public function insertDetails()
 	{
-
 		require 'vendor/autoload.php'; // For Unione template authoload
 
 		$details = $this->input->post('details');
@@ -3759,7 +3758,7 @@ class Rss extends CI_Controller
 
 							["email" => 'wasiu.i@smallsmall.com'],
 
-							// ["email" => 'customerexperience@smallsmall.com'],
+							["email" => 'customerexperience@smallsmall.com'],
 						],
 						"body" => ["html" => $htmlBody],
 						"subject" => "New Verification alert",

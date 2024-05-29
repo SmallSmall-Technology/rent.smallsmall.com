@@ -70,7 +70,6 @@ $('#loginForm').submit(function(e){
 	}
 
 	
-
 	if(!isEmail(username)){
 
 		$('.form-report').html("Wrong email format");
@@ -108,7 +107,7 @@ $('#loginForm').submit(function(e){
     mixpanel.init('86e1f301cd45debd226a5a82ad553d5c');
     
                         
-// Identify the user by their email and userID in Mixpanel to track Users
+    // Identify the user by their email and userID in Mixpanel to track Users
     mixpanel.identify(username);
 
     
@@ -186,12 +185,9 @@ $('#loginForm').submit(function(e){
 
 	});
 
-	
-
 });
 
 $('#pwdResetForm').submit(function(e){
-
 
 	"use strict";
 	e.preventDefault();
