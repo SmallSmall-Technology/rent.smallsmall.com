@@ -62,7 +62,7 @@
   <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
     <summary itemprop="name">What happens if I request a refund after making a payment as a prospective subscriber?</summary>
     <div class="details-expanded" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-      <p>If you request a refund after making a payment, please be aware that a 5% charge on the entire fee will apply. </p>
+      <p>If you request a refund after making a payment, please be aware that a 20% charge on the entire fee will apply. In addition to this, once an agreement has been signed, the contract is binding.</p>
     </div>
   </details>
 
