@@ -6381,7 +6381,14 @@ class Rss extends CI_Controller
 		CURLOPT_TIMEOUT => 30,
 		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 		CURLOPT_CUSTOMREQUEST => "POST",
-		CURLOPT_POSTFIELDS => $data,
+		CURLOPT_POSTFIELDS => array(
+			"customer" => array(
+				"name" => $name,
+				"email" => $email
+			),
+			"scope" => "auth",
+			"redirect_url" => "https://rent.smallsmall.com/rss/verification/verification-uploads"
+		),
 		CURLOPT_HTTPHEADER => array(
 			"accept: application/json",
 			"Content-Type: application/json",
