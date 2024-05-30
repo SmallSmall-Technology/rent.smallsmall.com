@@ -6357,7 +6357,7 @@ class Rss extends CI_Controller
 				"email" => $email
 			),
 			"scope" => "auth",
-			"redirect_url" => "https://rent.smallsmall.com/rss/verification/verification-uploadsId"
+			"redirect_url" => "'.base_url().'rss/verification/verification-uploadsId"
 		);
 
 		$headers = [
