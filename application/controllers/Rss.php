@@ -6351,16 +6351,14 @@ class Rss extends CI_Controller
 		$name = $bkdets['firstName'] .' '.$bkdets['lastName'];
 		$email = $bkdets['email'];
 
-		$data = [
-			"customer"=> [
-				"name"=>"$name", 
-				"email"=>"$email"
-			],
-			
+		$data = array(
+			"customer" => array(
+				"name" => $name,
+				"email" => $email
+			),
 			"scope" => "auth",
-			
 			"redirect_url" => "https://rent.smallsmall.com/rss/verification/verification-uploads"
-		];
+		);
 
 		$headers = [
             'accept => application/json', // Replace with your actual API key
@@ -6381,21 +6379,13 @@ class Rss extends CI_Controller
 		CURLOPT_TIMEOUT => 30,
 		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 		CURLOPT_CUSTOMREQUEST => "POST",
-		CURLOPT_POSTFIELDS => array(
-			"customer" => array(
-				"name" => "$name",
-				"email" => "$email"
-			),
-			"scope" => "auth",
-			"redirect_url" => "https://rent.smallsmall.com/rss/verification/verification-uploads"
-		),
+		CURLOPT_POSTFIELDS => json_encode($data),
 		CURLOPT_HTTPHEADER => array(
 			"accept: application/json",
 			"Content-Type: application/json",
 			"mono-sec-key: test_sk_yviioi5cjr3q1fs4arif"
 		),
-		)
-		);
+		));
 
 		$response = curl_exec($curl);
 		$err = curl_error($curl);
