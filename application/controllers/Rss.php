@@ -6357,7 +6357,7 @@ class Rss extends CI_Controller
 				"email" => $email
 			),
 			"scope" => "auth",
-			"redirect_url" => "https://rent.smallsmall.com/rss/verification/verification-uploads"
+			"redirect_url" => "https://rent.smallsmall.com/rss/verification/verification-uploadsId"
 		);
 
 		$headers = [
@@ -6393,13 +6393,14 @@ class Rss extends CI_Controller
 		curl_close($curl);
 
 		if ($err) {
-		echo "cURL Error #:" . $err;
+		$authUrl = 'https://rent.smallsmall.com/rss/verification/verification-uploads';
+		echo $authUrl;
 		} else {
 			$response = json_decode($response, true);
 
 			$authUrl = $response['data']['mono_url'];
 
-			print_r($response);
+			echo $authUrl;
 		}
 		
 		// //send Emails out
