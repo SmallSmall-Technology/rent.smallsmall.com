@@ -6365,7 +6365,7 @@ class Rss extends CI_Controller
 		$headers = [
             'accept' => 'application/json', // Replace with your actual API key
             'Content-Type' => 'application/json',
-			'mono-sec-key' => 'Bearer test_sk_yviioi5cjr3q1fs4arif',
+			'mono-sec-key' => 'test_sk_yviioi5cjr3q1fs4arif',
         ];
 
 		
