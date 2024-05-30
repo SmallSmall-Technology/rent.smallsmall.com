@@ -6357,7 +6357,7 @@ class Rss extends CI_Controller
 				"email" => $email
 			),
 			"scope" => "auth",
-			"redirect_url" => "'.base_url().'rss/verification/verification-uploadsId"
+			"redirect_url" => "base_url('rss/verification/verification-uploadsId')"
 		);
 
 		$headers = [
@@ -6393,7 +6393,7 @@ class Rss extends CI_Controller
 		curl_close($curl);
 
 		if ($err) {
-		$authUrl = ''.base_url().'rss/verification/verification-uploads';
+		$authUrl = "base_url('rss/verification/verification-uploadsId')";
 		echo $authUrl;
 		} else {
 			$response = json_decode($response, true);
