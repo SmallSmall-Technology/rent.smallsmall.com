@@ -6383,8 +6383,8 @@ class Rss extends CI_Controller
 		CURLOPT_CUSTOMREQUEST => "POST",
 		CURLOPT_POSTFIELDS => array(
 			"customer" => array(
-				"name" => $name,
-				"email" => $email
+				"name" => "$name",
+				"email" => "$email"
 			),
 			"scope" => "auth",
 			"redirect_url" => "https://rent.smallsmall.com/rss/verification/verification-uploads"
