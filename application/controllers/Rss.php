@@ -6393,7 +6393,7 @@ class Rss extends CI_Controller
 		curl_close($curl);
 
 		if ($err) {
-		$authUrl = 'https://rent.smallsmall.com/rss/verification/verification-uploads';
+		$authUrl = ''.base_url().'rss/verification/verification-uploads';
 		echo $authUrl;
 		} else {
 			$response = json_decode($response, true);
