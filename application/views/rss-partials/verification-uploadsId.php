@@ -30,32 +30,32 @@
                 <p class="verify-body">Click the buttons to verify</p>
             </div>
             <div class="row mt-5 justify-content-center">
-                <!--<div class="col-md-6 col-12 mb-4"> -->
+                <!-- <div class="col-md-6 col-12 mb-4">
                     <div class="d-flex flex-column align-items-center">
                         <div class="verify-icon mb-4">
                             <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/bank-icon.svg" alt="">
                         </div>
-                        <div>
+                        <div> -->
 
                             <!-- File upload input for Verify income -->
-                            <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
+                            <!-- <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
 
                             <input type="hidden" id="userID" value="<?php echo @$userID; ?>" />
 
-                            <input type="hidden" id="statement" value="" />
+                            <input type="hidden" id="statement" value="" /> -->
 
                             <!-- File submit button -->
-                            <input type="submit" id="verify-income-submit" hidden />
+                            <!-- <input type="submit" id="verify-income-submit" hidden /> -->
 
                             <!-- Show this button when not verified and make it trigger the file input -->
                             <!-- <button class="btn verify-btn px-5 py-2" onclick="verifyIncome()">Verify income</button>
 
                             Show this button when verified -->
                             <!-- <button class="btn verified-btn px-5 py-2 d-none" id="verified-button">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button> -->
-
+<!-- 
                         </div>
                     </div>
-                <!-- </div> -->
+                </div> -->
                 <div class="col-md-6 col-12">
                     <div class="d-flex flex-column align-items-center">
                         <div class="verify-icon mb-4">
