@@ -29,7 +29,7 @@
         <h2 class="verify-title">Verify ID & Income</h2>
         <p class="verify-body">Click the buttons to verify</p>
       </div>
-      <div class="row mt-5">
+      <div class="row mt-5 justify-content-center">
         <div class="col-md-6 col-12 mb-4">
           <div class="d-flex flex-column align-items-center">
             <div class="verify-icon mb-4">
@@ -56,7 +56,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-12">
+        <!-- <div class="col-md-6 col-12"> -->
           <div class="d-flex flex-column align-items-center">
             <div class="verify-icon mb-4">
               <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/face-scanner.svg" alt="">
@@ -68,14 +68,14 @@
               <!-- <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button> -->
             </div>
           </div>
-        </div>
+        <!-- </div> --> 
       </div>
       <div class="row mb-5">
         <div class="col-12 mt-5 text-center">
 
           <a href="https://rent.smallsmall.com/rss/verification/employment-verification" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
 
-          <button type="submit" class="btn verify-btn px-5 py-2 finishVerifyBut" id="finishVerifyBut">Finish</button>
+          <button type="submit" class="btn verify-btn px-5 py-2 finishVerifyBut" id="finishVerifyBut">next</button>
         </div>
       </div>
     </div>

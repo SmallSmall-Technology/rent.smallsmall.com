@@ -29,8 +29,8 @@
                 <h2 class="verify-title">Verify ID & Income</h2>
                 <p class="verify-body">Click the buttons to verify</p>
             </div>
-            <div class="row mt-5">
-                <div class="col-md-6 col-12 mb-4">
+            <div class="row mt-5 justify-content-center">
+                <!--<div class="col-md-6 col-12 mb-4"> -->
                     <div class="d-flex flex-column align-items-center">
                         <div class="verify-icon mb-4">
                             <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/bank-icon.svg" alt="">
@@ -55,7 +55,7 @@
 
                         </div>
                     </div>
-                </div>
+                <!-- </div> -->
                 <div class="col-md-6 col-12">
                     <div class="d-flex flex-column align-items-center">
                         <div class="verify-icon mb-4">
