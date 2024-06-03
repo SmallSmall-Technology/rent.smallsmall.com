@@ -144,6 +144,8 @@ $(document).on('submit', '#paymentForm', function (e) {
     var productTitle = document.getElementById('productName').value;
     
     var prodPrice = document.getElementById('amount-due').value;
+
+    var couponCode = document.getElementById('coupon-code').value;
     
     var securityDeposit = document.getElementById('sec-deposit').value;
     
@@ -182,6 +184,7 @@ $(document).on('submit', '#paymentForm', function (e) {
         "subscriptionFees": subscriptionFees,
         "serviceChargeDeposit": serviceChargeDeposit,
         "securityDepositFund": securityDepositFund,
+        "couponCode": couponCode,
         "total": total
     };
 
@@ -267,6 +270,8 @@ $(document).on('submit', '#paymentForm', function (e) {
         var verified = document.getElementById('verified').value;
         
         var v_stat = document.getElementById('cvstat').value;
+
+        var couponCode = document.getElementById('mob-coupon-code').value;
 
         if (inspectionStat == 'no') {
             
@@ -383,6 +388,8 @@ $(document).on('submit', '#paymentForm', function (e) {
             "serviceChargeDeposit": serviceChargeDeposit,
         
             "securityDepositFund": securityDepositFund,
+
+            "couponCode": couponCode,
             
             "total": total
 

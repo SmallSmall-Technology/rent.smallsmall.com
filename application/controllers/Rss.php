@@ -4028,15 +4028,29 @@ class Rss extends CI_Controller
 				$serviceChargeDeposit = $order['property'][0]['serviceChargeDeposit'];
 
 				$securityDepositFund = $order['property'][0]['securityDepositFund'];
+				
+				$couponCode = $order['property'][0]['couponCode'];
 
 				$total = $order['property'][0]['total'];
+
+				if($couponCode){
+
+					$coupon_value = $this->get_coupon_details($total, $couponCode);
+
+				}				
+
+				if($coupon_value){
+
+					$total = $total - $coupon_value;
+
+				}	
 
 
 				//Insert Booking
 
 				$booking_id = $this->random_strings(5);
 
-				$booked = $this->rss_model->insertBooking($booking_id, $ver_result['verification_id'], $userID, $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref, $subscriptionFees, $serviceChargeDeposit, $securityDepositFund, $total);
+				$booked = $this->rss_model->insertBooking($booking_id, $ver_result['verification_id'], $userID, $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref, $subscriptionFees, $serviceChargeDeposit, $securityDepositFund, $total, $couponCode);
 
 				$notify = $this->functions_model->insert_user_notifications('Booking Success!', 'Apartment has been successfully booked.', $userID, 'Rent');
 			} elseif ($order['orderType'] == "furnisure") {
@@ -9218,6 +9232,22 @@ value1&metadata[meta2]=value2*/
 			exit;
 
 		} 
+	}
+
+	public function get_coupon_details($price, $code){
+
+		$discounted_value = 0;
+
+		$available_discount = $this->rss_model->get_active_discount($code);
+
+		if(!empty($available_discount)){
+
+			$discounted_value = $price * ($available_discount['discount_value'] / 100);
+
+		}
+
+		return $discounted_value;
+
 	}
 
 	public function get_discount($price = 0, $code = 0){
