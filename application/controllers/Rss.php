@@ -6402,7 +6402,7 @@ class Rss extends CI_Controller
 
 			$authUrl = $response['data']['mono_url'];
 
-			echo $authUrl;
+			echo $response;
 		}
 		
 		// //send Emails out
