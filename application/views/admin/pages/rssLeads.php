@@ -88,7 +88,7 @@
 
                         </thead>
 
-                        <tbody>rs
+                        <tbody>
 
                         <?php
 
@@ -105,7 +105,8 @@
 
                         <tr>
                             <td class="text-left">
-                                <input type="checkbox" class="action-item" id="<?php echo $value['userID'] ?>" />
+
+                            <input type="checkbox" class="action-item" id="<?php echo $value['userID'] ?>" />
                             </td>
 
                             <td class="text-left">
