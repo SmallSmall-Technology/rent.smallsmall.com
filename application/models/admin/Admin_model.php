@@ -656,7 +656,7 @@ class Admin_model extends CI_Model
 
 		$query = $this->db->get();
 
-		return $query->row_array();
+		return $query;
 	}
 
 	// public function fetchrssLeads($referral)
