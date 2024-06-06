@@ -604,9 +604,9 @@ class Admin_model extends CI_Model
 
 		return $query->row_array();
 	}
+
 	public function fetchFurnisureTypes()
 	{
-
 		$this->db->select('*');
 
 		$this->db->from('furnisure_type_tbl');
@@ -618,9 +618,64 @@ class Admin_model extends CI_Model
 		return $query->result_array();
 	}
 
+	public function countrssLeads()
+	{
+		$this->db->select('DISTINCT(a.referral)');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.interest', 'RSS');
+		
+		return $this->db->count_all_results();
+	}
+
+	public function fetchDistRss()
+	{
+		$this->db->select('DISTINCT(a.referral)');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.interest', 'RSS');
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function fetchrssLeads($referral)
+	{
+		$this->db->select('a.referral, count(*) as total');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.referral', $referral);
+
+		$this->db->where('a.interest', 'RSS');
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
+	// public function fetchrssLeads($referral)
+	// {
+	// 	$this->db->select('a.referral, count(*) as total');
+
+	// 	$this->db->from('user_tbl as a');
+
+	// 	$this->db->where('a.referral', $referral);
+
+	// 	$this->db->limit($this->_pageNumber, $this->_offset);
+
+	// 	$query = $this->db->get();
+
+	// 	return $query->result_array();
+	// }
+
 	public function fetchRequests($id)
 	{
-
 		$this->db->select('a.id as msgID, a.requestID, a.content, a.sender, a.receiver, a.subject, a.status as msg_status, a.dateOfEntry, b.id as insID, b.inspectionID, b.propertyID, b.userID, b.inspectionDate, b.inspectionType, c.firstName, c.lastName, c.userID, d.propertyTitle ');
 
 		$this->db->from('messages_tbl as a');

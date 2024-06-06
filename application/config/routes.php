@@ -398,7 +398,11 @@ $route['admin/btl-inspections'] = 'admin/btl_inspection_requests';
 
 $route['admin/inspection/(:any)'] = 'admin/inspection_requests/$1';   
 
-$route['admin/inspection'] = 'admin/inspection_requests';  
+$route['admin/inspection'] = 'admin/inspection_requests';
+
+$route['admin/rssLeads'] = 'admin/rssLeads';
+
+$route['admin/bssLeads'] = 'admin/bssLeads';
 
 $route['admin/residential-inspections/(:any)'] = 'admin/app_residential_inspections/$1';
 

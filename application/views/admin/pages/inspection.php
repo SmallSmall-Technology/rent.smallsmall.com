@@ -95,10 +95,7 @@
 								if (isset($inspections) && !empty($inspections)) {
 
 									foreach($inspections as $inspection => $value) {
-
 							?>	
-
-
 
 							<tr>
 								<td class="text-left">
@@ -155,12 +152,7 @@
 									}
 
 								}
-
-						
-
 							?>
-
-							
 
 							</tbody>
 
