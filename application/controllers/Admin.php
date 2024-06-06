@@ -2181,7 +2181,7 @@ class Admin extends CI_Controller
 
 			$data['title'] = "Inspection :: RSS";
 
-			$this->load->view('admin/templates/header.php', $data);
+			$this->load->view('admin/templates/header.php', $data);	
 
 			$this->load->view('admin/templates/sidebar.php', $data);
 
