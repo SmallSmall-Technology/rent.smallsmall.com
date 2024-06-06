@@ -92,22 +92,21 @@
 
                         <?php
 
-                            $rssLeads = $this->admin_model->fetchrssLeads('twitter');
+                            // $rssLeads = $this->admin_model->fetchrssLeads('twitter');
 
-                            print_r($rssLeads);
+                            // print_r($rssLeads);
 
-                            foreach($rssDistLeads as $rssDistLead => $value) {
+                            // foreach($rssDistLeads as $rssDistLead => $value) {
 
-                                print_r($value);
-                            }
+                            //     print_r($value);
+                            // }
 
+                                foreach($rssDistLeads as $rssDistLead => $value) {
 
-                            // if (isset($rssDistLeads) && !empty($rssDistLeads)) {
+                                $rssLeads = $this->admin_model->fetchrssLeads($value['referral']);
 
-                            //     foreach($rssDistLeads as $rssDistLead => $value) {
-
-                            //     foreach($rssLeads as $rssLead => $values)
-                            //     {
+                                foreach($rssLeads as $rssLead => $values)
+                                {
 
                         ?>	
 
@@ -119,16 +118,16 @@
 
                             <td class="text-left">
 
-                                <!-- <?php 
-                                    // echo $values['referral'];
-                                ?> -->
+                                <?php 
+                                    echo $values['referral'];
+                                ?>
 
                             </td>
 
                             <td class="text-left">
 
                                 <?php 
-                                    // echo $value['total'];
+                                    echo $value['total'];
                                 ?>
 
                             </td>
@@ -137,12 +136,10 @@
 
                         <?php 
 
-                        //         }
+                            }
 
-                        //     }
+                        }
 
-                        // }
-                    
                         ?>
   
                         </tbody>
