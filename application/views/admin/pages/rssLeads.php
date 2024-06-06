@@ -101,11 +101,11 @@
                             //     print_r($value);
                             // }
 
-                                foreach($rssDistLeads as $rssDistLead => $value) {
+                                foreach($rssDistLeads as $value) {
 
                                 $rssLeads = $this->admin_model->fetchrssLeads($value['referral']);
 
-                                foreach($rssLeads as $rssLead => $values)
+                                foreach($rssLeads as $values)
                                 {
 
                         ?>	
