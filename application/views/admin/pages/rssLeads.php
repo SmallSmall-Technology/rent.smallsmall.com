@@ -92,16 +92,22 @@
 
                         <?php
 
-                            if (isset($rssDistLeads) && !empty($rssDistLeads)) {
+                            $rssLeads = $this->admin_model->fetchrssLeads('twitter');
 
-                                foreach($rssDistLeads as $rssDistLead => $value) {
+                            print_r($rssLeads);
 
-                                $rssLeads = $this->admin_model->fetchrssLeads($value['referral']);
+                            foreach($rssDistLeads as $rssDistLead => $value) {
 
-                                print_r($rssLeads)
+                                print_r($value);
+                            }
 
-                                foreach($rssLeads as $values)
-                                {
+
+                            // if (isset($rssDistLeads) && !empty($rssDistLeads)) {
+
+                            //     foreach($rssDistLeads as $rssDistLead => $value) {
+
+                            //     foreach($rssLeads as $rssLead => $values)
+                            //     {
 
                         ?>	
 
@@ -113,16 +119,16 @@
 
                             <td class="text-left">
 
-                                <?php 
-                                    echo $values['referral'];
-                                ?>
+                                <!-- <?php 
+                                    // echo $values['referral'];
+                                ?> -->
 
                             </td>
 
                             <td class="text-left">
 
                                 <?php 
-                                    echo $value['total'];
+                                    // echo $value['total'];
                                 ?>
 
                             </td>
@@ -131,11 +137,11 @@
 
                         <?php 
 
-                                }
+                        //         }
 
-                            }
+                        //     }
 
-                        }
+                        // }
                     
                         ?>
   
