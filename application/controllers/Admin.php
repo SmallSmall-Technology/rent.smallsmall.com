@@ -2171,7 +2171,7 @@ class Admin extends CI_Controller
 
 		//check if Admin is logged in
 
-		if ($this->session->has_userdata('adminLoggedIn')) {
+		// if ($this->session->has_userdata('adminLoggedIn')) {
 
 			//$data['aptTypes'] = $this->admin_model->fetchAptType();
 
@@ -2190,10 +2190,10 @@ class Admin extends CI_Controller
 			$this->load->view('admin/templates/footer.php', $data);
 
 			$this->load->view('admin/templates/request-modal.php', $data);
-		} else {
+		// } else {
 
-			redirect(base_url() . 'admin/login', 'refresh');
-		}
+		// 	redirect(base_url() . 'admin/login', 'refresh');
+		// }
 	}
 
 	
