@@ -101,12 +101,13 @@
                             //     print_r($value);
                             // }
 
-                                foreach($rssDistLeads as $value) {
+                                foreach($rssDistLeads as $rssDistLead => $value) {
 
                                 $rssLeads = $this->admin_model->fetchrssLeads($value['referral']);
 
-                                foreach($rssLeads as $values)
-                                {
+                                if ($rssLeads->num_rows() > 0) {
+                        
+                                foreach ($rssLeads->result() as $row) {
 
                         ?>	
 
@@ -119,7 +120,7 @@
                             <td class="text-left">
 
                                 <?php 
-                                    echo $values['referral'];
+                                    echo $row->referral;
                                 ?>
 
                             </td>
@@ -127,7 +128,7 @@
                             <td class="text-left">
 
                                 <?php 
-                                    echo $value['total'];
+                                    echo $row->total;
                                 ?>
 
                             </td>
@@ -136,6 +137,7 @@
 
                         <?php 
 
+                                }
                             }
 
                         }
