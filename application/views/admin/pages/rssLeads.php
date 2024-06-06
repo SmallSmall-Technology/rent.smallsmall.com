@@ -94,11 +94,13 @@
 
                             if (isset($rssDistLeads) && !empty($rssDistLeads)) {
 
-                                foreach($rssDistLeads as $rssDistLeads => $value) {
+                                foreach($rssDistLeads as $rssDistLead => $value) {
 
                                 $rssLeads = $this->admin_model->fetchrssLeads($value['referral']);
 
-                                foreach($rssLeads as $rssLead => $value)
+                                print_r($rssLeads)
+
+                                foreach($rssLeads as $values)
                                 {
 
                         ?>	
@@ -106,13 +108,13 @@
                         <tr>
                             <td class="text-left">
 
-                            <input type="checkbox" class="action-item" id="<?php echo $value['userID'] ?>" />
+                            <input type="checkbox" class="action-item" id="<?php echo $values['userID'] ?>" />
                             </td>
 
                             <td class="text-left">
 
                                 <?php 
-                                    echo $value['referral'];
+                                    echo $values['referral'];
                                 ?>
 
                             </td>
