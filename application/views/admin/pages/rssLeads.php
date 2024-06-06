@@ -114,7 +114,7 @@
                         <tr>
                             <td class="text-left">
 
-                            <input type="checkbox" class="action-item" id="<?php echo $values['userID'] ?>" />
+                            <input type="checkbox" class="action-item" id="<?php echo $row->userID; ?>" />
                             </td>
 
                             <td class="text-left">
