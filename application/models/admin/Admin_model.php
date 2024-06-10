@@ -683,7 +683,7 @@ class Admin_model extends CI_Model
 
 		$this->db->where('a.interest', 'RSS');
 
-	//	$this->db->where('YEARWEEK(regDate, 1) = YEARWEEK(CURDATE(), 1)');
+		$this->db->where('YEARWEEK(regDate, 1) = YEARWEEK(CURDATE(), 1)', NULL, FALSE);
 
 		$query = $this->db->get();
 
