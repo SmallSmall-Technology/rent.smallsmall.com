@@ -675,7 +675,7 @@ class Admin_model extends CI_Model
 
 	public function fetchrssLeadsThisWeek($referral)
 	{
-		$this->db->select('a.userID, a.referral, count(*) as total');
+		$this->db->select('a.userID, a.regDate, a.referral, count(*) as total');
 
 		$this->db->from('user_tbl as a');
 
