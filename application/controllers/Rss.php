@@ -1,8 +1,8 @@
 <?php
 
-$mono_key = 'test_sk_yviioi5cjr3q1fs4arif';
+//$mono_key = 'test_sk_yviioi5cjr3q1fs4arif';
 
-//include 'views/admin/box.php';
+include 'views/admin/box.php';
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
