@@ -629,6 +629,19 @@ class Admin_model extends CI_Model
 		return $this->db->count_all_results();
 	}
 
+	public function countrssThisWeekLeads()
+	{
+		$this->db->select('DISTINCT(a.referral)');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.interest', 'RSS');
+
+		$this->db->where('YEARWEEK(regDate, 1) = YEARWEEK(CURDATE(), 1)');
+		
+		return $this->db->count_all_results();
+	}
+
 	public function fetchDistRss()
 	{
 		$this->db->select('DISTINCT(a.referral)');
@@ -659,21 +672,24 @@ class Admin_model extends CI_Model
 		return $query;
 	}
 
-	// public function fetchrssLeads($referral)
-	// {
-	// 	$this->db->select('a.referral, count(*) as total');
 
-	// 	$this->db->from('user_tbl as a');
+	public function fetchrssLeadsThisWeek($referral)
+	{
+		$this->db->select('a.userID, a.referral, count(*) as total');
 
-	// 	$this->db->where('a.referral', $referral);
+		$this->db->from('user_tbl as a');
 
-	// 	$this->db->limit($this->_pageNumber, $this->_offset);
+		$this->db->where('a.referral', $referral);
 
-	// 	$query = $this->db->get();
+		$this->db->where('a.interest', 'RSS');
 
-	// 	return $query->result_array();
-	// }
+		$this->db->where('YEARWEEK(regDate, 1) = YEARWEEK(CURDATE(), 1)');
 
+		$query = $this->db->get();
+
+		return $query;
+	}
+	
 	public function fetchRequests($id)
 	{
 		$this->db->select('a.id as msgID, a.requestID, a.content, a.sender, a.receiver, a.subject, a.status as msg_status, a.dateOfEntry, b.id as insID, b.inspectionID, b.propertyID, b.userID, b.inspectionDate, b.inspectionType, c.firstName, c.lastName, c.userID, d.propertyTitle ');

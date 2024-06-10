@@ -150,6 +150,99 @@
 
                 </div>
 
+                <!-- Weekly report -->
+
+                <div>Weekly Report</div>
+                <!-- This week -->
+                <div><?php echo now(); ?></div>
+
+                <div class="table-responsive">
+
+                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+
+                        <thead>
+
+                        <tr>
+                            <th class="text-left">&nbsp;</th>
+
+                            <th class="text-left">Referral</th>
+
+                            <th class="text-left">Leads</th>
+<!-- 
+                            <th class="text-left">Inspection Date</th>
+
+                            <th class="text-left">Status</th>
+
+                            <th class="text-left">Entry Date</th>
+
+                            <th class="text-left">Actions</th> -->
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        <?php
+
+                            // $rssLeads = $this->admin_model->fetchrssLeads('twitter');
+
+                            // print_r($rssLeads);
+
+                            // foreach($rssDistLeads as $rssDistLead => $value) {
+
+                            //     print_r($value);
+                            // }
+
+                                foreach($rssDistLeads as $rssDistLead => $value) {
+
+                                $rssLeads = $this->admin_model->fetchrssLeadsThisWeek($value['referral']);
+
+                                if ($rssLeads->num_rows() > 0) {
+                        
+                                foreach ($rssLeads->result() as $row) {
+
+                        ?>	
+
+                        <tr>
+                            <td class="text-left">
+
+                            <input type="checkbox" class="action-item" id="<?php echo $row->userID; ?>" />
+                            </td>
+
+                            <td class="text-left">
+
+                                <?php 
+                                    echo $row->referral;
+                                ?>
+
+                            </td>
+
+                            <td class="text-left">
+
+                                <?php 
+                                    echo $row->total;
+                                ?>
+
+                            </td>
+
+                        </tr>
+
+                        <?php 
+
+                                }
+                            }
+
+                        }
+
+                        ?>
+  
+                        </tbody>
+
+                    </table>
+
+                </div>
+
                 <div class="d-block text-center card-footer">
 
                     <div class="paginated"><?php echo $this->pagination->create_links(); ?></div>

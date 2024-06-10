@@ -881,7 +881,6 @@ class Rss_model extends CI_Model
 
 	public function fetch_landlord_messages($id, $limit, $start)
 	{
-
 		$this->db->select('a.*, a.id as msg_id, b.*');
 
 		$this->db->from('landlord_messages as a');
