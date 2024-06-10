@@ -154,7 +154,7 @@
 
                 <div>Weekly Report</div>
                 <!-- This week -->
-                <div><?php echo now(); ?></div>
+                <div><?php echo date('Y-m-d'); ?></div>
 
                 <div class="table-responsive">
 
