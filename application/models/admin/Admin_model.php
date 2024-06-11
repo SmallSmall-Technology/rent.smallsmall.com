@@ -701,9 +701,9 @@ class Admin_model extends CI_Model
 
 		$this->db->where('a.interest', 'RSS');
 
-		$this->db->where('regDate >=', 'DATE_SUB(CURDATE(), INTERVAL 1 WEEK)', FALSE);
+		$this->db->where('regDate >=', date('Y-m-d', strtotime('-2 week')));
    
-		$this->db->where('regDate <', 'CURDATE()', FALSE);
+		$this->db->where('regDate <', date('Y-m-d', strtotime('-1 week')));
 
 		$query = $this->db->get();
 
