@@ -152,9 +152,9 @@
 
                 <!-- Weekly report -->
 
-                <div>Weekly Report</div>
+                <h3>Weekly Report for <?php date('Y-m-d', strtotime('-1 week')); ?> - <?php echo date('Y-m-d'); ?></h3>
                 <!-- This week -->
-                <div><?php echo date('Y-m-d'); ?></div>
+                <div></div>
 
                 <div class="table-responsive">
 
@@ -197,8 +197,6 @@
                                 foreach($rssDistLeads as $rssDistLead => $value) {
 
                                 $rssLeads = $this->admin_model->fetchrssLeadsThisWeek($value['referral']);
-
-                                print_r($rssLeads);
 
                                 if ($rssLeads->num_rows() > 0) {
                         
