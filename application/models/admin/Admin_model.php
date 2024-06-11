@@ -683,12 +683,12 @@ class Admin_model extends CI_Model
 
 		$this->db->where('a.interest', 'RSS');
 
-		$this->db->where('regDate >=', date('Y-m-d', strtotime('-1 week')));
+		$this->db->where('a.regDate >=', date('Y-m-d', strtotime('-1 week')));
 
 		$query = $this->db->get();
 
 		return $query;
-	}
+	}	
 	
 	public function fetchRequests($id)
 	{

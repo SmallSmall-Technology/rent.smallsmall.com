@@ -198,6 +198,8 @@
 
                                 $rssLeads = $this->admin_model->fetchrssLeadsThisWeek($value['referral']);
 
+                                print_r($rssLeads);
+
                                 if ($rssLeads->num_rows() > 0) {
                         
                                 foreach ($rssLeads->result() as $row) {
