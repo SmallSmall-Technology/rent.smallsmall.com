@@ -151,9 +151,10 @@
                 </div>
 
                 <!-- Weekly report -->
-
-                <h3>Weekly Report for <?php date('Y-m-d', strtotime('-1 week')); ?> - <?php echo date('Y-m-d'); ?></h3>
+                
                 <!-- This week -->
+                <br></br>
+                <h3>Weekly Report for <?php echo date('Y-m-d', strtotime('-1 week')); ?> - <?php echo date('Y-m-d'); ?></h3>
                 <div></div>
 
                 <div class="table-responsive">
@@ -197,6 +198,100 @@
                                 foreach($rssDistLeads as $rssDistLead => $value) {
 
                                 $rssLeads = $this->admin_model->fetchrssLeadsThisWeek($value['referral']);
+
+                                if ($rssLeads->num_rows() > 0) {
+                        
+                                foreach ($rssLeads->result() as $row) {
+
+                        ?>	
+
+                        <tr>
+                            <td class="text-left">
+
+                            <input type="checkbox" class="action-item" id="<?php echo $row->userID; ?>" />
+                            </td>
+
+                            <td class="text-left">
+
+                                <?php 
+                                    echo $row->referral;
+                                ?>
+
+                            </td>
+
+                            <td class="text-left">
+
+                                <?php 
+                                    echo $row->total;
+                                ?>
+
+                            </td>
+
+                        </tr>
+
+                        <?php 
+
+                                }
+                            }
+
+                        }
+
+                        ?>
+  
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- Last week week -->
+                <br></br>
+                <h3>Weekly Report for <?php echo date('Y-m-d', strtotime('-2 week')); ?> - <?php echo date('Y-m-d', strtotime('-1 week')); ?></h3>
+                <div></div>
+
+                <div class="table-responsive">
+
+                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+
+                        <thead>
+
+                        <tr>
+                            <th class="text-left">&nbsp;</th>
+
+                            <th class="text-left">Referral</th>
+
+                            <th class="text-left">Leads</th>
+                            
+                            <!-- 
+                            <th class="text-left">Inspection Date</th>
+
+                            <th class="text-left">Status</th>
+
+                            <th class="text-left">Entry Date</th>
+
+                            <th class="text-left">Actions</th> -->
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        <?php
+
+                            // $rssLeads = $this->admin_model->fetchrssLeads('twitter');
+
+                            // print_r($rssLeads);
+
+                            // foreach($rssDistLeads as $rssDistLead => $value) {
+
+                            //     print_r($value);
+                            // }
+
+                                foreach($rssDistLeads as $rssDistLead => $value) {
+
+                                $rssLeads = $this->admin_model->fetchrssLeadsLastWeek($value['referral']);
 
                                 if ($rssLeads->num_rows() > 0) {
                         

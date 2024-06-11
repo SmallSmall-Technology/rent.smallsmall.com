@@ -683,12 +683,30 @@ class Admin_model extends CI_Model
 
 		$this->db->where('a.interest', 'RSS');
 
+		$this->db->where('YEARWEEK(regDate, 1) = YEARWEEK(CURDATE(), 1)', NULL, FALSE);
+
+		$query = $this->db->get();
+
+		return $query;
+	}
+	
+
+	public function fetchrssLeadsLastWeek($referral)
+	{
+		$this->db->select('a.userID, a.regDate, a.referral, count(*) as total');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.referral', $referral);
+
+		$this->db->where('a.interest', 'RSS');
+
 		$this->db->where('a.regDate >=', date('Y-m-d', strtotime('-1 week')));
 
 		$query = $this->db->get();
 
 		return $query;
-	}	
+	}
 	
 	public function fetchRequests($id)
 	{
