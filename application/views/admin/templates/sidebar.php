@@ -779,7 +779,7 @@
 
 							<i class="metismenu-icon pe-7s-users"></i>
 
-							Admin
+							Admin Functions
 
 							<i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
 
@@ -804,7 +804,7 @@
 
 									<i class="metismenu-icon"></i>
 
-									Send BTL Shares
+									BSS Shares
 
 								</a>
 
@@ -815,7 +815,7 @@
 
 									<i class="metismenu-icon"></i>
 
-									New BTL Promo
+									Promos & Discounts
 
 								</a>
 
