@@ -327,7 +327,7 @@ else{
                                         <input type="text" class="form-control form-control-lg" value="<?php echo $profile['lastName'] ?>" id="lastNames" name = "lastName" placeholder="Enter email">
                                     </div>
                                     <div class="col-md-2 col-12 align-self-end mb-3">
-                                        <button class="btn secondary-background px-4" style="height: calc(1.5em + 1.4rem + 2px); border-radius: 4px;" type="submit" onclick="saveNames()">Save</button>
+                                        <button class="btn secondary-background px-4" style="height: calc(1.5em + 1.4rem + 2px); border-radius: 4px;" onclick="saveNames()">Save</button>
                                     </div>
 
                                 </div>
