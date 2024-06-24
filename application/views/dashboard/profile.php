@@ -320,14 +320,14 @@ else{
                                 <div class="form-row">
                                     <div class="form-group col-md-5">
                                         <label for="fullName">First name</label>
-                                        <input type="text" class="form-control form-control-lg" value="<?php echo $profile['firstName'] ?>" id="fullName" placeholder="Enter full name">
+                                        <input type="text" class="form-control form-control-lg" value="<?php echo $profile['firstName'] ?>" id="firstNames" name = "firstName" placeholder="Enter full name">
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label for="email">Last name</label>
-                                        <input type="text" class="form-control form-control-lg" value="<?php echo $profile['lastName'] ?>" id="email" placeholder="Enter email">
+                                        <input type="text" class="form-control form-control-lg" value="<?php echo $profile['lastName'] ?>" id="lastNames" name = "lastName" placeholder="Enter email">
                                     </div>
                                     <div class="col-md-2 col-12 align-self-end mb-3">
-                                        <button class="btn secondary-background px-4" style="height: calc(1.5em + 1.4rem + 2px); border-radius: 4px;" type="submit">Save</button>
+                                        <button class="btn secondary-background px-4" style="height: calc(1.5em + 1.4rem + 2px); border-radius: 4px;" type="submit" onclick="saveNames()">Save</button>
                                     </div>
 
                                 </div>
@@ -483,6 +483,43 @@ else{
         });
     </script>
 
+
+<script>
+
+    function saveNames(){
+        
+        var firstName = document.getElementById('firstName').value;
+        
+        var lastName = document.getElementById('lastName').value;
+        
+        var data = {"firstName" : firstName, "lastName" : lastName};
+        
+        $.ajaxSetup ({ cache: false });
+
+        $.ajax({
+
+            url : baseURL+'rss/userProfile/',
+
+            type: "POST",
+
+            async: true,
+
+            data: data,
+
+            success	: function (data){
+                if(data == 1){
+                    alert('Your Details Was Successful changed');
+                    window.location.href = baseURL+"dashboard/profile";
+                }else{                 
+                    alert('Something went wrong. Please try again');      
+                }				
+
+            }
+
+        });
+    }
+
+</script>
 
 </body>
 

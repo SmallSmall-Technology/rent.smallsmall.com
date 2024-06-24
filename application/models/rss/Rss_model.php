@@ -434,6 +434,25 @@ class Rss_model extends CI_Model
 		return $this->db->update('blog_tbl', $view);
 	}
 
+	public function updateNames($firstName, $lastName)
+	{
+		$userID = $this->session->userdata('userID');
+
+		$view = array('firstName' => $firstName, 'lastName' => $lastName);
+
+		$this->db->where('userID', $userID);
+
+		if($this->db->update('user_tbl', $view))
+		{
+			return 1;
+		}
+
+		else
+		{
+			return 0;
+		} 
+	}
+
 	public function getNearbyFacilities($id)
 	{
 

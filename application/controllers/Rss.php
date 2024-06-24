@@ -575,6 +575,15 @@ class Rss extends CI_Controller
 		return $facilities;
 	}
 
+	public function userProfile()
+	{
+		$firstName = $this->input->post('firstName');
+
+		$lastName = $this->input->post('lastName');
+
+		$this->rss_model->updateNames($firstName, $lastName);
+	}
+	
 	public function filter_search()
 	{
 		$locate = $this->input->post('locatn');
