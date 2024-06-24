@@ -488,9 +488,9 @@ else{
 
     function saveNames(){
         
-        var firstName = document.getElementById('firstName').value;
+        var firstName = document.getElementById('firstNames').value;
         
-        var lastName = document.getElementById('lastName').value;
+        var lastName = document.getElementById('lastNames').value;
         
         var data = {"firstName" : firstName, "lastName" : lastName};
         
