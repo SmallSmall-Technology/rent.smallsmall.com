@@ -442,15 +442,7 @@ class Rss_model extends CI_Model
 
 		$this->db->where('userID', $userID);
 
-		if($this->db->update('user_tbl', $view))
-		{
-			return 1;
-		}
-
-		else
-		{
-			return 0;
-		} 
+		$this->db->update('user_tbl', $view);
 	}
 
 	public function getNearbyFacilities($id)

@@ -581,7 +581,15 @@ class Rss extends CI_Controller
 
 		$lastName = $this->input->post('lastName');
 
-		$this->rss_model->updateNames($firstName, $lastName);
+		if($this->rss_model->updateNames($firstName, $lastName))
+		{
+			echo 1;
+		}
+
+		else
+		{
+			echo 0;
+		}
 	}
 	
 	public function filter_search()
