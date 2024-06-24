@@ -488,7 +488,7 @@ else{
 
     function saveNames(){
 
-        var baseURL = <?php echo base_url(); ?>
+        var baseURL = "<?php echo base_url(); ?>";
         
         var firstName = document.getElementById('firstNames').value;
         
