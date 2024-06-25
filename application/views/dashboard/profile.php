@@ -509,12 +509,7 @@ else{
             data: data,
 
             success	: function (data){
-                if(data == 1){
-                    alert('Your Details Was Successful changed');
-                    window.location.href = baseURL+"dashboard/profile";
-                }else{                 
-                    alert('Something went wrong. Please try again');      
-                }
+                alert('Your Details Was Successful changed');    
             }
 
         });
