@@ -6010,6 +6010,23 @@ class Rss extends CI_Controller
 
 	}
 
+	public function userProfile()
+	{
+		$firstName = $this->input->post('firstName');
+
+		$lastName = $this->input->post('lastName');
+
+		if($this->rss_model->updateNames($firstName, $lastName))
+		{
+			echo 1;
+		}
+
+		else
+		{
+			echo 0;
+		}
+	}
+
 	public function verify_test_payment($ref)
 	{
 
