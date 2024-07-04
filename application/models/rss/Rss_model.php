@@ -730,6 +730,17 @@ class Rss_model extends CI_Model
 		return $query->row_array();
 	}
 
+	public function updateNames($firstName, $lastName)
+	{
+		$userID = $this->session->userdata('userID');
+
+		$view = array('firstName' => $firstName, 'lastName' => $lastName);
+
+		$this->db->where('userID', $userID);
+
+		$this->db->update('user_tbl', $view);
+	}
+
 	public function get_admin($id)
 	{
 
@@ -1640,7 +1651,7 @@ class Rss_model extends CI_Model
 	}
 
 
-	public function insertBooking($id, $verificationID, $user_id, $productID, $productTitle, $paymentPlan, $prodPrice, $imageLink, $productUrl, $securityDeposit, $duration, $booked_as, $move_in_date, $payment_type, $total_cost, $ref, $subscriptionFees, $serviceChargeDeposit, $securityDepositFund, $total)
+	public function insertBooking($id, $verificationID, $user_id, $productID, $productTitle, $paymentPlan, $prodPrice, $imageLink, $productUrl, $securityDeposit, $duration, $booked_as, $move_in_date, $payment_type, $total_cost, $ref, $subscriptionFees, $serviceChargeDeposit, $securityDepositFund, $total, $couponCode)
 	{
 
 		//$nMonths = 12;
@@ -1707,6 +1718,7 @@ class Rss_model extends CI_Model
 			'subscription_fees' => $subscriptionFees,
 			'service_charge_deposit' => $serviceChargeDeposit,
 			'security_deposit_fund' => $securityDepositFund,
+			'coupon_code' => $couponCode,
 			'total' => $total
 		);
 
@@ -4405,15 +4417,13 @@ class Rss_model extends CI_Model
 
 		$this->db->where('discount_product', 'rss');
 
-		$this->db->where('staus', 1);
+		$this->db->where('status', 1);
 
-		if($code)
+		$this->db->where('discount_code', $code);
 
-			$this->db->where('discount_code', $code);
+		$this->db->where('start_date <=', $today);
 
-		$this->db->where('start_date >=', $today);
-
-		$this->db->where('end_date <=', $today);
+		$this->db->where('end_date >=', $today);
 
 		$this->db->order_by('id', 'DESC');
 

@@ -3202,6 +3202,175 @@ class Admin_model extends CI_Model
 
 		return $query->result_array();
 	}
+
+	public function countrssLeads()
+	{
+		$this->db->select('DISTINCT(a.referral)');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.interest', 'RSS');
+		
+		return $this->db->count_all_results();
+	}
+
+	public function countbssLeads()
+	{
+		$this->db->select('DISTINCT(a.referral)');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.interest', 'Buy');
+		
+		return $this->db->count_all_results();
+	}
+
+	public function countrssThisWeekLeads()
+	{
+		$this->db->select('DISTINCT(a.referral)');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.interest', 'RSS');
+
+		$this->db->where('YEARWEEK(regDate, 1) = YEARWEEK(CURDATE(), 1)');
+		
+		return $this->db->count_all_results();
+	}
+
+	public function fetchDistRss()
+	{
+		$this->db->select('DISTINCT(a.referral)');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.interest', 'RSS');
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function fetchDistBss()
+	{
+		$this->db->select('DISTINCT(a.referral)');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.interest', 'Buy');
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function fetchrssLeads($referral)
+	{
+		$this->db->select('a.userID, a.referral, count(*) as total');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.referral', $referral);
+
+		$this->db->where('a.interest', 'RSS');
+
+		$query = $this->db->get();
+
+		return $query;
+	}
+
+	public function fetchbssLeads($referral)
+	{
+		$this->db->select('a.userID, a.referral, count(*) as total');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.referral', $referral);
+
+		$this->db->where('a.interest', 'Buy');
+
+		$query = $this->db->get();
+
+		return $query;
+	}
+
+
+	public function fetchrssLeadsThisWeek($referral)
+	{
+		$this->db->select('a.userID, a.regDate, a.referral, count(*) as total');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.referral', $referral);
+
+		$this->db->where('a.interest', 'RSS');
+
+		$this->db->where('YEARWEEK(regDate, 1) = YEARWEEK(CURDATE(), 1)', NULL, FALSE);
+
+		$query = $this->db->get();
+
+		return $query;
+	}
+
+	public function fetchbssLeadsThisWeek($referral)
+	{
+		$this->db->select('a.userID, a.regDate, a.referral, count(*) as total');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.referral', $referral);
+
+		$this->db->where('a.interest', 'Buy');
+
+		$this->db->where('YEARWEEK(regDate, 1) = YEARWEEK(CURDATE(), 1)', NULL, FALSE);
+
+		$query = $this->db->get();
+
+		return $query;
+	}
+	
+	public function fetchrssLeadsLastWeek($referral)
+	{
+		$this->db->select('a.userID, a.regDate, a.referral, count(*) as total');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.referral', $referral);
+
+		$this->db->where('a.interest', 'RSS');
+
+		$this->db->where('regDate >=', date('Y-m-d', strtotime('-2 week')));
+   
+		$this->db->where('regDate <', date('Y-m-d', strtotime('-1 week')));
+
+		$query = $this->db->get();
+
+		return $query;
+	}
+
+	public function fetchbssLeadsLastWeek($referral)
+	{
+		$this->db->select('a.userID, a.regDate, a.referral, count(*) as total');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->where('a.referral', $referral);
+
+		$this->db->where('a.interest', 'Buy');
+
+		$this->db->where('regDate >=', date('Y-m-d', strtotime('-2 week')));
+   
+		$this->db->where('regDate <', date('Y-m-d', strtotime('-1 week')));
+
+		$query = $this->db->get();
+
+		return $query;
+	}
+	
 	public function get_all_admin()
 	{
 

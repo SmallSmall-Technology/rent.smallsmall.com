@@ -29,7 +29,7 @@
         <h2 class="verify-title">Verify ID & Income</h2>
         <p class="verify-body">Click the buttons to verify</p>
       </div>
-      <div class="row mt-5">
+      <div class="row mt-5 justify-content-center">
         <div class="col-md-6 col-12 mb-4">
           <div class="d-flex flex-column align-items-center">
             <div class="verify-icon mb-4">
@@ -48,7 +48,7 @@
               <input type="submit" id="verify-income-submit" hidden />
 
               <!-- Show this button when not verified and make it trigger the file input -->
-              <a href="#" class="btn verify-btn px-5 py-2" id="verify-income-button">Verify income</a>
+              <button class="btn verify-btn px-5 py-2" onclick="verifyIncome()">Verify income</button>
 
               <!-- Show this button when verified -->
               <button class="btn verified-btn px-5 py-2 d-none" id="verified-button">Verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
@@ -56,26 +56,26 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-12">
+        <!-- <div class="col-md-6 col-12">
           <div class="d-flex flex-column align-items-center">
             <div class="verify-icon mb-4">
               <img class="img-fluid" src="<?php echo base_url(); ?>assets/updated-assets/images/face-scanner.svg" alt="">
             </div>
             <div>
-              <!-- show this when not verified -->
-              <button class="btn verify-btn px-5 py-2" id="verify-id-btn">Verify ID</button>
+              show this when not verified -->
+              <!-- <button class="btn verify-btn px-5 py-2" id="verify-id-btn">Verify ID</button>
               <!-- show this when verified -->
-              <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button>
-            </div>
+              <!-- <button class="btn verified-btn px-5 py-2 d-none">verified <i class="fa-solid fa-check" style="color:#00CD2D"></i></button> -->
+            <!-- </div>
           </div>
-        </div>
+        </div>  -->
       </div>
       <div class="row mb-5">
         <div class="col-12 mt-5 text-center">
 
           <a href="https://rent.smallsmall.com/rss/verification/employment-verification" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
 
-          <button type="submit" class="btn verify-btn px-5 py-2 finishVerifyBut" id="finishVerifyBut">Finish</button>
+          <button type="submit" class="btn verify-btn px-5 py-2 finishVerifyBut" id="finishVerifyBut">next</button>
         </div>
       </div>
     </div>
@@ -258,6 +258,36 @@
       }
     });
   });
+
+
+  function verifyIncome() {
+
+    var baseURL = "<?php echo base_url(); ?>";
+        
+    var userID = document.getElementById('userID').value;
+    
+    var data = {"userID" : userID};
+    
+    $.ajaxSetup ({ cache: false });
+
+    $.ajax({
+
+        url : baseURL+'rss/verifyIncome/',
+
+        type: "POST",
+
+        async: true,
+
+        data: data,
+
+        success	: function (data){        
+        window.location.href= data
+        //alert(data);
+      }
+
+    });
+}
+
 </script>
 
 
