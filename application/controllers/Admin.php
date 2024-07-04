@@ -7188,7 +7188,6 @@ class Admin extends CI_Controller
 
 	public function shorten_title($string)
 	{
-
 		if (strlen($string) >= 20) {
 			return substr($string, 0, 20) . " ... ";
 		} else {
