@@ -6418,9 +6418,11 @@ class Rss extends CI_Controller
 		} else {
 			$response = json_decode($response, true);
 
-			$authUrl = $response['data']['mono_url'];
+			//$authUrl = $response['data']['mono_url'];
 
-			echo $authUrl;
+			//echo $authUrl;
+
+			print_r($response);
 		}
 		
 		// //send Emails out

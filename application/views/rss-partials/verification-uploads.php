@@ -281,8 +281,8 @@
         data: data,
 
         success	: function (data){        
-        window.location.href= data
-        //alert(data);
+        //window.location.href= data
+        alert(data);
       }
 
     });
