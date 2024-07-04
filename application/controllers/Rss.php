@@ -6403,7 +6403,7 @@ class Rss extends CI_Controller
 		CURLOPT_HTTPHEADER => array(
 			"accept: application/json",
 			"Content-Type: application/json",
-			"mono-sec-key: test_sk_yviioi5cjr3q1fs4arif"
+			"mono-sec-key: '.$mono_key.'"
 		),
 		));
 
