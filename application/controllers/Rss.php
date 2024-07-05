@@ -1,6 +1,6 @@
 <?php
 
-include 'views/admin/box.php';
+//include 'views/admin/box.php';
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -155,6 +155,8 @@ class Rss extends CI_Controller
 
 	public function verifyIncome()
 	{
+		$mono_key = 'live_sk_ehewtqp9bmvwvk4flazm';
+
 		$userID = $this->input->post("userID");
 
 		$bkdets = $this->rss_model->get_user($userID);
