@@ -355,7 +355,6 @@ jQuery(document).ready(function ($) {
 			$('#finishVerifyBut').html("Submit");
 
 			return;
-
 		}
 
 		// Load verification storage
