@@ -3,6 +3,7 @@ jQuery(document).ready(function ($) {
 
 	//Insert into local storage
 
+	//Just to make sure it picked it 
 	var baseUrl = "https://dev-rent.smallsmall.com/";
 
 	var details = "";
