@@ -187,7 +187,7 @@
 
 
 <script>
-  var baseUrl = "https://rent.smallsmall.com/";
+  var baseUrl = "https://dev-rent.smallsmall.com/";
 
   // Added to reference the verify button
   let input = document.getElementById('verify-income-upload');
@@ -203,61 +203,61 @@
   // console.log('verifyButton:', verifyButton);
   // console.log('verifiedButton:', verifiedButton);
 
-  incomeButton.onclick = () => {
+  // incomeButton.onclick = () => {
 
-    input.click();
+  //   input.click();
 
-  };
+  // };
 
-  input.addEventListener('change', function() {
+  // input.addEventListener('change', function() {
 
-    "use strict";
+  //   "use strict";
 
-    var fd = new FormData();
+  //   var fd = new FormData();
 
-    var files = $(this)[0].files[0];
-    // var files = this.files[0];
+  //   var files = $(this)[0].files[0];
+  //   // var files = this.files[0];
 
-    var folderName = document.getElementById('userID').value;
+  //   var folderName = document.getElementById('userID').value;
 
-    var filepath = "";
+  //   var filepath = "";
 
-    // console.log('files:', files); // burgs test
+  //   // console.log('files:', files); // burgs test
 
-    fd.append('files', files);
+  //   fd.append('files', files);
 
-    $.ajax({
-      url: baseUrl + 'rss/uploadIdentification/' + folderName,
+  //   $.ajax({
+  //     url: baseUrl + 'rss/uploadIdentification/' + folderName,
 
-      type: 'post',
+  //     type: 'post',
 
-      data: fd,
+  //     data: fd,
 
-      contentType: false,
+  //     contentType: false,
 
-      processData: false,
+  //     processData: false,
 
-      beforeSend: function() {
+  //     beforeSend: function() {
 
-        // Actions before upload here if needed
-      },
-      success: function(data, folder, pictures) {
+  //       // Actions before upload here if needed
+  //     },
+  //     success: function(data, folder, pictures) {
 
-        filepath = folderName + '/' + files.name.replace(/\s+/g, '_');
+  //       filepath = folderName + '/' + files.name.replace(/\s+/g, '_');
 
-        $('#statement').val(filepath);
+  //       $('#statement').val(filepath);
 
-        // console.log('filepath:', filepath);
+  //       // console.log('filepath:', filepath);
 
-        // Hide the verifyButton and show the verifiedButton
+  //       // Hide the verifyButton and show the verifiedButton
 
-        verifyButton.style.display = 'none';
+  //       verifyButton.style.display = 'none';
 
-        verifiedButton.classList.remove('d-none');
+  //       verifiedButton.classList.remove('d-none');
 
-      }
-    });
-  });
+  //     }
+  //   });
+  // });
 
 
   function verifyIncome() {
@@ -267,6 +267,10 @@
     var userID = document.getElementById('userID').value;
     
     var data = {"userID" : userID};
+
+    var filepath = "filepath";
+
+    $('#statement').val(filepath);
     
     $.ajaxSetup ({ cache: false });
 

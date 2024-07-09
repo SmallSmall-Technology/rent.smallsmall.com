@@ -1192,6 +1192,7 @@ class Rss_model extends CI_Model
 		return $query->row_array();
 		
 	}
+	
 	public function rent_status($id)
 	{
 

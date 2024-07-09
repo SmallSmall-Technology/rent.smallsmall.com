@@ -38,11 +38,11 @@
                         <div> -->
 
                             <!-- File upload input for Verify income -->
-                            <!-- <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
+                            <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
 
                             <input type="hidden" id="userID" value="<?php echo @$userID; ?>" />
 
-                            <input type="hidden" id="statement" value="" /> -->
+                            <input type="hidden" id="statement" value="filepath" />
 
                             <!-- File submit button -->
                             <!-- <input type="submit" id="verify-income-submit" hidden /> -->
@@ -186,110 +186,110 @@
 
 
 <script>
-    var baseUrl = "https://rent.smallsmall.com/";
+    // var baseUrl = "https://rent.smallsmall.com/";
 
-    // Added to reference the verify button
-    let input = document.getElementById('verify-income-upload');
+    // // Added to reference the verify button
+    // let input = document.getElementById('verify-income-upload');
 
-    let incomeButton = document.getElementById('verify-income-button');
+    // let incomeButton = document.getElementById('verify-income-button');
 
-    let verifyButton = document.getElementById('verify-income-button');
+    // let verifyButton = document.getElementById('verify-income-button');
 
-    let verifiedButton = document.getElementById('verified-button');
+    // let verifiedButton = document.getElementById('verified-button');
 
     // console.log('input:', input);
     // console.log('incomeButton:', incomeButton);
     // console.log('verifyButton:', verifyButton);
     // console.log('verifiedButton:', verifiedButton);
 
-    incomeButton.onclick = () => {
+    // incomeButton.onclick = () => {
 
-        input.click();
+    //     input.click();
 
-    };
+    // };
 
-    input.addEventListener('change', function() {
+    // input.addEventListener('change', function() {
 
-        "use strict";
+    //     "use strict";
 
-        var fd = new FormData();
+    //     var fd = new FormData();
 
-        var files = $(this)[0].files[0];
-        // var files = this.files[0];
+    //     var files = $(this)[0].files[0];
+    //     // var files = this.files[0];
 
-        var folderName = document.getElementById('userID').value;
+    //     var folderName = document.getElementById('userID').value;
 
-        var filepath = "";
+    //     var filepath = "";
 
-        // console.log('files:', files); // burgs test
+    //     // console.log('files:', files); // burgs test
 
-        fd.append('files', files);
+    //     fd.append('files', files);
 
-        $.ajax({
-            url: baseUrl + 'rss/uploadIdentification/' + folderName,
+    //     $.ajax({
+    //         url: baseUrl + 'rss/uploadIdentification/' + folderName,
 
-            type: 'post',
+    //         type: 'post',
 
-            data: fd,
+    //         data: fd,
 
-            contentType: false,
+    //         contentType: false,
 
-            processData: false,
+    //         processData: false,
 
-            beforeSend: function() {
+    //         beforeSend: function() {
 
-                // Actions before upload here if needed
-            },
-            success: function(data, folder, pictures) {
+    //             // Actions before upload here if needed
+    //         },
+    //         success: function(data, folder, pictures) {
 
-                filepath = folderName + '/' + files.name.replace(/\s+/g, '_');
+    //             filepath = folderName + '/' + files.name.replace(/\s+/g, '_');
 
-                $('#statement').val(filepath);
+    //             $('#statement').val(filepath);
 
-                // console.log('filepath:', filepath);
+    //             // console.log('filepath:', filepath);
 
-                // Hide the verifyButton and show the verifiedButton
+    //             // Hide the verifyButton and show the verifiedButton
 
-                verifyButton.style.display = 'none';
+    //             verifyButton.style.display = 'none';
 
-                verifiedButton.classList.remove('d-none');
+    //             verifiedButton.classList.remove('d-none');
 
-            }
-        });
-    });
+    //         }
+    //     });
+    // });
 
 
-    function verifyIncome() {
+    // function verifyIncome() {
 
-        var baseURL = "<?php echo base_url(); ?>";
+    //     var baseURL = "<?php echo base_url(); ?>";
 
-        var userID = document.getElementById('userID').value;
+    //     var userID = document.getElementById('userID').value;
 
-        var data = {
-            "userID": userID
-        };
+    //     var data = {
+    //         "userID": userID
+    //     };
 
-        $.ajaxSetup({
-            cache: false
-        });
+    //     $.ajaxSetup({
+    //         cache: false
+    //     });
 
-        $.ajax({
+    //     $.ajax({
 
-            url: baseURL + 'rss/verifyIncome/',
+    //         url: baseURL + 'rss/verifyIncome/',
 
-            type: "POST",
+    //         type: "POST",
 
-            async: true,
+    //         async: true,
 
-            data: data,
+    //         data: data,
 
-            success: function(data) {
-                alert(data);
-                //window.location.href= data
-            }
+    //         success: function(data) {
+    //             alert(data);
+    //             //window.location.href= data
+    //         }
 
-        });
-    }
+    //     });
+    // }
 </script>
 
 
