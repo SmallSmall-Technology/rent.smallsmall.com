@@ -420,7 +420,7 @@ jQuery(document).ready(function ($) {
 
 				// window.location.href = baseUrl + "rss/verification-complete";
 
-				alert(data);
+				alert(JSON.stringify(data, null, 2));
 
 				return false;
 			},
