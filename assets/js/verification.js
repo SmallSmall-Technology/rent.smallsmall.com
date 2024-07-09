@@ -414,11 +414,13 @@ jQuery(document).ready(function ($) {
 
 				// Redirect to the verification-complete page
 
-				localStorage.removeItem('verificationStorage');
+				// localStorage.removeItem('verificationStorage');
 
-				localStorage.removeItem('rentalBasket');
+				// localStorage.removeItem('rentalBasket');
 
-				window.location.href = baseUrl + "rss/verification-complete";
+				// window.location.href = baseUrl + "rss/verification-complete";
+
+				alert(data);
 
 				return false;
 			},
