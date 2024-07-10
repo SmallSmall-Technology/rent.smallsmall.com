@@ -1566,27 +1566,37 @@ class Rss_model extends CI_Model
 
 		$this->updated_at = date("Y-m-d H:i:s");
 
-		if ($this->db->insert('verifications', $this)) {
+		// if ($this->db->insert('verifications', $this)) {
 
-			$ver_stat = array("verified" => "received");
+		try {
+			$this->db->insert('verifications', $this);
 
-			$this->db->where("userID", $user_id);
+			// $ver_stat = array("verified" => "received");
 
-			if ($this->db->update("user_tbl", $ver_stat)) {
+			// $this->db->where("userID", $user_id);
 
-				$bank = $this->db->insert('bank_statements', array('verification_id' => $ver_id, 'user_id' => $user_id, 'file_path' => $statement_path, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')));
+			// if ($this->db->update("user_tbl", $ver_stat)) {
 
-				if ($bank) {
+			// 	$bank = $this->db->insert('bank_statements', array('verification_id' => $ver_id, 'user_id' => $user_id, 'file_path' => $statement_path, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')));
 
-					if ($this->db->insert('valid_ids', array('verification_id' => $ver_id, 'user_id' => $user_id, 'file_path' => $id_path, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')))) {
+			// 	if ($bank) {
 
-						return $ver_id;
-					}
-				} else {
+			// 		if ($this->db->insert('valid_ids', array('verification_id' => $ver_id, 'user_id' => $user_id, 'file_path' => $id_path, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')))) {
 
-					return 0;
-				}
-			}
+			// 			return $ver_id;
+			// 		}
+			// 	} else {
+
+			// 		return 0;
+			// 	}
+			// }
+
+			return array('status' => 'success');
+		}
+
+		catch (Exception $e) {
+            // Return error message
+            return array('status' => 'error', 'message' => $e->getMessage());
 		}
 	}
 
