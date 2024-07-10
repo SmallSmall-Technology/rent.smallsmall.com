@@ -42,7 +42,7 @@
 
                             <input type="hidden" id="userID" value="<?php echo @$userID; ?>" />
 
-                            <input type="hidden" id="statement" value="" />
+                            <input type="hidden" id="statement" value="filepath" />
 
                             <!-- File submit button -->
                             <!-- <input type="submit" id="verify-income-submit" hidden /> -->
