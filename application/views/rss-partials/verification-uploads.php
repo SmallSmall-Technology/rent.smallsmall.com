@@ -268,9 +268,9 @@
     
     var data = {"userID" : userID};
 
-    var filepath = "filepath";
+    //var filepath = "filepath";
 
-    $('#statement').val(filepath);
+    //$('#statement').val(filepath);
     
     $.ajaxSetup ({ cache: false });
 
