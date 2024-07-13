@@ -5,9 +5,9 @@
                     <h3>Finally, your unfair advantage..</h3>
                     <h1>Enjoy quality life on your terms and within your means.</h1>
                     <div class="hero-note">Our Innovative housing solutions makes affordable homes and quality living a reality for the average person. No more sacrificing your dreams due to down payments, credit issues or overwhelming costs — we’ve eliminated the financial barrier.</div>
-                    <div class="hero-button"><a href="">Get started <i class="fa fa-chevron-right"></i></a></div>
+                    <div class="hero-button"><a href="/small-small-new/register">Get started <i class="fa fa-chevron-right"></i></a></div>
                 </div>
-                <div class="hero-image">
+                <div class="hero-image hero">
                     <img src="assets/images/man-relaxing-on-chair-cleaned-edges.svg" alt="Man sitting on sofa" />
                 </div>
             </div>
@@ -25,7 +25,10 @@
         <section>
             <h1 class="head-title">Lorem ipsum dolor<br />consectetur adipiscing</h1>
             <div class="section-inner renters">                
-                <div class="renters-image">
+                <div class="renters-image renters desktop">
+                    <!---<img src="assets/images/relaxed-african-american-woman-enjoying-music-on-couch.svg" alt="Woman sitting on sofa" />--->
+                </div>
+                <div class="renters-image mobile">
                     <img src="assets/images/relaxed-african-american-woman-enjoying-music-on-couch.svg" alt="Woman sitting on sofa" />
                 </div>
                 <div class="renters-text">
@@ -167,7 +170,10 @@
                     </div>
                     <div class="employees-btn"><a href="">Explore more <i class="fa fa-arrow-right"></i></a></div>
                 </div>
-                <div class="employees-image">
+                <div class="employees-image employees">
+                    <!---<img src="assets/images/office-guys-working.svg" alt="Woman sitting on sofa" />--->
+                </div>
+                <div class="employees-image mobile">
                     <img src="assets/images/office-guys-working.svg" alt="Woman sitting on sofa" />
                 </div>
             </div>
