@@ -16,15 +16,15 @@
                     </div>
                     <div class="links-container">
                         <div class="footer-links-head">Resources</div>
-                        <div class="footer-links"><a href="">Podcast</a></div>
-                        <div class="footer-links"><a href="/blog">Blog</a></div>
-                        <div class="footer-links"><a href="">Newsletter</a></div>
+                        <div class="footer-links"><a href="#">Podcast</a></div>
+                        <div class="footer-links"><a href="/small-small-new/blog">Blog</a></div>
+                        <div class="footer-links"><a href="#">Newsletter</a></div>
                         <div class="footer-links"><a>&nbsp;</a></div>
                     </div>
                     <div class="links-container">
                         <div class="footer-links-head">Company</div>
-                        <div class="footer-links"><a href="">Our Story</a></div>
-                        <div class="footer-links"><a href="">Blog</a></div>
+                        <div class="footer-links"><a href="/small-small-new/about-us">Our Story</a></div>
+                        <div class="footer-links"><a href="/small-small-new/blog">Blog</a></div>
                         <div class="footer-links"><a href="">Careers</a></div>
                     </div>
                     <div class="links-container">                        

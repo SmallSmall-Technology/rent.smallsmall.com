@@ -30,12 +30,12 @@
                             <input type="text" class="text-field" placeholder="Referral Code (Optional)" />
                         </div> 
                         <div class="login-element-container">
-                            <input type="submit" class="reg-btn" value="Sign up" />
+                        <a class="reg-btn" href="/small-smll-new/registration-success">Sign up</a><!---<input type="submit" class="reg-btn" value="Sign up" />--->
                         </div>
                     </form>
                 </div>
                 <div class="forgot-password-box">
-                By signing up for an account you agree to our <a href="/privacy-policy">Privacy Policy</a> and <a href="terms-and-conditions">Terms of use</a>.
+                By signing up for an account you agree to our <a href="/small-small-new/privacy-policy">Privacy Policy</a> and <a href="/small-small-new/terms-and-conditions">Terms of use</a>.
                 </div>
             </div>
         </section>    

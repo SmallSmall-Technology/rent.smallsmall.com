@@ -27,12 +27,12 @@
                             <input type="password" class="text-field pass" placeholder="Confirm password" />
                         </div>
                         <div class="login-element-container">
-                            <button class="login-btn next-btn">Next<i class="fa fa-chevron-right"></i></button>
+                            <button class="login-btn next-btn"><a href="/small-small-new/register-2">Next<i class="fa fa-chevron-right"></i></a></button>
                         </div>
                     </form>
                 </div>
                 <div class="forgot-password-box">
-                By signing up for an account you agree to our <a href="">Privacy Policy</a> and <a href="">Terms of use</a>.
+                By signing up for an account you agree to our <a href="/small-small-new/privacy-policy">Privacy Policy</a> and <a href="/small-small-new/terms-and-conditions">Terms of use</a>.
                 </div>
             </div>
         </section>    

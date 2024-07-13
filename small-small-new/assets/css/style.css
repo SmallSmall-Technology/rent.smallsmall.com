@@ -182,7 +182,7 @@ section{
     width: 100%;
     margin-bottom: 50px;
 }
-.section.mobile{
+section.mobile{
     display: none !important;
 }
 section h1.head-title{
@@ -315,6 +315,7 @@ section.login{
 .reg-btn{
     width: 100%;
     line-height: 40px;
+    display: block;
     background:#138E3D;
     color: #FFF;
     font-family: 'Hellix Bold';
@@ -323,6 +324,7 @@ section.login{
     border: 0;
     text-align: center;
     cursor: pointer;
+    text-decoration: none;
 }
 .reg-btn:hover{
     transition: .4s;
@@ -705,7 +707,7 @@ a.buyer-btn i{
 .middle-class-btn:hover a i{
     transition: .4s;
     rotate: 360deg;
-}
+} 
 .blog-container{
     width: 100%;
     display: flex;
@@ -978,6 +980,10 @@ footer{
     width: 80%;
     margin: auto;
     padding: 50px 0;
+}
+.next-btn a{
+    color: #fff;
+    text-decoration: none;
 }
 @media(max-width: 900px){
     .header-inner{
@@ -1373,5 +1379,33 @@ footer{
     }
     .team-item:nth-child(2){
         margin-left: calc(100% - 350px);
+    }
+    .page-content h3{
+        font-size: 38px;
+    }
+    .page-content .note{
+        font-size: 16px;
+        line-height: 25px;
+        margin-bottom: 10px;
+    }
+    .content-inner{
+        width: 90%;
+        padding: 30px 0;
+    }
+    .content-inner h3{
+        margin: 20px 0;
+    }
+    .page-content .head{
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    section.login{
+        padding: 30px 30px 100px 30px;
+        justify-content: center;
+        margin-bottom: 0 !important;
+    }
+    .login-container{
+        width: 100%;
+        max-width: 500px;
     }
 }

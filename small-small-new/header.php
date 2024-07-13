@@ -29,7 +29,7 @@
                         <li id="menu-item-products" class="menu-item menu-item-parent"><a>Products <i class="fa fa-chevron-down"></i></a>
                             <ul id="products-menu" class="sub-menu">
                                 <li class="menu-item menu-item-parent">
-                                    <a href="https://rent.smllsmll.com">RentSmallSmall</a>
+                                    <a href="https://rent.smallsmall.com">RentSmallSmall</a>
                                     <span class="menu-description">
                                         Enjoy flexible monthly rental payments within your means.
                                     </span>
@@ -51,13 +51,13 @@
                         <li id="menu-item-company" class="menu-item menu-item-parent"><a>Company <i class="fa fa-chevron-down"></i></a>
                             <ul id="company-menu" class="sub-menu">
                                 <li class="menu-item">
-                                    <a href="/about-us">Our Story</a>
+                                    <a href="/small-small-new/about-us">Our Story</a>
                                     <span class="menu-description">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing 
                                     </span>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="/careers">Careers</a>
+                                    <a href="/small-small-new/careers">Careers</a>
                                     <span class="menu-description">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing 
                                     </span>
@@ -73,7 +73,7 @@
                                     </span>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="/blog">Blog</a>
+                                    <a href="/small-small-new/blog">Blog</a>
                                     <span class="menu-description">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing 
                                     </span>
@@ -89,13 +89,13 @@
                         </li>
                     </ul>
                     <div class="header-buttons mobile">
-                        <div class="header-btn login"><a href="/login">Login</a></div>
+                        <div class="header-btn login"><a href="/small-small-new/login">Login</a></div>
                         <div class="header-btn get-started"><a href="/register">Get started</a></div>
                     </div>
                 </div>
                 <div class="header-buttons desktop">
-                    <div class="header-btn login"><a href="/login">Login</a></div>
-                    <div class="header-btn get-started"><a href="/register">Get started</a></div>
+                    <div class="header-btn login"><a href="/small-small-new/login">Login</a></div>
+                    <div class="header-btn get-started"><a href="/small-small-new/register">Get started</a></div>
                 </div>
             </div>
         </header>
