@@ -1,0 +1,44 @@
+/* Reset <select> defaults */
+select {
+    appearance: none;
+    outline: 0;
+    border: 1px solid #D1CECE;
+    background: none;
+    color: inherit;
+    box-shadow: none;
+    border-radius: 5px;
+}
+select::-ms-expand {
+    display: none;
+}
+/* Custom Select wrapper */
+.select {
+    position: relative;
+    display: flex;
+    width: 100%;
+    background: var(--background-select);
+    border-radius: 5px;
+    overflow: hidden;
+    /* Select style */
+    select {
+        flex: 1;
+        padding: 1em;
+        cursor: pointer;
+    }
+    /* Arrow style */
+    &::after {
+        content: "\25BC";
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        transition: 0.25s all ease;
+        pointer-events: none; 
+        color: #138E3D;
+    }
+    /* Arrow hover */
+    &:hover::after {
+        color: #138E3D;
+        animation: bounce 0.5s infinite;
+    }
+}
+

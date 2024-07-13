@@ -1,0 +1,1377 @@
+@font-face {
+    font-family: 'Hellix Regular';
+    src: url('../fonts/hellix/Hellix-Regular.eot');
+    src: local('Hellix Regular'), local('Hellix-Regular'),
+        url('../fonts/hellix/Hellix-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/hellix/Hellix-Regular.woff2') format('woff2'),
+        url('../fonts/hellix/Hellix-Regular.woff') format('woff'),
+        url('../fonts/hellix/Hellix-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hellix Thin';
+    src: url('../fonts/hellix/Hellix-Thin.eot');
+    src: local('Hellix Thin'), local('Hellix-Thin'),
+        url('../fonts/hellix/Hellix-Thin.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/hellix/Hellix-Thin.woff2') format('woff2'),
+        url('../fonts/hellix/Hellix-Thin.woff') format('woff'),
+        url('../fonts/hellix/Hellix-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hellix Bold';
+    src: url('../fonts/hellix/Hellix-Bold.eot');
+    src: local('Hellix Bold'), local('Hellix-Bold'),
+        url('../fonts/hellix/Hellix-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/hellix/Hellix-Bold.woff2') format('woff2'),
+        url('../fonts/hellix/Hellix-Bold.woff') format('woff'),
+        url('../fonts/hellix/Hellix-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+*{
+    box-sizing: border-box;
+}
+body, html{
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+header{
+    width: 100%;
+    background: #FFF; 
+    border-bottom:1px solid rgba(0,0,0,0.15);
+}
+.header-inner{
+    width:90%;
+    max-width: 1300px;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    padding:20px 0;
+}
+.header-inner .header-logo{
+    flex-grow: 2;
+}
+.header-inner .header-logo img{
+    width:150px;
+    height:auto;
+}
+.mobile-menu{
+    width:40px;
+    height:40px;
+    display:none;
+}
+.header-inner .header-navigation{
+    flex-grow: 2;
+}
+.header-inner .header-buttons{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.header-inner .header-buttons.mobile{
+    display:none;
+}
+.menu{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+.menu .menu-item{
+    line-height: 40px;
+    padding: 0 10px;
+    margin-right:20px;
+    border-bottom: 2px solid transparent;
+}
+.menu .menu-item:hover{
+    border-bottom: 2px solid #138E3D;
+}
+.menu .menu-item a{
+    font-family: 'Hellix Regular';
+    color: #222224;
+    text-decoration: none;
+}
+.menu .menu-item a i{
+    font-size: 12px;
+    margin-left:10px;
+}
+.menu .menu-item > .sub-menu{
+    width: 100%;
+    transition: .4s;
+    position: absolute;
+    left: 0;
+    top: 63px;
+    background: #FFF;
+    list-style: none;
+    display: none;
+    flex-direction: row;
+    z-index: 20;
+    padding: 40px 0 40px 5%;
+}
+.menu .menu-item:hover .sub-menu{
+    transition: .4s;
+    display: flex;
+}
+.sub-menu .menu-item{
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 0;
+    margin-right: 50px;
+}
+.sub-menu .menu-item:last-child{
+    margin-right: 0;
+}
+.sub-menu .menu-item:hover{
+    border-bottom: 0;
+}
+.sub-menu .menu-item:hover a{
+    color: #138E3D;
+}
+.sub-menu .menu-item a{
+    font-family: 'Hellix Bold';
+    font-size: 16px;
+    color: #222224;
+}
+.sub-menu .menu-item .menu-description{
+    font-family: 'Hellix Regular';
+    font-size: 14px;
+    color: #222224;
+    line-height: 19px;
+}
+.header-buttons .header-btn{
+    line-height:40px;
+    width: 150px;
+    border-radius: 4px;
+    /*margin-right: 20px;*/
+    border: 1px solid #63AD7E;
+    text-align: center;
+    /*flex: 1 auto;*/
+}
+.header-buttons .header-btn:last-child{
+    margin-right: 0;
+}
+
+.header-buttons .header-btn.login{
+    background: #FFF;
+}
+.header-buttons .header-btn.get-started{
+    background: #63AD7E;
+}
+.header-buttons .header-btn a{
+    text-decoration: none;
+    font-family: 'Hellix Bold';
+    display: block;
+}
+.header-buttons .header-btn.login a{
+    color: #63AD7E;
+}
+.header-buttons .header-btn.get-started a{
+    color: #FFF;
+}
+section{
+    width: 100%;
+    margin-bottom: 50px;
+}
+.section.mobile{
+    display: none !important;
+}
+section h1.head-title{
+    text-align: center;
+    font-family: "Hellix Bold";
+    font-size: 58px;
+}
+section h3.head-title{
+    text-align: center;
+    font-family: "Hellix Bold";
+    font-size: 32px;
+}
+section .section-inner{
+    width: 90%;
+    margin:auto;    
+    position: relative;
+}
+.section-inner.hero{
+    padding: 50px 0;
+    display: flex;
+    flex-direction: row;
+}
+section.login{
+    width: 100%;
+    height: 100%;
+    background: #F4F5F6;
+    display: flex;
+    flex-direction: row;
+    padding: 50px 50px 150px 50px;
+    justify-content: center;
+    margin-bottom: 0 !important;
+}
+.login-container{
+    width: 40%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+.success-box{
+    width: 100%;
+    background: #FFF;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.success-icon{
+    width: 100%;
+
+}
+.success-icon img{
+    width: 50px;
+    height: auto;
+    margin-bottom: 30px;
+}
+.success-note{
+    width: 100%;
+    font-family: 'Hellix Regular';
+    font-size: 16px;
+    color: #03100D;
+    margin-bottom: 10px;
+}
+.success-email{
+    width: 100%;
+    font-family: 'Hellix Regular';
+    font-size: 20px;
+    color: #138E3D;
+    margin-bottom: 10px;
+}
+.login-box{
+    width: 100%;
+    background: #FFF;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.login-box-head{
+    font-family: 'Hellix Bold';
+    font-size: 18px;
+}
+.login-element-container{
+    width: 100%;
+    position: relative;
+    margin: 30px 0;
+}
+.login-element-container.double-fields{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.next-btn{
+    cursor: pointer;
+}
+.next-btn i{
+    color: #FFF !important;
+    font-size:14px;
+}
+.elem-container{
+    width: 48%;
+}
+.login-element-container i{
+    position: absolute;
+    color: #63AD7E;
+    top: 12px;
+    right: 10px;
+    cursor: pointer;
+}
+.text-field{
+    width: 100%;
+    height:40px;
+    padding:5px;
+    border: 1px solid #D1CECE;
+    border-radius: 5px;
+    outline: none;
+}
+.login-btn{
+    padding: 8px 40px;
+    background:#138E3D;
+    color: #FFF;
+    font-family: 'Hellix Bold';
+    font-size: 17px;
+    border-radius: 5px;
+    border: 0;
+    float: right;
+}
+.login-btn:hover{
+    transition: .4s;
+    background: #63AD7E;
+}
+.reg-btn{
+    width: 100%;
+    line-height: 40px;
+    background:#138E3D;
+    color: #FFF;
+    font-family: 'Hellix Bold';
+    font-size: 17px;
+    border-radius: 5px;
+    border: 0;
+    text-align: center;
+    cursor: pointer;
+}
+.reg-btn:hover{
+    transition: .4s;
+    background: #63AD7E;
+}
+.forgot-password-box{
+    width: 100%;
+    padding: 30px 0;
+    color: #222224;
+    font-family: 'Hellix Bold';
+    font-size: 14px;
+}
+.forgot-password-box a{
+    color: #138E3D;
+    text-decoration: none;
+    font-family: 'Hellix Bold';
+    font-size: 14px;
+}
+.login-register-box{
+    width: 100%;
+    padding: 20px;
+    background: #E8F3EC;
+    border-radius: 5px;
+}
+.login-register-box .text-head{
+    width: 100%;
+    font-family: 'Hellix Bold';
+    font-size: 17px;
+    color: #222224;
+    margin-bottom: 20px;
+}
+.login-register-box .text-note{
+    width: 100%;
+    font-family: 'Hellix Regular';
+    font-size: 15px;
+    color: #222224;
+}
+.login-register-box .text-note a{
+    text-decoration: none;
+    color: #138E3D;
+}
+.section-inner.about-us{
+    width: 70% !important;
+    padding: 50px 0;
+}
+.section-inner.hero h3{
+    font-size: 30px;
+    font-family: 'Hellix Bold';
+}
+.section-inner.hero h1{
+    font-size: 50px;
+    font-family: 'Hellix Bold';
+    margin: 20px 0;
+}
+.section-inner.hero .hero-note{
+    line-height:30px;
+    font-size: 22px;
+    font-family: 'Hellix Regular';
+}
+.section-inner.hero .hero-button{
+    padding: 15px 40px;
+    background: #63AD7E;
+    border-radius:5px;
+    display: inline-block;
+    margin-top:20px;
+}
+.section-inner.hero .hero-button a{
+    color: #FFF;
+    font-family: 'Hellix Regular';
+    font-size:20px;
+    text-decoration: none;
+    display:block;
+}
+.section-inner.hero .hero-button a i{
+    font-size: 16px;
+    margin-left: 10px;
+}
+.partner-logo-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style: none;
+}
+.partner-logo:first-child{
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    line-height: 65px;
+}
+.partner-logo{
+    font-family: 'Hellix Bold';
+    margin-right:50px;
+}
+.partner-logo:last-child{
+    margin-right: 0;
+}
+.partner-logo img{
+    width: 170px;
+    height: auto;
+}
+.partner-logo::after :first-child{
+    content: '|';
+}
+.section-inner.renters{
+    padding: 50px 0;
+    display: flex;
+    flex-direction: row;
+}
+.section-inner.renters h3{
+    font-size: 23px;
+    font-family: 'Hellix Bold';
+}
+.section-inner.renters h1{
+    font-size: 48px;
+    font-family: 'Hellix Bold';
+    margin: 20px 0;
+}
+.section-inner.renters h5{
+    font-size: 20px;
+    font-family: 'Hellix Regular';
+    margin: 0 0 20px 0;
+}
+.section-inner.renters .renters-note{
+    line-height: 30px;
+    font-size: 20px;
+    font-family: 'Hellix Regular';
+    border-bottom: 1px solid #FFF;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+.section-inner .renters-text{
+    width: 50%;
+    background: #007DC1;
+    padding: 30px;
+    color: #FFF;
+    border-radius: 0 5px 5px 0;
+}
+.section-inner .renters-image{
+    width: 50%;
+}
+.section-inner .renters-image img{
+    width: 100%;
+}
+.renters-benefits{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.benefit{
+    width: 48%;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+}
+.benefit-head{
+    font-family: 'Hellix Bold';
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.benefit .benefit-txt{
+    color: #FFF;
+    font-size: 14px;
+    font-family: 'Hellix Regular';
+}
+.renters-btn{
+    display: inline-block;
+    padding: 15px 30px; 
+    background: #FFF;
+    border-radius: 16px;
+    margin-top:40px;
+}
+.renters-btn a{
+    text-decoration: none;
+    display: block;
+    color: #007DC1;
+    font-family: 'Hellix Regular';
+}
+.renters-btn a i{
+    transition: .4s;
+    width: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    color: #FFF;
+    background: #007DC1;
+    text-align: center;
+}
+.renters-btn:hover a i{
+    transition: .4s;
+    rotate: 360deg;
+}
+.section-inner.employees{
+    padding: 50px 0;
+    display: flex;
+    flex-direction: row;
+}
+.section-inner.employees h3{
+    font-size: 23px;
+    font-family: 'Hellix Bold';
+}
+.section-inner.employees h1{
+    font-size: 48px;
+    font-family: 'Hellix Bold';
+    margin: 20px 0;
+}
+.section-inner.employees h5{
+    font-size: 20px;
+    font-family: 'Hellix Regular';
+    margin: 0 0 20px 0;
+}
+.section-inner.employees .employees-note{
+    line-height: 30px;
+    font-size: 20px;
+    font-family: 'Hellix Regular';
+    border-bottom: 1px solid #FFF;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+.section-inner .employees-text{
+    width: 50%;
+    background: #AC6ADD;
+    padding: 30px;
+    color: #FFF;
+    border-radius: 5px 0 0 5px;
+}
+.section-inner .employees-image{
+    width: 50%;
+}
+.section-inner .employees-image img{
+    width: 100%;
+}
+.employees-benefits{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.benefit-head{
+    font-family: 'Hellix Bold';
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.benefit .benefit-txt{
+    color: #FFF;
+    font-size: 14px;
+    font-family: 'Hellix Regular';
+}
+.employees-btn{
+    display: inline-block;
+    padding: 15px 30px; 
+    background: #FFF;
+    border-radius: 16px;
+    margin-top:40px;
+}
+.employees-btn a{
+    text-decoration: none;
+    display: block;
+    color: #AC6ADD;
+    font-family: 'Hellix Regular';
+}
+.employees-btn a i{
+    transition: .4s;
+    width: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    color: #FFF;
+    background: #AC6ADD;
+    text-align: center;
+}
+.employees-btn:hover a i{
+    transition: .4s;
+    rotate: 360deg;
+}
+.buyers-image{
+    position: relative;
+}
+.buyers-image img{
+    width: 100%;
+}
+.buyers-image-overlay{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius:5px;
+}
+.buyers-text{
+    width: 100%;
+    padding: 40px 50px;
+    color: #FFF;
+}
+.buyers-text h3{
+    font-size: 23px;
+    font-family: 'Hellix Bold';
+}
+.buyers-text h1{
+    font-size: 48px;
+    font-family: 'Hellix Bold';
+    margin: 20px 0;
+}
+.buyers-text h5{
+    font-size: 20px;
+    font-family: 'Hellix Regular';
+    margin: 0 0 20px 0;
+}
+.buyers-text .buyers-note{
+    line-height: 30px;
+    font-size: 20px;
+    font-family: 'Hellix Regular';
+    border-bottom: 1px solid #FFF;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+}
+.buyers-benefits{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.buyer-benefit{
+    width: 23%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.buyer-benefit .benefit-txt{
+    color: #FFF;
+    font-size: 16px;
+    font-family: 'Hellix Regular';
+    letter-spacing: 1px;
+    margin-bottom:15px;
+}
+a.buyer-btn{
+    color: #FFF;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: 'Hellix Bold';
+}
+a.buyer-btn i{
+    transition: .4s;
+    width: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    color: #FFF;
+    background: #AC6ADD;
+    text-align: center;
+}
+.section-inner .middle-class-text{
+    flex-grow: 1;
+    background: #F89521;
+    padding: 30px;
+    color: #FFF;
+    border-radius: 0 5px 5px 0;
+}
+.middle-class-btn{
+    display: inline-block;
+    padding: 15px 30px; 
+    background: #FFF;
+    border-radius: 16px;
+    margin-top:40px;
+}
+.middle-class-btn a{
+    text-decoration: none;
+    display: block;
+    color: #F89521;
+    font-family: 'Hellix Regular';
+}
+.middle-class-btn a i{
+    transition: .4s;
+    width: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    color: #FFF;
+    background: #F89521;
+    text-align: center;
+}
+.middle-class-btn:hover a i{
+    transition: .4s;
+    rotate: 360deg;
+}
+.blog-container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+}
+.blog-item{
+    width: 32%;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    border-radius: 20px;
+    margin-bottom: 25px;
+}
+.blog-image{
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.blog-image img{
+    width: 100%;
+    height: auto;
+}
+.blog-item-bottom{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    padding: 20px;
+}
+.blog-item-title{
+    width: 100%;
+    font-family: 'Hellix Regular';
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.blog-item-excerpt{
+    width: 100%;
+    font-family: 'Hellix Thin';
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+a.blog-item-btn{
+    padding: 15px 30px;
+    border-radius: 5px;
+    background: #63AD7E;
+    text-decoration: none;
+    color: #FFF;
+    display: inline-block;
+    font-family: 'Hellix Thin';
+}
+footer{
+    width: 100%;
+    padding-top: 200px;
+}
+.footer-inner{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+.footer-social-container{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    padding: 0;
+}
+.footer-social-item{
+    width:50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #CCC;
+    margin-right: 20px;
+}
+.footer-links-container{
+    width: 100%;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-top: 1px solid #ABBBCC;
+    padding-top: 40px;
+}
+.links-container{
+    width: 23%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+.top-title{
+    font-family: 'Hellix Regular';
+    font-size: 14px;
+    color: #63AD7E;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.large-title{
+    font-family: 'Hellix Bold';
+    font-size: 48px;
+    color: #222224;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.about-note{
+    font-family: 'Hellix Regular';
+    font-size: 18px;
+    color: #222224;
+    line-height: 30px;
+    text-align: justify;
+}
+.footer-links-head{
+    font-family: 'Hellix Bold';
+    font-size: 18px;
+    line-height:30px;
+    color: #222224;
+}
+.about-impact{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 50px 0;
+}
+.impact-item{
+    text-align: left;
+}
+.impact-item .impact-img{
+    width: 100%;
+    text-align: left;
+}
+.impact-item .impact-img img{
+    width: 30px;
+}
+.impact-item .impact-numbers{
+    font-family: 'Hellix Bold';
+    font-size: 60px;
+    line-height: 67px;
+}
+.impact-item .impact-note{
+    font-family: 'Hellix Regular';
+    font-size: 14px;
+    line-height: 19px;
+}
+.about-team{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 50px 0;
+    background-image:url(../img/team-work-watermark.svg);
+	background-position:right;
+	background-repeat:no-repeat;
+	-webkit-background-size: contain;
+	-moz-background-size: contain;
+	-ms-background-size: contain;
+	-o-background-size: contain;
+	background-size: contain;
+}
+.team-item{
+    width: 350px;
+    height: 200px;
+    position: relative;
+}
+.team-member-image{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #e9f4ec;
+}
+.team-member-details{
+    padding: 20px;
+    background: #FFF;
+    position: absolute;
+    top: 30px;
+    left: 100px;
+}
+.team-member-details .member-name{
+    width: 100%;
+    font-family: 'Hellix Bold';
+    color: #222224;
+}
+.team-member-details .member-position{
+    width: 100%;
+    font-family: 'Hellix Regular';
+    color: #222224;
+    font-size: 14px;
+}
+.footer-links{
+    font-family: 'Hellix Regular';
+    font-size: 15px;
+    line-height:30px;
+}
+.footer-links a{
+    font-family: 'Hellix Regular';
+    font-size: 15px;
+    color: #222224;
+    text-decoration: none;
+}
+.footer-logo{
+    width: 100%;
+}
+.footer-logo img{
+    width: 120px;
+    height:auto;
+}
+.copyright-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 20px 0;
+    border-top: 1px solid #ABBBCC;
+    margin-top:30px;
+}
+.copyright-container span{
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 14px;
+    color: #222224;
+    font-family: 'Hellix Regular';
+}
+.copyright-container span a{
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 14px;
+    color: #222224;
+    font-family: 'Hellix Regular';
+}
+.page-content{
+    width: 100%;
+    position: relative;
+}
+.page-content h3{
+    font-size: 48px;
+    text-align: left;
+    color: #222224;
+    font-family: 'Hellix Bold';
+}
+.page-content .head{
+    font-size: 22px;
+    text-align: left;
+    color: #222224;
+    font-family: 'Hellix Bold';
+}
+.page-content .note ul{
+    list-style: none;
+}
+.page-content .note{
+    font-size: 18px;
+    text-align: justify;
+    color: #222224;
+    font-family: 'Hellix Regular';
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+.content-inner{
+    width: 80%;
+    margin: auto;
+    padding: 50px 0;
+}
+@media(max-width: 900px){
+    .header-inner{
+        width:95%;
+        flex-wrap: wrap;
+        padding:20px 0;
+    }
+    .header-inner .header-logo{
+        width: calc(100% - 40px);
+    }
+    .header-inner .header-logo img{
+        width: 120px;
+    }
+    .mobile-menu i{
+        font-size: 30px;
+    }
+    .mobile-menu{
+        display: inline-block;
+    }
+    .header-navigation{
+        display: none;
+        width: 100%;
+        padding: 20px 0;
+    }
+    .menu{
+        width: 100%;
+        flex-direction: column;
+    }
+    .menu .menu-item > .sub-menu{
+        transition: .4s;
+        display: none;
+        position: relative;
+        left: 0;
+        top: 0;
+        flex-direction: column;
+        z-index: 0;
+        padding: 0 0 0 10px;
+    }
+    .menu-item .menu-description{
+        display: none;
+    }
+    .menu .menu-item{
+        line-height: 50px;
+        padding: 0;
+        margin-right: 0;
+        border-bottom: 0;
+    }
+    .menu .menu-item:hover{
+        border-bottom: 0;
+    }
+    .menu .menu-item:hover .sub-menu{
+        display: none;
+    }
+    .sub-menu .menu-item{
+        line-height: 25px;
+    }
+    .sub-menu .menu-item a{
+        font-family: 'Hellix Regular';
+        font-size: 16px;
+    }
+    .header-inner .header-buttons.mobile{
+        display: flex;
+        justify-content: left;
+    }
+    .header-inner .header-buttons.desktop{
+        display: none;
+    }
+    .header-buttons .header-btn.login{
+        margin-right: 20px;
+    }
+    .section-inner.hero .hero-text{
+        width: 100%;
+    }
+    .section-inner.hero .hero-image{
+        display: none;
+    }
+    .section-inner.renters{
+        padding: 30px 0;
+        flex-direction: column;
+    }
+    .section-inner.employees{
+        padding: 30px 0;
+        flex-direction: column-reverse;
+    }
+    section h1.head-title{
+        font-size: 42px;
+    }
+    .section-inner .renters-text{
+        width: 100%;
+        padding: 20px;
+        border-radius: 0 0 5px 5px;
+    }
+    .section-inner .renters-image{
+        width: 100%;
+    }
+    .section-inner .employees-image{
+        width: 100%;
+    }
+    .blog-container{
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .blog-item{
+        width: 100%;
+        display: flex;
+        margin-bottom: 20px;
+    }    
+    footer{
+        padding-top: 100px;
+    }
+    section.desktop{
+        display: none !important;
+    }
+    .large-title{
+        font-size: 42px;
+        margin-bottom: 10px;
+    }
+    .about-note{
+        font-size: 16px;
+        line-height: 25px;
+    }
+}
+@media(max-width: 600px){
+    .section-inner.hero h3{
+        font-size: 24px;
+    }
+    .section-inner.hero h1{
+        font-size: 40px;
+        margin: 20px 0;
+    }
+    .section-inner.hero .hero-note{
+        line-height: 22px;
+        font-size: 16px;
+    }
+    .section-inner.hero .hero-button{
+        padding: 10px 30px;
+        margin-top: 15px;
+    }
+    .section-inner.hero .hero-button a{
+        font-size:18px;
+    }
+    .section-inner.hero .hero-button a i{
+        font-size: 14px;
+        margin-left: 10px;
+    }
+    section h1.head-title{
+        font-size: 34px;
+    }
+    section{
+        margin-bottom: 0;
+    }
+    .partner-logo-container{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .partner-logo:first-child{
+        width: 100%;
+        display: flex;
+        line-height: 40px;
+        margin-right: 0;
+    }
+    .partner-logo{
+        font-family: 'Hellix Bold';
+        margin-right: 10px;
+        width: 30%;
+    }
+    .partner-logo:last-child{
+        margin-right: 0;
+        width: 30%;
+    }
+    .partner-logo img{
+        width: 100%;
+        height: auto;
+    }
+    .partner-logo::after :first-child{
+        content: '|';
+    }
+    section .section-inner.buyers{
+        height: 400px;
+    }
+    .section-inner.renters h3{
+        font-size: 18px;
+        font-family: 'Hellix Bold';
+    }
+    .section-inner.renters h1{
+        font-size: 38px;
+        font-family: 'Hellix Bold';
+        margin: 10px 0;
+    }
+    .section-inner.renters h5{
+        font-size: 16px;
+        margin: 0 0 10px 0;
+    }
+    .section-inner.renters .renters-note{
+        line-height: 25px;
+        font-size: 18px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+    .benefit-head{
+        font-size: 16px;
+    }
+    .benefit .benefit-txt{
+        font-size: 14px;
+    }
+    .renters-btn{
+        padding: 10px 25px; 
+        border-radius: 10px;
+        margin-top:20px;
+    }
+    .section-inner.employees h3{
+        font-size: 18px;
+        font-family: 'Hellix Bold';
+    }
+    .section-inner.employees h1{
+        font-size: 38px;
+        margin: 10px 0;
+    }
+    .section-inner.employees h5{
+        font-size: 16px;
+        margin: 0 0 10px 0;
+    }
+    .section-inner.employees .employees-note{
+        line-height: 25px;
+        font-size: 18px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+    .section-inner .employees-text{
+        width: 100%;
+        padding: 20px;
+        border-radius: 0 0 5px 5px;
+    }
+    .benefit-head{
+        font-size: 16px;
+    }
+    .benefit .benefit-txt{
+        font-size: 14px;
+    }
+    .employees-btn{
+        padding: 10px 25px; 
+        border-radius: 10px;
+        margin-top:20px;
+    }
+    .employees-btn a i{
+        transition: .4s;
+        width: 20px;
+        line-height: 20px;
+    }
+    .blog-item-title{
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    .blog-item-excerpt{
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+    a.blog-item-btn{
+        padding: 10px 25px;
+    }
+    footer{
+        padding-top: 70px;
+    }
+    .footer-social-item{
+        width:30px;
+        height: 30px;
+        margin-right: 15px;
+    }
+    .footer-links-container{
+        width: 100%;
+        margin: 20px auto;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding-top: 20px;
+    }
+    .links-container{
+        width: 48%;
+        margin-bottom:20px;
+    }
+    .copyright-container{
+        flex-direction: row-reverse;
+        padding: 10px 0;
+        margin-top:20px;
+        flex-wrap: wrap;
+        justify-content: left;
+    }
+    .copyright-container span{
+        margin-right: 20px;
+        font-size: 13px;
+    }
+    .copyright-container span:first-child{
+        width: 100%;
+        display: inline-block;
+        margin-bottom:10px;
+        margin-right: 0;
+    }
+    .copyright-container span a{
+        margin-right: 20px;
+        font-size: 14px;
+        text-align: left;
+    }
+    .renters-benefits{
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .benefit{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .benefit:last-child{
+        margin-bottom: 0;
+    }
+    .employees-benefits{
+        flex-direction: column;
+    }
+    section.mobile{
+        display: block !important;
+    }
+    .buyers-benefits{
+        flex-direction: column;
+    }
+    .buyer-benefit{
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    a.buyer-btn{
+        color: #FFF;
+        font-size: 16px;
+        text-decoration: none;
+        font-family: 'Hellix Bold';
+    }
+    a.buyer-btn i{
+        transition: .4s;
+        color: #AC6ADD;
+        background: #FFF;
+    }
+    .large-title{
+        font-size: 32px;
+    }
+    .section-inner.about-us{
+        width: 90% !important;
+        padding: 20px 0;
+    }
+    .about-note{
+        text-align: center;
+    }
+    .about-impact{
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px 0;
+    }
+    .impact-item{
+        width: 48%;
+        text-align: center;
+        padding:10px;
+    }
+    .impact-item .impact-img{
+        width: 100%;
+        text-align: center;
+    }
+    .impact-item .impact-img img{
+        width: 30px;
+    }
+    .impact-item .impact-numbers{
+        font-size: 40px;
+        line-height: 57px;
+    }
+    .impact-item .impact-note{
+        font-size: 14px;
+        line-height: 19px;
+    }
+    .about-team{
+        display: flex;
+        flex-direction: column;
+        padding: 30px 0;
+        background-image:url(../img/team-work-watermark.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        -webkit-background-size: contain;
+        -moz-background-size: contain;
+        -ms-background-size: contain;
+        -o-background-size: contain;
+        background-size: contain;
+    }
+    .team-item{
+        width: 350px;
+        height: 200px;
+        position: relative;
+        margin-bottom: 20px;
+    }
+    .team-item:nth-child(2){
+        margin-left: calc(100% - 350px);
+    }
+}
