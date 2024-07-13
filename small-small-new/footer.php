@@ -1,10 +1,10 @@
         <footer>
             <div class="footer-inner">
                 <ul class="footer-social-container">
-                    <li class="footer-social-item"><a href=""><i class="fas fa-instagram"></i></a></li>
-                    <li class="footer-social-item"><a href=""><i class="fas fa-twitter"></i></a></li>
-                    <li class="footer-social-item"><a href=""><i class="fas fa-facebook"></i></a></li>
-                    <li class="footer-social-item"><a href=""><i class="fas fa-youtube"></i></a></li>
+                    <li class="footer-social-item"><a href=""><img src="assets/img/instagram.svg" alt="instagram" /></a></li>
+                    <li class="footer-social-item"><a href=""><img src="assets/img/twitter.svg" alt="twitter" /></a></li>
+                    <li class="footer-social-item"><a href=""><img src="assets/img/facebook.svg" alt="instagram" /></a></li>
+                    <li class="footer-social-item"><a href=""><img src="assets/img/youtube.svg" alt="instagram" /></a></li>
                 </ul>
                 <div class="footer-links-container">
                     <div class="links-container">
