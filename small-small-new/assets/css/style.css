@@ -471,7 +471,7 @@ section.login{
     width: 100%;
 }
 .renters-image.mobile, .employees-image.mobile{
-    display:none;
+    display:none !important;
 }
 .renters-image.renters{
     background-image:url(../images/relaxed-african-american-woman-enjoying-music-on-couch.svg);
