@@ -1146,7 +1146,7 @@ footer{
         display: none;
     }
     .renters-image.mobile, .employees-image.mobile{
-        display: block;
+        display: block !important;
     }
 }
 @media(max-width: 600px){
