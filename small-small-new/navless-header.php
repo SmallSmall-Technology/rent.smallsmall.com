@@ -21,5 +21,5 @@
     <body>
         <header>
             <div class="header-inner">
-                <div class="header-logo"><a href=""><img src="assets/img/smallsmall-logo.svg" alt="smallsmall logo" /></a></div>                
+                <div class="header-logo"><a href="https://dev-rent.smallsmall.com/small-small-new"><img src="assets/img/smallsmall-logo.svg" alt="smallsmall logo" /></a></div>                
         </header>

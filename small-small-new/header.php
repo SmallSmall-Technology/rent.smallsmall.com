@@ -23,7 +23,7 @@
         <header>
             <div class="header-inner">
                 <div id="menu-bars" class="mobile-menu"><i class="fa fa-bars"></i></div>
-                <div class="header-logo"><a href=""><img src="assets/img/smallsmall-logo.svg" alt="smallsmall logo" /></a></div>
+                <div class="header-logo"><a href="https://dev-rent.smallsmall.com/small-small-new"><img src="assets/img/smallsmall-logo.svg" alt="smallsmall logo" /></a></div>
                 <div class="header-navigation">
                     <ul class="menu">
                         <li id="menu-item-products" class="menu-item menu-item-parent"><a>Products <i class="fa fa-chevron-down"></i></a>
@@ -90,7 +90,7 @@
                     </ul>
                     <div class="header-buttons mobile">
                         <div class="header-btn login"><a href="/small-small-new/login">Login</a></div>
-                        <div class="header-btn get-started"><a href="/register">Get started</a></div>
+                        <div class="header-btn get-started"><a href="/small-small-new/register">Get started</a></div>
                     </div>
                 </div>
                 <div class="header-buttons desktop">
