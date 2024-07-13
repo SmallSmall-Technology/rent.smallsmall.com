@@ -726,7 +726,7 @@ a.buyer-btn i{
 .middle-class-btn a{
     text-decoration: none;
     display: block;
-    color: #F89521;
+    color: #662D91;
     font-family: 'Hellix Regular';
 }
 .middle-class-btn a i{
@@ -735,7 +735,7 @@ a.buyer-btn i{
     line-height: 30px;
     border-radius: 50%;
     color: #FFF;
-    background: #F89521;
+    background: #662D91;
     text-align: center;
 }
 .middle-class-btn:hover a i{
@@ -1139,14 +1139,14 @@ footer{
         font-size: 16px;
         line-height: 25px;
     }
-    .renters-image.mobile, .employees-image.mobile{
-        display: block;
-    }
     .renters-image.renters{
         display: none;
     }
     .employees-image.employees{
         display: none;
+    }
+    .renters-image.mobile, .employees-image.mobile{
+        display: block;
     }
 }
 @media(max-width: 600px){
