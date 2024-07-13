@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="robots" content="noindex,nofollow" />
-        <link rel="stylesheet" href="assets/css/style.css?version=<?php rand(99, 99999); ?>" type="text/css" media="all">
+        <link rel="stylesheet" href="assets/css/style.css?version=<?php echo rand(99, 99999); ?>" type="text/css" media="all">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all">
