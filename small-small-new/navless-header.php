@@ -10,8 +10,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="robots" content="noindex,nofollow" />
-        <link rel="stylesheet" href="assets/css/style.css" type="text/css" media="all">
-        <link rel="stylesheet" href="assets/css/select-menu.css" type="text/css" media="all">
+        <link rel="stylesheet" href="assets/css/style.css?version=<?php rand(99, 99999); ?>" type="text/css" media="all">
+        <link rel="stylesheet" href="assets/css/select-menu.css?version=<?php rand(99, 99999); ?>" type="text/css" media="all">
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" type="text/css" media="all">
 
