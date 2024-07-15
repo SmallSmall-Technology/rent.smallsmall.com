@@ -1292,7 +1292,6 @@ class Admin extends CI_Controller
 
 	public function profile($id)
 	{
-
 		$data['ids'] = $id;
 
 		$data['details'] = $this->admin_model->get_verification($id);
@@ -1305,7 +1304,7 @@ class Admin extends CI_Controller
 		}
 
 		//check if Admin is logged in
-		if ($this->session->has_userdata('adminLoggedIn')) {
+		//if ($this->session->has_userdata('adminLoggedIn')) {
 
 			$data['adminPriv'] = $this->functions_model->getUserAccess();
 
@@ -1322,10 +1321,10 @@ class Admin extends CI_Controller
 			$this->load->view('admin/pages/profile.php', $data);
 
 			$this->load->view('admin/templates/footer.php', $data);
-		} else {
+		// } else {
 
-			redirect(base_url() . 'admin/login', 'refresh');
-		}
+		// 	redirect(base_url() . 'admin/login', 'refresh');
+		// }
 	}
 
 	public function download($id)
