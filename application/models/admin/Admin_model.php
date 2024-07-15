@@ -2800,9 +2800,9 @@ class Admin_model extends CI_Model
 		$this->db->where('a.verification_id', $id);
 
 		$this->db->join('user_tbl as b', 'b.userID = a.user_id');
-		$this->db->join('valid_ids as c', 'c.verification_id COLLATE utf8mb4_unicode_ci = a.verification_id COLLATE utf8mb4_unicode_ci', 'LEFT OUTER');
-		$this->db->join('bank_statements as d', 'd.verification_id COLLATE utf8mb4_unicode_ci = a.verification_id COLLATE utf8mb4_unicode_ci', 'LEFT OUTER');
-		$this->db->join('bookings as e', 'e.verification_id COLLATE utf8mb4_unicode_ci = a.verification_id COLLATE utf8mb4_unicode_ci', 'LEFT OUTER');
+		$this->db->join('valid_ids as c', 'c.verification_id = a.verification_id COLLATE utf8mb4_unicode_ci', 'LEFT OUTER');
+		$this->db->join('bank_statements as d', 'd.verification_id = a.verification_id COLLATE utf8mb4_unicode_ci', 'LEFT OUTER');
+		$this->db->join('bookings as e', 'e.verification_id = a.verification_id COLLATE utf8mb4_unicode_ci', 'LEFT OUTER');
 		$this->db->join('property_tbl as f', 'f.propertyID = e.propertyID', 'LEFT OUTER');
 		$this->db->join('apt_type_tbl as g', 'g.id = f.propertyType', 'LEFT OUTER');
 		$this->db->join('states as h', 'h.id = f.state', 'LEFT OUTER');
