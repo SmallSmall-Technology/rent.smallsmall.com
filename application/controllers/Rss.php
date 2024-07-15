@@ -8836,7 +8836,6 @@ value1&metadata[meta2]=value2*/
 
 	public function single_property($id)
 	{
-	
 		if ($this->session->has_userdata('loggedIn')) {
 
 			$data['userID'] = $this->session->userdata('userID');
