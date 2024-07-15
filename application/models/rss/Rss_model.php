@@ -1472,7 +1472,7 @@ class Rss_model extends CI_Model
 		return $this->db->update("property_tbl", $data);
 	}
 
-	public function insertVerification($firstname, $lastname, $email, $phone, $gross_pay, $dob, $gender, $marital_status, $state, $city, $linkedinUrl, $country, $passport_number, $present_address, $rent_country, $rent_state, $rent_city, $previous_rent_duration, $renting_status, $previous_eviction, $pet, $critical_illness, $landlord_fullname, $landlord_email, $landlord_phone, $landlord_address, $reason_for_leaving, $employment_status, $job_title, $company_address, $manager_hr_name, $manager_hr_email, $manager_hr_phone, $guarantor_name, $guarantor_email, $guarantor_phone, $guarantor_job_title, $guarantor_address, $statement_path, $id_path, $user_id, $company_name, $platform, $user_agent, $propertyID = NULL)
+	public function insertVerification($firstname, $lastname, $email, $phone, $gross_pay, $dob, $gender, $marital_status, $state, $city, $linkedinUrl, $country, $passport_number, $present_address, $rent_country, $rent_state, $rent_city, $previous_rent_duration, $renting_status, $previous_eviction, $pet, $critical_illness, $landlord_fullname, $landlord_email, $landlord_phone, $landlord_address, $reason_for_leaving, $employment_status, $job_title, $company_address, $manager_hr_name, $manager_hr_email, $manager_hr_phone, $guarantor_name, $guarantor_email, $guarantor_phone, $guarantor_job_title, $guarantor_address, $statement_path, $id_path, $user_id, $company_name, $platform, $user_agent, $propertyID)
 	{
 
 		$digits = 10;
