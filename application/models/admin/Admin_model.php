@@ -2770,29 +2770,6 @@ class Admin_model extends CI_Model
 
 	public function get_verification($id)
 	{
-
-		// $this->db->select('a.id, a.verification_id as vID, a.user_id, a.gross_annual_income, a.marital_status, a.dob, a.birth_place, a.country_id, a.present_address, a.present_country, a.duration_present_address, a.current_renting_status, a.disability, a.pets, a.present_landlord, a.landlord_email, a.landlord_phone, a.landlord_address, a.reason_for_living, a.employment_status, a.occupation, a.company_name, a.company_address, a.hr_manager_name, a.hr_manager_email, a.office_phone, a.guarantor_name, a.guarantor_email, a.guarantor_phone, a.guarantor_occupation, a.guarantor_address, a.created_at, a.updated_at, b.firstName, b.lastName, b.status, b.email, b.verified, c.file_path as valid_id_file_path, d.file_path as bank_statement_file_path, e.propertyID, e.verification_id, f.*, f.propertyID as propID, g.*, h.*');
-
-		// $this->db->from('verifications as a');
-
-		// $this->db->where('a.verification_id', $id);
-
-		// $this->db->join('user_tbl as b', 'b.userID = a.user_id');
-
-		// $this->db->join('valid_ids as c', 'c.verification_id = a.verification_id', 'LEFT OUTER'); // Used this so that it't will return data, even if the path is empty here
-
-		// // $this->db->join('valid_ids as c', 'c.verification_id = a.verification_id'); 
-
-		// $this->db->join('bank_statements as d', 'd.verification_id = a.verification_id', 'LEFT OUTER'); // Apply same here. Make its left join
-
-		// $this->db->join('bookings as e', 'e.verification_id = a.verification_id', 'LEFT OUTER');
-
-		// $this->db->join('property_tbl as f', 'f.propertyID = e.propertyID', 'LEFT OUTER');
-
-		// $this->db->join('apt_type_tbl as g', 'g.id = f.propertyType', 'LEFT OUTER');
-
-		// $this->db->join('states as h', 'h.id = f.state', 'LEFT OUTER');
-
 		$this->db->select('a.id, a.verification_id as vID, a.user_id, a.gross_annual_income, a.marital_status, a.dob, a.birth_place, a.country_id, a.present_address, a.present_country, a.duration_present_address, a.current_renting_status, a.disability, a.pets, a.present_landlord, a.landlord_email, a.landlord_phone, a.landlord_address, a.reason_for_living, a.employment_status, a.occupation, a.company_name, a.company_address, a.hr_manager_name, a.hr_manager_email, a.office_phone, a.guarantor_name, a.guarantor_email, a.guarantor_phone, a.guarantor_occupation, a.guarantor_address, a.created_at, a.updated_at, b.firstName, b.lastName, b.status, b.email, b.verified, c.file_path as valid_id_file_path, d.file_path as bank_statement_file_path, e.propertyID, e.verification_id, f.*, f.propertyID as propID, g.*, h.*');
 
 		$this->db->from('verifications as a');
@@ -2800,11 +2777,19 @@ class Admin_model extends CI_Model
 		$this->db->where('a.verification_id', $id);
 
 		$this->db->join('user_tbl as b', 'b.userID = a.user_id');
-		$this->db->join('valid_ids as c', 'c.verification_id = a.verification_id COLLATE utf8mb4_unicode_ci', 'LEFT OUTER');
-		$this->db->join('bank_statements as d', 'd.verification_id = a.verification_id COLLATE utf8mb4_unicode_ci', 'LEFT OUTER');
-		$this->db->join('bookings as e', 'e.verification_id = a.verification_id COLLATE utf8mb4_unicode_ci', 'LEFT OUTER');
+
+		$this->db->join('valid_ids as c', 'c.verification_id = a.verification_id', 'LEFT OUTER'); // Used this so that it't will return data, even if the path is empty here
+
+		// $this->db->join('valid_ids as c', 'c.verification_id = a.verification_id'); 
+
+		$this->db->join('bank_statements as d', 'd.verification_id = a.verification_id', 'LEFT OUTER'); // Apply same here. Make its left join
+
+		$this->db->join('bookings as e', 'e.verification_id = a.verification_id', 'LEFT OUTER');
+
 		$this->db->join('property_tbl as f', 'f.propertyID = e.propertyID', 'LEFT OUTER');
+
 		$this->db->join('apt_type_tbl as g', 'g.id = f.propertyType', 'LEFT OUTER');
+
 		$this->db->join('states as h', 'h.id = f.state', 'LEFT OUTER');
 
 		$query = $this->db->get();
@@ -2814,7 +2799,6 @@ class Admin_model extends CI_Model
 
 	public function get_app_verification($id)
 	{
-
 		$this->db2->select('a.id, a.user_id, a.gross_annual_income, a.marital_status, a.dob, a.birth_place, a.country_id, a.present_address, a.present_country, a.duration_present_address, a.current_renting_status, a.disability, a.pets, a.present_landlord, a.landlord_email, a.landlord_phone, a.landlord_address, a.reason_for_living, a.employment_status, a.occupation, a.company_name, a.company_address, a.hr_manager_name, a.hr_manager_email, a.office_phone, a.guarantor_name, a.guarantor_email, a.guarantor_phone, a.guarantor_occupation, a.guarantor_address, a.created_at, a.updated_at, a.is_verified, a.validID_path, a.bank_statement_1, a.bank_statement_2, a.bank_statement_3, a.pID, b.id, b.name, b.income_level, b.email');
 
 		$this->db2->from('verifications as a');
