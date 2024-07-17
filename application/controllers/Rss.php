@@ -3783,7 +3783,8 @@ class Rss extends CI_Controller
 
 				$booking_id = $this->random_strings(5);
 
-				echo json_encode($order);
+				echo $order['property'][0]['productID'];
+				//echo json_encode($order);
 
 				$booked = $this->rss_model->insertBooking($booking_id, $ver_result, $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 
