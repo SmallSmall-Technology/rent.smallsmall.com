@@ -420,6 +420,7 @@ jQuery(document).ready(function ($) {
 
 				// window.location.href = baseUrl + "rss/verification-complete";
 
+				//just to check it picked it 
 				alert(JSON.stringify(data, null, 2));
 
 				return false;
