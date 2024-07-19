@@ -342,6 +342,8 @@ jQuery(document).ready(function ($) {
 
 		var statement_path = $('#statement').val();
 
+		var dojahID = $('#verifyDj').val();
+
 		var user_id = $('#userID').val();
 
 		if (statement_path === "") {
@@ -351,7 +353,15 @@ jQuery(document).ready(function ($) {
 			$('#finishVerifyBut').html("Submit");
 
 			return;
+		}
 
+		if (dojahID === "") {
+
+			alert("Verify ID through dojah.");
+
+			$('#finishVerifyBut').html("Submit");
+
+			return;
 		}
 
 		// Load verification storage

@@ -44,6 +44,8 @@
 
                             <input type="hidden" id="statement" value="filepath" />
 
+                            <input type="hidden" id="verifyDj" value="" />
+
                             <!-- File submit button -->
                             <!-- <input type="submit" id="verify-income-submit" hidden /> -->
 
@@ -75,7 +77,7 @@
 
                     <a href="https://rent.smallsmall.com/rss/verification/employment-verification" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
 
-                    <button type="submit" class="btn verify-btn px-5 py-2 finishVerifyBut" id="finishVerifyBut">Finish</button>
+                    <button type="submit" class="btn verify-btn px-5 py-2 finishVerifyBut" id="finishVerifyBut">Submit Verification</button>
                 </div>
             </div>
         </div>
@@ -175,7 +177,11 @@
 
     const button = document.querySelector('#verify-id-btn');
 
+    var verifydjs = 'done'; 
+
     button.addEventListener('click', function() {
+
+        $('#verifyDj').val(verifydjs);
 
         connect.setup();
 
