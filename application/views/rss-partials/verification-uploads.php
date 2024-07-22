@@ -74,8 +74,9 @@
         <div class="col-12 mt-5 text-center">
 
           <a href="https://rent.smallsmall.com/rss/verification/employment-verification" class="text-dark mr-4 text-decoration-none">&lt; &nbsp;back</a>
+          
+          <!-- <button type="submit" class="btn verify-btn px-5 py-2 finishVerifyBut" id="finishVerifyBut">next</button> -->
 
-          <button type="submit" class="btn verify-btn px-5 py-2 finishVerifyBut" id="finishVerifyBut">next</button>
         </div>
       </div>
     </div>

@@ -38,11 +38,13 @@
                         <div> -->
 
                 <!-- File upload input for Verify income -->
-                <!-- <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
+                <input type="file" class="input statement-inp" id="verify-income-upload" hidden />
 
-                            <input type="hidden" id="userID" value="<?php echo @$userID; ?>" />
+                <input type="hidden" id="userID" value="<?php echo @$userID; ?>" />
 
-                            <input type="hidden" id="statement" value="" /> -->
+                <input type="hidden" id="statement" value="filepath" />
+
+                <input type="hidden" id="verifyDj" value="" />
 
                 <!-- File submit button -->
                 <!-- <input type="submit" id="verify-income-submit" hidden /> -->
@@ -175,8 +177,12 @@
 
     const button = document.querySelector('#verify-id-btn');
 
+    var verifydjs = 'done';
+
     button.addEventListener('click', function() {
 
+        $('#verifyDj').val(verifydjs);
+        
         connect.setup();
 
         connect.open();
