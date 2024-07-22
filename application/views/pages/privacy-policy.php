@@ -296,7 +296,7 @@
           <p>
             If you have any questions or concerns about our data handling practices or
             wish to exercise your data subject rights, don't hesitate to get in touch with
-            our Data Protection Officer at: <a href="mailto:pidah.t@smallsmall.com">pidah.t@smallsmall.com </a>
+            our Data Protection Officer at: <a href="mailto:data.manager@smallsmall.com">data.manager@smallsmall.com</a>
 
           </p>
 
