@@ -357,9 +357,9 @@ jQuery(document).ready(function ($) {
 
 		if (dojahID === "") {
 
-			alert("You must Verify before submitting Verification.");
+			alert("You must Verify your ID before submitting Verification.");
 
-			//$('#finishVerifyBut').html("Submit");
+			$('#finishVerifyBut').html("Submit Verification");
 
 			return;
 		}
