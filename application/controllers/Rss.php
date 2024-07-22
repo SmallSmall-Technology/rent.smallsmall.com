@@ -3873,7 +3873,7 @@ class Rss extends CI_Controller
 
 		$emailRes = $this->email->send();
 
-		echo json_encode(array('result' => $result, 'msg' => $price));
+		//echo json_encode(array('result' => $result, 'msg' => $price));
 	}
 
 	public function insertPropertyDetails()
