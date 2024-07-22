@@ -3629,7 +3629,9 @@ class Rss extends CI_Controller
 
 		//Insert details into verification table
 
-		echo json_encode($details);
+		//echo json_encode($details);
+
+		echo json_encode($order);
 
 		//echo $propertyID = $order['property'][0]['productID'];
 
