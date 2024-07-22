@@ -12,6 +12,8 @@
 
   <!--Platform Blog Script Code-->
 
+  <script class="cytrio-script" src="https://cytriocpmprod.blob.core.windows.net/cytrio-public/cookiescript/2339/2438/script.js"></script>
+
   <script defer charset="UTF-8" src="https://bundle.notice.studio/index.js"></script>
 
   <script src="https://cdn.gravitec.net/storage/16909e628b2b4433f66987cc8120e971/client.js" async></script>
@@ -21,7 +23,17 @@
   <script defer src="https://www.benifit.app/pixel/svpjnbeodkar3mju8w44lu7mujd5sdj3"></script>
   <!-- END Pixel Code -->
 
+  <!-- Poper Code Start - poper.ai -->
+  <script id="poper-js-script" data-account-id="443b7184dc82c688e3f067dbb8c621fe" src="https://app.poper.ai/share/poper.js" defer></script>
+  <script>
+      window.Poper = window.Poper || [];
+      window.Poper.push({
+          accountID: "443b7184dc82c688e3f067dbb8c621fe",
+      });
+  </script>
+  <!-- Poper Code End -->
 
+  
   <!--Start of Record Script-->
   <script>
     ! function(b, e, d, f) {

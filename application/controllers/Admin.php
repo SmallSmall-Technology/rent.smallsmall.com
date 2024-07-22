@@ -7025,9 +7025,169 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function rssLeads()
+	{
+		$values = array();
+
+		$admins = $this->admin_model->get_all_admin();
+
+		for ($i = 0; $i < count($admins); $i++) {
+
+			array_push($values, $admins[$i]['adminID']);
+		}
+
+		$data['adminID'] = $this->session->userdata('adminID');
+
+		$config['total_rows'] = $this->admin_model->countrssLeads();
+
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
+
+		if($config['total_rows'] > 0) {
+
+			$page_number = $this->uri->segment(3);
+
+			$config['base_url'] = base_url() . 'admin/rssLeads';
+
+			if (empty($page_number))
+
+				$page_number = 1;
+
+			$offset = ($page_number - 1) * $this->pagination->per_page;
+
+			$this->admin_model->setPageNumber($this->pagination->per_page);
+
+			$this->admin_model->setOffset($offset);
+
+			$this->pagination->cur_page = $page_number;
+
+			$this->pagination->initialize($config);
+
+			$data['page_links'] = $this->pagination->create_links();
+
+			//$data['inspections'] = $this->admin_model->fetchRequests($data['adminID']);
+
+			$data['rssDistLeads'] = $this->admin_model->fetchDistRss();
+		}
+
+		if (!file_exists(APPPATH . 'views/admin/pages/inspection.php')) {
+
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+
+		//check if Admin is logged in
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			//$data['aptTypes'] = $this->admin_model->fetchAptType();
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['title'] = "Inspection :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);	
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/rssLeads.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+
+			$this->load->view('admin/templates/request-modal.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+
+	public function bssLeads()
+	{
+		$values = array();
+
+		$admins = $this->admin_model->get_all_admin();
+
+		for ($i = 0; $i < count($admins); $i++) {
+
+			array_push($values, $admins[$i]['adminID']);
+		}
+
+		$data['adminID'] = $this->session->userdata('adminID');
+
+		$config['total_rows'] = $this->admin_model->countbssLeads();
+
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
+
+		if($config['total_rows'] > 0) {
+
+			$page_number = $this->uri->segment(3);
+
+			$config['base_url'] = base_url() . 'admin/bssLeads';
+
+			if (empty($page_number))
+
+				$page_number = 1;
+
+			$offset = ($page_number - 1) * $this->pagination->per_page;
+
+			$this->admin_model->setPageNumber($this->pagination->per_page);
+
+			$this->admin_model->setOffset($offset);
+
+			$this->pagination->cur_page = $page_number;
+
+			$this->pagination->initialize($config);
+
+			$data['page_links'] = $this->pagination->create_links();
+
+			//$data['inspections'] = $this->admin_model->fetchRequests($data['adminID']);
+
+			$data['bssDistLeads'] = $this->admin_model->fetchDistBss();
+		}
+
+		if (!file_exists(APPPATH . 'views/admin/pages/inspection.php')) {
+
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+
+		//check if Admin is logged in
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['aptTypes'] = $this->admin_model->fetchAptType();
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['title'] = "Inspection :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);	
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/bssLeads.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+
+			$this->load->view('admin/templates/request-modal.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
 	public function shorten_title($string)
 	{
-
 		if (strlen($string) >= 20) {
 			return substr($string, 0, 20) . " ... ";
 		} else {

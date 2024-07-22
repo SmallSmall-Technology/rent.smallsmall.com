@@ -102,6 +102,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['test/email'] = 'rss/email_test';
 
+$route['admin/send-inactive-users-email'] = 'rss/send_inactive_users_email';
+
 /********** Stay SmallSmall *******************/
 $route['admin/booking-details/(:any)'] = 'admin/booking_details/$1';
 
@@ -697,6 +699,10 @@ $route['verify-details'] = 'rss/verify_details';
 $route['renew-rent/(:any)'] = 'rss/renew_rent/$1';
 
 $route['rss/verify-payment/(:any)'] = 'rss/verify_payment/$1';
+
+$route['admin/rssLeads'] = 'admin/rssLeads';
+
+$route['admin/bssLeads'] = 'admin/bssLeads';
 
 $route['rss/verification-complete'] = 'rss/verification_complete';
 

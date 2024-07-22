@@ -86,12 +86,12 @@
                          <div class="col-md-6 col-12">
                              <div class="form-group">
                                  <div class="customized-select">
-                                     <select id="inputState standard-select marital-status verify-txt-f" class="form-control" id="marital-status">
+                                 <select id="marital-status" class="form-control marital-status verify-txt-f" data-gtm-form-interact-field-id="2">
                                          <option selected>Marital status</option>
-                                         <option>Single</option>
-                                         <option>Married</option>
-                                         <option>Divorced</option>
-                                         <option>widowed</option>
+                                         <option value="Single">Single</option>
+                                         <option value="Married">Married</option>
+                                         <option value="Divorced">Divorced</option>
+                                         <option value="widowed">widowed</option>
                                      </select>
                                  </div>
                              </div>
