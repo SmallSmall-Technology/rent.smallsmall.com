@@ -7861,7 +7861,6 @@ class Admin extends CI_Controller
 
 	public function startProcessing()
 	{
-
 		$user_id = $this->input->post('user_id');
 
 		$res = $this->admin_model->start_processing($user_id);
@@ -7872,23 +7871,91 @@ class Admin extends CI_Controller
 
 			$data['name'] = $user['lastName'];
 
-			$this->email->from('noreply@smallsmall.com', 'Small Small');
+			//send Emails out
 
-			$this->email->to($user['email']);
+			require 'vendor/autoload.php'; // For Unione template authoload
 
-			$this->email->subject("Verification in process.");
+			
+			// Unione Template
 
-			$this->email->set_mailtype("html");
+			$headers = array(
+				'Content-Type' => 'application/json',
+				'Accept' => 'application/json',
+				'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			);
 
-			$message = $this->load->view('email/header.php', $data, TRUE);
+			$client = new \GuzzleHttp\Client([
+				'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+			]);
 
-			$message .= $this->load->view('email/verification-in-process.php', $data, TRUE);
+			$requestBody = [
+				"id" => "f3bdb208-4d8c-11ef-8504-5eb1863c4a08"
+			];
 
-			$message .= $this->load->view('email/footer.php', $data, TRUE);
+			$requestCxBody = [
+				"id" => "a8de7f86-7198-11ee-9b86-1ef0731c1c1d"
+			];
 
-			$this->email->message($message);
 
-			$emailRes = $this->email->send();
+			//Unione Template
+
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestBody,
+				));
+
+				$jsonResponse = $response->getBody()->getContents();
+
+				$responseData = json_decode($jsonResponse, true);
+
+				$htmlBody = $responseData['template']['body']['html'];
+
+				//Replace the placeholder in the HTML body with the username
+
+				$htmlBody = str_replace('{{SubscriberName}}', $username, $htmlBody);
+
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailData = [
+					"message" => [
+						"recipients" => [
+							["email" => $user['email']],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "Property Verification Status",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "Small Small Inspection",
+					],
+				];
+
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailData,
+				]);
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
+			}
+
+			// $this->email->from('noreply@smallsmall.com', 'Small Small');
+
+			// $this->email->to($user['email']);
+
+			// $this->email->subject("Verification in process.");
+
+			// $this->email->set_mailtype("html");
+
+			// $message = $this->load->view('email/header.php', $data, TRUE);
+
+			// $message .= $this->load->view('email/verification-in-process.php', $data, TRUE);
+
+			// $message .= $this->load->view('email/footer.php', $data, TRUE);
+
+			// $this->email->message($message);
+
+			// $emailRes = $this->email->send();
 
 			echo 1;
 		} else {
