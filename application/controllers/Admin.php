@@ -7871,6 +7871,8 @@ class Admin extends CI_Controller
 
 			$data['name'] = $user['lastName'];
 
+			$username = $user['lastName'];
+
 			//send Emails out
 
 			require 'vendor/autoload.php'; // For Unione template authoload
@@ -7926,7 +7928,7 @@ class Admin extends CI_Controller
 						"body" => ["html" => $htmlBody],
 						"subject" => "Property Verification Status",
 						"from_email" => "donotreply@smallsmall.com",
-						"from_name" => "Small Small Inspection",
+						"from_name" => "Small Small Verification status",
 					],
 				];
 
