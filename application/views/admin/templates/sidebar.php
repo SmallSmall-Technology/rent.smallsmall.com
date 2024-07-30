@@ -256,6 +256,48 @@
 
 					</li>
 					<?php } ?>
+
+					<?php if($userAccess != 6){ ?>
+					<li>
+						<a href="dashboard-boxes.html">
+
+							<i class="metismenu-icon pe-7s-chat"></i>
+								Leads 
+							<i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+
+						</a>
+
+						<ul>
+
+							<li>
+
+								<a href="<?php echo base_url(); ?>admin/rssLeads">
+
+									<i class="metismenu-icon"></i>
+
+									RSS Leads
+
+								</a>
+
+							</li>
+                            <li>
+
+								<a href="<?php echo base_url(); ?>admin/bssLeads">
+
+									<i class="metismenu-icon"></i>
+
+									BSS Leads
+
+								</a>
+
+							</li>
+							
+
+						</ul>
+
+					</li>
+					<?php } ?>
+					
 					<?php if($userAccess != 6){ ?>
 					<li>
 
@@ -779,7 +821,7 @@
 
 							<i class="metismenu-icon pe-7s-users"></i>
 
-							Admin
+							Admin Functions
 
 							<i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
 
@@ -804,7 +846,7 @@
 
 									<i class="metismenu-icon"></i>
 
-									Send BTL Shares
+									BSS Shares
 
 								</a>
 
@@ -815,7 +857,7 @@
 
 									<i class="metismenu-icon"></i>
 
-									New BTL Promo
+									Promos & Discounts
 
 								</a>
 

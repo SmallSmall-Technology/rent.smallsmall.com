@@ -700,6 +700,10 @@ $route['renew-rent/(:any)'] = 'rss/renew_rent/$1';
 
 $route['rss/verify-payment/(:any)'] = 'rss/verify_payment/$1';
 
+$route['admin/rssLeads'] = 'admin/rssLeads';
+
+$route['admin/bssLeads'] = 'admin/bssLeads';
+
 $route['rss/verification-complete'] = 'rss/verification_complete';
 
 $route['rss/verification/(:any)'] = 'rss/verification/$1';

@@ -730,6 +730,17 @@ class Rss_model extends CI_Model
 		return $query->row_array();
 	}
 
+	public function updateNames($firstName, $lastName)
+	{
+		$userID = $this->session->userdata('userID');
+
+		$view = array('firstName' => $firstName, 'lastName' => $lastName);
+
+		$this->db->where('userID', $userID);
+
+		$this->db->update('user_tbl', $view);
+	}
+
 	public function get_admin($id)
 	{
 

@@ -7025,9 +7025,169 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function rssLeads()
+	{
+		$values = array();
+
+		$admins = $this->admin_model->get_all_admin();
+
+		for ($i = 0; $i < count($admins); $i++) {
+
+			array_push($values, $admins[$i]['adminID']);
+		}
+
+		$data['adminID'] = $this->session->userdata('adminID');
+
+		$config['total_rows'] = $this->admin_model->countrssLeads();
+
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
+
+		if($config['total_rows'] > 0) {
+
+			$page_number = $this->uri->segment(3);
+
+			$config['base_url'] = base_url() . 'admin/rssLeads';
+
+			if (empty($page_number))
+
+				$page_number = 1;
+
+			$offset = ($page_number - 1) * $this->pagination->per_page;
+
+			$this->admin_model->setPageNumber($this->pagination->per_page);
+
+			$this->admin_model->setOffset($offset);
+
+			$this->pagination->cur_page = $page_number;
+
+			$this->pagination->initialize($config);
+
+			$data['page_links'] = $this->pagination->create_links();
+
+			//$data['inspections'] = $this->admin_model->fetchRequests($data['adminID']);
+
+			$data['rssDistLeads'] = $this->admin_model->fetchDistRss();
+		}
+
+		if (!file_exists(APPPATH . 'views/admin/pages/inspection.php')) {
+
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+
+		//check if Admin is logged in
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			//$data['aptTypes'] = $this->admin_model->fetchAptType();
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['title'] = "Inspection :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);	
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/rssLeads.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+
+			$this->load->view('admin/templates/request-modal.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
+
+	public function bssLeads()
+	{
+		$values = array();
+
+		$admins = $this->admin_model->get_all_admin();
+
+		for ($i = 0; $i < count($admins); $i++) {
+
+			array_push($values, $admins[$i]['adminID']);
+		}
+
+		$data['adminID'] = $this->session->userdata('adminID');
+
+		$config['total_rows'] = $this->admin_model->countbssLeads();
+
+		$data['total_count'] = $config['total_rows'];
+
+		$config['suffix'] = '';
+
+		if($config['total_rows'] > 0) {
+
+			$page_number = $this->uri->segment(3);
+
+			$config['base_url'] = base_url() . 'admin/bssLeads';
+
+			if (empty($page_number))
+
+				$page_number = 1;
+
+			$offset = ($page_number - 1) * $this->pagination->per_page;
+
+			$this->admin_model->setPageNumber($this->pagination->per_page);
+
+			$this->admin_model->setOffset($offset);
+
+			$this->pagination->cur_page = $page_number;
+
+			$this->pagination->initialize($config);
+
+			$data['page_links'] = $this->pagination->create_links();
+
+			//$data['inspections'] = $this->admin_model->fetchRequests($data['adminID']);
+
+			$data['bssDistLeads'] = $this->admin_model->fetchDistBss();
+		}
+
+		if (!file_exists(APPPATH . 'views/admin/pages/inspection.php')) {
+
+			// Whoops, we don't have a page for that!
+
+			show_404();
+		}
+
+		//check if Admin is logged in
+
+		if ($this->session->has_userdata('adminLoggedIn')) {
+
+			$data['aptTypes'] = $this->admin_model->fetchAptType();
+
+			$data['userAccess'] = $this->session->userdata('userAccess');
+
+			$data['adminPriv'] = $this->functions_model->getUserAccess();
+
+			$data['title'] = "Inspection :: RSS";
+
+			$this->load->view('admin/templates/header.php', $data);	
+
+			$this->load->view('admin/templates/sidebar.php', $data);
+
+			$this->load->view('admin/pages/bssLeads.php', $data);
+
+			$this->load->view('admin/templates/footer.php', $data);
+
+			$this->load->view('admin/templates/request-modal.php', $data);
+		} else {
+
+			redirect(base_url() . 'admin/login', 'refresh');
+		}
+	}
+
 	public function shorten_title($string)
 	{
-
 		if (strlen($string) >= 20) {
 			return substr($string, 0, 20) . " ... ";
 		} else {
@@ -7468,24 +7628,94 @@ class Admin extends CI_Controller
 
 			$data['name'] = $user['lastName'];
 
-			$this->email->from('noreply@smallsmall.com', 'Small Small');
+			$username = $user['lastName'];
 
-			$this->email->to($user['email']);
+			//send Emails out
 
-			$this->email->subject("Verification in process.");
+			require 'vendor/autoload.php'; // For Unione template authoload
 
-			$this->email->set_mailtype("html");
+			
+			// Unione Template
 
-			$message = $this->load->view('email/header.php', $data, TRUE);
+			$headers = array(
+				'Content-Type' => 'application/json',
+				'Accept' => 'application/json',
+				'X-API-KEY' => '6bgqu7a8bd7xszkz1uonenrxwpdeium56kb1kb3y',
+			);
 
-			$message .= $this->load->view('email/verification-in-process.php', $data, TRUE);
+			$client = new \GuzzleHttp\Client([
+				'base_uri' => 'https://eu1.unione.io/en/transactional/api/v1/'
+			]);
 
-			$message .= $this->load->view('email/footer.php', $data, TRUE);
+			$requestBody = [
+				"id" => "f3bdb208-4d8c-11ef-8504-5eb1863c4a08"
+			];
 
-			$this->email->message($message);
+			$requestCxBody = [
+				"id" => "a8de7f86-7198-11ee-9b86-1ef0731c1c1d"
+			];
 
-			$emailRes = $this->email->send();
 
+			//Unione Template
+
+			try {
+				$response = $client->request('POST', 'template/get.json', array(
+					'headers' => $headers,
+					'json' => $requestBody,
+				));
+
+				$jsonResponse = $response->getBody()->getContents();
+
+				$responseData = json_decode($jsonResponse, true);
+
+				$htmlBody = $responseData['template']['body']['html'];
+
+				//Replace the placeholder in the HTML body with the username
+
+				$htmlBody = str_replace('{{SubscriberName}}', $username, $htmlBody);
+
+				$data['response'] = $htmlBody;
+
+				// Prepare the email data
+				$emailData = [
+					"message" => [
+						"recipients" => [
+							["email" => $user['email']],
+						],
+						"body" => ["html" => $htmlBody],
+						"subject" => "Property Verification Status",
+						"from_email" => "donotreply@smallsmall.com",
+						"from_name" => "Small Small Verification status",
+					],
+				];
+
+				// Send the email using the Unione API
+				$responseEmail = $client->request('POST', 'email/send.json', [
+					'headers' => $headers,
+					'json' => $emailData,
+				]);
+			} catch (\GuzzleHttp\Exception\BadResponseException $e) {
+				$data['response'] = $e->getMessage();
+			}
+
+			// $this->email->from('noreply@smallsmall.com', 'Small Small');
+
+			// $this->email->to($user['email']);
+
+			// $this->email->subject("Verification in process.");
+
+			// $this->email->set_mailtype("html");
+
+			// $message = $this->load->view('email/header.php', $data, TRUE);
+
+			// $message .= $this->load->view('email/verification-in-process.php', $data, TRUE);
+
+			// $message .= $this->load->view('email/footer.php', $data, TRUE);
+
+			// $this->email->message($message);
+
+			// $emailRes = $this->email->send();
+			
 			echo 1;
 		} else {
 
