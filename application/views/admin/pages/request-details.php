@@ -239,53 +239,29 @@
             </div>
             <?php } ?>
 
-            <!---<div class="col-lg-6">
-                <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Buyer Profile</h5>
-                        <table class="mb-0 table">
-                            <!--<thead>
-                            <tr>
-                                <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
-                            </tr>
-                            </thead>-->
-                            <!---<tbody>
-                            <tr>
-                                <th width="200px" scope="row">First Name</th>
-                                <td><?php //echo (!is_null($details['buyer_fname']))? $details['firstName'] : $details['buyer_fname']; ?></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Last Name</th>
-                                <td><?php //echo (!is_null($details['buyer_lname']))? $details['lastName'] : $details['lname']; ?></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Phone</th>
-                                <td><?php //echo (!is_null($details['buyer_phone']))? $details['phone'] : $details['buyer_phone']; ?></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Email</th>
-                                <td><?php //echo (!is_null($details['buyer_email']))? $details['email'] : $details['buyer_email']; ?></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Address</th>
-                                <td><?php //echo $details['address']; ?></td>
-                            </tr>												
-                            <tr>
-                                <th scope="row">Comment</th>
-                                <td><?php //echo $details['comment']; ?></td>
-                            </tr>
-                            
-                            <tr>
-                                <th scope="row">Identification</th>
-                                <td><a rel="nofollow" target="_blank" href="https://stay.smallsmall.com/uploads/identification/<?php //echo $details['userID'].'/'.$details['identification']; ?>">Download</a></td>
-                            </tr>
-                            </tbody>
-                        </table>
+            <?php if(($worth) && ($buybackrate)){ ?>
+                    <div class="col-lg-6">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body"><h5 class="card-title">Interest Details</h5>
+                                <table class="mb-0 table">                                    
+                                    <tbody>
+            
+                                        <tr>
+                                            <th width="200px" scope="row">Total Worth</th>
+                                            <td><?php echo number_format($worth); ?></td>
+                                        </tr>
+                        
+                                    <tr>
+                                        <th width="200px" scope="row">Buyback Value</th>
+                                        <td><?php echo number_format($worth - $buybackrate); ?></td>
+                                    </tr>
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>--->
+            <?php } ?>
 			            
             
         </div>

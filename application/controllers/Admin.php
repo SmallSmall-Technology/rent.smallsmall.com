@@ -3889,6 +3889,12 @@ class Admin extends CI_Controller
 
 			$data['userAccess'] = $this->session->userdata('userAccess');
 
+			$worth_and_bbr = $this->getPropertyWorth($data['details']['userID']);
+
+			$data['worth'] = $worth_and_bbr['worth'];
+
+			$data['buybackrate'] = $worth_and_bbr['buybackrate'];
+
 
 			$data['title'] = "Request Details";
 
@@ -9306,6 +9312,187 @@ class Admin extends CI_Controller
 			redirect(base_url() . 'admin/login', 'refresh');
 		}
 	}
+
+	public function getPropertyWorth($user_id)
+	{
+
+		$worth = 0;
+
+		$buy_back_rate = 0.00;
+
+		$buy_back_per_prop = array();
+
+		$properties = $this->admin_model->getAllUserCoOwnProperties($user_id);
+
+		if (count($properties) > 1) {
+
+			for ($i = 0; $i < count($properties); $i++) {
+
+				$worth = 0;
+
+				$buy_back_rate = 0.00;
+
+				//get request date diff
+				$date_diff = $this->getNumOfDays($properties[$i]['request_date']);
+
+				if ($properties[$i]['purchase_beneficiary'] == 'Self' || $properties[$i]['purchase_beneficiary'] == 'Free') {
+
+					$worth = $worth + ($properties[$i]['unit_amount'] * $properties[$i]['price']);
+
+					$bbr = $this->getBuyBackRate($date_diff, $properties[$i]['propertyID'], $properties[$i]['unit_amount']);
+
+					$buy_back_rate = $buy_back_rate + $bbr;
+
+					array_push($buy_back_per_prop, array("propertyID" => $properties[$i]['propertyID'], "num_of_days" => $date_diff, "buybackrate" => $bbr));
+
+				} else {
+
+					$worth = $worth + ($properties[$i]['no_of_units'] * $properties[$i]['price']);
+
+					$bbr = $this->getBuyBackRate($date_diff, $properties[$i]['propertyID'], $properties[$i]['no_of_units']);
+
+					$buy_back_rate = $buy_back_rate + $bbr;
+
+					array_push($buy_back_per_prop, array("propertyID" => $properties[$i]['propertyID'], "num_of_days" => $date_diff, "buybackrate" => $bbr));
+				}
+			}
+		} else if (count($properties) == 1) {
+			//Return single property worth
+			//$worth = $properties[0]['amount'];
+			//get request date diff
+			$date_diff = $this->getNumOfDays($properties[0]['request_date']);
+
+			if ($properties[0]['purchase_beneficiary'] == 'Self' || $properties[0]['purchase_beneficiary'] == 'Free') {
+
+				$worth = $worth + ($properties[0]['unit_amount'] * $properties[0]['price']);
+
+				$bbr = $this->getBuyBackRate($date_diff, $properties[0]['propertyID'], $properties[0]['unit_amount']);
+
+				$buy_back_rate = $buy_back_rate + $bbr;
+
+				array_push($buy_back_per_prop, array("propertyID" => $properties[0]['propertyID'], "num_of_days" => $date_diff, "buybackrate" => $bbr));
+			} else {
+
+				$worth = $worth + ($properties[0]['no_of_units'] * $properties[0]['price']);
+
+				$bbr = $this->getBuyBackRate($date_diff, $properties[0]['propertyID'], $properties[0]['no_of_units']);
+
+				$buy_back_rate = $buy_back_rate + $bbr;
+
+				array_push($buy_back_per_prop, array("propertyID" => $properties[0]['propertyID'], "num_of_days" => $date_diff, "buybackrate" => $bbr));
+			}
+		}
+
+		$worth = $worth + $buy_back_rate;
+
+		return array("worth" => $worth, "buybackrate" => $buy_back_rate, "properties" => $buy_back_per_prop);
+	}
+
+	public function getBuyBackRate($numberOfDays, $propertyID, $noOfUnits)
+	{
+
+		$rates = 0;
+
+		$property = $this->admin_model->getProperty($propertyID);
+
+		if ($numberOfDays > 0 && $numberOfDays <= 365) {
+
+			$valuePerDay = (($property['co_appr_1'] * $property['marketValue']) / 100) / 365;
+
+			$rates = $rates + ($numberOfDays * $valuePerDay);
+
+		} elseif ($numberOfDays > 365 && $numberOfDays <= 730) {
+
+			//Add first year
+			$first_year = ($property['co_appr_1'] * $property['marketValue']) / 100;
+
+			$remaining_days = $numberOfDays - 365;
+
+			$valuePerDay = (($property['co_appr_2'] * $property['marketValue']) / 100) / 365;
+
+			$rates = $first_year + ($remaining_days * $valuePerDay);
+
+		} elseif ($numberOfDays > 730 && $numberOfDays <= 1095) {
+
+			//Add first year
+			$first_year = ($property['co_appr_1'] * $property['marketValue']) / 100;
+
+			//Add second year
+			$second_year = ($property['co_appr_2'] * $property['marketValue']) / 100;
+
+			$remaining_days = $numberOfDays - 730;
+
+			$valuePerDay = (($property['co_appr_3'] * $property['marketValue']) / 100) / 365;
+
+			$rates = ($first_year + $second_year) + ($remaining_days * $valuePerDay);
+
+		} elseif ($numberOfDays > 1095 && $numberOfDays <= 1460) {
+
+			//Add first year
+			$first_year = ($property['co_appr_1'] * $property['marketValue']) / 100;
+
+			//Add second year
+			$second_year = ($property['co_appr_2'] * $property['marketValue']) / 100;
+
+			//Add third year
+			$third_year = ($property['co_appr_3'] * $property['marketValue']) / 100;
+
+			$remaining_days = $numberOfDays - 1095;
+
+			$valuePerDay = (($property['co_appr_4'] * $property['marketValue']) / 100) / 365;
+
+			$rates = ($first_year + $second_year + $third_year) + ($remaining_days * $valuePerDay);
+
+		} elseif ($numberOfDays > 1460 && $numberOfDays <= 1825) {
+
+			//Add first year
+			$first_year = ($property['co_appr_1'] * $property['marketValue']) / 100;
+
+			//Add second year
+			$second_year = ($property['co_appr_2'] * $property['marketValue']) / 100;
+
+			//Add third year
+			$third_year = ($property['co_appr_3'] * $property['marketValue']) / 100;
+
+			//Add fourth year
+			$fourth_year = ($property['co_appr_4'] * $property['marketValue']) / 100;
+
+			$remaining_days = $numberOfDays - 1460;
+
+			$valuePerDay = (($property['co_appr_5'] * $property['marketValue']) / 100) / 365;
+
+			$rates = ($first_year + $second_year + $third_year + $fourth_year) + ($remaining_days * $valuePerDay);
+
+		} elseif ($numberOfDays > 1825 && $numberOfDays <= 2190) {
+
+			//Add first year
+			$first_year = ($property['co_appr_1'] * $property['marketValue']) / 100;
+
+			//Add second year
+			$second_year = ($property['co_appr_2'] * $property['marketValue']) / 100;
+
+			//Add third year
+			$third_year = ($property['co_appr_3'] * $property['marketValue']) / 100;
+
+			//Add fourth year
+			$fourth_year = ($property['co_appr_4'] * $property['marketValue']) / 100;
+
+			//Add fifth year
+			$fifth_year = ($property['co_appr_5'] * $property['marketValue']) / 100;
+
+			$remaining_days = $numberOfDays - 1825;
+
+			$valuePerDay = (($property['co_appr_6'] * $property['marketValue']) / 100) / 365;
+
+			$rates = ($first_year + $second_year + $third_year + $fourth_year + $fifth_year) + ($remaining_days * $valuePerDay);
+		}
+
+		$rates = $rates * $noOfUnits;
+
+		return number_format((float)$rates, 2, '.', '');
+	}
+
+
 	function random_strings($length_of_string)
 	{
 		$str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz';
