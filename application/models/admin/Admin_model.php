@@ -4148,4 +4148,67 @@ class Admin_model extends CI_Model
 		return $this->db->delete('buytolet_promos');
 
 	}
+
+	public function getAllUserCoOwnProperties($user_id, $rID = 0)
+	{
+
+		$options = array('Self', 'Free');
+
+		$this->db->select('a.purchase_beneficiary, a.propertyID, a.request_date, a.unit_amount, b.price, c.amount, e.no_of_units');
+
+		$this->db->from('buytolet_request as a');
+
+		if ($rID) {
+
+			$this->db->where('a.id', $rID);
+		}
+
+		$this->db->where('a.plan', 'co-own');
+
+		$this->db->group_start();
+
+		$this->db->or_where('e.receiverID', $user_id);
+
+		$this->db->or_group_start();
+
+		$this->db->where('a.userID', $user_id);
+
+		$this->db->where_in('a.purchase_beneficiary', $options);
+
+		$this->db->group_end();
+
+		$this->db->group_end();
+
+		$this->db->join('buytolet_beneficiary_details as e', 'e.requestID = a.refID', 'LEFT OUTER');
+
+		$this->db->join('buytolet_property as b', 'b.propertyID = a.propertyID');
+
+		$this->db->join('buytolet_transactions as c', 'c.transaction_id = a.refID', 'INNER');
+
+		$this->db->join('states as d', 'd.id = b.state');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function getProperty($id)
+	{
+
+		$this->db->select('a.*, b.id, b.type, b.slug, c.id, c.country_id, c.name as propState');
+
+		$this->db->from('buytolet_property as a');
+
+		$this->db->where('a.propertyID', $id);
+
+		//$this->db->where('a.active', 1);	
+
+		$this->db->join('apt_type_tbl as b', 'b.id = a.apartment_type', 'LEFT');
+
+		$this->db->join('states as c', 'c.id = a.state', 'LEFT');
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
 }
