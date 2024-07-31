@@ -9492,6 +9492,18 @@ class Admin extends CI_Controller
 		return number_format((float)$rates, 2, '.', '');
 	}
 
+	public function getNumOfDays($date_of_purchase)
+	{
+
+		$today = strtotime(date('Y-m-d H:i:s')); // or your date as well
+
+		$date_of_purchase = strtotime($date_of_purchase);
+
+		$datediff = $today - $date_of_purchase;
+
+		return round($datediff / (60 * 60 * 24));
+	}
+
 
 	function random_strings($length_of_string)
 	{
