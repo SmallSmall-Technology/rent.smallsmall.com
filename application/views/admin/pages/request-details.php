@@ -248,12 +248,12 @@
             
                                         <tr>
                                             <th width="200px" scope="row">Total Worth</th>
-                                            <td><?php echo number_format($worth); ?></td>
+                                            <td><?php echo 'N'.number_format($worth); ?></td>
                                         </tr>
                         
                                     <tr>
                                         <th width="200px" scope="row">Buyback Value</th>
-                                        <td><?php echo number_format($worth - $buybackrate); ?></td>
+                                        <td><?php echo 'N'.number_format($worth - $buybackrate); ?></td>
                                     </tr>
                                     
                                     </tbody>

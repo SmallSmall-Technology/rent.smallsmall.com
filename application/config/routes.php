@@ -451,6 +451,10 @@ $route['admin/search-inspection/(:any)'] = 'admin/search_inspection/$1';
 
 $route['admin/search-inspection'] = 'admin/search_inspection';
 
+$route['admin/search-requests'] = 'admin/search_requests';
+
+$route['admin/search-requests/(:any)'] = 'admin/search_requests/$1';
+
 $route['admin/search-users'] = 'admin/search_users';
 
 $route['admin/search-users/(:any)'] = 'admin/search_users/$1';

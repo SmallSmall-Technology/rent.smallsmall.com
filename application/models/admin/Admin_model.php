@@ -81,6 +81,21 @@ class Admin_model extends CI_Model
 
 		return $this->db->count_all_results();
 	}
+
+	public function getRequestSearchCount($s_data)
+	{
+
+		$this->db->select('a.*, b.*');
+
+		$this->db->from('user_tbl as a');
+
+		$this->db->join('buytolet_request as b', 'b.userID = a.userID');
+
+		$this->db->where("(a.firstName LIKE '%" . $s_data['s_query'] . "%' OR a.lastName LIKE '%" . $s_data['s_query'] . "%')");
+
+		return $this->db->count_all_results();
+
+	}
 	public function countWalletAccounts()
 	{
 
@@ -3738,6 +3753,30 @@ class Admin_model extends CI_Model
 		$this->db->join('buytolet_property as c', 'c.propertyID = a.propertyID', 'LEFT OUTER');
 
 		$this->db->join('buytolet_investment_type as d', 'd.id = c.investment_type', 'LEFT OUTER');
+
+		$this->db->order_by('a.id', 'DESC');
+
+		$this->db->limit($this->_pageNumber, $this->_offset);
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function fetchBuytoletRequestsSearch($s_data)
+	{
+
+		$this->db->select('a.*, b.*, c.*, d.type as investmentType');
+
+		$this->db->from('buytolet_request as a');
+
+		$this->db->join('user_tbl as b', 'b.userID = a.userID', 'LEFT OUTER');
+
+		$this->db->join('buytolet_property as c', 'c.propertyID = a.propertyID', 'LEFT OUTER');
+
+		$this->db->join('buytolet_investment_type as d', 'd.id = c.investment_type', 'LEFT OUTER');
+
+		$this->db->where("(b.firstName LIKE '%" . $s_data['s_query'] . "%' OR b.lastName LIKE '%" . $s_data['s_query'] . "%')");
 
 		$this->db->order_by('a.id', 'DESC');
 
