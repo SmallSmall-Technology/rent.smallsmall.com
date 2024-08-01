@@ -3934,7 +3934,7 @@ class Admin extends CI_Controller
 	
 				$page_number = $this->uri->segment(3);
 	
-				$config['base_url'] = base_url() . 'admin/btl-requests';
+				$config['base_url'] = base_url() . 'admin/search-requests';
 	
 				if (empty($page_number))
 	
