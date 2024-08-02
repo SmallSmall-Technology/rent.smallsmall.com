@@ -3633,7 +3633,7 @@ class Rss extends CI_Controller
 
 		//echo json_encode($order);
 
-		//$propertyID = $order['property'][0]['productID'];
+		$propertyID = $order['property'][0]['productID'];
 
 		echo json_encode($propertyID);
 
