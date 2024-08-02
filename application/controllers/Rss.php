@@ -3633,7 +3633,9 @@ class Rss extends CI_Controller
 
 		//echo json_encode($order);
 
-		$propertyID = $order['property'][0]['productID'];
+		//$propertyID = $order['property'][0]['productID'];
+
+		echo json_encode($propertyID);
 
 		$ver_result = $this->rss_model->insertVerification($details['profile'][0]['firstname'], $details['profile'][0]['lastname'], $details['profile'][0]['email'], $details['profile'][0]['phone'], $details['profile'][0]['gross_pay'], $details['profile'][0]['dob'], $details['profile'][0]['gender'], $details['profile'][0]['marital_status'], $details['profile'][0]['state'], $details['profile'][0]['city'],  $details['profile'][0]['linkedinUrl'], $details['profile'][0]['country'], $details['profile'][0]['passport_number'], $details['renting'][0]['present_address'], $details['renting'][0]['country'], $details['renting'][0]['state'], $details['renting'][0]['city'], $details['renting'][0]['previous_rent_duration'], $details['renting'][0]['renting_status'], $details['renting'][0]['previous_eviction'], $details['renting'][0]['pet'], $details['renting'][0]['critical_illness'], $details['renting'][0]['landlord_full_name'], $details['renting'][0]['landlord_email'], $details['renting'][0]['landlord_phone'], $details['renting'][0]['landlord_address'], $details['renting'][0]['reason_for_leaving'], $details['employment'][0]['employment_status'], $details['employment'][0]['job_title'], $details['employment'][0]['company_address'], $details['employment'][0]['manager_hr_name'], $details['employment'][0]['manager_hr_email'], $details['employment'][0]['manager_hr_phone'], $details['employment'][0]['guarantor_name'], $details['employment'][0]['guarantor_email'], $details['employment'][0]['guarantor_phone'], $details['employment'][0]['guarantor_job_title'], $details['employment'][0]['guarantor_address'], $details['uploads'][0]['statement_path'], $details['uploads'][0]['id_path'], $details['uploads'][0]['user_id'], $details['employment'][0]['company_name'], 'Web', $user_agent['userAgent'], $propertyID);
 
@@ -3784,12 +3786,10 @@ class Rss extends CI_Controller
 				//Insert Booking
 
 				$booking_id = $this->random_strings(5);
-
-				
 				
 				$booked = $this->rss_model->insertBooking($booking_id, $ver_result, $details['uploads'][0]['user_id'], $order['property'][0]['productID'], $order['property'][0]['productTitle'], $order['property'][0]['paymentPlan'], $order['property'][0]['prodPrice'], $order['property'][0]['imageLink'], $order['property'][0]['productUrl'], $order['property'][0]['securityDeposit'], $order['property'][0]['duration'], $order['property'][0]['book_as'], $order['property'][0]['move_in_date'], $order['paymentOption'], $price, $ref);
 
-				echo json_encode($booked);
+				//echo json_encode($booked);
 
 				if ($booked) {
 
