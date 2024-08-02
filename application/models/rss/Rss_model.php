@@ -1050,7 +1050,6 @@ class Rss_model extends CI_Model
 
 	public function get_payment_details($id)
 	{
-
 		$this->db->select('a.*, b.*, c.*, d.*');
 
 		// 		$this->db->select('a.id, a.verification_id, a.reference_id, a.amount, a.transaction_id, a.status, a.transaction_date, a.type, a.payment_type, b.reference_id, b.bookingID, b.verification_id, b.propertyID, b.payment_plan, b.duration, b.rent_status, b.rent_expiration, b.booked_on, c.propertyTitle, c.price, c.securityDeposit, c.securityDepositTerm, d.email, d.firstName, d.lastName'); 

@@ -2786,7 +2786,7 @@ class Admin_model extends CI_Model
 
 		$this->db->join('bookings as e', 'e.verification_id = a.verification_id', 'LEFT OUTER');
 
-		$this->db->join('property_tbl as f', 'f.propertyID = e.propertyID', 'LEFT OUTER');
+		$this->db->join('property_tbl as f', 'f.propertyID = a.propertyID', 'LEFT OUTER');
 
 		$this->db->join('apt_type_tbl as g', 'g.id = f.propertyType', 'LEFT OUTER');
 
