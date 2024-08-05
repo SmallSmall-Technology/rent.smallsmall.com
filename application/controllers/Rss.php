@@ -3641,6 +3641,7 @@ class Rss extends CI_Controller
 
 		//echo json_encode($ver_result);
 
+		//
 		$notify = $this->functions_model->insert_user_notifications('Verification Request Submitted', 'You have successfully submitted a verification request. You will be notified of the status of your verification as it changes.', $details['uploads'][0]['user_id'], 'Rent');
 
 		$data['ver_title'] = "Verification Notification";
