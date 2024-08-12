@@ -6,6 +6,10 @@
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allPropertyPage.css" />
 
+<link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet">
+
+<script id="search-js" defer="" src="https://api.mapbox.com/search-js/v1.0.0-beta.22/web.js"></script>
+
 <?php
 
 //Get The Eviction Security Deposit
@@ -910,17 +914,29 @@ function startsWith($string, $prefix)
             </p>
           </section>
 
+          <section>
+          <form>
+            <input name="address" value="<?php echo $property['address']; ?>"  type = "hidden" autocomplete="address-line1" placeholder="Enter an address...">
+          </form>
+
+          <br>
+          <div style="height: 360px; width: 100%;">
+            <mapbox-address-minimap satellite-toggle="true" can-adjust-marker="true"></mapbox-address-minimap>
+          </div>
+
+          </section>
+
           <section class="my-5">
             <h4>Amenities</h4>
             <div class="row">
               <div class="col-md-4 col-6">
 
                 <?php
-                $amenity = unserialize($property['amenities']);
+                  $amenity = unserialize($property['amenities']);
 
-                $amenity_list = "";
-
+                  $amenity_list = "";
                 ?>
+
                 <?php $amenity_count = count($amenity); ?>
 
                 <?php if (in_array('prepaid', $amenity)) { ?>
@@ -994,7 +1010,6 @@ function startsWith($string, $prefix)
               </div>
             </div>
           </section>
-
 
           <section>
             <h4>House rules</h4>
@@ -1553,7 +1568,9 @@ function startsWith($string, $prefix)
                       </small>
                     </p>
                     <p class="card-text"><?php echo shortenText($value['address'] . ", " . $value['city'], 30); ?></p>
+                    
                     <div class="card-text d-flex justify-content-between">
+                      <input type = 'hidden' id = "mpBx_addr" value = "<?php echo $value['address']; ?>" />
                       <p class="card-text">
                         &bull;<?php echo $value['bed']; ?> Bed
                         &bull;<?php echo $value['bath']; ?> Bath
@@ -1657,6 +1674,24 @@ function startsWith($string, $prefix)
 
     $('#insDateMob').attr('min', maxDate);
   }
+
+//   var client = new MapboxClient(mapboxgl.accessToken);
+//   var address = document.getElementById('mpBx_addr').value;
+//   client.geocodeForward(address, function(err, data, res) {
+//   var coordinates = data.features[0].center;
+
+//   // Use the coordinates with the Minimap component here
+
+//   const minimap = document.querySelector('mapbox-address-minimap');  
+//   minimap.accessToken = 'pk.eyJ1IjoicmVudHNtYWxsc21hbGwiLCJhIjoiY2x6anVudTlkMG9rNzJyc2EwY3JiaDByaSJ9.eo6Kt3OChBq00i-fjJAZlw';  
+//   minimap.feature = {  
+//     type: 'Feature',  
+//     geometry: { type: 'Point', coordinates: coordinates },  
+//     properties: {}  
+//   };
+
+// });
+
 </script>
 
 <!--Tooltip for share-->
@@ -1678,6 +1713,37 @@ function startsWith($string, $prefix)
       // console.log('Web Share API not supported');
     }
   }
+</script>
+
+<script>
+	// TO MAKE THE MAP APPEAR YOU MUST
+	// ADD YOUR ACCESS TOKEN FROM
+	// https://account.mapbox.com
+	mapboxgl.accessToken = 'pk.eyJ1IjoicmVudHNtYWxsc21hbGwiLCJhIjoiY2x6anVudTlkMG9rNzJyc2EwY3JiaDByaSJ9.eo6Kt3OChBq00i-fjJAZlw';
+  const script = document.getElementById('search-js');
+  script.onload = () => {
+    // Add search box to input
+    const collection = mapboxsearch.autofill({ accessToken: ACCESS_TOKEN });
+
+    // Configure minimap
+    const minimap = document.querySelector('mapbox-address-minimap');
+    minimap.accessToken = ACCESS_TOKEN;
+    minimap.defaultMapStyle = ['mapbox', 'outdoors-v11'];
+    minimap.theme = {
+      variables: { border: '13px solid #bbb', borderRadius: '18px', boxShadow: '0 2px 8px #000' }
+    }
+    minimap.onSaveMarkerLocation = (coordinate) => { console.log(coordinate); }
+    minimap.feature = {
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [-73.981872, 40.768037] },
+      properties: {}
+    };
+
+    // Set minimap feature on search box selection
+    collection.addEventListener('retrieve', (e) => {
+      minimap.feature = e.detail.features[0];
+    })
+  };
 </script>
 
 <!--//Script for subscribe Now Shift for web-->

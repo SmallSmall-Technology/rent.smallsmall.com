@@ -13,6 +13,10 @@
   
   
   <!--Platform Blog Script Code-->
+
+  <link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet">
+
+  <script id="search-js" defer="" src="https://api.mapbox.com/search-js/v1.0.0-beta.22/web.js"></script>
   
   <script defer charset="UTF-8" 
   src="https://bundle.notice.studio/index.js"></script>
