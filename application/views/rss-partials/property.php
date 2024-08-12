@@ -916,7 +916,7 @@ function startsWith($string, $prefix)
 
           <section>
           <form>
-            <input name="address" value="<?php echo $property['address']; ?>"  type = "hidden" autocomplete="address-line1" placeholder="Enter an address...">
+            <input name="address" value="<?php echo $property['address'] . ' ' . $property['city']; ?>"  type = "hidden" autocomplete="address-line1" placeholder="Enter an address...">
           </form>
 
           <br>
