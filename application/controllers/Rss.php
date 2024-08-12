@@ -765,7 +765,7 @@ class Rss extends CI_Controller
 			show_404();
 		}
 	}
-
+	
 	// Verification Old - Incase of revert
 
 	// public function verification($page)

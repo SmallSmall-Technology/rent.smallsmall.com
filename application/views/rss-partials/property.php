@@ -1,5 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
+<script id="search-js" defer="" src="https://api.mapbox.com/search-js/v1.0.0-beta.22/web.js"></script>
+
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/allproperty.css" />
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/updated-assets/css/custom-css/singleProperty.css" />
@@ -8,7 +10,8 @@
 
 <link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet">
 
-<script id="search-js" defer="" src="https://api.mapbox.com/search-js/v1.0.0-beta.22/web.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css" rel="stylesheet">
+
 
 <?php
 
@@ -1719,6 +1722,8 @@ function startsWith($string, $prefix)
 	// TO MAKE THE MAP APPEAR YOU MUST
 	// ADD YOUR ACCESS TOKEN FROM
 	// https://account.mapbox.com
+  const ACCESS_TOKEN = 'pk.eyJ1IjoicmVudHNtYWxsc21hbGwiLCJhIjoiY2x6anVudTlkMG9rNzJyc2EwY3JiaDByaSJ9.eo6Kt3OChBq00i-fjJAZlw';
+  
 	mapboxgl.accessToken = 'pk.eyJ1IjoicmVudHNtYWxsc21hbGwiLCJhIjoiY2x6anVudTlkMG9rNzJyc2EwY3JiaDByaSJ9.eo6Kt3OChBq00i-fjJAZlw';
   const script = document.getElementById('search-js');
   script.onload = () => {
