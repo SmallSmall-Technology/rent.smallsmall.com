@@ -4258,4 +4258,171 @@ class App extends CI_Controller
 
 		echo $total_cost;
 	}
+
+	function vendor_upload()
+	{
+		$result = FALSE;
+
+		$details = '';
+
+		$data = array();
+
+		$key = $this->getKey();
+
+		$json = file_get_contents('php://input');
+
+		$json_data = json_decode($json);
+
+		if (@$headers['Authorization']) {
+
+			$token = explode(' ', $headers['Authorization']);
+
+			try {
+
+				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+
+				if ($decoded) {
+
+					$file = $_FILES['product_img']['tmp_name'];
+
+					if (file_exists($file)) {
+						$allowedExts = array("gif", "jpeg", "jpg", "png");
+						$typefile    = explode(".", $_FILES["product_img"]["name"]);
+						$extension   = end($typefile);
+
+						if (!in_array(strtolower($extension), $allowedExts)) {
+							//not image
+							$details = "images";
+
+						} else {
+
+							$full_path = "uploads/vendor-products/";
+
+							/*if(!is_dir($full_path)){
+							mkdir($full_path, 0777, true);
+							}*/
+							$path = $_FILES['product_img']['tmp_name'];
+
+							$image_name = $full_path . preg_replace("/[^a-z0-9\._]+/", "-", strtolower(uniqid() . $_FILES['product_img']['name']));
+							
+
+							$details = "success";
+
+							$s3_bucket = s3_bucket_upload($path, $image_name);
+
+							if ($s3_bucket['message'] == "success") {
+
+								$data['imagename'] = $s3_bucket['imagepath'];
+								$data['imagepath'] = $s3_bucket['imagename'];
+								$result = TRUE;
+
+							}
+
+						}
+					} else {
+						//not file
+						$details = "images";
+					}
+
+				} else {
+
+					$details = "Invalid token";
+				}
+			} catch (Exception $ex) {
+
+				$details = "Exception error caught";
+			}
+		} else {
+
+			$details = "No authorization code";
+		}
+
+		echo json_encode(array("response" => $result, "details" => $details, "data" => $data));
+
+		//echo json_encode($data);
+		//$file_name2 = preg_replace("/ /", "-", $file_name);
+	}
+
+	// Helper file add code
+	// image compress code
+	function compress($source, $destination, $quality)
+	{
+		ob_start();
+		$info = getimagesize($source);
+
+		if ($info['mime'] == 'image/jpeg') {
+			$image = imagecreatefromjpeg($source);
+		} elseif ($info['mime'] == 'image/gif') {
+			$image = imagecreatefromgif($source);
+		} elseif ($info['mime'] == 'image/png') {
+			$image = imagecreatefrompng($source);
+		}
+
+		$filename = tempnam(sys_get_temp_dir(), "beyondbroker");
+
+		imagejpeg($image, $filename, $quality);
+
+		//ob_get_contents();
+		$imagedata = ob_end_clean();
+
+		return $filename;
+	}
+
+	// type for if image then it will reduce size
+	// site for it in web of mobile because mobile webservice image will in base 64
+	// $tempth will file temp path
+	// $image_path will file where to save path
+
+	function s3_bucket_upload($temppath, $image_path, $type = "image", $site = "web")
+	{
+		$bucket = "small-small-fair";
+
+		$data = array();
+
+		$data['message'] = "false";
+
+		// For website only
+		if ($site == "web") {
+			if ($type == "image") {
+				$file_Path = compress($temppath, $image_path, 90);
+			} else {
+				$file_Path = $temppath;
+			}
+		}
+
+		try {
+			$s3Client = new S3Client([
+				'version'     => 'latest',
+				'region'      => 'eu-west-1'
+			]);
+
+			// For website only
+			if ($site == "web") {
+
+				$result = $s3Client->putObject([
+					'Bucket'     => $bucket,
+					'Key'        => $image_path,
+					'SourceFile' => $file_Path,
+					//'body'=> $file_Path,
+					'ACL'        => 'public-read',
+					//'StorageClass' => 'REDUCED_REDUNDANCY',
+				]);
+
+				$data['message']   = "success";
+				$data['imagename'] = $image_path;
+				$data['imagepath'] = $result['ObjectURL'];
+			} else {
+				// $tmp = base64_decode($base64);
+				$upload  = $s3Client->upload($bucket, $image_path, $temppath, 'public-read');
+				$data['message']   = "success";
+				$data['imagepath'] = $upload->get('ObjectURL');
+			}
+
+		} catch (Exception $e) {
+			$data['message'] = "false";
+			// echo $e->getMessage() . "\n";
+		}
+
+		return $data;
+	}
 }

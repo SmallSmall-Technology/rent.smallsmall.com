@@ -162,6 +162,8 @@ $route['app/create-virtual-account'] = 'app/create_wallet_account';
 
 $route['app/check-virtual-account'] = 'app/check_virtual_account';
 
+$route['app/vendor-upload'] = 'app/vendor_upload';
+
 $route['basquet-transactions'] = 'loans/basquet_transactions';
 
 $route['lenco-transactions'] = 'loans/lenco_transactions';
