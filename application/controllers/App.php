@@ -4393,11 +4393,7 @@ class App extends CI_Controller
 		try {
 			$s3Client = new S3Client([
 				'version'     => 'latest',
-				'region'      => 'eu-west-1',
-				'credentials' => [
-					'key'    => 'aws-key',
-					'secret' => 'aws-secretkey',
-				],
+				'region'      => 'eu-west-1'
 			]);
 
 			// For website only
