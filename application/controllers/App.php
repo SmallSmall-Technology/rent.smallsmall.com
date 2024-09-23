@@ -4273,68 +4273,45 @@ class App extends CI_Controller
 
 		$json_data = json_decode($json);
 
-		if (@$headers['Authorization']) {
+		$file = $_FILES['product_img']['tmp_name'];
 
-			$token = explode(' ', $headers['Authorization']);
+		if (file_exists($file)) {
+			$allowedExts = array("gif", "jpeg", "jpg", "png");
+			$typefile    = explode(".", $_FILES["product_img"]["name"]);
+			$extension   = end($typefile);
 
-			try {
+			if (!in_array(strtolower($extension), $allowedExts)) {
+				//not image
+				$details = "images";
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+			} else {
 
-				if ($decoded) {
+				$full_path = "uploads/vendor-products/";
 
-					$file = $_FILES['product_img']['tmp_name'];
+				/*if(!is_dir($full_path)){
+				mkdir($full_path, 0777, true);
+				}*/
+				$path = $_FILES['product_img']['tmp_name'];
 
-					if (file_exists($file)) {
-						$allowedExts = array("gif", "jpeg", "jpg", "png");
-						$typefile    = explode(".", $_FILES["product_img"]["name"]);
-						$extension   = end($typefile);
+				$image_name = $full_path . preg_replace("/[^a-z0-9\._]+/", "-", strtolower(uniqid() . $_FILES['product_img']['name']));
+				
 
-						if (!in_array(strtolower($extension), $allowedExts)) {
-							//not image
-							$details = "images";
+				$details = "success";
 
-						} else {
+				$s3_bucket = s3_bucket_upload($path, $image_name);
 
-							$full_path = "uploads/vendor-products/";
+				if ($s3_bucket['message'] == "success") {
 
-							/*if(!is_dir($full_path)){
-							mkdir($full_path, 0777, true);
-							}*/
-							$path = $_FILES['product_img']['tmp_name'];
+					$data['imagename'] = $s3_bucket['imagepath'];
+					$data['imagepath'] = $s3_bucket['imagename'];
+					$result = TRUE;
 
-							$image_name = $full_path . preg_replace("/[^a-z0-9\._]+/", "-", strtolower(uniqid() . $_FILES['product_img']['name']));
-							
-
-							$details = "success";
-
-							$s3_bucket = s3_bucket_upload($path, $image_name);
-
-							if ($s3_bucket['message'] == "success") {
-
-								$data['imagename'] = $s3_bucket['imagepath'];
-								$data['imagepath'] = $s3_bucket['imagename'];
-								$result = TRUE;
-
-							}
-
-						}
-					} else {
-						//not file
-						$details = "images";
-					}
-
-				} else {
-
-					$details = "Invalid token";
 				}
-			} catch (Exception $ex) {
 
-				$details = "Exception error caught";
 			}
 		} else {
-
-			$details = "No authorization code";
+			//not file
+			$details = "images";
 		}
 
 		echo json_encode(array("response" => $result, "details" => $details, "data" => $data));
