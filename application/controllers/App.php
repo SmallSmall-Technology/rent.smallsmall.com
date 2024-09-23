@@ -3806,54 +3806,6 @@ class App extends CI_Controller
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
 
-	// public function get_user_notifications(){
-
-	//     $result = FALSE;
-
-	//     $details = '';
-
-	//     $data = array();
-
-	//     $key = $this->getKey();
-
-	//     $headers = $this->input->request_headers();
-
-	//     if(@$headers['Authorization']){
-
-	//         $token = explode(' ', $headers['Authorization']);
-
-	//         try{
-
-	//             $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-
-	//             if($decoded){
-
-	//                 //Insert the inspection details
-	//         		$userID = $decoded->user->userID;
-
-	//         		$data = $this->app_model->get_all_user_notifications($userID);
-
-	//     		    $result = TRUE;
-
-	//             }else{
-
-	//                 $details = "Invalid token";
-
-	//             }
-
-	//         }catch (Exception $ex){
-
-	//            $details = "Exception error caught";
-
-	//         }
-	//     }else{
-
-	//         $details = "No authorization code";
-	//     }
-
-	//     echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
-	// }
-
 	public function get_user_notifications()
 	{
 
@@ -3918,66 +3870,6 @@ class App extends CI_Controller
 
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
-
-
-	// public function update_user_notification_status()
-	// {
-
-	// 	$result = FALSE;
-
-	// 	$details = '';
-
-	// 	$data = array();
-
-	// 	$key = $this->getKey();
-
-	// 	$headers = $this->input->request_headers();
-
-	// 	$json = file_get_contents('php://input');
-
-	// 	$json_data = json_decode($json);
-
-	// 	$notificationID = $json_data->notificationID;
-
-	// 	if (@$headers['Authorization']) {
-
-	// 		$token = explode(' ', $headers['Authorization']);
-
-	// 		try {
-
-	// 			$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-
-	// 			if ($decoded) {
-
-	// 				//Insert the inspection details
-	// 				$userID = $decoded->user->userID;
-
-	// 				$res = $this->app_model->update_user_notification($notificationID, $userID);
-
-	// 				$result = TRUE;
-
-	// 				if ($res) {
-
-	// 					$details = "Successful";
-	// 				} else {
-
-	// 					$details = "Failed";
-	// 				}
-	// 			} else {
-
-	// 				$details = "Invalid token";
-	// 			}
-	// 		} catch (Exception $ex) {
-
-	// 			$details = "Exception error caught";
-	// 		}
-	// 	} else {
-
-	// 		$details = "No authorization code";
-	// 	}
-
-	// 	echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
-	// }
 
 
 	public function update_user_notification_status()
@@ -4090,66 +3982,6 @@ class App extends CI_Controller
 		}
 	}
 
-	public function test_notification()
-	{
-
-		$result = FALSE;
-
-		$details = '';
-
-		$data = array();
-
-		$key = $this->getKey();
-
-		$headers = $this->input->request_headers();
-
-		$json = file_get_contents('php://input');
-
-		$json_data = json_decode($json);
-
-		$notificationID = $json_data->notificationID;
-
-		if (@$headers['Authorization']) {
-
-			$token = explode(' ', $headers['Authorization']);
-
-			try {
-
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-
-				if ($decoded) {
-
-					$publishResponse = $beamsClient->publishToInterests(
-						array("hello", "donuts"),
-						array(
-							"fcm" => array(
-								"notification" => array(
-									"title" => "Hi!",
-									"body" => "This is my first Push Notification!"
-								)
-							),
-							"apns" => array("aps" => array(
-								"alert" => array(
-									"title" => "Hi!",
-									"body" => "This is my first Push Notification!"
-								)
-							))
-						)
-					);
-				} else {
-
-					$details = "Invalid token";
-				}
-			} catch (Exception $ex) {
-
-				$details = "Exception error caught";
-			}
-		} else {
-
-			$details = "No authorization code";
-		}
-	}
-
 	public function update_profile()
 	{
 
@@ -4174,20 +4006,7 @@ class App extends CI_Controller
 		// Directly use userID intead decoded token which is the right method but due to AWS Header Authorization error that is why I'm doing this for now.
 		$userID = $json_data->userID;
 
-		// $headers = $this->input->request_headers();
-
-		// if (@$headers['Authorization']) {
-
-		// 	$token = explode(' ', $headers['Authorization']);
-
 		try {
-
-			// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-
-			// if ($decoded) {
-			// 	//Update user profile
-
-			// 	$userID = $decoded->user->userID;
 
 			if (!is_null($userID)) {
 
@@ -4267,17 +4086,15 @@ class App extends CI_Controller
 
 		$data = array();
 
-		$key = $this->getKey();
-
 		$json = file_get_contents('php://input');
 
 		$json_data = json_decode($json);
 
-		$file = $_FILES['product_img']['tmp_name'];
+		$file = $json_data->product_img->tmp_name;
 
 		if (file_exists($file)) {
 			$allowedExts = array("gif", "jpeg", "jpg", "png");
-			$typefile    = explode(".", $_FILES["product_img"]["name"]);
+			$typefile    = explode(".", $json_data->product_img->name);
 			$extension   = end($typefile);
 
 			if (!in_array(strtolower($extension), $allowedExts)) {
@@ -4291,10 +4108,9 @@ class App extends CI_Controller
 				/*if(!is_dir($full_path)){
 				mkdir($full_path, 0777, true);
 				}*/
-				$path = $_FILES['product_img']['tmp_name'];
+				$path = $file;
 
-				$image_name = $full_path . preg_replace("/[^a-z0-9\._]+/", "-", strtolower(uniqid() . $_FILES['product_img']['name']));
-				
+				$image_name = $full_path . preg_replace("/[^a-z0-9\._]+/", "-", strtolower(uniqid() . $json_data->product_img->name));
 
 				$details = "success";
 
