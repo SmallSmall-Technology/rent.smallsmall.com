@@ -3806,54 +3806,6 @@ class App extends CI_Controller
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
 
-	// public function get_user_notifications(){
-
-	//     $result = FALSE;
-
-	//     $details = '';
-
-	//     $data = array();
-
-	//     $key = $this->getKey();
-
-	//     $headers = $this->input->request_headers();
-
-	//     if(@$headers['Authorization']){
-
-	//         $token = explode(' ', $headers['Authorization']);
-
-	//         try{
-
-	//             $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-
-	//             if($decoded){
-
-	//                 //Insert the inspection details
-	//         		$userID = $decoded->user->userID;
-
-	//         		$data = $this->app_model->get_all_user_notifications($userID);
-
-	//     		    $result = TRUE;
-
-	//             }else{
-
-	//                 $details = "Invalid token";
-
-	//             }
-
-	//         }catch (Exception $ex){
-
-	//            $details = "Exception error caught";
-
-	//         }
-	//     }else{
-
-	//         $details = "No authorization code";
-	//     }
-
-	//     echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
-	// }
-
 	public function get_user_notifications()
 	{
 
@@ -3918,66 +3870,6 @@ class App extends CI_Controller
 
 		echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
 	}
-
-
-	// public function update_user_notification_status()
-	// {
-
-	// 	$result = FALSE;
-
-	// 	$details = '';
-
-	// 	$data = array();
-
-	// 	$key = $this->getKey();
-
-	// 	$headers = $this->input->request_headers();
-
-	// 	$json = file_get_contents('php://input');
-
-	// 	$json_data = json_decode($json);
-
-	// 	$notificationID = $json_data->notificationID;
-
-	// 	if (@$headers['Authorization']) {
-
-	// 		$token = explode(' ', $headers['Authorization']);
-
-	// 		try {
-
-	// 			$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-
-	// 			if ($decoded) {
-
-	// 				//Insert the inspection details
-	// 				$userID = $decoded->user->userID;
-
-	// 				$res = $this->app_model->update_user_notification($notificationID, $userID);
-
-	// 				$result = TRUE;
-
-	// 				if ($res) {
-
-	// 					$details = "Successful";
-	// 				} else {
-
-	// 					$details = "Failed";
-	// 				}
-	// 			} else {
-
-	// 				$details = "Invalid token";
-	// 			}
-	// 		} catch (Exception $ex) {
-
-	// 			$details = "Exception error caught";
-	// 		}
-	// 	} else {
-
-	// 		$details = "No authorization code";
-	// 	}
-
-	// 	echo json_encode(array("result" => $result, "details" => $details, "data" => $data));
-	// }
 
 
 	public function update_user_notification_status()
@@ -4090,66 +3982,6 @@ class App extends CI_Controller
 		}
 	}
 
-	public function test_notification()
-	{
-
-		$result = FALSE;
-
-		$details = '';
-
-		$data = array();
-
-		$key = $this->getKey();
-
-		$headers = $this->input->request_headers();
-
-		$json = file_get_contents('php://input');
-
-		$json_data = json_decode($json);
-
-		$notificationID = $json_data->notificationID;
-
-		if (@$headers['Authorization']) {
-
-			$token = explode(' ', $headers['Authorization']);
-
-			try {
-
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-
-				if ($decoded) {
-
-					$publishResponse = $beamsClient->publishToInterests(
-						array("hello", "donuts"),
-						array(
-							"fcm" => array(
-								"notification" => array(
-									"title" => "Hi!",
-									"body" => "This is my first Push Notification!"
-								)
-							),
-							"apns" => array("aps" => array(
-								"alert" => array(
-									"title" => "Hi!",
-									"body" => "This is my first Push Notification!"
-								)
-							))
-						)
-					);
-				} else {
-
-					$details = "Invalid token";
-				}
-			} catch (Exception $ex) {
-
-				$details = "Exception error caught";
-			}
-		} else {
-
-			$details = "No authorization code";
-		}
-	}
-
 	public function update_profile()
 	{
 
@@ -4174,20 +4006,7 @@ class App extends CI_Controller
 		// Directly use userID intead decoded token which is the right method but due to AWS Header Authorization error that is why I'm doing this for now.
 		$userID = $json_data->userID;
 
-		// $headers = $this->input->request_headers();
-
-		// if (@$headers['Authorization']) {
-
-		// 	$token = explode(' ', $headers['Authorization']);
-
 		try {
-
-			// $decoded = $this->jwt->decode($token[1], $key, array("HS256"));
-
-			// if ($decoded) {
-			// 	//Update user profile
-
-			// 	$userID = $decoded->user->userID;
 
 			if (!is_null($userID)) {
 
@@ -4267,74 +4086,48 @@ class App extends CI_Controller
 
 		$data = array();
 
-		$key = $this->getKey();
-
 		$json = file_get_contents('php://input');
 
 		$json_data = json_decode($json);
 
-		if (@$headers['Authorization']) {
+		$file = $json_data->product_img->tmp_name;
 
-			$token = explode(' ', $headers['Authorization']);
+		if (file_exists($file)) {
+			$allowedExts = array("gif", "jpeg", "jpg", "png");
+			$typefile    = explode(".", $json_data->product_img->name);
+			$extension   = end($typefile);
 
-			try {
+			if (!in_array(strtolower($extension), $allowedExts)) {
+				//not image
+				$details = "images";
 
-				$decoded = $this->jwt->decode($token[1], $key, array("HS256"));
+			} else {
 
-				if ($decoded) {
+				$full_path = "uploads/vendor-products/";
 
-					$file = $_FILES['product_img']['tmp_name'];
+				/*if(!is_dir($full_path)){
+				mkdir($full_path, 0777, true);
+				}*/
+				$path = $file;
 
-					if (file_exists($file)) {
-						$allowedExts = array("gif", "jpeg", "jpg", "png");
-						$typefile    = explode(".", $_FILES["product_img"]["name"]);
-						$extension   = end($typefile);
+				$image_name = $full_path . preg_replace("/[^a-z0-9\._]+/", "-", strtolower(uniqid() . $json_data->product_img->name));
 
-						if (!in_array(strtolower($extension), $allowedExts)) {
-							//not image
-							$details = "images";
+				$details = "success";
 
-						} else {
+				$s3_bucket = s3_bucket_upload($path, $image_name);
 
-							$full_path = "uploads/vendor-products/";
+				if ($s3_bucket['message'] == "success") {
 
-							/*if(!is_dir($full_path)){
-							mkdir($full_path, 0777, true);
-							}*/
-							$path = $_FILES['product_img']['tmp_name'];
+					$data['imagename'] = $s3_bucket['imagepath'];
+					$data['imagepath'] = $s3_bucket['imagename'];
+					$result = TRUE;
 
-							$image_name = $full_path . preg_replace("/[^a-z0-9\._]+/", "-", strtolower(uniqid() . $_FILES['product_img']['name']));
-							
-
-							$details = "success";
-
-							$s3_bucket = s3_bucket_upload($path, $image_name);
-
-							if ($s3_bucket['message'] == "success") {
-
-								$data['imagename'] = $s3_bucket['imagepath'];
-								$data['imagepath'] = $s3_bucket['imagename'];
-								$result = TRUE;
-
-							}
-
-						}
-					} else {
-						//not file
-						$details = "images";
-					}
-
-				} else {
-
-					$details = "Invalid token";
 				}
-			} catch (Exception $ex) {
 
-				$details = "Exception error caught";
 			}
 		} else {
-
-			$details = "No authorization code";
+			//not file
+			$details = "images";
 		}
 
 		echo json_encode(array("response" => $result, "details" => $details, "data" => $data));
