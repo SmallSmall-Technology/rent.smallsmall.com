@@ -208,6 +208,13 @@ $route['admin/notify-cx/(:any)'] = 'rss/send_inspection_email/$1';
 
 $route['rss/test-pdf'] = 'rss/test_pdf';
 
+//AppWrite endpoints
+$route['app/create-fincra-account'] = 'app/create_fincra_account';
+
+$route['app/verify-account-details'] = 'app/verify_account_details';
+
+$route['app/list-banks'] = 'app/list_all_banks';
+
 //Link to resend verification to user
 $route['admin/resend-verification-email/(:any)/(:any)'] = 'admin/send_another_verification_email/$1/$2';
 
