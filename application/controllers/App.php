@@ -4218,4 +4218,64 @@ class App extends CI_Controller
 
 		return $data;
 	}
+
+	function create_fincra_account(){
+	
+		require_once('vendor/autoload.php');
+
+		$client = new \GuzzleHttp\Client();
+
+		$response = $client->request('POST', 'https://sandboxapi.fincra.com/profile/virtual-accounts/requests', [
+		'body' => '{"currency":"NGN","accountType":"individual","channel":"globus"}',
+		'headers' => [
+			'accept' => 'application/json',
+			'content-type' => 'application/json',
+		],
+		]);
+
+		echo $response->getBody();
+	}
+
+	function list_all_banks(){
+
+		require_once('vendor/autoload.php');
+
+		$client = new \GuzzleHttp\Client();
+
+		$response = $client->request('GET', 'https://sandboxapi.fincra.com/core/banks?currency=NGN&country=NG', [
+		'headers' => [
+			'accept' => 'application/json',
+		],
+		]);
+
+		echo $response->getBody();
+	}
+
+	function verify_account_details(){
+
+		require_once('vendor/autoload.php');
+
+		$client = new \GuzzleHttp\Client();
+
+		$json = file_get_contents('php://input');
+
+		$json_data = json_decode($json);
+
+		$account_number = $json_data->account_number;
+
+		$response = $client->request('POST', 'https://sandboxapi.fincra.com/core/accounts/resolve', [
+		'body' => '{"accountNumber":"'.$account_number.'","type":"nuban"}',
+		'headers' => [
+			'accept' => 'application/json',
+			'content-type' => 'application/json',
+		],
+		]);
+
+		echo $response->getBody();
+	}
+
+	function outward_transfer(){
+
+		
+	}
 }
