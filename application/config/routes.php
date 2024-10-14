@@ -215,6 +215,8 @@ $route['app/verify-account-details'] = 'app/verify_account_details';
 
 $route['app/list-banks'] = 'app/list_all_banks';
 
+//$route['app/fincra-transfer'] = 'app/fincra_transfer';
+
 //Link to resend verification to user
 $route['admin/resend-verification-email/(:any)/(:any)'] = 'admin/send_another_verification_email/$1/$2';
 
