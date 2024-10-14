@@ -4225,10 +4225,11 @@ class App extends CI_Controller
 
 		$client = new \GuzzleHttp\Client();
 
-		$response = $client->request('POST', 'https://sandboxapi.fincra.com/profile/virtual-accounts/requests', [
+		$response = $client->request('POST', 'https://api.fincra.com/profile/virtual-accounts/requests', [
 		'body' => '{"currency":"NGN","accountType":"individual","channel":"globus"}',
 		'headers' => [
 			'accept' => 'application/json',
+			'api-key' => FINCRA_API_KEY,
 			'content-type' => 'application/json',
 		],
 		]);
@@ -4242,9 +4243,10 @@ class App extends CI_Controller
 
 		$client = new \GuzzleHttp\Client();
 
-		$response = $client->request('GET', 'https://sandboxapi.fincra.com/core/banks?currency=NGN&country=NG', [
+		$response = $client->request('GET', 'https://api.fincra.com/core/banks?currency=NGN&country=NG', [
 		'headers' => [
 			'accept' => 'application/json',
+			'api-key' => FINCRA_API_KEY,
 		],
 		]);
 
@@ -4261,12 +4263,15 @@ class App extends CI_Controller
 
 		$json_data = json_decode($json);
 
-		$account_number = $json_data->account_number;
+		$accountNumber = $json_data->accountNumber;
 
-		$response = $client->request('POST', 'https://sandboxapi.fincra.com/core/accounts/resolve', [
-		'body' => '{"accountNumber":"'.$account_number.'","type":"nuban"}',
+		$bankCode = $json_data->bankCode;
+
+		$response = $client->request('POST', 'https://api.fincra.com/core/accounts/resolve', [
+		'body' => '{"accountNumber":"'.$accountNumber.'","type":"nuban", "bankCode":"'.$bankCode.'"}',
 		'headers' => [
 			'accept' => 'application/json',
+			'api-key' => FINCRA_API_KEY,
 			'content-type' => 'application/json',
 		],
 		]);
@@ -4274,8 +4279,32 @@ class App extends CI_Controller
 		echo $response->getBody();
 	}
 
-	function outward_transfer(){
+	/*function fincra_transfer(){
 
-		
-	}
+		require_once('vendor/autoload.php');
+
+		$client = new \GuzzleHttp\Client();
+
+		$json = file_get_contents('php://input');
+
+		$json_data = json_decode($json);
+
+		$destination_account_number = $json_data->accountNumber;
+
+		$amount = $json_data->amount;
+
+		$customerReference = $json_data->customerReference;
+
+		$response = $client->request('POST', 'https://api.fincra.com/disbursements/payouts', [
+		'body' => '{"sourceCurrency":"NGN","destinationCurrency":"NGN","amount":"'.$amount.'","description":"Payment","'.$customerReference.'":"TXT-001","beneficiary":{"firstName":"John","lastName":"Doe","email":"test@fincra.com","type":"individual","accountHolderName":"'..'","accountNumber":"'.$accountNumber.'","mobileMoneyCode":"901","country":"GB","bankCode":"'.$bankCode.'","sortCode":"9090","registrationNumber":"A909"},"paymentDestination":"'.$destination_account_number.'"}',
+		'headers' => [
+			'accept' => 'application/json',
+			'api-key' => FINCRA_API_KEY,
+			'content-type' => 'application/json',
+		],
+		]);
+
+		echo $response->getBody();
+
+	}*/
 }
